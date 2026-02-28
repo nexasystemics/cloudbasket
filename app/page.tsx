@@ -1,32 +1,45 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import ProductGrid from '@/components/ProductGrid'
 import ProductFilter from '@/components/ProductFilter'
 import { PRODUCTS } from '@/lib/mock-data'
 import {
   ShoppingCart,
-  TrendingDown,
-  Shirt,
+  Zap,
+  Layout,
   BookOpen,
   Scale,
-  DollarSign,
-  ExternalLink,
-  ArrowRight,
-  Star,
-  Zap,
   Shield,
-  Heart,
-  Search,
-  Layout,
 } from 'lucide-react'
 
-export default function CloudBasketHome() {
+function HomeContent() {
+  const searchParams = useSearchParams()
+  
   // --- Filtering State ---
   const [search, setSearch] = useState('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState(100000)
+
+  // --- Sync with URL Params ---
+  useEffect(() => {
+    const categoryParam = searchParams.get('category')
+    const queryParam = searchParams.get('q')
+
+    if (categoryParam) {
+      setSelectedCategories([categoryParam])
+    } else {
+      setSelectedCategories([])
+    }
+
+    if (queryParam) {
+      setSearch(queryParam)
+    } else {
+      setSearch('')
+    }
+  }, [searchParams])
 
   // --- Master Data Info ---
   const categories = ['Beauty', 'Books', 'Sports', 'Toys']
@@ -47,48 +60,11 @@ export default function CloudBasketHome() {
     setSearch('')
     setSelectedCategories([])
     setPriceRange(maxPrice)
+    window.history.pushState({}, '', '/')
   }
-
-  // NOTE: In a real Next.js 16 app, tenant/theme logic would be handled by 
-  // a provider or passed from a layout. For this prototype, we'll use 
-  // the 'cloudbasket' default theme colors directly.
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* Navigation */}
-      <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold shadow-lg bg-[#039BE5]">
-              CB
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="font-bold text-gray-900 tracking-tight">CloudBasket</span>
-              <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
-                Smart shopping hub
-              </span>
-            </div>
-          </Link>
-          
-          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-gray-500">
-            <Link href="/products" className="hover:text-[#039BE5] transition-colors">Products</Link>
-            <Link href="/deals" className="hover:text-[#039BE5] transition-colors">Deals</Link>
-            <Link href="/compare" className="hover:text-[#039BE5] transition-colors">Compare</Link>
-            <Link href="/pod" className="hover:text-[#039BE5] transition-colors">POD Store</Link>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <Link
-              href="/products"
-              className="inline-flex items-center justify-center rounded-xl bg-[#039BE5] text-white text-xs font-bold px-5 py-2.5 shadow-md hover:bg-[#0288D1] transition-all active:scale-95"
-            >
-              <ShoppingCart size={16} className="mr-2" />
-              <span>Start Shopping</span>
-            </Link>
-          </div>
-        </nav>
-      </header>
-
       {/* Hero Section */}
       <section className="relative w-full bg-[#039BE5] text-white pt-24 pb-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top,_#ffffff_0%,_transparent_60%)]" />
@@ -104,20 +80,26 @@ export default function CloudBasketHome() {
             All your shopping essentials, unified in one basket.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-white text-[#039BE5] px-8 py-4 rounded-xl font-bold text-sm hover:shadow-xl transition-all flex items-center gap-2">
+            <Link 
+              href="/products"
+              className="bg-white text-[#039BE5] px-8 py-4 rounded-xl font-bold text-sm hover:shadow-xl transition-all flex items-center gap-2"
+            >
               <ShoppingCart size={18} />
               Browse Catalog
-            </button>
-            <button className="bg-[#E65100] text-white px-8 py-4 rounded-xl font-bold text-sm hover:bg-[#BF360C] transition-all flex items-center gap-2 shadow-lg">
+            </Link>
+            <Link 
+              href="/products?q=deal"
+              className="bg-[#E65100] text-white px-8 py-4 rounded-xl font-bold text-sm hover:bg-[#BF360C] transition-all flex items-center gap-2 shadow-lg"
+            >
               <Zap size={18} />
-              Flash Deals
-            </button>
+              Lightning Deals
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Unified Filtering System */}
-      <section className="py-20 bg-gray-50/50">
+      {/* Unified Filtering System (Featured on Home) */}
+      <section id="shop" className="py-20 bg-gray-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <h2 className="text-4xl font-black text-gray-900 tracking-tight mb-2">Featured Collections</h2>
@@ -125,7 +107,6 @@ export default function CloudBasketHome() {
           </div>
 
           <div className="grid grid-cols-12 gap-12">
-            {/* Sidebar Filter (3 Columns) */}
             <aside className="col-span-12 lg:col-span-3">
               <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
                 <ProductFilter
@@ -140,8 +121,6 @@ export default function CloudBasketHome() {
                 />
               </div>
             </aside>
-
-            {/* Product Grid (9 Columns) */}
             <main className="col-span-12 lg:col-span-9">
               <ProductGrid products={filteredProducts} onReset={resetFilters} />
             </main>
@@ -149,25 +128,59 @@ export default function CloudBasketHome() {
         </div>
       </section>
 
-      {/* Categories & Platforms (Secondary Sections) */}
+      {/* Categories Section - Links to Catalog */}
       <section className="py-24 border-t border-gray-100 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-black text-gray-900 tracking-tight mb-16 uppercase">Shop by Marketplace</h2>
+          <h2 className="text-3xl font-black text-gray-900 tracking-tight mb-16 uppercase">Shop by Category</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {['Amazon', 'Flipkart', 'Redbubble', 'Teepublic'].map((partner) => (
-              <div key={partner} className="p-10 bg-gray-50 rounded-2xl hover:bg-sky-50 transition-colors border border-transparent hover:border-[#039BE5]/20 group">
+            {[
+              { name: 'Electronics', q: 'Electronics' },
+              { name: 'Fashion', q: 'Fashion' },
+              { name: 'Home & Kitchen', q: 'Home' },
+              { name: 'Sports', q: 'Sports' }
+            ].map((cat) => (
+              <Link 
+                key={cat.name} 
+                href={`/products?category=${cat.q}`}
+                className="p-10 bg-gray-50 rounded-2xl hover:bg-sky-50 transition-colors border border-transparent hover:border-[#039BE5]/20 group"
+              >
                 <div className="w-16 h-16 bg-white rounded-xl shadow-sm mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Layout className="text-[#039BE5]" size={32} />
                 </div>
-                <h3 className="font-bold text-gray-900">{partner}</h3>
-                <p className="text-xs text-gray-400 font-bold mt-2 uppercase tracking-widest">Official Partner</p>
-              </div>
+                <h3 className="font-bold text-gray-900">{cat.name}</h3>
+                <p className="text-xs text-gray-400 font-bold mt-2 uppercase tracking-widest">Explore Catalog</p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Quick Links Section */}
+      <section className="py-20 bg-gray-50 border-y border-gray-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="p-8 bg-white rounded-2xl shadow-sm">
+              <BookOpen className="mx-auto mb-4 text-[#039BE5]" size={32} />
+              <h4 className="font-black text-gray-900 mb-2">Shopping Guides</h4>
+              <p className="text-sm text-gray-500 font-medium mb-4">Expert reviews and buying advice for global markets.</p>
+              <Link href="/blog" className="text-[#039BE5] text-xs font-black uppercase tracking-widest hover:underline">Read Blog</Link>
+            </div>
+            <div className="p-8 bg-white rounded-2xl shadow-sm">
+              <Scale className="mx-auto mb-4 text-[#039BE5]" size={32} />
+              <h4 className="font-black text-gray-900 mb-2">Price Compare</h4>
+              <p className="text-sm text-gray-500 font-medium mb-4">Track historical prices across 5+ major retailers.</p>
+              <Link href="/compare" className="text-[#039BE5] text-xs font-black uppercase tracking-widest hover:underline">Compare Now</Link>
+            </div>
+            <div className="p-8 bg-white rounded-2xl shadow-sm">
+              <Shield className="mx-auto mb-4 text-[#039BE5]" size={32} />
+              <h4 className="font-black text-gray-900 mb-2">Safe & Secure</h4>
+              <p className="text-sm text-gray-500 font-medium mb-4">Compliant with DPDP Act 2023 for your privacy.</p>
+              <Link href="/privacy" className="text-[#039BE5] text-xs font-black uppercase tracking-widest hover:underline">Learn More</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer className="bg-gray-900 text-white py-20 mt-auto">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-2">
@@ -184,7 +197,7 @@ export default function CloudBasketHome() {
             <h4 className="font-black uppercase tracking-widest text-xs mb-6 text-white/40">Resources</h4>
             <ul className="space-y-4 text-sm font-bold text-gray-300">
               <li><Link href="/products" className="hover:text-white transition-colors">Product Catalog</Link></li>
-              <li><Link href="/deals" className="hover:text-white transition-colors">Daily Deals</Link></li>
+              <li><Link href="/products?q=deal" className="hover:text-white transition-colors">All Deals</Link></li>
               <li><Link href="/affiliate" className="hover:text-white transition-colors">Affiliate Hub</Link></li>
             </ul>
           </div>
@@ -199,5 +212,13 @@ export default function CloudBasketHome() {
         </div>
       </footer>
     </div>
+  )
+}
+
+export default function CloudBasketHome() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center font-black">LOADING...</div>}>
+      <HomeContent />
+    </Suspense>
   )
 }

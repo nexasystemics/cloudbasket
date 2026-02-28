@@ -1,12 +1,14 @@
 'use client'
 
-import React, { use } from 'react'
+import React, { use, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ShoppingBag, ShieldCheck, Truck, RotateCcw } from 'lucide-react'
 import { PRODUCTS } from '@/lib/mock-data'
 import { useCart } from '@/context/CartContext'
 import { notFound } from 'next/navigation'
+
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1560393464-5c69a73c5770?auto=format&fit=crop&q=80&w=800'
 
 interface ProductPageProps {
   params: Promise<{ id: string }>
@@ -16,6 +18,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   const resolvedParams = use(params)
   const product = PRODUCTS.find((p) => p.id === parseInt(resolvedParams.id))
   const { addToCart } = useCart()
+  const [imgSrc, setImgSrc] = useState(product?.image || FALLBACK_IMAGE)
 
   if (!product) {
     return notFound()
@@ -42,12 +45,13 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="lg:col-span-7">
             <div className="relative aspect-square rounded-3xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm group">
               <Image
-                src={product.image}
+                src={imgSrc}
                 alt={product.name}
                 fill
                 priority
                 className="object-cover group-hover:scale-105 transition-transform duration-1000"
                 sizes="(max-width: 1024px) 100vw, 60vw"
+                onError={() => setImgSrc(FALLBACK_IMAGE)}
               />
             </div>
           </div>

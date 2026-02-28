@@ -37,7 +37,9 @@ const NAV_ITEMS: readonly NavItem[] = [
     href: '/products',
     dropdown: [
       { label: 'All Products',   href: '/products' },
-      { label: 'Compare Prices', href: '/compare'  },
+      { label: 'Electronics',    href: '/products?category=Electronics' },
+      { label: 'Fashion',        href: '/products?category=Fashion' },
+      { label: 'Home & Kitchen', href: '/products?category=Home' },
     ],
   },
   {
@@ -52,10 +54,10 @@ const NAV_ITEMS: readonly NavItem[] = [
   {
     id: 'deals',
     label: 'Deals',
-    href: '/deals',
+    href: '/products?q=deal',
     dropdown: [
-      { label: "Today's Deals",  href: '/deals'   },
-      { label: 'Flash Sales',    href: '/deals/flash' },
+      { label: "Today's Deals",  href: '/products?q=deal'   },
+      { label: 'Flash Sales',    href: '/products?q=flash' },
     ],
   },
 ]

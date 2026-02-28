@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import type { TenantTheme } from '@/lib/themes'
 import { PRODUCTS, CATEGORIES, type Category, type Platform } from '@/lib/products-data'
@@ -31,35 +32,17 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 function PlatformBadge({ platform }: { platform: Platform }) {
-  if (platform === 'Amazon') {
-    return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#FF9900' }}>
-        Amazon
-      </span>
-    )
+  const colors: Record<Platform, string> = {
+    Amazon: '#FF9900',
+    Flipkart: '#2874F0',
+    Myntra: '#FF3F6C',
+    AJIO: '#2C333E'
   }
-  if (platform === 'Flipkart') {
-    return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#2874F0' }}>
-        Flipkart
-      </span>
-    )
-  }
-  if (platform === 'Myntra') {
-    return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#FF3F6C' }}>
-        Myntra
-      </span>
-    )
-  }
-  if (platform === 'AJIO') {
-    return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#2C333E' }}>
-        AJIO
-      </span>
-    )
-  }
-  return null
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: colors[platform] }}>
+      {platform}
+    </span>
+  )
 }
 
 function ProductCard({ id, name, platform, originalPrice, discountedPrice, rating, discountPercent, imageUrl, category, theme }: {
@@ -103,11 +86,30 @@ function ProductCard({ id, name, platform, originalPrice, discountedPrice, ratin
   )
 }
 
-export default function ProductsClient({ theme }: { theme: TenantTheme }) {
+function ProductsContent({ theme }: { theme: TenantTheme }) {
+  const searchParams = useSearchParams()
   const [activeCategory, setActiveCategory] = useState<Category>('All')
   const [sortBy, setSortBy] = useState<SortOption>('Relevance')
   const [search, setSearch] = useState('')
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE)
+
+  useEffect(() => {
+    const cat = searchParams.get('category')
+    const query = searchParams.get('q')
+
+    if (cat && CATEGORIES.includes(cat as Category)) {
+      setActiveCategory(cat as Category)
+    } else {
+      setActiveCategory('All')
+    }
+
+    if (query) {
+      setSearch(query)
+    } else {
+      setSearch('')
+    }
+    setDisplayCount(PAGE_SIZE)
+  }, [searchParams])
 
   const filtered = useMemo(() => {
     let list = activeCategory === 'All' ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeCategory)
@@ -132,6 +134,14 @@ export default function ProductsClient({ theme }: { theme: TenantTheme }) {
   const handleCategoryChange = (cat: Category) => {
     setActiveCategory(cat)
     setDisplayCount(PAGE_SIZE)
+    // Update URL without full reload to sync with state
+    const params = new URLSearchParams(window.location.search)
+    if (cat === 'All') {
+      params.delete('category')
+    } else {
+      params.set('category', cat)
+    }
+    window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`)
   }
 
   return (
@@ -143,7 +153,15 @@ export default function ProductsClient({ theme }: { theme: TenantTheme }) {
             type="search"
             placeholder="Search products, brands, categories…"
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setDisplayCount(PAGE_SIZE) }}
+            onChange={(e) => { 
+              const val = e.target.value
+              setSearch(val)
+              setDisplayCount(PAGE_SIZE)
+              const params = new URLSearchParams(window.location.search)
+              if (val) params.set('q', val)
+              else params.delete('q')
+              window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`)
+            }}
             className="w-full md:max-w-md px-4 py-2 rounded-full border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition"
             style={{ ['--tw-ring-color' as string]: '#039BE5' }}
           />
@@ -204,7 +222,12 @@ export default function ProductsClient({ theme }: { theme: TenantTheme }) {
             <p className="text-gray-500 text-lg font-medium">No products found.</p>
             <button
               type="button"
-              onClick={() => { setActiveCategory('All'); setSearch(''); setDisplayCount(PAGE_SIZE) }}
+              onClick={() => { 
+                setActiveCategory('All'); 
+                setSearch(''); 
+                setDisplayCount(PAGE_SIZE);
+                window.history.pushState({}, '', window.location.pathname)
+              }}
               className="mt-3 text-sm font-semibold hover:opacity-80 transition-opacity"
               style={{ color: '#039BE5' }}
             >
@@ -235,10 +258,15 @@ export default function ProductsClient({ theme }: { theme: TenantTheme }) {
             </p>
           </div>
         )}
-        <p className="mt-6 text-center text-xs text-gray-400">
-          Affiliate links — we may earn a commission at no extra cost to you.
-        </p>
       </section>
     </>
+  )
+}
+
+export default function ProductsClient({ theme }: { theme: TenantTheme }) {
+  return (
+    <Suspense fallback={<div className="text-center py-20 font-bold text-[#039BE5]">Loading Products...</div>}>
+      <ProductsContent theme={theme} />
+    </Suspense>
   )
 }

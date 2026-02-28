@@ -86,7 +86,7 @@ export default function ProductGrid({ products, onReset }: ProductGridProps) {
                   ₹{product.price.toLocaleString('en-IN')}
                 </span>
                 <Link
-                  href={`/products/${product.id}`}
+                  href={`/product/${product.id}`}
                   className="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-tighter text-gray-400 hover:text-[#039BE5] transition-colors group/btn"
                 >
                   Details

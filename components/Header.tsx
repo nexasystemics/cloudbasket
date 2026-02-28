@@ -1,7 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useCallback } from 'react'
 import type { ReactNode, FormEvent, ChangeEvent, JSX } from 'react'
+import { Star, Layout } from 'lucide-react'
 import {
   semantic,
   components,
@@ -351,7 +353,7 @@ interface CartBadgeProps {
 function CartBadge({ count }: CartBadgeProps): JSX.Element {
   const label = `Shopping cart${count > 0 ? `, ${count} ${count === 1 ? 'item' : 'items'}` : ', empty'}`
   return (
-    <a
+    <Link
       href="/products"
       aria-label={label}
       className="relative flex items-center justify-center p-2 rounded-lg"
@@ -376,7 +378,7 @@ function CartBadge({ count }: CartBadgeProps): JSX.Element {
           {count > 99 ? '99+' : count}
         </span>
       )}
-    </a>
+    </Link>
   )
 }
 
@@ -390,13 +392,14 @@ function AffiliateBadge(): JSX.Element {
       role="note"
       aria-label="Affiliate partner disclosure — we may earn a commission"
       title="CloudBasket contains affiliate links. We may earn a small commission at no extra cost to you."
-      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold select-none"
+      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold select-none"
       style={{
         backgroundColor: semantic.brand.accent,
         color:           semantic.text.onAccent,
       }}
     >
-      ★ Affiliate Partner
+      <Star size={14} fill="currentColor" />
+      Affiliate Partner
     </span>
   )
 }
@@ -463,7 +466,7 @@ export default function Header(): JSX.Element {
         >
 
           {/* ── LOGO ── */}
-          <a
+          <Link
             href="/"
             className="flex-shrink-0 flex items-center gap-2 select-none"
             aria-label="CloudBasket — go to homepage"
@@ -487,7 +490,7 @@ export default function Header(): JSX.Element {
               Cloud
               <span style={{ color: semantic.brand.accent }}>Basket</span>
             </span>
-          </a>
+          </Link>
 
           {/* ── SEARCH BAR ── */}
           <form

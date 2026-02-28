@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ChevronRight, ExternalLink, ShoppingBag, Truck, Globe, Heart } from 'lucide-react'
+import { ChevronRight, ExternalLink, ShoppingBag, Truck, Globe, Heart, Palette, Shirt, ShoppingCart, Package, Layout } from 'lucide-react'
 
 export default function PODPage() {
   // Sample designs with realistic data
@@ -154,16 +154,16 @@ export default function PODPage() {
           <h2 className="text-3xl font-bold text-center mb-12">How Print-on-Demand Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { step: '1', title: 'Browse Designs', desc: 'Explore our unique original artwork', icon: '🎨' },
-              { step: '2', title: 'Choose Product', desc: 'T-shirts, hoodies, mugs, cases & more', icon: '👕' },
-              { step: '3', title: 'Place Order', desc: 'Checkout securely on partner platforms', icon: '🛒' },
-              { step: '4', title: 'Freshly Printed', desc: 'Produced on demand and shipped to you', icon: '📦' },
+              { step: '1', title: 'Browse Designs', desc: 'Explore our unique original artwork', icon: <Palette className="text-[#039BE5] mx-auto" size={48} /> },
+              { step: '2', title: 'Choose Product', desc: 'T-shirts, hoodies, mugs, cases & more', icon: <Shirt className="text-[#039BE5] mx-auto" size={48} /> },
+              { step: '3', title: 'Place Order', desc: 'Checkout securely on partner platforms', icon: <ShoppingCart className="text-[#039BE5] mx-auto" size={48} /> },
+              { step: '4', title: 'Freshly Printed', desc: 'Produced on demand and shipped to you', icon: <Package className="text-[#039BE5] mx-auto" size={48} /> },
             ].map((item, idx) => (
               <div key={item.step} className="text-center relative">
                 <div className="bg-[#039BE5] text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 shadow-lg">
                   {item.step}
                 </div>
-                <div className="text-5xl mb-3">{item.icon}</div>
+                <div className="mb-3">{item.icon}</div>
                 <h3 className="font-bold text-lg mb-2">{item.title}</h3>
                 <p className="text-gray-600 text-sm">{item.desc}</p>
                 {idx < 3 && (
@@ -304,7 +304,7 @@ export default function PODPage() {
             {[
               {
                 name: 'Redbubble',
-                icon: '🔴',
+                icon: <Layout className="text-[#E6192E] mx-auto" size={64} />,
                 features: [
                   'Ships to 150+ countries',
                   'Premium apparel & accessories',
@@ -315,7 +315,7 @@ export default function PODPage() {
               },
               {
                 name: 'Teepublic',
-                icon: '🔵',
+                icon: <Layout className="text-[#207BFF] mx-auto" size={64} />,
                 features: [
                   'Aggressive discounts and frequent sales',
                   'Fast shipping to US, EU & India',
@@ -326,7 +326,7 @@ export default function PODPage() {
               },
               {
                 name: 'Teespring',
-                icon: '🟣',
+                icon: <Layout className="text-[#9C27B0] mx-auto" size={64} />,
                 features: [
                   'Custom creator-owned storefronts',
                   'On-demand fulfillment & no inventory risk',
@@ -337,7 +337,7 @@ export default function PODPage() {
               },
             ].map((platform) => (
               <div key={platform.name} className="bg-white rounded-xl shadow-md p-8 flex flex-col h-full">
-                <div className="text-6xl mb-4 text-center">{platform.icon}</div>
+                <div className="mb-4 text-center">{platform.icon}</div>
                 <h3 className="text-2xl font-bold text-center mb-6">{platform.name}</h3>
 
                 <ul className="space-y-3 mb-6 flex-1">

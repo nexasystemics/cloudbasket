@@ -2,7 +2,7 @@
 // Single source of truth for ProductsClient, /products/[id], compare, search
 // No external calls — all data is static
 
-export type Platform = 'Amazon' | 'Flipkart'
+export type Platform = 'Amazon' | 'Flipkart' | 'Myntra' | 'AJIO'
 
 export type Category =
   | 'All'
@@ -18,6 +18,7 @@ export type Category =
   | 'Beauty'
   | 'Sports'
   | 'Toys'
+  | 'Furniture'
 
 export interface Product {
   id: string

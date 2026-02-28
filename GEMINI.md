@@ -1,0 +1,1 @@
+GOVERNANCE: Strict privacy; No exposure of API keys; No access to sensitive user data. COMPLIANCE: DPDPA 2023; Safe and secure coding only. PROJECT: CloudBasket; STACK: Next.js 16, Supabase, pnpm, TS Strict. RULES: No Emojis; Apple-clean UI; Titanium Gray accents.

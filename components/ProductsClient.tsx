@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import type { TenantTheme } from '@/lib/themes'
-import { PRODUCTS, CATEGORIES, type Category } from '@/lib/products-data'
+import { PRODUCTS, CATEGORIES, type Category, type Platform } from '@/lib/products-data'
 
 const PAGE_SIZE = 8
 
@@ -30,25 +30,40 @@ function StarRating({ rating }: { rating: number }) {
   )
 }
 
-function PlatformBadge({ platform }: { platform: 'Amazon' | 'Flipkart' }) {
+function PlatformBadge({ platform }: { platform: Platform }) {
   if (platform === 'Amazon') {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#FF9900' }}>
-        <svg viewBox="0 0 24 24" className="w-3 h-3 fill-white" aria-hidden><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39.01.41.24.02.23-.097.408-.31.507-2.968 1.29-6.13 1.936-9.48 1.936-4.286 0-8.307-1.054-12.06-3.162-.218-.13-.293-.363-.163-.57l.33-.23zm-.547-2.184c-.13-.128-.113-.266.048-.414 3.997-3.624 7.924-7.247 11.78-10.87l.06-.053c.14-.128.26-.16.374-.094.113.067.144.19.093.37l-.03.09-2.19 6.43c-.084.247-.23.357-.44.33-.21-.027-.295-.172-.256-.437l.038-.09 1.67-4.905-9.27 8.54c-.148.137-.28.14-.4.05-.12-.09-.16-.25-.1-.44l.02-.07 1.12-3.29-1.52-2.26c-.08-.12-.1-.235-.063-.35.04-.113.13-.17.27-.17h.12l.16.04 1.44 2.14 1.12-3.29-.19.06c-.12.04-.22.02-.3-.06zm16.37-3.61c-.13-.133-.113-.27.048-.414 1.12-1.022 2.22-2.044 3.33-3.065l.11-.1c.2-.183.4-.18.56.01.16.19.12.4-.11.62l-3.39 3.12c-.21.19-.41.19-.55-.01l-.02-.16zm-5.68.69c-.55 0-1.02-.18-1.42-.55-.4-.37-.6-.83-.6-1.38 0-.54.2-1 .6-1.37.4-.37.87-.55 1.42-.55.55 0 1.02.18 1.42.55.4.37.6.83.6 1.37 0 .55-.2 1.01-.6 1.38-.4.37-.87.55-1.42.55z"/></svg>
         Amazon
       </span>
     )
   }
-  return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#2874F0' }}>
-      <svg viewBox="0 0 24 24" className="w-3 h-3 fill-white" aria-hidden><path d="M11.5.5C5.25.5.25 5.5.25 11.75S5.25 23 11.5 23 22.75 18 22.75 11.75 17.75.5 11.5.5zm5.1 16.4l-.54.54a.42.42 0 01-.6 0l-4.96-4.96-4.96 4.96a.42.42 0 01-.6 0l-.54-.54a.42.42 0 010-.6l4.96-4.96-4.96-4.96a.42.42 0 010-.6l.54-.54a.42.42 0 01.6 0l4.96 4.96 4.96-4.96a.42.42 0 01.6 0l.54.54a.42.42 0 010 .6l-4.96 4.96 4.96 4.96a.42.42 0 010 .6z"/></svg>
-      Flipkart
-    </span>
-  )
+  if (platform === 'Flipkart') {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#2874F0' }}>
+        Flipkart
+      </span>
+    )
+  }
+  if (platform === 'Myntra') {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#FF3F6C' }}>
+        Myntra
+      </span>
+    )
+  }
+  if (platform === 'AJIO') {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: '#2C333E' }}>
+        AJIO
+      </span>
+    )
+  }
+  return null
 }
 
 function ProductCard({ id, name, platform, originalPrice, discountedPrice, rating, discountPercent, imageUrl, category, theme }: {
-  id: string; name: string; platform: 'Amazon' | 'Flipkart'
+  id: string; name: string; platform: Platform
   originalPrice: string; discountedPrice: string; rating: number
   discountPercent: number; imageUrl: string; category: string
   theme: TenantTheme

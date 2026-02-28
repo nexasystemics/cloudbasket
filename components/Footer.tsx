@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useCallback, useRef, useEffect } from 'react'
 import type { FormEvent, ChangeEvent, JSX, ReactNode } from 'react'
 import {
@@ -134,7 +135,7 @@ interface FooterLinkProps {
 function FooterLink({ href, children }: FooterLinkProps): JSX.Element {
   const [hovered, setHovered] = useState<boolean>(false)
   return (
-    <a
+    <Link
       href={href}
       className="block text-sm py-0.5"
       style={{
@@ -145,7 +146,7 @@ function FooterLink({ href, children }: FooterLinkProps): JSX.Element {
       onMouseLeave={() => setHovered(false)}
     >
       {children}
-    </a>
+    </Link>
   )
 }
 
@@ -333,7 +334,7 @@ export default function Footer(): JSX.Element {
           <div className="lg:col-span-3 md:col-span-2">
 
             {/* Logo */}
-            <a
+            <Link
               href="/"
               className="inline-flex items-center gap-2 mb-3 select-none"
               aria-label="CloudBasket — go to homepage"
@@ -356,7 +357,7 @@ export default function Footer(): JSX.Element {
               >
                 Cloud<span style={{ color: semantic.brand.accent }}>Basket</span>
               </span>
-            </a>
+            </Link>
 
             {/* Tagline */}
             <p

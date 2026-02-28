@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser } from 'puppeteer';
 import Redis from 'ioredis';
 import { Pool } from 'pg';
 
@@ -13,7 +13,7 @@ interface ProductPrice {
 }
 
 export class PriceScraper {
-  private browser: any = null;
+  private browser: Browser | null = null;
 
   /**
    * Initialize browser instance (reuse across scrapes)
@@ -40,6 +40,7 @@ export class PriceScraper {
     }
 
     await this.initialize();
+    if (!this.browser) return null;
     const page = await this.browser.newPage();
 
     try {
@@ -50,10 +51,10 @@ export class PriceScraper {
       });
 
       // Try multiple selectors
-      let priceText = null;
+      let priceText: string | null = null;
       for (const selector of selectors) {
         try {
-          priceText = await page.$eval(selector, (el: any) => el.textContent);
+          priceText = await page.$eval(selector, (el: Element) => el.textContent);
           if (priceText) break;
         } catch (e) {
           continue;

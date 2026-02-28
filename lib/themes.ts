@@ -3,6 +3,7 @@ export type TenantTheme = {
   primaryColor: string
   secondaryColor: string
   accentColor: string
+  ctaColor: string
   logo: string
   favicon: string
   tagline: string
@@ -17,6 +18,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     primaryColor: '#039BE5',
     secondaryColor: '#0288D1',
     accentColor: '#F59E0B',
+    ctaColor: '#E65100',
     logo: '/logos/cloudbasket.png',
     favicon: '/favicons/cloudbasket.ico',
     tagline: 'Design. Print. Earn.',
@@ -29,6 +31,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     primaryColor: '#8B5CF6',
     secondaryColor: '#6D28D9',
     accentColor: '#EC4899',
+    ctaColor: '#8B5CF6',
     logo: '/logos/infotyx.png',
     favicon: '/favicons/infotyx.ico',
     tagline: 'Intelligence That Drives Decisions',
@@ -41,6 +44,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     primaryColor: '#6D28D9',
     secondaryColor: '#4C1D95',
     accentColor: '#10B981',
+    ctaColor: '#6D28D9',
     logo: '/logos/infotyxco.png',
     favicon: '/favicons/infotyxco.ico',
     tagline: 'From Intelligence to Execution',
@@ -50,9 +54,10 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
   },
   myhomefinder: {
     name: 'MyHomeFinder',
-    primaryColor: '#1565C0',   // R8 Role 01 — Navy Blue     (was #10B981)
-    secondaryColor: '#039BE5', // R8 Role 03 — Sky Blue      (was #059669)
-    accentColor: '#E65100',    // R8 Role 02 — Orange CTA    (was #F59E0B)
+    primaryColor: '#1565C0',
+    secondaryColor: '#039BE5',
+    accentColor: '#E65100',
+    ctaColor: '#E65100',
     logo: '/logos/myhomefinder.png',
     favicon: '/favicons/myhomefinder.ico',
     tagline: 'Find Your Perfect Home',
@@ -65,6 +70,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     primaryColor: '#0EA5E9',
     secondaryColor: '#0284C7',
     accentColor: '#8B5CF6',
+    ctaColor: '#0EA5E9',
     logo: '/logos/skybluecloud.png',
     favicon: '/favicons/skybluecloud.ico',
     tagline: 'Your Cloud. Your Choice.',
@@ -77,6 +83,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     primaryColor: '#DC2626',
     secondaryColor: '#B91C1C',
     accentColor: '#F59E0B',
+    ctaColor: '#DC2626',
     logo: '/logos/eseva.png',
     favicon: '/favicons/eseva.ico',
     tagline: 'Har Kaam. Har Baar. Aasaan.',
@@ -89,6 +96,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     primaryColor: '#B45309',
     secondaryColor: '#92400E',
     accentColor: '#DC2626',
+    ctaColor: '#B45309',
     logo: '/logos/esevai.png',
     favicon: '/favicons/esevai.ico',
     tagline: 'Samajho. Seekho. Karo.',
@@ -101,6 +109,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     primaryColor: '#1B3A5C',
     secondaryColor: '#0F2542',
     accentColor: '#F59E0B',
+    ctaColor: '#1B3A5C',
     logo: '/logos/nexqon.png',
     favicon: '/favicons/nexqon.ico',
     tagline: 'Building India\'s Digital Future',
@@ -113,6 +122,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     primaryColor: '#374151',
     secondaryColor: '#1F2937',
     accentColor: '#3B82F6',
+    ctaColor: '#374151',
     logo: '/logos/nexqonorg.png',
     favicon: '/favicons/nexqonorg.ico',
     tagline: 'The Intelligence Behind the Empire',

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { headers } from 'next/headers'
 import { getTheme } from '@/lib/themes'
+import ProductGrid from '@/components/ProductGrid'
 import {
   ShoppingCart,
   TrendingDown,
@@ -15,7 +16,32 @@ import {
   Shield,
   Heart,
   Search,
+  Layout,
 } from 'lucide-react'
+
+// ---------------------------------------------------------------------------
+// TYPES
+// ---------------------------------------------------------------------------
+
+interface Category {
+  name: string
+  icon: string
+  link: string
+}
+
+interface Platform {
+  name: string
+  icon: React.ReactNode
+  desc: string
+  products: string
+  link: string
+}
+
+interface Feature {
+  icon: React.ReactNode
+  title: string
+  desc: string
+}
 
 export default async function CloudBasketHome() {
   const headersList = await headers()
@@ -177,6 +203,17 @@ export default async function CloudBasketHome() {
         </div>
       </section>
 
+      {/* Featured Collections Section */}
+      <section className="bg-white">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Collections</h2>
+            <p className="text-gray-600">Explore our curated selection of global essentials</p>
+          </div>
+          <ProductGrid />
+        </div>
+      </section>
+
       {/* Main Features - 4 Cards */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -272,28 +309,30 @@ export default async function CloudBasketHome() {
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {[
-              { name: 'Mobiles', icon: 'https://placehold.co/300x300', link: '/products?category=mobiles' },
-              { name: 'Laptops', icon: 'https://placehold.co/300x300', link: '/products?category=laptops' },
-              { name: 'Fashion', icon: 'https://placehold.co/300x300', link: '/products?category=fashion' },
-              { name: 'Home', icon: 'https://placehold.co/300x300', link: '/products?category=home' },
-              { name: 'Cameras', icon: 'https://placehold.co/300x300', link: '/products?category=cameras' },
-              { name: 'Gaming', icon: 'https://placehold.co/300x300', link: '/products?category=gaming' },
-              {
-                name: 'Electronics',
-                icon: 'https://placehold.co/300x300',
-                link: '/products?category=electronics',
-              },
-              {
-                name: 'Footwear',
-                icon: 'https://placehold.co/300x300',
-                link: '/products?category=footwear',
-              },
-              { name: 'Books', icon: 'https://placehold.co/300x300', link: '/products?category=books' },
-              { name: 'Beauty', icon: 'https://placehold.co/300x300', link: '/products?category=beauty' },
-              { name: 'Sports', icon: 'https://placehold.co/300x300', link: '/products?category=sports' },
-              { name: 'Toys', icon: 'https://placehold.co/300x300', link: '/products?category=toys' },
-            ].map((category) => (
+            {(
+              [
+                { name: 'Mobiles', icon: 'https://placehold.co/300x300', link: '/products?category=mobiles' },
+                { name: 'Laptops', icon: 'https://placehold.co/300x300', link: '/products?category=laptops' },
+                { name: 'Fashion', icon: 'https://placehold.co/300x300', link: '/products?category=fashion' },
+                { name: 'Home', icon: 'https://placehold.co/300x300', link: '/products?category=home' },
+                { name: 'Cameras', icon: 'https://placehold.co/300x300', link: '/products?category=cameras' },
+                { name: 'Gaming', icon: 'https://placehold.co/300x300', link: '/products?category=gaming' },
+                {
+                  name: 'Electronics',
+                  icon: 'https://placehold.co/300x300',
+                  link: '/products?category=electronics',
+                },
+                {
+                  name: 'Footwear',
+                  icon: 'https://placehold.co/300x300',
+                  link: '/products?category=footwear',
+                },
+                { name: 'Books', icon: 'https://placehold.co/300x300', link: '/products?category=books' },
+                { name: 'Beauty', icon: 'https://placehold.co/300x300', link: '/products?category=beauty' },
+                { name: 'Sports', icon: 'https://placehold.co/300x300', link: '/products?category=sports' },
+                { name: 'Toys', icon: 'https://placehold.co/300x300', link: '/products?category=toys' },
+              ] as Category[]
+            ).map((category) => (
               <Link
                 key={category.name}
                 href={category.link}
@@ -321,35 +360,37 @@ export default async function CloudBasketHome() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Redbubble',
-                icon: '🔴',
-                desc: 'Global marketplace. Ships to 150+ countries.',
-                products: 'T-Shirts, Hoodies, Stickers, Cases',
-                link: 'https://redbubble.com/people/cloudbasket',
-              },
-              {
-                name: 'Teepublic',
-                icon: '🔵',
-                desc: 'Affordable prices. Fast US and India shipping.',
-                products: 'T-Shirts, Mugs, Tote Bags, Posters',
-                link: 'https://teepublic.com/user/cloudbasket',
-              },
-              {
-                name: 'Teespring',
-                icon: '🟡',
-                desc: 'Custom merchandise. Creator-friendly platform.',
-                products: 'Apparel, Accessories, Home Decor',
-                link: 'https://teespring.com/stores/cloudbasket',
-              },
-            ].map((platform) => (
+            {(
+              [
+                {
+                  name: 'Redbubble',
+                  icon: <Layout className="text-[#E6192E]" size={64} />,
+                  desc: 'Global marketplace. Ships to 150+ countries.',
+                  products: 'T-Shirts, Hoodies, Stickers, Cases',
+                  link: 'https://redbubble.com/people/cloudbasket',
+                },
+                {
+                  name: 'Teepublic',
+                  icon: <Layout className="text-[#207BFF]" size={64} />,
+                  desc: 'Affordable prices. Fast US and India shipping.',
+                  products: 'T-Shirts, Mugs, Tote Bags, Posters',
+                  link: 'https://teepublic.com/user/cloudbasket',
+                },
+                {
+                  name: 'Teespring',
+                  icon: <Layout className="text-[#FFC107]" size={64} />,
+                  desc: 'Custom merchandise. Creator-friendly platform.',
+                  products: 'Apparel, Accessories, Home Decor',
+                  link: 'https://teespring.com/stores/cloudbasket',
+                },
+              ] as Platform[]
+            ).map((platform) => (
               <div
                 key={platform.name}
                 className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8"
               >
                 <div className="flex items-center mb-4">
-                  <span className="text-6xl mr-4">{platform.icon}</span>
+                  <div className="mr-4">{platform.icon}</div>
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900">{platform.name}</h3>
                     <p className="text-sm text-gray-600">{platform.desc}</p>
@@ -394,12 +435,14 @@ export default async function CloudBasketHome() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { icon: <Star className="text-[#F5C518]" size={40} />, title: 'Best Prices', desc: 'Always find the lowest price across trusted marketplaces.' },
-              { icon: <Zap className="text-[#E65100]" size={40} />, title: 'Fast Updates', desc: 'Real-time price and deal tracking, refreshed constantly.' },
-              { icon: <Shield className="text-[#039BE5]" size={40} />, title: 'Trusted Sources', desc: 'Only verified affiliate and POD platforms are listed.' },
-              { icon: <Heart className="text-[#1B5E20]" size={40} />, title: 'User Friendly', desc: 'Simple, clutter-free UI designed for quick decisions.' },
-            ].map((feature, idx) => (
+            {(
+              [
+                { icon: <Star className="text-[#F5C518]" size={40} />, title: 'Best Prices', desc: 'Always find the lowest price across trusted marketplaces.' },
+                { icon: <Zap className="text-[#E65100]" size={40} />, title: 'Fast Updates', desc: 'Real-time price and deal tracking, refreshed constantly.' },
+                { icon: <Shield className="text-[#039BE5]" size={40} />, title: 'Trusted Sources', desc: 'Only verified affiliate and POD platforms are listed.' },
+                { icon: <Heart className="text-[#1B5E20]" size={40} />, title: 'User Friendly', desc: 'Simple, clutter-free UI designed for quick decisions.' },
+              ] as Feature[]
+            ).map((feature, idx) => (
               <div key={idx} className="text-center">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-4">
                   {feature.icon}

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd F:/cloudbasket && pnpm tsc --noEmit 2>&1)",
+      "Bash(cd F:/cloudbasket && pnpm add -D @types/pg 2>&1)",
+      "Bash(cd:*)",
+      "Bash(cd:* and after task completion list here all the goverenace rules and regular rules we agree , and the lastest amendments also)"
+    ]
+  }
+}

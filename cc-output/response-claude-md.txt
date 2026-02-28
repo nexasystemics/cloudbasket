@@ -1,0 +1,37 @@
+================================================================================
+CLOUDBASKET — SESSION LOG
+FILE: cc-output/response-claude-md.txt
+TOPIC: CLAUDE.md creation for cloudbasket
+DATE: 2026-02-23
+================================================================================
+
+ACTION: Created CLAUDE.md at project root
+
+FILE PATH:   F:\cloudbasket\CLAUDE.md
+PURPOSE:     Persistent session governance file — read by Claude Code at
+             session start to enforce all rules, scope, and standards
+RISK LEVEL:  None — documentation only, no runtime effect
+DEPENDENCIES: None
+ROLLBACK:    Delete F:\cloudbasket\CLAUDE.md
+
+SECTIONS INCLUDED:
+  1.  Project Identity        — name, type, domain, market, root, tagline
+  2.  Tech Stack              — full table: Next.js 16, TS5, React 19, Supabase,
+                                PostgreSQL, Redis, Axios, Puppeteer, Ollama,
+                                bcrypt, JWT, Playwright, ESLint, pnpm, Cloudflare
+  3.  Standing Rules          — all 10 rules locked permanently
+  4.  Session Scope           — cloudbasket only; myhomefinder + others = separate
+  5.  Output Protocol         — cc-output/response-[topic].txt every response
+  6.  Folder Structure        — full annotated tree
+  7.  Path Aliases            — tsconfig @/ aliases documented
+  8.  Design System           — brand colors (locked), token file location,
+                                themes.ts multi-tenant registry
+  9.  Coding Standards        — TS strict, components, styling, imports, naming
+  10. Package Management      — pnpm only, approval required before install
+  11. Environment/Credentials — .env.local off-limits, no hardcoded secrets
+  12. Git Protocol            — no commit/push without instruction, no --force
+  13. Tenant System           — full tenant registry table, scope boundary
+  14. Services                — price-engine, email-engine
+
+STATUS: COMPLETE ✓
+================================================================================

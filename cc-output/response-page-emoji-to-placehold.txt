@@ -1,0 +1,15 @@
+FILE PATH   : F:\cloudbasket\app\page.tsx
+PURPOSE     : Replace 12 emoji category icons with placehold.co/300x300 image tags
+RISK LEVEL  : Low — visual change only, no logic affected
+DEPENDENCIES: placehold.co (external placeholder image CDN)
+ROLLBACK    : Revert icon values back to emoji strings and restore text-6xl div class
+
+CHANGES MADE:
+1. Lines 248–267: Replaced all 12 emoji icon strings with 'https://placehold.co/300x300'
+   Categories: Mobiles, Laptops, Fashion, Home, Cameras, Gaming, Electronics, Footwear, Books, Beauty, Sports, Toys
+
+2. Lines 274–276: Changed render div
+   Before: <div className="text-6xl mb-3 ..."> {category.icon} </div>
+   After:  <div className="mb-3 ..."> <img src={category.icon} alt={category.name} width={300} height={300} className="mx-auto rounded-lg" /> </div>
+
+STATUS: Completed — 2026-02-23

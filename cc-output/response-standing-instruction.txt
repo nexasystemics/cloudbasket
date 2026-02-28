@@ -1,0 +1,25 @@
+================================================================================
+CLOUDBASKET — SESSION LOG
+FILE: cc-output/response-standing-instruction.txt
+TOPIC: Standing Instruction — Save All Responses
+DATE: 2026-02-22
+================================================================================
+
+STANDING INSTRUCTION CONFIRMED:
+
+After every response this session, output will be saved to:
+  F:\cloudbasket\cc-output\response-[topic].txt
+
+Rules:
+- Folder: F:\cloudbasket\cc-output\ (created ✓)
+- Filename pattern: response-[topic].txt (topic = short kebab-case label)
+- Scope: ALL responses this session going forward
+- This is a manual per-response commitment, not an automated hook
+
+IMPORTANT NOTE:
+This is executed manually at the end of each response. It is NOT an OS-level
+hook or background process. Every response will include a Write tool call to
+save output to the appropriate file.
+
+STATUS: ACTIVE — confirmed and set for all responses this session.
+================================================================================

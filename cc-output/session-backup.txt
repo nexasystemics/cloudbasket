@@ -1,0 +1,115 @@
+================================================================================
+CLOUDBASKET — SESSION SUMMARY (updated)
+Date: 2026-02-24
+Model: Claude Sonnet 4.6
+================================================================================
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ COMPLETED THIS SESSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] pnpm tsc --noEmit → 0 errors (installed @types/pg@8.16.0)
+[2] Hover states on all buttons/links sitewide (12 files)
+[3] app/blog/[slug]/page.tsx — dynamic blog route, 8 posts, Unsplash images
+[4] lib/products-data.ts — 50 products across 13 categories, full TypeScript types
+[5] components/ProductsClient.tsx — rewritten: load more (8/page), search, active
+    category filter pills (#039BE5), sort, real SVG platform badges, wired
+    View Deal → /products/[id]
+[6] app/products/page.tsx — wired to ProductsClient, 160 lines dead code removed
+[7] app/products/[id]/page.tsx — full detail page: hero image, price, rating,
+    tags, trust badges, related products grid, breadcrumb, affiliate CTA
+[8] lib/deals-data.ts — 8 deals with Unsplash images, full TypeScript types
+[9] app/deals/[id]/page.tsx — full detail page: hero image, stock bar, countdown
+    timer, deal type badge, related deals grid, breadcrumb, affiliate CTA
+[10] CLAUDE.md — rules 11–14 added (checkpoint, context warning, exit save)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 FILES CREATED / MODIFIED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Created:
+  lib/products-data.ts                  50 products, shared data layer
+  lib/deals-data.ts                     8 deals, shared data layer
+  app/blog/[slug]/page.tsx              dynamic blog detail route
+  app/products/[id]/page.tsx            dynamic product detail route
+  app/deals/[id]/page.tsx               dynamic deal detail route  ← NEW
+  components/ProductsClient.tsx         rewritten client component
+
+Modified:
+  app/products/page.tsx                 wired ProductsClient, dead code removed
+  components/Header.tsx                 hover states
+  components/Footer.tsx                 hover states
+  components/Navigation.tsx             hover states
+  app/contact/page.tsx                  hover states
+  app/deals/page.tsx                    hover states
+  app/sitemap/page.tsx                  hover states
+  app/about / affiliate-disclosure / careers / cookies /
+    faq / privacy / terms / contact /
+    deals/flash / pod/mugs / pod/phone-cases / pod/tshirts  hover states
+  CLAUDE.md                             rules 11–14
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏸ PENDING TASKS (resume order)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[B] EMOJI → UNSPLASH replacement (skipped by user, do later)
+    app/blog/page.tsx      image fields (🏠📱💻🛒🎉🎧📺💼📷🤖) → imageUrl + <img>
+    app/deals/page.tsx     emoji fields → imageUrl + <img>  (deals-data.ts ready)
+    app/compare/page.tsx   image fields (📱📱📱) → imageUrl + <img>
+    app/pod/page.tsx       image fields (🏔️⚡🌊☕🚀🐱🧘🎮) → imageUrl + <img>
+
+[C] Wire "Grab This Deal" button in app/deals/page.tsx
+    Currently: <button> with no href
+    Fix: change to <Link href={`/deals/${deal.id}`}> — need to add id to DEALS array
+    in page.tsx OR import from lib/deals-data.ts and remove local DEALS
+
+[D] Fix app/deals/page.tsx to import from lib/deals-data.ts
+    Currently: local DEALS array with emoji field
+    Fix: import DEALS from '@/lib/deals-data', render imageUrl cards
+
+[E] app/search/page.tsx — NOT STARTED
+    Suggested: 'use client' SearchClient with useSearchParams,
+    filter PRODUCTS from lib/products-data, grid + category pills
+
+[F] Fix Affiliate "Join Now" button → <Link href="/affiliate">
+    app/affiliate/page.tsx line 77: <button> → <Link>
+
+[G] Fix Footer "Version State" and "NEXQON" → <Link href="/about">
+    components/Footer.tsx lines 498, 512: wrap spans in Link
+
+[H] Fix Home dropdown hrefs (#featured etc.) → /products?category=...
+    components/Header.tsx NAV_ITEMS lines 40–42
+
+[I] Fix Save Comparison button (console.log) → localStorage or toast
+    app/compare/page.tsx line 447
+
+[J] Fix Blog Read More links → /blog/[slug]
+    app/blog/page.tsx lines 316, 371, 433: /cloudbasket/blog/[id] → /blog/[id]
+
+[K] Add 10 more FAQ questions to app/faq/page.tsx (currently 6)
+
+[L] Fix all /cloudbasket/* hrefs sitewide → canonical routes
+    Affected: blog, affiliate, cj, compare, pod, page.tsx
+
+[M] Update app/sitemap/page.tsx — add new routes:
+    /blog/[slug], /products/[id], /deals/[id], /search,
+    /about, /contact, /faq, /careers, /privacy, /terms,
+    /cookies, /affiliate-disclosure, /pod/tshirts, /pod/mugs,
+    /pod/phone-cases, /deals/flash
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  KNOWN ISSUES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. images.unsplash.com not in next.config.ts remotePatterns — using <img> not
+   next/image to avoid config change. Add when ready.
+2. puppeteer@21 deprecated (< 24.15.0). Upgrade needs user approval.
+3. /cloudbasket/* hrefs broken sitewide — pending fix [L].
+4. purpleTheme variable name misleading in blog/affiliate/compare (value is
+   #039BE5, name says purple) — cosmetic, low priority.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TypeScript: 0 errors  |  Packages installed: @types/pg@8.16.0
+================================================================================
+END — 2026-02-24
+================================================================================

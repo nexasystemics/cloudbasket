@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { useState, useCallback } from 'react'
-import type { ReactNode, FormEvent, ChangeEvent, JSX } from 'react'
-import { Star, Layout } from 'lucide-react'
+import type { FormEvent, ChangeEvent, JSX } from 'react'
+import { Star, ShoppingBag, Search, Menu, X, ChevronDown } from 'lucide-react'
+import { useCart } from '@/context/CartContext'
 import {
   semantic,
   components,
@@ -29,21 +30,7 @@ interface NavItem {
   readonly dropdown: readonly DropdownItem[]
 }
 
-// ---------------------------------------------------------------------------
-// NAV CONFIGURATION — only routes that exist in app/
-// ---------------------------------------------------------------------------
-
 const NAV_ITEMS: readonly NavItem[] = [
-  {
-    id: 'home',
-    label: 'Home',
-    href: '/',
-    dropdown: [
-      { label: 'Featured Today', href: '/#featured'     },
-      { label: 'New Arrivals',   href: '/#new-arrivals' },
-      { label: 'Trending Now',   href: '/#trending'     },
-    ],
-  },
   {
     id: 'products',
     label: 'Products',
@@ -59,7 +46,7 @@ const NAV_ITEMS: readonly NavItem[] = [
     href: '/pod',
     dropdown: [
       { label: 'POD Store',         href: '/pod'       },
-      { label: 'Affiliate Program', href: '/affiliate' },
+      { label: 'Our Designs',       href: '/pod#designs' },
     ],
   },
   {
@@ -68,339 +55,45 @@ const NAV_ITEMS: readonly NavItem[] = [
     href: '/deals',
     dropdown: [
       { label: "Today's Deals",  href: '/deals'   },
-      { label: 'Compare Prices', href: '/compare' },
-    ],
-  },
-  {
-    id: 'more',
-    label: 'More',
-    href: '/blog',
-    dropdown: [
-      { label: 'Blog & Reviews',    href: '/blog'      },
-      { label: 'Affiliate Program', href: '/affiliate' },
-      { label: 'CJ Partner Hub',    href: '/cj'        },
+      { label: 'Flash Sales',    href: '/deals/flash' },
     ],
   },
 ]
 
 // ---------------------------------------------------------------------------
-// ICONS — inline SVG, zero external dependencies
-// ---------------------------------------------------------------------------
-
-function IconSearch(): JSX.Element {
-  return (
-    <svg
-      width="18" height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-    </svg>
-  )
-}
-
-function IconCart(): JSX.Element {
-  return (
-    <svg
-      width="22" height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="9"  cy="21" r="1" />
-      <circle cx="20" cy="21" r="1" />
-      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-    </svg>
-  )
-}
-
-function IconHamburger(): JSX.Element {
-  return (
-    <svg
-      width="22" height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <line x1="3" y1="6"  x2="21" y2="6"  />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  )
-}
-
-function IconClose(): JSX.Element {
-  return (
-    <svg
-      width="22" height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <line x1="18" y1="6"  x2="6"  y2="18" />
-      <line x1="6"  y1="6"  x2="18" y2="18" />
-    </svg>
-  )
-}
-
-function IconChevronDown(): JSX.Element {
-  return (
-    <svg
-      width="12" height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// DROPDOWN LINK
-// ---------------------------------------------------------------------------
-
-interface DropdownLinkProps {
-  href:     string
-  children: ReactNode
-}
-
-function DropdownLink({ href, children }: DropdownLinkProps): JSX.Element {
-  const [hovered, setHovered] = useState<boolean>(false)
-  return (
-    <a
-      href={href}
-      role="menuitem"
-      className="block px-4 py-2.5 text-sm font-medium"
-      style={{
-        color:           hovered ? semantic.brand.primary : semantic.text.primary,
-        backgroundColor: hovered ? semantic.surface.brand  : 'transparent',
-        transition:      transitions.preset.colors,
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {children}
-    </a>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// DESKTOP NAV ITEM
-// Handlers on BOTH trigger <a> AND dropdown <div> — prevents gap-close bug.
-// mt-0 + pt-2 on panel: no physical gap, visual breathing room inside.
-// ---------------------------------------------------------------------------
-
-interface DesktopNavItemProps {
-  item:     NavItem
-  isActive: boolean
-  onEnter:  (id: string) => void
-  onLeave:  () => void
-}
-
-function DesktopNavItem({
-  item,
-  isActive,
-  onEnter,
-  onLeave,
-}: DesktopNavItemProps): JSX.Element {
-  return (
-    <div className="relative">
-      {/* Trigger — onMouseEnter/Leave here */}
-      <a
-        href={item.href}
-        className="flex items-center gap-1 px-3 py-2 text-sm font-semibold rounded-md"
-        style={{
-          color:           semantic.text.inverse,
-          backgroundColor: isActive ? colors.sky['700'] : 'transparent',
-          transition:      transitions.preset.colors,
-        }}
-        aria-haspopup="menu"
-        aria-expanded={isActive}
-        onMouseEnter={() => onEnter(item.id)}
-        onMouseLeave={onLeave}
-      >
-        {item.label}
-        <span
-          style={{
-            display:    'inline-flex',
-            transition: 'transform 200ms ease',
-            transform:  isActive ? 'rotate(180deg)' : 'rotate(0deg)',
-          }}
-        >
-          <IconChevronDown />
-        </span>
-      </a>
-
-      {/* Dropdown panel — onMouseEnter/Leave here too, mt-0 removes gap */}
-      {isActive && (
-        <div
-          role="menu"
-          aria-label={`${item.label} submenu`}
-          className="absolute top-full left-0 mt-0 pt-2 pb-1 rounded-xl overflow-hidden"
-          style={{
-            minWidth:        '200px',
-            backgroundColor: semantic.surface.base,
-            boxShadow:       shadows.lg,
-            border:          `1px solid ${semantic.border.subtle}`,
-            zIndex:          200,
-          }}
-          onMouseEnter={() => onEnter(item.id)}
-          onMouseLeave={onLeave}
-        >
-          {item.dropdown.map((sub) => (
-            <DropdownLink key={sub.href} href={sub.href}>
-              {sub.label}
-            </DropdownLink>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// MOBILE NAV ITEM — tap to accordion open
-// ---------------------------------------------------------------------------
-
-interface MobileNavItemProps {
-  item:     NavItem
-  isOpen:   boolean
-  onToggle: (id: string) => void
-}
-
-function MobileNavItem({
-  item,
-  isOpen,
-  onToggle,
-}: MobileNavItemProps): JSX.Element {
-  return (
-    <div style={{ borderBottom: `1px solid ${colors.sky['500']}` }}>
-      <button
-        type="button"
-        className="flex items-center justify-between w-full px-5 py-4 text-base font-semibold text-left hover:bg-white/10 transition-colors"
-        style={{ color: semantic.text.inverse }}
-        onClick={() => onToggle(item.id)}
-        aria-expanded={isOpen}
-        aria-controls={`mobile-panel-${item.id}`}
-      >
-        {item.label}
-        <span
-          style={{
-            display:    'inline-flex',
-            transition: 'transform 200ms ease',
-            transform:  isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-          }}
-        >
-          <IconChevronDown />
-        </span>
-      </button>
-
-      {isOpen && (
-        <div
-          id={`mobile-panel-${item.id}`}
-          role="menu"
-          aria-label={`${item.label} submenu`}
-          style={{ backgroundColor: colors.sky['700'] }}
-        >
-          {item.dropdown.map((sub) => (
-            <a
-              key={sub.href}
-              href={sub.href}
-              role="menuitem"
-              className="block px-8 py-3 text-sm font-medium"
-              style={{ color: colors.sky['100'] }}
-            >
-              {sub.label}
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// CART BADGE — links to /products (no /cart page exists yet)
-// ---------------------------------------------------------------------------
-
-interface CartBadgeProps {
-  count: number
-}
-
-function CartBadge({ count }: CartBadgeProps): JSX.Element {
-  const label = `Shopping cart${count > 0 ? `, ${count} ${count === 1 ? 'item' : 'items'}` : ', empty'}`
-  return (
-    <Link
-      href="/products"
-      aria-label={label}
-      className="relative flex items-center justify-center p-2 rounded-lg"
-      style={{ color: semantic.text.inverse, transition: transitions.preset.colors }}
-    >
-      <IconCart />
-      {count > 0 && (
-        <span
-          className="absolute flex items-center justify-center rounded-full font-bold leading-none"
-          aria-hidden="true"
-          style={{
-            top:             '-2px',
-            right:           '-2px',
-            minWidth:        '18px',
-            height:          '18px',
-            paddingInline:   '3px',
-            backgroundColor: semantic.brand.cta,
-            color:           semantic.text.inverse,
-            fontSize:        '10px',
-          }}
-        >
-          {count > 99 ? '99+' : count}
-        </span>
-      )}
-    </Link>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// AFFILIATE DISCLOSURE BADGE
+// SUB-COMPONENTS
 // ---------------------------------------------------------------------------
 
 function AffiliateBadge(): JSX.Element {
   return (
     <span
-      role="note"
-      aria-label="Affiliate partner disclosure — we may earn a commission"
-      title="CloudBasket contains affiliate links. We may earn a small commission at no extra cost to you."
-      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold select-none"
-      style={{
-        backgroundColor: semantic.brand.accent,
-        color:           semantic.text.onAccent,
-      }}
+      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest select-none bg-[#E65100]/10 text-[#E65100]"
+      title="CloudBasket contains affiliate links."
     >
-      <Star size={14} fill="currentColor" />
-      Affiliate Partner
+      <Star size={12} fill="currentColor" />
+      Partner Disclosure
     </span>
+  )
+}
+
+function CartButton(): JSX.Element {
+  const { totalItems, setIsCartOpen } = useCart()
+  
+  return (
+    <button
+      onClick={() => setIsCartOpen(true)}
+      className="relative flex items-center justify-center p-2.5 rounded-xl hover:bg-white/10 transition-all active:scale-95 group"
+      aria-label={`Open basket, ${totalItems} items`}
+    >
+      <ShoppingBag size={22} className="text-white group-hover:scale-110 transition-transform" />
+      {totalItems > 0 && (
+        <span
+          className="absolute -top-1 -right-1 flex items-center justify-center rounded-full font-black min-w-[18px] h-[18px] px-1 bg-[#E65100] text-white text-[10px] shadow-lg border-2 border-[#039BE5]"
+        >
+          {totalItems > 99 ? '99+' : totalItems}
+        </span>
+      )}
+    </button>
   )
 }
 
@@ -411,29 +104,7 @@ function AffiliateBadge(): JSX.Element {
 export default function Header(): JSX.Element {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
-  const [mobileOpenItem, setMobileOpenItem] = useState<string | null>(null)
   const [searchValue,    setSearchValue]    = useState<string>('')
-
-  const cartCount = 3
-
-  const handleDropdownEnter = useCallback((id: string): void => {
-    setActiveDropdown(id)
-  }, [])
-
-  const handleDropdownLeave = useCallback((): void => {
-    setActiveDropdown(null)
-  }, [])
-
-  const handleMobileItemToggle = useCallback((id: string): void => {
-    setMobileOpenItem((prev) => (prev === id ? null : id))
-  }, [])
-
-  const handleSearchChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>): void => {
-      setSearchValue(e.target.value)
-    },
-    []
-  )
 
   const handleSearchSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>): void => {
@@ -447,185 +118,103 @@ export default function Header(): JSX.Element {
   )
 
   return (
-    <header
-      style={{
-        position:        'sticky',
-        top:             0,
-        zIndex:          components.navbar.zIndex,
-        backgroundColor: semantic.brand.primary,
-        boxShadow:       components.navbar.shadow,
-      }}
-    >
-      {/* ================================================================
-          ROW 1 — Logo | Search | Cart + Hamburger
-      ================================================================ */}
+    <header className="sticky top-0 z-50 bg-[#039BE5] shadow-lg border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          className="flex items-center gap-4"
-          style={{ height: components.navbar.height }}
-        >
-
-          {/* ── LOGO ── */}
-          <Link
-            href="/"
-            className="flex-shrink-0 flex items-center gap-2 select-none"
-            aria-label="CloudBasket — go to homepage"
-          >
-            <span
-              className="flex items-center justify-center font-black text-sm flex-shrink-0"
-              style={{
-                width:           '36px',
-                height:          '36px',
-                borderRadius:    radii.lg,
-                backgroundColor: semantic.brand.cta,
-                color:           semantic.text.inverse,
-              }}
-            >
-              CB
-            </span>
-            <span
-              className="hidden sm:block text-xl font-extrabold tracking-tight"
-              style={{ color: semantic.text.inverse }}
-            >
-              Cloud
-              <span style={{ color: semantic.brand.accent }}>Basket</span>
-            </span>
+        <div className="flex items-center gap-6 h-16 sm:h-20">
+          
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 shrink-0 group">
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-xl group-hover:rotate-6 transition-transform">
+              <span className="font-black text-[#039BE5] text-lg">CB</span>
+            </div>
+            <div className="hidden lg:flex flex-col leading-none">
+              <span className="text-xl font-black text-white tracking-tighter">CloudBasket</span>
+              <span className="text-[10px] font-bold text-white/70 uppercase tracking-[0.2em] mt-0.5">Global Hub</span>
+            </div>
           </Link>
 
-          {/* ── SEARCH BAR ── */}
-          <form
-            onSubmit={handleSearchSubmit}
-            className="flex-1 mx-auto"
-            style={{ maxWidth: '540px' }}
-            role="search"
-            aria-label="Site search"
-          >
-            <div className="relative flex items-center">
-              <input
-                type="search"
-                value={searchValue}
-                onChange={handleSearchChange}
-                placeholder="Search products, deals, designs…"
-                aria-label="Search CloudBasket"
-                className="w-full outline-none"
-                style={{
-                  height:          components.searchBar.height,
-                  borderRadius:    components.searchBar.borderRadius,
-                  border:          'none',
-                  paddingLeft:     '20px',
-                  paddingRight:    '52px',
-                  backgroundColor: semantic.surface.base,
-                  color:           semantic.text.primary,
-                  boxShadow:       components.searchBar.shadow,
-                  transition:      components.searchBar.transition,
-                  fontSize:        components.searchBar.fontSize,
-                }}
-              />
-              <button
-                type="submit"
-                aria-label="Submit search"
-                className="hover:opacity-90"
-                style={{
-                  position:        'absolute',
-                  right:           0,
-                  top:             0,
-                  bottom:          0,
-                  width:           '48px',
-                  display:         'flex',
-                  alignItems:      'center',
-                  justifyContent:  'center',
-                  backgroundColor: semantic.brand.cta,
-                  color:           semantic.text.inverse,
-                  borderRadius:    `0 ${radii.full} ${radii.full} 0`,
-                  border:          'none',
-                  cursor:          'pointer',
-                  transition:      transitions.preset.colors,
-                }}
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {NAV_ITEMS.map((item) => (
+              <div 
+                key={item.id} 
+                className="relative"
+                onMouseEnter={() => setActiveDropdown(item.id)}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
-                <IconSearch />
-              </button>
-            </div>
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white/90 hover:text-white rounded-lg hover:bg-white/10 transition-all"
+                >
+                  {item.label}
+                  <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === item.id ? 'rotate-180' : ''}`} />
+                </Link>
+
+                {activeDropdown === item.id && (
+                  <div className="absolute top-full left-0 pt-2 w-48">
+                    <div className="bg-white rounded-xl shadow-2xl border border-gray-100 py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                      {item.dropdown.map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className="block px-4 py-2.5 text-sm font-bold text-gray-600 hover:text-[#039BE5] hover:bg-gray-50 transition-colors"
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </nav>
+
+          {/* Search */}
+          <form onSubmit={handleSearchSubmit} className="flex-grow max-w-xl relative hidden sm:block">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" size={18} />
+            <input
+              type="text"
+              value={searchValue}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+              placeholder="Search global essentials..."
+              className="w-full bg-white/10 border border-white/20 rounded-xl py-2.5 pl-12 pr-4 text-sm text-white placeholder:text-white/40 outline-none focus:bg-white/20 focus:border-white/40 transition-all"
+            />
           </form>
 
-          {/* ── RIGHT ICONS ── */}
-          <div className="flex items-center gap-1 flex-shrink-0">
-            <CartBadge count={cartCount} />
-
+          {/* Actions */}
+          <div className="flex items-center gap-2 sm:gap-4 ml-auto">
+            <div className="hidden xl:block">
+              <AffiliateBadge />
+            </div>
+            <CartButton />
             <button
-              type="button"
-              className="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-white/10 transition-colors"
-              style={{ color: semantic.text.inverse }}
-              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="header-mobile-menu"
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-white hover:bg-white/10 rounded-xl transition-all"
             >
-              {mobileMenuOpen ? <IconClose /> : <IconHamburger />}
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
-
         </div>
       </div>
 
-      {/* ================================================================
-          ROW 2 — Desktop Nav + Affiliate Badge
-      ================================================================ */}
-      <div
-        className="hidden md:block"
-        style={{ borderTop: `1px solid ${colors.sky['500']}` }}
-      >
-        <nav
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center"
-          style={{ height: '44px' }}
-          aria-label="Primary navigation"
-        >
-          <div className="flex items-center gap-1">
-            {NAV_ITEMS.map((item) => (
-              <DesktopNavItem
-                key={item.id}
-                item={item}
-                isActive={activeDropdown === item.id}
-                onEnter={handleDropdownEnter}
-                onLeave={handleDropdownLeave}
-              />
-            ))}
-          </div>
-
-          <div className="ml-auto">
-            <AffiliateBadge />
-          </div>
-        </nav>
-      </div>
-
-      {/* ================================================================
-          MOBILE MENU — accordion
-      ================================================================ */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div
-          id="header-mobile-menu"
-          className="md:hidden"
-          role="navigation"
-          aria-label="Mobile navigation"
-          style={{
-            backgroundColor: semantic.brand.primary,
-            borderTop:       `1px solid ${colors.sky['500']}`,
-          }}
-        >
-          <div
-            className="flex items-center justify-center py-3"
-            style={{ borderBottom: `1px solid ${colors.sky['500']}` }}
-          >
-            <AffiliateBadge />
+        <div className="md:hidden bg-white border-t border-gray-100 animate-in slide-in-from-top duration-300">
+          <div className="px-4 py-6 space-y-4">
+            {NAV_ITEMS.map((item) => (
+              <div key={item.id} className="space-y-3">
+                <Link href={item.href} className="text-lg font-black text-gray-900 block">{item.label}</Link>
+                <div className="grid grid-cols-1 gap-2 pl-4">
+                  {item.dropdown.map((sub) => (
+                    <Link key={sub.href} href={sub.href} className="text-sm font-bold text-gray-500 hover:text-[#039BE5]">{sub.label}</Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className="pt-4 border-t border-gray-100">
+              <AffiliateBadge />
+            </div>
           </div>
-
-          {NAV_ITEMS.map((item) => (
-            <MobileNavItem
-              key={item.id}
-              item={item}
-              isOpen={mobileOpenItem === item.id}
-              onToggle={handleMobileItemToggle}
-            />
-          ))}
         </div>
       )}
     </header>

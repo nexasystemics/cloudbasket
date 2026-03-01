@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useCallback, useEffect } from 'react'
 import type { FormEvent, ChangeEvent, JSX } from 'react'
-import { Search, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react'
+import { Search, Menu, X, ChevronDown, Sun, Moon, Shield } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 // ---------------------------------------------------------------------------
@@ -75,6 +75,18 @@ function ThemeToggle({ mounted, theme, setTheme }: { mounted: boolean, theme?: s
   )
 }
 
+function AdminLoginButton(): JSX.Element {
+  return (
+    <Link
+      href="/admin"
+      className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg dark:shadow-white/10 group"
+    >
+      <Shield size={16} className="group-hover:rotate-12 transition-transform" />
+      Admin Login
+    </Link>
+  )
+}
+
 // ---------------------------------------------------------------------------
 // MAIN HEADER
 // ---------------------------------------------------------------------------
@@ -135,8 +147,8 @@ export default function Header(): JSX.Element {
                   <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
                 </Link>
 
-                <div className="absolute top-[80%] left-0 pt-4 w-56 hidden group-hover:block z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-black/50 border border-gray-100 dark:border-gray-800 py-3 overflow-hidden backdrop-blur-xl bg-white/95 dark:bg-gray-900/95">
+                <div className="absolute top-[80%] left-0 pt-4 w-56 hidden group-hover:flex z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-black/50 border border-gray-100 dark:border-gray-800 py-3 overflow-hidden backdrop-blur-xl bg-white/95 dark:bg-gray-900/95 flex flex-col">
                     {item.dropdown.map((sub) => (
                       <Link
                         key={sub.href}
@@ -167,6 +179,9 @@ export default function Header(): JSX.Element {
 
             <div className="flex items-center gap-2 sm:gap-4">
               <ThemeToggle mounted={mounted} theme={theme} setTheme={setTheme} />
+              <div className="hidden sm:block">
+                <AdminLoginButton />
+              </div>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="xl:hidden p-2 text-gray-700 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition-all"
@@ -192,6 +207,9 @@ export default function Header(): JSX.Element {
                 </div>
               </div>
             ))}
+            <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
+               <AdminLoginButton />
+            </div>
           </div>
         </div>
       )}

@@ -4,8 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useCallback, useEffect } from 'react'
 import type { FormEvent, ChangeEvent, JSX } from 'react'
-import { Star, ShoppingBag, Search, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react'
-import { useCart } from '@/context/CartContext'
+import { Search, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 // ---------------------------------------------------------------------------
@@ -30,28 +29,30 @@ const NAV_ITEMS: readonly NavItem[] = [
     label: 'Products',
     href: '/products',
     dropdown: [
-      { label: 'All Products',   href: '/products' },
-      { label: 'Electronics',    href: '/products?category=Electronics' },
-      { label: 'Fashion',        href: '/products?category=Fashion' },
-      { label: 'Home & Kitchen', href: '/products?category=Home' },
+      { label: 'All Mobiles',   href: '/products?mainCategory=Mobiles' },
+      { label: 'Laptops Hub',   href: '/products?mainCategory=Laptops' },
+      { label: 'Fashion Feed',  href: '/products?mainCategory=Fashion' },
+      { label: 'Home Living',   href: '/products?mainCategory=Home' },
     ],
   },
   {
     id: 'pod',
-    label: 'POD',
+    label: 'POD Designs',
     href: '/pod',
     dropdown: [
-      { label: 'POD Store',         href: '/pod'       },
-      { label: 'Our Designs',       href: '/pod#designs' },
+      { label: 'Graphic T-Shirts',  href: '/pod/tshirts' },
+      { label: 'Custom Mugs',       href: '/pod/mugs' },
+      { label: 'Phone Cases',       href: '/pod/phone-cases' },
     ],
   },
   {
     id: 'deals',
-    label: 'Deals',
-    href: '/products?q=deal',
+    label: 'Exclusive Deals',
+    href: '/deals',
     dropdown: [
-      { label: "Today's Deals",  href: '/products?q=deal'   },
-      { label: 'Flash Sales',    href: '/products?q=flash' },
+      { label: "Flash Sales",    href: '/deals/flash' },
+      { label: 'CJ Network Ads',  href: '/deals/cj' },
+      { label: 'Supplier Picks',  href: '/deals/picks' },
     ],
   },
 ]
@@ -59,39 +60,6 @@ const NAV_ITEMS: readonly NavItem[] = [
 // ---------------------------------------------------------------------------
 // SUB-COMPONENTS
 // ---------------------------------------------------------------------------
-
-function AffiliateBadge(): JSX.Element {
-  return (
-    <span
-      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest select-none bg-skyline-accent/10 text-skyline-accent dark:bg-skyline-accent/20"
-      title="CloudBasket contains affiliate links."
-    >
-      <Star size={12} fill="currentColor" />
-      Partner Disclosure
-    </span>
-  )
-}
-
-function CartButton(): JSX.Element {
-  const { totalItems, setIsCartOpen } = useCart()
-  
-  return (
-    <button
-      onClick={() => setIsCartOpen(true)}
-      className="relative flex items-center justify-center p-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95 group"
-      aria-label={`Open basket, ${totalItems} items`}
-    >
-      <ShoppingBag size={22} className="text-gray-700 dark:text-white group-hover:scale-110 transition-transform" />
-      {totalItems > 0 && (
-        <span
-          className="absolute -top-1 -right-1 flex items-center justify-center rounded-full font-black min-w-[18px] h-[18px] px-1 bg-skyline-accent text-white text-[10px] shadow-lg border-2 border-white dark:border-gray-900"
-        >
-          {totalItems > 99 ? '99+' : totalItems}
-        </span>
-      )}
-    </button>
-  )
-}
 
 function ThemeToggle({ mounted, theme, setTheme }: { mounted: boolean, theme?: string, setTheme: (t: string) => void }): JSX.Element | null {
   if (!mounted) return <div className="w-10 h-10" />
@@ -112,7 +80,6 @@ function ThemeToggle({ mounted, theme, setTheme }: { mounted: boolean, theme?: s
 // ---------------------------------------------------------------------------
 
 export default function Header(): JSX.Element {
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
   const [searchValue,    setSearchValue]    = useState<string>('')
   const [mounted,        setMounted]        = useState(false)
@@ -136,7 +103,7 @@ export default function Header(): JSX.Element {
   const logoSrc = (mounted && theme === 'dark') ? '/brand/logo-full-dark.svg' : '/brand/logo-full.svg'
 
   return (
-    <header className="glass-header transition-all duration-300">
+    <header className="glass-header transition-all duration-300 z-50">
       <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           
@@ -154,37 +121,33 @@ export default function Header(): JSX.Element {
           </Link>
 
           {/* Desktop Nav - Middle */}
-          <nav className="hidden xl:flex items-center gap-1 mx-4">
+          <nav className="hidden xl:flex items-center gap-1 mx-4 h-full">
             {NAV_ITEMS.map((item) => (
               <div 
                 key={item.id} 
-                className="relative"
-                onMouseEnter={() => setActiveDropdown(item.id)}
-                onMouseLeave={() => setActiveDropdown(null)}
+                className="relative group h-full flex items-center"
               >
                 <Link
                   href={item.href}
                   className="flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-skyline-primary dark:hover:text-white rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-all whitespace-nowrap"
                 >
                   {item.label}
-                  <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === item.id ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
                 </Link>
 
-                {activeDropdown === item.id && (
-                  <div className="absolute top-full start-0 pt-2 w-48">
-                    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-100 dark:border-gray-800 py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                      {item.dropdown.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          className="block px-4 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-skyline-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
+                <div className="absolute top-[80%] left-0 pt-4 w-56 hidden group-hover:block z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-black/50 border border-gray-100 dark:border-gray-800 py-3 overflow-hidden backdrop-blur-xl bg-white/95 dark:bg-gray-900/95">
+                    {item.dropdown.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        className="block px-5 py-3 text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-skyline-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </nav>
@@ -197,17 +160,13 @@ export default function Header(): JSX.Element {
                 type="text"
                 value={searchValue}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
-                placeholder="Search catalog..."
+                placeholder="Search deals..."
                 className="w-full bg-black/5 dark:bg-white/10 border border-gray-200 dark:border-white/20 rounded-xl py-2.5 ps-12 pe-4 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-white/40 outline-none focus:bg-white dark:focus:bg-white/20 focus:border-skyline-primary transition-all"
               />
             </form>
 
             <div className="flex items-center gap-2 sm:gap-4">
               <ThemeToggle mounted={mounted} theme={theme} setTheme={setTheme} />
-              <div className="hidden 2xl:block">
-                <AffiliateBadge />
-              </div>
-              <CartButton />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="xl:hidden p-2 text-gray-700 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition-all"
@@ -233,9 +192,6 @@ export default function Header(): JSX.Element {
                 </div>
               </div>
             ))}
-            <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
-              <AffiliateBadge />
-            </div>
           </div>
         </div>
       )}

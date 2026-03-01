@@ -3,9 +3,8 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, SearchX, ShoppingBag, Star, ShieldCheck, Box, Tag, ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowRight, SearchX, ExternalLink, Star, ShieldCheck, Box, Tag, ChevronDown, ChevronUp } from 'lucide-react'
 import { Product } from '@/lib/mock-data'
-import { useCart } from '@/context/CartContext'
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1560393464-5c69a73c5770?auto=format&fit=crop&q=80&w=800'
 
@@ -15,9 +14,13 @@ interface ProductGridProps {
 }
 
 function ProductCard({ product }: { product: Product }) {
-  const { addToCart } = useCart()
   const [imgSrc, setImgSrc] = useState(product.image)
   const [showFullSpecs, setShowFullSpecs] = useState(false)
+
+  const handleViewDeal = (e: React.MouseEvent) => {
+    e.preventDefault()
+    window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer')
+  }
 
   return (
     <div className="group bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-black/40 transition-all duration-500 flex flex-col h-full">
@@ -37,14 +40,13 @@ function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
         
-        {/* Quick Add Overlay */}
+        {/* View Deal Overlay */}
         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <button
-            onClick={() => addToCart(product)}
-            className="bg-white text-skyline-primary p-3.5 rounded-full shadow-xl hover:bg-skyline-primary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 active:scale-90"
-            aria-label="Add to basket"
+            onClick={handleViewDeal}
+            className="bg-white text-skyline-primary px-6 py-3 rounded-full font-black text-xs uppercase tracking-widest shadow-xl hover:bg-skyline-primary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 active:scale-90 flex items-center gap-2"
           >
-            <ShoppingBag size={20} />
+            View Deal <ExternalLink size={14} />
           </button>
         </div>
       </div>
@@ -74,7 +76,7 @@ function ProductCard({ product }: { product: Product }) {
           </div>
           <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
             <ShieldCheck size={12} className="text-sky-500" />
-            {product.warranty}
+            Verified
           </div>
         </div>
 
@@ -102,18 +104,18 @@ function ProductCard({ product }: { product: Product }) {
 
         <div className="space-y-3 mt-auto pt-4">
           <button
-            onClick={() => addToCart(product)}
+            onClick={handleViewDeal}
             className="w-full bg-skyline-accent hover:bg-orange-600 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20"
           >
-            <ShoppingBag size={14} />
-            Add to Basket
+            <ExternalLink size={14} />
+            View Deal
           </button>
           
           <Link
-            href={`/product/${product.id}`}
+            href={`/products/${product.id}`}
             className="flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-skyline-primary transition-colors"
           >
-            View Details <ArrowRight size={12} />
+            Compare Prices <ArrowRight size={12} />
           </Link>
         </div>
       </div>

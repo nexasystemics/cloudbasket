@@ -2,10 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { CartProvider } from '@/context/CartContext'
-import CartDrawer from '@/components/CartDrawer'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import CartSuccessVideo from '@/components/CartSuccessVideo'
 
 export const metadata: Metadata = { 
   title: 'CloudBasket - Everything in One Basket', 
@@ -25,13 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          <CartProvider>
-            <Header />
-            <CartDrawer />
-            <CartSuccessVideo />
-            {children}
-            <Footer />
-          </CartProvider>
+          <Header />
+          {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -8,6 +8,7 @@ import ProductFilter from '@/components/ProductFilter'
 import PromotionSidebar from '@/components/PromotionSidebar'
 import Pagination from '@/components/Pagination'
 import HeroVideo from '@/components/HeroVideo'
+import AdBanner from '@/components/AdBanner'
 import { PRODUCTS, MAIN_CATEGORIES, SUB_CATEGORIES } from '@/lib/mock-data'
 import {
   Layout,
@@ -83,11 +84,10 @@ function HomeContent() {
   }, [search, selectedMainCategory, selectedSubCategories, priceRange])
 
   // --- Pagination Logic ---
-  const totalPages = 5 // Branded 5-page system
+  const totalPages = 5 
   
   const paginatedProducts = useMemo(() => {
     const segmentSize = Math.ceil(filteredProducts.length / totalPages)
-    // Respect the itemsPerPage dropdown if changed, else use segmentSize
     const effectiveSize = itemsPerPage !== 10 ? itemsPerPage : Math.max(1, segmentSize)
     
     const start = (currentPage - 1) * effectiveSize
@@ -185,8 +185,8 @@ function HomeContent() {
           <main className="flex-1 px-6 lg:px-12 py-10 bg-white dark:bg-[#1D1D1F] transition-colors duration-300 border-x dark:border-gray-800">
             <div className="flex items-center justify-between mb-10">
               <div>
-                <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">Featured</h2>
-                <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mt-1">Curated Selection</p>
+                <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">Marketplace</h2>
+                <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mt-1">Verified Deals</p>
               </div>
               <div className="hidden sm:flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
                  Sort: <span className="text-gray-900 dark:text-white cursor-pointer hover:text-skyline-primary transition-colors font-black">Popularity</span>
@@ -210,8 +210,10 @@ function HomeContent() {
           </main>
 
           {/* Right Sidebar: PromoPanel (w-64) */}
-          <aside className="hidden xl:block w-64 flex-shrink-0 glass-sidebar-right px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
+          <aside className="hidden xl:block w-64 flex-shrink-0 glass-sidebar-right px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar space-y-10">
+            <AdBanner type="brand" label="Premium 5G Flagships" />
             <PromotionSidebar selectedCategory={selectedMainCategory} />
+            <AdBanner type="brand" label="Student Workstations" />
           </aside>
         </div>
       </section>
@@ -219,7 +221,7 @@ function HomeContent() {
       {/* Categories Section */}
       <section className="py-24 bg-white dark:bg-[#1D1D1F] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6 text-center">
-           <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter uppercase mb-16">Global Hub</h2>
+           <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter uppercase mb-16">Explore Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
             {MAIN_CATEGORIES.slice(0, 10).map((cat) => (
               <Link 
@@ -228,7 +230,7 @@ function HomeContent() {
                 className="p-8 bg-gray-50 dark:bg-gray-900 rounded-[2rem] hover:bg-white dark:hover:bg-gray-800 hover:shadow-2xl dark:hover:shadow-black/40 transition-all border border-transparent hover:border-[#039BE5]/10 dark:hover:border-[#039BE5]/20 group text-center"
               >
                 <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-2xl shadow-sm mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Layout className="text-[#039BE5]" size={32} />
+                  <Layout className="text-skyline-primary" size={32} />
                 </div>
                 <h3 className="text-[11px] font-black text-gray-900 dark:text-white uppercase tracking-tighter">{cat}</h3>
               </Link>
@@ -282,11 +284,14 @@ function HomeContent() {
             <p className="text-gray-400 max-w-sm leading-relaxed font-medium text-lg">
               The definitive price aggregator and discovery hub for the Indian & Global marketplace.
             </p>
+            <div className="mt-10">
+               <AdBanner type="affiliate" label="Partner with CloudBasket & CJ" />
+            </div>
           </div>
           <div>
-            <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-8 text-white/40">Marketplace</h4>
+            <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-8 text-white/40">Network</h4>
             <ul className="space-y-4 text-sm font-bold text-gray-300">
-              <li><Link href="/" className="hover:text-skyline-primary transition-colors">All Products</Link></li>
+              <li><Link href="/" className="hover:text-skyline-primary transition-colors">Affiliate Hub</Link></li>
               <li><Link href="/deals" className="hover:text-skyline-primary transition-colors">Daily Deals</Link></li>
             </ul>
           </div>

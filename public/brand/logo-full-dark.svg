@@ -1,0 +1,6 @@
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="40" height="40" y="5" rx="10" fill="#009DFF"/>
+  <path d="M12 25L18 31L28 19" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="50" y="32" fill="#009DFF" font-family="sans-serif" font-weight="900" font-size="24">Cloud</text>
+  <text x="115" y="32" fill="#FFFFFF" font-family="sans-serif" font-weight="900" font-size="24">Basket</text>
+</svg>

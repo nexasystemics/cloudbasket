@@ -146,7 +146,7 @@ function HomeContent() {
         <div className="max-w-[1800px] mx-auto flex flex-col lg:flex-row min-h-[800px]">
           
           {/* Left Sidebar: CategoryFilters (w-64) */}
-          <aside className="hidden lg:block w-64 flex-shrink-0 border-r border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/30 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
+          <aside className="hidden lg:block w-64 flex-shrink-0 glass-sidebar px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
             <ProductFilter
               search={search}
               setSearch={setSearch}
@@ -237,7 +237,7 @@ function HomeContent() {
           </main>
 
           {/* Right Sidebar: PromoPanel (w-64) */}
-          <aside className="hidden xl:block w-64 flex-shrink-0 border-l border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/30 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
+          <aside className="hidden xl:block w-64 flex-shrink-0 glass-sidebar-right px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
             <PromotionSidebar selectedCategory={selectedMainCategory} />
           </aside>
         </div>

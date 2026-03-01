@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useCallback, useEffect } from 'react'
 import type { FormEvent, ChangeEvent, JSX } from 'react'
 import { Star, ShoppingBag, Search, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react'
@@ -62,7 +63,7 @@ const NAV_ITEMS: readonly NavItem[] = [
 function AffiliateBadge(): JSX.Element {
   return (
     <span
-      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest select-none bg-[#E65100]/10 text-[#E65100] dark:bg-orange-500/20 dark:text-orange-400"
+      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest select-none bg-skyline-accent/10 text-skyline-accent dark:bg-skyline-accent/20"
       title="CloudBasket contains affiliate links."
     >
       <Star size={12} fill="currentColor" />
@@ -77,13 +78,13 @@ function CartButton(): JSX.Element {
   return (
     <button
       onClick={() => setIsCartOpen(true)}
-      className="relative flex items-center justify-center p-2.5 rounded-xl hover:bg-white/10 transition-all active:scale-95 group"
+      className="relative flex items-center justify-center p-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95 group"
       aria-label={`Open basket, ${totalItems} items`}
     >
-      <ShoppingBag size={22} className="text-white group-hover:scale-110 transition-transform" />
+      <ShoppingBag size={22} className="text-gray-700 dark:text-white group-hover:scale-110 transition-transform" />
       {totalItems > 0 && (
         <span
-          className="absolute -top-1 -right-1 flex items-center justify-center rounded-full font-black min-w-[18px] h-[18px] px-1 bg-[#E65100] text-white text-[10px] shadow-lg border-2 border-[#039BE5]"
+          className="absolute -top-1 -right-1 flex items-center justify-center rounded-full font-black min-w-[18px] h-[18px] px-1 bg-skyline-accent text-white text-[10px] shadow-lg border-2 border-white dark:border-gray-900"
         >
           {totalItems > 99 ? '99+' : totalItems}
         </span>
@@ -105,7 +106,7 @@ function ThemeToggle(): JSX.Element | null {
   return (
     <button
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="p-2.5 rounded-xl text-white hover:bg-white/10 transition-all active:scale-95 flex items-center justify-center border border-white/10"
+      className="p-2.5 rounded-xl text-gray-700 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95 flex items-center justify-center border border-gray-200 dark:border-white/10"
       aria-label="Toggle Theme"
     >
       {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
@@ -121,6 +122,12 @@ export default function Header(): JSX.Element {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
   const [searchValue,    setSearchValue]    = useState<string>('')
+  const [mounted,        setMounted]        = useState(false)
+  const { theme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleSearchSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>): void => {
@@ -133,19 +140,23 @@ export default function Header(): JSX.Element {
     [searchValue]
   )
 
+  const logoSrc = mounted && theme === 'dark' ? '/brand/logo-full-dark.svg' : '/brand/logo-full.svg'
+
   return (
-    <header className="sticky top-0 z-50 bg-[#039BE5] dark:bg-[#015C94] shadow-lg border-b border-white/10 transition-colors duration-300">
+    <header className="glass-header transition-all duration-300">
       <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           
           {/* Logo - Start */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-xl group-hover:rotate-6 transition-transform">
-              <span className="font-black text-[#039BE5] text-lg">CB</span>
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-xl font-black text-white tracking-tighter">Product Catalog</span>
-              <span className="text-[10px] font-bold text-white/70 uppercase tracking-[0.2em] mt-0.5">CloudBasket Hub</span>
+            <div className="relative w-[180px] h-[40px]">
+               <Image 
+                src={logoSrc} 
+                alt="CloudBasket" 
+                fill 
+                className="object-contain group-hover:scale-105 transition-transform"
+                priority
+               />
             </div>
           </Link>
 
@@ -160,7 +171,7 @@ export default function Header(): JSX.Element {
               >
                 <Link
                   href={item.href}
-                  className="flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white/90 hover:text-white rounded-lg hover:bg-white/10 transition-all whitespace-nowrap"
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-skyline-primary dark:hover:text-white rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-all whitespace-nowrap"
                 >
                   {item.label}
                   <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === item.id ? 'rotate-180' : ''}`} />
@@ -173,7 +184,7 @@ export default function Header(): JSX.Element {
                         <Link
                           key={sub.href}
                           href={sub.href}
-                          className="block px-4 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-[#039BE5] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                          className="block px-4 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-skyline-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                         >
                           {sub.label}
                         </Link>
@@ -188,13 +199,13 @@ export default function Header(): JSX.Element {
           {/* Search & Actions - End */}
           <div className="flex items-center gap-2 sm:gap-4">
             <form onSubmit={handleSearchSubmit} className="hidden md:block relative w-64 lg:w-96">
-              <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-white/50" size={18} />
+              <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               <input
                 type="text"
                 value={searchValue}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
                 placeholder="Search catalog..."
-                className="w-full bg-white/10 border border-white/20 rounded-xl py-2.5 ps-12 pe-4 text-sm text-white placeholder:text-white/40 outline-none focus:bg-white/20 focus:border-white/40 transition-all"
+                className="w-full bg-black/5 dark:bg-white/10 border border-gray-200 dark:border-white/20 rounded-xl py-2.5 ps-12 pe-4 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-white/40 outline-none focus:bg-white dark:focus:bg-white/20 focus:border-skyline-primary transition-all"
               />
             </form>
 
@@ -206,7 +217,7 @@ export default function Header(): JSX.Element {
               <CartButton />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="xl:hidden p-2 text-white hover:bg-white/10 rounded-xl transition-all"
+                className="xl:hidden p-2 text-gray-700 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition-all"
               >
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -224,7 +235,7 @@ export default function Header(): JSX.Element {
                 <Link href={item.href} className="text-lg font-black text-gray-900 dark:text-white block">{item.label}</Link>
                 <div className="grid grid-cols-1 gap-2 ps-4">
                   {item.dropdown.map((sub) => (
-                    <Link key={sub.href} href={sub.href} className="text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-[#039BE5]">{sub.label}</Link>
+                    <Link key={sub.href} href={sub.href} className="text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-skyline-primary">{sub.label}</Link>
                   ))}
                 </div>
               </div>

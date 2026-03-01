@@ -1,9 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  /* This is the v4 way to define your blue */
-  --color-brand-blue: #039BE5;
+  /* Skyline Theme Palette */
+  --color-skyline-primary: #009DFF;    /* Digital Sky Blue */
+  --color-skyline-accent: #FF6D00;     /* Fulfillment Orange */
+  
+  --color-brand-blue: var(--color-skyline-primary);
 }
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -11,15 +15,40 @@
   --font-mono: var(--font-geist-mono);
 }
 
+:root {
+  --background: #FFFFFF;
+  --foreground: #1D1D1F;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1D1D1F;
+    --foreground: #F5F5F7;
   }
 }
 
+/* Base Body Styles */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Glassmorphism Utilities */
+.glass-header {
+  @apply sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-[#1D1D1F]/80 border-b border-gray-100 dark:border-gray-800;
+}
+
+.glass-sidebar {
+  @apply backdrop-blur-lg bg-gray-50/50 dark:bg-gray-900/30 border-r dark:border-gray-800;
+}
+
+.glass-sidebar-right {
+  @apply backdrop-blur-lg bg-gray-50/50 dark:bg-gray-900/30 border-l dark:border-gray-800;
+}
+
+/* Smooth Transitions */
+* {
+  @apply transition-colors duration-200;
 }

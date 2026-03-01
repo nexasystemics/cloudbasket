@@ -8,11 +8,13 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = { 
   title: 'CloudBasket - Everything in One Basket', 
-  description: 'Compare prices, track deals, discover POD designs and earn affiliate commissions.' 
+  description: 'Compare prices, track deals, discover POD designs and earn affiliate commissions.',
+  icons: {
+    icon: '/brand/favicon.svg',
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // We default to 'en' and 'ltr'. Real production apps might use headers or context for this.
   return (
     <html lang="en" suppressHydrationWarning dir="ltr">
       <body className="antialiased bg-white dark:bg-[#1D1D1F] text-gray-900 dark:text-gray-100 transition-colors duration-300">

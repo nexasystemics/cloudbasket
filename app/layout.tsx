@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
 import SettingsBar from '@/components/SettingsBar'
+import CookieConsent from '@/components/CookieConsent'
 
 export const metadata: Metadata = { 
   title: 'CloudBasket - Everything in One Basket', 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
             <Footer />
             <SettingsBar />
+            <CookieConsent />
           </ThemeProvider>
         </GlobalProvider>
       </body>

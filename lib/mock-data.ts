@@ -13,12 +13,20 @@ export interface Product {
   warranty: string;
   specs: Record<string, string>;
   affiliateUrl: string;
+  status: 'Pending' | 'Approved' | 'Rejected';
 }
 
 export const MAIN_CATEGORIES = [
   'Mobiles', 'Laptops', 'Fashion', 'Home', 'Beauty', 
   'Sports', 'Toys', 'Grocery', 'Automotive', 'Books'
 ];
+
+export const CATEGORY_SEO: Record<string, { title: string, description: string }> = {
+  Mobiles: { title: 'Best Mobile Deals 2026', description: 'Compare latest 5G smartphones and flagship deals from top global brands.' },
+  Laptops: { title: 'High-Performance Laptops', description: 'Discover work and gaming laptop deals with verified specs and regional pricing.' },
+  Fashion: { title: 'Premium Global Fashion', description: 'Curated apparel, watches, and accessories from elite international nodes.' },
+  // ... more can be added
+};
 
 export const SUB_CATEGORIES: Record<string, string[]> = {
   Mobiles: ['Flagship', 'Budget', 'Mid-range', 'Refurbished', 'Gaming Phones', '5G Phones', 'Accessories', 'Tablets', 'Foldables', 'iPhones'],
@@ -41,7 +49,6 @@ const generateProducts = (): Product[] => {
     const subs = SUB_CATEGORIES[mainCat];
     subs.forEach((subCat, subIdx) => {
       for (let i = 1; i <= 20; i++) {
-        // Use diverse image IDs by combining indices
         const imageId = 1500000000000 + (mainIdx * 500) + (subIdx * 50) + (i * 7);
         products.push({
           id: id++,
@@ -68,7 +75,8 @@ const generateProducts = (): Product[] => {
             'Quality': 'Grade-A Platinum',
             'Support': '24/7 Tech Hub'
           },
-          affiliateUrl: `https://example.com/affiliate/deal-${id}?tag=cloudbasket-21`
+          affiliateUrl: `https://example.com/affiliate/deal-${id}?tag=cloudbasket-21`,
+          status: 'Approved'
         });
       }
     });

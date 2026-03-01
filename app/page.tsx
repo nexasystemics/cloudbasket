@@ -142,8 +142,8 @@ function HomeContent() {
       <section id="shop" className="bg-white border-b border-gray-100 overflow-hidden">
         <div className="max-w-[1800px] mx-auto flex flex-col lg:flex-row min-h-[800px]">
           
-          {/* Left Sidebar: Sticky Filter (Desktop) */}
-          <aside className="hidden lg:block w-72 xl:w-80 flex-shrink-0 border-r border-gray-100 bg-gray-50/30 px-8 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
+          {/* Left Sidebar: CategoryFilters (w-64) */}
+          <aside className="hidden lg:block w-64 flex-shrink-0 border-r border-gray-100 bg-gray-50/50 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
             <ProductFilter
               search={search}
               setSearch={setSearch}
@@ -187,7 +187,7 @@ function HomeContent() {
           )}
 
           {/* Main Grid: Flexible Center */}
-          <main className="flex-1 px-6 lg:px-10 py-10">
+          <main className="flex-1 px-6 lg:px-12 py-10 bg-white">
             <div className="flex items-center justify-between mb-10">
               <div>
                 <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase">Featured</h2>
@@ -200,20 +200,22 @@ function HomeContent() {
             
             <ProductGrid products={paginatedProducts} onReset={resetFilters} />
 
-            <Pagination 
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-              itemsPerPage={itemsPerPage}
-              onItemsPerPageChange={(val) => {
-                setItemsPerPage(val)
-                setCurrentPage(1)
-              }}
-            />
+            <div className="flex justify-center w-full">
+              <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                itemsPerPage={itemsPerPage}
+                onItemsPerPageChange={(val) => {
+                  setItemsPerPage(val)
+                  setCurrentPage(1)
+                }}
+              />
+            </div>
           </main>
 
-          {/* Right Sidebar: Sticky Promotion (Desktop) */}
-          <aside className="hidden xl:block w-80 2xl:w-96 flex-shrink-0 border-l border-gray-100 bg-gray-50/30 px-8 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
+          {/* Right Sidebar: PromoPanel (w-64) */}
+          <aside className="hidden xl:block w-64 flex-shrink-0 border-l border-gray-100 bg-gray-50/50 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
             <PromotionSidebar selectedCategory={selectedCategories[0]} />
           </aside>
 

@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, SearchX, ExternalLink, Star, ShieldCheck, Box, Tag, ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowRight, SearchX, ExternalLink, Star, ShieldCheck, Box, Tag, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react'
 import { Product } from '@/lib/mock-data'
 import { useGlobal } from '@/context/GlobalContext'
 import { convertPrice, formatPrice } from '@/lib/currency-service'
@@ -13,6 +13,24 @@ const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1560393464-5c69a73c577
 interface ProductGridProps {
   products: Product[]
   onReset: () => void
+  isLoading?: boolean
+}
+
+function SkeletonCard() {
+  return (
+    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden h-[500px] flex flex-col animate-pulse">
+      <div className="aspect-square bg-gray-100 dark:bg-gray-800" />
+      <div className="p-5 space-y-4">
+        <div className="h-4 bg-gray-100 dark:bg-gray-800 rounded w-3/4" />
+        <div className="h-3 bg-gray-50 dark:bg-gray-800 rounded w-1/2" />
+        <div className="grid grid-cols-2 gap-2">
+          <div className="h-8 bg-gray-50 dark:bg-gray-800 rounded" />
+          <div className="h-8 bg-gray-50 dark:bg-gray-800 rounded" />
+        </div>
+        <div className="h-10 bg-gray-100 dark:bg-gray-800 rounded-xl w-full" />
+      </div>
+    </div>
+  )
 }
 
 function ProductCard({ product }: { product: Product }) {
@@ -34,21 +52,10 @@ function ProductCard({ product }: { product: Product }) {
     }
   }, [country])
 
-  const regionalUrl = useMemo(() => {
-    // Placeholder logic for regional platform switching
-    const baseUrl = product.affiliateUrl
-    if (country === 'US') return baseUrl.replace('.in', '.com')
-    if (country === 'GB') return baseUrl.replace('.in', '.co.uk')
-    return baseUrl
-  }, [product.affiliateUrl, country])
-
-  const handleViewDeal = (e: React.MouseEvent) => {
-    e.preventDefault()
-    window.open(regionalUrl, '_blank', 'noopener,noreferrer')
-  }
+  const goUrl = `/go/${product.id}`
 
   return (
-    <div className="group bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-black/40 transition-all duration-500 flex flex-col h-full">
+    <div className="group bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-black/40 transition-all duration-500 flex flex-col h-full relative">
       {/* Optimized Image */}
       <div className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800 flex-shrink-0">
         <Image
@@ -59,20 +66,29 @@ function ProductCard({ product }: { product: Product }) {
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 25vw, 20vw"
           onError={() => setImgSrc(FALLBACK_IMAGE)}
         />
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-3 left-3 flex gap-2">
           <span className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-gray-900 dark:text-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100 dark:border-gray-800">
             {product.subCategory}
           </span>
         </div>
+
+        <button 
+          title="Report content"
+          className="absolute top-3 right-3 p-2 bg-black/20 hover:bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all backdrop-blur-md"
+        >
+          <AlertTriangle size={12} />
+        </button>
         
         {/* View Deal Overlay */}
         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <button
-            onClick={handleViewDeal}
+          <a
+            href={goUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-white text-skyline-primary px-6 py-3 rounded-full font-black text-xs uppercase tracking-widest shadow-xl hover:bg-skyline-primary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 active:scale-90 flex items-center gap-2"
           >
             View Deal <ExternalLink size={14} />
-          </button>
+          </a>
         </div>
       </div>
 
@@ -133,13 +149,15 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         <div className="space-y-3 mt-auto pt-4">
-          <button
-            onClick={handleViewDeal}
+          <a
+            href={goUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full bg-skyline-accent hover:bg-orange-600 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20"
           >
             <ExternalLink size={14} />
             View Deal
-          </button>
+          </a>
           
           <Link
             href={`/products/${product.id}`}
@@ -153,7 +171,15 @@ function ProductCard({ product }: { product: Product }) {
   )
 }
 
-export default function ProductGrid({ products, onReset }: ProductGridProps) {
+export default function ProductGrid({ products, onReset, isLoading }: ProductGridProps) {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => <SkeletonCard key={i} />)}
+      </div>
+    )
+  }
+
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center bg-gray-50 dark:bg-gray-900/50 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800">

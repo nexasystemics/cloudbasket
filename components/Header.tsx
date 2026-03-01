@@ -31,10 +31,10 @@ const NAV_ITEMS: readonly NavItem[] = [
     label: 'Products',
     href: '/products',
     dropdown: [
-      { label: 'All Mobiles',   href: '/products?mainCategory=Mobiles' },
-      { label: 'Laptops Hub',   href: '/products?mainCategory=Laptops' },
-      { label: 'Fashion Feed',  href: '/products?mainCategory=Fashion' },
-      { label: 'Home Living',   href: '/products?mainCategory=Home' },
+      { label: 'All Mobiles',   href: '/category/Mobiles' },
+      { label: 'Laptops Hub',   href: '/category/Laptops' },
+      { label: 'Fashion Feed',  href: '/category/Fashion' },
+      { label: 'Home Living',   href: '/category/Home' },
     ],
   },
   {
@@ -42,9 +42,9 @@ const NAV_ITEMS: readonly NavItem[] = [
     label: 'POD Designs',
     href: '/pod',
     dropdown: [
-      { label: 'Graphic T-Shirts',  href: '/pod/tshirts' },
-      { label: 'Custom Mugs',       href: '/pod/mugs' },
-      { label: 'Phone Cases',       href: '/pod/phone-cases' },
+      { label: 'Graphic T-Shirts',  href: '/category/Tshirts' },
+      { label: 'Custom Mugs',       href: '/category/Mugs' },
+      { label: 'Phone Cases',       href: '/category/Phone-cases' },
     ],
   },
   {
@@ -52,9 +52,9 @@ const NAV_ITEMS: readonly NavItem[] = [
     label: 'Exclusive Deals',
     href: '/deals',
     dropdown: [
-      { label: "Flash Sales",    href: '/deals/flash' },
-      { label: 'CJ Network Ads',  href: '/deals/cj' },
-      { label: 'Supplier Picks',  href: '/deals/picks' },
+      { label: "Flash Sales",    href: '/category/Flash' },
+      { label: 'CJ Network Ads',  href: '/category/Cj' },
+      { label: 'Supplier Picks',  href: '/category/Picks' },
     ],
   },
 ]

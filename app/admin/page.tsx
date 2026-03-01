@@ -20,7 +20,8 @@ import {
   Lock,
   ArrowUpRight,
   Clock,
-  CheckCircle
+  CheckCircle,
+  Megaphone
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -32,6 +33,7 @@ export default function AdminDashboard() {
     { name: 'Product Manager', icon: Package, href: '#products' },
     { name: 'POD Lister', icon: Palette, href: '/admin/pod/upload' },
     { name: 'Associate CRM', icon: Users, href: '/admin/associates' },
+    { name: 'Marketing Studio', icon: Megaphone, href: '/admin/marketing' },
     { name: 'Affiliate Vault', icon: Lock, href: '/admin/affiliate-keys' },
     { name: 'API Settings', icon: Settings, href: '#api' },
   ]
@@ -120,14 +122,14 @@ export default function AdminDashboard() {
           <div className="flex items-end justify-between">
             <div>
               <h2 className="text-4xl font-black tracking-tighter">Marketplace Insights</h2>
-              <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">Step 4: CRM & Global Keys Integrated.</p>
+              <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">Step 5: Omni-Channel Marketing Engine Active.</p>
             </div>
             <div className="flex gap-3">
               <Link 
-                href="/admin/associates"
-                className="px-6 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-black uppercase tracking-widest active:scale-95 transition-all"
+                href="/admin/marketing"
+                className="px-6 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-black uppercase tracking-widest active:scale-95 transition-all flex items-center gap-2"
               >
-                Manage CRM
+                <Megaphone size={14} /> Marketing Studio
               </Link>
               <Link 
                 href="/admin/pod/upload"

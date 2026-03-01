@@ -15,7 +15,12 @@ import {
   Globe,
   DollarSign,
   Upload,
-  Link as LinkIcon
+  Link as LinkIcon,
+  MousePointer2,
+  Lock,
+  ArrowUpRight,
+  Clock,
+  CheckCircle
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -26,15 +31,23 @@ export default function AdminDashboard() {
   const sidebarLinks = [
     { name: 'Product Manager', icon: Package, href: '#products' },
     { name: 'POD Lister', icon: Palette, href: '/admin/pod/upload' },
-    { name: 'Associate CRM', icon: Users, href: '#crm' },
+    { name: 'Associate CRM', icon: Users, href: '/admin/associates' },
+    { name: 'Affiliate Vault', icon: Lock, href: '/admin/affiliate-keys' },
     { name: 'API Settings', icon: Settings, href: '#api' },
   ]
 
   const stats = [
     { label: 'Total Products', value: '2,000', icon: Package, color: 'text-skyline-primary' },
-    { label: 'Total Designs', value: '42', icon: Palette, color: 'text-orange-500' },
-    { label: 'POD Platforms', value: '20+', icon: LinkIcon, color: 'text-purple-500' },
+    { label: 'Click Redirects', value: '12,402', icon: MousePointer2, color: 'text-purple-500' },
+    { label: 'Active Associates', value: '124', icon: Users, color: 'text-orange-500' },
     { label: 'Total Revenue', value: '₹45,200', icon: DollarSign, color: 'text-emerald-500' },
+  ]
+
+  const platformClicks = [
+    { name: 'Amazon India', clicks: 5420, trend: '+12%' },
+    { name: 'Flipkart', clicks: 3210, trend: '+5%' },
+    { name: 'Redbubble', clicks: 1850, trend: '+24%' },
+    { name: 'Printful', clicks: 1922, trend: '-2%' },
   ]
 
   return (
@@ -82,7 +95,7 @@ export default function AdminDashboard() {
             <Search size={18} className="text-gray-400" />
             <input 
               type="text" 
-              placeholder="Quick find products, designs or associates..."
+              placeholder="Search command center..."
               className="bg-transparent border-none outline-none text-xs font-bold w-full"
             />
           </div>
@@ -107,14 +120,20 @@ export default function AdminDashboard() {
           <div className="flex items-end justify-between">
             <div>
               <h2 className="text-4xl font-black tracking-tighter">Marketplace Insights</h2>
-              <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">Real-time status of your global POD and affiliate network.</p>
+              <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">Step 4: CRM & Global Keys Integrated.</p>
             </div>
             <div className="flex gap-3">
+              <Link 
+                href="/admin/associates"
+                className="px-6 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-black uppercase tracking-widest active:scale-95 transition-all"
+              >
+                Manage CRM
+              </Link>
               <Link 
                 href="/admin/pod/upload"
                 className="px-6 py-2.5 bg-skyline-primary text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-sky-500/20 active:scale-95 transition-all flex items-center gap-2"
               >
-                <Upload size={14} /> New POD Design
+                <Upload size={14} /> New Design
               </Link>
             </div>
           </div>
@@ -135,39 +154,75 @@ export default function AdminDashboard() {
             ))}
           </div>
 
-          {/* Activity Placeholder */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 p-10 h-96 flex flex-col items-center justify-center text-center">
-               <div className="w-20 h-20 bg-skyline-primary/5 rounded-full flex items-center justify-center text-skyline-primary mb-6">
-                  <TrendingUp size={40} />
+            {/* Click Analytics Dashboard */}
+            <div className="lg:col-span-2 bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 p-10 flex flex-col">
+               <div className="flex items-center justify-between mb-10">
+                  <div>
+                    <h3 className="text-xl font-black tracking-tighter uppercase">Click Analytics</h3>
+                    <p className="text-xs font-medium text-gray-400 mt-1 uppercase tracking-widest">Real-time Platform Redirects</p>
+                  </div>
+                  <TrendingUp className="text-skyline-primary" />
                </div>
-               <h3 className="text-xl font-black">Conversion Analytics</h3>
-               <p className="text-gray-400 max-w-xs mt-2 text-sm font-medium leading-relaxed">POD stores performing above average: Redbubble (+12%), Teepublic (+8%).</p>
+               
+               <div className="space-y-6">
+                  {platformClicks.map((p) => (
+                    <div key={p.name} className="flex items-center justify-between group">
+                       <div className="flex items-center gap-4">
+                          <div className="w-2 h-2 rounded-full bg-skyline-primary" />
+                          <span className="text-sm font-bold text-gray-600 dark:text-gray-300">{p.name}</span>
+                       </div>
+                       <div className="flex items-center gap-6">
+                          <div className="text-right">
+                             <p className="text-sm font-black">{p.clicks.toLocaleString()}</p>
+                             <p className="text-[10px] font-black text-emerald-500">{p.trend}</p>
+                          </div>
+                          <ArrowUpRight size={16} className="text-gray-300 group-hover:text-skyline-primary transition-colors" />
+                       </div>
+                    </div>
+                  ))}
+               </div>
+
+               <div className="mt-auto pt-10">
+                  <div className="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full flex overflow-hidden">
+                     <div className="bg-skyline-primary w-[45%]" />
+                     <div className="bg-purple-500 w-[25%]" />
+                     <div className="bg-orange-500 w-[20%]" />
+                     <div className="bg-gray-300 w-[10%]" />
+                  </div>
+               </div>
             </div>
-            <div className="bg-gray-900 rounded-[2.5rem] p-10 text-white flex flex-col h-96 relative overflow-hidden">
-               <div className="relative z-10">
-                 <h3 className="text-2xl font-black tracking-tighter mb-2">Cloud Status</h3>
-                 <div className="flex items-center gap-2 mb-8">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Nodes Connected</span>
-                 </div>
-                 
-                 <div className="space-y-6">
-                    <div className="flex justify-between items-center">
-                       <span className="text-xs font-bold text-gray-400">Printful Sync</span>
-                       <span className="text-xs font-black text-emerald-400">Active</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                       <span className="text-xs font-bold text-gray-400">Redbubble Webhook</span>
-                       <span className="text-xs font-black text-emerald-400">Live</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                       <span className="text-xs font-bold text-gray-400">Zazzle API</span>
-                       <span className="text-xs font-black text-orange-400">Pending</span>
-                    </div>
-                 </div>
+
+            {/* Admin Payment Log Preview */}
+            <div className="bg-white dark:bg-gray-900 rounded-[3rem] border border-gray-100 dark:border-gray-800 p-10 flex flex-col shadow-sm">
+               <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500">
+                    <DollarSign size={20} />
+                  </div>
+                  <h3 className="text-xl font-black tracking-tighter uppercase">Due Payouts</h3>
                </div>
-               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#009DFF33_0%,_transparent_70%)]" />
+
+               <div className="space-y-4">
+                  {[
+                    { name: 'Amit Verma', amount: '₹8,900', time: '2h ago' },
+                    { name: 'Rahul Sharma', amount: '₹4,500', time: '5h ago' }
+                  ].map((pay, i) => (
+                    <div key={i} className="p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                       <div>
+                          <p className="text-xs font-black">{pay.name}</p>
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{pay.time}</p>
+                       </div>
+                       <p className="text-sm font-black text-emerald-500">{pay.amount}</p>
+                    </div>
+                  ))}
+               </div>
+
+               <Link 
+                href="/admin/associates" 
+                className="mt-8 w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-center hover:bg-skyline-primary dark:hover:bg-skyline-primary dark:hover:text-white transition-all"
+               >
+                 Review All Requests
+               </Link>
             </div>
           </div>
         </div>

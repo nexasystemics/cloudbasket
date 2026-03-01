@@ -13,7 +13,9 @@ import {
   ChevronRight,
   TrendingUp,
   Globe,
-  DollarSign
+  DollarSign,
+  Upload,
+  Link as LinkIcon
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -23,16 +25,16 @@ export default function AdminDashboard() {
 
   const sidebarLinks = [
     { name: 'Product Manager', icon: Package, href: '#products' },
-    { name: 'POD Lister', icon: Palette, href: '#pod' },
+    { name: 'POD Lister', icon: Palette, href: '/admin/pod/upload' },
     { name: 'Associate CRM', icon: Users, href: '#crm' },
     { name: 'API Settings', icon: Settings, href: '#api' },
   ]
 
   const stats = [
     { label: 'Total Products', value: '2,000', icon: Package, color: 'text-skyline-primary' },
-    { label: 'Total Commissions', value: '₹45,200', icon: DollarSign, color: 'text-emerald-500' },
-    { label: 'Active Associates', value: '124', icon: Users, color: 'text-orange-500' },
-    { label: 'Global Reach', value: '12 Countries', icon: Globe, color: 'text-purple-500' },
+    { label: 'Total Designs', value: '42', icon: Palette, color: 'text-orange-500' },
+    { label: 'POD Platforms', value: '20+', icon: LinkIcon, color: 'text-purple-500' },
+    { label: 'Total Revenue', value: '₹45,200', icon: DollarSign, color: 'text-emerald-500' },
   ]
 
   return (
@@ -80,7 +82,7 @@ export default function AdminDashboard() {
             <Search size={18} className="text-gray-400" />
             <input 
               type="text" 
-              placeholder="Quick find products or associates..."
+              placeholder="Quick find products, designs or associates..."
               className="bg-transparent border-none outline-none text-xs font-bold w-full"
             />
           </div>
@@ -105,11 +107,15 @@ export default function AdminDashboard() {
           <div className="flex items-end justify-between">
             <div>
               <h2 className="text-4xl font-black tracking-tighter">Marketplace Insights</h2>
-              <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">Real-time status of your global affiliate network.</p>
+              <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">Real-time status of your global POD and affiliate network.</p>
             </div>
             <div className="flex gap-3">
-              <button className="px-6 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-black uppercase tracking-widest active:scale-95 transition-all">Download Report</button>
-              <button className="px-6 py-2.5 bg-skyline-primary text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-sky-500/20 active:scale-95 transition-all">Add New Item</button>
+              <Link 
+                href="/admin/pod/upload"
+                className="px-6 py-2.5 bg-skyline-primary text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-sky-500/20 active:scale-95 transition-all flex items-center gap-2"
+              >
+                <Upload size={14} /> New POD Design
+              </Link>
             </div>
           </div>
 
@@ -124,7 +130,6 @@ export default function AdminDashboard() {
                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{stat.label}</p>
                   <p className="text-3xl font-black tracking-tighter">{stat.value}</p>
                 </div>
-                {/* Subtle background flair */}
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gray-50 dark:bg-gray-800 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity" />
               </div>
             ))}
@@ -137,28 +142,28 @@ export default function AdminDashboard() {
                   <TrendingUp size={40} />
                </div>
                <h3 className="text-xl font-black">Conversion Analytics</h3>
-               <p className="text-gray-400 max-w-xs mt-2 text-sm font-medium leading-relaxed">Detailed click-through and sales data will be integrated with Supabase/CJ API here.</p>
+               <p className="text-gray-400 max-w-xs mt-2 text-sm font-medium leading-relaxed">POD stores performing above average: Redbubble (+12%), Teepublic (+8%).</p>
             </div>
             <div className="bg-gray-900 rounded-[2.5rem] p-10 text-white flex flex-col h-96 relative overflow-hidden">
                <div className="relative z-10">
                  <h3 className="text-2xl font-black tracking-tighter mb-2">Cloud Status</h3>
                  <div className="flex items-center gap-2 mb-8">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">All Systems Functional</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Nodes Connected</span>
                  </div>
                  
                  <div className="space-y-6">
                     <div className="flex justify-between items-center">
-                       <span className="text-xs font-bold text-gray-400">CJ API Connection</span>
-                       <span className="text-xs font-black text-emerald-400">Stable</span>
+                       <span className="text-xs font-bold text-gray-400">Printful Sync</span>
+                       <span className="text-xs font-black text-emerald-400">Active</span>
                     </div>
                     <div className="flex justify-between items-center">
-                       <span className="text-xs font-bold text-gray-400">Sync Frequency</span>
-                       <span className="text-xs font-black">Every 5m</span>
+                       <span className="text-xs font-bold text-gray-400">Redbubble Webhook</span>
+                       <span className="text-xs font-black text-emerald-400">Live</span>
                     </div>
                     <div className="flex justify-between items-center">
-                       <span className="text-xs font-bold text-gray-400">Database Load</span>
-                       <span className="text-xs font-black">Low</span>
+                       <span className="text-xs font-bold text-gray-400">Zazzle API</span>
+                       <span className="text-xs font-black text-orange-400">Pending</span>
                     </div>
                  </div>
                </div>

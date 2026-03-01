@@ -4,8 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useCallback, useEffect } from 'react'
 import type { FormEvent, ChangeEvent, JSX } from 'react'
-import { Search, Menu, X, ChevronDown, Sun, Moon, Shield } from 'lucide-react'
+import { Search, Menu, X, ChevronDown, Sun, Moon, Shield, Globe } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import { useGlobal } from '@/context/GlobalContext'
+import { CurrencyCode } from '@/lib/currency-service'
 
 // ---------------------------------------------------------------------------
 // TYPES
@@ -61,6 +63,28 @@ const NAV_ITEMS: readonly NavItem[] = [
 // SUB-COMPONENTS
 // ---------------------------------------------------------------------------
 
+function CurrencySelector(): JSX.Element {
+  const { currency, setCurrency } = useGlobal()
+  const currencies: CurrencyCode[] = ['INR', 'USD', 'EUR', 'GBP']
+
+  return (
+    <div className="flex items-center gap-2 bg-black/5 dark:bg-white/10 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-white/10 group cursor-pointer transition-all hover:border-skyline-primary">
+      <Globe size={14} className="text-gray-400 group-hover:text-skyline-primary" />
+      <select
+        value={currency}
+        onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
+        className="bg-transparent text-[10px] font-black uppercase tracking-widest outline-none cursor-pointer appearance-none pr-1"
+      >
+        {currencies.map((c) => (
+          <option key={c} value={c} className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-bold">
+            {c}
+          </option>
+        ))}
+      </select>
+    </div>
+  )
+}
+
 function ThemeToggle({ mounted, theme, setTheme }: { mounted: boolean, theme?: string, setTheme: (t: string) => void }): JSX.Element | null {
   if (!mounted) return <div className="w-10 h-10" />
 
@@ -82,7 +106,7 @@ function AdminLoginButton(): JSX.Element {
       className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg dark:shadow-white/10 group"
     >
       <Shield size={16} className="group-hover:rotate-12 transition-transform" />
-      Admin Login
+      Admin
     </Link>
   )
 }
@@ -166,7 +190,7 @@ export default function Header(): JSX.Element {
 
           {/* Search & Actions - End */}
           <div className="flex items-center gap-2 sm:gap-4">
-            <form onSubmit={handleSearchSubmit} className="hidden md:block relative w-64 lg:w-96">
+            <form onSubmit={handleSearchSubmit} className="hidden md:block relative w-64 lg:w-80">
               <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               <input
                 type="text"
@@ -178,6 +202,9 @@ export default function Header(): JSX.Element {
             </form>
 
             <div className="flex items-center gap-2 sm:gap-4">
+              <div className="hidden lg:block">
+                <CurrencySelector />
+              </div>
               <ThemeToggle mounted={mounted} theme={theme} setTheme={setTheme} />
               <div className="hidden sm:block">
                 <AdminLoginButton />
@@ -197,6 +224,10 @@ export default function Header(): JSX.Element {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 animate-in slide-in-from-top duration-300 transition-colors duration-300">
           <div className="px-4 py-6 space-y-4">
+            <div className="flex justify-between items-center pb-4 border-b border-gray-100 dark:border-gray-800">
+               <CurrencySelector />
+               <AdminLoginButton />
+            </div>
             {NAV_ITEMS.map((item) => (
               <div key={item.id} className="space-y-3">
                 <Link href={item.href} className="text-lg font-black text-gray-900 dark:text-white block">{item.label}</Link>
@@ -207,9 +238,6 @@ export default function Header(): JSX.Element {
                 </div>
               </div>
             ))}
-            <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
-               <AdminLoginButton />
-            </div>
           </div>
         </div>
       )}

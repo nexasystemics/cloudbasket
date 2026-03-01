@@ -1,10 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, SearchX, ExternalLink, Star, ShieldCheck, Box, Tag, ChevronDown, ChevronUp } from 'lucide-react'
 import { Product } from '@/lib/mock-data'
+import { useGlobal } from '@/context/GlobalContext'
+import { convertPrice, formatPrice } from '@/lib/currency-service'
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1560393464-5c69a73c5770?auto=format&fit=crop&q=80&w=800'
 
@@ -14,12 +16,35 @@ interface ProductGridProps {
 }
 
 function ProductCard({ product }: { product: Product }) {
+  const { currency, country, rates } = useGlobal()
   const [imgSrc, setImgSrc] = useState(product.image)
   const [showFullSpecs, setShowFullSpecs] = useState(false)
 
+  const convertedPrice = useMemo(() => {
+    const raw = convertPrice(product.price, currency, rates)
+    return formatPrice(raw, currency, country === 'IN' ? 'en-IN' : 'en-US')
+  }, [product.price, currency, rates, country])
+
+  const regionDisclaimer = useMemo(() => {
+    switch (country) {
+      case 'US': return 'FTC Disclosure: We earn from qualifying purchases.'
+      case 'IN': return 'DPDPA 2023: Verified Affiliate Partner Hub.'
+      case 'GB': return 'UK ASA: Affiliate commissions may be earned.'
+      default: return 'Disclosure: Affiliate links are present.'
+    }
+  }, [country])
+
+  const regionalUrl = useMemo(() => {
+    // Placeholder logic for regional platform switching
+    const baseUrl = product.affiliateUrl
+    if (country === 'US') return baseUrl.replace('.in', '.com')
+    if (country === 'GB') return baseUrl.replace('.in', '.co.uk')
+    return baseUrl
+  }, [product.affiliateUrl, country])
+
   const handleViewDeal = (e: React.MouseEvent) => {
     e.preventDefault()
-    window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer')
+    window.open(regionalUrl, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -64,7 +89,7 @@ function ProductCard({ product }: { product: Product }) {
         <div className="grid grid-cols-2 gap-2 pb-4 border-b border-gray-50 dark:border-gray-800">
           <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
             <Tag size={12} className="text-skyline-primary" />
-            ₹{product.price.toLocaleString('en-IN')}
+            {convertedPrice}
           </div>
           <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
             <Star size={12} className="text-yellow-500 fill-yellow-500" />
@@ -79,6 +104,11 @@ function ProductCard({ product }: { product: Product }) {
             Verified
           </div>
         </div>
+
+        {/* Region Disclaimer */}
+        <p className="text-[8px] font-black uppercase tracking-widest text-gray-300 dark:text-gray-600 text-center px-2">
+          {regionDisclaimer}
+        </p>
 
         {/* View Full Specs Toggle */}
         <div className="space-y-3">

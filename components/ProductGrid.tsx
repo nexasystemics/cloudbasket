@@ -20,9 +20,9 @@ function ProductCard({ product }: { product: Product }) {
   const [showFullSpecs, setShowFullSpecs] = useState(false)
 
   return (
-    <div className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
+    <div className="group bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-black/40 transition-all duration-500 flex flex-col h-full">
       {/* Optimized Image */}
-      <div className="relative aspect-square overflow-hidden bg-gray-50 flex-shrink-0">
+      <div className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800 flex-shrink-0">
         <Image
           src={imgSrc}
           alt={product.name}
@@ -32,7 +32,7 @@ function ProductCard({ product }: { product: Product }) {
           onError={() => setImgSrc(FALLBACK_IMAGE)}
         />
         <div className="absolute top-3 left-3">
-          <span className="bg-white/90 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-gray-900 px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100">
+          <span className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-gray-900 dark:text-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100 dark:border-gray-800">
             {product.subCategory}
           </span>
         </div>
@@ -52,27 +52,27 @@ function ProductCard({ product }: { product: Product }) {
       {/* Info */}
       <div className="p-5 flex flex-col flex-grow space-y-4">
         <div className="space-y-1">
-          <h3 className="text-sm font-black text-gray-900 line-clamp-1 group-hover:text-[#039BE5] transition-colors duration-300">
+          <h3 className="text-sm font-black text-gray-900 dark:text-white line-clamp-1 group-hover:text-[#039BE5] transition-colors duration-300">
             {product.name}
           </h3>
-          <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{product.brand}</p>
+          <p className="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest">{product.brand}</p>
         </div>
 
         {/* 5 Key Specs Instantly */}
-        <div className="grid grid-cols-2 gap-2 pb-4 border-b border-gray-50">
-          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500">
+        <div className="grid grid-cols-2 gap-2 pb-4 border-b border-gray-50 dark:border-gray-800">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
             <Tag size={12} className="text-[#039BE5]" />
             ₹{product.price.toLocaleString('en-IN')}
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500">
-            <Star size={12} className="text-gold-500 fill-gold-500" />
+          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
+            <Star size={12} className="text-yellow-500 fill-yellow-500" />
             {product.rating} / 5
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
             <Box size={12} className="text-emerald-500" />
             {product.stock} In Stock
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
             <ShieldCheck size={12} className="text-sky-500" />
             {product.warranty}
           </div>
@@ -82,18 +82,18 @@ function ProductCard({ product }: { product: Product }) {
         <div className="space-y-3">
           <button 
             onClick={() => setShowFullSpecs(!showFullSpecs)}
-            className="w-full flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors py-1"
+            className="w-full flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors py-1"
           >
             Full Specs
             {showFullSpecs ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
           </button>
 
           {showFullSpecs && (
-            <div className="grid grid-cols-1 gap-1.5 pt-2 border-t border-gray-50 animate-in fade-in slide-in-from-top-1 duration-200">
+            <div className="grid grid-cols-1 gap-1.5 pt-2 border-t border-gray-50 dark:border-gray-800 animate-in fade-in slide-in-from-top-1 duration-200">
               {Object.entries(product.specs).map(([key, value]) => (
                 <div key={key} className="flex justify-between items-center text-[9px]">
-                  <span className="text-gray-400 font-bold uppercase tracking-tighter">{key}</span>
-                  <span className="text-gray-900 font-black">{value}</span>
+                  <span className="text-gray-400 dark:text-gray-500 font-bold uppercase tracking-tighter">{key}</span>
+                  <span className="text-gray-900 dark:text-gray-200 font-black">{value}</span>
                 </div>
               ))}
             </div>
@@ -103,7 +103,7 @@ function ProductCard({ product }: { product: Product }) {
         <div className="space-y-3 mt-auto pt-4">
           <button
             onClick={() => addToCart(product)}
-            className="w-full bg-gray-900 hover:bg-[#039BE5] text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-gray-900/10"
+            className="w-full bg-gray-900 dark:bg-gray-800 hover:bg-[#039BE5] text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-gray-900/10"
           >
             <ShoppingBag size={14} />
             Quick Add
@@ -111,7 +111,7 @@ function ProductCard({ product }: { product: Product }) {
           
           <Link
             href={`/product/${product.id}`}
-            className="flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-widest text-gray-400 hover:text-[#039BE5] transition-colors"
+            className="flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-[#039BE5] transition-colors"
           >
             Product Details <ArrowRight size={12} />
           </Link>
@@ -124,12 +124,12 @@ function ProductCard({ product }: { product: Product }) {
 export default function ProductGrid({ products, onReset }: ProductGridProps) {
   if (products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
-        <div className="bg-white p-6 rounded-full shadow-sm mb-6">
-          <SearchX size={48} className="text-gray-300" />
+      <div className="flex flex-col items-center justify-center py-24 text-center bg-gray-50 dark:bg-gray-900/50 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-full shadow-sm mb-6">
+          <SearchX size={48} className="text-gray-300 dark:text-gray-600" />
         </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">No products found</h3>
-        <p className="text-gray-500 mb-8 max-w-sm px-4 text-sm">
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">No products found</h3>
+        <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-sm px-4 text-sm font-medium">
           We couldn&apos;t find any items matching your current filters. Try adjusting your search, 
           categories, or price range.
         </p>

@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { CartProvider } from '@/context/CartContext'
 import CartDrawer from '@/components/CartDrawer'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = { 
   title: 'CloudBasket - Everything in One Basket', 
@@ -11,15 +12,23 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // We default to 'en' and 'ltr'. Real production apps might use headers or context for this.
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <CartProvider>
-          <Header />
-          <CartDrawer />
-          {children}
-          <Footer />
-        </CartProvider>
+    <html lang="en" suppressHydrationWarning dir="ltr">
+      <body className="antialiased bg-white dark:bg-[#1D1D1F] text-gray-900 dark:text-gray-100 transition-colors duration-300">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <CartProvider>
+            <Header />
+            <CartDrawer />
+            {children}
+            <Footer />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

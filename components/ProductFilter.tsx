@@ -46,16 +46,16 @@ export default function ProductFilter({
   return (
     <div className="space-y-10 sticky top-24">
       {/* Header */}
-      <div className="flex items-center gap-3 pb-6 border-b border-gray-100">
-        <div className="bg-[#039BE5]/10 p-2 rounded-lg">
+      <div className="flex items-center gap-3 pb-6 border-b border-gray-100 dark:border-gray-800">
+        <div className="bg-[#039BE5]/10 dark:bg-[#039BE5]/20 p-2 rounded-lg">
           <Filter size={20} className="text-[#039BE5]" />
         </div>
-        <h2 className="text-xl font-black text-gray-900 uppercase tracking-tighter">Refine</h2>
+        <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">Refine</h2>
       </div>
 
       {/* Search Bar */}
       <div className="space-y-4">
-        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500">
           Search Products
         </label>
         <div className="relative group">
@@ -68,14 +68,14 @@ export default function ProductFilter({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Type to search..."
-            className="w-full bg-white border-2 border-gray-100 focus:border-[#039BE5] focus:outline-none rounded-xl py-3 pl-11 pr-4 text-xs font-bold text-gray-900 transition-all shadow-sm"
+            className="w-full bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-[#039BE5] focus:outline-none rounded-xl py-3 pl-11 pr-4 text-xs font-bold text-gray-900 dark:text-white transition-all shadow-sm"
           />
         </div>
       </div>
 
       {/* Main Category Filter */}
       <div className="space-y-4">
-        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500">
           Main Category
         </label>
         <div className="relative">
@@ -83,7 +83,7 @@ export default function ProductFilter({
           <select 
             value={selectedMainCategory}
             onChange={(e) => handleMainCategoryChange(e.target.value)}
-            className="w-full bg-white border-2 border-gray-100 rounded-xl py-3 pl-11 pr-4 text-xs font-black text-gray-900 focus:border-[#039BE5] outline-none appearance-none cursor-pointer"
+            className="w-full bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-xl py-3 pl-11 pr-4 text-xs font-black text-gray-900 dark:text-white focus:border-[#039BE5] outline-none appearance-none cursor-pointer"
           >
             <option value="All">All Categories</option>
             {mainCategories.map(cat => (
@@ -97,7 +97,7 @@ export default function ProductFilter({
       {/* Sub Category Filter (Dynamic) */}
       {selectedMainCategory !== 'All' && (
         <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-          <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+          <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500">
             {selectedMainCategory} Subs
           </label>
           <div className="space-y-2.5 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
@@ -108,7 +108,7 @@ export default function ProductFilter({
                     type="checkbox"
                     checked={selectedSubCategories.includes(sub)}
                     onChange={() => toggleSubCategory(sub)}
-                    className="peer h-5 w-5 appearance-none rounded-lg border-2 border-gray-100 checked:bg-[#039BE5] checked:border-[#039BE5] transition-all cursor-pointer"
+                    className="peer h-5 w-5 appearance-none rounded-lg border-2 border-gray-200 dark:border-gray-700 checked:bg-[#039BE5] checked:border-[#039BE5] transition-all cursor-pointer"
                   />
                   <svg
                     className="absolute h-3.5 w-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity left-0.5 pointer-events-none"
@@ -123,7 +123,7 @@ export default function ProductFilter({
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
-                <span className="ml-3 text-[11px] font-bold text-gray-500 group-hover:text-gray-900 transition-colors uppercase tracking-tight">
+                <span className="ml-3 text-[11px] font-bold text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors uppercase tracking-tight">
                   {sub}
                 </span>
               </label>
@@ -135,10 +135,10 @@ export default function ProductFilter({
       {/* Price Range */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500">
             Price Range
           </label>
-          <span className="text-[9px] font-black bg-gray-900 text-white px-2 py-1 rounded-lg">
+          <span className="text-[9px] font-black bg-gray-900 dark:bg-black text-white px-2 py-1 rounded-lg">
             MAX ₹{priceRange.toLocaleString('en-IN')}
           </span>
         </div>
@@ -150,9 +150,9 @@ export default function ProductFilter({
             step="500"
             value={priceRange}
             onChange={(e) => setPriceRange(Number(e.target.value))}
-            className="w-full h-1 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-[#039BE5]"
+            className="w-full h-1 bg-gray-100 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-[#039BE5]"
           />
-          <div className="flex justify-between mt-3 text-[9px] font-black text-gray-300 uppercase tracking-tighter">
+          <div className="flex justify-between mt-3 text-[9px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-tighter">
             <span>₹0</span>
             <span>₹{maxPrice.toLocaleString('en-IN')}</span>
           </div>

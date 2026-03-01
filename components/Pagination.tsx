@@ -52,13 +52,13 @@ export default function Pagination({
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-6 py-12 border-t border-gray-100 mt-12">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-6 py-12 border-t border-gray-100 dark:border-gray-800 mt-12 transition-colors duration-300">
       {/* Navigation Buttons */}
       <div className="flex items-center gap-2">
         <button
           onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="p-2.5 rounded-xl border border-gray-100 text-gray-400 hover:text-gray-900 hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent transition-all active:scale-95"
+          className="p-2.5 rounded-lg border border-gray-100 dark:border-gray-800 text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-30 disabled:hover:bg-transparent transition-all active:scale-95"
           aria-label="Previous page"
         >
           <ChevronLeft size={18} />
@@ -71,8 +71,8 @@ export default function Pagination({
                 onClick={() => onPageChange(page)}
                 className={`w-11 h-11 rounded-lg text-sm font-black transition-all active:scale-95 border-2 ${
                   currentPage === page
-                    ? 'bg-gray-900 border-gray-900 text-white shadow-lg shadow-gray-900/10'
-                    : 'bg-white border-transparent text-gray-400 hover:text-gray-900 hover:border-gray-200'
+                    ? 'bg-gray-900 dark:bg-black border-gray-900 dark:border-[#039BE5] text-white shadow-lg shadow-gray-900/10'
+                    : 'bg-white dark:bg-gray-800 border-transparent text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:border-gray-200 dark:hover:border-gray-700'
                 }`}
               >
                 {page}
@@ -84,7 +84,7 @@ export default function Pagination({
         <button
           onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="p-2.5 rounded-lg border border-gray-100 text-gray-400 hover:text-gray-900 hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-transparent transition-all active:scale-95"
+          className="p-2.5 rounded-lg border border-gray-100 dark:border-gray-800 text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-30 disabled:hover:bg-transparent transition-all active:scale-95"
           aria-label="Next page"
         >
           <ChevronRight size={18} />
@@ -92,15 +92,15 @@ export default function Pagination({
       </div>
 
       {/* Items Per Page Dropdown */}
-      <div className="flex items-center gap-4 bg-gray-50/50 p-1.5 rounded-xl border border-gray-100">
-        <div className="flex items-center gap-2 pl-3 text-gray-400">
+      <div className="flex items-center gap-4 bg-gray-50/50 dark:bg-gray-900/50 p-1.5 rounded-xl border border-gray-100 dark:border-gray-800">
+        <div className="flex items-center gap-2 ps-3 text-gray-400 dark:text-gray-500">
           <Settings2 size={16} />
           <span className="text-[10px] font-black uppercase tracking-widest">Display</span>
         </div>
         <select
           value={itemsPerPage}
           onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-          className="bg-white border-2 border-gray-100 rounded-lg px-4 py-2 text-xs font-black text-gray-900 focus:border-[#039BE5] focus:outline-none transition-colors cursor-pointer appearance-none min-w-[120px]"
+          className="bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-lg px-4 py-2 text-xs font-black text-gray-900 dark:text-white focus:border-[#039BE5] focus:outline-none transition-colors cursor-pointer appearance-none min-w-[120px]"
         >
           <option value={10}>10 Items / Page</option>
           <option value={12}>12 Items / Page</option>

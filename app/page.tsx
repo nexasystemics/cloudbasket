@@ -111,9 +111,9 @@ function HomeContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white font-sans">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#1D1D1F] font-sans transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative w-full bg-[#039BE5] text-white pt-32 pb-24 overflow-hidden">
+      <section className="relative w-full bg-[#039BE5] dark:bg-[#015C94] text-white pt-32 pb-24 overflow-hidden transition-colors duration-300">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top,_#ffffff_0%,_transparent_60%)]" />
         <div className="relative max-w-5xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full mb-8 border border-white/10 animate-fade-in">
@@ -123,7 +123,7 @@ function HomeContent() {
             </p>
           </div>
           <h1 className="text-6xl md:text-8xl font-black leading-[0.9] mb-8 tracking-tighter">
-            Global <br/> <span className="text-sky-200">Catalog.</span>
+            Global <br/> <span className="text-sky-200 dark:text-sky-300">Catalog.</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/70 mb-12 max-w-2xl mx-auto leading-tight font-medium">
             2,000+ Items. 100+ Categories. Verified Global Specs.
@@ -132,7 +132,7 @@ function HomeContent() {
           <div className="flex flex-wrap justify-center gap-5">
             <Link 
               href="#shop"
-              className="bg-white text-[#039BE5] px-10 py-5 rounded-2xl font-black text-sm hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-3 active:scale-95"
+              className="bg-white text-[#039BE5] dark:text-[#015C94] px-10 py-5 rounded-2xl font-black text-sm hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-3 active:scale-95"
             >
               <ShoppingCart size={20} />
               Browse Catalog
@@ -142,11 +142,11 @@ function HomeContent() {
       </section>
 
       {/* 3-Column Marketplace Layout */}
-      <section id="shop" className="bg-white border-b border-gray-100 overflow-hidden">
+      <section id="shop" className="bg-white dark:bg-[#1D1D1F] border-b border-gray-100 dark:border-gray-800 overflow-hidden transition-colors duration-300">
         <div className="max-w-[1800px] mx-auto flex flex-col lg:flex-row min-h-[800px]">
           
           {/* Left Sidebar: CategoryFilters (w-64) */}
-          <aside className="hidden lg:block w-64 flex-shrink-0 border-r border-gray-100 bg-gray-50/50 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
+          <aside className="hidden lg:block w-64 flex-shrink-0 border-r border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/30 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
             <ProductFilter
               search={search}
               setSearch={setSearch}
@@ -176,22 +176,22 @@ function HomeContent() {
           </aside>
 
           {/* Mobile Filter Trigger */}
-          <div className="lg:hidden px-6 py-4 bg-gray-50 border-b border-gray-100 flex items-center justify-between sticky top-16 z-40 backdrop-blur-md">
+          <div className="lg:hidden px-6 py-4 bg-gray-50 dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between sticky top-16 z-40 backdrop-blur-md">
              <button 
               onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-              className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-900 bg-white border border-gray-200 px-4 py-2.5 rounded-xl shadow-sm"
+              className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2.5 rounded-xl shadow-sm"
              >
                <Filter size={16} />
                {isMobileFilterOpen ? 'Close Filters' : 'Filter Products'}
              </button>
-             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+             <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">
                {filteredProducts.length} Results
              </span>
           </div>
 
           {/* Mobile Filter Drawer (Stacked) */}
           {isMobileFilterOpen && (
-            <div className="lg:hidden p-6 bg-white border-b border-gray-100 animate-in slide-in-from-top duration-300">
+            <div className="lg:hidden p-6 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 animate-in slide-in-from-top duration-300">
                <ProductFilter
                   search={search}
                   setSearch={setSearch}
@@ -209,14 +209,14 @@ function HomeContent() {
           )}
 
           {/* Main Grid: Flexible Center */}
-          <main className="flex-1 px-6 lg:px-12 py-10 bg-white">
+          <main className="flex-1 px-6 lg:px-12 py-10 bg-white dark:bg-[#1D1D1F] transition-colors duration-300">
             <div className="flex items-center justify-between mb-10">
               <div>
-                <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase">Featured</h2>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">Curated Selection</p>
+                <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">Featured</h2>
+                <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mt-1">Curated Selection</p>
               </div>
-              <div className="hidden sm:flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-gray-400">
-                 Sort: <span className="text-gray-900 cursor-pointer hover:text-[#039BE5] transition-colors font-black">Popularity</span>
+              <div className="hidden sm:flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                 Sort: <span className="text-gray-900 dark:text-white cursor-pointer hover:text-[#039BE5] transition-colors font-black">Popularity</span>
               </div>
             </div>
             
@@ -237,27 +237,27 @@ function HomeContent() {
           </main>
 
           {/* Right Sidebar: PromoPanel (w-64) */}
-          <aside className="hidden xl:block w-64 flex-shrink-0 border-l border-gray-100 bg-gray-50/50 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
+          <aside className="hidden xl:block w-64 flex-shrink-0 border-l border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/30 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
             <PromotionSidebar selectedCategory={selectedMainCategory} />
           </aside>
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-[#1D1D1F] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6 text-center">
-           <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase mb-16">Global Hub</h2>
+           <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter uppercase mb-16">Global Hub</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
             {MAIN_CATEGORIES.slice(0, 10).map((cat) => (
               <Link 
                 key={cat} 
                 href={`/?mainCategory=${cat}`}
-                className="p-8 bg-gray-50 rounded-[2rem] hover:bg-white hover:shadow-2xl hover:shadow-[#039BE5]/10 transition-all border border-transparent hover:border-[#039BE5]/10 group text-center"
+                className="p-8 bg-gray-50 dark:bg-gray-900 rounded-[2rem] hover:bg-white dark:hover:bg-gray-800 hover:shadow-2xl dark:hover:shadow-black/40 transition-all border border-transparent hover:border-[#039BE5]/10 dark:hover:border-[#039BE5]/20 group text-center"
               >
-                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-2xl shadow-sm mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Layout className="text-[#039BE5]" size={32} />
                 </div>
-                <h3 className="text-[11px] font-black text-gray-900 uppercase tracking-tighter">{cat}</h3>
+                <h3 className="text-[11px] font-black text-gray-900 dark:text-white uppercase tracking-tighter">{cat}</h3>
               </Link>
             ))}
           </div>
@@ -265,15 +265,15 @@ function HomeContent() {
       </section>
 
       {/* Branding Section */}
-      <section className="py-24 border-y border-gray-100 bg-[#F5F5F7]">
+      <section className="py-24 border-y border-gray-100 dark:border-gray-800 bg-[#F5F5F7] dark:bg-[#161617] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div className="flex flex-col items-center text-center p-8">
               <div className="bg-[#039BE5] w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-[#039BE5]/20">
                 <Scale size={28} />
               </div>
-              <h4 className="font-black text-xl text-gray-900 mb-4 tracking-tight">Best Value</h4>
-              <p className="text-sm text-gray-500 font-medium leading-relaxed">
+              <h4 className="font-black text-xl text-gray-900 dark:text-white mb-4 tracking-tight">Best Value</h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
                 Scanning millions of global data points for the absolute lowest price.
               </p>
             </div>
@@ -281,8 +281,8 @@ function HomeContent() {
               <div className="bg-[#039BE5] w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-[#039BE5]/20">
                 <BookOpen size={28} />
               </div>
-              <h4 className="font-black text-xl text-gray-900 mb-4 tracking-tight">Expert Guides</h4>
-              <p className="text-sm text-gray-500 font-medium leading-relaxed">
+              <h4 className="font-black text-xl text-gray-900 dark:text-white mb-4 tracking-tight">Expert Guides</h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
                 Unbiased reviews and detailed comparisons for smart decisions.
               </p>
             </div>
@@ -290,8 +290,8 @@ function HomeContent() {
               <div className="bg-[#039BE5] w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-[#039BE5]/20">
                 <Shield size={28} />
               </div>
-              <h4 className="font-black text-xl text-gray-900 mb-4 tracking-tight">Secure & Safe</h4>
-              <p className="text-sm text-gray-500 font-medium leading-relaxed">
+              <h4 className="font-black text-xl text-gray-900 dark:text-white mb-4 tracking-tight">Secure & Safe</h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
                 Fully DPDP Act 2023 compliant. Your privacy is our priority.
               </p>
             </div>
@@ -299,7 +299,7 @@ function HomeContent() {
         </div>
       </section>
 
-      <footer className="bg-[#36454F] text-white py-24">
+      <footer className="bg-[#36454F] dark:bg-black text-white py-24 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-16">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-8">
@@ -338,6 +338,9 @@ function HomeContent() {
           background: #e5e7eb;
           border-radius: 10px;
         }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #374151;
+        }
       `}</style>
     </div>
   )
@@ -345,7 +348,7 @@ function HomeContent() {
 
 export default function CloudBasketHome() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center font-black">LOADING...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-white dark:bg-[#1D1D1F] flex items-center justify-center font-black">LOADING...</div>}>
       <HomeContent />
     </Suspense>
   )

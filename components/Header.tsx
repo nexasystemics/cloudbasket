@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useCallback, useEffect } from 'react'
 import type { FormEvent, ChangeEvent, JSX } from 'react'
-import { Search, Menu, X, ChevronDown, Sun, Moon, Shield, Globe } from 'lucide-react'
+import { Search, Menu, X, ChevronDown, Sun, Moon, Shield, Globe, Layout, UserCircle } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useGlobal } from '@/context/GlobalContext'
 import { CurrencyCode } from '@/lib/currency-service'
@@ -85,29 +85,47 @@ function CurrencySelector(): JSX.Element {
   )
 }
 
-function ThemeToggle({ mounted, theme, setTheme }: { mounted: boolean, theme?: string, setTheme: (t: string) => void }): JSX.Element | null {
-  if (!mounted) return <div className="w-10 h-10" />
+function AuthButtons(): JSX.Element {
+  const { user } = useGlobal()
+
+  if (user) {
+    return (
+      <div className="flex items-center gap-3">
+        {user.role === 'Admin' && (
+          <Link
+            href="/admin"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg group"
+          >
+            <Shield size={16} className="group-hover:rotate-12 transition-transform" />
+            Admin
+          </Link>
+        )}
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2 px-5 py-2.5 bg-skyline-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg group"
+        >
+          <Layout size={16} className="group-hover:scale-110 transition-transform" />
+          Dashboard
+        </Link>
+      </div>
+    )
+  }
 
   return (
-    <button
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="p-2.5 rounded-xl text-gray-700 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95 flex items-center justify-center border border-gray-200 dark:border-white/10"
-      aria-label="Toggle Theme"
-    >
-      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-    </button>
-  )
-}
-
-function AdminLoginButton(): JSX.Element {
-  return (
-    <Link
-      href="/admin"
-      className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg dark:shadow-white/10 group"
-    >
-      <Shield size={16} className="group-hover:rotate-12 transition-transform" />
-      Admin
-    </Link>
+    <div className="flex items-center gap-3">
+      <Link
+        href="/login"
+        className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-skyline-primary transition-colors"
+      >
+        Login
+      </Link>
+      <Link
+        href="/register"
+        className="px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all"
+      >
+        Register
+      </Link>
+    </div>
   )
 }
 
@@ -119,7 +137,7 @@ export default function Header(): JSX.Element {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
   const [searchValue,    setSearchValue]    = useState<string>('')
   const [mounted,        setMounted]        = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { theme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
@@ -205,9 +223,8 @@ export default function Header(): JSX.Element {
               <div className="hidden lg:block">
                 <CurrencySelector />
               </div>
-              <ThemeToggle mounted={mounted} theme={theme} setTheme={setTheme} />
               <div className="hidden sm:block">
-                <AdminLoginButton />
+                <AuthButtons />
               </div>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -226,7 +243,7 @@ export default function Header(): JSX.Element {
           <div className="px-4 py-6 space-y-4">
             <div className="flex justify-between items-center pb-4 border-b border-gray-100 dark:border-gray-800">
                <CurrencySelector />
-               <AdminLoginButton />
+               <AuthButtons />
             </div>
             {NAV_ITEMS.map((item) => (
               <div key={item.id} className="space-y-3">

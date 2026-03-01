@@ -24,6 +24,7 @@ import {
   AlertCircle
 } from 'lucide-react'
 import Link from 'next/link'
+import { useGlobal } from '@/context/GlobalContext'
 
 const PLATFORMS = [
   { name: 'Instagram', icon: Instagram, color: 'text-pink-500' },
@@ -39,6 +40,7 @@ const PLATFORMS = [
 ]
 
 export default function MarketingStudio() {
+  const { user } = useGlobal()
   const [activePlatform, setActiveTab] = useState('Instagram')
   const [previewMode, setPreviewMode] = useState<'mobile' | 'desktop'>('mobile')
   const [caption, setCaption] = useState('')
@@ -84,7 +86,14 @@ Shop via CloudBasket: ${affiliateLink || 'https://cloudbasket.in/deals'}
             <div className="bg-white dark:bg-gray-900 rounded-[3rem] border border-gray-100 dark:border-gray-800 p-10 shadow-sm space-y-10">
               <div>
                 <h2 className="text-3xl font-black tracking-tighter mb-2 text-gray-900 dark:text-white">Content Composer</h2>
-                <p className="text-gray-400 font-medium text-sm">One upload. Ten platforms. Automated branding.</p>
+                <div className="flex items-center gap-2 mb-2">
+                   <p className="text-gray-400 font-medium text-sm">One upload. Ten platforms. Automated branding.</p>
+                   {user && (
+                     <span className="bg-skyline-primary/10 text-skyline-primary text-[10px] font-black px-2 py-0.5 rounded-full border border-skyline-primary/20">
+                       Creator: {user.id}
+                     </span>
+                   )}
+                </div>
               </div>
 
               <div className="space-y-8">

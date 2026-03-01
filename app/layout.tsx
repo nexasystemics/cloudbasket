@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
+import SettingsBar from '@/components/SettingsBar'
 
 export const metadata: Metadata = { 
   title: 'CloudBasket - Everything in One Basket', 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Header />
             {children}
             <Footer />
+            <SettingsBar />
           </ThemeProvider>
         </GlobalProvider>
       </body>

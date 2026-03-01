@@ -1,143 +1,169 @@
+'use client'
+
+import React, { useState } from 'react'
+import { 
+  Heart, 
+  Bookmark, 
+  BookOpen, 
+  Settings, 
+  User, 
+  ChevronRight, 
+  ArrowRight,
+  Zap,
+  TrendingUp,
+  Layout,
+  ExternalLink,
+  LogOut
+} from 'lucide-react'
 import Link from 'next/link'
-import { headers } from 'next/headers'
-import { getTheme } from '@/lib/themes'
+import Image from 'next/image'
+import { useGlobal } from '@/context/GlobalContext'
+import { useRouter } from 'next/navigation'
 
-const STATS = [
-  { label: 'Total Clicks',       value: '1,248',  sub: 'last 30 days' },
-  { label: 'Conversions',        value: '34',      sub: 'last 30 days' },
-  { label: 'Estimated Earnings', value: '₹4,820',  sub: 'pending payout' },
-  { label: 'Active Links',       value: '12',      sub: 'across all platforms' },
-] as const
+export default function UserDashboard() {
+  const { user, setUser } = useGlobal()
+  const router = useRouter()
 
-const RECENT_ACTIVITY = [
-  { date: 'Feb 27', product: 'Samsung Galaxy M35 5G',    commission: '₹380',  status: 'confirmed' },
-  { date: 'Feb 25', product: 'Atomic Habits — James Clear', commission: '₹39',  status: 'confirmed' },
-  { date: 'Feb 24', product: 'boAt Airdopes 141 TWS',    commission: '₹100',  status: 'pending'   },
-  { date: 'Feb 23', product: 'Pigeon Air Fryer 4.2L',    commission: '₹330',  status: 'confirmed' },
-  { date: 'Feb 21', product: 'Boldfit Yoga Mat 6mm',     commission: '₹70',   status: 'pending'   },
-] as const
+  const handleLogout = () => {
+    setUser(null)
+    router.push('/')
+  }
 
-const NAV_LINKS = [
-  { href: '/dashboard',          label: 'Overview'      },
-  { href: '/dashboard/links',    label: 'My Links'      },
-  { href: '/dashboard/payouts',  label: 'Payouts'       },
-  { href: '/dashboard/settings', label: 'Settings'      },
-] as const
+  const savedDeals = [
+    { id: 1, name: 'Premium Wireless Earbuds', price: '₹2,499', image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&q=80&w=400' },
+    { id: 2, name: 'Ergonomic Office Chair', price: '₹8,999', image: 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&q=80&w=400' },
+  ]
 
-export default async function DashboardPage() {
-  const headersList = await headers()
-  const tenant = headersList.get('x-tenant') ?? 'cloudbasket'
-  const theme  = getTheme(tenant)
+  const followedBlogs = [
+    { title: 'Top 10 Tech Deals of 2026', author: 'Cloud Hub', date: 'March 1' },
+    { title: 'The Future of POD Designs', author: 'Artisan Pro', date: 'Feb 28' },
+  ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Top bar */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-lg font-extrabold tracking-tight" style={{ color: theme.primaryColor }}>
-            Cloud<span style={{ color: theme.ctaColor ?? '#E65100' }}>Basket</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            {NAV_LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-          <Link
-            href="/login"
-            className="text-sm font-semibold px-4 py-2 rounded-lg text-white transition hover:opacity-90"
-            style={{ backgroundColor: theme.primaryColor }}
-          >
-            Sign Out
-          </Link>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Greeting */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Your Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-1">Track your affiliate performance and earnings.</p>
-        </div>
-
-        {/* Stats grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {STATS.map((s) => (
-            <div
-              key={s.label}
-              className="bg-white rounded-xl border border-gray-200 shadow-sm p-5"
-            >
-              <p className="text-xs text-gray-500 uppercase tracking-wide">{s.label}</p>
-              <p className="mt-1 text-2xl font-bold text-gray-900">{s.value}</p>
-              <p className="mt-0.5 text-xs text-gray-400">{s.sub}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Recent activity */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="font-semibold text-gray-900">Recent Activity</h2>
-            <Link
-              href="/dashboard/links"
-              className="text-xs font-medium hover:underline"
-              style={{ color: theme.primaryColor }}
-            >
-              View all links
-            </Link>
+    <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#161617] font-sans text-[#1D1D1F] dark:text-white pb-20">
+      {/* Dashboard Nav */}
+      <nav className="h-20 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 md:px-12 sticky top-0 z-40">
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 bg-skyline-primary rounded-xl flex items-center justify-center text-white shadow-lg">
+            <Layout size={20} />
           </div>
-          <div className="divide-y divide-gray-50">
-            {RECENT_ACTIVITY.map((row) => (
-              <div key={`${row.date}-${row.product}`} className="px-6 py-4 flex items-center justify-between gap-4">
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-gray-800 truncate">{row.product}</p>
-                  <p className="text-xs text-gray-400">{row.date}</p>
-                </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-sm font-bold text-gray-900">{row.commission}</span>
-                  <span
-                    className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                      row.status === 'confirmed'
-                        ? 'bg-green-50 text-green-700'
-                        : 'bg-amber-50 text-amber-700'
-                    }`}
-                  >
-                    {row.status}
-                  </span>
-                </div>
+          <h1 className="text-xl font-black tracking-tighter">My Dashboard</h1>
+        </div>
+        <div className="flex items-center gap-6">
+           <Link href="/products" className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-skyline-primary transition-colors">Explore</Link>
+           <button onClick={handleLogout} className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 px-4 py-2 rounded-xl transition-all">
+             <LogOut size={16} />
+             Logout
+           </button>
+        </div>
+      </nav>
+
+      <main className="max-w-[1400px] mx-auto px-6 md:px-12 py-12 space-y-12">
+        {/* Welcome Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 bg-gray-900 rounded-[3rem] p-10 text-white relative overflow-hidden">
+           <div className="relative z-10">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-skyline-primary mb-2">Authenticated User</p>
+              <h2 className="text-4xl font-black tracking-tighter mb-4">Hello, {user?.email?.split('@')[0] || 'Cloud Shopper'}!</h2>
+              <p className="text-gray-400 max-w-sm font-medium leading-relaxed">You have 12 active alerts and 4 bookmarked deals waiting for your review.</p>
+           </div>
+           <div className="flex gap-4 relative z-10">
+              <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 text-center min-w-[120px]">
+                 <p className="text-2xl font-black tracking-tighter">142</p>
+                 <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-1">Points</p>
               </div>
-            ))}
-          </div>
+              <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 text-center min-w-[120px]">
+                 <p className="text-2xl font-black tracking-tighter">4</p>
+                 <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-1">Badges</p>
+              </div>
+           </div>
+           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#009DFF33_0%,_transparent_70%)]" />
         </div>
 
-        {/* Quick links */}
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Link
-            href="/products"
-            className="flex flex-col items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow text-center"
-          >
-            <span className="text-sm font-semibold text-gray-800">Browse Products</span>
-            <span className="text-xs text-gray-500">Generate affiliate links</span>
-          </Link>
-          <Link
-            href="/deals"
-            className="flex flex-col items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow text-center"
-          >
-            <span className="text-sm font-semibold text-gray-800">Today&apos;s Deals</span>
-            <span className="text-xs text-gray-500">High-converting flash deals</span>
-          </Link>
-          <Link
-            href="/affiliate"
-            className="flex flex-col items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow text-center"
-          >
-            <span className="text-sm font-semibold text-gray-800">Affiliate Program</span>
-            <span className="text-xs text-gray-500">Commission rates &amp; resources</span>
-          </Link>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* Bookmarked Deals */}
+          <div className="lg:col-span-2 space-y-8">
+            <div className="flex items-center justify-between">
+               <h3 className="text-2xl font-black tracking-tighter flex items-center gap-3">
+                 <Bookmark size={24} className="text-skyline-primary" /> Bookmarked Deals
+               </h3>
+               <Link href="/products" className="text-xs font-black uppercase tracking-widest text-skyline-primary hover:underline">View Catalog</Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+               {savedDeals.map((deal) => (
+                 <div key={deal.id} className="bg-white dark:bg-gray-900 p-6 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-6 group hover:shadow-xl transition-all">
+                    <div className="w-24 h-24 rounded-2xl overflow-hidden relative flex-shrink-0 bg-gray-50 dark:bg-gray-800">
+                       <Image src={deal.image} alt={deal.name} fill className="object-cover group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="space-y-2">
+                       <h4 className="text-sm font-black line-clamp-1">{deal.name}</h4>
+                       <p className="text-skyline-primary font-black">{deal.price}</p>
+                       <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                         View Deal <ExternalLink size={12} />
+                       </button>
+                    </div>
+                 </div>
+               ))}
+            </div>
+
+            {/* Favorite Projects / Blogs */}
+            <div className="pt-12 space-y-8">
+               <h3 className="text-2xl font-black tracking-tighter flex items-center gap-3">
+                 <BookOpen size={24} className="text-orange-500" /> Followed Blogs
+               </h3>
+               <div className="space-y-4">
+                  {followedBlogs.map((blog, i) => (
+                    <div key={i} className="bg-white dark:bg-gray-900 p-8 rounded-[2rem] border border-gray-100 dark:border-gray-800 flex justify-between items-center group cursor-pointer hover:border-orange-500/30 transition-all">
+                       <div className="space-y-1">
+                          <h4 className="text-lg font-black group-hover:text-skyline-primary transition-colors">{blog.title}</h4>
+                          <div className="flex items-center gap-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                             <span>{blog.author}</span>
+                             <div className="w-1 h-1 bg-gray-200 rounded-full" />
+                             <span>{blog.date}</span>
+                          </div>
+                       </div>
+                       <ChevronRight className="text-gray-200 group-hover:text-skyline-primary transition-all" size={24} />
+                    </div>
+                  ))}
+               </div>
+            </div>
+          </div>
+
+          {/* User Settings Sidebar */}
+          <div className="space-y-8">
+             <div className="bg-white dark:bg-gray-900 rounded-[2.5rem] p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-8">
+                <h3 className="text-xl font-black tracking-tighter flex items-center gap-3">
+                  <Settings size={20} className="text-gray-400" /> Quick Settings
+                </h3>
+                
+                <div className="space-y-4">
+                   <button className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl hover:bg-gray-100 transition-colors group">
+                      <div className="flex items-center gap-3">
+                         <User size={18} className="text-gray-400 group-hover:text-skyline-primary" />
+                         <span className="text-xs font-black uppercase tracking-widest">Account Security</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-300" />
+                   </button>
+                   <button className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl hover:bg-gray-100 transition-colors group">
+                      <div className="flex items-center gap-3">
+                         <Zap size={18} className="text-gray-400 group-hover:text-skyline-primary" />
+                         <span className="text-xs font-black uppercase tracking-widest">Price Alerts</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-300" />
+                   </button>
+                </div>
+
+                <div className="pt-8 border-t border-gray-100 dark:border-gray-800">
+                   <div className="bg-skyline-primary/5 p-6 rounded-3xl border border-skyline-primary/10">
+                      <div className="flex items-center gap-2 mb-2">
+                         <TrendingUp size={14} className="text-skyline-primary" />
+                         <span className="text-[10px] font-black uppercase text-skyline-primary tracking-widest">Growth Phase</span>
+                      </div>
+                      <p className="text-[10px] text-gray-500 font-medium leading-relaxed">New dashboard features arriving weekly. Stay synced with our Global Hub.</p>
+                   </div>
+                </div>
+             </div>
+          </div>
         </div>
       </main>
     </div>

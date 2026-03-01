@@ -4,6 +4,13 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { CurrencyCode, getExchangeRates, ExchangeRates } from '@/lib/currency-service'
 
 export type CountryCode = 'IN' | 'US' | 'EU' | 'GB';
+export type Direction = 'ltr' | 'rtl';
+
+interface User {
+  id: string;
+  email: string;
+  role: 'Admin' | 'Associate' | 'User';
+}
 
 interface GlobalContextType {
   country: CountryCode
@@ -11,6 +18,10 @@ interface GlobalContextType {
   currency: CurrencyCode
   setCurrency: (currency: CurrencyCode) => void
   rates: ExchangeRates
+  direction: Direction
+  setDirection: (dir: Direction) => void
+  user: User | null
+  setUser: (user: User | null) => void
   isReady: boolean
 }
 
@@ -26,6 +37,8 @@ const COUNTRY_CURRENCY_MAP: Record<CountryCode, CurrencyCode> = {
 export function GlobalProvider({ children }: { children: ReactNode }) {
   const [country, setCountry] = useState<CountryCode>('IN')
   const [currency, setCurrency] = useState<CurrencyCode>('INR')
+  const [direction, setDirection] = useState<Direction>('ltr')
+  const [user, setUser] = useState<User | null>(null) // Real app would fetch from Supabase
   const [rates, setRates] = useState<ExchangeRates>({ INR: 1, USD: 0.012, EUR: 0.011, GBP: 0.0095 })
   const [isReady, setIsReady] = useState(false)
 
@@ -35,19 +48,22 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
       const latestRates = await getExchangeRates()
       setRates(latestRates)
       
-      // Try to get from localStorage
       const savedCountry = localStorage.getItem('cb-user-country') as CountryCode
       const savedCurrency = localStorage.getItem('cb-user-currency') as CurrencyCode
+      const savedDir = localStorage.getItem('cb-user-dir') as Direction
       
       if (savedCountry) setCountry(savedCountry)
       if (savedCurrency) setCurrency(savedCurrency)
+      if (savedDir) setDirection(savedDir)
+      
+      // Update HTML dir attribute
+      document.documentElement.dir = savedDir || 'ltr'
       
       setIsReady(true)
     }
     init()
   }, [])
 
-  // Auto-sync currency when country changes (unless user manually overrides)
   const handleSetCountry = (newCountry: CountryCode) => {
     setCountry(newCountry)
     setCurrency(COUNTRY_CURRENCY_MAP[newCountry])
@@ -60,6 +76,12 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('cb-user-currency', newCurrency)
   }
 
+  const handleSetDirection = (newDir: Direction) => {
+    setDirection(newDir)
+    document.documentElement.dir = newDir
+    localStorage.setItem('cb-user-dir', newDir)
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -68,6 +90,10 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
         currency,
         setCurrency: handleSetCurrency,
         rates,
+        direction,
+        setDirection: handleSetDirection,
+        user,
+        setUser,
         isReady,
       }}
     >

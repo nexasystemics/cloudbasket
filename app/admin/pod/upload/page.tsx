@@ -13,6 +13,7 @@ import {
   ChevronLeft
 } from 'lucide-react'
 import Link from 'next/link'
+import { useGlobal } from '@/context/GlobalContext'
 
 const POD_PLATFORMS = [
   'Redbubble', 'Society6', 'Zazzle', 'Printful', 'Printify', 
@@ -22,6 +23,7 @@ const POD_PLATFORMS = [
 ]
 
 export default function PODUploadPage() {
+  const { user } = useGlobal()
   const [designTitle, setDesignTitle] = useState('')
   const [tags, setTags] = useState('')
   const [platformUrls, setPlatformUrls] = useState<Record<string, string>>({})
@@ -35,7 +37,7 @@ export default function PODUploadPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsUploading(true)
-    // Simulate API call
+    // Simulate API call linking to user.id
     setTimeout(() => {
       setIsUploading(false)
       setUploadSuccess(true)
@@ -82,9 +84,16 @@ export default function PODUploadPage() {
           <div className="flex-1">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="bg-white dark:bg-gray-900 p-10 rounded-[3rem] border border-gray-100 dark:border-gray-800 shadow-sm space-y-8">
-                <div>
-                  <h2 className="text-3xl font-black tracking-tighter mb-2">POD Multi-Lister</h2>
-                  <p className="text-gray-400 font-medium text-sm">Deploy your design across 20+ global print-on-demand networks.</p>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h2 className="text-3xl font-black tracking-tighter mb-2 text-gray-900 dark:text-white">POD Multi-Lister</h2>
+                    <p className="text-gray-400 font-medium text-sm">Deploy your design across 20+ global print-on-demand networks.</p>
+                  </div>
+                  {user && (
+                    <div className="bg-skyline-primary/10 text-skyline-primary text-[10px] font-black px-3 py-1 rounded-full border border-skyline-primary/20">
+                      CREATOR: {user.id}
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-6">
@@ -144,7 +153,9 @@ export default function PODUploadPage() {
                   className={`w-full py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] transition-all shadow-xl flex items-center justify-center gap-3 active:scale-95 ${
                     isUploading 
                       ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                      : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-skyline-primary dark:hover:bg-skyline-primary dark:hover:text-white'
+                      : uploadSuccess 
+                        ? 'bg-emerald-500 text-white shadow-emerald-500/20'
+                        : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-skyline-primary dark:hover:bg-skyline-primary dark:hover:text-white'
                   }`}
                 >
                   {isUploading ? (

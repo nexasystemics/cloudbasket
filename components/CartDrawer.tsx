@@ -136,6 +136,7 @@ export default function CartDrawer() {
             </p>
             <Link
               href="/checkout"
+              onClick={() => setIsCartOpen(false)}
               className="flex items-center justify-center gap-3 w-full bg-[#039BE5] hover:bg-[#0288D1] text-white py-4 rounded-xl font-black tracking-tight transition-all shadow-lg active:scale-95 group"
             >
               Proceed to Checkout

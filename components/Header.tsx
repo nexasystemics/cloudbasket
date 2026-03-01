@@ -136,7 +136,7 @@ export default function Header(): JSX.Element {
     [searchValue]
   )
 
-  const logoSrc = (mounted && theme === 'dark') ? '/brand/logo-full-dark.svg' : '/brand/logo-full.svg'
+  const logoSrc = (mounted && theme === 'dark') ? '/brand/logo-dark.svg' : '/brand/logo-light.svg'
 
   return (
     <header className="glass-header transition-all duration-300 z-50">
@@ -145,7 +145,7 @@ export default function Header(): JSX.Element {
           
           {/* Logo - Start */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="relative w-[180px] h-[40px]">
+            <div className="relative w-[200px] h-[50px]">
                <Image 
                 src={logoSrc} 
                 alt="CloudBasket" 

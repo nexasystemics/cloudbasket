@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useMemo, useEffect, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ProductGrid from '@/components/ProductGrid'
 import ProductFilter from '@/components/ProductFilter'
 import PromotionSidebar from '@/components/PromotionSidebar'
+import Pagination from '@/components/Pagination'
 import { PRODUCTS } from '@/lib/mock-data'
 import {
   ShoppingCart,
@@ -20,17 +21,22 @@ import {
 
 function HomeContent() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   
-  // --- Filtering State ---
+  // --- Filtering & Pagination State ---
   const [search, setSearch] = useState('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState(100000)
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+  
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
 
   // --- Sync with URL Params ---
   useEffect(() => {
     const categoryParam = searchParams.get('category')
     const queryParam = searchParams.get('q')
+    const pageParam = searchParams.get('page')
 
     if (categoryParam) {
       setSelectedCategories([categoryParam])
@@ -42,6 +48,12 @@ function HomeContent() {
       setSearch(queryParam)
     } else {
       setSearch('')
+    }
+
+    if (pageParam) {
+      setCurrentPage(Number(pageParam))
+    } else {
+      setCurrentPage(1)
     }
   }, [searchParams])
 
@@ -60,11 +72,32 @@ function HomeContent() {
     })
   }, [search, selectedCategories, priceRange])
 
+  // --- Pagination Logic ---
+  const totalPages = 5 // User requested fixed 5-page system for branded excitement
+  
+  const paginatedProducts = useMemo(() => {
+    // We slice the product array into 5 equal segments
+    const segmentSize = Math.ceil(filteredProducts.length / totalPages)
+    // However, if user uses the dropdown, we prioritize that itemsPerPage
+    const effectiveSize = itemsPerPage !== 10 ? itemsPerPage : segmentSize
+    
+    const start = (currentPage - 1) * effectiveSize
+    return filteredProducts.slice(start, start + effectiveSize)
+  }, [filteredProducts, currentPage, itemsPerPage])
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('page', page.toString())
+    router.push(`?${params.toString()}`, { scroll: false })
+    setCurrentPage(page)
+  }
+
   const resetFilters = () => {
     setSearch('')
     setSelectedCategories([])
     setPriceRange(maxPrice)
-    window.history.pushState({}, '', '/')
+    setCurrentPage(1)
+    router.push('/', { scroll: false })
   }
 
   return (
@@ -165,7 +198,18 @@ function HomeContent() {
               </div>
             </div>
             
-            <ProductGrid products={filteredProducts} onReset={resetFilters} />
+            <ProductGrid products={paginatedProducts} onReset={resetFilters} />
+
+            <Pagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              itemsPerPage={itemsPerPage}
+              onItemsPerPageChange={(val) => {
+                setItemsPerPage(val)
+                setCurrentPage(1)
+              }}
+            />
           </main>
 
           {/* Right Sidebar: Sticky Promotion (Desktop) */}

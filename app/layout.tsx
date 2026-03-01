@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import { CartProvider } from '@/context/CartContext'
 import CartDrawer from '@/components/CartDrawer'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import CartSuccessVideo from '@/components/CartSuccessVideo'
 
 export const metadata: Metadata = { 
   title: 'CloudBasket - Everything in One Basket', 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CartProvider>
             <Header />
             <CartDrawer />
+            <CartSuccessVideo />
             {children}
             <Footer />
           </CartProvider>

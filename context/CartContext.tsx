@@ -17,6 +17,8 @@ interface CartContextType {
   totalPrice: number
   isCartOpen: boolean
   setIsCartOpen: (isOpen: boolean) => void
+  showSuccessVideo: boolean
+  setShowSuccessVideo: (show: boolean) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -24,6 +26,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [showSuccessVideo, setShowSuccessVideo] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Load from localStorage on mount
@@ -56,7 +59,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { ...product, quantity: 1 }]
     })
-    setIsCartOpen(true)
+    setShowSuccessVideo(true)
+    // Auto close and open drawer
+    setTimeout(() => {
+      setShowSuccessVideo(false)
+      setIsCartOpen(true)
+    }, 2500)
   }
 
   const removeFromCart = (productId: number) => {
@@ -94,6 +102,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         totalPrice,
         isCartOpen,
         setIsCartOpen,
+        showSuccessVideo,
+        setShowSuccessVideo,
       }}
     >
       {children}

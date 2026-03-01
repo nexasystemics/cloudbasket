@@ -41,7 +41,7 @@ function ProductCard({ product }: { product: Product }) {
         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <button
             onClick={() => addToCart(product)}
-            className="bg-white text-[#039BE5] p-3.5 rounded-full shadow-xl hover:bg-[#039BE5] hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 active:scale-90"
+            className="bg-white text-skyline-primary p-3.5 rounded-full shadow-xl hover:bg-skyline-primary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 active:scale-90"
             aria-label="Add to basket"
           >
             <ShoppingBag size={20} />
@@ -52,7 +52,7 @@ function ProductCard({ product }: { product: Product }) {
       {/* Info */}
       <div className="p-5 flex flex-col flex-grow space-y-4">
         <div className="space-y-1">
-          <h3 className="text-sm font-black text-gray-900 dark:text-white line-clamp-1 group-hover:text-[#039BE5] transition-colors duration-300">
+          <h3 className="text-sm font-black text-gray-900 dark:text-white line-clamp-1 group-hover:text-skyline-primary transition-colors duration-300">
             {product.name}
           </h3>
           <p className="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest">{product.brand}</p>
@@ -61,7 +61,7 @@ function ProductCard({ product }: { product: Product }) {
         {/* 5 Key Specs Instantly */}
         <div className="grid grid-cols-2 gap-2 pb-4 border-b border-gray-50 dark:border-gray-800">
           <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
-            <Tag size={12} className="text-[#039BE5]" />
+            <Tag size={12} className="text-skyline-primary" />
             ₹{product.price.toLocaleString('en-IN')}
           </div>
           <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 dark:text-gray-400">
@@ -103,17 +103,17 @@ function ProductCard({ product }: { product: Product }) {
         <div className="space-y-3 mt-auto pt-4">
           <button
             onClick={() => addToCart(product)}
-            className="w-full bg-gray-900 dark:bg-gray-800 hover:bg-[#039BE5] text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-gray-900/10"
+            className="w-full bg-skyline-accent hover:bg-orange-600 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20"
           >
             <ShoppingBag size={14} />
-            Quick Add
+            Add to Basket
           </button>
           
           <Link
             href={`/product/${product.id}`}
-            className="flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-[#039BE5] transition-colors"
+            className="flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-skyline-primary transition-colors"
           >
-            Product Details <ArrowRight size={12} />
+            View Details <ArrowRight size={12} />
           </Link>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function ProductGrid({ products, onReset }: ProductGridProps) {
         </p>
         <button
           onClick={onReset}
-          className="bg-[#039BE5] hover:bg-[#0288D1] text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg active:scale-95"
+          className="bg-skyline-primary hover:bg-sky-600 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg active:scale-95"
         >
           Reset All Filters
         </button>

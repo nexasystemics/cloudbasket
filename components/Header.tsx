@@ -93,15 +93,8 @@ function CartButton(): JSX.Element {
   )
 }
 
-function ThemeToggle(): JSX.Element | null {
-  const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
+function ThemeToggle({ mounted, theme, setTheme }: { mounted: boolean, theme?: string, setTheme: (t: string) => void }): JSX.Element | null {
+  if (!mounted) return <div className="w-10 h-10" />
 
   return (
     <button
@@ -123,7 +116,7 @@ export default function Header(): JSX.Element {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
   const [searchValue,    setSearchValue]    = useState<string>('')
   const [mounted,        setMounted]        = useState(false)
-  const { theme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
@@ -140,7 +133,7 @@ export default function Header(): JSX.Element {
     [searchValue]
   )
 
-  const logoSrc = mounted && theme === 'dark' ? '/brand/logo-full-dark.svg' : '/brand/logo-full.svg'
+  const logoSrc = (mounted && theme === 'dark') ? '/brand/logo-full-dark.svg' : '/brand/logo-full.svg'
 
   return (
     <header className="glass-header transition-all duration-300">
@@ -210,7 +203,7 @@ export default function Header(): JSX.Element {
             </form>
 
             <div className="flex items-center gap-2 sm:gap-4">
-              <ThemeToggle />
+              <ThemeToggle mounted={mounted} theme={theme} setTheme={setTheme} />
               <div className="hidden 2xl:block">
                 <AffiliateBadge />
               </div>

@@ -7,9 +7,9 @@ import ProductGrid from '@/components/ProductGrid'
 import ProductFilter from '@/components/ProductFilter'
 import PromotionSidebar from '@/components/PromotionSidebar'
 import Pagination from '@/components/Pagination'
+import HeroVideo from '@/components/HeroVideo'
 import { PRODUCTS, MAIN_CATEGORIES, SUB_CATEGORIES } from '@/lib/mock-data'
 import {
-  ShoppingCart,
   Layout,
   BookOpen,
   Scale,
@@ -112,34 +112,7 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#1D1D1F] font-sans transition-colors duration-300">
-      {/* Hero Section */}
-      <section className="relative w-full bg-[#039BE5] dark:bg-[#015C94] text-white pt-32 pb-24 overflow-hidden transition-colors duration-300">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top,_#ffffff_0%,_transparent_60%)]" />
-        <div className="relative max-w-5xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full mb-8 border border-white/10 animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <p className="text-[10px] uppercase tracking-[0.3em] font-black text-white/80">
-              India&apos;s Premium Price Engine 2026
-            </p>
-          </div>
-          <h1 className="text-6xl md:text-8xl font-black leading-[0.9] mb-8 tracking-tighter">
-            Global <br/> <span className="text-sky-200 dark:text-sky-300">Catalog.</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-white/70 mb-12 max-w-2xl mx-auto leading-tight font-medium">
-            2,000+ Items. 100+ Categories. Verified Global Specs.
-            Your ultimate marketplace discovery hub.
-          </p>
-          <div className="flex flex-wrap justify-center gap-5">
-            <Link 
-              href="#shop"
-              className="bg-white text-[#039BE5] dark:text-[#015C94] px-10 py-5 rounded-2xl font-black text-sm hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-3 active:scale-95"
-            >
-              <ShoppingCart size={20} />
-              Browse Catalog
-            </Link>
-          </div>
-        </div>
-      </section>
+      <HeroVideo />
 
       {/* 3-Column Marketplace Layout */}
       <section id="shop" className="bg-white dark:bg-[#1D1D1F] border-b border-gray-100 dark:border-gray-800 overflow-hidden transition-colors duration-300">
@@ -209,14 +182,14 @@ function HomeContent() {
           )}
 
           {/* Main Grid: Flexible Center */}
-          <main className="flex-1 px-6 lg:px-12 py-10 bg-white dark:bg-[#1D1D1F] transition-colors duration-300">
+          <main className="flex-1 px-6 lg:px-12 py-10 bg-white dark:bg-[#1D1D1F] transition-colors duration-300 border-x dark:border-gray-800">
             <div className="flex items-center justify-between mb-10">
               <div>
                 <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">Featured</h2>
                 <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mt-1">Curated Selection</p>
               </div>
               <div className="hidden sm:flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                 Sort: <span className="text-gray-900 dark:text-white cursor-pointer hover:text-[#039BE5] transition-colors font-black">Popularity</span>
+                 Sort: <span className="text-gray-900 dark:text-white cursor-pointer hover:text-skyline-primary transition-colors font-black">Popularity</span>
               </div>
             </div>
             
@@ -269,7 +242,7 @@ function HomeContent() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div className="flex flex-col items-center text-center p-8">
-              <div className="bg-[#039BE5] w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-[#039BE5]/20">
+              <div className="bg-skyline-primary w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-skyline-primary/20">
                 <Scale size={28} />
               </div>
               <h4 className="font-black text-xl text-gray-900 dark:text-white mb-4 tracking-tight">Best Value</h4>
@@ -278,7 +251,7 @@ function HomeContent() {
               </p>
             </div>
             <div className="flex flex-col items-center text-center p-8">
-              <div className="bg-[#039BE5] w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-[#039BE5]/20">
+              <div className="bg-skyline-primary w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-skyline-primary/20">
                 <BookOpen size={28} />
               </div>
               <h4 className="font-black text-xl text-gray-900 dark:text-white mb-4 tracking-tight">Expert Guides</h4>
@@ -287,7 +260,7 @@ function HomeContent() {
               </p>
             </div>
             <div className="flex flex-col items-center text-center p-8">
-              <div className="bg-[#039BE5] w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-[#039BE5]/20">
+              <div className="bg-skyline-primary w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-skyline-primary/20">
                 <Shield size={28} />
               </div>
               <h4 className="font-black text-xl text-gray-900 dark:text-white mb-4 tracking-tight">Secure & Safe</h4>
@@ -303,7 +276,7 @@ function HomeContent() {
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-16">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-[#039BE5] flex items-center justify-center text-white font-black text-xl shadow-lg">CB</div>
+              <div className="w-12 h-12 rounded-xl bg-skyline-primary flex items-center justify-center text-white font-black text-xl shadow-lg">CB</div>
               <span className="text-3xl font-black tracking-tighter">CloudBasket</span>
             </div>
             <p className="text-gray-400 max-w-sm leading-relaxed font-medium text-lg">
@@ -313,15 +286,15 @@ function HomeContent() {
           <div>
             <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-8 text-white/40">Marketplace</h4>
             <ul className="space-y-4 text-sm font-bold text-gray-300">
-              <li><Link href="/" className="hover:text-[#039BE5] transition-colors">All Products</Link></li>
-              <li><Link href="/deals" className="hover:text-[#039BE5] transition-colors">Daily Deals</Link></li>
+              <li><Link href="/" className="hover:text-skyline-primary transition-colors">All Products</Link></li>
+              <li><Link href="/deals" className="hover:text-skyline-primary transition-colors">Daily Deals</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-8 text-white/40">Company</h4>
             <ul className="space-y-4 text-sm font-bold text-gray-300">
-              <li><Link href="/about" className="hover:text-[#039BE5] transition-colors">About Us</Link></li>
-              <li><Link href="/privacy" className="hover:text-[#039BE5] transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/about" className="hover:text-skyline-primary transition-colors">About Us</Link></li>
+              <li><Link href="/privacy" className="hover:text-skyline-primary transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>

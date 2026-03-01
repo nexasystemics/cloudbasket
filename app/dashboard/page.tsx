@@ -13,7 +13,11 @@ import {
   TrendingUp,
   Layout,
   ExternalLink,
-  LogOut
+  LogOut,
+  MousePointer2,
+  DollarSign,
+  ArrowUpRight,
+  Link as LinkIcon
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -23,6 +27,7 @@ import { useRouter } from 'next/navigation'
 export default function UserDashboard() {
   const { user, setUser } = useGlobal()
   const router = useRouter()
+  const isAssociate = user?.role === 'Associate' || user?.role === 'Admin'
 
   const handleLogout = () => {
     setUser(null)
@@ -47,7 +52,7 @@ export default function UserDashboard() {
           <div className="w-10 h-10 bg-skyline-primary rounded-xl flex items-center justify-center text-white shadow-lg">
             <Layout size={20} />
           </div>
-          <h1 className="text-xl font-black tracking-tighter">My Dashboard</h1>
+          <h1 className="text-xl font-black tracking-tighter uppercase italic">Sovereign Node</h1>
         </div>
         <div className="flex items-center gap-6">
            <Link href="/products" className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-skyline-primary transition-colors">Explore</Link>
@@ -62,14 +67,14 @@ export default function UserDashboard() {
         {/* Welcome Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 bg-gray-900 rounded-[3rem] p-10 text-white relative overflow-hidden">
            <div className="relative z-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-skyline-primary mb-2">Authenticated User</p>
-              <h2 className="text-4xl font-black tracking-tighter mb-4">Hello, {user?.email?.split('@')[0] || 'Cloud Shopper'}!</h2>
-              <p className="text-gray-400 max-w-sm font-medium leading-relaxed">You have 12 active alerts and 4 bookmarked deals waiting for your review.</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-skyline-primary mb-2">Authenticated Identity</p>
+              <h2 className="text-4xl font-black tracking-tighter mb-4 uppercase italic">Welcome, {user?.email?.split('@')[0] || 'Cloud Shopper'}</h2>
+              <p className="text-gray-400 max-w-sm font-medium leading-relaxed">Your sovereign discovery hub is active. {isAssociate ? 'Performance metrics are synced.' : 'Your bookmarks are safe.'}</p>
            </div>
            <div className="flex gap-4 relative z-10">
               <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 text-center min-w-[120px]">
                  <p className="text-2xl font-black tracking-tighter">142</p>
-                 <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-1">Points</p>
+                 <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-1">Trust Score</p>
               </div>
               <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 text-center min-w-[120px]">
                  <p className="text-2xl font-black tracking-tighter">4</p>
@@ -79,16 +84,57 @@ export default function UserDashboard() {
            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#009DFF33_0%,_transparent_70%)]" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Bookmarked Deals */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="flex items-center justify-between">
-               <h3 className="text-2xl font-black tracking-tighter flex items-center gap-3">
-                 <Bookmark size={24} className="text-skyline-primary" /> Bookmarked Deals
-               </h3>
-               <Link href="/products" className="text-xs font-black uppercase tracking-widest text-skyline-primary hover:underline">View Catalog</Link>
-            </div>
+        {/* Associate Performance Hub (Conditional) */}
+        {isAssociate && (
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+             <h3 className="text-2xl font-black tracking-tighter uppercase italic flex items-center gap-3">
+               <TrendingUp size={24} className="text-skyline-primary" /> Performance telemetry
+             </h3>
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
+                   <div className="flex justify-between items-start">
+                      <div className="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-500">
+                         <MousePointer2 size={20} />
+                      </div>
+                      <span className="text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">+12%</span>
+                   </div>
+                   <div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Total Redirects</p>
+                      <p className="text-3xl font-black tracking-tighter">1,240</p>
+                   </div>
+                </div>
+                <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
+                   <div className="flex justify-between items-start">
+                      <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500">
+                         <DollarSign size={20} />
+                      </div>
+                      <span className="text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">Pending</span>
+                   </div>
+                   <div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Potential Revenue</p>
+                      <p className="text-3xl font-black tracking-tighter">₹4,500</p>
+                   </div>
+                </div>
+                <div className="bg-gray-900 rounded-[2.5rem] p-8 text-white flex flex-col justify-center space-y-4 relative overflow-hidden">
+                   <div className="relative z-10">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-skyline-primary mb-1">Your ref link</p>
+                      <div className="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
+                         <code className="text-[10px] font-bold text-gray-300">.../?ref={user?.id || 'CB-REF'}</code>
+                         <LinkIcon size={14} className="text-skyline-primary" />
+                      </div>
+                   </div>
+                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_#009DFF22_0%,_transparent_70%)]" />
+                </div>
+             </div>
+          </div>
+        )}
 
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* User Specifics */}
+          <div className="lg:col-span-2 space-y-8">
+            <h3 className="text-2xl font-black tracking-tighter uppercase italic flex items-center gap-3">
+              <Bookmark size={24} className="text-skyline-primary" /> Vaulted Items
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                {savedDeals.map((deal) => (
                  <div key={deal.id} className="bg-white dark:bg-gray-900 p-6 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-6 group hover:shadow-xl transition-all">
@@ -105,62 +151,28 @@ export default function UserDashboard() {
                  </div>
                ))}
             </div>
-
-            {/* Favorite Projects / Blogs */}
-            <div className="pt-12 space-y-8">
-               <h3 className="text-2xl font-black tracking-tighter flex items-center gap-3">
-                 <BookOpen size={24} className="text-orange-500" /> Followed Blogs
-               </h3>
-               <div className="space-y-4">
-                  {followedBlogs.map((blog, i) => (
-                    <div key={i} className="bg-white dark:bg-gray-900 p-8 rounded-[2rem] border border-gray-100 dark:border-gray-800 flex justify-between items-center group cursor-pointer hover:border-orange-500/30 transition-all">
-                       <div className="space-y-1">
-                          <h4 className="text-lg font-black group-hover:text-skyline-primary transition-colors">{blog.title}</h4>
-                          <div className="flex items-center gap-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                             <span>{blog.author}</span>
-                             <div className="w-1 h-1 bg-gray-200 rounded-full" />
-                             <span>{blog.date}</span>
-                          </div>
-                       </div>
-                       <ChevronRight className="text-gray-200 group-hover:text-skyline-primary transition-all" size={24} />
-                    </div>
-                  ))}
-               </div>
-            </div>
           </div>
 
-          {/* User Settings Sidebar */}
           <div className="space-y-8">
              <div className="bg-white dark:bg-gray-900 rounded-[2.5rem] p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-8">
                 <h3 className="text-xl font-black tracking-tighter flex items-center gap-3">
-                  <Settings size={20} className="text-gray-400" /> Quick Settings
+                  <Settings size={20} className="text-gray-400" /> Identity Settings
                 </h3>
-                
                 <div className="space-y-4">
                    <button className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl hover:bg-gray-100 transition-colors group">
                       <div className="flex items-center gap-3">
                          <User size={18} className="text-gray-400 group-hover:text-skyline-primary" />
-                         <span className="text-xs font-black uppercase tracking-widest">Account Security</span>
+                         <span className="text-xs font-black uppercase tracking-widest">Protocol Node</span>
                       </div>
                       <ChevronRight size={16} className="text-gray-300" />
                    </button>
                    <button className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl hover:bg-gray-100 transition-colors group">
                       <div className="flex items-center gap-3">
                          <Zap size={18} className="text-gray-400 group-hover:text-skyline-primary" />
-                         <span className="text-xs font-black uppercase tracking-widest">Price Alerts</span>
+                         <span className="text-xs font-black uppercase tracking-widest">Alert Filters</span>
                       </div>
                       <ChevronRight size={16} className="text-gray-300" />
                    </button>
-                </div>
-
-                <div className="pt-8 border-t border-gray-100 dark:border-gray-800">
-                   <div className="bg-skyline-primary/5 p-6 rounded-3xl border border-skyline-primary/10">
-                      <div className="flex items-center gap-2 mb-2">
-                         <TrendingUp size={14} className="text-skyline-primary" />
-                         <span className="text-[10px] font-black uppercase text-skyline-primary tracking-widest">Growth Phase</span>
-                      </div>
-                      <p className="text-[10px] text-gray-500 font-medium leading-relaxed">New dashboard features arriving weekly. Stay synced with our Global Hub.</p>
-                   </div>
                 </div>
              </div>
           </div>

@@ -7,15 +7,13 @@ import ProductGrid from '@/components/ProductGrid'
 import ProductFilter from '@/components/ProductFilter'
 import PromotionSidebar from '@/components/PromotionSidebar'
 import Pagination from '@/components/Pagination'
-import { PRODUCTS } from '@/lib/mock-data'
+import { PRODUCTS, MAIN_CATEGORIES, SUB_CATEGORIES } from '@/lib/mock-data'
 import {
   ShoppingCart,
-  Zap,
   Layout,
   BookOpen,
   Scale,
   Shield,
-  ArrowRight,
   Filter,
 } from 'lucide-react'
 
@@ -25,7 +23,8 @@ function HomeContent() {
   
   // --- Filtering & Pagination State ---
   const [search, setSearch] = useState('')
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const [selectedMainCategory, setSelectedMainCategory] = useState('All')
+  const [selectedSubCategories, setSelectedSubCategories] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState(100000)
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
   
@@ -34,14 +33,21 @@ function HomeContent() {
 
   // --- Sync with URL Params ---
   useEffect(() => {
-    const categoryParam = searchParams.get('category')
+    const mainCatParam = searchParams.get('mainCategory')
+    const subCatParam = searchParams.get('subCategory')
     const queryParam = searchParams.get('q')
     const pageParam = searchParams.get('page')
 
-    if (categoryParam) {
-      setSelectedCategories([categoryParam])
+    if (mainCatParam) {
+      setSelectedMainCategory(mainCatParam)
     } else {
-      setSelectedCategories([])
+      setSelectedMainCategory('All')
+    }
+
+    if (subCatParam) {
+      setSelectedSubCategories(subCatParam.split(','))
+    } else {
+      setSelectedSubCategories([])
     }
 
     if (queryParam) {
@@ -58,7 +64,6 @@ function HomeContent() {
   }, [searchParams])
 
   // --- Master Data Info ---
-  const categories = ['Beauty', 'Books', 'Sports', 'Toys']
   const maxPrice = 100000
 
   // --- Filtering Logic ---
@@ -66,20 +71,24 @@ function HomeContent() {
     return PRODUCTS.filter((product) => {
       const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase()) ||
                             product.description.toLowerCase().includes(search.toLowerCase())
-      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category)
+      
+      const matchesMain = selectedMainCategory === 'All' || product.mainCategory === selectedMainCategory
+      
+      const matchesSub = selectedSubCategories.length === 0 || selectedSubCategories.includes(product.subCategory)
+      
       const matchesPrice = product.price <= priceRange
-      return matchesSearch && matchesCategory && matchesPrice
+      
+      return matchesSearch && matchesMain && matchesSub && matchesPrice
     })
-  }, [search, selectedCategories, priceRange])
+  }, [search, selectedMainCategory, selectedSubCategories, priceRange])
 
   // --- Pagination Logic ---
-  const totalPages = 5 // User requested fixed 5-page system for branded excitement
+  const totalPages = 5 // Branded 5-page system
   
   const paginatedProducts = useMemo(() => {
-    // We slice the product array into 5 equal segments
     const segmentSize = Math.ceil(filteredProducts.length / totalPages)
-    // However, if user uses the dropdown, we prioritize that itemsPerPage
-    const effectiveSize = itemsPerPage !== 10 ? itemsPerPage : segmentSize
+    // Respect the itemsPerPage dropdown if changed, else use segmentSize
+    const effectiveSize = itemsPerPage !== 10 ? itemsPerPage : Math.max(1, segmentSize)
     
     const start = (currentPage - 1) * effectiveSize
     return filteredProducts.slice(start, start + effectiveSize)
@@ -94,7 +103,8 @@ function HomeContent() {
 
   const resetFilters = () => {
     setSearch('')
-    setSelectedCategories([])
+    setSelectedMainCategory('All')
+    setSelectedSubCategories([])
     setPriceRange(maxPrice)
     setCurrentPage(1)
     router.push('/', { scroll: false })
@@ -113,11 +123,11 @@ function HomeContent() {
             </p>
           </div>
           <h1 className="text-6xl md:text-8xl font-black leading-[0.9] mb-8 tracking-tighter">
-            Marketplace <br/> <span className="text-sky-200">Reimagined.</span>
+            Global <br/> <span className="text-sky-200">Catalog.</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/70 mb-12 max-w-2xl mx-auto leading-tight font-medium">
-            Compare across 10+ platforms. Discover unique POD designs. 
-            All-in-one smart shopping hub.
+            2,000+ Items. 100+ Categories. Verified Global Specs.
+            Your ultimate marketplace discovery hub.
           </p>
           <div className="flex flex-wrap justify-center gap-5">
             <Link 
@@ -125,14 +135,7 @@ function HomeContent() {
               className="bg-white text-[#039BE5] px-10 py-5 rounded-2xl font-black text-sm hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-3 active:scale-95"
             >
               <ShoppingCart size={20} />
-              Start Exploring
-            </Link>
-            <Link 
-              href="/deals/flash"
-              className="bg-[#E65100] text-white px-10 py-5 rounded-2xl font-black text-sm hover:bg-[#BF360C] transition-all flex items-center gap-3 shadow-xl active:scale-95"
-            >
-              <Zap size={20} />
-              Flash Deals
+              Browse Catalog
             </Link>
           </div>
         </div>
@@ -147,11 +150,27 @@ function HomeContent() {
             <ProductFilter
               search={search}
               setSearch={setSearch}
-              selectedCategories={selectedCategories}
-              setSelectedCategories={setSelectedCategories}
+              selectedMainCategory={selectedMainCategory}
+              setSelectedMainCategory={(cat) => {
+                setSelectedMainCategory(cat);
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('mainCategory', cat);
+                params.delete('subCategory');
+                params.set('page', '1');
+                router.push(`?${params.toString()}`, { scroll: false });
+              }}
+              selectedSubCategories={selectedSubCategories}
+              setSelectedSubCategories={(subs) => {
+                setSelectedSubCategories(subs);
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('subCategory', subs.join(','));
+                params.set('page', '1');
+                router.push(`?${params.toString()}`, { scroll: false });
+              }}
               priceRange={priceRange}
               setPriceRange={setPriceRange}
-              categories={categories}
+              mainCategories={MAIN_CATEGORIES}
+              subCategoriesMap={SUB_CATEGORIES}
               maxPrice={maxPrice}
             />
           </aside>
@@ -176,11 +195,14 @@ function HomeContent() {
                <ProductFilter
                   search={search}
                   setSearch={setSearch}
-                  selectedCategories={selectedCategories}
-                  setSelectedCategories={setSelectedCategories}
+                  selectedMainCategory={selectedMainCategory}
+                  setSelectedMainCategory={setSelectedMainCategory}
+                  selectedSubCategories={selectedSubCategories}
+                  setSelectedSubCategories={setSelectedSubCategories}
                   priceRange={priceRange}
                   setPriceRange={setPriceRange}
-                  categories={categories}
+                  mainCategories={MAIN_CATEGORIES}
+                  subCategoriesMap={SUB_CATEGORIES}
                   maxPrice={maxPrice}
                 />
             </div>
@@ -194,13 +216,13 @@ function HomeContent() {
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">Curated Selection</p>
               </div>
               <div className="hidden sm:flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-gray-400">
-                 Sort: <span className="text-gray-900 cursor-pointer hover:text-[#039BE5] transition-colors">Popularity</span>
+                 Sort: <span className="text-gray-900 cursor-pointer hover:text-[#039BE5] transition-colors font-black">Popularity</span>
               </div>
             </div>
             
             <ProductGrid products={paginatedProducts} onReset={resetFilters} />
 
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center w-full mt-10">
               <Pagination 
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -216,47 +238,26 @@ function HomeContent() {
 
           {/* Right Sidebar: PromoPanel (w-64) */}
           <aside className="hidden xl:block w-64 flex-shrink-0 border-l border-gray-100 bg-gray-50/50 px-6 py-10 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar">
-            <PromotionSidebar selectedCategory={selectedCategories[0]} />
+            <PromotionSidebar selectedCategory={selectedMainCategory} />
           </aside>
-
-          {/* Mobile Promotions (Stacked Below Grid) */}
-          <div className="xl:hidden px-6 py-12 bg-gray-50 border-t border-gray-100">
-             <div className="max-w-md mx-auto">
-                <PromotionSidebar selectedCategory={selectedCategories[0]} />
-             </div>
-          </div>
         </div>
       </section>
 
       {/* Categories Section */}
       <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-end justify-between mb-16">
-            <div className="text-left">
-              <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase">Global Hub</h2>
-              <p className="text-gray-500 font-medium">Quick access to our main categories.</p>
-            </div>
-            <Link href="/products" className="hidden sm:flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#039BE5] hover:underline">
-               View All Catalog <ArrowRight size={14} />
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { name: 'Electronics', q: 'Electronics' },
-              { name: 'Fashion', q: 'Fashion' },
-              { name: 'Home & Kitchen', q: 'Home' },
-              { name: 'Sports', q: 'Sports' }
-            ].map((cat) => (
+        <div className="max-w-7xl mx-auto px-6 text-center">
+           <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase mb-16">Global Hub</h2>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            {MAIN_CATEGORIES.slice(0, 10).map((cat) => (
               <Link 
-                key={cat.name} 
-                href={`/products?category=${cat.q}`}
+                key={cat} 
+                href={`/?mainCategory=${cat}`}
                 className="p-8 bg-gray-50 rounded-[2rem] hover:bg-white hover:shadow-2xl hover:shadow-[#039BE5]/10 transition-all border border-transparent hover:border-[#039BE5]/10 group text-center"
               >
                 <div className="w-16 h-16 bg-white rounded-2xl shadow-sm mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Layout className="text-[#039BE5]" size={32} />
                 </div>
-                <h3 className="font-black text-gray-900 uppercase tracking-tighter">{cat.name}</h3>
-                <p className="text-[10px] text-gray-400 font-black mt-2 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Explore</p>
+                <h3 className="text-[11px] font-black text-gray-900 uppercase tracking-tighter">{cat}</h3>
               </Link>
             ))}
           </div>
@@ -273,7 +274,7 @@ function HomeContent() {
               </div>
               <h4 className="font-black text-xl text-gray-900 mb-4 tracking-tight">Best Value</h4>
               <p className="text-sm text-gray-500 font-medium leading-relaxed">
-                Our engine scans millions of data points to find the absolute lowest price for you.
+                Scanning millions of global data points for the absolute lowest price.
               </p>
             </div>
             <div className="flex flex-col items-center text-center p-8">
@@ -282,7 +283,7 @@ function HomeContent() {
               </div>
               <h4 className="font-black text-xl text-gray-900 mb-4 tracking-tight">Expert Guides</h4>
               <p className="text-sm text-gray-500 font-medium leading-relaxed">
-                Unbiased reviews and detailed comparisons to help you make informed decisions.
+                Unbiased reviews and detailed comparisons for smart decisions.
               </p>
             </div>
             <div className="flex flex-col items-center text-center p-8">
@@ -291,7 +292,7 @@ function HomeContent() {
               </div>
               <h4 className="font-black text-xl text-gray-900 mb-4 tracking-tight">Secure & Safe</h4>
               <p className="text-sm text-gray-500 font-medium leading-relaxed">
-                Fully DPDP Act 2023 compliant. Your data privacy is our highest priority.
+                Fully DPDP Act 2023 compliant. Your privacy is our priority.
               </p>
             </div>
           </div>
@@ -308,41 +309,21 @@ function HomeContent() {
             <p className="text-gray-400 max-w-sm leading-relaxed font-medium text-lg">
               The definitive price aggregator and discovery hub for the Indian & Global marketplace.
             </p>
-            <div className="mt-10 flex gap-4">
-               {[1,2,3,4].map(i => (
-                 <div key={i} className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
-                    <Layout size={18} className="text-white/60" />
-                 </div>
-               ))}
-            </div>
           </div>
           <div>
             <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-8 text-white/40">Marketplace</h4>
             <ul className="space-y-4 text-sm font-bold text-gray-300">
-              <li><Link href="/products" className="hover:text-[#039BE5] transition-colors">All Products</Link></li>
+              <li><Link href="/" className="hover:text-[#039BE5] transition-colors">All Products</Link></li>
               <li><Link href="/deals" className="hover:text-[#039BE5] transition-colors">Daily Deals</Link></li>
-              <li><Link href="/pod" className="hover:text-[#039BE5] transition-colors">POD Designs</Link></li>
-              <li><Link href="/compare" className="hover:text-[#039BE5] transition-colors">Price Tracker</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-8 text-white/40">Company</h4>
             <ul className="space-y-4 text-sm font-bold text-gray-300">
               <li><Link href="/about" className="hover:text-[#039BE5] transition-colors">About Us</Link></li>
-              <li><Link href="/careers" className="hover:text-[#039BE5] transition-colors">Careers</Link></li>
               <li><Link href="/privacy" className="hover:text-[#039BE5] transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="hover:text-[#039BE5] transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-6 mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-           <p className="text-[10px] font-black uppercase tracking-widest text-white/30">
-             © 2026 CloudBasket India. All rights reserved.
-           </p>
-           <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400">
-             DPDP Act 2023 Compliant Platform
-           </p>
         </div>
       </footer>
 
@@ -356,9 +337,6 @@ function HomeContent() {
         .custom-scrollbar::-webkit-scrollbar-thumb {
           background: #e5e7eb;
           border-radius: 10px;
-        }
-        .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-          background: #d1d5db;
         }
       `}</style>
     </div>

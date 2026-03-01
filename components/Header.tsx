@@ -121,22 +121,22 @@ export default function Header(): JSX.Element {
 
   return (
     <header className="sticky top-0 z-50 bg-[#039BE5] shadow-lg border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-6 h-16 sm:h-20">
+      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           
-          {/* Logo */}
+          {/* Logo - Top Left */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group">
             <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-xl group-hover:rotate-6 transition-transform">
               <span className="font-black text-[#039BE5] text-lg">CB</span>
             </div>
-            <div className="hidden lg:flex flex-col leading-none">
-              <span className="text-xl font-black text-white tracking-tighter">CloudBasket</span>
-              <span className="text-[10px] font-bold text-white/70 uppercase tracking-[0.2em] mt-0.5">Global Hub</span>
+            <div className="flex flex-col leading-none">
+              <span className="text-xl font-black text-white tracking-tighter">Product Catalog</span>
+              <span className="text-[10px] font-bold text-white/70 uppercase tracking-[0.2em] mt-0.5">CloudBasket Hub</span>
             </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          {/* Desktop Nav - Middle */}
+          <nav className="hidden xl:flex items-center gap-1 mx-4">
             {NAV_ITEMS.map((item) => (
               <div 
                 key={item.id} 
@@ -146,7 +146,7 @@ export default function Header(): JSX.Element {
               >
                 <Link
                   href={item.href}
-                  className="flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white/90 hover:text-white rounded-lg hover:bg-white/10 transition-all"
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white/90 hover:text-white rounded-lg hover:bg-white/10 transition-all whitespace-nowrap"
                 >
                   {item.label}
                   <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === item.id ? 'rotate-180' : ''}`} />
@@ -171,30 +171,31 @@ export default function Header(): JSX.Element {
             ))}
           </nav>
 
-          {/* Search */}
-          <form onSubmit={handleSearchSubmit} className="flex-grow max-w-xl relative hidden sm:block">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" size={18} />
-            <input
-              type="text"
-              value={searchValue}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
-              placeholder="Search global essentials..."
-              className="w-full bg-white/10 border border-white/20 rounded-xl py-2.5 pl-12 pr-4 text-sm text-white placeholder:text-white/40 outline-none focus:bg-white/20 focus:border-white/40 transition-all"
-            />
-          </form>
+          {/* Search & Actions - Top Right */}
+          <div className="flex items-center gap-2 sm:gap-6">
+            <form onSubmit={handleSearchSubmit} className="hidden md:block relative w-64 lg:w-96">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" size={18} />
+              <input
+                type="text"
+                value={searchValue}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+                placeholder="Search catalog..."
+                className="w-full bg-white/10 border border-white/20 rounded-xl py-2.5 pl-12 pr-4 text-sm text-white placeholder:text-white/40 outline-none focus:bg-white/20 focus:border-white/40 transition-all"
+              />
+            </form>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2 sm:gap-4 ml-auto">
-            <div className="hidden xl:block">
-              <AffiliateBadge />
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="hidden 2xl:block">
+                <AffiliateBadge />
+              </div>
+              <CartButton />
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="xl:hidden p-2 text-white hover:bg-white/10 rounded-xl transition-all"
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
             </div>
-            <CartButton />
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-white hover:bg-white/10 rounded-xl transition-all"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
         </div>
       </div>

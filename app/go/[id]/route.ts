@@ -1,45 +1,65 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PRODUCTS } from '@/lib/mock-data'
+import { AFFILIATE_TAGS, INCOME_SHIELD_BASE } from '@/lib/constants'
 
-/**
- * Step 10: Sovereign Redirect Node
- * Ensures "Income Shield" logic is applied to every exit.
- */
+const AFFILIATE_DOMAINS: Record<string, string> = {
+  amazon: 'https://www.amazon.in',
+  flipkart: 'https://www.flipkart.com',
+  cj: 'https://www.cj.com',
+}
+
+const DEMO_PRODUCTS: Record<string, string> = {
+  'demo-id': `https://www.amazon.in?tag=${AFFILIATE_TAGS.AMAZON}`,
+  'demo-mobile': `https://www.amazon.in/s?k=smartphones&tag=${AFFILIATE_TAGS.AMAZON}`,
+  'demo-laptop': 'https://www.flipkart.com/laptops',
+}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const id = parseInt(params.id)
-  const product = PRODUCTS.find((p) => p.id === id)
+  { params }: { params: Promise<{ id: string }> },
+): Promise<NextResponse> {
+  try {
+    const { id } = await params
 
-  if (!product) {
-    return NextResponse.redirect(new URL('/', request.url))
+    if (typeof id !== 'string' || id.trim().length === 0) {
+      return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
+    }
+
+    const normalizedId = id.trim()
+
+    if (normalizedId in DEMO_PRODUCTS) {
+      const demoUrl = DEMO_PRODUCTS[normalizedId]
+      if (!demoUrl.startsWith('https://')) {
+        return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
+      }
+      console.log('[Income Shield]', `${INCOME_SHIELD_BASE}/${normalizedId}`, '→', demoUrl)
+      return NextResponse.redirect(demoUrl, { status: 302 })
+    }
+
+    const [sourceRaw, ...productParts] = normalizedId.split('-')
+    const source = sourceRaw?.toLowerCase()
+    const productId = productParts.join('-').trim()
+
+    if (!(source in AFFILIATE_DOMAINS) || productId.length === 0) {
+      return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
+    }
+
+    let affiliateUrl = ''
+
+    if (source === 'amazon') {
+      affiliateUrl = `${AFFILIATE_DOMAINS.amazon}/dp/${encodeURIComponent(productId)}?tag=${AFFILIATE_TAGS.AMAZON}`
+    } else if (source === 'flipkart') {
+      affiliateUrl = `${AFFILIATE_DOMAINS.flipkart}/product/${encodeURIComponent(productId)}?affid=${AFFILIATE_TAGS.FLIPKART}`
+    } else if (source === 'cj') {
+      affiliateUrl = `${AFFILIATE_DOMAINS.cj}/product/${encodeURIComponent(productId)}?affid=${AFFILIATE_TAGS.CJ}`
+    }
+
+    if (!affiliateUrl.startsWith('https://')) {
+      return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
+    }
+
+    console.log('[Income Shield]', `${INCOME_SHIELD_BASE}/${normalizedId}`, '→', affiliateUrl)
+    return NextResponse.redirect(affiliateUrl, { status: 302 })
+  } catch {
+    return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
   }
-
-  // 1. Resolve Attribution Identity
-  const searchParams = request.nextUrl.searchParams
-  const associateRef = searchParams.get('ref') || 'admin-master'
-  const campaign = searchParams.get('utm_campaign') || 'sovereign_audit'
-
-  // 2. Platform-Specific Tag Injection Logic
-  let finalUrl = product.affiliateUrl
-  const urlObj = new URL(finalUrl)
-
-  if (finalUrl.includes('amazon')) {
-    urlObj.searchParams.set('tag', associateRef === 'admin-master' ? 'cloudbasket-21' : associateRef)
-  } else if (finalUrl.includes('flipkart')) {
-    urlObj.searchParams.set('affid', associateRef)
-  } else {
-    urlObj.searchParams.set('cb_ref', associateRef)
-  }
-  
-  urlObj.searchParams.set('utm_source', 'cloudbasket')
-  urlObj.searchParams.set('utm_medium', 'referral')
-  urlObj.searchParams.set('utm_campaign', campaign)
-
-  // 3. Sovereign Click Insurance Logging
-  console.log(`[EXIT NODE] ID: ${id} | Platform: ${urlObj.hostname} | Ref: ${associateRef} | Time: ${new Date().toISOString()}`)
-
-  // 4. Perform High-Speed Redirect
-  return NextResponse.redirect(urlObj.toString())
 }

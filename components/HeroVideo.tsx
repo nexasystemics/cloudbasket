@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { ShoppingCart, ArrowRight } from 'lucide-react'
+import { Sparkles, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 export default function HeroVideo() {
@@ -44,7 +44,7 @@ export default function HeroVideo() {
               href="#shop"
               className="bg-skyline-primary text-white px-10 py-5 rounded-2xl font-black text-sm hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-3 active:scale-95"
             >
-              <ShoppingCart size={20} />
+              <Sparkles size={20} />
               Browse Catalog
             </Link>
             <button className="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-10 py-5 rounded-2xl font-black text-sm transition-all flex items-center gap-3 backdrop-blur-md active:scale-95">

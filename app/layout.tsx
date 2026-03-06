@@ -1,37 +1,50 @@
 import type { Metadata } from 'next'
-import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import { ThemeProvider } from '@/components/ThemeProvider'
-import { GlobalProvider } from '@/context/GlobalContext'
-import SettingsBar from '@/components/SettingsBar'
+import type { ReactNode } from 'react'
 import CookieConsent from '@/components/CookieConsent'
+import Footer from '@/components/Footer'
+import Header from '@/components/Header'
+import CBThemeProvider from '@/components/ThemeProvider'
+import { GlobalProvider } from '@/context/GlobalContext'
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/constants'
+import './globals.css'
 
-export const metadata: Metadata = { 
-  title: 'CloudBasket - Everything in One Basket', 
-  description: 'Compare prices, track deals, discover POD designs and earn affiliate commissions.',
-  icons: {
-    icon: '/brand/favicon.svg',
-  }
+export const metadata: Metadata = {
+  title: {
+    default: 'CloudBasket — Everything in One Basket',
+    template: '%s | CloudBasket',
+  },
+  description: SITE_DESCRIPTION,
+  keywords: ['price comparison', 'deals', 'Amazon', 'Flipkart', 'India shopping', 'affiliate', 'CloudBasket'],
+  metadataBase: new URL(SITE_URL),
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: 'CloudBasket — Everything in One Basket',
+    description: SITE_DESCRIPTION,
+    images: [{ url: '/og/default.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CloudBasket',
+    description: SITE_DESCRIPTION,
+  },
+  robots: { index: true, follow: true },
+  icons: { icon: '/brand/favicon.svg' },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning dir="ltr">
-      <body className="antialiased bg-white dark:bg-[#1D1D1F] text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-[var(--cb-surface)] font-sans text-[var(--cb-text-primary)] antialiased transition-colors duration-300">
         <GlobalProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <CBThemeProvider>
             <Header />
-            {children}
+            <main>{children}</main>
             <Footer />
-            <SettingsBar />
             <CookieConsent />
-          </ThemeProvider>
+          </CBThemeProvider>
         </GlobalProvider>
       </body>
     </html>

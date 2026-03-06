@@ -1,52 +1,65 @@
+import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowLeft, Shirt } from 'lucide-react'
+import { ROUTES } from '@/lib/constants'
+import { PRODUCTS } from '@/lib/mock-data'
 
-export default function PodTshirtsPage() {
+export default function TshirtsPage() {
+  const tshirtProducts = PRODUCTS.filter(
+    (product) => product.mainCategory === 'Fashion' && product.subCategory === 'Activewear',
+  ).slice(0, 12)
+
   return (
-    <main className="min-h-screen bg-white">
-      <div className="w-full py-12 px-6" style={{ backgroundColor: '#039BE5' }}>
-        <div className="max-w-3xl mx-auto">
-          <p className="text-xs uppercase tracking-widest text-white/60 mb-2">cloudbasket · pod</p>
-          <h1 className="text-4xl font-extrabold text-white mb-2">Custom T-Shirts</h1>
-          <p className="text-white/80 text-sm">
-            Exclusive CloudBasket designs on premium tees — available on Redbubble &amp; Teepublic.
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[var(--cb-surface)]">
+      <div className="mx-auto w-full max-w-7xl px-6 py-12">
+        <nav className="text-sm text-[var(--cb-text-muted)]">
+          <span>POD</span>
+          <span className="px-2">/</span>
+          <span>T-Shirts</span>
+        </nav>
 
-      <div className="max-w-3xl mx-auto px-6 py-12 space-y-8">
-        <section
-          className="rounded-2xl p-8 text-center"
-          style={{ backgroundColor: '#f0fdf4', border: '2px dashed #1B5E20' }}
+        <Link
+          href={ROUTES.POD}
+          className="mt-3 inline-flex items-center gap-2 text-sm text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]"
         >
-          <div
-            className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"
-            style={{ backgroundColor: '#1B5E20' }}
-          >
-            👕
-          </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">T-Shirt Collection</h2>
-          <p className="text-gray-600 text-sm max-w-md mx-auto">
-            Browse our full t-shirt collection across platforms. New designs added weekly.
-          </p>
-        </section>
+          <ArrowLeft size={14} />
+          Back to POD
+        </Link>
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Link
-            href="/pod"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: '#039BE5' }}
-          >
-            View All POD →
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: '#E65100' }}
-          >
-            ← Back to Home
-          </Link>
-        </div>
+        <header className="mt-6">
+          <h1 className="flex items-center gap-2 font-display text-3xl font-black uppercase text-[var(--cb-text-primary)]">
+            <Shirt size={28} className="text-skyline-primary" />
+            Graphic T-Shirts
+          </h1>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            200+ unique designs. Premium cotton. Ships worldwide.
+          </p>
+        </header>
+
+        <section className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {tshirtProducts.map((product) => (
+            <article key={product.id} className="cb-card cursor-pointer overflow-hidden">
+              <div className="relative aspect-square">
+                <Image src={product.image} alt={product.name} fill className="object-cover" />
+              </div>
+              <div className="p-3">
+                <h2 className="line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">{product.name}</h2>
+                <p className="mt-1 font-mono text-sm text-skyline-primary">
+                  ₹{new Intl.NumberFormat('en-IN').format(product.price)}
+                </p>
+                <a
+                  href={`/go/cj-${product.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cb-btn-primary mt-3 w-full justify-center text-xs"
+                >
+                  View on CJ
+                </a>
+              </div>
+            </article>
+          ))}
+        </section>
       </div>
-    </main>
+    </div>
   )
 }

@@ -1,118 +1,288 @@
 'use client'
 
-import React, { useState } from 'react'
-import { 
-  Package, 
-  Palette, 
-  Plus, 
-  ExternalLink, 
-  ChevronLeft, 
-  CheckCircle2, 
-  ShieldCheck,
-  Tag,
-  Globe,
-  Upload,
-  ShoppingBag
-} from 'lucide-react'
+import { useCallback, useState } from 'react'
 import Link from 'next/link'
+import { Plus, Save, X } from 'lucide-react'
 import { useGlobal } from '@/context/GlobalContext'
+import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
+import { SUB_CATEGORIES } from '@/lib/mock-data'
+import type { AffiliateSource, Product } from '@/lib/types'
 
-export default function UnifiedListerPortal() {
+interface ProductFormData {
+  name: string
+  price: string
+  originalPrice: string
+  description: string
+  mainCategory: string
+  subCategory: string
+  brand: string
+  affiliateUrl: string
+  source: AffiliateSource
+  warranty: string
+}
+
+const DEFAULT_FORM: ProductFormData = {
+  name: '',
+  price: '',
+  originalPrice: '',
+  description: '',
+  mainCategory: '',
+  subCategory: '',
+  brand: '',
+  affiliateUrl: '',
+  source: 'Amazon',
+  warranty: '',
+}
+
+export default function ListerPage() {
   const { user } = useGlobal()
-  const [listType, setListType] = useState<'product' | 'design'>('product')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [form, setForm] = useState<ProductFormData>(DEFAULT_FORM)
+  const [submitted, setSubmitted] = useState<boolean>(false)
+  const [errors, setErrors] = useState<Partial<Record<keyof ProductFormData, string>>>({})
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSuccess(true)
-      setTimeout(() => setSuccess(false), 3000)
-    }, 2000)
+  const validate = useCallback((value: ProductFormData): Partial<Record<keyof ProductFormData, string>> => {
+    const nextErrors: Partial<Record<keyof ProductFormData, string>> = {}
+
+    if (value.name.trim().length < 3) {
+      nextErrors.name = 'Name must be at least 3 characters.'
+    }
+    if (value.price.trim().length === 0 || Number.isNaN(Number(value.price)) || Number(value.price) <= 0) {
+      nextErrors.price = 'Enter a valid price greater than 0.'
+    }
+    if (value.description.trim().length < 20) {
+      nextErrors.description = 'Description must be at least 20 characters.'
+    }
+    if (value.mainCategory.trim().length === 0) {
+      nextErrors.mainCategory = 'Select a main category.'
+    }
+    if (value.affiliateUrl.trim().length === 0 || !value.affiliateUrl.startsWith('https://')) {
+      nextErrors.affiliateUrl = 'Affiliate URL must start with https://'
+    }
+
+    return nextErrors
+  }, [])
+
+  const handleSubmit = useCallback((): void => {
+    const nextErrors = validate(form)
+    setErrors(nextErrors)
+    if (Object.keys(nextErrors).length > 0) {
+      return
+    }
+
+    const draftProduct: Partial<Product> = {
+      name: form.name,
+      brand: form.brand,
+      mainCategory: form.mainCategory,
+      subCategory: form.subCategory,
+      affiliateUrl: form.affiliateUrl,
+      source: form.source,
+    }
+    void draftProduct
+
+    setSubmitted(true)
+  }, [form, validate])
+
+  const setField = useCallback(<K extends keyof ProductFormData>(key: K, value: ProductFormData[K]): void => {
+    setForm((prev) => ({ ...prev, [key]: value }))
+  }, [])
+
+  if (!user || user.role !== 'Admin') {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--cb-surface)] px-6 text-center">
+        <h1 className="font-display text-2xl font-black text-[var(--cb-text-primary)]">Admin Access Required</h1>
+        <Link href={ROUTES.LOGIN} className="cb-btn-primary mt-4">
+          Sign In
+        </Link>
+      </div>
+    )
   }
 
-  return (
-    <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#161617] p-6 md:p-12 font-sans">
-      <div className="max-w-4xl mx-auto space-y-10">
-        <div className="flex items-center justify-between">
-          <Link 
-            href="/admin" 
-            className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-skyline-primary transition-colors group"
+  if (submitted) {
+    return (
+      <div className="min-h-screen bg-[var(--cb-surface-2)]">
+        <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-6 py-16 text-center">
+          <div className="rounded-full bg-status-success/10 p-4">
+            <Save size={28} className="text-status-success" />
+          </div>
+          <h1 className="mt-4 font-display text-2xl font-black text-[var(--cb-text-primary)]">
+            Product submitted for review
+          </h1>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            Moderation will validate data before this listing goes live.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setForm(DEFAULT_FORM)
+              setErrors({})
+              setSubmitted(false)
+            }}
+            className="cb-btn-primary mt-6 gap-2"
           >
-            <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-            Admin Hub
-          </Link>
-          <div className="bg-skyline-primary/10 text-skyline-primary text-[10px] font-black px-4 py-2 rounded-full border border-skyline-primary/20 flex items-center gap-2">
-            <ShieldCheck size={14} />
-            Verified Lister: {user?.id || 'CB-Node-01'}
-          </div>
+            <Plus size={14} />
+            Add Another
+          </button>
         </div>
+      </div>
+    )
+  }
 
-        <div className="bg-white dark:bg-gray-900 rounded-[3rem] border border-gray-100 dark:border-gray-800 shadow-xl overflow-hidden">
-          <div className="p-10 border-b border-gray-50 dark:border-gray-800 bg-gray-50/30 dark:bg-gray-800/20">
-            <h2 className="text-3xl font-black tracking-tighter mb-6">Unified Lister Portal</h2>
-            
-            <div className="flex bg-white dark:bg-gray-900 p-1.5 rounded-2xl border border-gray-100 dark:border-gray-800 w-fit">
-               <button 
-                onClick={() => setListType('product')}
-                className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2 ${listType === 'product' ? 'bg-skyline-primary text-white shadow-lg' : 'text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
-               >
-                 <ShoppingBag size={14} /> Affiliate Product
-               </button>
-               <button 
-                onClick={() => setListType('design')}
-                className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2 ${listType === 'design' ? 'bg-orange-500 text-white shadow-lg' : 'text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
-               >
-                 <Palette size={14} /> POD Design
-               </button>
-            </div>
+  const subCategoryOptions =
+    form.mainCategory.length > 0 && form.mainCategory in SUB_CATEGORIES
+      ? SUB_CATEGORIES[form.mainCategory as keyof typeof SUB_CATEGORIES]
+      : []
+
+  return (
+    <div className="min-h-screen bg-[var(--cb-surface-2)]">
+      <div className="mx-auto w-full max-w-3xl px-6 py-12">
+        <h1 className="font-display text-2xl font-black text-[var(--cb-text-primary)]">Add New Product</h1>
+        <p className="mt-1 text-sm text-[var(--cb-text-muted)]">
+          Products are submitted for moderation before going live
+        </p>
+
+        <div className="mt-8 space-y-4">
+          <label className="block">
+            <span className="text-xs font-bold text-[var(--cb-text-muted)]">Product Name</span>
+            <input
+              value={form.name}
+              onChange={(event) => setField('name', event.target.value)}
+              className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+            />
+            {errors.name && <p className="mt-1 text-xs text-status-error">{errors.name}</p>}
+          </label>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <label className="block">
+              <span className="text-xs font-bold text-[var(--cb-text-muted)]">Main Category</span>
+              <select
+                value={form.mainCategory}
+                onChange={(event) => {
+                  setField('mainCategory', event.target.value)
+                  setField('subCategory', '')
+                }}
+                className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+              >
+                <option value="">Select category</option>
+                {MAIN_CATEGORIES.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+              {errors.mainCategory && <p className="mt-1 text-xs text-status-error">{errors.mainCategory}</p>}
+            </label>
+
+            <label className="block">
+              <span className="text-xs font-bold text-[var(--cb-text-muted)]">Sub Category</span>
+              <select
+                value={form.subCategory}
+                onChange={(event) => setField('subCategory', event.target.value)}
+                className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+              >
+                <option value="">Select sub category</option>
+                {subCategoryOptions.map((subCategory) => (
+                  <option key={subCategory} value={subCategory}>
+                    {subCategory}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
 
-          <form onSubmit={handleSubmit} className="p-10 space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-               <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Item Title</label>
-                  <input required type="text" placeholder="e.g. Ultra-Light Carbon Fiber Tripod" className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-2xl py-4 px-6 text-sm font-bold focus:ring-2 focus:ring-skyline-primary outline-none" />
-               </div>
-               <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Category Hub</label>
-                  <select className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-2xl py-4 px-6 text-sm font-black focus:ring-2 focus:ring-skyline-primary outline-none appearance-none">
-                     <option>Mobiles</option>
-                     <option>Laptops</option>
-                     <option>Fashion</option>
-                     <option>Home</option>
-                  </select>
-               </div>
-            </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <label className="block">
+              <span className="text-xs font-bold text-[var(--cb-text-muted)]">Brand</span>
+              <input
+                value={form.brand}
+                onChange={(event) => setField('brand', event.target.value)}
+                className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+              />
+            </label>
 
-            <div className="space-y-2">
-               <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Master Redirect URL (Affiliate)</label>
-               <div className="relative">
-                  <Globe size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input required type="url" placeholder="https://amazon.in/dp/..." className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-2xl py-4 pl-12 pr-6 text-sm font-bold focus:ring-2 focus:ring-skyline-primary outline-none" />
-               </div>
-            </div>
+            <label className="block">
+              <span className="text-xs font-bold text-[var(--cb-text-muted)]">Price INR</span>
+              <input
+                type="number"
+                value={form.price}
+                onChange={(event) => setField('price', event.target.value)}
+                className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+              />
+              {errors.price && <p className="mt-1 text-xs text-status-error">{errors.price}</p>}
+            </label>
+          </div>
 
-            <div className="p-8 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-[2rem] flex flex-col items-center justify-center text-center group cursor-pointer hover:border-skyline-primary transition-all">
-               <Upload className="text-gray-300 group-hover:text-skyline-primary transition-colors mb-4" size={32} />
-               <p className="text-xs font-black uppercase tracking-widest text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">Upload 4K Product Media</p>
-            </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <label className="block">
+              <span className="text-xs font-bold text-[var(--cb-text-muted)]">Original Price INR</span>
+              <input
+                type="number"
+                value={form.originalPrice}
+                onChange={(event) => setField('originalPrice', event.target.value)}
+                className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+              />
+            </label>
 
-            <div className="pt-6 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-6">
-               <div className="flex items-center gap-3 text-gray-400">
-                  <CheckCircle2 size={16} className="text-emerald-500" />
-                  <p className="text-[9px] font-black uppercase tracking-widest">Sent to Moderation Queue upon deployment</p>
-               </div>
-               <button 
-                disabled={isSubmitting}
-                className={`px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl flex items-center gap-3 active:scale-95 ${isSubmitting ? 'bg-gray-100 text-gray-400' : success ? 'bg-emerald-500 text-white' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900'}`}
-               >
-                 {isSubmitting ? 'Processing Nodes...' : success ? 'Deployment Successful' : 'Request Listing'}
-               </button>
-            </div>
-          </form>
+            <label className="block">
+              <span className="text-xs font-bold text-[var(--cb-text-muted)]">Source</span>
+              <select
+                value={form.source}
+                onChange={(event) => setField('source', event.target.value as AffiliateSource)}
+                className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+              >
+                <option value="Amazon">Amazon</option>
+                <option value="Flipkart">Flipkart</option>
+                <option value="CJ">CJ</option>
+                <option value="Direct">Direct</option>
+              </select>
+            </label>
+          </div>
+
+          <label className="block">
+            <span className="text-xs font-bold text-[var(--cb-text-muted)]">Affiliate URL</span>
+            <input
+              type="url"
+              value={form.affiliateUrl}
+              onChange={(event) => setField('affiliateUrl', event.target.value)}
+              className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+            />
+            {errors.affiliateUrl && <p className="mt-1 text-xs text-status-error">{errors.affiliateUrl}</p>}
+          </label>
+
+          <label className="block">
+            <span className="text-xs font-bold text-[var(--cb-text-muted)]">Warranty</span>
+            <input
+              value={form.warranty}
+              onChange={(event) => setField('warranty', event.target.value)}
+              className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-xs font-bold text-[var(--cb-text-muted)]">Description</span>
+            <textarea
+              rows={4}
+              value={form.description}
+              onChange={(event) => setField('description', event.target.value)}
+              className="glass-panel mt-1 w-full rounded-button border cb-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-skyline-primary"
+            />
+            {errors.description && <p className="mt-1 text-xs text-status-error">{errors.description}</p>}
+          </label>
+
+          <button type="button" onClick={handleSubmit} className="cb-btn-primary w-full justify-center gap-2 py-4">
+            <Save size={16} />
+            Submit for Review
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setForm(DEFAULT_FORM)
+              setErrors({})
+            }}
+            className="cb-btn-ghost w-full justify-center gap-2"
+          >
+            <X size={14} />
+            Clear
+          </button>
         </div>
       </div>
     </div>

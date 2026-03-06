@@ -1,460 +1,279 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { Search, Plus, X, Check, ExternalLink, Share2, ChevronRight } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { ChevronDown, ExternalLink, Plus, Search, Star, X } from 'lucide-react'
+import { useGlobal } from '@/context/GlobalContext'
+import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
+import { PRODUCTS } from '@/lib/mock-data'
+import type { Product } from '@/lib/types'
 
-const purpleTheme = '#039BE5'
-
-interface Product {
-  id: string
-  name: string
-  price: string
-  rating: number
-  brand: string
-  image: string
-  specs: {
-    processor: string
-    camera: string
-    display: string
-    battery: string
-    has5G: boolean
-    hasWirelessCharging: boolean
-    hasWaterResistance: boolean
-    warranty: string
-  }
-  pros: string[]
-  cons: string[]
-  amazonLink: string
-}
-
-const SAMPLE_PRODUCTS: Product[] = [
-  {
-    id: '1',
-    name: 'iPhone 15 Pro',
-    price: '₹1,34,900',
-    rating: 4.8,
-    brand: 'Apple',
-    image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=400&fit=crop',
-    specs: {
-      processor: 'A17 Pro',
-      camera: '48MP',
-      display: '6.1" OLED',
-      battery: '3274 mAh',
-      has5G: true,
-      hasWirelessCharging: true,
-      hasWaterResistance: true,
-      warranty: '1 Year',
-    },
-    pros: ['Best camera system', 'Premium build quality', 'Long software support'],
-    cons: ['Expensive', 'No charger included', 'Limited customization'],
-    amazonLink: '#',
-  },
-  {
-    id: '2',
-    name: 'Samsung Galaxy S24',
-    price: '₹79,999',
-    rating: 4.7,
-    brand: 'Samsung',
-    image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=400&fit=crop',
-    specs: {
-      processor: 'Snapdragon 8 Gen 3',
-      camera: '50MP',
-      display: '6.2" AMOLED',
-      battery: '4000 mAh',
-      has5G: true,
-      hasWirelessCharging: true,
-      hasWaterResistance: true,
-      warranty: '1 Year',
-    },
-    pros: ['Excellent display', 'Great performance', 'Good battery life'],
-    cons: ['One UI can be heavy', 'Pricey', 'Fast charging slower'],
-    amazonLink: '#',
-  },
-  {
-    id: '3',
-    name: 'OnePlus 12',
-    price: '₹64,999',
-    rating: 4.6,
-    brand: 'OnePlus',
-    image: 'https://images.unsplash.com/photo-1546054454-aa26e2b734c7?w=400&h=400&fit=crop',
-    specs: {
-      processor: 'Snapdragon 8 Gen 3',
-      camera: '50MP',
-      display: '6.82" AMOLED',
-      battery: '5400 mAh',
-      has5G: true,
-      hasWirelessCharging: true,
-      hasWaterResistance: true,
-      warranty: '1 Year',
-    },
-    pros: ['Fast charging', 'Great value', 'Smooth software'],
-    cons: ['Camera not flagship level', 'Large size', 'Limited availability'],
-    amazonLink: '#',
-  },
-]
+const MAX_COMPARE = 4
 
 export default function ComparePage() {
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>(SAMPLE_PRODUCTS)
-  const [searchQuery, setSearchQuery] = useState('')
+  const router = useRouter()
+  const { formatPrice } = useGlobal()
+  const [selectedIds, setSelectedIds] = useState<number[]>([])
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchCategory, setSearchCategory] = useState<string>('All')
 
-  const addProduct = () => {
-    // Placeholder for add product functionality
-    console.log('Add product')
-  }
+  const selectedProducts = useMemo<Product[]>(() => {
+    return PRODUCTS.filter((product) => selectedIds.includes(product.id))
+  }, [selectedIds])
 
-  const removeProduct = (id: string) => {
-    setSelectedProducts(selectedProducts.filter((p) => p.id !== id))
-  }
-
-  const shareComparison = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: 'Product Comparison',
-        text: 'Check out this product comparison on CloudBasket',
-        url: window.location.href,
-      })
-    } else {
-      navigator.clipboard.writeText(window.location.href)
-      alert('Link copied to clipboard!')
+  const searchResults = useMemo<Product[]>(() => {
+    const query = searchQuery.trim().toLowerCase()
+    if (query.length < 2) {
+      return []
     }
+
+    return PRODUCTS.filter((product) => {
+      const matchesQuery =
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query) ||
+        product.brand.toLowerCase().includes(query)
+      const matchesCategory = searchCategory === 'All' || product.mainCategory === searchCategory
+      return matchesQuery && matchesCategory && !selectedIds.includes(product.id)
+    }).slice(0, 8)
+  }, [searchCategory, searchQuery, selectedIds])
+
+  const lowestPrice = useMemo<number | null>(() => {
+    if (selectedProducts.length === 0) {
+      return null
+    }
+    return selectedProducts.reduce((min, item) => (item.price < min ? item.price : min), selectedProducts[0].price)
+  }, [selectedProducts])
+
+  const highestRating = useMemo<number | null>(() => {
+    if (selectedProducts.length === 0) {
+      return null
+    }
+    return selectedProducts.reduce(
+      (max, item) => (item.rating > max ? item.rating : max),
+      selectedProducts[0].rating,
+    )
+  }, [selectedProducts])
+
+  const addProduct = (id: number): void => {
+    if (selectedIds.includes(id) || selectedIds.length >= MAX_COMPARE) {
+      return
+    }
+    setSelectedIds([...selectedIds, id])
+    setSearchQuery('')
+  }
+
+  const removeProduct = (id: number): void => {
+    setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id))
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Breadcrumb */}
-      <section className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <nav className="flex items-center gap-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-[#039BE5] transition-colors">
-              Home
-            </Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-gray-900 font-medium">Compare</span>
-          </nav>
-        </div>
-      </section>
-
-      {/* Hero Section */}
-      <section
-        className="py-16 px-4 text-white"
-        style={{ backgroundColor: purpleTheme }}
-      >
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+    <div className="min-h-screen bg-[var(--cb-surface)]">
+      <div className="mx-auto w-full max-w-7xl px-6 py-12">
+        <header>
+          <h1 className="font-display text-3xl font-black uppercase tracking-tight text-[var(--cb-text-primary)]">
             Compare Products
           </h1>
-          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Make smarter buying decisions with side-by-side comparisons
+          <p className="mt-1 text-sm text-[var(--cb-text-muted)]">
+            Add up to 4 products to compare side by side
           </p>
+        </header>
 
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <section className="mt-8">
+          <div className="relative max-w-3xl">
+            <div className="glass-panel relative">
+              <Search
+                size={18}
+                className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
+              />
               <input
-                type="text"
-                placeholder="Search products to compare..."
+                type="search"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search product to add..."
+                className="w-full rounded-card bg-transparent py-4 pe-4 ps-11 text-sm text-[var(--cb-text-primary)] outline-none"
               />
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Comparison Slots */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {[0, 1, 2].map((index) => {
-            const product = selectedProducts[index]
-            return (
-              <div
-                key={index}
-                className={`rounded-xl border-2 p-6 ${
-                  product
-                    ? 'border-gray-200 bg-white shadow-sm'
-                    : 'border-dashed border-[#039BE5]/40 bg-[#039BE5]/5'
-                }`}
-              >
-                {product ? (
-                  <>
-                    <div className="flex items-start justify-between mb-4">
-                      <img src={product.image} alt={product.name} className="w-20 h-20 object-contain rounded-lg mb-2" loading="lazy" />
-                      <button
-                        onClick={() => removeProduct(product.id)}
-                        className="p-1 rounded-full hover:bg-gray-100 transition-colors"
-                        aria-label="Remove product"
-                      >
-                        <X className="w-5 h-5 text-gray-400" />
-                      </button>
-                    </div>
-                    <h3 className="font-bold text-lg text-gray-900 mb-1">
-                      {product.name}
-                    </h3>
-                    <p
-                      className="text-2xl font-bold mb-2"
-                      style={{ color: purpleTheme }}
-                    >
-                      {product.price}
-                    </p>
-                    <div className="flex items-center gap-1 text-sm text-gray-600 mb-4">
-                      <span className="font-medium text-amber-500">{product.rating} / 5</span>
-                    </div>
-                    <button
-                      onClick={() => removeProduct(product.id)}
-                      className="w-full py-2 px-4 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Remove
-                    </button>
-                  </>
-                ) : (
+            {searchResults.length > 0 && (
+              <div className="glass-panel absolute inset-x-0 top-[calc(100%+8px)] z-30 overflow-hidden border cb-border rounded-card">
+                {searchResults.map((product) => (
                   <button
-                    onClick={addProduct}
-                    className="w-full h-full flex flex-col items-center justify-center py-12 text-gray-400 hover:text-[#039BE5] transition-colors"
+                    key={product.id}
+                    type="button"
+                    onClick={() => addProduct(product.id)}
+                    className="flex w-full cursor-pointer items-center gap-3 p-3 text-start transition-colors hover:bg-[var(--cb-surface-3)]"
                   >
-                    <Plus className="w-12 h-12 mb-3" />
-                    <span className="font-medium">Add Product</span>
-                  </button>
-                )}
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Comparison Table */}
-        {selectedProducts.length > 0 && (
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-            {/* Sticky Header */}
-            <div className="sticky top-0 z-10 bg-white border-b border-gray-200">
-              <div className="grid grid-cols-4 gap-4 p-4">
-                <div className="font-semibold text-gray-700">Specification</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="text-center">
-                    <img src={product.image} alt={product.name} className="w-12 h-12 object-contain rounded mx-auto mb-2" loading="lazy" />
-                    <div className="font-semibold text-sm text-gray-900">
-                      {product.name}
+                    <div className="relative h-10 w-10 overflow-hidden rounded-badge">
+                      <Image src={product.image} alt={product.name} fill className="object-cover" />
                     </div>
-                  </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[13px] font-bold text-[var(--cb-text-primary)]">{product.name}</p>
+                      <p className="font-mono text-xs text-skyline-primary">{formatPrice(product.price)}</p>
+                    </div>
+                  </button>
                 ))}
               </div>
-            </div>
-
-            {/* Table Rows */}
-            <div className="divide-y divide-gray-100">
-              {/* Price */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Price</div>
-                {selectedProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className="font-bold text-lg"
-                    style={{ color: purpleTheme }}
-                  >
-                    {product.price}
-                  </div>
-                ))}
-              </div>
-
-              {/* Rating */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Rating</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="flex items-center gap-1">
-                    <span className="font-semibold text-amber-500">{product.rating} / 5</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Brand */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Brand</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="text-gray-900">
-                    {product.brand}
-                  </div>
-                ))}
-              </div>
-
-              {/* Processor */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Processor</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="text-gray-900">
-                    {product.specs.processor}
-                  </div>
-                ))}
-              </div>
-
-              {/* Camera */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Camera</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="text-gray-900">
-                    {product.specs.camera}
-                  </div>
-                ))}
-              </div>
-
-              {/* Display */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Display</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="text-gray-900">
-                    {product.specs.display}
-                  </div>
-                ))}
-              </div>
-
-              {/* Battery */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Battery</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="text-gray-900">
-                    {product.specs.battery}
-                  </div>
-                ))}
-              </div>
-
-              {/* 5G Support */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">5G Support</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="flex justify-center">
-                    {product.specs.has5G ? (
-                      <Check className="w-5 h-5 text-green-500" />
-                    ) : (
-                      <X className="w-5 h-5 text-red-500" />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Wireless Charging */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Wireless Charging</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="flex justify-center">
-                    {product.specs.hasWirelessCharging ? (
-                      <Check className="w-5 h-5 text-green-500" />
-                    ) : (
-                      <X className="w-5 h-5 text-red-500" />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Water Resistance */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Water Resistance</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="flex justify-center">
-                    {product.specs.hasWaterResistance ? (
-                      <Check className="w-5 h-5 text-green-500" />
-                    ) : (
-                      <X className="w-5 h-5 text-red-500" />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Warranty */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Warranty</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="text-gray-900">
-                    {product.specs.warranty}
-                  </div>
-                ))}
-              </div>
-
-              {/* Pros */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Pros</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="space-y-1">
-                    {product.pros.map((pro, idx) => (
-                      <div
-                        key={idx}
-                        className="text-sm text-green-700 flex items-start gap-1"
-                      >
-                        <Check className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                        <span>{pro}</span>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-
-              {/* Cons */}
-              <div className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                <div className="font-medium text-gray-700">Cons</div>
-                {selectedProducts.map((product) => (
-                  <div key={product.id} className="space-y-1">
-                    {product.cons.map((con, idx) => (
-                      <div
-                        key={idx}
-                        className="text-sm text-red-700 flex items-start gap-1"
-                      >
-                        <X className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                        <span>{con}</span>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-
-              {/* View on Amazon */}
-              <div className="grid grid-cols-4 gap-4 p-4 bg-[#039BE5]/5">
-                <div className="font-medium text-gray-700">Buy Now</div>
-                {selectedProducts.map((product) => (
-                  <a
-                    key={product.id}
-                    href={product.amazonLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-sm font-semibold text-white transition hover:opacity-90"
-                    style={{ backgroundColor: purpleTheme }}
-                  >
-                    View on Amazon
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                ))}
-              </div>
-            </div>
+            )}
           </div>
-        )}
-      </section>
 
-      {/* Bottom CTA */}
-      {selectedProducts.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => setSelectedProducts([])}
-              className="px-6 py-3 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+          <div className="relative mt-3 max-w-[240px]">
+            <select
+              value={searchCategory}
+              onChange={(event) => setSearchCategory(event.target.value)}
+              className="cb-btn-ghost w-full appearance-none justify-between rounded-button pe-8 text-sm"
             >
-              Start New Comparison
-            </button>
-            <button
-              onClick={() => console.log('Save comparison')}
-              className="px-6 py-3 rounded-lg border-2 font-semibold hover:bg-sky-50 transition-colors"
-              style={{ borderColor: purpleTheme, color: purpleTheme }}
-            >
-              Save Comparison
-            </button>
-            <button
-              onClick={shareComparison}
-              className="px-6 py-3 rounded-lg font-semibold text-white transition hover:opacity-90 flex items-center justify-center gap-2"
-              style={{ backgroundColor: purpleTheme }}
-            >
-              <Share2 className="w-4 h-4" />
-              Share
-            </button>
+              <option value="All">All</option>
+              {MAIN_CATEGORIES.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              size={14}
+              className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
+            />
           </div>
         </section>
-      )}
+
+        <section className="mt-10">
+          {selectedProducts.length === 0 ? (
+            <div className="flex flex-col items-center justify-center gap-3 rounded-card border cb-border bg-[var(--cb-surface-2)] py-16 text-center">
+              <Plus size={48} className="text-[var(--cb-text-muted)]" />
+              <p className="text-[var(--cb-text-primary)]">Add products above to start comparing</p>
+              <Link href={ROUTES.PRODUCTS} className="cb-btn-ghost">
+                Browse products
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {selectedProducts.map((product) => (
+                <article key={product.id} className="cb-card relative p-4">
+                  <button
+                    type="button"
+                    onClick={() => removeProduct(product.id)}
+                    className="absolute end-2 top-2 rounded-full p-1 text-[var(--cb-text-muted)] hover:bg-[var(--cb-surface-3)]"
+                    aria-label={`Remove ${product.name}`}
+                  >
+                    <X size={14} />
+                  </button>
+                  <div className="relative aspect-square overflow-hidden rounded-card">
+                    <Image src={product.image} alt={product.name} fill className="object-cover" />
+                  </div>
+                  <div className="mt-2 cb-badge bg-skyline-glow text-skyline-primary">{product.brand}</div>
+                  <h2 className="mt-1 line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">
+                    {product.name}
+                  </h2>
+                  <p className="mt-2 font-display text-xl font-black text-skyline-primary">
+                    {formatPrice(product.price)}
+                  </p>
+                  <div className="mt-1 flex items-center gap-1">
+                    {Array.from({ length: 5 }, (_, index) => (
+                      <Star
+                        key={`${product.id}-star-${index + 1}`}
+                        size={12}
+                        className={index + 1 <= Math.round(product.rating) ? 'fill-[#F5C842] text-[#F5C842]' : 'text-[var(--cb-text-muted)]'}
+                      />
+                    ))}
+                    <span className="ms-1 text-xs text-[var(--cb-text-muted)]">{product.rating.toFixed(1)}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => router.push('/go/amazon-' + String(product.id))}
+                    className="cb-btn-primary mt-3 w-full justify-center gap-2 text-xs"
+                  >
+                    View Deal
+                    <ExternalLink size={12} />
+                  </button>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {selectedProducts.length >= 2 && (
+          <section className="mt-8 overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th className="border cb-border bg-[var(--cb-surface-3)] p-3 text-start text-xs font-black uppercase tracking-wider text-[var(--cb-text-muted)]">
+                    Spec
+                  </th>
+                  {selectedProducts.map((product) => (
+                    <th
+                      key={`head-${product.id}`}
+                      className="border cb-border bg-[var(--cb-surface-3)] p-3 text-start text-xs font-black text-[var(--cb-text-primary)]"
+                    >
+                      {product.name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="even:bg-[var(--cb-surface-2)]">
+                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Rating</td>
+                  {selectedProducts.map((product) => (
+                    <td
+                      key={`rating-${product.id}`}
+                      className={`border cb-border p-3 text-sm ${
+                        highestRating !== null && product.rating === highestRating
+                          ? 'font-bold text-skyline-primary'
+                          : 'text-[var(--cb-text-primary)]'
+                      }`}
+                    >
+                      {product.rating.toFixed(1)}
+                    </td>
+                  ))}
+                </tr>
+                <tr className="even:bg-[var(--cb-surface-2)]">
+                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Price</td>
+                  {selectedProducts.map((product) => (
+                    <td
+                      key={`price-${product.id}`}
+                      className={`border cb-border p-3 text-sm ${
+                        lowestPrice !== null && product.price === lowestPrice
+                          ? 'font-bold text-status-success'
+                          : 'text-[var(--cb-text-primary)]'
+                      }`}
+                    >
+                      {formatPrice(product.price)}
+                    </td>
+                  ))}
+                </tr>
+                <tr className="even:bg-[var(--cb-surface-2)]">
+                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Brand</td>
+                  {selectedProducts.map((product) => (
+                    <td key={`brand-${product.id}`} className="border cb-border p-3 text-sm text-[var(--cb-text-primary)]">
+                      {product.brand}
+                    </td>
+                  ))}
+                </tr>
+                <tr className="even:bg-[var(--cb-surface-2)]">
+                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Warranty</td>
+                  {selectedProducts.map((product) => (
+                    <td
+                      key={`warranty-${product.id}`}
+                      className="border cb-border p-3 text-sm text-[var(--cb-text-primary)]"
+                    >
+                      {product.warranty}
+                    </td>
+                  ))}
+                </tr>
+                <tr className="even:bg-[var(--cb-surface-2)]">
+                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Stock</td>
+                  {selectedProducts.map((product) => (
+                    <td key={`stock-${product.id}`} className="border cb-border p-3 text-sm text-[var(--cb-text-primary)]">
+                      {product.stock}
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        )}
+      </div>
     </div>
   )
 }

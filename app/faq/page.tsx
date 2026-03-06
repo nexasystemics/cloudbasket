@@ -1,66 +1,104 @@
-import Link from 'next/link'
+'use client'
 
-interface FaqItem {
-  readonly q: string
-  readonly a: string
-}
+import { useState } from 'react'
+import { ChevronDown, HelpCircle } from 'lucide-react'
 
-const FAQS: readonly FaqItem[] = [
+const FAQS = [
   {
-    q: 'Is CloudBasket free to use?',
-    a: 'Yes. CloudBasket is completely free for shoppers. We earn through affiliate commissions when you make a purchase via our links — at no extra cost to you.',
+    question: 'How does CloudBasket make money?',
+    answer:
+      'CloudBasket earns affiliate commission when users click our /go links and complete purchases on partner platforms. This commission comes from retailers, not from users. Prices shown to users are not increased by this model.',
   },
   {
-    q: 'Do you sell products directly?',
-    a: 'No. CloudBasket is an aggregator and affiliate platform. We link you to Amazon, Flipkart, Redbubble, Teepublic and other trusted platforms where you complete your purchase.',
+    question: 'Do I complete my purchase on CloudBasket?',
+    answer:
+      'No. CloudBasket is a zero-checkout discovery platform only. Every purchase is completed on the retailer website after secure redirect.',
   },
   {
-    q: 'How does the affiliate program work?',
-    a: 'Sign up, get your unique referral links, share them anywhere, and earn up to 8% commission on qualifying sales. Payouts are processed monthly.',
+    question: 'Are the prices shown real-time?',
+    answer:
+      'Prices are refreshed frequently but retailer pages remain the final source of truth. During high-traffic sale windows, a short delay can happen. Always verify final checkout pricing on the destination store.',
   },
   {
-    q: 'Are your prices always accurate?',
-    a: 'Prices are updated regularly via our price engine, but final prices are always confirmed at the retailer checkout. Always verify before purchasing.',
+    question: 'How do I become a CloudBasket Associate?',
+    answer:
+      'You can apply through the Associates program page and submit basic profile details. Approved associates receive tracking-ready links and dashboard access. Most applications are reviewed within 48 hours.',
   },
   {
-    q: 'How do I get my POD design on CloudBasket?',
-    a: 'Visit our POD Store page to browse our exclusive designs available on Redbubble, Teepublic and Teespring. Custom submissions will be available soon.',
+    question: 'Is my data safe with CloudBasket?',
+    answer:
+      'CloudBasket follows DPDPA 2023 and GDPR-aligned handling principles. We minimize personal data collection and never store payment credentials. Users can request deletion through privacy support channels.',
   },
   {
-    q: 'Is my data safe?',
-    a: 'Yes. CloudBasket is DPDP Act 2023 compliant. We do not sell or share personal data. See our Privacy Policy for full details.',
+    question: 'What is the /go/ redirect link?',
+    answer:
+      'The /go path is CloudBasket\'s secure affiliate redirect layer. It routes users to partner listings while preserving attribution integrity. This improves link reliability and auditability across campaigns.',
   },
-]
+  {
+    question: 'Which stores does CloudBasket compare?',
+    answer:
+      'CloudBasket currently covers major affiliate networks including Amazon, Flipkart and CJ Affiliate partners. Coverage continues to expand by category. Only verified sources are surfaced in core listings.',
+  },
+  {
+    question: 'How do I report a wrong price?',
+    answer:
+      'If you notice a mismatch, use contact channels and share the product URL and timestamp. The team reviews and updates feed quality continuously. Critical pricing issues are prioritized for fast correction.',
+  },
+  {
+    question: 'Is CloudBasket DPDPA 2023 compliant?',
+    answer:
+      'Yes. CloudBasket privacy and retention policy is aligned with DPDPA 2023 requirements. Users can request access, correction or deletion of personal data where applicable.',
+  },
+  {
+    question: 'How do I delete my account?',
+    answer:
+      'Send a deletion request through privacy support with your registered email. After verification, account-linked data is removed within policy timelines. Confirmation is provided once deletion is complete.',
+  },
+] as const
 
-export default function FaqPage() {
+export default function FAQPage() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const toggle = (index: number): void => {
+    setOpenIndex((current) => (current === index ? null : index))
+  }
+
   return (
-    <main className="min-h-screen bg-white">
-      <div className="w-full py-12 px-6" style={{ backgroundColor: '#039BE5' }}>
-        <div className="max-w-3xl mx-auto">
-          <p className="text-xs uppercase tracking-widest text-white/60 mb-2">cloudbasket</p>
-          <h1 className="text-4xl font-extrabold text-white mb-2">Frequently Asked Questions</h1>
-          <p className="text-white/80 text-sm">Everything you need to know about CloudBasket.</p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[var(--cb-surface)]">
+      <div className="mx-auto w-full max-w-3xl px-6 py-16">
+        <header>
+          <h1 className="flex items-center gap-2 font-display text-3xl font-black text-[var(--cb-text-primary)]">
+            <HelpCircle size={30} className="text-skyline-primary" />
+            Frequently Asked Questions
+          </h1>
+        </header>
 
-      <div className="max-w-3xl mx-auto px-6 py-12 space-y-4">
-        {FAQS.map((item, idx) => (
-          <div key={idx} className="rounded-2xl border border-gray-200 p-6">
-            <h2 className="font-bold text-gray-900 mb-2">{item.q}</h2>
-            <p className="text-sm text-gray-600 leading-relaxed">{item.a}</p>
-          </div>
-        ))}
-
-        <div className="pt-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: '#E65100' }}
-          >
-            ← Back to Home
-          </Link>
-        </div>
+        <section className="mt-10 space-y-3">
+          {FAQS.map((item, index) => {
+            const isOpen = openIndex === index
+            return (
+              <article key={item.question} className="cb-card overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => toggle(index)}
+                  className="flex w-full items-center justify-between p-5 text-start"
+                >
+                  <span className="text-base font-bold text-[var(--cb-text-primary)]">{item.question}</span>
+                  <ChevronDown
+                    size={18}
+                    className={`text-[var(--cb-text-muted)] transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {isOpen && (
+                  <div className="border-t cb-border p-5 pt-4">
+                    <p className="text-sm leading-relaxed text-[var(--cb-text-secondary)]">{item.answer}</p>
+                  </div>
+                )}
+              </article>
+            )
+          })}
+        </section>
       </div>
-    </main>
+    </div>
   )
 }

@@ -1,68 +1,78 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowRight, Globe, Shield, Target, Zap } from 'lucide-react'
+import { ROUTES, SITE_DESCRIPTION } from '@/lib/constants'
+
+export const metadata: Metadata = {
+  title: 'About CloudBasket',
+  description: SITE_DESCRIPTION,
+}
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <div className="w-full py-12 px-6" style={{ backgroundColor: '#039BE5' }}>
-        <div className="max-w-3xl mx-auto">
-          <p className="text-xs uppercase tracking-widest text-white/60 mb-2">cloudbasket</p>
-          <h1 className="text-4xl font-extrabold text-white mb-2">About CloudBasket</h1>
-          <p className="text-white/80 text-sm max-w-xl">
-            India&apos;s smart shopping hub — compare prices, track deals, discover exclusive
-            print-on-demand designs and earn affiliate commissions, all in one place.
+    <div className="min-h-screen bg-[var(--cb-surface)]">
+      <section className="mx-auto max-w-4xl px-6 py-24 text-center">
+        <h1 className="font-display text-5xl font-black uppercase tracking-tighter text-[var(--cb-text-primary)]">
+          About CloudBasket
+        </h1>
+        <p className="mx-auto mt-6 max-w-2xl text-xl leading-relaxed text-[var(--cb-text-muted)]">
+          We built CloudBasket because finding the best price in India&apos;s fragmented e-commerce market
+          was too hard. Now it takes one search.
+        </p>
+      </section>
+
+      <section className="mx-auto mt-6 w-full max-w-4xl px-6">
+        <article className="cb-card p-10">
+          <Target size={40} className="text-skyline-primary" />
+          <h2 className="mt-4 font-display text-2xl font-black text-[var(--cb-text-primary)]">Our Mission</h2>
+          <p className="mt-4 leading-relaxed text-[var(--cb-text-secondary)]">
+            CloudBasket exists to deliver sovereign price discovery that is fast, transparent and trustworthy.
+            We follow a strict zero-checkout model so users always complete purchases on retailer-owned secure
+            infrastructure. Our focus remains on Indian market realities while maintaining global discovery depth.
+          </p>
+        </article>
+      </section>
+
+      <section className="mx-auto mt-12 grid w-full max-w-4xl grid-cols-1 gap-6 px-6 md:grid-cols-3">
+        <article className="cb-card p-6">
+          <Globe size={32} className="text-skyline-primary" />
+          <h3 className="mt-3 text-lg font-bold text-[var(--cb-text-primary)]">Global Coverage</h3>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            Compare prices in INR, USD, EUR and GBP across multiple affiliate networks.
+          </p>
+        </article>
+        <article className="cb-card p-6">
+          <Shield size={32} className="text-skyline-primary" />
+          <h3 className="mt-3 text-lg font-bold text-[var(--cb-text-primary)]">Privacy First</h3>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            DPDPA 2023 aligned processing with strict minimization and zero payment-data storage.
+          </p>
+        </article>
+        <article className="cb-card p-6">
+          <Zap size={32} className="text-skyline-primary" />
+          <h3 className="mt-3 text-lg font-bold text-[var(--cb-text-primary)]">Speed</h3>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            Fast listing search and frequent price refresh cycles across verified products.
+          </p>
+        </article>
+      </section>
+
+      <section className="mx-auto mt-16 w-full max-w-4xl px-6">
+        <div className="rounded-card bg-skyline-glow p-8">
+          <h3 className="font-display text-xl font-black text-skyline-primary">The Zero-Checkout Promise</h3>
+          <p className="mt-3 leading-relaxed text-[var(--cb-text-secondary)]">
+            CloudBasket is a discovery engine. We never process payments. We never store financial data.
+            Every purchase happens on the retailer&apos;s own secure platform.
           </p>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-3xl mx-auto px-6 py-12 space-y-8">
-        <section>
-          <h2 className="text-xl font-bold mb-3" style={{ color: '#36454F' }}>Our Mission</h2>
-          <p className="text-gray-600 leading-relaxed">
-            CloudBasket was built to help Indian and global shoppers make smarter purchasing
-            decisions. We aggregate prices from top marketplaces, curate daily deals, and
-            showcase exclusive print-on-demand designs — all under one roof.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="text-xl font-bold mb-3" style={{ color: '#36454F' }}>What We Do</h2>
-          <ul className="space-y-2 text-gray-600">
-            <li className="flex items-start gap-2">
-              <span style={{ color: '#1B5E20' }} className="font-bold mt-0.5">✓</span>
-              Compare prices across Amazon, Flipkart and global marketplaces
-            </li>
-            <li className="flex items-start gap-2">
-              <span style={{ color: '#1B5E20' }} className="font-bold mt-0.5">✓</span>
-              Curate daily deals, flash sales and coupon codes
-            </li>
-            <li className="flex items-start gap-2">
-              <span style={{ color: '#1B5E20' }} className="font-bold mt-0.5">✓</span>
-              Publish exclusive designs on print-on-demand platforms
-            </li>
-            <li className="flex items-start gap-2">
-              <span style={{ color: '#1B5E20' }} className="font-bold mt-0.5">✓</span>
-              Run an affiliate program earning up to 8% commission
-            </li>
-          </ul>
-        </section>
-
-        <section>
-          <h2 className="text-xl font-bold mb-3" style={{ color: '#36454F' }}>Compliance</h2>
-          <p className="text-gray-600 leading-relaxed">
-            CloudBasket is compliant with the DPDP Act 2023. We do not sell or share your
-            personal data with third parties. Affiliate links are disclosed transparently on
-            every page.
-          </p>
-        </section>
-
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-colors hover:opacity-90"
-          style={{ backgroundColor: '#E65100' }}
-        >
-          ← Back to Home
+      <section className="pb-24 pt-16 text-center">
+        <Link href={ROUTES.PRODUCTS} className="cb-btn-primary inline-flex items-center gap-2 px-8 py-4">
+          Start Finding Deals
+          <ArrowRight size={16} />
         </Link>
-      </div>
-    </main>
+      </section>
+    </div>
   )
 }

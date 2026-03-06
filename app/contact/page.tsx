@@ -1,96 +1,109 @@
-import Link from 'next/link'
+'use client'
+
+import { useCallback, useState } from 'react'
+import { CheckCircle, Mail, MessageSquare, Send } from 'lucide-react'
 
 export default function ContactPage() {
-  return (
-    <main className="min-h-screen bg-white">
-      <div className="w-full py-12 px-6" style={{ backgroundColor: '#039BE5' }}>
-        <div className="max-w-3xl mx-auto">
-          <p className="text-xs uppercase tracking-widest text-white/60 mb-2">cloudbasket</p>
-          <h1 className="text-4xl font-extrabold text-white mb-2">Contact Us</h1>
-          <p className="text-white/80 text-sm">
-            Questions, feedback, or affiliate enquiries — we&apos;re here to help.
-          </p>
+  const [name, setName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [subject, setSubject] = useState<string>('')
+  const [message, setMessage] = useState<string>('')
+  const [submitted, setSubmitted] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const handleSubmit = useCallback(async (): Promise<void> => {
+    if (
+      name.trim().length === 0 ||
+      email.trim().length === 0 ||
+      subject.trim().length === 0 ||
+      message.trim().length === 0
+    ) {
+      return
+    }
+
+    setIsLoading(true)
+    await new Promise<void>((resolve) => {
+      window.setTimeout(() => resolve(), 800)
+    })
+    setSubmitted(true)
+    setIsLoading(false)
+  }, [email, message, name, subject])
+
+  if (submitted) {
+    return (
+      <div className="min-h-screen bg-[var(--cb-surface)]">
+        <div className="mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center">
+          <CheckCircle size={48} className="text-status-success" />
+          <h1 className="mt-4 font-display text-3xl font-black text-[var(--cb-text-primary)]">Message Sent!</h1>
+          <p className="mt-2 text-[var(--cb-text-muted)]">We&apos;ll reply within 24 hours.</p>
         </div>
       </div>
+    )
+  }
 
-      <div className="max-w-3xl mx-auto px-6 py-12 space-y-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="rounded-2xl border border-gray-200 p-6 text-center">
-            <div
-              className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white font-bold text-lg"
-              style={{ backgroundColor: '#039BE5' }}
-            >
-              @
-            </div>
-            <h3 className="font-bold text-gray-900 mb-1">Email</h3>
-            <p className="text-sm text-gray-500">hello@cloudbasket.in</p>
-          </div>
-          <div className="rounded-2xl border border-gray-200 p-6 text-center">
-            <div
-              className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white font-bold text-lg"
-              style={{ backgroundColor: '#1B5E20' }}
-            >
-              ✉
-            </div>
-            <h3 className="font-bold text-gray-900 mb-1">Affiliate</h3>
-            <p className="text-sm text-gray-500">affiliate@cloudbasket.in</p>
-          </div>
-          <div className="rounded-2xl border border-gray-200 p-6 text-center">
-            <div
-              className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white font-bold text-lg"
-              style={{ backgroundColor: '#E65100' }}
-            >
-              ⚑
-            </div>
-            <h3 className="font-bold text-gray-900 mb-1">Support</h3>
-            <p className="text-sm text-gray-500">support@cloudbasket.in</p>
-          </div>
-        </div>
+  return (
+    <div className="min-h-screen bg-[var(--cb-surface)]">
+      <div className="mx-auto w-full max-w-2xl px-6 py-16">
+        <h1 className="flex items-center gap-2 font-display text-3xl font-black text-[var(--cb-text-primary)]">
+          <Mail size={30} className="text-skyline-primary" />
+          Contact Us
+        </h1>
+        <p className="mt-2 text-[var(--cb-text-muted)]">Questions, partnerships, press enquiries</p>
 
-        <section className="rounded-2xl border border-gray-200 p-8">
-          <h2 className="text-lg font-bold mb-5" style={{ color: '#36454F' }}>Send a Message</h2>
-          <form className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Your name"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none"
-                style={{ borderColor: '#e5e7eb' }}
-              />
-              <input
-                type="email"
-                placeholder="Email address"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none"
-              />
-            </div>
+        <div className="mt-8 space-y-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <input
               type="text"
-              placeholder="Subject"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              placeholder="Your name"
+              className="glass-panel rounded-button border cb-border px-4 py-3 text-sm text-[var(--cb-text-primary)] outline-none"
             />
-            <textarea
-              rows={4}
-              placeholder="Your message…"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none resize-none"
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              className="glass-panel rounded-button border cb-border px-4 py-3 text-sm text-[var(--cb-text-primary)] outline-none"
             />
-            <button
-              type="submit"
-              className="px-6 py-3 rounded-full font-semibold text-white text-sm transition-colors hover:opacity-90"
-              style={{ backgroundColor: '#E65100' }}
-            >
-              Send Message
-            </button>
-          </form>
-        </section>
+          </div>
 
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-colors hover:opacity-90"
-          style={{ backgroundColor: '#E65100' }}
-        >
-          ← Back to Home
-        </Link>
+          <input
+            type="text"
+            value={subject}
+            onChange={(event) => setSubject(event.target.value)}
+            placeholder="Subject"
+            className="glass-panel w-full rounded-button border cb-border px-4 py-3 text-sm text-[var(--cb-text-primary)] outline-none"
+          />
+
+          <textarea
+            rows={5}
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+            placeholder="Write your message"
+            className="glass-panel w-full rounded-button border cb-border px-4 py-3 text-sm text-[var(--cb-text-primary)] outline-none"
+          />
+
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className="cb-btn-primary w-full justify-center gap-2 py-3 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <Send size={16} />
+            {isLoading ? 'Sending...' : 'Send Message'}
+          </button>
+        </div>
+
+        <div className="mt-8 space-y-2 border-t cb-border pt-6">
+          <p className="flex items-center gap-2 text-sm text-[var(--cb-text-muted)]">
+            <MessageSquare size={14} />
+            privacy@cloudbasket.in
+          </p>
+          <p className="font-mono text-sm text-skyline-primary">privacy@cloudbasket.in</p>
+          <p className="font-mono text-sm text-skyline-primary">partners@cloudbasket.in</p>
+        </div>
       </div>
-    </main>
+    </div>
   )
 }

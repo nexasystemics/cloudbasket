@@ -1,0 +1,1 @@
+CREATE TABLE short_links (id TEXT PRIMARY KEY, destination TEXT NOT NULL, created_at TIMESTAMPTZ DEFAULT NOW()); INSERT INTO short_links (id, destination) VALUES ('prod_001', 'https://amazon.com/sample-deal');

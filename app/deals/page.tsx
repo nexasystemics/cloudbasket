@@ -1,205 +1,187 @@
+'use client'
+
+import { useEffect, useMemo, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { getTheme } from '@/lib/themes'
-import { headers } from 'next/headers'
-import { DEALS } from '@/lib/deals-data'
-import type { TenantTheme } from '@/lib/themes'
+import { useRouter } from 'next/navigation'
+import { Clock, ExternalLink, Tag, TrendingDown, Zap } from 'lucide-react'
+import { DEALS, FLASH_DEALS } from '@/lib/deals-data'
+import { PRODUCTS } from '@/lib/mock-data'
+import { ROUTES } from '@/lib/constants'
 
-const FILTER_OPTIONS = [
-  'All Deals',
-  'Lightning Deals',
-  'Today Only',
-  'Electronics',
-  'Fashion',
-  'Kitchen',
-  'Sports',
-] as const
+type DealTab = 'all' | 'flash' | 'cj'
 
-export default async function DealsPage() {
-  const headersList = await headers()
-  const tenant = headersList.get('x-tenant') || 'cloudbasket'
-  const theme = getTheme(tenant)
+interface CountdownProps {
+  expiresAt: string
+}
+
+const formatInr = (value: number): string => `₹${new Intl.NumberFormat('en-IN').format(value)}`
+
+function Countdown({ expiresAt }: CountdownProps) {
+  const [timeLeft, setTimeLeft] = useState<string>('00:00:00')
+
+  useEffect(() => {
+    const calculate = (): string => {
+      const now = Date.now()
+      const target = new Date(expiresAt).getTime()
+      const diff = Math.max(target - now, 0)
+      const totalSeconds = Math.floor(diff / 1000)
+      const hours = Math.floor(totalSeconds / 3600)
+      const minutes = Math.floor((totalSeconds % 3600) / 60)
+      const seconds = totalSeconds % 60
+      return [hours, minutes, seconds].map((unit) => String(unit).padStart(2, '0')).join(':')
+    }
+
+    setTimeLeft(calculate())
+    const timer = window.setInterval(() => setTimeLeft(calculate()), 1000)
+
+    return () => {
+      window.clearInterval(timer)
+    }
+  }, [expiresAt])
 
   return (
-    <>
-      {/* SECTION 1 — HERO BANNER */}
-      <section
-        className="py-12 px-4 text-center text-white"
-        style={{ backgroundColor: theme.primaryColor }}
-      >
-        <span
-          className="mb-4 inline-block rounded-full bg-white px-3 py-1 text-xs font-medium"
-          style={{ color: theme.primaryColor }}
-        >
-          Limited Time Offers
-        </span>
-        <h1 className="text-3xl font-bold md:text-4xl mt-2">Today&apos;s Best Deals</h1>
-        <p className="mt-2 text-white/90 text-sm md:text-base max-w-xl mx-auto">
-          Handpicked offers from Amazon and Flipkart. Updated daily.
+    <span className="flex items-center gap-1 font-mono text-xs text-status-warning">
+      <Clock size={12} />
+      {timeLeft}
+    </span>
+  )
+}
+
+export default function DealsPage() {
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState<DealTab>('all')
+
+  const filteredDeals = useMemo(() => {
+    if (activeTab === 'flash') {
+      return FLASH_DEALS
+    }
+    if (activeTab === 'cj') {
+      return DEALS.filter((deal) => deal.id.startsWith('cj'))
+    }
+    return DEALS
+  }, [activeTab])
+
+  return (
+    <div className="min-h-screen bg-[var(--cb-surface)]">
+      <section className="bg-gradient-to-br from-[#09090B] to-[#0F172A] py-16 text-center text-white">
+        <h1 className="font-display text-4xl font-black uppercase tracking-tight">Today&apos;s Best Deals</h1>
+        <p className="mt-2 text-base text-[var(--cb-text-muted)]">
+          Verified deals from Amazon, Flipkart & CJ — updated hourly
         </p>
-        <div className="flex flex-row flex-wrap justify-center gap-4 mt-6">
-          <span className="rounded-full bg-white/10 px-4 py-2 text-sm">8 Active Deals</span>
-          <span className="rounded-full bg-white/10 px-4 py-2 text-sm">Up to 67% OFF</span>
+        <div className="mt-4 flex justify-center">
+          <span className="cb-badge gap-1 bg-[#F97316]/20 text-[#F97316]">
+            <Zap size={11} />
+            Flash Sales Active
+          </span>
         </div>
       </section>
 
-      {/* SECTION 2 — DEAL TYPE FILTER */}
-      <section className="sticky top-0 z-10 border-b bg-white overflow-x-auto">
-        <div className="flex gap-2 px-4 py-3 min-w-0 shrink-0">
-          {FILTER_OPTIONS.map((option) => {
-            const isActive = option === 'All Deals'
-            return (
-              <button
-                key={option}
-                type="button"
-                className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${
-                  isActive
-                    ? 'text-white hover:opacity-90'
-                    : 'border border-gray-300 bg-white text-gray-600 hover:border-gray-400 hover:bg-gray-50'
-                }`}
-                style={isActive ? { backgroundColor: theme.primaryColor } : undefined}
-              >
-                {option}
-              </button>
-            )
-          })}
+      <section className="mx-auto mt-8 w-full max-w-7xl px-6">
+        <div className="flex items-center gap-6 border-b cb-border">
+          <button
+            type="button"
+            onClick={() => setActiveTab('all')}
+            className={`pb-2 text-sm font-bold transition-colors ${
+              activeTab === 'all'
+                ? 'border-b-2 border-skyline-primary text-skyline-primary'
+                : 'text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]'
+            }`}
+          >
+            All Deals
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('flash')}
+            className={`pb-2 text-sm font-bold transition-colors ${
+              activeTab === 'flash'
+                ? 'border-b-2 border-skyline-primary text-skyline-primary'
+                : 'text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]'
+            }`}
+          >
+            Flash Sales
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('cj')}
+            className={`pb-2 text-sm font-bold transition-colors ${
+              activeTab === 'cj'
+                ? 'border-b-2 border-skyline-primary text-skyline-primary'
+                : 'text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]'
+            }`}
+          >
+            CJ Exclusives
+          </button>
         </div>
       </section>
 
-      {/* SECTION 3 — COUNTDOWN BANNER */}
-      <section
-        className="py-3 px-4 text-center text-white"
-        style={{ backgroundColor: theme.secondaryColor }}
-      >
-        <span className="mr-2 font-medium">Flash Sale ends in:</span>
-        <span className="inline-flex items-center gap-1 font-mono">
-          <span className="rounded bg-white px-2 py-1 text-sm font-bold" style={{ color: theme.secondaryColor }}>02</span>
-          <span className="text-white">:</span>
-          <span className="rounded bg-white px-2 py-1 text-sm font-bold" style={{ color: theme.secondaryColor }}>45</span>
-          <span className="text-white">:</span>
-          <span className="rounded bg-white px-2 py-1 text-sm font-bold" style={{ color: theme.secondaryColor }}>30</span>
-        </span>
-      </section>
-
-      {/* SECTION 4 — DEALS GRID */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {DEALS.map((deal) => (
-            <article
-              key={deal.id}
-              className="relative rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-md"
-            >
-              {/* TOP IMAGE AREA */}
-              <div className="relative aspect-square rounded-t-xl bg-gray-50 overflow-hidden">
-                <span
-                  className={`absolute top-2 left-2 z-10 rounded-full px-2 py-1 text-xs font-medium text-white ${
-                    deal.platform === 'Amazon' ? 'bg-orange-500' : 'bg-blue-600'
-                  }`}
-                >
-                  {deal.platform}
-                </span>
-                <span className="absolute top-2 right-2 z-10 rounded-full bg-green-500 px-2 py-1 text-xs font-medium text-white">
-                  {deal.discount}
-                </span>
-                <img
-                  src={deal.imageUrl}
-                  alt={deal.name}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-                <span className="absolute bottom-2 left-2 z-10 rounded-full border border-gray-200 bg-white px-2 py-1 text-xs text-gray-600">
-                  {deal.dealType}
-                </span>
-              </div>
-
-              {/* CARD BODY */}
-              <div className="p-4">
-                <h2 className="line-clamp-2 text-sm font-semibold text-gray-800">{deal.name}</h2>
-                <p className="mt-1 text-xs">
-                  <span className="text-amber-500 font-medium">{deal.rating} / 5</span>
-                  <span className="ml-1 text-gray-400">({deal.reviews} reviews)</span>
-                </p>
-                <div className="mt-2 flex items-baseline gap-2">
-                  <span className="text-sm text-gray-400 line-through">{deal.originalPrice}</span>
-                  <span className="text-xl font-bold" style={{ color: theme.primaryColor }}>
-                    {deal.dealPrice}
+      <section className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-6 py-8 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredDeals.map((deal) => {
+          const product = PRODUCTS.find((item) => item.id === deal.productId)
+          return (
+            <article key={deal.id} className="cb-card cursor-pointer overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                {product ? (
+                  <Image src={product.image} alt={deal.title} fill className="object-cover" />
+                ) : (
+                  <div className="h-full w-full bg-[var(--cb-surface-3)]" />
+                )}
+                <div className="absolute start-0 top-0 flex flex-col gap-1 p-2">
+                  {deal.isFlash && (
+                    <span className="cb-badge gap-1 bg-[#F97316] text-white">
+                      <Zap size={11} />
+                      Flash
+                    </span>
+                  )}
+                  <span className="cb-badge gap-1 bg-status-success/90 text-white">
+                    <TrendingDown size={11} />
+                    -{deal.discount}%
                   </span>
                 </div>
-                <p className="mt-1 text-xs text-orange-500">Ends in {deal.expiresIn}</p>
+              </div>
 
-                {/* STOCK PROGRESS BAR */}
+              <div className="p-4">
+                <h2 className="line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">{deal.title}</h2>
                 <div className="mt-2">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-gray-500">Stock Left</span>
-                    <span className={deal.stock < 15 ? 'font-medium text-red-500' : 'text-gray-500'}>
-                      {deal.stock} remaining
-                    </span>
-                  </div>
-                  <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-gray-100">
-                    <div
-                      className={`h-2 rounded-full transition-all ${
-                        deal.stock < 15 ? 'bg-red-500' : 'bg-green-500'
-                      }`}
-                      style={{
-                        width: `${Math.round((deal.stock / deal.totalStock) * 100)}%`,
-                      }}
-                    />
-                  </div>
+                  <Countdown expiresAt={deal.expiresAt} />
                 </div>
 
-                {/* CTA BUTTON */}
-                <Link
-                  href={`/deals/${deal.id}`}
-                  className="mt-3 block w-full rounded-lg py-2.5 text-center text-sm font-semibold text-white transition hover:opacity-90"
-                  style={{ backgroundColor: theme.primaryColor }}
+                {product && (
+                  <div className="mt-2 flex items-end gap-2">
+                    <span className="font-display text-xl font-black text-[var(--cb-text-primary)]">
+                      {formatInr(product.price)}
+                    </span>
+                    {product.originalPrice !== null && (
+                      <span className="text-sm text-[var(--cb-text-muted)] line-through">
+                        {formatInr(product.originalPrice)}
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => router.push('/go/amazon-' + String(deal.productId))}
+                  className="cb-btn-primary mt-3 w-full justify-center gap-2"
                 >
+                  <ExternalLink size={14} />
                   Grab This Deal
-                </Link>
-                <p className="mt-1 text-center text-xs text-gray-400">
-                  Affiliate link — commission earned
-                </p>
+                </button>
+
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="cb-badge gap-1 bg-skyline-glow text-skyline-primary">
+                    <Tag size={11} />
+                    {deal.badge ?? 'Deal'}
+                  </span>
+                  <Link href={`${ROUTES.DEALS}/${deal.id}`} className="text-xs text-[var(--cb-text-muted)] hover:text-skyline-primary">
+                    Details
+                  </Link>
+                </div>
               </div>
             </article>
-          ))}
-        </div>
+          )
+        })}
       </section>
-
-      {/* SECTION 5 — DEAL ALERT SIGNUP */}
-      <section
-        className="py-12 px-4 text-center text-white"
-        style={{ backgroundColor: theme.secondaryColor }}
-      >
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl font-bold">Never Miss a Deal</h2>
-          <p className="mt-2 text-white/90 text-sm">
-            Get notified when prices drop on your wishlist products
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-6 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full rounded-lg bg-white px-4 py-3 text-sm text-gray-800 placeholder-gray-500"
-              aria-label="Email for deal alerts"
-            />
-            <button
-              type="button"
-              className="shrink-0 rounded-lg bg-white px-6 py-3 text-sm font-semibold transition hover:opacity-90"
-              style={{ color: theme.primaryColor }}
-            >
-              Alert Me
-            </button>
-          </div>
-          <p className="mt-3 text-xs text-white/70 max-w-md mx-auto">
-            By subscribing you agree to our Privacy Policy. DPDP Act 2023 compliant. Unsubscribe anytime.
-          </p>
-        </div>
-      </section>
-
-      {/* SECTION 6 — DISCLAIMER FOOTER */}
-      <section className="border-t bg-gray-50 py-6 px-4">
-        <div className="max-w-4xl mx-auto text-center text-xs text-gray-400 leading-relaxed">
-          All deals shown are affiliate links. CloudBasket earns a commission when you purchase through our links at no extra cost to you. Prices and availability are subject to change without notice. Deal expiry times shown are approximate. Always verify final price on the retailer&apos;s website before purchasing. ASCI and FTC compliant affiliate disclosures.
-        </div>
-      </section>
-    </>
+    </div>
   )
 }

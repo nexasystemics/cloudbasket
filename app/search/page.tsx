@@ -1,111 +1,158 @@
 'use client'
 
-import { Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { PRODUCTS } from '@/lib/products-data'
-import type { Product } from '@/lib/products-data'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Search } from 'lucide-react'
+import ProductGrid from '@/components/products/ProductGrid'
+import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
+import { PRODUCTS } from '@/lib/mock-data'
+import type { Product } from '@/lib/types'
 
-const BRAND_COLOR = '#039BE5'
-const CTA_COLOR   = '#E65100'
+const ALL_FILTER = 'All'
 
-function SearchResults() {
-  const params  = useSearchParams()
-  const query   = (params.get('q') ?? '').toLowerCase().trim()
-  const cat     = params.get('category') ?? ''
+function SearchPageContent() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const [query, setQuery] = useState<string>(searchParams.get('q') ?? '')
+  const [activeFilter, setActiveFilter] = useState<string>(ALL_FILTER)
 
-  const results: Product[] = PRODUCTS.filter((p) => {
-    const matchQ   = query === '' || p.name.toLowerCase().includes(query) || p.brand.toLowerCase().includes(query) || p.tags.some((t) => t.toLowerCase().includes(query))
-    const matchCat = cat === '' || p.category === cat
-    return matchQ && matchCat
-  })
+  useEffect(() => {
+    setQuery(searchParams.get('q') ?? '')
+  }, [searchParams])
 
-  if (query === '' && cat === '') {
-    return (
-      <p className="text-center text-gray-500 py-12 text-sm">
-        Start typing to search products.
-      </p>
-    )
-  }
+  const syncQueryToUrl = useCallback(
+    (nextQuery: string): void => {
+      const params = new URLSearchParams(searchParams.toString())
+      const cleaned = nextQuery.trim()
 
-  if (results.length === 0) {
-    return (
-      <p className="text-center text-gray-500 py-12 text-sm">
-        No products found for &ldquo;{query}&rdquo;. Try a different keyword.
-      </p>
-    )
-  }
+      if (cleaned.length > 0) {
+        params.set('q', cleaned)
+      } else {
+        params.delete('q')
+      }
+
+      const queryString = params.toString()
+      router.replace(queryString.length > 0 ? `/search?${queryString}` : '/search')
+    },
+    [router, searchParams],
+  )
+
+  const handleQueryChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      const nextQuery = event.target.value
+      setQuery(nextQuery)
+      syncQueryToUrl(nextQuery)
+    },
+    [syncQueryToUrl],
+  )
+
+  const handleReset = useCallback((): void => {
+    setQuery('')
+    setActiveFilter(ALL_FILTER)
+    router.replace('/search')
+  }, [router])
+
+  const searchResults = useMemo<Product[]>(() => {
+    const cleaned = query.trim().toLowerCase()
+    if (cleaned.length < 2) {
+      return []
+    }
+
+    return PRODUCTS.filter((product) => {
+      const matchesQuery =
+        product.name.toLowerCase().includes(cleaned) ||
+        product.description.toLowerCase().includes(cleaned) ||
+        product.brand.toLowerCase().includes(cleaned)
+
+      const matchesStatus = product.status === 'Approved'
+      const matchesCategory = activeFilter === ALL_FILTER || product.mainCategory === activeFilter
+
+      return matchesQuery && matchesStatus && matchesCategory
+    }).slice(0, 60)
+  }, [activeFilter, query])
+
+  const hasSearchInput = query.trim().length >= 2
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {results.map((p) => (
-        <article
-          key={p.id}
-          className="rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow"
-        >
-          <div className="aspect-square rounded-t-xl overflow-hidden bg-gray-50">
-            <img
-              src={p.imageUrl}
-              alt={p.name}
-              className="h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="p-3">
-            <p className="line-clamp-2 text-xs font-semibold text-gray-800">{p.name}</p>
-            <p className="mt-1 text-xs text-gray-400">{p.brand}</p>
-            <div className="mt-1 flex items-baseline gap-1">
-              <span className="text-xs text-gray-400 line-through">{p.originalPrice}</span>
-              <span className="text-sm font-bold" style={{ color: BRAND_COLOR }}>{p.discountedPrice}</span>
-            </div>
-            <Link
-              href={`/products/${p.id}`}
-              className="mt-2 block w-full rounded-lg py-2 text-center text-xs font-semibold text-white transition hover:opacity-90"
-              style={{ backgroundColor: CTA_COLOR }}
+    <div className="min-h-screen bg-[var(--cb-surface)]">
+      <div className="mx-auto w-full max-w-7xl px-6 py-12">
+        <h1 className="font-display text-3xl font-black uppercase tracking-tight text-[var(--cb-text-primary)]">
+          Search Results
+        </h1>
+
+        <div className="glass-panel relative mt-6 w-full max-w-2xl">
+          <Search
+            size={20}
+            className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
+          />
+          <input
+            type="search"
+            value={query}
+            onChange={handleQueryChange}
+            placeholder="Search products, brands, categories..."
+            className="w-full rounded-card bg-transparent py-4 pe-4 ps-12 text-[15px] text-[var(--cb-text-primary)] outline-none"
+            aria-label="Search products, brands, categories"
+          />
+        </div>
+
+        <div className="mt-6 flex flex-wrap gap-2">
+          {[ALL_FILTER, ...MAIN_CATEGORIES].map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setActiveFilter(category)}
+              className={`rounded-pill px-3 py-1.5 text-[11px] font-black uppercase tracking-wide transition-colors ${
+                activeFilter === category
+                  ? 'bg-skyline-primary text-white'
+                  : 'cb-btn-ghost text-[var(--cb-text-muted)]'
+              }`}
             >
-              View Deal
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <p className="mt-4 text-sm text-[var(--cb-text-muted)]">
+          {hasSearchInput
+            ? `${searchResults.length} results for "${query.trim()}"`
+            : 'Start typing to search...'}
+        </p>
+
+        {hasSearchInput && searchResults.length === 0 ? (
+          <div className="mt-10 rounded-card border cb-border bg-[var(--cb-surface-2)] p-8 text-center">
+            <h2 className="text-xl font-black text-[var(--cb-text-primary)]">
+              No results for &quot;{query.trim()}&quot;
+            </h2>
+            <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+              Try: Mobiles, Laptops, Fashion...
+            </p>
+            <Link href={ROUTES.PRODUCTS} className="mt-4 inline-flex cb-btn-ghost">
+              Browse All Products
             </Link>
           </div>
-        </article>
-      ))}
+        ) : (
+          <div className="mt-8">
+            <ProductGrid products={searchResults} onReset={handleReset} />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function SearchPageFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[var(--cb-surface)]">
+      <p className="text-sm text-[var(--cb-text-muted)]">Loading search...</p>
     </div>
   )
 }
 
 export default function SearchPage() {
   return (
-    <main className="max-w-7xl mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Search Products</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          Search across {PRODUCTS.length} products from Amazon &amp; Flipkart.
-        </p>
-      </div>
-
-      {/* Search form */}
-      <form method="GET" action="/search" className="flex gap-2 mb-8">
-        <input
-          type="search"
-          name="q"
-          placeholder="Search phones, laptops, books..."
-          className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2"
-          style={{ focusRingColor: BRAND_COLOR } as React.CSSProperties}
-          autoFocus
-        />
-        <button
-          type="submit"
-          className="shrink-0 rounded-lg px-6 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
-          style={{ backgroundColor: BRAND_COLOR }}
-        >
-          Search
-        </button>
-      </form>
-
-      {/* Results */}
-      <Suspense fallback={<p className="text-sm text-gray-400">Loading...</p>}>
-        <SearchResults />
-      </Suspense>
-    </main>
+    <Suspense fallback={<SearchPageFallback />}>
+      <SearchPageContent />
+    </Suspense>
   )
 }

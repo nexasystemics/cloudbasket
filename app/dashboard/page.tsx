@@ -1,183 +1,143 @@
 'use client'
 
-import React, { useState } from 'react'
-import { 
-  Heart, 
-  Bookmark, 
-  BookOpen, 
-  Settings, 
-  User, 
-  ChevronRight, 
-  ArrowRight,
-  Zap,
-  TrendingUp,
-  Layout,
-  ExternalLink,
-  LogOut,
-  MousePointer2,
-  DollarSign,
-  ArrowUpRight,
-  Link as LinkIcon
-} from 'lucide-react'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
+import { Bell, ExternalLink, Heart, LogOut, Package, Settings, Star, TrendingDown } from 'lucide-react'
 import { useGlobal } from '@/context/GlobalContext'
-import { useRouter } from 'next/navigation'
+import { ROUTES } from '@/lib/constants'
+import { PRODUCTS } from '@/lib/mock-data'
 
-export default function UserDashboard() {
-  const { user, setUser } = useGlobal()
-  const router = useRouter()
-  const isAssociate = user?.role === 'Associate' || user?.role === 'Admin'
+export default function DashboardPage() {
+  const { user } = useGlobal()
 
-  const handleLogout = () => {
-    setUser(null)
-    router.push('/')
+  if (!user) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--cb-surface)] px-6 text-center">
+        <h1 className="font-display text-2xl font-black text-[var(--cb-text-primary)]">Sign in required</h1>
+        <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+          You need an account to access your dashboard.
+        </p>
+        <Link href={ROUTES.LOGIN} className="cb-btn-primary mt-4">
+          Go to login
+        </Link>
+      </div>
+    )
   }
 
-  const savedDeals = [
-    { id: 1, name: 'Premium Wireless Earbuds', price: '₹2,499', image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&q=80&w=400' },
-    { id: 2, name: 'Ergonomic Office Chair', price: '₹8,999', image: 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&q=80&w=400' },
+  const MOCK_WISHLIST = PRODUCTS.slice(0, 4)
+  const MOCK_ALERTS = [
+    { product: PRODUCTS[0], targetPrice: 25000, currentPrice: 32999 },
+    { product: PRODUCTS[1], targetPrice: 45000, currentPrice: 51999 },
   ]
 
-  const followedBlogs = [
-    { title: 'Top 10 Tech Deals of 2026', author: 'Cloud Hub', date: 'March 1' },
-    { title: 'The Future of POD Designs', author: 'Artisan Pro', date: 'Feb 28' },
-  ]
+  const initials = user.email.slice(0, 2).toUpperCase()
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#161617] font-sans text-[#1D1D1F] dark:text-white pb-20">
-      {/* Dashboard Nav */}
-      <nav className="h-20 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 md:px-12 sticky top-0 z-40">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-skyline-primary rounded-xl flex items-center justify-center text-white shadow-lg">
-            <Layout size={20} />
-          </div>
-          <h1 className="text-xl font-black tracking-tighter uppercase italic">Sovereign Node</h1>
-        </div>
-        <div className="flex items-center gap-6">
-           <Link href="/products" className="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-skyline-primary transition-colors">Explore</Link>
-           <button onClick={handleLogout} className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 px-4 py-2 rounded-xl transition-all">
-             <LogOut size={16} />
-             Logout
-           </button>
-        </div>
-      </nav>
-
-      <main className="max-w-[1400px] mx-auto px-6 md:px-12 py-12 space-y-12">
-        {/* Welcome Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 bg-gray-900 rounded-[3rem] p-10 text-white relative overflow-hidden">
-           <div className="relative z-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-skyline-primary mb-2">Authenticated Identity</p>
-              <h2 className="text-4xl font-black tracking-tighter mb-4 uppercase italic">Welcome, {user?.email?.split('@')[0] || 'Cloud Shopper'}</h2>
-              <p className="text-gray-400 max-w-sm font-medium leading-relaxed">Your sovereign discovery hub is active. {isAssociate ? 'Performance metrics are synced.' : 'Your bookmarks are safe.'}</p>
-           </div>
-           <div className="flex gap-4 relative z-10">
-              <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 text-center min-w-[120px]">
-                 <p className="text-2xl font-black tracking-tighter">142</p>
-                 <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-1">Trust Score</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 text-center min-w-[120px]">
-                 <p className="text-2xl font-black tracking-tighter">4</p>
-                 <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-1">Badges</p>
-              </div>
-           </div>
-           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#009DFF33_0%,_transparent_70%)]" />
-        </div>
-
-        {/* Associate Performance Hub (Conditional) */}
-        {isAssociate && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-             <h3 className="text-2xl font-black tracking-tighter uppercase italic flex items-center gap-3">
-               <TrendingUp size={24} className="text-skyline-primary" /> Performance telemetry
-             </h3>
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
-                   <div className="flex justify-between items-start">
-                      <div className="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-500">
-                         <MousePointer2 size={20} />
-                      </div>
-                      <span className="text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">+12%</span>
-                   </div>
-                   <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Total Redirects</p>
-                      <p className="text-3xl font-black tracking-tighter">1,240</p>
-                   </div>
-                </div>
-                <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
-                   <div className="flex justify-between items-start">
-                      <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500">
-                         <DollarSign size={20} />
-                      </div>
-                      <span className="text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">Pending</span>
-                   </div>
-                   <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Potential Revenue</p>
-                      <p className="text-3xl font-black tracking-tighter">₹4,500</p>
-                   </div>
-                </div>
-                <div className="bg-gray-900 rounded-[2.5rem] p-8 text-white flex flex-col justify-center space-y-4 relative overflow-hidden">
-                   <div className="relative z-10">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-skyline-primary mb-1">Your ref link</p>
-                      <div className="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
-                         <code className="text-[10px] font-bold text-gray-300">.../?ref={user?.id || 'CB-REF'}</code>
-                         <LinkIcon size={14} className="text-skyline-primary" />
-                      </div>
-                   </div>
-                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_#009DFF22_0%,_transparent_70%)]" />
-                </div>
-             </div>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* User Specifics */}
-          <div className="lg:col-span-2 space-y-8">
-            <h3 className="text-2xl font-black tracking-tighter uppercase italic flex items-center gap-3">
-              <Bookmark size={24} className="text-skyline-primary" /> Vaulted Items
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-               {savedDeals.map((deal) => (
-                 <div key={deal.id} className="bg-white dark:bg-gray-900 p-6 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-6 group hover:shadow-xl transition-all">
-                    <div className="w-24 h-24 rounded-2xl overflow-hidden relative flex-shrink-0 bg-gray-50 dark:bg-gray-800">
-                       <Image src={deal.image} alt={deal.name} fill className="object-cover group-hover:scale-110 transition-transform" />
-                    </div>
-                    <div className="space-y-2">
-                       <h4 className="text-sm font-black line-clamp-1">{deal.name}</h4>
-                       <p className="text-skyline-primary font-black">{deal.price}</p>
-                       <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                         View Deal <ExternalLink size={12} />
-                       </button>
-                    </div>
-                 </div>
-               ))}
+    <div className="min-h-screen bg-[var(--cb-surface-2)]">
+      <div className="mx-auto w-full max-w-5xl px-6 py-12">
+        <section className="cb-card mb-6 p-6">
+          <div className="flex items-center gap-4">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-skyline-primary font-bold text-white">
+              {initials}
             </div>
+            <div className="min-w-0 flex-1">
+              <h1 className="truncate text-lg font-bold text-[var(--cb-text-primary)]">{user.email}</h1>
+              <p className="text-sm text-[var(--cb-text-muted)]">{user.email}</p>
+            </div>
+            <span
+              className={`cb-badge ${
+                user.role === 'Admin'
+                  ? 'bg-status-error/10 text-status-error'
+                  : user.role === 'Associate'
+                    ? 'bg-[#F97316]/10 text-[#F97316]'
+                    : 'bg-skyline-glow text-skyline-primary'
+              }`}
+            >
+              {user.role}
+            </span>
           </div>
+        </section>
 
-          <div className="space-y-8">
-             <div className="bg-white dark:bg-gray-900 rounded-[2.5rem] p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-8">
-                <h3 className="text-xl font-black tracking-tighter flex items-center gap-3">
-                  <Settings size={20} className="text-gray-400" /> Identity Settings
-                </h3>
-                <div className="space-y-4">
-                   <button className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl hover:bg-gray-100 transition-colors group">
-                      <div className="flex items-center gap-3">
-                         <User size={18} className="text-gray-400 group-hover:text-skyline-primary" />
-                         <span className="text-xs font-black uppercase tracking-widest">Protocol Node</span>
-                      </div>
-                      <ChevronRight size={16} className="text-gray-300" />
-                   </button>
-                   <button className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl hover:bg-gray-100 transition-colors group">
-                      <div className="flex items-center gap-3">
-                         <Zap size={18} className="text-gray-400 group-hover:text-skyline-primary" />
-                         <span className="text-xs font-black uppercase tracking-widest">Alert Filters</span>
-                      </div>
-                      <ChevronRight size={16} className="text-gray-300" />
-                   </button>
+        <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <article className="cb-card p-6">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-[var(--cb-text-primary)]">
+              <Heart size={18} />
+              Saved Items
+            </h2>
+            <div className="mt-3">
+              {MOCK_WISHLIST.map((product) => (
+                <div
+                  key={product.id}
+                  className="flex items-center gap-3 border-b cb-border py-3 last:border-b-0"
+                >
+                  <div className="relative h-12 w-12 overflow-hidden rounded-badge">
+                    <Image src={product.image} alt={product.name} fill className="object-cover" />
+                  </div>
+                  <p className="flex-1 truncate text-[13px] font-bold text-[var(--cb-text-primary)]">{product.name}</p>
+                  <p className="font-mono text-sm text-skyline-primary">
+                    ₹{new Intl.NumberFormat('en-IN').format(product.price)}
+                  </p>
+                  <Link
+                    href={'/go/amazon-' + String(product.id)}
+                    className="text-[var(--cb-text-muted)] hover:text-skyline-primary"
+                  >
+                    <ExternalLink size={14} />
+                  </Link>
                 </div>
-             </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="cb-card p-6">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-[var(--cb-text-primary)]">
+              <Bell size={18} />
+              Price Alerts
+            </h2>
+            <div className="mt-3">
+              {MOCK_ALERTS.map((alert) => (
+                <div key={alert.product.id} className="flex items-center gap-3 py-3">
+                  <div className="flex-1 min-w-0">
+                    <p className="truncate text-[13px] font-bold text-[var(--cb-text-primary)]">{alert.product.name}</p>
+                    <p className="font-mono text-xs text-status-success">
+                      Target: ₹{new Intl.NumberFormat('en-IN').format(alert.targetPrice)}
+                    </p>
+                  </div>
+                  <p className="font-mono text-xs text-[var(--cb-text-muted)] line-through">
+                    ₹{new Intl.NumberFormat('en-IN').format(alert.currentPrice)}
+                  </p>
+                  <span className="cb-badge bg-skyline-glow text-skyline-primary">Watching</span>
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section className="cb-card mt-6 p-6">
+          <h2 className="mb-3 text-lg font-bold text-[var(--cb-text-primary)]">Quick Links</h2>
+          <div className="grid grid-cols-3 gap-3">
+            <Link href={ROUTES.LOGIN} className="cb-btn-ghost justify-center gap-2">
+              <Settings size={14} />
+              Settings
+            </Link>
+            <Link href={ROUTES.PRODUCTS} className="cb-btn-ghost justify-center gap-2">
+              <Package size={14} />
+              Browse
+            </Link>
+            <Link href={ROUTES.DEALS} className="cb-btn-ghost justify-center gap-2">
+              <TrendingDown size={14} />
+              Deals
+            </Link>
           </div>
-        </div>
-      </main>
+          <div className="mt-4 flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
+            <Star size={12} />
+            Dashboard actions preserve secure /go/[id] affiliate routing.
+          </div>
+          <div className="mt-2 text-xs text-[var(--cb-text-muted)]">
+            <LogOut size={12} className="me-1 inline-block" />
+            Logout is available from the global header.
+          </div>
+        </section>
+      </div>
     </div>
   )
 }

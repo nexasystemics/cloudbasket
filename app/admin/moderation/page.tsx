@@ -55,14 +55,14 @@ export default function AdminModerationPage() {
                     <div className="flex gap-2">
                       <button
                         type="button"
-                        onClick={() => console.log('Approve product', product.id)}
+                        onClick={() => void 0}
                         className="cb-btn-primary py-1 text-xs"
                       >
                         Approve
                       </button>
                       <button
                         type="button"
-                        onClick={() => console.log('Reject product', product.id)}
+                        onClick={() => void 0}
                         className="cb-btn-ghost py-1 text-xs text-status-error"
                       >
                         Reject

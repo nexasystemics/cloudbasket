@@ -84,7 +84,7 @@ const RAW_PRODUCTS = [
     description: '6.6" Super AMOLED display, 50MP camera, 5000mAh battery, 6GB RAM. Best mid-range performer for 2026.',
     tags: ['5G', 'AMOLED', '50MP'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-mob-1',
   },
   {
     id: 'mob-2',
@@ -101,7 +101,7 @@ const RAW_PRODUCTS = [
     description: 'A16 Bionic chip, 48MP main camera, Dynamic Island, USB-C charging. The benchmark smartphone experience.',
     tags: ['A16 Bionic', 'USB-C', 'Dynamic Island'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-mob-2',
   },
   {
     id: 'mob-3',
@@ -118,7 +118,7 @@ const RAW_PRODUCTS = [
     description: '200MP camera, 67W turbo charging, Snapdragon 7s Gen 2. The camera king under ₹20,000.',
     tags: ['200MP', '5G', '67W Charging'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-mob-3',
   },
   {
     id: 'mob-4',
@@ -135,7 +135,7 @@ const RAW_PRODUCTS = [
     description: 'Periscope zoom camera, 50MP Sony IMX890, 67W SUPERVOOC. Exceptional photography at mid-range price.',
     tags: ['Periscope Zoom', '5G', 'Sony Sensor'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-mob-4',
   },
   {
     id: 'mob-5',
@@ -152,7 +152,7 @@ const RAW_PRODUCTS = [
     description: '50MP front camera with aura light, 80W flash charge, 6.78" AMOLED. Selfie-focused flagship killer.',
     tags: ['Selfie Camera', '5G', '80W Charging'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-mob-5',
   },
 
   // ── Laptops ────────────────────────────────────────────────────────────────
@@ -171,7 +171,7 @@ const RAW_PRODUCTS = [
     description: 'Intel Core i5-1335U, 16GB RAM, 512GB SSD, Full HD display. Best-in-class productivity laptop.',
     tags: ['Intel i5', '16GB RAM', 'SSD'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-lap-1',
   },
   {
     id: 'lap-2',
@@ -188,7 +188,7 @@ const RAW_PRODUCTS = [
     description: 'M3 chip, 18-hour battery, 13.6" Liquid Retina display, 8GB Unified Memory. Fanless, silent performance.',
     tags: ['M3 Chip', '18hr Battery', 'Retina'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-lap-2',
   },
   {
     id: 'lap-3',
@@ -205,7 +205,7 @@ const RAW_PRODUCTS = [
     description: 'Intel Core i5-1235U, 8GB RAM, 512GB SSD, 15.6" FHD. Reliable workhorse with excellent build quality.',
     tags: ['Intel i5', 'Dell', 'FHD'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-lap-3',
   },
   {
     id: 'lap-4',
@@ -222,7 +222,7 @@ const RAW_PRODUCTS = [
     description: 'Ryzen 5 7530U, 15.6" OLED 2.8K display, 16GB RAM, 512GB SSD. Stunning visuals for creators.',
     tags: ['OLED', 'Ryzen 5', '2.8K Display'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-lap-4',
   },
   {
     id: 'lap-5',
@@ -239,7 +239,7 @@ const RAW_PRODUCTS = [
     description: 'Intel Core i3-1215U, 8GB RAM, 256GB SSD, 15.6" FHD. Budget-friendly for students and beginners.',
     tags: ['Budget', 'Student', 'Lenovo'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-lap-5',
   },
 
   // ── Fashion ────────────────────────────────────────────────────────────────
@@ -258,7 +258,7 @@ const RAW_PRODUCTS = [
     description: 'Slim metal case, mineral crystal glass, water resistant to 30m. Classic Indian watchmaking at its finest.',
     tags: ['Analog', 'Water Resistant', 'Titan'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-fas-1',
   },
   {
     id: 'fas-2',
@@ -275,7 +275,7 @@ const RAW_PRODUCTS = [
     description: '100% cotton pique fabric, ribbed collar, regular fit. Versatile wardrobe essential for office and casual.',
     tags: ['Cotton', 'Regular Fit', 'Polo'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-fas-2',
   },
   {
     id: 'fas-3',
@@ -292,7 +292,7 @@ const RAW_PRODUCTS = [
     description: 'Printed cotton kurta with palazzo pants, ethnic embroidery work. Festival-ready ethnic fashion.',
     tags: ['Ethnic', 'Cotton', 'Festival Wear'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-fas-3',
   },
   {
     id: 'fas-4',
@@ -309,7 +309,7 @@ const RAW_PRODUCTS = [
     description: 'Stretch denim, slim fit through thigh and leg opening. The gold-standard everyday jean for men.',
     tags: ['Slim Fit', 'Stretch Denim', 'Levi\'s'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-fas-4',
   },
   {
     id: 'fas-5',
@@ -326,7 +326,7 @@ const RAW_PRODUCTS = [
     description: 'UV400 protection, polycarbonate lens, lightweight frame. Premium look at an accessible price.',
     tags: ['UV400', 'Lightweight', 'Oval Frame'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-fas-5',
   },
 
   // ── Home ───────────────────────────────────────────────────────────────────
@@ -345,7 +345,7 @@ const RAW_PRODUCTS = [
     description: '6.2L capacity, Rapid Air Technology, 13 cooking presets. Fry, bake, grill and roast with 90% less fat.',
     tags: ['Air Fryer', '6.2L', 'Philips'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-hom-1',
   },
   {
     id: 'hom-2',
@@ -362,7 +362,7 @@ const RAW_PRODUCTS = [
     description: '2000W power, feather touch controls, auto-off safety, 7 preset cooking menus. Smart cooking simplified.',
     tags: ['2000W', 'Auto-off', 'Induction'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-hom-2',
   },
   {
     id: 'hom-3',
@@ -379,7 +379,7 @@ const RAW_PRODUCTS = [
     description: '8L storage, RO+UV+UF purification, TDS controller, 20L/hr flow. Hospital-grade purified water at home.',
     tags: ['RO+UV', '8L Tank', 'Kent'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-hom-3',
   },
   {
     id: 'hom-4',
@@ -396,7 +396,7 @@ const RAW_PRODUCTS = [
     description: '1200mm blade sweep, remote control, 100% copper motor, 5-speed settings. Powerful and whisper-quiet.',
     tags: ['Remote Control', 'Copper Motor', '5-Speed'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-hom-4',
   },
   {
     id: 'hom-5',
@@ -413,7 +413,7 @@ const RAW_PRODUCTS = [
     description: '100% microfibre double bedsheet with 2 pillow covers, 144 thread count. Soft, fade-resistant comfort.',
     tags: ['Microfibre', 'Double Bed', '144TC'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-hom-5',
   },
 
   // ── Cameras ────────────────────────────────────────────────────────────────
@@ -432,7 +432,7 @@ const RAW_PRODUCTS = [
     description: '24.1MP APS-C sensor, 4K video, Dual Pixel autofocus, touchscreen. Perfect first mirrorless camera.',
     tags: ['24MP', '4K Video', 'Mirrorless'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-cam-1',
   },
   {
     id: 'cam-2',
@@ -449,7 +449,7 @@ const RAW_PRODUCTS = [
     description: '24.2MP APS-C, 4K 30fps, directional 3-capsule mic, fast hybrid AF. The vlogger\'s best friend.',
     tags: ['Vlogging', '4K', 'Sony'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-cam-2',
   },
   {
     id: 'cam-3',
@@ -466,7 +466,7 @@ const RAW_PRODUCTS = [
     description: '5.3K60 video, HyperSmooth 6.0 stabilisation, 27MP photos, waterproof to 10m. Adventure-ready.',
     tags: ['5.3K', 'Waterproof', 'Action Cam'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-cam-3',
   },
   {
     id: 'cam-4',
@@ -483,7 +483,7 @@ const RAW_PRODUCTS = [
     description: '7ft max height, 4kg load capacity, universal mount, carry bag included. Studio quality at home.',
     tags: ['7ft', 'Portable', 'Universal Mount'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-cam-4',
   },
 
   // ── Gaming ─────────────────────────────────────────────────────────────────
@@ -502,7 +502,7 @@ const RAW_PRODUCTS = [
     description: 'Adaptive triggers, haptic feedback, built-in mic, USB-C charging. Next-gen feel for PS5 and PC.',
     tags: ['PS5', 'Haptic', 'Adaptive Triggers'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-gam-1',
   },
   {
     id: 'gam-2',
@@ -519,7 +519,7 @@ const RAW_PRODUCTS = [
     description: 'Outemu Blue switches, full RGB backlighting, N-key rollover, metal plate. Best budget mech keyboard.',
     tags: ['Mechanical', 'RGB', 'N-Key Rollover'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-gam-2',
   },
   {
     id: 'gam-3',
@@ -536,7 +536,7 @@ const RAW_PRODUCTS = [
     description: 'HERO 25K sensor, 13 programmable buttons, LIGHTFORCE switches, 89g. Precision for competitive gaming.',
     tags: ['25K DPI', '89g', 'HERO Sensor'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-gam-3',
   },
   {
     id: 'gam-4',
@@ -553,7 +553,7 @@ const RAW_PRODUCTS = [
     description: '53mm drivers, virtual 7.1 surround, memory foam ear cups, detachable mic. Award-winning audio.',
     tags: ['7.1 Surround', '53mm Drivers', 'Memory Foam'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-gam-4',
   },
   {
     id: 'gam-5',
@@ -570,7 +570,7 @@ const RAW_PRODUCTS = [
     description: '7" OLED screen, enhanced audio, 64GB storage, wide adjustable stand. Play anywhere, anytime.',
     tags: ['OLED', 'Portable', 'Nintendo'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-gam-5',
   },
 
   // ── Electronics ────────────────────────────────────────────────────────────
@@ -589,7 +589,7 @@ const RAW_PRODUCTS = [
     description: '42H total playback, BEAST Mode low latency, ENx mic, IPX4 rated. India\'s most popular TWS earbuds.',
     tags: ['42H Battery', 'BEAST Mode', 'IPX4'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-ele-1',
   },
   {
     id: 'ele-2',
@@ -606,7 +606,7 @@ const RAW_PRODUCTS = [
     description: 'Crystal Processor 4K, PurColor, HDR, Tizen OS, 3 HDMI ports. Vivid viewing on a budget.',
     tags: ['4K UHD', 'HDR', 'Smart TV'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-ele-2',
   },
   {
     id: 'ele-3',
@@ -623,7 +623,7 @@ const RAW_PRODUCTS = [
     description: '20H playtime, IP67 waterproof, built-in power bank, PartyBoost. The party speaker built to last.',
     tags: ['20H Battery', 'IP67', 'Power Bank'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-ele-3',
   },
   {
     id: 'ele-4',
@@ -640,7 +640,7 @@ const RAW_PRODUCTS = [
     description: 'S8 chip, crash detection, heart rate & SpO2 monitoring, swimproof. The essential Apple Watch.',
     tags: ['Health Tracking', 'Crash Detection', 'Swimproof'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-ele-4',
   },
   {
     id: 'ele-5',
@@ -657,7 +657,7 @@ const RAW_PRODUCTS = [
     description: '20000mAh, dual USB-A + USB-C, 22.5W fast charge, PowerIQ 3.0. Charge 3 devices simultaneously.',
     tags: ['20000mAh', '22.5W Fast Charge', 'Anker'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-ele-5',
   },
 
   // ── Footwear ───────────────────────────────────────────────────────────────
@@ -676,7 +676,7 @@ const RAW_PRODUCTS = [
     description: 'Foam midsole, rubber outsole for grip, breathable mesh upper. Everyday running made comfortable.',
     tags: ['Running', 'Foam Midsole', 'Breathable'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-foo-1',
   },
   {
     id: 'foo-2',
@@ -693,7 +693,7 @@ const RAW_PRODUCTS = [
     description: 'Genuine leather upper, cushioned insole, non-slip sole. Office-ready formal shoes at an unbeatable price.',
     tags: ['Formal', 'Leather', 'Office Wear'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-foo-2',
   },
   {
     id: 'foo-3',
@@ -710,7 +710,7 @@ const RAW_PRODUCTS = [
     description: 'CELL technology cushioning, breathable mesh upper, flexible outsole. Sport-casual hybrid for all day.',
     tags: ['CELL Cushioning', 'Casual', 'Puma'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-foo-3',
   },
   {
     id: 'foo-4',
@@ -727,7 +727,7 @@ const RAW_PRODUCTS = [
     description: 'Croslite foam construction, 13 ventilation ports, pivoting heel straps. Iconic comfort all day long.',
     tags: ['Croslite Foam', 'Ventilated', 'Iconic'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-foo-4',
   },
 
   // ── Books ──────────────────────────────────────────────────────────────────
@@ -746,7 +746,7 @@ const RAW_PRODUCTS = [
     description: 'The #1 bestselling guide to building good habits and breaking bad ones. Over 10 million copies sold worldwide.',
     tags: ['Self-Help', 'Bestseller', 'Habits'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-boo-1',
   },
   {
     id: 'boo-2',
@@ -763,7 +763,7 @@ const RAW_PRODUCTS = [
     description: 'A magical story about following your dreams. Translated into 80 languages, 65 million copies sold.',
     tags: ['Fiction', 'Inspirational', 'Classic'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-boo-2',
   },
   {
     id: 'boo-3',
@@ -780,7 +780,7 @@ const RAW_PRODUCTS = [
     description: 'The global bestseller on financial literacy, investing, and building wealth. A life-changing read.',
     tags: ['Finance', 'Investing', 'Bestseller'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-boo-3',
   },
   {
     id: 'boo-4',
@@ -797,7 +797,7 @@ const RAW_PRODUCTS = [
     description: '19 short stories exploring the strange ways people think about money. Essential personal finance reading.',
     tags: ['Finance', 'Psychology', 'Personal Finance'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-boo-4',
   },
 
   // ── Beauty ─────────────────────────────────────────────────────────────────
@@ -816,7 +816,7 @@ const RAW_PRODUCTS = [
     description: 'SPF 30, 9-in-1 benefits, light-medium coverage, dermatologist tested. The everyday complexion corrector.',
     tags: ['SPF 30', 'CC Cream', 'Dermatologist Tested'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-bea-1',
   },
   {
     id: 'bea-2',
@@ -833,7 +833,7 @@ const RAW_PRODUCTS = [
     description: 'Vitamin C & Turmeric, SPF 20, non-greasy formula, MadeSafe certified. Glowing skin all day.',
     tags: ['Vitamin C', 'SPF 20', 'Non-Greasy'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-bea-2',
   },
   {
     id: 'bea-3',
@@ -850,7 +850,7 @@ const RAW_PRODUCTS = [
     description: '1800W motor, 2 heat settings, cool shot button, ionic technology. Frizz-free blowout at home.',
     tags: ['1800W', 'Ionic', 'Cool Shot'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-bea-3',
   },
   {
     id: 'bea-4',
@@ -867,7 +867,7 @@ const RAW_PRODUCTS = [
     description: '150ml, long-lasting floral-woody fragrance, skin-friendly formula. All-day freshness for women.',
     tags: ['Floral', 'Long-Lasting', '150ml'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-bea-4',
   },
 
   // ── Sports ─────────────────────────────────────────────────────────────────
@@ -886,7 +886,7 @@ const RAW_PRODUCTS = [
     description: '6mm thick TPE foam, anti-slip texture, carry strap, sweat-resistant. Perfect for yoga and home workouts.',
     tags: ['6mm', 'Anti-Slip', 'TPE Foam'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-spo-1',
   },
   {
     id: 'spo-2',
@@ -903,7 +903,7 @@ const RAW_PRODUCTS = [
     description: 'Rubber-coated hex design, anti-roll, chrome handle, pair of 5kg. Home gym essentials for beginners.',
     tags: ['Rubber Coated', 'Hex Design', 'Pair'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-spo-2',
   },
   {
     id: 'spo-3',
@@ -920,7 +920,7 @@ const RAW_PRODUCTS = [
     description: 'Grade 3 English Willow, full cane handle, 2.7 lbs, short handle. Trusted by club cricketers.',
     tags: ['English Willow', 'Grade 3', 'SG'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-spo-3',
   },
   {
     id: 'spo-4',
@@ -937,7 +937,7 @@ const RAW_PRODUCTS = [
     description: 'Graphite shaft, T-joint reinforcement, pre-strung, includes full cover. Ideal for recreational play.',
     tags: ['Graphite', 'Pre-strung', 'Yonex'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-spo-4',
   },
 
   // ── Toys ───────────────────────────────────────────────────────────────────
@@ -956,7 +956,7 @@ const RAW_PRODUCTS = [
     description: '484 pieces, 33 LEGO colours, 9 base plates. Endless creative building for ages 4+.',
     tags: ['Ages 4+', '484 Pieces', 'Creative'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-toy-1',
   },
   {
     id: 'toy-2',
@@ -973,7 +973,7 @@ const RAW_PRODUCTS = [
     description: '20 die-cast vehicles, 1:64 scale, assorted designs. The perfect gift for little car enthusiasts.',
     tags: ['Die-Cast', '20 Cars', 'Ages 3+'],
     inStock: true,
-    affiliateUrl: 'https://www.flipkart.com',
+    affiliateUrl: '/go/flipkart-toy-2',
   },
   {
     id: 'toy-3',
@@ -990,7 +990,7 @@ const RAW_PRODUCTS = [
     description: '3-storey, 7 play areas, 70+ accessories, colour-change features. Imagination-packed playset for ages 3+.',
     tags: ['Ages 3+', '70+ Accessories', 'Playset'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-toy-3',
   },
   {
     id: 'toy-4',
@@ -1007,7 +1007,7 @@ const RAW_PRODUCTS = [
     description: '2-in-1 classic board game, vibrant printed board, 4 player tokens, dice. Family game night favourite.',
     tags: ['Board Game', '2-in-1', 'Family'],
     inStock: true,
-    affiliateUrl: 'https://www.amazon.in',
+    affiliateUrl: '/go/amazon-toy-4',
   },
 ]
 

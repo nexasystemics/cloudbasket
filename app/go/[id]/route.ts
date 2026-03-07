@@ -8,9 +8,9 @@ const AFFILIATE_DOMAINS: Record<string, string> = {
 }
 
 const DEMO_PRODUCTS: Record<string, string> = {
-  'demo-id': `https://www.amazon.in?tag=${AFFILIATE_TAGS.AMAZON}`,
-  'demo-mobile': `https://www.amazon.in/s?k=smartphones&tag=${AFFILIATE_TAGS.AMAZON}`,
-  'demo-laptop': 'https://www.flipkart.com/laptops',
+  'demo-id': `${AFFILIATE_DOMAINS.amazon}?tag=${AFFILIATE_TAGS.AMAZON}`,
+  'demo-mobile': `${AFFILIATE_DOMAINS.amazon}/s?k=smartphones&tag=${AFFILIATE_TAGS.AMAZON}`,
+  'demo-laptop': `${AFFILIATE_DOMAINS.flipkart}/laptops`,
 }
 
 export async function GET(

@@ -57,7 +57,7 @@ const CATEGORY_DATA: readonly CategoryItem[] = [
     label: 'Beauty',
     icon: Sparkles,
     gradient: 'from-purple-500 to-violet-400',
-    image: 'https://images.unsplash.com/photo-1512446819047-4c62175c2005?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400&q=80',
     count: '250+ deals',
   },
   {
@@ -71,7 +71,7 @@ const CATEGORY_DATA: readonly CategoryItem[] = [
     label: 'Toys',
     icon: Gamepad2,
     gradient: 'from-yellow-500 to-amber-400',
-    image: 'https://images.unsplash.com/photo-1537655780520-1e392ede8139?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80',
     count: '120+ deals',
   },
   {
@@ -85,14 +85,14 @@ const CATEGORY_DATA: readonly CategoryItem[] = [
     label: 'Automotive',
     icon: Car,
     gradient: 'from-red-500 to-orange-400',
-    image: 'https://images.unsplash.com/photo-1492144531155-ad8d5f4c2921?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400&q=80',
     count: '90+ deals',
   },
   {
     label: 'Books',
     icon: BookOpen,
     gradient: 'from-indigo-500 to-blue-400',
-    image: 'https://images.unsplash.com/photo-1495442358998-961f6d17fbb5?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&q=80',
     count: '200+ deals',
   },
 ]
@@ -140,3 +140,4 @@ export default function CategoryGrid() {
     </section>
   )
 }
+

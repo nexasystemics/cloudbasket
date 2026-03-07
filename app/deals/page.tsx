@@ -1,187 +1,283 @@
-'use client'
-
-import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { Clock, ExternalLink, Tag, TrendingDown, Zap } from 'lucide-react'
-import { DEALS, FLASH_DEALS } from '@/lib/deals-data'
-import { PRODUCTS } from '@/lib/mock-data'
-import { ROUTES } from '@/lib/constants'
+import { Zap, Clock, TrendingDown, ExternalLink, Tag } from 'lucide-react'
 
-type DealTab = 'all' | 'flash' | 'cj'
-
-interface CountdownProps {
-  expiresAt: string
+type DealItem = {
+  id: string
+  title: string
+  subtitle: string
+  discount: number
+  originalPrice: number
+  dealPrice: number
+  platform: 'Amazon' | 'Flipkart' | 'CJ Global'
+  image: string
+  badge: 'Flash' | 'Hot' | 'Exclusive' | 'Limited'
+  endsIn: string
+  productId: number
 }
 
-const formatInr = (value: number): string => `₹${new Intl.NumberFormat('en-IN').format(value)}`
+const DEALS_DATA: readonly DealItem[] = [
+  {
+    id: 'deal-1',
+    title: 'Samsung Galaxy S25 Ultra',
+    subtitle: '256GB • Snapdragon flagship • 5G',
+    discount: 33,
+    originalPrice: 44999,
+    dealPrice: 29999,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80',
+    badge: 'Flash',
+    endsIn: '02h 48m',
+    productId: 101,
+  },
+  {
+    id: 'deal-2',
+    title: 'MacBook Air M3',
+    subtitle: '13-inch • 16GB RAM • 512GB SSD',
+    discount: 22,
+    originalPrice: 114990,
+    dealPrice: 89990,
+    platform: 'Flipkart',
+    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80',
+    badge: 'Hot',
+    endsIn: '05h 21m',
+    productId: 102,
+  },
+  {
+    id: 'deal-3',
+    title: 'Sony WH-1000XM5',
+    subtitle: 'Industry-leading ANC wireless headphones',
+    discount: 43,
+    originalPrice: 34990,
+    dealPrice: 19999,
+    platform: 'CJ Global',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',
+    badge: 'Exclusive',
+    endsIn: '11h 03m',
+    productId: 103,
+  },
+  {
+    id: 'deal-4',
+    title: 'Nike Air Max 270',
+    subtitle: 'Men running shoes • multiple colorways',
+    discount: 50,
+    originalPrice: 9995,
+    dealPrice: 4999,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',
+    badge: 'Flash',
+    endsIn: '01h 42m',
+    productId: 104,
+  },
+  {
+    id: 'deal-5',
+    title: 'Instant Pot Duo',
+    subtitle: '7-in-1 electric pressure cooker',
+    discount: 45,
+    originalPrice: 10995,
+    dealPrice: 5999,
+    platform: 'Flipkart',
+    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
+    badge: 'Limited',
+    endsIn: '08h 10m',
+    productId: 105,
+  },
+  {
+    id: 'deal-6',
+    title: 'iPad Pro 11"',
+    subtitle: 'M4 chip • Liquid Retina display',
+    discount: 22,
+    originalPrice: 89900,
+    dealPrice: 69900,
+    platform: 'CJ Global',
+    image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&q=80',
+    badge: 'Hot',
+    endsIn: '06h 39m',
+    productId: 106,
+  },
+  {
+    id: 'deal-7',
+    title: "Levi's 511 Jeans",
+    subtitle: 'Slim fit stretch denim for daily wear',
+    discount: 55,
+    originalPrice: 3999,
+    dealPrice: 1799,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80',
+    badge: 'Flash',
+    endsIn: '03h 25m',
+    productId: 107,
+  },
+  {
+    id: 'deal-8',
+    title: 'Dyson V15 Vacuum',
+    subtitle: 'Cordless vacuum with laser detection',
+    discount: 36,
+    originalPrice: 54900,
+    dealPrice: 34900,
+    platform: 'Flipkart',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
+    badge: 'Exclusive',
+    endsIn: '09h 57m',
+    productId: 108,
+  },
+  {
+    id: 'deal-9',
+    title: 'OnePlus 13',
+    subtitle: 'Flagship killer • 120Hz AMOLED',
+    discount: 27,
+    originalPrice: 54999,
+    dealPrice: 39999,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80',
+    badge: 'Hot',
+    endsIn: '04h 11m',
+    productId: 109,
+  },
+  {
+    id: 'deal-10',
+    title: 'Boat Rockerz 450',
+    subtitle: 'Bluetooth on-ear headphones',
+    discount: 75,
+    originalPrice: 3990,
+    dealPrice: 999,
+    platform: 'Flipkart',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',
+    badge: 'Flash',
+    endsIn: '00h 59m',
+    productId: 110,
+  },
+  {
+    id: 'deal-11',
+    title: 'Instant Pot Air Fryer',
+    subtitle: 'Crisp technology • family size basket',
+    discount: 50,
+    originalPrice: 8999,
+    dealPrice: 4499,
+    platform: 'CJ Global',
+    image: 'https://images.unsplash.com/photo-1585515320310-259814833e62?w=400&q=80',
+    badge: 'Limited',
+    endsIn: '10h 32m',
+    productId: 111,
+  },
+  {
+    id: 'deal-12',
+    title: 'Canon EOS R50',
+    subtitle: 'Mirrorless camera with RF-S lens kit',
+    discount: 23,
+    originalPrice: 64999,
+    dealPrice: 49999,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&q=80',
+    badge: 'Exclusive',
+    endsIn: '07h 08m',
+    productId: 112,
+  },
+]
 
-function Countdown({ expiresAt }: CountdownProps) {
-  const [timeLeft, setTimeLeft] = useState<string>('00:00:00')
-
-  useEffect(() => {
-    const calculate = (): string => {
-      const now = Date.now()
-      const target = new Date(expiresAt).getTime()
-      const diff = Math.max(target - now, 0)
-      const totalSeconds = Math.floor(diff / 1000)
-      const hours = Math.floor(totalSeconds / 3600)
-      const minutes = Math.floor((totalSeconds % 3600) / 60)
-      const seconds = totalSeconds % 60
-      return [hours, minutes, seconds].map((unit) => String(unit).padStart(2, '0')).join(':')
-    }
-
-    setTimeLeft(calculate())
-    const timer = window.setInterval(() => setTimeLeft(calculate()), 1000)
-
-    return () => {
-      window.clearInterval(timer)
-    }
-  }, [expiresAt])
-
-  return (
-    <span className="flex items-center gap-1 font-mono text-xs text-status-warning">
-      <Clock size={12} />
-      {timeLeft}
-    </span>
-  )
+function getBadgeClass(badge: DealItem['badge']): string {
+  if (badge === 'Flash') {
+    return 'cb-badge-orange'
+  }
+  if (badge === 'Hot') {
+    return 'cb-badge bg-red-500 text-white border-red-500'
+  }
+  if (badge === 'Exclusive') {
+    return 'cb-badge border-purple-500 bg-purple-500 text-white'
+  }
+  return 'cb-badge-green'
 }
 
 export default function DealsPage() {
-  const router = useRouter()
-  const [activeTab, setActiveTab] = useState<DealTab>('all')
-
-  const filteredDeals = useMemo(() => {
-    if (activeTab === 'flash') {
-      return FLASH_DEALS
-    }
-    if (activeTab === 'cj') {
-      return DEALS.filter((deal) => deal.id.startsWith('cj'))
-    }
-    return DEALS
-  }, [activeTab])
-
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <section className="bg-gradient-to-br from-[#09090B] to-[#0F172A] py-16 text-center text-white">
-        <h1 className="font-display text-4xl font-black uppercase tracking-tight">Today&apos;s Best Deals</h1>
-        <p className="mt-2 text-base text-[var(--cb-text-muted)]">
-          Verified deals from Amazon, Flipkart & CJ — updated hourly
-        </p>
-        <div className="mt-4 flex justify-center">
-          <span className="cb-badge gap-1 bg-[#F97316]/20 text-[#F97316]">
-            <Zap size={11} />
-            Flash Sales Active
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-gradient-to-r from-[#039BE5] to-[#0277BD] py-16">
+        <div className="mx-auto max-w-7xl px-6 text-center">
+          <span className="cb-badge mb-4 border-white/30 bg-white/20 text-white">
+            <Zap size={14} /> Live Deals
           </span>
+          <h1 className="text-5xl font-black tracking-tighter text-white">Today's Best Deals</h1>
+          <p className="mt-3 text-lg text-white/80">Curated from 50+ stores. Updated every hour.</p>
+
+          <div className="mt-8 flex justify-center gap-12 text-white">
+            <div>
+              <p className="text-3xl font-black">12</p>
+              <p className="text-xs uppercase tracking-widest text-white/70">Active Deals</p>
+            </div>
+            <div>
+              <p className="text-3xl font-black">50+</p>
+              <p className="text-xs uppercase tracking-widest text-white/70">Stores</p>
+            </div>
+            <div>
+              <p className="text-3xl font-black">₹0</p>
+              <p className="text-xs uppercase tracking-widest text-white/70">Platform fee</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto mt-8 w-full max-w-7xl px-6">
-        <div className="flex items-center gap-6 border-b cb-border">
-          <button
-            type="button"
-            onClick={() => setActiveTab('all')}
-            className={`pb-2 text-sm font-bold transition-colors ${
-              activeTab === 'all'
-                ? 'border-b-2 border-skyline-primary text-skyline-primary'
-                : 'text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]'
-            }`}
-          >
-            All Deals
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('flash')}
-            className={`pb-2 text-sm font-bold transition-colors ${
-              activeTab === 'flash'
-                ? 'border-b-2 border-skyline-primary text-skyline-primary'
-                : 'text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]'
-            }`}
-          >
-            Flash Sales
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('cj')}
-            className={`pb-2 text-sm font-bold transition-colors ${
-              activeTab === 'cj'
-                ? 'border-b-2 border-skyline-primary text-skyline-primary'
-                : 'text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]'
-            }`}
-          >
-            CJ Exclusives
-          </button>
-        </div>
+      <section className="mx-auto max-w-7xl px-6 py-4">
+        <div className="ad-slot-leaderboard">Advertisement · Google AdSense · 728×90</div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-6 py-8 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredDeals.map((deal) => {
-          const product = PRODUCTS.find((item) => item.id === deal.productId)
-          return (
-            <article key={deal.id} className="cb-card cursor-pointer overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                {product ? (
-                  <Image src={product.image} alt={deal.title} fill className="object-cover" />
-                ) : (
-                  <div className="h-full w-full bg-[var(--cb-surface-3)]" />
-                )}
-                <div className="absolute start-0 top-0 flex flex-col gap-1 p-2">
-                  {deal.isFlash && (
-                    <span className="cb-badge gap-1 bg-[#F97316] text-white">
-                      <Zap size={11} />
-                      Flash
-                    </span>
-                  )}
-                  <span className="cb-badge gap-1 bg-status-success/90 text-white">
-                    <TrendingDown size={11} />
-                    -{deal.discount}%
-                  </span>
-                </div>
+      <section className="mx-auto max-w-7xl px-6 py-10">
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-2xl font-black tracking-tighter">All Deals</h2>
+          <Link href="/deals/flash" className="cb-btn cb-btn-orange gap-2">
+            <Zap size={16} /> Flash Sales
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {DEALS_DATA.map((deal) => (
+            <article key={deal.id} className="cb-card group relative flex flex-col overflow-hidden">
+              <div className="relative h-52">
+                <Image fill className="object-cover" src={deal.image} alt={deal.title} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+                <span className={`absolute left-3 top-3 ${getBadgeClass(deal.badge)}`}>{deal.badge}</span>
+                <p className="absolute right-3 top-3 text-2xl font-black text-white">-{deal.discount}%</p>
+                <span className="cb-badge absolute bottom-3 left-3 border-white/30 bg-white/20 text-[10px] text-white">
+                  <Tag size={10} /> {deal.platform}
+                </span>
               </div>
 
-              <div className="p-4">
-                <h2 className="line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">{deal.title}</h2>
-                <div className="mt-2">
-                  <Countdown expiresAt={deal.expiresAt} />
+              <div className="flex flex-1 flex-col gap-2 p-4">
+                <h3 className="line-clamp-2 text-sm font-black leading-snug">{deal.title}</h3>
+                <p className="line-clamp-1 text-xs text-[var(--cb-text-muted)]">{deal.subtitle}</p>
+
+                <div className="mt-1 flex items-baseline gap-2">
+                  <p className="price-current">₹{deal.dealPrice.toLocaleString('en-IN')}</p>
+                  <p className="price-original text-xs">₹{deal.originalPrice.toLocaleString('en-IN')}</p>
                 </div>
 
-                {product && (
-                  <div className="mt-2 flex items-end gap-2">
-                    <span className="font-display text-xl font-black text-[var(--cb-text-primary)]">
-                      {formatInr(product.price)}
-                    </span>
-                    {product.originalPrice !== null && (
-                      <span className="text-sm text-[var(--cb-text-muted)] line-through">
-                        {formatInr(product.originalPrice)}
-                      </span>
-                    )}
-                  </div>
-                )}
+                <p className="price-savings text-xs">
+                  You save ₹{(deal.originalPrice - deal.dealPrice).toLocaleString('en-IN')}
+                </p>
 
-                <button
-                  type="button"
-                  onClick={() => router.push('/go/amazon-' + String(deal.productId))}
-                  className="cb-btn-primary mt-3 w-full justify-center gap-2"
-                >
-                  <ExternalLink size={14} />
-                  Grab This Deal
-                </button>
+                <div className="mt-1 flex items-center gap-1">
+                  <Clock size={12} className="text-[#F97316]" />
+                  <p className="text-xs font-bold text-[#F97316]">Ends in {deal.endsIn}</p>
+                </div>
 
-                <div className="mt-2 flex items-center justify-between">
-                  <span className="cb-badge gap-1 bg-skyline-glow text-skyline-primary">
-                    <Tag size={11} />
-                    {deal.badge ?? 'Deal'}
-                  </span>
-                  <Link href={`${ROUTES.DEALS}/${deal.id}`} className="text-xs text-[var(--cb-text-muted)] hover:text-skyline-primary">
-                    Details
+                <div className="mt-auto pt-3">
+                  <Link href={`/go/amazon-${deal.productId}`} className="cb-btn cb-btn-orange w-full text-sm">
+                    <ExternalLink size={14} /> Grab This Deal
                   </Link>
                 </div>
               </div>
+
+              <span className="absolute bottom-2 right-2 text-[10px] text-[var(--cb-text-muted)]">
+                <TrendingDown size={10} className="inline" /> verified
+              </span>
             </article>
-          )
-        })}
+          ))}
+        </div>
       </section>
-    </div>
+
+      <section className="mx-auto flex max-w-7xl justify-center px-6 pb-10">
+        <div className="ad-slot-leaderboard">Advertisement · Google AdSense · 728×90</div>
+      </section>
+    </main>
   )
 }

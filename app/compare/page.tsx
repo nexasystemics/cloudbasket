@@ -1,279 +1,217 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { ChevronDown, ExternalLink, Plus, Search, Star, X } from 'lucide-react'
-import { useGlobal } from '@/context/GlobalContext'
-import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
-import { PRODUCTS } from '@/lib/mock-data'
-import type { Product } from '@/lib/types'
+import { Plus, X, ExternalLink, Check, Minus, Search, SlidersHorizontal } from 'lucide-react'
+import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 
-const MAX_COMPARE = 4
+type Product = (typeof MOCK_PRODUCTS)[number]
+
+type SpecDefinition = {
+  label: string
+  key?: 'brand' | 'source'
+  render?: (product: Product) => ReactNode
+}
+
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'
 
 export default function ComparePage() {
-  const router = useRouter()
-  const { formatPrice } = useGlobal()
-  const [selectedIds, setSelectedIds] = useState<number[]>([])
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [searchCategory, setSearchCategory] = useState<string>('All')
+  const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
-  const selectedProducts = useMemo<Product[]>(() => {
-    return PRODUCTS.filter((product) => selectedIds.includes(product.id))
-  }, [selectedIds])
+  const selectedProducts = MOCK_PRODUCTS.filter((product) => selectedIds.includes(String(product.id)))
 
-  const searchResults = useMemo<Product[]>(() => {
+  const searchResults = useMemo(() => {
     const query = searchQuery.trim().toLowerCase()
-    if (query.length < 2) {
+
+    if (!query) {
       return []
     }
 
-    return PRODUCTS.filter((product) => {
-      const matchesQuery =
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query) ||
-        product.brand.toLowerCase().includes(query)
-      const matchesCategory = searchCategory === 'All' || product.mainCategory === searchCategory
-      return matchesQuery && matchesCategory && !selectedIds.includes(product.id)
-    }).slice(0, 8)
-  }, [searchCategory, searchQuery, selectedIds])
+    return MOCK_PRODUCTS.filter(
+      (product) => product.name.toLowerCase().includes(query) && !selectedIds.includes(String(product.id)),
+    ).slice(0, 6)
+  }, [searchQuery, selectedIds])
 
-  const lowestPrice = useMemo<number | null>(() => {
-    if (selectedProducts.length === 0) {
-      return null
-    }
-    return selectedProducts.reduce((min, item) => (item.price < min ? item.price : min), selectedProducts[0].price)
-  }, [selectedProducts])
-
-  const highestRating = useMemo<number | null>(() => {
-    if (selectedProducts.length === 0) {
-      return null
-    }
-    return selectedProducts.reduce(
-      (max, item) => (item.rating > max ? item.rating : max),
-      selectedProducts[0].rating,
-    )
-  }, [selectedProducts])
-
-  const addProduct = (id: number): void => {
-    if (selectedIds.includes(id) || selectedIds.length >= MAX_COMPARE) {
+  const addProduct = (id: number) => {
+    if (selectedIds.length >= 3) {
       return
     }
-    setSelectedIds([...selectedIds, id])
+
+    const value = String(id)
+    setSelectedIds((current) => (current.includes(value) ? current : [...current, value]))
     setSearchQuery('')
+    setShowDropdown(false)
   }
 
-  const removeProduct = (id: number): void => {
-    setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id))
+  const removeProduct = (id: string) => {
+    setSelectedIds((current) => current.filter((item) => item !== id))
   }
+
+  const specs: readonly SpecDefinition[] = [
+    { label: 'Brand', key: 'brand' },
+    { label: 'Category', render: (product) => product.mainCategory },
+    {
+      label: 'Original Price',
+      render: (product) => (product.originalPrice ? `₹${product.originalPrice.toLocaleString('en-IN')}` : '—'),
+    },
+    { label: 'Discount', render: (product) => (product.discount ? `${product.discount}%` : '—') },
+    { label: 'Platform', key: 'source' },
+    { label: 'Rating', render: (product) => (product.rating ? `${product.rating} ★` : '—') },
+    {
+      label: 'In Stock',
+      render: (product) =>
+        product.stock > 0 ? <Check size={16} className="mx-auto text-[#10B981]" /> : <Minus size={16} className="mx-auto text-[var(--cb-text-muted)]" />,
+    },
+  ]
 
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <div className="mx-auto w-full max-w-7xl px-6 py-12">
-        <header>
-          <h1 className="font-display text-3xl font-black uppercase tracking-tight text-[var(--cb-text-primary)]">
-            Compare Products
-          </h1>
-          <p className="mt-1 text-sm text-[var(--cb-text-muted)]">
-            Add up to 4 products to compare side by side
-          </p>
-        </header>
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-[var(--cb-surface-2)] py-12">
+        <div className="mx-auto max-w-7xl px-6 text-center">
+          <SlidersHorizontal size={32} className="mx-auto mb-4 text-[#039BE5]" />
+          <h1 className="text-4xl font-black tracking-tighter">Compare Products</h1>
+          <p className="mt-3 text-[var(--cb-text-muted)]">Select up to 3 products to compare side by side</p>
+        </div>
+      </section>
 
-        <section className="mt-8">
-          <div className="relative max-w-3xl">
-            <div className="glass-panel relative">
-              <Search
-                size={18}
-                className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
-              />
-              <input
-                type="search"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Search product to add..."
-                className="w-full rounded-card bg-transparent py-4 pe-4 ps-11 text-sm text-[var(--cb-text-primary)] outline-none"
-              />
+      <section className="mx-auto max-w-7xl px-6 py-8">
+        <h2 className="mb-4 text-lg font-black">Add Products to Compare</h2>
+
+        <div className="relative max-w-lg">
+          <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
+          <input
+            data-compare-search
+            className="cb-input w-full pl-10"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(event) => {
+              setSearchQuery(event.target.value)
+              setShowDropdown(true)
+            }}
+            onFocus={() => setShowDropdown(true)}
+          />
+
+          {showDropdown && searchResults.length > 0 ? (
+            <div className="cb-card absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden shadow-2xl">
+              {searchResults.map((product) => (
+                <button
+                  key={product.id}
+                  type="button"
+                  className="flex w-full items-center gap-3 p-3 text-left transition-colors hover:bg-[var(--cb-surface-2)]"
+                  onClick={() => addProduct(product.id)}
+                >
+                  <Image
+                    src={product.image || FALLBACK_IMAGE}
+                    alt={product.name}
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 rounded-lg object-cover"
+                  />
+                  <div>
+                    <p className="line-clamp-1 text-sm font-bold">{product.name}</p>
+                    <p className="text-xs text-[var(--cb-text-muted)]">
+                      ₹{product.price.toLocaleString('en-IN')} · {product.brand}
+                    </p>
+                  </div>
+                </button>
+              ))}
             </div>
+          ) : null}
+        </div>
 
-            {searchResults.length > 0 && (
-              <div className="glass-panel absolute inset-x-0 top-[calc(100%+8px)] z-30 overflow-hidden border cb-border rounded-card">
-                {searchResults.map((product) => (
-                  <button
-                    key={product.id}
-                    type="button"
-                    onClick={() => addProduct(product.id)}
-                    className="flex w-full cursor-pointer items-center gap-3 p-3 text-start transition-colors hover:bg-[var(--cb-surface-3)]"
-                  >
-                    <div className="relative h-10 w-10 overflow-hidden rounded-badge">
-                      <Image src={product.image} alt={product.name} fill className="object-cover" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-[13px] font-bold text-[var(--cb-text-primary)]">{product.name}</p>
-                      <p className="font-mono text-xs text-skyline-primary">{formatPrice(product.price)}</p>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {selectedProducts.map((product) => (
+            <span key={product.id} className="cb-badge">
+              {product.name}
+              <button type="button" onClick={() => removeProduct(String(product.id))} aria-label={`Remove ${product.name}`}>
+                <X size={12} />
+              </button>
+            </span>
+          ))}
 
-          <div className="relative mt-3 max-w-[240px]">
-            <select
-              value={searchCategory}
-              onChange={(event) => setSearchCategory(event.target.value)}
-              className="cb-btn-ghost w-full appearance-none justify-between rounded-button pe-8 text-sm"
+          {selectedIds.length < 3 ? (
+            <button
+              type="button"
+              className="cb-badge cb-badge-blue cursor-pointer"
+              onClick={() => document.querySelector<HTMLInputElement>('input[data-compare-search]')?.focus()}
             >
-              <option value="All">All</option>
-              {MAIN_CATEGORIES.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              size={14}
-              className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
-            />
+              <Plus size={12} /> Add product ({selectedIds.length}/3)
+            </button>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 pb-16">
+        {selectedProducts.length === 0 ? (
+          <div className="cb-card mx-auto mt-4 max-w-lg p-16 text-center">
+            <SlidersHorizontal size={48} className="mx-auto mb-4 text-[var(--cb-text-muted)]" />
+            <h2 className="text-xl font-black">No products selected</h2>
+            <p className="mt-2 text-[var(--cb-text-muted)]">Search above and add up to 3 products to compare</p>
+            <Link href="/products" className="cb-btn cb-btn-primary mt-6 gap-2">
+              Browse Products <ExternalLink size={16} />
+            </Link>
           </div>
-        </section>
-
-        <section className="mt-10">
-          {selectedProducts.length === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-3 rounded-card border cb-border bg-[var(--cb-surface-2)] py-16 text-center">
-              <Plus size={48} className="text-[var(--cb-text-muted)]" />
-              <p className="text-[var(--cb-text-primary)]">Add products above to start comparing</p>
-              <Link href={ROUTES.PRODUCTS} className="cb-btn-ghost">
-                Browse products
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {selectedProducts.map((product) => (
-                <article key={product.id} className="cb-card relative p-4">
-                  <button
-                    type="button"
-                    onClick={() => removeProduct(product.id)}
-                    className="absolute end-2 top-2 rounded-full p-1 text-[var(--cb-text-muted)] hover:bg-[var(--cb-surface-3)]"
-                    aria-label={`Remove ${product.name}`}
-                  >
-                    <X size={14} />
-                  </button>
-                  <div className="relative aspect-square overflow-hidden rounded-card">
-                    <Image src={product.image} alt={product.name} fill className="object-cover" />
-                  </div>
-                  <div className="mt-2 cb-badge bg-skyline-glow text-skyline-primary">{product.brand}</div>
-                  <h2 className="mt-1 line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">
-                    {product.name}
-                  </h2>
-                  <p className="mt-2 font-display text-xl font-black text-skyline-primary">
-                    {formatPrice(product.price)}
-                  </p>
-                  <div className="mt-1 flex items-center gap-1">
-                    {Array.from({ length: 5 }, (_, index) => (
-                      <Star
-                        key={`${product.id}-star-${index + 1}`}
-                        size={12}
-                        className={index + 1 <= Math.round(product.rating) ? 'fill-[#F5C842] text-[#F5C842]' : 'text-[var(--cb-text-muted)]'}
-                      />
-                    ))}
-                    <span className="ms-1 text-xs text-[var(--cb-text-muted)]">{product.rating.toFixed(1)}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => router.push('/go/amazon-' + String(product.id))}
-                    className="cb-btn-primary mt-3 w-full justify-center gap-2 text-xs"
-                  >
-                    View Deal
-                    <ExternalLink size={12} />
-                  </button>
-                </article>
-              ))}
-            </div>
-          )}
-        </section>
-
-        {selectedProducts.length >= 2 && (
-          <section className="mt-8 overflow-x-auto">
+        ) : (
+          <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr>
-                  <th className="border cb-border bg-[var(--cb-surface-3)] p-3 text-start text-xs font-black uppercase tracking-wider text-[var(--cb-text-muted)]">
-                    Spec
+                <tr className="bg-[var(--cb-surface-2)]">
+                  <th className="w-40 p-4 text-left text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)]">
+                    Specification
                   </th>
                   {selectedProducts.map((product) => (
-                    <th
-                      key={`head-${product.id}`}
-                      className="border cb-border bg-[var(--cb-surface-3)] p-3 text-start text-xs font-black text-[var(--cb-text-primary)]"
-                    >
-                      {product.name}
+                    <th key={product.id} className="relative min-w-[200px] p-4 text-center align-top">
+                      <button
+                        type="button"
+                        className="cb-btn absolute right-2 top-2 rounded-full bg-[var(--cb-surface-2)] p-1"
+                        onClick={() => removeProduct(String(product.id))}
+                        aria-label={`Remove ${product.name}`}
+                      >
+                        <X size={12} />
+                      </button>
+
+                      <Image
+                        src={product.image || FALLBACK_IMAGE}
+                        alt={product.name}
+                        width={80}
+                        height={80}
+                        className="mx-auto h-20 w-20 rounded-xl object-contain"
+                      />
+                      <p className="mt-2 line-clamp-2 text-sm font-black">{product.name}</p>
+                      <p className="mt-1 text-lg font-black text-[#039BE5]">₹{product.price.toLocaleString('en-IN')}</p>
+                      <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-orange mt-2 w-full gap-1 text-xs">
+                        <ExternalLink size={12} /> View Deal
+                      </Link>
                     </th>
                   ))}
                 </tr>
               </thead>
+
               <tbody>
-                <tr className="even:bg-[var(--cb-surface-2)]">
-                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Rating</td>
-                  {selectedProducts.map((product) => (
-                    <td
-                      key={`rating-${product.id}`}
-                      className={`border cb-border p-3 text-sm ${
-                        highestRating !== null && product.rating === highestRating
-                          ? 'font-bold text-skyline-primary'
-                          : 'text-[var(--cb-text-primary)]'
-                      }`}
-                    >
-                      {product.rating.toFixed(1)}
-                    </td>
-                  ))}
-                </tr>
-                <tr className="even:bg-[var(--cb-surface-2)]">
-                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Price</td>
-                  {selectedProducts.map((product) => (
-                    <td
-                      key={`price-${product.id}`}
-                      className={`border cb-border p-3 text-sm ${
-                        lowestPrice !== null && product.price === lowestPrice
-                          ? 'font-bold text-status-success'
-                          : 'text-[var(--cb-text-primary)]'
-                      }`}
-                    >
-                      {formatPrice(product.price)}
-                    </td>
-                  ))}
-                </tr>
-                <tr className="even:bg-[var(--cb-surface-2)]">
-                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Brand</td>
-                  {selectedProducts.map((product) => (
-                    <td key={`brand-${product.id}`} className="border cb-border p-3 text-sm text-[var(--cb-text-primary)]">
-                      {product.brand}
-                    </td>
-                  ))}
-                </tr>
-                <tr className="even:bg-[var(--cb-surface-2)]">
-                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Warranty</td>
-                  {selectedProducts.map((product) => (
-                    <td
-                      key={`warranty-${product.id}`}
-                      className="border cb-border p-3 text-sm text-[var(--cb-text-primary)]"
-                    >
-                      {product.warranty}
-                    </td>
-                  ))}
-                </tr>
-                <tr className="even:bg-[var(--cb-surface-2)]">
-                  <td className="border cb-border p-3 text-sm font-bold text-[var(--cb-text-muted)]">Stock</td>
-                  {selectedProducts.map((product) => (
-                    <td key={`stock-${product.id}`} className="border cb-border p-3 text-sm text-[var(--cb-text-primary)]">
-                      {product.stock}
-                    </td>
-                  ))}
-                </tr>
+                {specs.map((spec, index) => (
+                  <tr
+                    key={spec.label}
+                    className={`border-t border-[var(--cb-border)] ${index % 2 === 1 ? 'bg-[var(--cb-surface-2)]/30' : ''}`}
+                  >
+                    <td className="p-4 text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)]">{spec.label}</td>
+                    {selectedProducts.map((product) => {
+                      const value = spec.render ? spec.render(product) : spec.key ? product[spec.key] : '—'
+                      return (
+                        <td key={`${spec.label}-${product.id}`} className="p-4 text-center text-sm">
+                          {value ?? '—'}
+                        </td>
+                      )
+                    })}
+                  </tr>
+                ))}
               </tbody>
             </table>
-          </section>
+          </div>
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }

@@ -1,90 +1,264 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { Clock, Zap } from 'lucide-react'
-import { FLASH_DEALS } from '@/lib/deals-data'
-import { PRODUCTS } from '@/lib/mock-data'
+import Link from 'next/link'
+import { Zap, Clock, ExternalLink } from 'lucide-react'
 
-interface CountdownProps {
-  expiresAt: string
+type DealItem = {
+  id: string
+  title: string
+  subtitle: string
+  discount: number
+  originalPrice: number
+  dealPrice: number
+  platform: 'Amazon' | 'Flipkart' | 'CJ Global'
+  image: string
+  badge: 'Flash' | 'Hot' | 'Exclusive' | 'Limited'
+  endsIn: string
+  productId: number
 }
 
-function Countdown({ expiresAt }: CountdownProps) {
-  const [timeLeft, setTimeLeft] = useState<string>('00:00:00')
+const DEALS_DATA: readonly DealItem[] = [
+  {
+    id: 'deal-1',
+    title: 'Samsung Galaxy S25 Ultra',
+    subtitle: '256GB • Snapdragon flagship • 5G',
+    discount: 33,
+    originalPrice: 44999,
+    dealPrice: 29999,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80',
+    badge: 'Flash',
+    endsIn: '02h 48m',
+    productId: 101,
+  },
+  {
+    id: 'deal-2',
+    title: 'MacBook Air M3',
+    subtitle: '13-inch • 16GB RAM • 512GB SSD',
+    discount: 22,
+    originalPrice: 114990,
+    dealPrice: 89990,
+    platform: 'Flipkart',
+    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80',
+    badge: 'Hot',
+    endsIn: '05h 21m',
+    productId: 102,
+  },
+  {
+    id: 'deal-3',
+    title: 'Sony WH-1000XM5',
+    subtitle: 'Industry-leading ANC wireless headphones',
+    discount: 43,
+    originalPrice: 34990,
+    dealPrice: 19999,
+    platform: 'CJ Global',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',
+    badge: 'Exclusive',
+    endsIn: '11h 03m',
+    productId: 103,
+  },
+  {
+    id: 'deal-4',
+    title: 'Nike Air Max 270',
+    subtitle: 'Men running shoes • multiple colorways',
+    discount: 50,
+    originalPrice: 9995,
+    dealPrice: 4999,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',
+    badge: 'Flash',
+    endsIn: '01h 42m',
+    productId: 104,
+  },
+  {
+    id: 'deal-5',
+    title: 'Instant Pot Duo',
+    subtitle: '7-in-1 electric pressure cooker',
+    discount: 45,
+    originalPrice: 10995,
+    dealPrice: 5999,
+    platform: 'Flipkart',
+    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
+    badge: 'Limited',
+    endsIn: '08h 10m',
+    productId: 105,
+  },
+  {
+    id: 'deal-6',
+    title: 'iPad Pro 11"',
+    subtitle: 'M4 chip • Liquid Retina display',
+    discount: 22,
+    originalPrice: 89900,
+    dealPrice: 69900,
+    platform: 'CJ Global',
+    image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&q=80',
+    badge: 'Hot',
+    endsIn: '06h 39m',
+    productId: 106,
+  },
+  {
+    id: 'deal-7',
+    title: "Levi's 511 Jeans",
+    subtitle: 'Slim fit stretch denim for daily wear',
+    discount: 55,
+    originalPrice: 3999,
+    dealPrice: 1799,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80',
+    badge: 'Flash',
+    endsIn: '03h 25m',
+    productId: 107,
+  },
+  {
+    id: 'deal-8',
+    title: 'Dyson V15 Vacuum',
+    subtitle: 'Cordless vacuum with laser detection',
+    discount: 36,
+    originalPrice: 54900,
+    dealPrice: 34900,
+    platform: 'Flipkart',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
+    badge: 'Exclusive',
+    endsIn: '09h 57m',
+    productId: 108,
+  },
+  {
+    id: 'deal-9',
+    title: 'OnePlus 13',
+    subtitle: 'Flagship killer • 120Hz AMOLED',
+    discount: 27,
+    originalPrice: 54999,
+    dealPrice: 39999,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80',
+    badge: 'Hot',
+    endsIn: '04h 11m',
+    productId: 109,
+  },
+  {
+    id: 'deal-10',
+    title: 'Boat Rockerz 450',
+    subtitle: 'Bluetooth on-ear headphones',
+    discount: 75,
+    originalPrice: 3990,
+    dealPrice: 999,
+    platform: 'Flipkart',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',
+    badge: 'Flash',
+    endsIn: '00h 59m',
+    productId: 110,
+  },
+  {
+    id: 'deal-11',
+    title: 'Instant Pot Air Fryer',
+    subtitle: 'Crisp technology • family size basket',
+    discount: 50,
+    originalPrice: 8999,
+    dealPrice: 4499,
+    platform: 'CJ Global',
+    image: 'https://images.unsplash.com/photo-1585515320310-259814833e62?w=400&q=80',
+    badge: 'Limited',
+    endsIn: '10h 32m',
+    productId: 111,
+  },
+  {
+    id: 'deal-12',
+    title: 'Canon EOS R50',
+    subtitle: 'Mirrorless camera with RF-S lens kit',
+    discount: 23,
+    originalPrice: 64999,
+    dealPrice: 49999,
+    platform: 'Amazon',
+    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&q=80',
+    badge: 'Exclusive',
+    endsIn: '07h 08m',
+    productId: 112,
+  },
+]
 
-  useEffect(() => {
-    const update = (): string => {
-      const diff = Math.max(new Date(expiresAt).getTime() - Date.now(), 0)
-      const seconds = Math.floor(diff / 1000)
-      const hh = Math.floor(seconds / 3600)
-      const mm = Math.floor((seconds % 3600) / 60)
-      const ss = seconds % 60
-      return [hh, mm, ss].map((unit) => String(unit).padStart(2, '0')).join(':')
-    }
-
-    setTimeLeft(update())
-    const timer = window.setInterval(() => setTimeLeft(update()), 1000)
-
-    return () => {
-      window.clearInterval(timer)
-    }
-  }, [expiresAt])
-
-  return (
-    <span className="flex items-center gap-1 font-mono text-xs text-status-warning">
-      <Clock size={12} />
-      {timeLeft}
-    </span>
-  )
+function getBadgeClass(badge: DealItem['badge']): string {
+  if (badge === 'Flash') {
+    return 'cb-badge-orange'
+  }
+  if (badge === 'Hot') {
+    return 'cb-badge bg-red-500 text-white border-red-500'
+  }
+  if (badge === 'Exclusive') {
+    return 'cb-badge border-purple-500 bg-purple-500 text-white'
+  }
+  return 'cb-badge-green'
 }
 
-export default function FlashPage() {
-  const router = useRouter()
+const FLASH_DEALS = DEALS_DATA.filter((deal) => deal.badge === 'Flash' || deal.badge === 'Hot')
 
+export default function FlashDealsPage() {
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <header className="border-b border-[#F97316]/20 bg-[#F97316]/5 py-12 text-center">
-        <Zap size={32} className="mx-auto text-[#F97316]" />
-        <h1 className="mt-3 font-display text-3xl font-black text-[var(--cb-text-primary)]">Flash Sales</h1>
-        <p className="mt-1 text-sm text-[var(--cb-text-muted)]">Limited time. Maximum savings. All verified.</p>
-        <div className="mt-3">
-          <span className="cb-badge bg-[#F97316]/20 text-[#F97316]">{FLASH_DEALS.length} active deals</span>
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-gradient-to-r from-[#F97316] to-[#EA580C] py-16">
+        <div className="mx-auto max-w-7xl px-6 text-center">
+          <span className="cb-badge mb-4 border-white/30 bg-white/20 text-white">
+            <Zap size={14} /> Flash Sales
+          </span>
+          <h1 className="text-5xl font-black tracking-tighter text-white">Flash Sales</h1>
+          <p className="mt-3 text-white/80">Limited time. Maximum savings. Move fast.</p>
+
+          <div className="mt-8 flex justify-center gap-4">
+            {[
+              { value: '02', label: 'Hours' },
+              { value: '47', label: 'Minutes' },
+              { value: '33', label: 'Seconds' },
+            ].map((time) => (
+              <div key={time.label} className="cb-card border-white/20 bg-white/10 px-6 py-4 text-center">
+                <p className="text-3xl font-black text-white">{time.value}</p>
+                <p className="text-xs text-white/60">{time.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </header>
-
-      <section className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 px-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
-        {FLASH_DEALS.map((deal) => {
-          const product = PRODUCTS.find((item) => item.id === deal.productId)
-          return (
-            <article
-              key={deal.id}
-              className="cb-card cursor-pointer border-[#F97316]/30 p-4 transition-colors hover:border-[#F97316]"
-            >
-              <div className="relative h-40 overflow-hidden rounded-card">
-                {product ? (
-                  <Image src={product.image} alt={deal.title} fill className="object-cover" />
-                ) : (
-                  <div className="h-full w-full bg-[var(--cb-surface-3)]" />
-                )}
-              </div>
-              <h2 className="mt-3 line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">{deal.title}</h2>
-              <div className="mt-2 flex items-center justify-between">
-                <span className="cb-badge bg-status-success/10 text-status-success">-{deal.discount}%</span>
-                <Countdown expiresAt={deal.expiresAt} />
-              </div>
-              <button
-                type="button"
-                onClick={() => router.push('/go/amazon-' + String(deal.productId))}
-                className="cb-btn-primary mt-3 w-full justify-center"
-              >
-                Grab Deal
-              </button>
-            </article>
-          )
-        })}
       </section>
-    </div>
+
+      <section className="mx-auto max-w-7xl px-6 py-10">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {FLASH_DEALS.map((deal) => (
+            <article key={deal.id} className="cb-card group relative flex flex-col overflow-hidden">
+              <div className="relative h-52">
+                <Image fill className="object-cover" src={deal.image} alt={deal.title} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+                <span className={`absolute left-3 top-3 ${getBadgeClass(deal.badge)}`}>{deal.badge}</span>
+                <p className="absolute right-3 top-3 text-2xl font-black text-white">-{deal.discount}%</p>
+                <span className="cb-badge absolute bottom-3 left-3 border-white/30 bg-white/20 text-[10px] text-white">
+                  {deal.platform}
+                </span>
+              </div>
+
+              <div className="flex flex-1 flex-col gap-2 p-4">
+                <h3 className="line-clamp-2 text-sm font-black leading-snug">{deal.title}</h3>
+                <p className="line-clamp-1 text-xs text-[var(--cb-text-muted)]">{deal.subtitle}</p>
+
+                <div className="mt-1 flex items-baseline gap-2">
+                  <p className="price-current">₹{deal.dealPrice.toLocaleString('en-IN')}</p>
+                  <p className="price-original text-xs">₹{deal.originalPrice.toLocaleString('en-IN')}</p>
+                </div>
+
+                <p className="price-savings text-xs">
+                  You save ₹{(deal.originalPrice - deal.dealPrice).toLocaleString('en-IN')}
+                </p>
+
+                <div className="mt-1 flex items-center gap-1">
+                  <Clock size={12} className="text-[#F97316]" />
+                  <p className="text-xs font-bold text-[#F97316]">Ends in {deal.endsIn}</p>
+                </div>
+
+                <div className="mt-auto pt-3">
+                  <Link href={`/go/amazon-${deal.productId}`} className="cb-btn cb-btn-orange w-full text-sm">
+                    <ExternalLink size={14} /> Grab This Deal
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
   )
 }

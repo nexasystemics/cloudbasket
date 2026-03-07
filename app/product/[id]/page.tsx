@@ -1,253 +1,282 @@
-import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 import {
-  ChevronRight,
   ExternalLink,
-  RotateCcw,
-  Shield,
   Star,
+  Shield,
   Truck,
-  Zap,
+  RefreshCw,
+  TrendingDown,
+  ChevronRight,
+  Share2,
+  Heart,
+  BarChart2,
 } from 'lucide-react'
-import ProductCard from '@/components/products/ProductCard'
-import { AFFILIATE_TAGS, ROUTES } from '@/lib/constants'
-import { PRODUCTS } from '@/lib/mock-data'
-import type { Product } from '@/lib/types'
+import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 
-interface ProductDetailPageProps {
-  params: Promise<{ id: string }>
+type Product = (typeof MOCK_PRODUCTS)[number]
+
+type PriceEntry = {
+  platform: 'Amazon' | 'Flipkart' | 'CJ Global'
+  platformSlug: 'amazon' | 'flipkart' | 'cj'
+  price: number
+  delivery: string
+  eta: string
+  best: boolean
 }
 
-const toInr = (amount: number): string => {
-  return `₹${new Intl.NumberFormat('en-IN').format(amount)}`
-}
-
-const trimName = (name: string): string => {
-  return name.length > 30 ? `${name.slice(0, 30)}...` : name
-}
-
-const getProductById = (id: number): Product | undefined => {
-  return PRODUCTS.find((product) => product.id === id)
-}
-
-export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
-  const { id } = await params
-  const parsedId = Number.parseInt(id, 10)
-  const product = Number.isNaN(parsedId) ? undefined : getProductById(parsedId)
-
-  if (!product) {
-    return {
-      title: 'Product Not Found',
-      description: 'Requested product could not be found.',
-    }
+function getPlatformBadgeClass(platform: PriceEntry['platform']): string {
+  if (platform === 'Amazon') {
+    return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
   }
-
-  return {
-    title: product.name,
-    description: product.description,
-    openGraph: {
-      title: product.name,
-      description: product.description,
-      images: [product.images[0] ?? product.image],
-    },
+  if (platform === 'Flipkart') {
+    return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
   }
+  return 'cb-badge-green'
 }
 
-export async function generateStaticParams(): Promise<{ id: string }[]> {
-  return PRODUCTS.slice(0, 100).map((product) => ({ id: String(product.id) }))
-}
-
-export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const { id } = await params
-  const parsedId = Number.parseInt(id, 10)
-  if (Number.isNaN(parsedId)) {
-    notFound()
-  }
-
-  const product = getProductById(parsedId)
-  if (!product) {
-    notFound()
-  }
-
-  const roundedRating = Math.round(product.rating)
-  const relatedProducts = PRODUCTS.filter(
-    (item) =>
-      item.mainCategory === product.mainCategory && item.id !== product.id && item.status === 'Approved',
-  ).slice(0, 4)
-
-  const savings =
-    product.originalPrice !== null && product.originalPrice > product.price
-      ? product.originalPrice - product.price
-      : 0
+function RelatedCard({ product }: { product: Product }) {
+  const originalPrice = product.originalPrice ?? Math.round(product.price * 1.2)
+  const discount = product.discount ?? Math.max(1, Math.round(((originalPrice - product.price) / originalPrice) * 100))
 
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <nav className="mx-auto flex w-full max-w-7xl items-center gap-2 px-6 pt-6 text-[12px] text-[var(--cb-text-muted)]">
-        <Link href={ROUTES.HOME} className="hover:text-[var(--cb-text-primary)]">
-          Home
+    <article className="cb-card group flex flex-col overflow-hidden">
+      <div className="relative h-40">
+        <Image
+          fill
+          className="object-cover"
+          src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+          alt={product.name}
+        />
+      </div>
+      <div className="flex flex-1 flex-col gap-1 p-3">
+        <p className="line-clamp-2 text-xs font-bold">{product.name}</p>
+        <div className="mt-1 flex items-baseline gap-2">
+          <p className="price-current">₹{product.price.toLocaleString('en-IN')}</p>
+          <p className="price-original text-xs">₹{originalPrice.toLocaleString('en-IN')}</p>
+        </div>
+        <p className="price-savings text-xs">Save {discount}%</p>
+        <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-auto w-full py-2 text-xs">
+          View Deal <ExternalLink size={12} />
         </Link>
-        <ChevronRight size={12} />
-        <Link href={ROUTES.PRODUCTS} className="hover:text-[var(--cb-text-primary)]">
-          Products
-        </Link>
-        <ChevronRight size={12} />
-        <Link href={`/category/${product.mainCategory.toLowerCase()}`} className="hover:text-[var(--cb-text-primary)]">
-          {product.mainCategory}
-        </Link>
-        <ChevronRight size={12} />
-        <span className="truncate">{trimName(product.name)}</span>
-      </nav>
+      </div>
+    </article>
+  )
+}
 
-      <main className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-12 px-6 py-8 lg:grid-cols-2">
-        <section>
-          <div className="relative aspect-square overflow-hidden rounded-card border cb-border bg-[var(--cb-surface-2)]">
-            <Image src={product.image} alt={product.name} fill priority className="object-cover" />
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const numericId = Number.parseInt(id, 10)
+
+  if (Number.isNaN(numericId)) {
+    notFound()
+  }
+
+  const product = MOCK_PRODUCTS.find((item) => item.id === numericId)
+
+  if (!product) {
+    notFound()
+  }
+
+  const related = MOCK_PRODUCTS.filter(
+    (item) => item.mainCategory === product.mainCategory && item.id !== product.id,
+  ).slice(0, 4)
+
+  const reviewCount = product.reviewCount
+
+  const priceComparison: readonly PriceEntry[] = [
+    {
+      platform: 'Amazon',
+      platformSlug: 'amazon',
+      price: product.price,
+      delivery: 'Free Delivery',
+      eta: '2-4 days',
+      best: false,
+    },
+    {
+      platform: 'Flipkart',
+      platformSlug: 'flipkart',
+      price: Math.round(product.price * 1.03),
+      delivery: '₹40 delivery',
+      eta: '3-5 days',
+      best: false,
+    },
+    {
+      platform: 'CJ Global',
+      platformSlug: 'cj',
+      price: Math.round(product.price * 0.97),
+      delivery: 'Free Delivery',
+      eta: '5-7 days',
+      best: true,
+    },
+  ]
+
+  const historyBars: readonly number[] = [
+    54, 60, 58, 62, 65, 63, 59, 66, 68, 71, 73, 69, 72, 70, 67, 64, 62, 58, 61, 63, 66, 68, 72, 75, 77, 80, 83,
+    86, 89, 94,
+  ]
+
+  return (
+    <main className="bg-[var(--cb-bg)]">
+      <section className="mx-auto max-w-7xl px-6 py-4">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--cb-text-muted)]">
+          <Link href="/">Home</Link>
+          <ChevronRight size={12} />
+          <Link href="/products">Products</Link>
+          <ChevronRight size={12} />
+          <Link href={`/category/${encodeURIComponent(product.mainCategory.toLowerCase())}`}>{product.mainCategory}</Link>
+          <ChevronRight size={12} />
+          <span className="line-clamp-1">{product.name}</span>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-6 lg:grid-cols-2">
+        <div>
+          <div className="cb-card overflow-hidden">
+            <div className="relative h-96">
+              <Image
+                fill
+                className="object-cover"
+                src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+                alt={product.name}
+              />
+            </div>
+            <div className="flex gap-2 p-4">
+              {[0, 1, 2].map((thumb) => (
+                <div
+                  key={thumb}
+                  className={`relative h-16 w-16 cursor-pointer overflow-hidden rounded-lg border-2 ${
+                    thumb === 0 ? 'border-[#039BE5]' : 'border-transparent'
+                  }`}
+                >
+                  <Image
+                    fill
+                    className="object-cover"
+                    src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+                    alt={`${product.name} preview ${thumb + 1}`}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="mt-3 flex gap-2">
-            {product.images.slice(0, 3).map((imageUrl, index) => (
+        </div>
+
+        <div>
+          <span className="cb-badge cb-badge-blue mb-3">{product.mainCategory}</span>
+          <h1 className="text-3xl font-black tracking-tighter">{product.name}</h1>
+          <p className="mt-1 text-sm text-[var(--cb-text-muted)]">{product.brand}</p>
+
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <span className="flex items-center gap-1 text-[#F5C842]">
+              <Star size={14} fill="currentColor" />
+              <Star size={14} fill="currentColor" />
+              <Star size={14} fill="currentColor" />
+              <Star size={14} fill="currentColor" />
+              <Star size={14} />
+            </span>
+            <span className="text-sm">{product.rating.toFixed(1)} out of 5</span>
+            <span className="cb-badge">{reviewCount.toLocaleString('en-IN')} reviews</span>
+          </div>
+
+          <div className="cb-card mt-6 p-6">
+            <p className="mb-3 text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Price Comparison</p>
+
+            {priceComparison.map((entry, index) => (
               <div
-                key={`${product.id}-thumb-${index}`}
-                className="relative h-20 w-20 overflow-hidden rounded-badge border cb-border"
+                key={entry.platform}
+                className={`flex items-center justify-between py-3 ${
+                  index !== priceComparison.length - 1 ? 'border-b border-[var(--cb-border)]' : ''
+                }`}
               >
-                <Image src={imageUrl} alt={`${product.name} image ${index + 1}`} fill className="object-cover" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className={`cb-badge text-[10px] ${getPlatformBadgeClass(entry.platform)}`}>{entry.platform}</span>
+                    <p className="text-sm font-bold">{entry.platform}</p>
+                  </div>
+                  <p className="mt-1 text-xs text-[var(--cb-text-muted)]">
+                    {entry.delivery} · {entry.eta}
+                  </p>
+                </div>
+
+                <div className="text-right">
+                  <p className="price-current text-lg">₹{entry.price.toLocaleString('en-IN')}</p>
+                  {entry.best ? <span className="cb-badge cb-badge-green mt-1">Best Price</span> : null}
+                  <div>
+                    <Link href={`/go/${entry.platformSlug}-${product.id}`} className="cb-btn cb-btn-primary mt-2 gap-1 text-xs">
+                      Buy Now <ExternalLink size={12} />
+                    </Link>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-        </section>
 
-        <section>
-          <div className="cb-badge bg-skyline-glow text-skyline-primary">{product.brand.toUpperCase()}</div>
-          <h1 className="mt-3 font-display text-2xl font-black leading-tight tracking-tight text-[var(--cb-text-primary)]">
-            {product.name}
-          </h1>
-
-          <div className="mt-2 flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              {Array.from({ length: 5 }, (_, index) => (
-                <Star
-                  key={`${product.id}-star-${index + 1}`}
-                  size={14}
-                  className={index + 1 <= roundedRating ? 'fill-[#F5C842] text-[#F5C842]' : 'text-[var(--cb-text-muted)]'}
-                />
-              ))}
-            </div>
-            <span className="font-mono text-sm text-[var(--cb-text-primary)]">{product.rating.toFixed(1)}</span>
-            <span className="text-sm text-[var(--cb-text-muted)]">
-              ({new Intl.NumberFormat('en-IN').format(product.reviewCount)} reviews)
+          <div className="mt-4 flex flex-wrap gap-3 text-xs text-[var(--cb-text-muted)]">
+            <span className="inline-flex items-center gap-2">
+              <Shield size={13} /> Secure Redirect
             </span>
-          </div>
-
-          <div className="mt-4">
-            <p className="font-display text-4xl font-black text-[var(--cb-text-primary)]">{toInr(product.price)}</p>
-            {product.originalPrice !== null && (
-              <div className="mt-1 flex items-center gap-3">
-                <span className="text-lg text-[var(--cb-text-muted)] line-through">
-                  {toInr(product.originalPrice)}
-                </span>
-                {product.discount !== null && (
-                  <span className="cb-badge bg-status-success/10 text-status-success">
-                    -{product.discount}% OFF
-                  </span>
-                )}
-              </div>
-            )}
-            {savings > 0 && <p className="mt-1 text-sm font-bold text-status-success">You save {toInr(savings)}</p>}
+            <span className="inline-flex items-center gap-2">
+              <Truck size={13} /> Direct from Retailer
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <RefreshCw size={13} /> No Hidden Fees
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <TrendingDown size={13} /> Best Price Tracked
+            </span>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-3">
-            <div className="flex items-center gap-1.5 text-xs text-[var(--cb-text-muted)]">
-              <Shield size={14} />
-              <span>Secure Redirect</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-[var(--cb-text-muted)]">
-              <Truck size={14} />
-              <span>Free Delivery Available</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-[var(--cb-text-muted)]">
-              <RotateCcw size={14} />
-              <span>{product.warranty}</span>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <h3 className="mb-2 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">
-              About this product
-            </h3>
-            <p className="text-sm leading-relaxed text-[var(--cb-text-secondary)]">{product.description}</p>
-          </div>
-
-          <div className="mt-6">
-            <h3 className="mb-2 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">
-              Specifications
-            </h3>
-            <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2">
-              {Object.entries(product.specs).map(([key, value]) => (
-                <div key={key}>
-                  <dt className="text-[11px] font-bold text-[var(--cb-text-muted)]">{key}</dt>
-                  <dd className="text-[13px] text-[var(--cb-text-primary)]">{value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          <div className="mt-8 flex flex-col gap-3">
-            <a
-              href={`/go/amazon-${product.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View deal for ${product.name}`}
-              className="cb-btn-primary w-full justify-center gap-2 py-4 text-base"
-            >
-              <ExternalLink size={18} />
-              View Best Deal
-            </a>
-            <Link href={ROUTES.COMPARE} className="cb-btn-ghost w-full justify-center">
-              Compare Prices
+            <button type="button" className="cb-btn cb-btn-ghost gap-2">
+              <Heart size={16} /> Wishlist
+            </button>
+            <button type="button" className="cb-btn cb-btn-ghost gap-2">
+              <Share2 size={16} /> Share
+            </button>
+            <Link href="/compare" className="cb-btn cb-btn-ghost gap-2">
+              <BarChart2 size={16} /> Compare
             </Link>
-            <p className="mt-2 text-center text-[10px] italic text-[var(--cb-text-muted)]">
-              * You will be redirected to a partner site.
-            </p>
-            <p className="text-center text-[10px] italic text-[var(--cb-text-muted)]">
-              CloudBasket earns affiliate commission.
-            </p>
           </div>
-
-          <div className="mt-4 flex items-center gap-2">
-            <span className="text-sm text-[var(--cb-text-muted)]">Listed on: {product.source}</span>
-            <span className="cb-badge bg-skyline-glow text-skyline-primary">
-              <Zap size={11} className="me-1" />
-              {AFFILIATE_TAGS.AMAZON}
-            </span>
-          </div>
-        </section>
-      </main>
-
-      <section className="mx-auto mt-12 w-full max-w-7xl border-t cb-border px-6 pt-8">
-        <h2 className="font-display text-2xl font-black uppercase text-[var(--cb-text-primary)]">
-          Full Specifications
-        </h2>
-        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {Object.entries(product.specs).map(([key, value]) => (
-            <div key={`full-${key}`} className="cb-card p-4">
-              <p className="text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">{key}</p>
-              <p className="mt-1 text-[13px] text-[var(--cb-text-primary)]">{value}</p>
-            </div>
-          ))}
         </div>
       </section>
 
-      <section className="mx-auto mt-16 w-full max-w-7xl px-6 pb-16">
-        <h2 className="font-display text-2xl font-black uppercase text-[var(--cb-text-primary)]">
-          Related Products
-        </h2>
-        <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {relatedProducts.map((relatedProduct) => (
-            <ProductCard key={relatedProduct.id} product={relatedProduct} variant="grid" />
+      <section className="mx-auto max-w-7xl px-6 py-8">
+        <div className="cb-card p-8">
+          <h2 className="mb-6 text-xl font-black tracking-tighter">Price History (30 days)</h2>
+          <div className="flex h-32 items-end gap-1">
+            {historyBars.map((height, index) => (
+              <div
+                key={`${height}-${index}`}
+                className={`flex-1 rounded-t ${index === historyBars.length - 1 ? 'bg-[#039BE5]' : 'bg-[#039BE5]/60'}`}
+                style={{ height: `${height}%` }}
+              />
+            ))}
+          </div>
+          <div className="mt-2 flex justify-between text-xs text-[var(--cb-text-muted)]">
+            <span>30 days ago</span>
+            <span>Today</span>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-8 text-sm">
+            <p>Lowest: ₹{Math.round(product.price * 0.9).toLocaleString('en-IN')}</p>
+            <p>Highest: ₹{Math.round(product.price * 1.15).toLocaleString('en-IN')}</p>
+            <p>Current: ₹{product.price.toLocaleString('en-IN')}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 pb-16">
+        <h2 className="mb-6 text-2xl font-black tracking-tighter">Related Products</h2>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {related.map((item) => (
+            <RelatedCard key={item.id} product={item} />
           ))}
         </div>
       </section>
-    </div>
+    </main>
   )
 }

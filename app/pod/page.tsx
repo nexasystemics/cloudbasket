@@ -1,154 +1,143 @@
-import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import {
-  ArrowRight,
-  Coffee,
-  Printer,
-  Shirt,
-  Smartphone,
-  Star,
-} from 'lucide-react'
-import { ROUTES } from '@/lib/constants'
+import { Printer, Package, Truck, Shield, ArrowRight } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'Print-on-Demand Designs | CloudBasket POD',
-  description: 'Custom mugs, t-shirts and phone cases. Unique designs, global delivery.',
-}
-
-type PodCategory = {
-  id: string
-  label: string
-  icon: typeof Shirt
-  desc: string
-  count: string
-  href: string
-  goId: string
-  color: string
-  image: string
-}
-
-const POD_CATEGORIES: PodCategory[] = [
+const POD_CATEGORIES = [
   {
-    id: 'tshirts',
-    label: 'Graphic T-Shirts',
-    icon: Shirt,
-    desc: 'Premium cotton. Unique sovereign designs.',
-    count: '200+ designs',
-    href: '/pod/tshirts',
-    goId: 'cj-pod-tshirts',
-    color: '#039BE5',
-    image:
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=900',
+    slug: 'tshirts',
+    name: 'T-Shirts',
+    desc: 'Premium cotton tees with custom prints',
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80',
+    count: 48,
+    startPrice: 599,
   },
   {
-    id: 'mugs',
-    label: 'Custom Mugs',
-    icon: Coffee,
-    desc: 'Ceramic & travel mugs. Print your vision.',
-    count: '150+ designs',
-    href: '/pod/mugs',
-    goId: 'cj-pod-mugs',
-    color: '#F97316',
-    image:
-      'https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?auto=format&fit=crop&q=80&w=900',
+    slug: 'mugs',
+    name: 'Mugs & Drinkware',
+    desc: 'Ceramic mugs, travel cups and more',
+    image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80',
+    count: 32,
+    startPrice: 349,
   },
   {
-    id: 'phone-cases',
-    label: 'Phone Cases',
-    icon: Smartphone,
-    desc: 'Fits all major models. Shockproof & stylish.',
-    count: '300+ designs',
-    href: '/pod/phone-cases',
-    goId: 'cj-pod-cases',
-    color: '#10B981',
-    image:
-      'https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&q=80&w=900',
+    slug: 'phone-cases',
+    name: 'Phone Cases',
+    desc: 'Custom cases for all major phone models',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80',
+    count: 64,
+    startPrice: 299,
   },
-]
+  {
+    slug: 'posters',
+    name: 'Posters & Prints',
+    desc: 'High-quality art prints for your walls',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+    count: 28,
+    startPrice: 449,
+  },
+  {
+    slug: 'hoodies',
+    name: 'Hoodies',
+    desc: 'Comfortable hoodies with custom designs',
+    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=600&q=80',
+    count: 24,
+    startPrice: 999,
+  },
+  {
+    slug: 'tote-bags',
+    name: 'Tote Bags',
+    desc: 'Eco-friendly canvas tote bags',
+    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&q=80',
+    count: 20,
+    startPrice: 449,
+  },
+] as const
+
+const POD_FEATURES = [
+  {
+    icon: Printer,
+    title: 'Print on Demand',
+    desc: 'Printed fresh for every order. No inventory.',
+  },
+  {
+    icon: Package,
+    title: 'Quality Guaranteed',
+    desc: 'Premium materials. Satisfaction guaranteed.',
+  },
+  {
+    icon: Truck,
+    title: '5-7 Day Delivery',
+    desc: 'Pan-India delivery from our print partner.',
+  },
+  {
+    icon: Shield,
+    title: 'NEXQON Backed',
+    desc: 'Sovereign product line by NEXQON Holdings.',
+  },
+] as const
 
 export default function PODPage() {
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <section className="mx-auto max-w-3xl px-6 py-20 text-center">
-        <Printer size={48} className="mx-auto text-skyline-primary" />
-        <h1 className="mt-4 font-display text-4xl font-black uppercase tracking-tight text-[var(--cb-text-primary)]">
-          Print-on-Demand
-        </h1>
-        <p className="mt-3 text-lg text-[var(--cb-text-muted)]">
-          Unique designs. Printed on demand. Shipped globally.
-        </p>
-      </section>
-
-      <section className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-8 px-6 py-12 md:grid-cols-3">
-        {POD_CATEGORIES.map((category) => {
-          const Icon = category.icon
-          return (
-            <article
-              key={category.id}
-              className="cb-card group cursor-pointer overflow-hidden p-8 text-center transition-colors hover:border-skyline-primary/40"
-            >
-              <div className="relative mb-5 h-36 overflow-hidden rounded-card">
-                <Image
-                  src={category.image}
-                  alt={category.label}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-              <div
-                className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl transition-transform group-hover:scale-110"
-                style={{ backgroundColor: `${category.color}15` }}
-              >
-                <Icon size={32} style={{ color: category.color }} />
-              </div>
-              <h2 className="font-display text-xl font-black text-[var(--cb-text-primary)]">{category.label}</h2>
-              <p className="mt-2 text-sm text-[var(--cb-text-muted)]">{category.desc}</p>
-              <span
-                className="cb-badge mt-3"
-                style={{ backgroundColor: `${category.color}10`, color: category.color }}
-              >
-                {category.count}
-              </span>
-              <div className="mt-6 flex flex-col gap-2">
-                <Link href={category.href} className="cb-btn-primary justify-center gap-2">
-                  Browse Designs
-                  <ArrowRight size={14} />
-                </Link>
-                <a
-                  href={`/go/${category.goId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cb-btn-ghost justify-center"
-                >
-                  Buy on CJ
-                </a>
-              </div>
-            </article>
-          )
-        })}
-      </section>
-
-      <section className="mx-auto flex w-full max-w-5xl flex-wrap justify-center gap-8 px-6 pb-16">
-        <div className="flex items-center gap-2 text-sm text-[var(--cb-text-muted)]">
-          <Star size={14} />
-          Premium Quality
-        </div>
-        <div className="flex items-center gap-2 text-sm text-[var(--cb-text-muted)]">
-          <Printer size={14} />
-          Print on Demand
-        </div>
-        <div className="flex items-center gap-2 text-sm text-[var(--cb-text-muted)]">
-          <ArrowRight size={14} />
-          Global Shipping
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-gradient-to-br from-[#F97316]/5 via-transparent to-[#8B5CF6]/5 py-20">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <span className="cb-badge cb-badge-orange mb-6">
+            <Printer size={14} /> Print on Demand
+          </span>
+          <h1 className="text-5xl font-black tracking-tighter">CloudBasket Originals</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-[var(--cb-text-muted)]">
+            Custom merchandise printed fresh for every order. Premium quality. Zero inventory. Ships pan-India.
+          </p>
+          <div className="mt-8 flex justify-center gap-4">
+            <Link href="/pod/tshirts" className="cb-btn cb-btn-orange gap-2">
+              Shop T-Shirts <ArrowRight size={16} />
+            </Link>
+            <Link href="/pod/mugs" className="cb-btn cb-btn-ghost gap-2">
+              Shop Mugs <ArrowRight size={16} />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="pb-12 text-center">
-        <Link href={ROUTES.POD} className="text-xs text-[var(--cb-text-muted)]">
-          CloudBasket POD Catalog
-        </Link>
+      <section className="mx-auto max-w-5xl px-6 py-12">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          {POD_FEATURES.map((feature) => {
+            const FeatureIcon = feature.icon
+            return (
+              <article key={feature.title} className="cb-card p-6 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F97316]/10">
+                  <FeatureIcon size={22} className="text-[#F97316]" />
+                </div>
+                <h3 className="mt-3 text-sm font-black">{feature.title}</h3>
+                <p className="mt-1 text-xs text-[var(--cb-text-muted)]">{feature.desc}</p>
+              </article>
+            )
+          })}
+        </div>
       </section>
-    </div>
+
+      <section className="mx-auto max-w-5xl px-6 py-8 pb-16">
+        <h2 className="mb-8 text-center text-3xl font-black tracking-tighter">Shop by Category</h2>
+
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
+          {POD_CATEGORIES.map((category) => (
+            <Link key={category.slug} href={`/pod/${category.slug}`} className="cb-card group cursor-pointer overflow-hidden">
+              <div className="relative h-52">
+                <Image fill className="object-cover" src={category.image} alt={category.name} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <h3 className="text-lg font-black text-white">{category.name}</h3>
+                  <p className="text-xs text-white/70">{category.desc}</p>
+                  <div className="mt-2 flex items-center justify-between">
+                    <p className="text-xs text-white/60">{category.count} designs</p>
+                    <span className="cb-badge border-white/30 bg-white/20 text-white">From ₹{category.startPrice}</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </main>
   )
 }

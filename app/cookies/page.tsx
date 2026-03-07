@@ -1,63 +1,92 @@
 import Link from 'next/link'
+import { Cookie, Shield, Settings, BarChart2, ExternalLink, CheckCircle } from 'lucide-react'
 
 export default function CookiesPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <div className="w-full py-12 px-6" style={{ backgroundColor: '#039BE5' }}>
-        <div className="max-w-3xl mx-auto">
-          <p className="text-xs uppercase tracking-widest text-white/60 mb-2">cloudbasket · legal</p>
-          <h1 className="text-4xl font-extrabold text-white mb-2">Cookie Policy</h1>
-          <p className="text-white/80 text-sm">Last updated: February 2026</p>
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-[var(--cb-surface-2)] py-16 text-center">
+        <div className="mx-auto max-w-4xl px-6">
+          <Cookie size={40} className="mx-auto mb-4 text-[#039BE5]" />
+          <h1 className="text-4xl font-black">Cookie Policy</h1>
+          <p className="mt-3 text-[var(--cb-text-muted)]">Last updated: March 1, 2026</p>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-3xl mx-auto px-6 py-12 space-y-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {[
-            { type: 'Essential', color: '#1B5E20', desc: 'Session management and security. Always active.' },
-            { type: 'Analytics', color: '#039BE5', desc: 'Anonymous usage stats via privacy-first tools.' },
-            { type: 'Affiliate', color: '#E65100', desc: 'Tracks referral clicks for commission attribution.' },
-          ].map((c) => (
-            <div key={c.type} className="rounded-2xl border border-gray-200 p-5">
-              <span
-                className="text-xs font-bold px-2.5 py-1 rounded-full text-white inline-block mb-3"
-                style={{ backgroundColor: c.color }}
-              >
-                {c.type}
-              </span>
-              <p className="text-sm text-gray-600">{c.desc}</p>
-            </div>
-          ))}
-        </div>
+      <section className="mx-auto flex max-w-3xl flex-col gap-6 px-6 py-12">
+        <article className="cb-card p-8">
+          <p className="text-sm leading-relaxed text-[var(--cb-text-muted)]">
+            CloudBasket uses cookies to improve your experience. This policy explains what cookies we use and why.
+          </p>
+        </article>
 
-        {[
-          {
-            title: 'What Are Cookies?',
-            body: 'Cookies are small text files stored on your device by your browser. They help us remember preferences and understand how visitors use the site.',
-          },
-          {
-            title: 'How to Control Cookies',
-            body: 'You can disable cookies in your browser settings at any time. Note that disabling essential cookies may affect site functionality.',
-          },
-          {
-            title: 'Third-Party Cookies',
-            body: 'Affiliate network partners (Amazon Associates, CJ Affiliate) may set their own cookies for commission tracking. These are governed by their respective privacy policies.',
-          },
-        ].map((s) => (
-          <section key={s.title}>
-            <h2 className="font-bold text-gray-900 mb-2">{s.title}</h2>
-            <p className="text-sm text-gray-600 leading-relaxed">{s.body}</p>
-          </section>
-        ))}
+        <article className="cb-card p-8">
+          <div className="mb-3 inline-flex items-center gap-2 text-[#039BE5]">
+            <Shield size={16} /> <h2 className="text-lg font-black text-[var(--cb-text-primary)]">Essential Cookies</h2>
+          </div>
+          <p className="text-xs font-black uppercase tracking-widest text-[#10B981]">Always On</p>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            Purpose: Authentication, security and session management. Examples: `supabase-auth`, `cb-session`,
+            `csrf-token`. These cannot be disabled.
+          </p>
+        </article>
 
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-colors hover:opacity-90"
-          style={{ backgroundColor: '#E65100' }}
-        >
-          ← Back to Home
-        </Link>
-      </div>
+        <article className="cb-card p-8">
+          <div className="mb-3 inline-flex items-center gap-2 text-[#039BE5]">
+            <BarChart2 size={16} />{' '}
+            <h2 className="text-lg font-black text-[var(--cb-text-primary)]">Analytics Cookies</h2>
+          </div>
+          <p className="text-xs font-black uppercase tracking-widest text-[#039BE5]">Default On</p>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            Purpose: Understand navigation and improve UX. Tool: Vercel Analytics (privacy-first, no IP storage).
+            Can be disabled in browser settings.
+          </p>
+        </article>
+
+        <article className="cb-card p-8">
+          <div className="mb-3 inline-flex items-center gap-2 text-[#039BE5]">
+            <ExternalLink size={16} />{' '}
+            <h2 className="text-lg font-black text-[var(--cb-text-primary)]">Affiliate Tracking Cookies</h2>
+          </div>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            Purpose: Track deal clicks for commission attribution. Set by Amazon, Flipkart and CJ Affiliate.
+            Duration: 1-30 days depending on partner. Required for affiliate revenue model.
+          </p>
+        </article>
+
+        <article className="cb-card p-8">
+          <div className="mb-3 inline-flex items-center gap-2 text-[#039BE5]">
+            <Settings size={16} /> <h2 className="text-lg font-black text-[var(--cb-text-primary)]">Preference Cookies</h2>
+          </div>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            Purpose: Remember your region, currency and theme preferences. Duration is up to 1 year and can be
+            cleared in browser settings.
+          </p>
+        </article>
+
+        <article className="cb-card border-[#039BE5]/20 bg-[#039BE5]/5 p-6">
+          <p className="inline-flex items-center gap-2 text-sm font-bold text-[#039BE5]">
+            <CheckCircle size={14} /> Managing Your Cookies
+          </p>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            You can manage cookies through your browser settings. Note: disabling essential cookies will affect site
+            functionality.
+          </p>
+          <div className="mt-4 flex gap-3">
+            <button type="button" className="cb-btn cb-btn-primary">
+              Accept All
+            </button>
+            <button type="button" className="cb-btn cb-btn-ghost">
+              Essential Only
+            </button>
+          </div>
+        </article>
+
+        <p>
+          <Link href="/legal/privacy" className="text-sm text-[#039BE5]">
+            View our full Privacy Policy →
+          </Link>
+        </p>
+      </section>
     </main>
   )
 }

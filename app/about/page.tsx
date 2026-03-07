@@ -1,78 +1,149 @@
-import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Globe, Shield, Target, Zap } from 'lucide-react'
-import { ROUTES, SITE_DESCRIPTION } from '@/lib/constants'
+import { Shield, Zap, Globe, TrendingDown, Users, Award, Target, Heart } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'About CloudBasket',
-  description: SITE_DESCRIPTION,
-}
+const STATS: ReadonlyArray<{ value: string; label: string }> = [
+  { value: '2,000+', label: 'Products Tracked' },
+  { value: '50+', label: 'Stores Compared' },
+  { value: '5', label: 'Revenue Streams' },
+  { value: '₹0', label: 'Checkout Fee' },
+]
+
+const REVENUE_STREAMS = [
+  {
+    title: 'Affiliate Commissions',
+    desc: 'Earn when users click deals on Amazon, Flipkart & CJ Global',
+    color: '#039BE5',
+    icon: TrendingDown,
+  },
+  {
+    title: 'Print on Demand',
+    desc: 'Custom merchandise sold via /pod — zero inventory',
+    color: '#F97316',
+    icon: Award,
+  },
+  {
+    title: 'Associates Program',
+    desc: 'Partners earn commissions by sharing CloudBasket links',
+    color: '#10B981',
+    icon: Users,
+  },
+  {
+    title: 'Google AdSense',
+    desc: 'Non-intrusive ads on high-traffic pages',
+    color: '#8B5CF6',
+    icon: Globe,
+  },
+  {
+    title: 'CJ Network',
+    desc: 'International product commissions via Commission Junction',
+    color: '#F5C842',
+    icon: Zap,
+  },
+] as const
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <section className="mx-auto max-w-4xl px-6 py-24 text-center">
-        <h1 className="font-display text-5xl font-black uppercase tracking-tighter text-[var(--cb-text-primary)]">
-          About CloudBasket
-        </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-xl leading-relaxed text-[var(--cb-text-muted)]">
-          We built CloudBasket because finding the best price in India&apos;s fragmented e-commerce market
-          was too hard. Now it takes one search.
-        </p>
-      </section>
-
-      <section className="mx-auto mt-6 w-full max-w-4xl px-6">
-        <article className="cb-card p-10">
-          <Target size={40} className="text-skyline-primary" />
-          <h2 className="mt-4 font-display text-2xl font-black text-[var(--cb-text-primary)]">Our Mission</h2>
-          <p className="mt-4 leading-relaxed text-[var(--cb-text-secondary)]">
-            CloudBasket exists to deliver sovereign price discovery that is fast, transparent and trustworthy.
-            We follow a strict zero-checkout model so users always complete purchases on retailer-owned secure
-            infrastructure. Our focus remains on Indian market realities while maintaining global discovery depth.
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-gradient-to-br from-[#039BE5]/5 to-[#0277BD]/5 py-20">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <span className="cb-badge cb-badge-blue mb-6">About CloudBasket</span>
+          <h1 className="text-5xl font-black leading-tight tracking-tighter">
+            India's Sovereign Commerce Intelligence Platform
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-[var(--cb-text-muted)]">
+            CloudBasket was built with one mission: help every Indian shopper find the absolute best price without
+            ever trusting a single retailer. We compare. You decide. You save.
           </p>
-        </article>
-      </section>
-
-      <section className="mx-auto mt-12 grid w-full max-w-4xl grid-cols-1 gap-6 px-6 md:grid-cols-3">
-        <article className="cb-card p-6">
-          <Globe size={32} className="text-skyline-primary" />
-          <h3 className="mt-3 text-lg font-bold text-[var(--cb-text-primary)]">Global Coverage</h3>
-          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
-            Compare prices in INR, USD, EUR and GBP across multiple affiliate networks.
-          </p>
-        </article>
-        <article className="cb-card p-6">
-          <Shield size={32} className="text-skyline-primary" />
-          <h3 className="mt-3 text-lg font-bold text-[var(--cb-text-primary)]">Privacy First</h3>
-          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
-            DPDPA 2023 aligned processing with strict minimization and zero payment-data storage.
-          </p>
-        </article>
-        <article className="cb-card p-6">
-          <Zap size={32} className="text-skyline-primary" />
-          <h3 className="mt-3 text-lg font-bold text-[var(--cb-text-primary)]">Speed</h3>
-          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
-            Fast listing search and frequent price refresh cycles across verified products.
-          </p>
-        </article>
-      </section>
-
-      <section className="mx-auto mt-16 w-full max-w-4xl px-6">
-        <div className="rounded-card bg-skyline-glow p-8">
-          <h3 className="font-display text-xl font-black text-skyline-primary">The Zero-Checkout Promise</h3>
-          <p className="mt-3 leading-relaxed text-[var(--cb-text-secondary)]">
-            CloudBasket is a discovery engine. We never process payments. We never store financial data.
-            Every purchase happens on the retailer&apos;s own secure platform.
-          </p>
+          <div className="mt-8 flex justify-center gap-4">
+            <Link href="/deals" className="cb-btn cb-btn-primary">
+              Browse Deals
+            </Link>
+            <Link href="/associates" className="cb-btn cb-btn-ghost">
+              Join Associates
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="pb-24 pt-16 text-center">
-        <Link href={ROUTES.PRODUCTS} className="cb-btn-primary inline-flex items-center gap-2 px-8 py-4">
-          Start Finding Deals
-          <ArrowRight size={16} />
-        </Link>
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="cb-card p-8 text-center transition-colors hover:border-[#039BE5]/50">
+              <p className="text-4xl font-black tracking-tighter text-[#039BE5]">{stat.value}</p>
+              <p className="mt-2 text-xs uppercase tracking-widest text-[var(--cb-text-muted)]">{stat.label}</p>
+            </div>
+          ))}
+        </div>
       </section>
-    </div>
+
+      <section className="mx-auto max-w-5xl px-6 py-10">
+        <div className="flex flex-col items-center gap-12 md:flex-row">
+          <div className="relative h-72 w-full overflow-hidden rounded-2xl md:w-1/2">
+            <Image
+              fill
+              className="object-cover"
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
+              alt="NEXQON mission"
+            />
+          </div>
+          <div className="md:w-1/2">
+            <span className="cb-badge cb-badge-orange mb-4">Our Mission</span>
+            <h2 className="text-3xl font-black tracking-tighter">Zero Checkout. Pure Discovery.</h2>
+            <p className="mt-3 leading-relaxed text-[var(--cb-text-muted)]">
+              We are not a store. We never hold inventory. We never process payments. CloudBasket is pure
+              intelligence, a sovereign price aggregator that scans 50+ retailers every hour to surface the best deals
+              for Indian shoppers. Every rupee saved is a win for our users.
+            </p>
+            <p className="mt-3 leading-relaxed text-[var(--cb-text-muted)]">
+              Built by NEXQON Engineering, CloudBasket is part of India's sovereign digital infrastructure stack,
+              designed to last 20 years.
+            </p>
+            <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#039BE5]">
+              <Target size={16} /> Sovereign architecture. Measurable savings.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <div className="cb-card p-10">
+          <h2 className="mb-10 text-center text-3xl font-black tracking-tighter">How CloudBasket Makes Money</h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-5">
+            {REVENUE_STREAMS.map((item) => {
+              const Icon = item.icon
+              return (
+                <article key={item.title} className="text-center">
+                  <div
+                    className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl"
+                    style={{ backgroundColor: `${item.color}1A` }}
+                  >
+                    <Icon size={22} style={{ color: item.color }} />
+                  </div>
+                  <h3 className="mt-3 text-sm font-black">{item.title}</h3>
+                  <p className="mt-1 text-xs leading-relaxed text-[var(--cb-text-muted)]">{item.desc}</p>
+                </article>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-10 bg-[var(--cb-surface-2)] py-16">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <Shield size={32} className="mx-auto mb-4 text-[#039BE5]" />
+          <p className="text-lg font-black">Built by NEXQON Engineering</p>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            © 2026 NEXQON Holdings · CloudBasket Sovereign Platform · v2.0.0
+          </p>
+          <p className="mt-1 text-xs text-[var(--cb-text-muted)]">
+            DPDPA 2023 Compliant · Zero Checkout · Sovereign Architecture
+          </p>
+          <p className="mt-3 inline-flex items-center gap-1 text-xs text-[#039BE5]">
+            <Heart size={12} /> Built in India for Indian shoppers
+          </p>
+        </div>
+      </section>
+    </main>
   )
 }

@@ -1,157 +1,194 @@
 'use client'
 
-import { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Search } from 'lucide-react'
-import ProductGrid from '@/components/products/ProductGrid'
-import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
-import { PRODUCTS } from '@/lib/mock-data'
-import type { Product } from '@/lib/types'
+import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp } from 'lucide-react'
+import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 
-const ALL_FILTER = 'All'
+type Product = (typeof MOCK_PRODUCTS)[number]
+
+const TRENDING_SEARCHES: readonly string[] = [
+  'iPhone 16',
+  'Samsung S25',
+  'MacBook Air M3',
+  'Nike Air Max',
+  'Sony Headphones',
+  'iPad Pro',
+  'OnePlus 13',
+]
+
+function getPlatformBadgeClass(source: Product['source']): string {
+  if (source === 'Amazon') {
+    return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
+  }
+  if (source === 'Flipkart') {
+    return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
+  }
+  return 'cb-badge-green'
+}
 
 function SearchPageContent() {
   const searchParams = useSearchParams()
-  const router = useRouter()
-  const [query, setQuery] = useState<string>(searchParams.get('q') ?? '')
-  const [activeFilter, setActiveFilter] = useState<string>(ALL_FILTER)
+  const initialQuery = searchParams.get('q') ?? ''
+
+  const [query, setQuery] = useState<string>(initialQuery)
+  const [sortBy, setSortBy] = useState<string>('relevance')
 
   useEffect(() => {
     setQuery(searchParams.get('q') ?? '')
   }, [searchParams])
 
-  const syncQueryToUrl = useCallback(
-    (nextQuery: string): void => {
-      const params = new URLSearchParams(searchParams.toString())
-      const cleaned = nextQuery.trim()
+  const results = useMemo(() => {
+    const normalized = query.trim().toLowerCase()
 
-      if (cleaned.length > 0) {
-        params.set('q', cleaned)
-      } else {
-        params.delete('q')
-      }
+    const filtered = !normalized
+      ? MOCK_PRODUCTS.slice(0, 20)
+      : MOCK_PRODUCTS.filter(
+          (product) =>
+            product.name.toLowerCase().includes(normalized) ||
+            product.brand.toLowerCase().includes(normalized) ||
+            product.mainCategory.toLowerCase().includes(normalized),
+        )
 
-      const queryString = params.toString()
-      router.replace(queryString.length > 0 ? `/search?${queryString}` : '/search')
-    },
-    [router, searchParams],
-  )
-
-  const handleQueryChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>): void => {
-      const nextQuery = event.target.value
-      setQuery(nextQuery)
-      syncQueryToUrl(nextQuery)
-    },
-    [syncQueryToUrl],
-  )
-
-  const handleReset = useCallback((): void => {
-    setQuery('')
-    setActiveFilter(ALL_FILTER)
-    router.replace('/search')
-  }, [router])
-
-  const searchResults = useMemo<Product[]>(() => {
-    const cleaned = query.trim().toLowerCase()
-    if (cleaned.length < 2) {
-      return []
+    if (sortBy === 'price-low') {
+      return [...filtered].sort((a, b) => a.price - b.price)
+    }
+    if (sortBy === 'price-high') {
+      return [...filtered].sort((a, b) => b.price - a.price)
+    }
+    if (sortBy === 'rating') {
+      return [...filtered].sort((a, b) => b.rating - a.rating)
     }
 
-    return PRODUCTS.filter((product) => {
-      const matchesQuery =
-        product.name.toLowerCase().includes(cleaned) ||
-        product.description.toLowerCase().includes(cleaned) ||
-        product.brand.toLowerCase().includes(cleaned)
-
-      const matchesStatus = product.status === 'Approved'
-      const matchesCategory = activeFilter === ALL_FILTER || product.mainCategory === activeFilter
-
-      return matchesQuery && matchesStatus && matchesCategory
-    }).slice(0, 60)
-  }, [activeFilter, query])
-
-  const hasSearchInput = query.trim().length >= 2
+    return filtered
+  }, [query, sortBy])
 
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <div className="mx-auto w-full max-w-7xl px-6 py-12">
-        <h1 className="font-display text-3xl font-black uppercase tracking-tight text-[var(--cb-text-primary)]">
-          Search Results
-        </h1>
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-[var(--cb-surface-2)] py-12">
+        <div className="mx-auto max-w-4xl px-6">
+          <h1 className="mb-6 text-center text-3xl font-black tracking-tighter">
+            {query ? `Results for "${query}"` : 'Search CloudBasket'}
+          </h1>
 
-        <div className="glass-panel relative mt-6 w-full max-w-2xl">
-          <Search
-            size={20}
-            className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
-          />
-          <input
-            type="search"
-            value={query}
-            onChange={handleQueryChange}
-            placeholder="Search products, brands, categories..."
-            className="w-full rounded-card bg-transparent py-4 pe-4 ps-12 text-[15px] text-[var(--cb-text-primary)] outline-none"
-            aria-label="Search products, brands, categories"
-          />
+          <div className="relative">
+            <Search size={20} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
+            <input
+              className="cb-input w-full py-4 pl-12 pr-12 text-base"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search products, brands, categories..."
+            />
+            {query ? (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
+                aria-label="Clear search"
+              >
+                <X size={18} />
+              </button>
+            ) : null}
+          </div>
+
+          {!query ? (
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              <p className="mr-2 inline-flex items-center gap-1 text-xs text-[var(--cb-text-muted)]">
+                <TrendingUp size={12} /> Trending:
+              </p>
+              {TRENDING_SEARCHES.map((term) => (
+                <button key={term} type="button" className="cb-badge cb-badge-blue cursor-pointer" onClick={() => setQuery(term)}>
+                  {term}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-8">
+        <div className="mb-6 flex items-center justify-between gap-3">
+          <p className="text-sm text-[var(--cb-text-muted)]">
+            {query ? `${results.length} results for '${query}'` : 'Showing popular products'}
+          </p>
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal size={14} className="text-[var(--cb-text-muted)]" />
+            <select className="cb-input w-auto py-1.5 text-xs" value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+              <option value="relevance">Relevance</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+            </select>
+          </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-2">
-          {[ALL_FILTER, ...MAIN_CATEGORIES].map((category) => (
-            <button
-              key={category}
-              type="button"
-              onClick={() => setActiveFilter(category)}
-              className={`rounded-pill px-3 py-1.5 text-[11px] font-black uppercase tracking-wide transition-colors ${
-                activeFilter === category
-                  ? 'bg-skyline-primary text-white'
-                  : 'cb-btn-ghost text-[var(--cb-text-muted)]'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
-        <p className="mt-4 text-sm text-[var(--cb-text-muted)]">
-          {hasSearchInput
-            ? `${searchResults.length} results for "${query.trim()}"`
-            : 'Start typing to search...'}
-        </p>
-
-        {hasSearchInput && searchResults.length === 0 ? (
-          <div className="mt-10 rounded-card border cb-border bg-[var(--cb-surface-2)] p-8 text-center">
-            <h2 className="text-xl font-black text-[var(--cb-text-primary)]">
-              No results for &quot;{query.trim()}&quot;
-            </h2>
-            <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
-              Try: Mobiles, Laptops, Fashion...
-            </p>
-            <Link href={ROUTES.PRODUCTS} className="mt-4 inline-flex cb-btn-ghost">
+        {results.length === 0 ? (
+          <div className="cb-card mx-auto max-w-md p-16 text-center">
+            <Search size={48} className="mx-auto mb-4 text-[var(--cb-text-muted)]" />
+            <h2 className="text-xl font-black">No results found</h2>
+            <p className="mt-2 text-[var(--cb-text-muted)]">Try different keywords or browse categories</p>
+            <Link href="/products" className="cb-btn cb-btn-primary mt-4">
               Browse All Products
             </Link>
           </div>
         ) : (
-          <div className="mt-8">
-            <ProductGrid products={searchResults} onReset={handleReset} />
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {results.map((product) => {
+              const originalPrice = product.originalPrice ?? Math.round(product.price * 1.2)
+              const discount =
+                product.discount ?? Math.max(1, Math.round(((originalPrice - product.price) / originalPrice) * 100))
+
+              return (
+                <article key={product.id} className="cb-card group flex flex-col overflow-hidden">
+                  <div className="relative h-44">
+                    <Image
+                      fill
+                      className="object-cover"
+                      src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+                      alt={product.name}
+                    />
+                    <div className="absolute left-2 top-2 flex flex-col gap-1">
+                      {discount ? <span className="cb-badge cb-badge-green">-{discount}%</span> : null}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 flex-col gap-1 p-3">
+                    <span className={`cb-badge w-fit text-[10px] ${getPlatformBadgeClass(product.source)}`}>
+                      {product.source === 'CJ' ? 'CJ Global' : product.source}
+                    </span>
+                    <p className="text-[10px] font-black uppercase text-[var(--cb-text-muted)]">{product.brand}</p>
+                    <h3 className="line-clamp-2 text-xs font-bold">{product.name}</h3>
+                    <p className="text-xs text-[#F5C842]">★★★★☆</p>
+
+                    <div className="mt-1 flex items-baseline gap-2">
+                      <p className="price-current">₹{product.price.toLocaleString('en-IN')}</p>
+                      <p className="price-original text-xs">₹{originalPrice.toLocaleString('en-IN')}</p>
+                    </div>
+                    <p className="price-savings text-xs">Save {discount}%</p>
+
+                    <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-auto w-full py-2 text-xs">
+                      View Deal <ExternalLink size={12} />
+                    </Link>
+                  </div>
+                </article>
+              )
+            })}
           </div>
         )}
-      </div>
-    </div>
-  )
-}
-
-function SearchPageFallback() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--cb-surface)]">
-      <p className="text-sm text-[var(--cb-text-muted)]">Loading search...</p>
-    </div>
+      </section>
+    </main>
   )
 }
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<SearchPageFallback />}>
+    <Suspense
+      fallback={
+        <main className="bg-[var(--cb-bg)] px-6 py-16 text-center text-sm text-[var(--cb-text-muted)]">Loading search...</main>
+      }
+    >
       <SearchPageContent />
     </Suspense>
   )

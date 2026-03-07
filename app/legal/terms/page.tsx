@@ -1,57 +1,106 @@
-import type { Metadata } from 'next'
-import { FileText } from 'lucide-react'
+import Link from 'next/link'
+import { FileText, Scale, AlertCircle } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'Terms of Service | CloudBasket',
-  description: 'Terms governing use of CloudBasket discovery and affiliate redirection platform.',
-}
-
-const SECTIONS = [
-  {
-    title: '1. Acceptance of Terms',
-    content:
-      'By using CloudBasket, you agree to these Terms of Service and all applicable legal requirements. If you do not agree, discontinue use of the platform immediately.',
-  },
-  {
-    title: '2. Nature of Service (Discovery Only)',
-    content:
-      'CloudBasket is a zero-checkout product discovery platform. We do not process payments, manage carts, or execute purchase transactions. All purchases are completed on third-party retailer websites.',
-  },
-  {
-    title: '3. Affiliate Links Disclaimer',
-    content:
-      'CloudBasket uses affiliate links and may earn commission when users purchase through partner retailers. This relationship does not alter listed prices and is disclosed as required by FTC guidance.',
-  },
-  {
-    title: '4. Limitation of Liability',
-    content:
-      'CloudBasket is not responsible for pricing changes, stock differences, delivery issues, warranties, or merchant conduct on external retail websites. Users should verify final terms before purchase.',
-  },
-  {
-    title: '5. Governing Law (India, DPDPA 2023)',
-    content:
-      'These terms are governed by Indian law. Data handling and privacy commitments align with DPDPA 2023. Any disputes are subject to jurisdiction within India.',
-  },
-] as const
+const LAST_UPDATED = 'March 1, 2026'
+const EFFECTIVE_DATE = 'March 1, 2026'
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <div className="mx-auto w-full max-w-3xl px-6 py-16">
-        <FileText size={40} className="text-skyline-primary" />
-        <h1 className="mt-4 font-display text-3xl font-black text-[var(--cb-text-primary)]">Terms of Service</h1>
-        <p className="mt-2 text-sm text-[var(--cb-text-muted)]">Last updated: March 2026</p>
-        <div className="mt-8 border-t cb-border" />
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-[var(--cb-surface-2)] py-16 text-center">
+        <div className="mx-auto max-w-4xl px-6">
+          <FileText size={40} className="mx-auto mb-4 text-[#039BE5]" />
+          <h1 className="text-4xl font-black">Terms of Service</h1>
+          <p className="mt-3 text-[var(--cb-text-muted)]">
+            Effective: {EFFECTIVE_DATE} · Last updated: {LAST_UPDATED}
+          </p>
+          <span className="cb-badge cb-badge-blue mt-4">
+            <Scale size={13} /> Governed by Indian Law
+          </span>
+        </div>
+      </section>
 
-        <section className="mt-8 space-y-10">
-          {SECTIONS.map((section) => (
-            <article key={section.title}>
-              <h2 className="text-lg font-bold text-[var(--cb-text-primary)]">{section.title}</h2>
-              <p className="mt-3 text-base leading-relaxed text-[var(--cb-text-secondary)]">{section.content}</p>
-            </article>
-          ))}
-        </section>
-      </div>
-    </div>
+      <section className="mx-auto flex max-w-3xl flex-col gap-6 px-6 py-12">
+        <article className="cb-card p-8">
+          <h2 className="text-xl font-black">1. Acceptance of Terms</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
+            By using CloudBasket, you agree to these terms. CloudBasket is operated by NEXQON Holdings, Bengaluru,
+            India.
+          </p>
+        </article>
+
+        <article className="cb-card p-8">
+          <h2 className="text-xl font-black">2. Service Description</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
+            CloudBasket is a price comparison platform. We do not sell products, process payments, or hold inventory.
+            All purchases happen on third-party retailer sites.
+          </p>
+        </article>
+
+        <article className="cb-card p-8">
+          <h2 className="text-xl font-black">3. Affiliate Links & Income Shield</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
+            All deal links use our Income Shield (`/go/`) system. Clicking a deal link may earn CloudBasket an
+            affiliate commission. This does not affect the price you pay.
+          </p>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            Full disclosure available at <Link href="/affiliate-disclosure" className="text-[#039BE5]">/affiliate-disclosure</Link>.
+          </p>
+        </article>
+
+        <article className="cb-card p-8">
+          <h2 className="text-xl font-black">4. User Accounts</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
+            You must be 18+ to create an account. You are responsible for account security. We reserve the right to
+            suspend accounts for policy violations.
+          </p>
+        </article>
+
+        <article className="cb-card p-8">
+          <h2 className="text-xl font-black">5. Associates Program</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
+            Associates earn commissions per our published rate card. Commissions are paid monthly via bank transfer or
+            UPI. Fraudulent referrals result in immediate termination.
+          </p>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
+            See <Link href="/associates" className="text-[#039BE5]">/associates</Link> for full program terms.
+          </p>
+        </article>
+
+        <article className="cb-card p-8">
+          <h2 className="text-xl font-black">6. Print on Demand (POD)</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
+            POD products are fulfilled by our print partner. Custom products cannot be returned unless defective.
+            Delivery timeline is 5-7 business days pan-India.
+          </p>
+        </article>
+
+        <article className="cb-card p-8">
+          <h2 className="text-xl font-black">7. Limitation of Liability</h2>
+          <ul className="mt-3 list-disc space-y-2 ps-5 text-sm text-[var(--cb-text-muted)]">
+            <li>Price inaccuracies on partner sites</li>
+            <li>Product quality issues (contact retailer directly)</li>
+            <li>Delivery delays by third-party retailers</li>
+          </ul>
+          <p className="mt-3 text-sm text-[var(--cb-text-muted)]">Maximum liability is limited to ₹1,000.</p>
+        </article>
+
+        <article className="cb-card p-8">
+          <h2 className="text-xl font-black">8. Governing Law & Contact</h2>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
+            These terms are governed by the laws of India. Disputes are subject to jurisdiction of Bengaluru courts.
+            Legal notices can be sent to legal@nexqon.in.
+          </p>
+          <div className="mt-4">
+            <Link href="/contact" className="cb-btn cb-btn-primary">
+              Contact Us
+            </Link>
+          </div>
+          <p className="mt-3 inline-flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
+            <AlertCircle size={12} /> NEXQON sovereign compliance coverage active
+          </p>
+        </article>
+      </section>
+    </main>
   )
 }

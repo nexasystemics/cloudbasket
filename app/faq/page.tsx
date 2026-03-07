@@ -1,104 +1,160 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, HelpCircle } from 'lucide-react'
+import { ChevronDown, HelpCircle, Zap, Shield, Users, Package, type LucideIcon } from 'lucide-react'
 
-const FAQS = [
+type FAQItem = {
+  q: string
+  a: string
+}
+
+type FAQCategory = {
+  name: string
+  icon: LucideIcon
+  items: FAQItem[]
+}
+
+const FAQ_CATEGORIES: readonly FAQCategory[] = [
   {
-    question: 'How does CloudBasket make money?',
-    answer:
-      'CloudBasket earns affiliate commission when users click our /go links and complete purchases on partner platforms. This commission comes from retailers, not from users. Prices shown to users are not increased by this model.',
+    name: 'General',
+    icon: HelpCircle,
+    items: [
+      {
+        q: 'What is CloudBasket?',
+        a: "CloudBasket is India's sovereign price comparison platform. We track prices across 50+ retailers including Amazon, Flipkart, and CJ Global to help you find the best deal. We never sell products directly — we only show you where to buy at the lowest price.",
+      },
+      {
+        q: 'Is CloudBasket free to use?',
+        a: '100% free for shoppers. Always. We earn through affiliate commissions when you click a deal link — at no extra cost to you.',
+      },
+      {
+        q: 'How do you make money?',
+        a: 'Five revenue streams: affiliate commissions, Print on Demand products, Associates program, Google AdSense, and CJ Network commissions.',
+      },
+    ],
   },
   {
-    question: 'Do I complete my purchase on CloudBasket?',
-    answer:
-      'No. CloudBasket is a zero-checkout discovery platform only. Every purchase is completed on the retailer website after secure redirect.',
+    name: 'Deals',
+    icon: Zap,
+    items: [
+      {
+        q: 'How often are prices updated?',
+        a: 'Prices are updated every hour from all 50+ partner stores. Flash deals are monitored in near real-time.',
+      },
+      {
+        q: 'Are the deals verified?',
+        a: 'Yes. Our system cross-checks prices across multiple sources. We also show original vs deal price so you can verify yourself.',
+      },
+      {
+        q: 'What is CJ Global?',
+        a: 'Commission Junction (CJ) is a global affiliate network connecting CloudBasket to international retailers. Products sourced via CJ often have exclusive pricing not available elsewhere.',
+      },
+    ],
   },
   {
-    question: 'Are the prices shown real-time?',
-    answer:
-      'Prices are refreshed frequently but retailer pages remain the final source of truth. During high-traffic sale windows, a short delay can happen. Always verify final checkout pricing on the destination store.',
+    name: 'Privacy',
+    icon: Shield,
+    items: [
+      {
+        q: 'What data do you collect?',
+        a: "We collect email (if you register), search queries, and click data for analytics. We comply fully with India's DPDPA 2023.",
+      },
+      {
+        q: 'Do you sell my data?',
+        a: 'Never. Your data is never sold to third parties. See our Privacy Policy.',
+      },
+      {
+        q: 'How do I delete my account?',
+        a: "Email privacy@cloudbasket.in with subject 'Delete Account'. We will process within 7 business days per DPDPA 2023.",
+      },
+    ],
   },
   {
-    question: 'How do I become a CloudBasket Associate?',
-    answer:
-      'You can apply through the Associates program page and submit basic profile details. Approved associates receive tracking-ready links and dashboard access. Most applications are reviewed within 48 hours.',
+    name: 'Associates',
+    icon: Users,
+    items: [
+      {
+        q: 'How do I join the Associates program?',
+        a: 'Register at cloudbasket.in/register, select Associates during signup, and get your unique referral link within minutes.',
+      },
+      {
+        q: 'What commission rates do Associates earn?',
+        a: 'POD products: 10% · Fashion: 5% · Home: 4% · Laptops: 3% · Mobiles: 2.5% Commissions are paid monthly via bank transfer or UPI.',
+      },
+    ],
   },
   {
-    question: 'Is my data safe with CloudBasket?',
-    answer:
-      'CloudBasket follows DPDPA 2023 and GDPR-aligned handling principles. We minimize personal data collection and never store payment credentials. Users can request deletion through privacy support channels.',
+    name: 'POD',
+    icon: Package,
+    items: [
+      {
+        q: 'What is Print on Demand?',
+        a: 'CloudBasket POD lets you buy custom-designed merchandise — t-shirts, mugs, phone cases — printed on demand with no inventory. Products ship within 5-7 business days.',
+      },
+    ],
   },
-  {
-    question: 'What is the /go/ redirect link?',
-    answer:
-      'The /go path is CloudBasket\'s secure affiliate redirect layer. It routes users to partner listings while preserving attribution integrity. This improves link reliability and auditability across campaigns.',
-  },
-  {
-    question: 'Which stores does CloudBasket compare?',
-    answer:
-      'CloudBasket currently covers major affiliate networks including Amazon, Flipkart and CJ Affiliate partners. Coverage continues to expand by category. Only verified sources are surfaced in core listings.',
-  },
-  {
-    question: 'How do I report a wrong price?',
-    answer:
-      'If you notice a mismatch, use contact channels and share the product URL and timestamp. The team reviews and updates feed quality continuously. Critical pricing issues are prioritized for fast correction.',
-  },
-  {
-    question: 'Is CloudBasket DPDPA 2023 compliant?',
-    answer:
-      'Yes. CloudBasket privacy and retention policy is aligned with DPDPA 2023 requirements. Users can request access, correction or deletion of personal data where applicable.',
-  },
-  {
-    question: 'How do I delete my account?',
-    answer:
-      'Send a deletion request through privacy support with your registered email. After verification, account-linked data is removed within policy timelines. Confirmation is provided once deletion is complete.',
-  },
-] as const
+]
 
 export default function FAQPage() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [openItem, setOpenItem] = useState<string | null>(null)
 
-  const toggle = (index: number): void => {
-    setOpenIndex((current) => (current === index ? null : index))
+  const toggleItem = (id: string) => {
+    setOpenItem((current) => (current === id ? null : id))
   }
 
   return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <div className="mx-auto w-full max-w-3xl px-6 py-16">
-        <header>
-          <h1 className="flex items-center gap-2 font-display text-3xl font-black text-[var(--cb-text-primary)]">
-            <HelpCircle size={30} className="text-skyline-primary" />
-            Frequently Asked Questions
-          </h1>
-        </header>
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-[var(--cb-surface-2)] py-16">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <HelpCircle size={40} className="mx-auto mb-4 text-[#039BE5]" />
+          <h1 className="text-4xl font-black tracking-tighter">Frequently Asked Questions</h1>
+          <p className="mt-3 text-[var(--cb-text-muted)]">Everything you need to know about CloudBasket</p>
+        </div>
+      </section>
 
-        <section className="mt-10 space-y-3">
-          {FAQS.map((item, index) => {
-            const isOpen = openIndex === index
-            return (
-              <article key={item.question} className="cb-card overflow-hidden">
-                <button
-                  type="button"
-                  onClick={() => toggle(index)}
-                  className="flex w-full items-center justify-between p-5 text-start"
-                >
-                  <span className="text-base font-bold text-[var(--cb-text-primary)]">{item.question}</span>
-                  <ChevronDown
-                    size={18}
-                    className={`text-[var(--cb-text-muted)] transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                {isOpen && (
-                  <div className="border-t cb-border p-5 pt-4">
-                    <p className="text-sm leading-relaxed text-[var(--cb-text-secondary)]">{item.answer}</p>
-                  </div>
-                )}
-              </article>
-            )
-          })}
-        </section>
-      </div>
-    </div>
+      <section className="mx-auto max-w-3xl px-6 py-12">
+        {FAQ_CATEGORIES.map((category) => {
+          const CategoryIcon = category.icon
+
+          return (
+            <div key={category.name} className="mt-8">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#039BE5]/10">
+                  <CategoryIcon size={18} className="text-[#039BE5]" />
+                </div>
+                <h2 className="text-lg font-black">{category.name}</h2>
+              </div>
+
+              {category.items.map((item, index) => {
+                const id = `${category.name}-${index}`
+                const isOpen = openItem === id
+
+                return (
+                  <article key={id} className="cb-card mb-2 cursor-pointer overflow-hidden">
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between p-5 text-left"
+                      onClick={() => toggleItem(id)}
+                    >
+                      <p className="text-sm font-bold">{item.q}</p>
+                      <ChevronDown
+                        size={16}
+                        className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+
+                    {isOpen ? (
+                      <div className="border-t border-[var(--cb-border)] p-5 pt-4">
+                        <p className="text-sm leading-relaxed text-[var(--cb-text-muted)]">{item.a}</p>
+                      </div>
+                    ) : null}
+                  </article>
+                )
+              })}
+            </div>
+          )
+        })}
+      </section>
+    </main>
   )
 }

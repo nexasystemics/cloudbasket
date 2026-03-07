@@ -1,335 +1,237 @@
-'use client'
+import Image from 'next/image'
+import Link from 'next/link'
+import { SlidersHorizontal, ExternalLink, Grid3X3, List, TrendingDown, Zap } from 'lucide-react'
+import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 
-import { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Filter } from 'lucide-react'
-import ProductFilter from '@/components/products/ProductFilter'
-import ProductGrid from '@/components/products/ProductGrid'
-import PromotionSidebar from '@/components/products/PromotionSidebar'
-import { MAIN_CATEGORIES, PAGINATION, ROUTES } from '@/lib/constants'
-import { PRODUCTS, SUB_CATEGORIES } from '@/lib/mock-data'
-import type { PaginatedResponse, Product } from '@/lib/types'
+type Product = (typeof MOCK_PRODUCTS)[number]
 
-const MAX_PRICE = 100000
-const PAGE_WINDOW = 5
-const ITEMS_PER_PAGE_OPTIONS = [20, 40, 60, 100] as const
-const ALL_CATEGORY = 'All'
+const CATEGORIES_FILTER: readonly string[] = [
+  'All',
+  'Mobiles',
+  'Laptops',
+  'Fashion',
+  'Home',
+  'Beauty',
+  'Sports',
+  'Books',
+  'Toys',
+]
 
-type MainCategory = (typeof MAIN_CATEGORIES)[number]
-
-const isMainCategory = (value: string): value is MainCategory => {
-  return (MAIN_CATEGORIES as readonly string[]).includes(value)
-}
-
-const buildVisiblePages = (currentPage: number, totalPages: number): number[] => {
-  if (totalPages <= PAGE_WINDOW) {
-    return Array.from({ length: totalPages }, (_, index) => index + 1)
+function getPlatformBadgeClass(source: Product['source']): string {
+  if (source === 'Amazon') {
+    return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
   }
-
-  const halfWindow = Math.floor(PAGE_WINDOW / 2)
-  let start = Math.max(1, currentPage - halfWindow)
-  let end = Math.min(totalPages, start + PAGE_WINDOW - 1)
-  start = Math.max(1, end - PAGE_WINDOW + 1)
-
-  return Array.from({ length: end - start + 1 }, (_, index) => start + index)
+  if (source === 'Flipkart') {
+    return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
+  }
+  return 'cb-badge-green'
 }
 
-function ProductsPageContent() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-
-  const [search, setSearch] = useState<string>('')
-  const [selectedMain, setSelectedMain] = useState<string>(ALL_CATEGORY)
-  const [selectedSubs, setSelectedSubs] = useState<string[]>([])
-  const [priceRange, setPriceRange] = useState<number>(MAX_PRICE)
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [itemsPerPage, setItemsPerPage] = useState<number>(PAGINATION.DEFAULT_PAGE_SIZE)
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false)
-
-  useEffect(() => {
-    let isMounted = true
-
-    const query = searchParams.get('q') ?? ''
-    const mainCategoryParam = searchParams.get('mainCategory') ?? ALL_CATEGORY
-    const pageParam = Number(searchParams.get('page') ?? '1')
-
-    const nextMainCategory =
-      mainCategoryParam === ALL_CATEGORY || isMainCategory(mainCategoryParam)
-        ? mainCategoryParam
-        : ALL_CATEGORY
-
-    const parsedSubCategories = (searchParams.get('subCategory') ?? '')
-      .split(',')
-      .map((value) => value.trim())
-      .filter((value) => value.length > 0)
-
-    const allowedSubCategories =
-      nextMainCategory === ALL_CATEGORY ? [] : SUB_CATEGORIES[nextMainCategory]
-
-    const nextSelectedSubs =
-      nextMainCategory === ALL_CATEGORY
-        ? []
-        : parsedSubCategories.filter((subCategory) => allowedSubCategories.includes(subCategory))
-
-    const safePage = Number.isFinite(pageParam) && pageParam > 0 ? Math.floor(pageParam) : 1
-
-    if (isMounted) {
-      setSearch(query)
-      setSelectedMain(nextMainCategory)
-      setSelectedSubs(nextSelectedSubs)
-      setCurrentPage(safePage)
-    }
-
-    return () => {
-      isMounted = false
-    }
-  }, [searchParams])
-
-  const filteredProducts = useMemo<Product[]>(() => {
-    const normalizedQuery = search.trim().toLowerCase()
-
-    return PRODUCTS.filter((product) => {
-      if (product.status !== 'Approved') {
-        return false
-      }
-
-      if (
-        normalizedQuery.length > 0 &&
-        !product.name.toLowerCase().includes(normalizedQuery) &&
-        !product.description.toLowerCase().includes(normalizedQuery)
-      ) {
-        return false
-      }
-
-      if (selectedMain !== ALL_CATEGORY && product.mainCategory !== selectedMain) {
-        return false
-      }
-
-      if (selectedSubs.length > 0 && !selectedSubs.includes(product.subCategory)) {
-        return false
-      }
-
-      if (product.price > priceRange) {
-        return false
-      }
-
-      return true
-    })
-  }, [priceRange, search, selectedMain, selectedSubs])
-
-  const totalPages = useMemo<number>(() => {
-    return Math.max(1, Math.ceil(filteredProducts.length / itemsPerPage))
-  }, [filteredProducts.length, itemsPerPage])
-
-  const paginationState = useMemo<PaginatedResponse<Product>>(() => {
-    const normalizedPage = Math.min(Math.max(currentPage, 1), totalPages)
-    const startIndex = (normalizedPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-
-    return {
-      data: filteredProducts.slice(startIndex, endIndex),
-      total: filteredProducts.length,
-      page: normalizedPage,
-      pageSize: itemsPerPage,
-      totalPages,
-    }
-  }, [currentPage, filteredProducts, itemsPerPage, totalPages])
-
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages)
-    }
-  }, [currentPage, totalPages])
-
-  const buildQueryString = useCallback(
-    (page: number): string => {
-      const params = new URLSearchParams()
-
-      if (search.trim().length > 0) {
-        params.set('q', search.trim())
-      }
-
-      if (selectedMain !== ALL_CATEGORY) {
-        params.set('mainCategory', selectedMain)
-      }
-
-      if (selectedMain !== ALL_CATEGORY && selectedSubs.length > 0) {
-        params.set('subCategory', selectedSubs.join(','))
-      }
-
-      if (page > 1) {
-        params.set('page', String(page))
-      }
-
-      return params.toString()
-    },
-    [search, selectedMain, selectedSubs],
-  )
-
-  const handlePageChange = useCallback(
-    (nextPage: number): void => {
-      const boundedPage = Math.min(Math.max(nextPage, 1), totalPages)
-      setCurrentPage(boundedPage)
-
-      const queryString = buildQueryString(boundedPage)
-      const destination = queryString.length > 0 ? `${ROUTES.PRODUCTS}?${queryString}` : ROUTES.PRODUCTS
-      router.push(destination)
-    },
-    [buildQueryString, router, totalPages],
-  )
-
-  const resetFilters = useCallback((): void => {
-    setSearch('')
-    setSelectedMain(ALL_CATEGORY)
-    setSelectedSubs([])
-    setPriceRange(MAX_PRICE)
-    setCurrentPage(1)
-    setItemsPerPage(PAGINATION.DEFAULT_PAGE_SIZE)
-    setIsMobileFilterOpen(false)
-    router.push(ROUTES.PRODUCTS)
-  }, [router])
-
-  const visiblePages = useMemo<number[]>(() => {
-    return buildVisiblePages(paginationState.page, paginationState.totalPages)
-  }, [paginationState.page, paginationState.totalPages])
-
-  return (
-    <div className="min-h-screen bg-[var(--cb-surface)]">
-      <section className="mx-auto flex w-full max-w-[1800px] items-end justify-between px-6 py-8">
-        <div>
-          <h2 className="font-display text-3xl font-black uppercase tracking-tighter text-[var(--cb-text-primary)]">
-            Marketplace
-          </h2>
-          <p className="text-sm text-[var(--cb-text-muted)]">{paginationState.total} verified deals</p>
-        </div>
-        <p className="text-xs text-[var(--cb-text-muted)]">Sort: Popularity</p>
-      </section>
-
-      <section className="mx-auto flex w-full max-w-[1800px]">
-        <aside className="glass-sidebar hidden w-64 shrink-0 px-6 py-8 lg:block">
-          <div className="custom-scrollbar sticky top-[64px] h-[calc(100vh-64px)] overflow-y-auto">
-            <ProductFilter
-              search={search}
-              setSearch={setSearch}
-              selectedMain={selectedMain}
-              setSelectedMain={setSelectedMain}
-              selectedSubs={selectedSubs}
-              setSelectedSubs={setSelectedSubs}
-              priceRange={priceRange}
-              setPriceRange={setPriceRange}
-              maxPrice={MAX_PRICE}
-              onReset={resetFilters}
-            />
-          </div>
-        </aside>
-
-        <div className="sticky top-[56px] z-40 flex items-center justify-between border-b cb-border bg-[var(--cb-surface)] px-4 py-3 lg:hidden">
-          <button
-            type="button"
-            onClick={() => setIsMobileFilterOpen((state) => !state)}
-            className="cb-btn-ghost gap-2 px-3 py-2 text-xs"
-          >
-            <Filter size={14} />
-            {isMobileFilterOpen ? 'Close' : 'Filters'}
-          </button>
-          <span className="font-mono text-[11px] text-[var(--cb-text-muted)]">{paginationState.total} results</span>
-        </div>
-
-        {isMobileFilterOpen && (
-          <div className="border-b cb-border bg-[var(--cb-surface-2)] p-6 lg:hidden">
-            <ProductFilter
-              search={search}
-              setSearch={setSearch}
-              selectedMain={selectedMain}
-              setSelectedMain={setSelectedMain}
-              selectedSubs={selectedSubs}
-              setSelectedSubs={setSelectedSubs}
-              priceRange={priceRange}
-              setPriceRange={setPriceRange}
-              maxPrice={MAX_PRICE}
-              onReset={resetFilters}
-            />
-          </div>
-        )}
-
-        <main className="flex-1 px-6 py-8 lg:px-10">
-          <ProductGrid products={paginationState.data} onReset={resetFilters} />
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
-            <button
-              type="button"
-              disabled={paginationState.page === 1}
-              onClick={() => handlePageChange(paginationState.page - 1)}
-              className="cb-btn-ghost disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Prev
-            </button>
-
-            {visiblePages.map((page) => (
-              <button
-                key={`page-${page}`}
-                type="button"
-                onClick={() => handlePageChange(page)}
-                className={`cb-btn-ghost min-w-[38px] justify-center ${
-                  page === paginationState.page ? 'border-skyline-primary bg-skyline-primary text-white' : ''
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-
-            <button
-              type="button"
-              disabled={paginationState.page === paginationState.totalPages}
-              onClick={() => handlePageChange(paginationState.page + 1)}
-              className="cb-btn-ghost disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Next
-            </button>
-
-            <label className="ms-2 flex items-center gap-2 text-[11px] text-[var(--cb-text-muted)]">
-              <span>Items:</span>
-              <select
-                value={itemsPerPage}
-                onChange={(event) => {
-                  const nextValue = Number(event.target.value)
-                  setItemsPerPage(nextValue)
-                  setCurrentPage(1)
-                }}
-                className="rounded-button border cb-border bg-[var(--cb-surface)] px-2 py-1 text-[11px] text-[var(--cb-text-primary)] outline-none"
-              >
-                {ITEMS_PER_PAGE_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        </main>
-
-        <aside className="glass-sidebar-right hidden w-56 shrink-0 px-4 py-8 xl:block">
-          <div className="custom-scrollbar sticky top-[64px] h-[calc(100vh-64px)] overflow-y-auto">
-            <PromotionSidebar selectedCategory={selectedMain} />
-          </div>
-        </aside>
-      </section>
-    </div>
-  )
+function getPlatformLabel(source: Product['source']): string {
+  return source === 'CJ' ? 'CJ Global' : source
 }
 
-function ProductsPageFallback() {
+function ProductCard({ product }: { product: Product }) {
+  const originalPrice = product.originalPrice ?? Math.round(product.price * 1.2)
+  const discount = product.discount ?? Math.max(1, Math.round(((originalPrice - product.price) / originalPrice) * 100))
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--cb-surface)]">
-      <p className="text-sm text-[var(--cb-text-muted)]">Loading marketplace...</p>
-    </div>
+    <article key={product.id} className="cb-card group flex flex-col overflow-hidden">
+      <div className="relative h-48">
+        <Image
+          fill
+          className="object-cover"
+          src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+          alt={product.name}
+        />
+
+        <div className="absolute left-2 top-2 flex flex-col gap-1">
+          {discount ? <span className="cb-badge cb-badge-green">-{discount}%</span> : null}
+          {product.isTrending ? <span className="cb-badge cb-badge-orange">Trending</span> : null}
+        </div>
+
+        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+          <Link href={`/product/${product.id}`} className="cb-btn bg-white px-4 py-2 text-xs text-[#09090B]">
+            Quick View
+          </Link>
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col gap-1 p-3">
+        <span className={`cb-badge w-fit text-[10px] ${getPlatformBadgeClass(product.source)}`}>
+          {getPlatformLabel(product.source)}
+        </span>
+
+        <p className="text-[10px] font-black uppercase text-[var(--cb-text-muted)]">{product.brand}</p>
+
+        <h3 className="line-clamp-2 text-xs font-bold">{product.name}</h3>
+
+        <p className="text-xs text-[#F5C842]">★★★★☆</p>
+
+        <div className="mt-1 flex items-baseline gap-2">
+          <p className="price-current">₹{product.price.toLocaleString('en-IN')}</p>
+          <p className="price-original text-xs">₹{originalPrice.toLocaleString('en-IN')}</p>
+        </div>
+        <p className="price-savings text-xs">Save {discount}%</p>
+
+        <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-auto w-full py-2 text-xs">
+          View Deal <ExternalLink size={12} />
+        </Link>
+      </div>
+    </article>
   )
 }
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<ProductsPageFallback />}>
-      <ProductsPageContent />
-    </Suspense>
+    <main className="bg-[var(--cb-bg)]">
+      <section className="bg-[var(--cb-surface-2)] py-12">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-4xl font-black tracking-tighter">All Products</h1>
+            <p className="mt-2 text-[var(--cb-text-muted)]">
+              2,000+ deals tracked across Amazon, Flipkart & CJ Global
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <Link href="/deals/flash" className="cb-btn cb-btn-primary gap-2">
+              <Zap size={16} /> Flash Deals
+            </Link>
+            <button type="button" className="cb-btn cb-btn-ghost gap-2">
+              <SlidersHorizontal size={16} /> Filters
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-6">
+        <div className="flex flex-wrap gap-2">
+          {CATEGORIES_FILTER.map((category, index) => (
+            <span
+              key={category}
+              className={`cb-badge cursor-pointer px-4 py-2 text-sm ${index === 0 ? 'cb-badge-blue' : 'hover:cb-badge-blue'}`}
+            >
+              {category}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 pb-4">
+        <div className="ad-slot-leaderboard">Advertisement · Google AdSense · 728×90</div>
+      </section>
+
+      <section className="mx-auto flex max-w-7xl gap-6 px-6 pb-16">
+        <aside className="hidden w-56 flex-shrink-0 md:block">
+          <div className="cb-card p-5">
+            <div className="mb-5 flex items-center gap-2">
+              <SlidersHorizontal size={16} className="text-[#039BE5]" />
+              <p className="text-sm font-black">Filters</p>
+            </div>
+
+            <div>
+              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Price Range</p>
+              <div className="grid grid-cols-2 gap-2">
+                <input className="cb-input py-2 text-xs" placeholder="Min ₹" />
+                <input className="cb-input py-2 text-xs" placeholder="Max ₹" />
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Sort By</p>
+              <select className="cb-input w-full py-2 text-xs">
+                <option>Relevance</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Newest</option>
+                <option>Top Rated</option>
+              </select>
+            </div>
+
+            <div className="mt-5">
+              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Brands</p>
+              {['Samsung', 'Apple', 'OnePlus', 'Xiaomi', 'HP', 'Dell', 'Sony', 'Nike'].map((brand) => (
+                <label key={brand} className="flex items-center gap-2 py-1">
+                  <input type="checkbox" className="rounded" />
+                  <span className="text-sm text-[var(--cb-text-secondary)]">{brand}</span>
+                </label>
+              ))}
+            </div>
+
+            <div className="mt-5">
+              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Rating</p>
+              {['4★+', '3★+', 'Any'].map((rating) => (
+                <span key={rating} className="cb-badge mb-1 block w-fit cursor-pointer">
+                  {rating}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-5">
+              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Platform</p>
+              {['Amazon', 'Flipkart', 'CJ Global'].map((platform) => (
+                <label key={platform} className="flex items-center gap-2 py-1">
+                  <input type="checkbox" className="rounded" />
+                  <span className="text-sm text-[var(--cb-text-secondary)]">{platform}</span>
+                </label>
+              ))}
+            </div>
+
+            <button type="button" className="cb-btn cb-btn-primary mt-6 w-full">
+              Apply Filters
+            </button>
+            <button type="button" className="cb-btn cb-btn-ghost mt-2 w-full">
+              Reset
+            </button>
+          </div>
+
+          <div className="ad-slot-rectangle mt-4">Advertisement · 300×250</div>
+        </aside>
+
+        <div className="flex-1">
+          <div className="mb-6 flex items-center justify-between gap-3">
+            <p className="text-sm text-[var(--cb-text-muted)]">Showing {MOCK_PRODUCTS.length} products</p>
+            <div className="flex items-center gap-2">
+              <select className="cb-input w-auto py-1.5 text-xs">
+                <option>Relevance</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Top Rated</option>
+              </select>
+              <button type="button" className="cb-btn cb-btn-ghost p-2" aria-label="Grid view">
+                <Grid3X3 size={15} />
+              </button>
+              <button type="button" className="cb-btn cb-btn-ghost p-2" aria-label="List view">
+                <List size={15} />
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+            {MOCK_PRODUCTS.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+
+          <div className="mt-10 flex justify-center gap-2">
+            <button type="button" className="cb-btn cb-btn-ghost">
+              Prev
+            </button>
+            {[1, 2, 3, 4, 5].map((page) => (
+              <button key={page} type="button" className={`cb-btn ${page === 1 ? 'cb-btn-primary' : ''}`}>
+                {page}
+              </button>
+            ))}
+            <button type="button" className="cb-btn cb-btn-ghost">
+              Next
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div className="mx-auto mb-8 flex max-w-7xl items-center justify-center gap-2 px-6 text-xs text-[var(--cb-text-muted)]">
+        <TrendingDown size={12} /> NEXQON price intelligence updates every hour
+      </div>
+    </main>
   )
 }

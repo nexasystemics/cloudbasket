@@ -45,6 +45,12 @@ const DEMO_COLUMNS: readonly DemoColumn[] = [
 
 const TYPING_TEXT = '$500 smartphone'
 
+const logoBadgeByPlatform: Record<DemoColumn['id'], { label: string; className: string }> = {
+  amazon: { label: 'a', className: 'bg-[#F97316] text-white' },
+  flipkart: { label: 'F', className: 'bg-[#FACC15] text-[#0F172A]' },
+  cj: { label: 'CJ', className: 'bg-[#10B981] text-white' },
+}
+
 export default function HeroSection() {
   const router = useRouter()
   const [phase, setPhase] = useState<number>(0)
@@ -123,17 +129,29 @@ export default function HeroSection() {
   )
 
   return (
-    <section className="bg-[var(--cb-surface)] px-6 py-24 dark:bg-[#09090B]">
-      <div className="mx-auto flex min-h-[90vh] max-w-7xl flex-col justify-center">
+    <section className="hero-gradient relative overflow-hidden px-6 py-24">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(3,155,229,0.08) 1px, transparent 0)',
+          backgroundSize: '32px 32px',
+        }}
+      />
+
+      <div className="pointer-events-none absolute -end-20 top-0 h-[300px] w-[300px] rounded-full bg-skyline-primary/30 blur-3xl opacity-20" />
+      <div className="pointer-events-none absolute -start-12 bottom-8 h-[200px] w-[200px] rounded-full bg-[#F97316]/30 blur-3xl opacity-20" />
+      <div className="pointer-events-none absolute end-1/3 top-1/2 h-[150px] w-[150px] rounded-full bg-[#8B5CF6]/30 blur-3xl opacity-20" />
+
+      <div className="relative mx-auto flex min-h-[90vh] max-w-7xl flex-col justify-center">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
           className="mb-8 inline-flex"
         >
-          <span className="cb-badge inline-flex items-center gap-1 border border-skyline-primary/20 bg-[var(--cb-primary-glow)] px-3 py-1 text-skyline-primary">
+          <span className="cb-badge cb-badge-blue inline-flex items-center gap-1 px-3 py-1">
             <Zap size={12} />
-            India&apos;s #1 Sovereign Price Aggregator
+            India&apos;s Sovereign Price Aggregator
           </span>
         </motion.div>
 
@@ -154,7 +172,7 @@ export default function HeroSection() {
         </div>
 
         <div className="mt-6 max-w-xl space-y-1 text-lg text-[var(--cb-text-secondary)]">
-          <p>Compare prices across Amazon, Flipkart &amp; 50+ stores.</p>
+          <p>Compare prices across Amazon, Flipkart and 50+ stores.</p>
           <p>Zero checkout. Pure discovery. Maximum savings.</p>
         </div>
 
@@ -166,12 +184,12 @@ export default function HeroSection() {
             className="mt-10 space-y-4"
           >
             <div
-              className={`glass-panel flex h-12 items-center gap-3 rounded-card px-4 ${
+              className={`glass-panel flex h-12 items-center gap-3 rounded-[var(--cb-radius-card)] px-4 ${
                 phase >= 2 ? 'ring-2 ring-skyline-primary' : ''
               } ${phase === 2 ? 'animate-pulse' : ''}`}
             >
               <Search size={18} className="text-[var(--cb-text-muted)]" />
-              <span className="font-mono text-sm text-[var(--cb-text-primary)]">{typedText}</span>
+              <span className="font-mono-cb text-sm text-[var(--cb-text-primary)]">{typedText}</span>
             </div>
 
             <AnimatePresence>
@@ -186,6 +204,7 @@ export default function HeroSection() {
                 >
                   {DEMO_COLUMNS.map((column, index) => {
                     const isHighlighted = column.highlight && phase >= 4
+                    const logoBadge = logoBadgeByPlatform[column.id]
                     return (
                       <motion.div
                         key={column.id}
@@ -196,9 +215,17 @@ export default function HeroSection() {
                           isHighlighted ? 'border-2 border-[#F97316] shadow-[0_0_24px_rgba(249,115,22,0.2)]' : ''
                         }`}
                       >
-                        <p className="font-mono text-[11px] font-black uppercase tracking-[0.08em] text-[var(--cb-text-muted)]">
-                          {column.label}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`inline-flex h-6 min-w-6 items-center justify-center rounded-full px-1 text-[10px] font-black ${logoBadge.className}`}
+                          >
+                            {logoBadge.label}
+                          </span>
+                          <p className="font-mono-cb text-[11px] font-black uppercase tracking-[0.08em] text-[var(--cb-text-muted)]">
+                            {column.label}
+                          </p>
+                        </div>
+
                         <p className="mt-2 truncate text-[13px] font-bold text-[var(--cb-text-primary)]">Galaxy S25 Ultra</p>
                         <p
                           className={`mt-3 font-display text-2xl font-black ${
@@ -209,9 +236,7 @@ export default function HeroSection() {
                         </p>
                         <span
                           className={`cb-badge mt-2 ${
-                            isHighlighted
-                              ? 'bg-[#F97316]/10 text-[#F97316]'
-                              : 'bg-[var(--cb-primary-glow)] text-skyline-primary'
+                            isHighlighted ? 'cb-badge-orange' : 'cb-badge-blue'
                           }`}
                         >
                           {column.badge}
@@ -220,7 +245,7 @@ export default function HeroSection() {
                           type="button"
                           onClick={() => handleDealClick(column.goId)}
                           className={`mt-4 w-full px-3 py-2 text-[11px] ${
-                            isHighlighted ? 'cb-btn-primary bg-[#F97316] text-white hover:bg-[#EA580C]' : 'cb-btn-ghost'
+                            isHighlighted ? 'cb-btn-orange' : 'cb-btn-ghost'
                           }`}
                         >
                           View Deal
@@ -255,16 +280,22 @@ export default function HeroSection() {
         </AnimatePresence>
 
         <div className="mt-12 flex flex-wrap items-center gap-8">
-          <div className="flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
-            <Shield size={14} />
+          <div className="inline-flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-skyline-glow)]">
+              <Shield size={13} className="text-skyline-primary" />
+            </span>
             <span>DPDPA 2023 Compliant</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
-            <TrendingDown size={14} />
+          <div className="inline-flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-skyline-glow)]">
+              <TrendingDown size={13} className="text-skyline-primary" />
+            </span>
             <span>50+ Stores Compared</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
-            <Zap size={14} />
+          <div className="inline-flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-skyline-glow)]">
+              <Zap size={13} className="text-skyline-primary" />
+            </span>
             <span>Real-time Prices</span>
           </div>
         </div>

@@ -1,237 +1,317 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState, type JSX } from 'react'
-import Image from 'next/image'
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type ChangeEvent,
+  type FormEvent,
+  type JSX,
+} from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { ChevronDown, Globe, Menu, Moon, Search, Shield, Sun, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import {
+  Search,
+  Menu,
+  X,
+  ChevronDown,
+  Sun,
+  Moon,
+  Globe,
+  Shield,
+  Zap,
+  TrendingDown,
+  type LucideIcon,
+} from 'lucide-react'
 import { useGlobal } from '@/context/GlobalContext'
 import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
-import type { CountryCode, NavItem } from '@/lib/types'
+import type { CountryCode } from '@/lib/types'
 
-const productCategories = MAIN_CATEGORIES.slice(0, 5)
+type DropdownItem = {
+  label: string
+  href: string
+  icon: LucideIcon
+}
 
-const NAV_ITEMS: readonly NavItem[] = [
-  {
-    id: 'products',
-    label: 'Products',
-    href: ROUTES.PRODUCTS,
-    dropdown: productCategories.map((category) => ({
-      label: category,
-      href: `/category/${encodeURIComponent(category.toLowerCase())}`,
-    })),
-  },
-  {
-    id: 'deals',
-    label: 'Deals',
-    href: ROUTES.DEALS,
-    dropdown: [
-      { label: 'Flash Sales', href: '/deals/flash' },
-      { label: 'Top Offers', href: ROUTES.DEALS },
-      { label: 'CJ Network', href: '/cj' },
-    ],
-  },
-  {
-    id: 'pod',
-    label: 'POD',
-    href: ROUTES.POD,
-    dropdown: [
-      { label: 'T-Shirts', href: '/pod/tshirts' },
-      { label: 'Mugs', href: '/pod/mugs' },
-      { label: 'Phone Cases', href: '/pod/phone-cases' },
-    ],
-  },
-  { id: 'compare', label: 'Compare', href: ROUTES.COMPARE, dropdown: [] },
-  { id: 'blog', label: 'Blog', href: ROUTES.BLOG, dropdown: [] },
+type NavigationItem = {
+  id: 'products' | 'deals' | 'pod' | 'compare' | 'blog'
+  label: string
+  href: string
+  dropdown: DropdownItem[]
+}
+
+const PROMO_TICKER_ITEMS: readonly string[] = [
+  ' Flash Sale: Up to 70% off Mobiles',
+  '⚡ CJ Exclusive: Global deals in INR',
+  '️ DPDPA 2023 Compliant — Your data is safe',
+  ' 50+ stores compared in real-time',
 ]
 
 const COUNTRY_OPTIONS: ReadonlyArray<{ value: CountryCode; label: string }> = [
-  { value: 'IN', label: 'IN India' },
-  { value: 'US', label: 'US USA' },
-  { value: 'EU', label: 'EU Europe' },
-  { value: 'GB', label: 'GB UK' },
+  { value: 'IN', label: 'India' },
+  { value: 'US', label: 'USA' },
+  { value: 'EU', label: 'Europe' },
+  { value: 'GB', label: 'United Kingdom' },
 ]
 
-function ThemeToggle(): JSX.Element | null {
-  const { resolvedTheme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState<boolean>(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const handleToggle = useCallback(() => {
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
-  }, [resolvedTheme, setTheme])
-
-  if (!mounted) {
-    return null
-  }
-
-  const isDark = resolvedTheme === 'dark'
-
-  return (
-    <button
-      type="button"
-      onClick={handleToggle}
-      className="glass-panel grid h-9 w-9 place-items-center rounded-button"
-      aria-label="Toggle theme"
-    >
-      {isDark ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-indigo-500" />}
-    </button>
-  )
+const COUNTRY_FLAGS: Record<CountryCode, string> = {
+  IN: 'IN',
+  US: 'US',
+  EU: 'EU',
+  GB: 'GB',
 }
 
-function CurrencySelector(): JSX.Element {
-  const { country, setCountry } = useGlobal()
+const DEAL_DROPDOWN: readonly DropdownItem[] = [
+  { label: 'Flash Sales', href: '/deals/flash', icon: Zap },
+  { label: 'Top Offers', href: ROUTES.DEALS, icon: TrendingDown },
+  { label: 'CJ Network', href: '/cj', icon: Globe },
+  { label: 'Deal Alerts', href: ROUTES.DEALS, icon: Shield },
+]
 
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const nextCountry = event.target.value as CountryCode
-      setCountry(nextCountry)
-    },
-    [setCountry],
-  )
+const POD_DROPDOWN: readonly DropdownItem[] = [
+  { label: 'T-Shirts', href: '/pod/tshirts', icon: Zap },
+  { label: 'Mugs', href: '/pod/mugs', icon: TrendingDown },
+  { label: 'Phone Cases', href: '/pod/phone-cases', icon: Shield },
+]
 
-  return (
-    <label className="glass-panel flex h-9 items-center gap-1 rounded-button px-2 text-[11px]">
-      <Globe className="h-3.5 w-3.5 text-[var(--cb-text-secondary)]" />
-      <select
-        aria-label="Select country"
-        value={country}
-        onChange={handleChange}
-        className="bg-transparent font-mono text-[11px] text-[var(--cb-text-primary)] outline-none"
-      >
-        {COUNTRY_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value} className="bg-[var(--cb-surface)] text-[var(--cb-text-primary)]">
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </label>
-  )
-}
-
-function SearchBar({ compact }: { compact?: boolean }): JSX.Element {
-  const router = useRouter()
-  const [query, setQuery] = useState<string>('')
-
-  const handleSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-      const normalizedQuery = query.trim()
-      if (normalizedQuery.length === 0) {
-        return
-      }
-      router.push(`/search?q=${encodeURIComponent(normalizedQuery)}`)
-    },
-    [query, router],
-  )
-
-  return (
-    <form onSubmit={handleSubmit} className={compact ? 'w-full' : 'min-w-72'} role="search">
-      <div className="glass-panel flex h-9 items-center gap-2 rounded-button px-3">
-        <Search className="h-4 w-4 shrink-0 text-[var(--cb-text-muted)]" />
-        <input
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          type="search"
-          placeholder="Search products, deals..."
-          className="w-full bg-transparent text-sm text-[var(--cb-text-primary)] outline-none placeholder:text-[var(--cb-text-muted)]"
-          aria-label="Search products"
-        />
-      </div>
-    </form>
-  )
-}
+const PROMO_DISMISS_KEY = 'cb-promo-dismissed'
 
 export default function Header(): JSX.Element {
   const pathname = usePathname()
-  const { user } = useGlobal()
-  const { resolvedTheme } = useTheme()
+  const router = useRouter()
+  const { country, setCountry, user } = useGlobal()
+  const { resolvedTheme, setTheme } = useTheme()
 
+  const [mounted, setMounted] = useState<boolean>(false)
+  const [promoDismissed, setPromoDismissed] = useState<boolean>(false)
+  const [promoIndex, setPromoIndex] = useState<number>(0)
   const [mobileOpen, setMobileOpen] = useState<boolean>(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [searchOpen, setSearchOpen] = useState<boolean>(false)
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [activeDropdown, setActiveDropdown] = useState<NavigationItem['id'] | null>(null)
   const [scrolled, setScrolled] = useState<boolean>(false)
-  const [logoReady, setLogoReady] = useState<boolean>(false)
+  const [logoError, setLogoError] = useState<boolean>(false)
+
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
+  const dropdownTimeoutRef = useRef<number | null>(null)
+
+  const navItems: readonly NavigationItem[] = [
+    {
+      id: 'products',
+      label: 'Products',
+      href: ROUTES.PRODUCTS,
+      dropdown: MAIN_CATEGORIES.map((category) => ({
+        label: category,
+        href: `/category/${encodeURIComponent(category.toLowerCase())}`,
+        icon: Globe,
+      })),
+    },
+    {
+      id: 'deals',
+      label: 'Deals',
+      href: ROUTES.DEALS,
+      dropdown: [...DEAL_DROPDOWN],
+    },
+    {
+      id: 'pod',
+      label: 'POD',
+      href: ROUTES.POD,
+      dropdown: [...POD_DROPDOWN],
+    },
+    { id: 'compare', label: 'Compare', href: ROUTES.COMPARE, dropdown: [] },
+    { id: 'blog', label: 'Blog', href: ROUTES.BLOG, dropdown: [] },
+  ]
+
+  useEffect(() => {
+    setMounted(true)
+    const dismissed = window.localStorage.getItem(PROMO_DISMISS_KEY)
+    setPromoDismissed(dismissed === 'true')
+  }, [])
+
+  useEffect(() => {
+    if (promoDismissed) {
+      return
+    }
+    const interval = window.setInterval(() => {
+      setPromoIndex((current) => (current + 1) % PROMO_TICKER_ITEMS.length)
+    }, 3000)
+
+    return () => {
+      window.clearInterval(interval)
+    }
+  }, [promoDismissed])
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 10)
+      setScrolled(window.scrollY > 8)
     }
 
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-
     return () => {
       window.removeEventListener('scroll', onScroll)
     }
   }, [])
 
   useEffect(() => {
-    setLogoReady(true)
-  }, [])
-
-  useEffect(() => {
     setMobileOpen(false)
+    setSearchOpen(false)
     setActiveDropdown(null)
   }, [pathname])
 
-  const logoSource = useMemo(() => {
-    if (!logoReady) {
-      return '/brand/logo-full.svg'
+  useEffect(() => {
+    if (searchOpen) {
+      searchInputRef.current?.focus()
     }
-    return resolvedTheme === 'dark' ? '/brand/logo-full-dark.svg' : '/brand/logo-full.svg'
-  }, [logoReady, resolvedTheme])
+  }, [searchOpen])
+
+  const clearDropdownTimer = useCallback(() => {
+    if (dropdownTimeoutRef.current !== null) {
+      window.clearTimeout(dropdownTimeoutRef.current)
+      dropdownTimeoutRef.current = null
+    }
+  }, [])
+
+  const handleDropdownEnter = useCallback(
+    (itemId: NavigationItem['id']) => {
+      clearDropdownTimer()
+      setActiveDropdown(itemId)
+    },
+    [clearDropdownTimer],
+  )
+
+  const handleDropdownLeave = useCallback(() => {
+    clearDropdownTimer()
+    dropdownTimeoutRef.current = window.setTimeout(() => {
+      setActiveDropdown(null)
+    }, 150)
+  }, [clearDropdownTimer])
+
+  const handleSearchSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      const query = searchQuery.trim()
+      if (query.length === 0) {
+        return
+      }
+      router.push(`/search?q=${encodeURIComponent(query)}`)
+      setSearchOpen(false)
+    },
+    [router, searchQuery],
+  )
+
+  const handlePromoDismiss = useCallback(() => {
+    setPromoDismissed(true)
+    window.localStorage.setItem(PROMO_DISMISS_KEY, 'true')
+  }, [])
+
+  const handleCountryChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      setCountry(event.target.value as CountryCode)
+    },
+    [setCountry],
+  )
+
+  const toggleTheme = useCallback(() => {
+    if (resolvedTheme === 'dark') {
+      setTheme('light')
+      return
+    }
+    setTheme('dark')
+  }, [resolvedTheme, setTheme])
 
   const authRoute = user?.role === 'Admin' ? ROUTES.ADMIN : ROUTES.LOGIN
   const authLabel = user?.role === 'Admin' ? 'Admin' : 'Sign In'
 
+  const isItemActive = useCallback(
+    (href: string): boolean => pathname === href || pathname.startsWith(`${href}/`),
+    [pathname],
+  )
+
   return (
-    <header className={`glass-header ${scrolled ? 'shadow-glass' : ''}`}>
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 lg:h-16 lg:px-6">
-        <Link href={ROUTES.HOME} className="inline-flex items-center">
-          <Image src={logoSource} alt="CloudBasket" width={140} height={36} priority />
+    <header className={`glass-header ${scrolled ? 'scrolled' : ''}`}>
+      {!promoDismissed ? (
+        <div className="promo-ticker flex h-8 items-center">
+          <div className="mx-auto flex h-8 w-full max-w-7xl items-center justify-between px-3 lg:px-6">
+            <div className="overflow-hidden text-ellipsis whitespace-nowrap text-[11px] md:text-xs">
+              <span key={promoIndex} className="inline-flex items-center gap-2 animate-fade-up">
+                <Zap size={12} />
+                {PROMO_TICKER_ITEMS[promoIndex]}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={handlePromoDismiss}
+              className="ms-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 hover:bg-white/20"
+              aria-label="Dismiss promo ticker"
+            >
+              <X size={12} />
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-3 lg:h-16 lg:px-6">
+        <Link href={ROUTES.HOME} className="inline-flex items-center gap-2" aria-label="CloudBasket Home">
+          {logoError ? (
+            <span className="inline-flex items-center gap-2">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-skyline-primary text-xs font-black text-white">
+                CB
+              </span>
+              <span className="font-display text-xl font-black tracking-tight text-[var(--cb-text-primary)]">CloudBasket</span>
+            </span>
+          ) : (
+            <Image
+              src="/brand/logo-full.svg"
+              alt="CloudBasket"
+              width={150}
+              height={36}
+              priority
+              onError={() => setLogoError(true)}
+            />
+          )}
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
-          {NAV_ITEMS.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
+          {navItems.map((item) => {
             const hasDropdown = item.dropdown.length > 0
             return (
               <div
                 key={item.id}
                 className="relative"
-                onMouseEnter={() => setActiveDropdown(item.id)}
-                onMouseLeave={() => setActiveDropdown((current) => (current === item.id ? null : current))}
+                onMouseEnter={() => handleDropdownEnter(item.id)}
+                onMouseLeave={handleDropdownLeave}
               >
                 <Link
                   href={item.href}
-                  className={`inline-flex items-center gap-1 rounded-button px-3 py-2 text-sm font-medium transition-colors ${
-                    active ? 'text-skyline-primary' : 'text-[var(--cb-text-secondary)] hover:text-[var(--cb-text-primary)]'
+                  className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors ${
+                    isItemActive(item.href)
+                      ? 'font-bold text-skyline-primary'
+                      : 'font-medium text-[var(--cb-text-secondary)] hover:text-[var(--cb-text-primary)]'
                   }`}
                 >
-                  <span>{item.label}</span>
-                  {hasDropdown ? <ChevronDown className="h-3.5 w-3.5" /> : null}
+                  {item.label}
+                  {hasDropdown ? <ChevronDown size={14} /> : null}
                 </Link>
+
                 {hasDropdown ? (
-                  <div
-                    className={`glass-panel absolute [inset-inline-start:0] top-[calc(100%+8px)] z-[100] min-w-48 rounded-card p-2 transition-all duration-200 ${
-                      activeDropdown === item.id
-                        ? 'pointer-events-auto translate-y-0 opacity-100'
-                        : 'pointer-events-none -translate-y-2 opacity-0'
-                    }`}
-                  >
-                    {item.dropdown.map((entry) => (
-                      <Link
-                        key={entry.href}
-                        href={entry.href}
-                        className="block rounded-button px-3 py-2 text-sm text-[var(--cb-text-secondary)] transition-colors hover:bg-[var(--cb-primary-glow)] hover:text-[var(--cb-text-primary)]"
-                      >
-                        {entry.label}
-                      </Link>
-                    ))}
+                  <div className={`cb-dropdown ${activeDropdown === item.id ? 'open' : ''}`}>
+                    {item.dropdown.map((entry) => {
+                      const ItemIcon = entry.icon
+                      return (
+                        <Link
+                          key={entry.href}
+                          href={entry.href}
+                          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)] hover:text-[var(--cb-text-primary)]"
+                        >
+                          <ItemIcon size={14} />
+                          <span>{entry.label}</span>
+                        </Link>
+                      )
+                    })}
                   </div>
                 ) : null}
               </div>
@@ -240,51 +320,159 @@ export default function Header(): JSX.Element {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <SearchBar />
-          <CurrencySelector />
-          <ThemeToggle />
-          <Link href={authRoute} className="cb-btn-primary inline-flex items-center gap-1.5">
-            {user?.role === 'Admin' ? <Shield className="h-4 w-4" /> : null}
-            <span>{authLabel}</span>
+          <form onSubmit={handleSearchSubmit} className="flex items-center">
+            <button
+              type="button"
+              onClick={() => setSearchOpen((current) => !current)}
+              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg"
+              aria-label="Toggle search"
+            >
+              <Search size={15} className="text-[var(--cb-text-secondary)]" />
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-200 ${
+                searchOpen ? 'ms-2 w-[220px] opacity-100' : 'w-0 opacity-0'
+              }`}
+            >
+              <input
+                ref={searchInputRef}
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                type="search"
+                placeholder="Search deals"
+                className="cb-input h-9"
+                aria-label="Search"
+              />
+            </div>
+          </form>
+
+          <label className="glass-panel flex h-9 items-center gap-1 rounded-lg px-2 text-[11px]">
+            <Globe size={13} className="text-[var(--cb-text-muted)]" />
+            <select
+              value={country}
+              onChange={handleCountryChange}
+              className="bg-transparent text-[11px] font-semibold text-[var(--cb-text-primary)] outline-none"
+              aria-label="Select country"
+            >
+              {COUNTRY_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {COUNTRY_FLAGS[option.value]} {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg"
+            aria-label="Toggle theme"
+          >
+            {mounted && resolvedTheme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+          </button>
+
+          <Link href={authRoute} className="cb-btn-primary inline-flex h-9 items-center gap-1 px-3 text-xs">
+            {user?.role === 'Admin' ? <Shield size={13} /> : null}
+            {authLabel}
           </Link>
         </div>
 
         <button
           type="button"
+          className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg lg:hidden"
           onClick={() => setMobileOpen((current) => !current)}
-          className="glass-panel grid h-9 w-9 place-items-center rounded-button lg:hidden"
           aria-expanded={mobileOpen}
           aria-label="Toggle mobile menu"
         >
-          {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
 
       <div
-        className={`overflow-hidden border-[var(--cb-border)] transition-all duration-300 lg:hidden ${
-          mobileOpen ? 'max-h-[75vh] border-b' : 'max-h-0'
+        className={`fixed inset-0 z-[90] bg-black/45 transition-opacity duration-200 lg:hidden ${
+          mobileOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
-        <div className="space-y-4 px-4 py-4">
-          <SearchBar compact={true} />
-          <div className="space-y-2">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className="block rounded-button px-3 py-2 text-sm font-semibold text-[var(--cb-text-secondary)] transition-colors hover:bg-[var(--cb-primary-glow)] hover:text-[var(--cb-text-primary)]"
-              >
-                {item.label}
-              </Link>
+        <div className="h-full w-full bg-[var(--cb-surface)] p-4">
+          <div className="mb-4 flex items-center justify-between">
+            <p className="font-display text-xl font-black">Menu</p>
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg"
+              aria-label="Close menu"
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          <form onSubmit={handleSearchSubmit} className="mb-4">
+            <input
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              type="search"
+              placeholder="Search products, deals"
+              className="cb-input"
+              aria-label="Search mobile"
+            />
+          </form>
+
+          <div className="space-y-1">
+            {navItems.map((item) => (
+              <div key={item.id} className="rounded-xl border border-[var(--cb-border)] p-2">
+                <Link
+                  href={item.href}
+                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-[var(--cb-text-primary)]"
+                >
+                  {item.label}
+                </Link>
+                {item.dropdown.length > 0 ? (
+                  <div className="mt-1 grid grid-cols-1 gap-1 px-2 pb-1">
+                    {item.dropdown.map((entry) => (
+                      <Link
+                        key={`${item.id}-${entry.href}`}
+                        href={entry.href}
+                        className="rounded-md px-2 py-1 text-xs text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)]"
+                      >
+                        {entry.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             ))}
           </div>
-          <div className="flex items-center gap-2">
-            <CurrencySelector />
-            <ThemeToggle />
+
+          <div className="mt-4 flex items-center gap-2">
+            <label className="glass-panel flex h-10 flex-1 items-center gap-2 rounded-lg px-3">
+              <Globe size={14} className="text-[var(--cb-text-muted)]" />
+              <select
+                value={country}
+                onChange={handleCountryChange}
+                className="w-full bg-transparent text-sm outline-none"
+                aria-label="Select country mobile"
+              >
+                {COUNTRY_OPTIONS.map((option) => (
+                  <option key={`mobile-${option.value}`} value={option.value}>
+                    {COUNTRY_FLAGS[option.value]} {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="glass-panel inline-flex h-10 w-10 items-center justify-center rounded-lg"
+              aria-label="Toggle theme mobile"
+            >
+              {mounted && resolvedTheme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
           </div>
-          <Link href={authRoute} className="cb-btn-primary flex w-full items-center justify-center gap-1.5">
-            {user?.role === 'Admin' ? <Shield className="h-4 w-4" /> : null}
-            <span>{authLabel}</span>
+
+          <Link href={authRoute} className="cb-btn-primary mt-4 flex w-full items-center justify-center gap-2 py-3 text-sm">
+            {user?.role === 'Admin' ? <Shield size={15} /> : null}
+            {authLabel}
           </Link>
         </div>
       </div>

@@ -12,90 +12,99 @@ const discoverLinks = [
 const companyLinks = [
   { label: 'About', href: ROUTES.ABOUT },
   { label: 'Associates', href: ROUTES.ASSOCIATES },
-  { label: 'Careers', href: `${ROUTES.ABOUT}#careers` },
+  { label: 'Careers', href: '/careers' },
   { label: 'Contact', href: ROUTES.CONTACT },
-  { label: 'FAQ', href: `${ROUTES.CONTACT}#faq` },
+  { label: 'FAQ', href: '/faq' },
 ] as const
 
 const legalLinks = [
   { label: 'Privacy Policy', href: ROUTES.PRIVACY },
   { label: 'Terms', href: ROUTES.TERMS },
   { label: 'Affiliate Disclosure', href: ROUTES.AFFILIATE },
-  { label: 'Cookies', href: `${ROUTES.PRIVACY}#cookies` },
 ] as const
 
 const complianceBadges = ['DPDPA 2023', 'GDPR', 'FTC Compliant'] as const
 
 export default function Footer() {
   return (
-    <footer className="bg-[#36454F] py-20 text-white dark:bg-black">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="grid gap-12 md:grid-cols-4">
-          <div className="space-y-5 md:col-span-2">
-            <div className="flex items-center gap-4">
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-skyline-primary text-xl font-black text-white">
-                CB
-              </div>
-              <p className="text-2xl font-black tracking-tighter">{SITE_NAME}</p>
-            </div>
-            <p className="max-w-sm text-sm leading-relaxed text-gray-400">
-              Discover trusted prices across marketplaces with one sovereign, privacy-forward product discovery layer.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {complianceBadges.map((badge) => (
-                <span
-                  key={badge}
-                  className="inline-flex rounded-pill border border-skyline-primary/20 bg-[rgba(3,155,229,0.15)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-skyline-primary"
-                >
-                  {badge}
-                </span>
-              ))}
-            </div>
+    <footer className="border-t border-[#1E293B] bg-[#09090B] text-white dark:bg-[#020206]">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-12 px-6 py-16 md:grid-cols-5">
+        <div className="md:col-span-2">
+          <div className="grid h-12 w-12 place-items-center rounded-xl bg-skyline-primary text-xl font-black text-white">
+            CB
+          </div>
+          <p className="mt-3 text-2xl font-black tracking-tighter text-white">{SITE_NAME}</p>
+          <p className="mt-2 max-w-xs text-sm leading-relaxed text-[#64748B]">
+            India&apos;s sovereign price aggregator. Zero checkout. Pure discovery.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {complianceBadges.map((badge) => (
+              <span key={badge} className="cb-badge cb-badge-blue">
+                {badge}
+              </span>
+            ))}
           </div>
 
-          <div>
-            <p className="pb-4 text-[10px] uppercase tracking-widest text-white/40">Discover</p>
-            <ul className="space-y-3">
-              {discoverLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-300 transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p className="pb-4 text-[10px] uppercase tracking-widest text-white/40">Company</p>
-            <ul className="space-y-3">
-              {companyLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-300 transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p className="pb-4 text-[10px] uppercase tracking-widest text-white/40">Legal</p>
-            <ul className="space-y-3">
-              {legalLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-300 transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="mt-6 text-sm text-[#64748B]">
+            <p>Built with sovereignty by</p>
+            <a
+              href="https://nexqon.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-skyline-primary hover:underline"
+            >
+              NEXQON Engineering
+            </a>
+            <p className="mt-1 text-xs text-[#334155]">v2.0.0 · March 2026</p>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-8 text-[11px] sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-gray-500">© 2026 {SITE_NAME}. All rights reserved.</p>
-          <p className="text-gray-600">Powered by sovereign technology</p>
+        <div>
+          <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-[#334155]">Discover</p>
+          {discoverLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="block py-1 text-sm text-[#64748B] transition-colors hover:text-white"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        <div>
+          <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-[#334155]">Company</p>
+          {companyLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="block py-1 text-sm text-[#64748B] transition-colors hover:text-white"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        <div>
+          <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-[#334155]">Legal</p>
+          {legalLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="block py-1 text-sm text-[#64748B] transition-colors hover:text-white"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-t border-[#1E293B] py-6">
+        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center sm:flex-row sm:text-start">
+          <p className="text-xs text-[#334155]">© 2026 CloudBasket. All rights reserved.</p>
+          <p className="text-xs text-[#1E293B]">Powered by NEXQON Sovereign Technology</p>
+          <p className="font-mono-cb text-xs text-[#1E293B]">v2.0.0-sovereign</p>
         </div>
       </div>
     </footer>

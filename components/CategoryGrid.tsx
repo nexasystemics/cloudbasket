@@ -1,55 +1,137 @@
 import {
+  ArrowRight,
   BookOpen,
   Car,
   Dumbbell,
   Gamepad2,
   Home,
   Laptop,
-  type LucideProps,
-  Shirt,
   ShoppingBasket,
+  Shirt,
   Smartphone,
   Sparkles,
+  type LucideIcon,
 } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
-import type { ComponentType } from 'react'
-import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
+import { ROUTES } from '@/lib/constants'
 
-type CategoryIcon = ComponentType<LucideProps>
-
-const CATEGORY_ICONS: Record<string, CategoryIcon> = {
-  Mobiles: Smartphone,
-  Laptops: Laptop,
-  Fashion: Shirt,
-  Home,
-  Beauty: Sparkles,
-  Sports: Dumbbell,
-  Toys: Gamepad2,
-  Grocery: ShoppingBasket,
-  Automotive: Car,
-  Books: BookOpen,
+type CategoryItem = {
+  label: string
+  icon: LucideIcon
+  gradient: string
+  image: string
+  count: string
 }
+
+const CATEGORY_DATA: readonly CategoryItem[] = [
+  {
+    label: 'Mobiles',
+    icon: Smartphone,
+    gradient: 'from-blue-500 to-cyan-400',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80',
+    count: '200+ deals',
+  },
+  {
+    label: 'Laptops',
+    icon: Laptop,
+    gradient: 'from-slate-600 to-slate-400',
+    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80',
+    count: '150+ deals',
+  },
+  {
+    label: 'Fashion',
+    icon: Shirt,
+    gradient: 'from-pink-500 to-rose-400',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80',
+    count: '500+ deals',
+  },
+  {
+    label: 'Home',
+    icon: Home,
+    gradient: 'from-amber-500 to-orange-400',
+    image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400&q=80',
+    count: '300+ deals',
+  },
+  {
+    label: 'Beauty',
+    icon: Sparkles,
+    gradient: 'from-purple-500 to-violet-400',
+    image: 'https://images.unsplash.com/photo-1512446819047-4c62175c2005?w=400&q=80',
+    count: '250+ deals',
+  },
+  {
+    label: 'Sports',
+    icon: Dumbbell,
+    gradient: 'from-green-500 to-emerald-400',
+    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80',
+    count: '180+ deals',
+  },
+  {
+    label: 'Toys',
+    icon: Gamepad2,
+    gradient: 'from-yellow-500 to-amber-400',
+    image: 'https://images.unsplash.com/photo-1537655780520-1e392ede8139?w=400&q=80',
+    count: '120+ deals',
+  },
+  {
+    label: 'Grocery',
+    icon: ShoppingBasket,
+    gradient: 'from-lime-500 to-green-400',
+    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80',
+    count: '400+ deals',
+  },
+  {
+    label: 'Automotive',
+    icon: Car,
+    gradient: 'from-red-500 to-orange-400',
+    image: 'https://images.unsplash.com/photo-1492144531155-ad8d5f4c2921?w=400&q=80',
+    count: '90+ deals',
+  },
+  {
+    label: 'Books',
+    icon: BookOpen,
+    gradient: 'from-indigo-500 to-blue-400',
+    image: 'https://images.unsplash.com/photo-1495442358998-961f6d17fbb5?w=400&q=80',
+    count: '200+ deals',
+  },
+]
 
 export default function CategoryGrid() {
   return (
-    <section className="bg-[var(--cb-surface-2)] py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <h2 className="font-display text-3xl font-black uppercase tracking-tighter text-[var(--cb-text-primary)]">
-          Explore Categories
-        </h2>
-        <p className="mb-16 mt-2 text-sm text-[var(--cb-text-muted)]">Find the best deals across every category</p>
+    <section className="bg-[var(--cb-surface-2)] py-20">
+      <div className="mx-auto w-full max-w-7xl px-6">
+        <div className="mb-12 flex items-end justify-between gap-4">
+          <div>
+            <h2 className="font-display text-3xl font-black uppercase tracking-tighter text-[var(--cb-text-primary)]">
+              Explore Categories
+            </h2>
+            <p className="mt-1 text-sm text-[var(--cb-text-muted)]">Find deals across every category</p>
+          </div>
+          <Link href={ROUTES.PRODUCTS} className="cb-btn-ghost inline-flex items-center gap-2 px-3 py-2 text-xs">
+            View All
+            <ArrowRight size={14} />
+          </Link>
+        </div>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
-          {MAIN_CATEGORIES.map((category) => {
-            const Icon = CATEGORY_ICONS[category]
-            const categorySlug = encodeURIComponent(category.toLowerCase())
-
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
+          {CATEGORY_DATA.map((category) => {
+            const Icon = category.icon
+            const slug = encodeURIComponent(category.label.toLowerCase())
             return (
-              <Link key={category} href={`${ROUTES.HOME}category/${categorySlug}`} className="cb-card group cursor-pointer p-6 text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--cb-surface-3)] transition-all duration-200 group-hover:scale-110 group-hover:bg-skyline-primary/10">
-                  <Icon size={28} className="text-[var(--cb-text-muted)] transition-colors duration-200 group-hover:text-skyline-primary" />
+              <Link key={category.label} href={`/category/${slug}`} className="category-card">
+                <div className="relative h-32 w-full overflow-hidden rounded-xl">
+                  <Image src={category.image} alt={category.label} fill className="object-cover" sizes="240px" />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${category.gradient} opacity-70`} />
+                  <div className="absolute bottom-3 start-3">
+                    <Icon size={24} className="text-white" />
+                  </div>
                 </div>
-                <p className="text-[11px] font-black uppercase tracking-tighter text-[var(--cb-text-primary)]">{category}</p>
+
+                <div className="pt-3">
+                  <p className="category-card-label">{category.label}</p>
+                  <span className="cb-badge cb-badge-blue mt-1">{category.count}</span>
+                </div>
               </Link>
             )
           })}

@@ -1,0 +1,27 @@
+
+> cloudbasket@2.0.0 dev F:\cloudbasket
+> next dev --turbopack "--port" "3000"
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.13:3000
+- Environments: .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+
+✓ Starting...
+✓ Ready in 3439s
+ GET / 200 in 2.7s (compile: 2.2s, proxy.ts: 4ms, render: 424ms)
+ GET /offline 500 in 561ms (compile: 301ms, proxy.ts: 3ms, render: 257ms)
+ GET /login 200 in 492ms (compile: 394ms, proxy.ts: 2ms, render: 95ms)
+ GET /product/cb-00001 200 in 1626ms (compile: 1265ms, proxy.ts: 3ms, render: 358ms)
+ GET /api/feed/google 200 in 192ms (compile: 181ms, render: 10ms)
+ GET /manifest.webmanifest 200 in 92ms (compile: 87ms, proxy.ts: 3ms, render: 3ms)
+ GET /offline 500 in 473ms (compile: 6ms, proxy.ts: 7ms, render: 460ms)
+✓ Compiled in 232ms
+ GET / 200 in 303ms (compile: 5ms, proxy.ts: 10ms, render: 288ms)
+ GET /offline 200 in 367ms (compile: 89ms, proxy.ts: 6ms, render: 272ms)
+ GET /login 200 in 149ms (compile: 4ms, proxy.ts: 7ms, render: 138ms)
+ GET /product/cb-00001 200 in 978ms (compile: 666ms, proxy.ts: 6ms, render: 306ms)
+ GET /api/feed/google 200 in 12ms (compile: 2ms, render: 9ms)
+ GET /manifest.webmanifest 200 in 21ms (compile: 6ms, proxy.ts: 8ms, render: 8ms)

@@ -1,7 +1,12 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Shield, Zap, Globe, TrendingDown, Users, Award, Target, Heart } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "About CloudBasket — India's Sovereign Price Aggregator",
+  description: "Learn how CloudBasket compares prices across 50+ stores to save Indian shoppers money.",
+}
 const STATS: ReadonlyArray<{ value: string; label: string }> = [
   { value: '2,000+', label: 'Products Tracked' },
   { value: '50+', label: 'Stores Compared' },
@@ -147,3 +152,4 @@ export default function AboutPage() {
     </main>
   )
 }
+

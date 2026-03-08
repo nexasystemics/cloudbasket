@@ -1,7 +1,12 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Globe, ExternalLink, DollarSign, Zap, ArrowRight, Package } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "CJ Global Network — International Products",
+  description: "Shop international products via Commission Junction. Best USD/INR rates.",
+}
 type CJProduct = {
   name: string
   usdPrice: number
@@ -146,3 +151,4 @@ export default function CJPage() {
     </main>
   )
 }
+

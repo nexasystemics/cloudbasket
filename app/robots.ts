@@ -1,14 +1,15 @@
 import type { MetadataRoute } from 'next'
-import { SITE_URL } from '@/lib/constants'
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/admin', '/dashboard', '/api', '/go'],
-    },
-    sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin/', '/dashboard/', '/api/'],
+      },
+    ],
+    sitemap: 'https://cloudbasket.vercel.app/sitemap.xml',
+    host: 'https://cloudbasket.vercel.app',
   }
 }

@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MapPin, Clock, Briefcase, ArrowRight, Code, PenTool, TrendingUp, Search, Users, Zap } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Careers at NEXQON — Join Our Team",
+  description: "Join NEXQON Engineering and build India's sovereign digital infrastructure.",
+}
 const BENEFITS: ReadonlyArray<{ title: string; desc: string }> = [
   { title: 'Remote First', desc: 'Work from anywhere in India' },
   { title: 'Equity', desc: 'ESOP for all full-time roles' },
@@ -139,3 +144,4 @@ export default function CareersPage() {
     </main>
   )
 }
+

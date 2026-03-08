@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, DollarSign, Link2, Users, TrendingUp, Zap } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Associates Program — Earn with CloudBasket",
+  description: "Earn commissions by sharing deals. Join 500+ associates earning with CloudBasket.",
+}
 const COMMISSION_TABLE: ReadonlyArray<{ category: string; rate: string; cookie: string; color: string }> = [
   { category: 'POD Products', rate: '10%', cookie: '60 days', color: '#F97316' },
   { category: 'Fashion', rate: '5%', cookie: '7 days', color: '#EC4899' },
@@ -173,3 +178,4 @@ export default function AssociatesPage() {
     </main>
   )
 }
+

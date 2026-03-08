@@ -1,7 +1,12 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, ExternalLink } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Flash Sales — Limited Time Deals",
+  description: "Flash sales with maximum discounts. Limited time only.",
+}
 type DealItem = {
   id: string
   title: string
@@ -262,3 +267,4 @@ export default function FlashDealsPage() {
     </main>
   )
 }
+

@@ -1,51 +1,57 @@
 import type { MetadataRoute } from 'next'
-import { MAIN_CATEGORIES, SITE_URL } from '@/lib/constants'
-import { BLOG_POSTS } from '@/lib/blog-data'
+
+const BASE_URL = 'https://cloudbasket.vercel.app'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date()
-
-  const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/products`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/deals`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/deals/flash`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/pod`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/compare`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/associates`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${SITE_URL}/faq`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${SITE_URL}/careers`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${SITE_URL}/register`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${SITE_URL}/login`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
-  ]
-
-  const categoryRoutes: MetadataRoute.Sitemap = MAIN_CATEGORIES.map((category) => ({
-    url: `${SITE_URL}/category/${category.toLowerCase()}`,
-    lastModified: now,
-    changeFrequency: 'daily',
-    priority: 0.8,
+  const staticRoutes = [
+    '/',
+    '/products',
+    '/deals',
+    '/deals/flash',
+    '/compare',
+    '/blog',
+    '/about',
+    '/contact',
+    '/careers',
+    '/associates',
+    '/pod',
+    '/pod/tshirts',
+    '/pod/mugs',
+    '/pod/phone-cases',
+    '/pod/posters',
+    '/pod/hoodies',
+    '/pod/tote-bags',
+    '/cj',
+    '/search',
+    '/faq',
+    '/affiliate-disclosure',
+    '/legal/privacy',
+    '/legal/terms',
+    '/cookies',
+  ].map((route) => ({
+    url: `${BASE_URL}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: route === '/' ? 1 : 0.8,
   }))
 
-  const blogRoutes: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
-    url: `${SITE_URL}/blog/${post.slug}`,
-    lastModified: now,
-    changeFrequency: 'weekly',
-    priority: 0.7,
+  const categoryRoutes = [
+    'mobiles',
+    'laptops',
+    'fashion',
+    'home',
+    'beauty',
+    'sports',
+    'toys',
+    'grocery',
+    'automotive',
+    'books',
+  ].map((slug) => ({
+    url: `${BASE_URL}/category/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: 0.9,
   }))
 
-  const legalRoutes: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/legal/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${SITE_URL}/legal/terms`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
-    {
-      url: `${SITE_URL}/affiliate-disclosure`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-  ]
-
-  return [...staticRoutes, ...categoryRoutes, ...blogRoutes, ...legalRoutes]
+  return [...staticRoutes, ...categoryRoutes]
 }

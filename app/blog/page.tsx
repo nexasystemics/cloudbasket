@@ -1,7 +1,12 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Calendar, Clock, ArrowRight, Tag } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Deals Intelligence & Buying Guides",
+  description: "Expert buying guides and price comparison analysis for Indian shoppers.",
+}
 type BlogPost = {
   title: string
   excerpt?: string
@@ -151,3 +156,4 @@ export default function BlogPage() {
     </main>
   )
 }
+

@@ -1,7 +1,12 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, TrendingDown, ExternalLink, Tag } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Today's Best Deals — Up to 75% Off",
+  description: "Best deals today from Amazon, Flipkart & CJ Global. Updated every hour.",
+}
 type DealItem = {
   id: string
   title: string
@@ -281,3 +286,4 @@ export default function DealsPage() {
     </main>
   )
 }
+

@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Cookie, Shield, Settings, BarChart2, ExternalLink, CheckCircle } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Cookie Policy — CloudBasket",
+  description: "How CloudBasket uses cookies and how to manage them.",
+}
 export default function CookiesPage() {
   return (
     <main className="bg-[var(--cb-bg)]">
@@ -90,3 +95,4 @@ export default function CookiesPage() {
     </main>
   )
 }
+

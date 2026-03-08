@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Shield, ExternalLink, Info, CheckCircle, AlertCircle } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Affiliate Disclosure — CloudBasket",
+  description: "Full transparency about how CloudBasket earns affiliate revenue.",
+}
 const PARTNER_NETWORKS: ReadonlyArray<{ name: string; range: string; badgeClass: string }> = [
   { name: 'Amazon Associates India', range: 'Commission range: 1% - 10%', badgeClass: 'cb-badge cb-badge-orange' },
   { name: 'Flipkart Affiliate', range: 'Commission range: 2% - 12%', badgeClass: 'cb-badge cb-badge-blue' },
@@ -91,3 +96,4 @@ export default function AffiliateDisclosurePage() {
     </main>
   )
 }
+

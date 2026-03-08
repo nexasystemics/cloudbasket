@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Shield, Lock, Eye, Database, UserCheck, Clock, Mail, AlertCircle } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Privacy Policy — DPDPA 2023 Compliant",
+  description: "CloudBasket privacy policy. DPDPA 2023 and GDPR compliant.",
+}
 const LAST_UPDATED = 'March 1, 2026'
 const DPO_EMAIL = 'privacy@cloudbasket.in'
 
@@ -135,3 +140,4 @@ export default function PrivacyPage() {
     </main>
   )
 }
+

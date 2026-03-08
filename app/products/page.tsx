@@ -1,8 +1,13 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SlidersHorizontal, ExternalLink, Grid3X3, List, TrendingDown, Zap } from 'lucide-react'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 
+export const metadata: Metadata = {
+  title: "All Products — 2,000+ Deals Tracked",
+  description: "Browse 2,000+ products tracked across Amazon, Flipkart and CJ Global.",
+}
 type Product = (typeof MOCK_PRODUCTS)[number]
 
 const CATEGORIES_FILTER: readonly string[] = [
@@ -235,3 +240,4 @@ export default function ProductsPage() {
     </main>
   )
 }
+

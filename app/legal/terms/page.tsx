@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FileText, Scale, AlertCircle } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "Terms of Service — CloudBasket",
+  description: "CloudBasket terms of service. Governed by Indian law.",
+}
 const LAST_UPDATED = 'March 1, 2026'
 const EFFECTIVE_DATE = 'March 1, 2026'
 
@@ -104,3 +109,4 @@ export default function TermsPage() {
     </main>
   )
 }
+

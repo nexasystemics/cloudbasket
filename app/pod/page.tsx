@@ -1,7 +1,12 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Printer, Package, Truck, Shield, ArrowRight } from 'lucide-react'
 
+export const metadata: Metadata = {
+  title: "CloudBasket Originals — Print on Demand",
+  description: "Custom merchandise printed fresh for every order. Ships pan-India.",
+}
 const POD_CATEGORIES = [
   {
     slug: 'tshirts',
@@ -141,3 +146,4 @@ export default function PODPage() {
     </main>
   )
 }
+

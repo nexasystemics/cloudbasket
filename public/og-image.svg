@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0277BD"/>
+      <stop offset="100%" style="stop-color:#039BE5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grad)"/>
+  <text x="600" y="240"
+    font-family="Arial Black, sans-serif"
+    font-size="90" font-weight="900"
+    fill="white" text-anchor="middle">
+    CloudBasket
+  </text>
+  <text x="600" y="320"
+    font-family="Arial, sans-serif"
+    font-size="34" fill="rgba(255,255,255,0.85)"
+    text-anchor="middle">
+    India's Best Price Comparison
+  </text>
+  <text x="600" y="380"
+    font-family="Arial, sans-serif"
+    font-size="24" fill="rgba(255,255,255,0.65)"
+    text-anchor="middle">
+    Compare Amazon · Flipkart · 50+ Stores · Zero Checkout
+  </text>
+  <text x="600" y="570"
+    font-family="Arial, sans-serif"
+    font-size="18" fill="rgba(255,255,255,0.45)"
+    text-anchor="middle">
+    Powered by NEXQON Sovereign Technology v2.0.0
+  </text>
+</svg>

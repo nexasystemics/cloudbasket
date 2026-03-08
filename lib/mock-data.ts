@@ -291,5 +291,7 @@ const generateProducts = (): Product[] => {
 }
 
 export const PRODUCTS: Product[] = generateProducts()
+export const MOCK_PRODUCTS: Product[] = PRODUCTS
 
 export { SUB_CATEGORIES, CATEGORY_IMAGES }
+

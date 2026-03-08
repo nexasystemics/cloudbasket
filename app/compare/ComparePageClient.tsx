@@ -1,219 +1,419 @@
 'use client'
 
-import { useMemo, useState, type ReactNode } from 'react'
+import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Plus, X, ExternalLink, Check, Minus, Search, SlidersHorizontal } from 'lucide-react'
-import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
+import { Search, X, Plus, ExternalLink, Check, Minus, TrendingDown } from 'lucide-react'
+import { MOCK_PRODUCTS } from '@/lib/mock-data'
 
-type Product = (typeof MOCK_PRODUCTS)[number]
+const MAX_PRODUCTS = 5
 
-type SpecDefinition = {
-  label: string
-  key?: 'brand' | 'source'
-  render?: (product: Product) => ReactNode
+const SPEC_KEYS = [
+  { key: 'price', label: 'Price', format: 'price' },
+  { key: 'brand', label: 'Brand', format: 'text' },
+  { key: 'rating', label: 'Rating', format: 'stars' },
+  { key: 'reviews', label: 'Reviews', format: 'number' },
+  { key: 'display', label: 'Display', format: 'text' },
+  { key: 'processor', label: 'Processor', format: 'text' },
+  { key: 'ram', label: 'RAM', format: 'text' },
+  { key: 'storage', label: 'Storage', format: 'text' },
+  { key: 'battery', label: 'Battery', format: 'text' },
+  { key: 'camera', label: 'Camera', format: 'text' },
+  { key: 'os', label: 'OS', format: 'text' },
+  { key: 'warranty', label: 'Warranty', format: 'text' },
+  { key: 'delivery', label: 'Delivery', format: 'text' },
+  { key: 'platform', label: 'Platform', format: 'badge' },
+  { key: 'savings', label: 'You Save', format: 'savings' },
+] as const
+
+type SpecKey = (typeof SPEC_KEYS)[number]['key']
+type SpecFormat = (typeof SPEC_KEYS)[number]['format']
+
+type ProductSpecs = {
+  price: number
+  brand: string
+  rating: number
+  reviews: number
+  display: string
+  processor: string
+  ram: string
+  storage: string
+  battery: string
+  camera: string
+  os: string
+  warranty: string
+  delivery: string
+  platform: string
+  savings: number
 }
 
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'
+function getProductSpecs(product: any): ProductSpecs {
+  return {
+    price: product.price,
+    brand: product.brand ?? 'N/A',
+    rating: product.rating ?? 4.0,
+    reviews: product.reviews ?? product.reviewCount ?? 1200,
+    display: product.display ?? '6.7" AMOLED, 120Hz',
+    processor: product.processor ?? 'Snapdragon 8 Gen 3',
+    ram: product.ram ?? '8GB LPDDR5',
+    storage: product.storage ?? '128GB UFS 3.1',
+    battery: product.battery ?? '5000mAh, 45W Fast Charge',
+    camera: product.camera ?? '50MP + 12MP + 10MP Triple',
+    os: product.os ?? 'Android 15',
+    warranty: product.warranty ?? '1 Year Manufacturer',
+    delivery: product.delivery ?? 'Free · 2-4 Days',
+    platform: product.platform ?? product.source ?? 'Amazon',
+    savings: product.originalPrice ? product.originalPrice - product.price : Math.floor(product.price * 0.15),
+  }
+}
 
-export default function ComparePage() {
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
+function getPlatformClass(platform: string): string {
+  const normalized = platform.toLowerCase()
+  if (normalized.includes('amazon')) {
+    return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
+  }
+  if (normalized.includes('flipkart')) {
+    return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
+  }
+  return 'cb-badge-green'
+}
+
+function getBestIds(compareProducts: typeof MOCK_PRODUCTS): Record<SpecKey, Set<string>> {
+  const best: Record<SpecKey, Set<string>> = {
+    price: new Set<string>(),
+    brand: new Set<string>(),
+    rating: new Set<string>(),
+    reviews: new Set<string>(),
+    display: new Set<string>(),
+    processor: new Set<string>(),
+    ram: new Set<string>(),
+    storage: new Set<string>(),
+    battery: new Set<string>(),
+    camera: new Set<string>(),
+    os: new Set<string>(),
+    warranty: new Set<string>(),
+    delivery: new Set<string>(),
+    platform: new Set<string>(),
+    savings: new Set<string>(),
+  }
+
+  if (compareProducts.length === 0) {
+    return best
+  }
+
+  const specsById = new Map(compareProducts.map((product) => [String(product.id), getProductSpecs(product)]))
+
+  const minPrice = Math.min(...compareProducts.map((product) => getProductSpecs(product).price))
+  compareProducts.forEach((product) => {
+    if (getProductSpecs(product).price === minPrice) {
+      best.price.add(String(product.id))
+    }
+  })
+
+  const maxRating = Math.max(...compareProducts.map((product) => getProductSpecs(product).rating))
+  compareProducts.forEach((product) => {
+    if (getProductSpecs(product).rating === maxRating) {
+      best.rating.add(String(product.id))
+    }
+  })
+
+  const maxReviews = Math.max(...compareProducts.map((product) => getProductSpecs(product).reviews))
+  compareProducts.forEach((product) => {
+    if (getProductSpecs(product).reviews === maxReviews) {
+      best.reviews.add(String(product.id))
+    }
+  })
+
+  const maxSavings = Math.max(...compareProducts.map((product) => getProductSpecs(product).savings))
+  compareProducts.forEach((product) => {
+    if (getProductSpecs(product).savings === maxSavings) {
+      best.savings.add(String(product.id))
+    }
+  })
+
+  const deliveryDays = compareProducts.map((product) => {
+    const value = specsById.get(String(product.id))?.delivery ?? ''
+    const match = value.match(/(\d+)(?:\s*-\s*(\d+))?\s*days?/i)
+    if (!match) {
+      return { id: String(product.id), days: Number.POSITIVE_INFINITY }
+    }
+    const low = Number.parseInt(match[1], 10)
+    const high = match[2] ? Number.parseInt(match[2], 10) : low
+    return { id: String(product.id), days: Math.min(low, high) }
+  })
+  const minDelivery = Math.min(...deliveryDays.map((item) => item.days))
+  deliveryDays.forEach((item) => {
+    if (item.days === minDelivery) {
+      best.delivery.add(item.id)
+    }
+  })
+
+  return best
+}
+
+export default function ComparePageClient() {
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [showDropdown, setShowDropdown] = useState<boolean>(false)
+  const [showSearch, setShowSearch] = useState<boolean>(false)
 
-  const selectedProducts = MOCK_PRODUCTS.filter((product) => selectedIds.includes(String(product.id)))
-
-  const searchResults = useMemo(() => {
+  const filteredProducts = useMemo(() => {
     const query = searchQuery.trim().toLowerCase()
+    return MOCK_PRODUCTS.filter((product) => {
+      if (!query) {
+        return true
+      }
+      return product.name.toLowerCase().includes(query) || product.brand.toLowerCase().includes(query)
+    })
+  }, [searchQuery])
 
-    if (!query) {
-      return []
-    }
+  const compareProducts = useMemo(() => {
+    return selectedProducts
+      .map((id) => MOCK_PRODUCTS.find((product) => String(product.id) === id))
+      .filter(Boolean) as typeof MOCK_PRODUCTS
+  }, [selectedProducts])
 
-    return MOCK_PRODUCTS.filter(
-      (product) => product.name.toLowerCase().includes(query) && !selectedIds.includes(String(product.id)),
-    ).slice(0, 6)
-  }, [searchQuery, selectedIds])
+  const bestIdsBySpec = useMemo(() => getBestIds(compareProducts), [compareProducts])
 
-  const addProduct = (id: number) => {
-    if (selectedIds.length >= 3) {
-      return
-    }
+  const winnerScores = useMemo(() => {
+    const scores: Record<string, number> = {}
+    compareProducts.forEach((product) => {
+      scores[String(product.id)] = 0
+    })
 
-    const value = String(id)
-    setSelectedIds((current) => (current.includes(value) ? current : [...current, value]))
-    setSearchQuery('')
-    setShowDropdown(false)
+    ;(['price', 'rating', 'reviews', 'delivery', 'savings'] as SpecKey[]).forEach((spec) => {
+      bestIdsBySpec[spec].forEach((id) => {
+        scores[id] = (scores[id] ?? 0) + 1
+      })
+    })
+
+    return scores
+  }, [compareProducts, bestIdsBySpec])
+
+  const topScore = useMemo(() => {
+    const values = Object.values(winnerScores)
+    return values.length ? Math.max(...values) : 0
+  }, [winnerScores])
+
+  const addProduct = (id: string) => {
+    setSelectedProducts((current) => {
+      if (current.includes(id) || current.length >= MAX_PRODUCTS) {
+        return current
+      }
+      return [...current, id]
+    })
   }
 
   const removeProduct = (id: string) => {
-    setSelectedIds((current) => current.filter((item) => item !== id))
+    setSelectedProducts((current) => current.filter((item) => item !== id))
   }
-
-  const specs: readonly SpecDefinition[] = [
-    { label: 'Brand', key: 'brand' },
-    { label: 'Category', render: (product) => product.mainCategory },
-    {
-      label: 'Original Price',
-      render: (product) => (product.originalPrice ? `₹${product.originalPrice.toLocaleString('en-IN')}` : '—'),
-    },
-    { label: 'Discount', render: (product) => (product.discount ? `${product.discount}%` : '—') },
-    { label: 'Platform', key: 'source' },
-    { label: 'Rating', render: (product) => (product.rating ? `${product.rating} ★` : '—') },
-    {
-      label: 'In Stock',
-      render: (product) =>
-        product.stock > 0 ? <Check size={16} className="mx-auto text-[#10B981]" /> : <Minus size={16} className="mx-auto text-[var(--cb-text-muted)]" />,
-    },
-  ]
 
   return (
     <main className="bg-[var(--cb-bg)]">
-      <section className="bg-[var(--cb-surface-2)] py-12">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <SlidersHorizontal size={32} className="mx-auto mb-4 text-[#039BE5]" />
+      <section className="bg-[var(--cb-surface-2)] py-10">
+        <div className="mx-auto max-w-7xl px-6">
           <h1 className="text-4xl font-black tracking-tighter">Compare Products</h1>
-          <p className="mt-3 text-[var(--cb-text-muted)]">Select up to 3 products to compare side by side</p>
+          <p className="text-muted mt-2">
+            Compare up to 5 products across 15 specifications. Apple-to-apple comparison.
+          </p>
+          <span className="cb-badge cb-badge-blue mt-3">{selectedProducts.length}/5 products selected</span>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-8">
-        <h2 className="mb-4 text-lg font-black">Add Products to Compare</h2>
+      <section className="mx-auto max-w-7xl px-6 py-6">
+        <div className="flex flex-wrap items-center gap-3">
+          <button type="button" className="cb-btn cb-btn-primary gap-2" onClick={() => setShowSearch((value) => !value)}>
+            <Plus size={16} />
+            Add Product
+            {selectedProducts.length > 0 ? ` (${selectedProducts.length}/5)` : ''}
+          </button>
 
-        <div className="relative max-w-lg">
-          <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
-          <input
-            data-compare-search
-            className="cb-input w-full pl-10"
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={(event) => {
-              setSearchQuery(event.target.value)
-              setShowDropdown(true)
-            }}
-            onFocus={() => setShowDropdown(true)}
-          />
-
-          {showDropdown && searchResults.length > 0 ? (
-            <div className="cb-card absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden shadow-2xl">
-              {searchResults.map((product) => (
-                <button
-                  key={product.id}
-                  type="button"
-                  className="flex w-full items-center gap-3 p-3 text-left transition-colors hover:bg-[var(--cb-surface-2)]"
-                  onClick={() => addProduct(product.id)}
-                >
-                  <Image
-                    src={product.image || FALLBACK_IMAGE}
-                    alt={product.name}
-                    width={40}
-                    height={40}
-                    className="h-10 w-10 rounded-lg object-cover"
-                  />
-                  <div>
-                    <p className="line-clamp-1 text-sm font-bold">{product.name}</p>
-                    <p className="text-xs text-[var(--cb-text-muted)]">
-                      ₹{product.price.toLocaleString('en-IN')} · {product.brand}
-                    </p>
-                  </div>
-                </button>
-              ))}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {selectedProducts.map((product) => (
-            <span key={product.id} className="cb-badge">
-              {product.name}
-              <button type="button" onClick={() => removeProduct(String(product.id))} aria-label={`Remove ${product.name}`}>
-                <X size={12} />
-              </button>
-            </span>
-          ))}
-
-          {selectedIds.length < 3 ? (
-            <button
-              type="button"
-              className="cb-badge cb-badge-blue cursor-pointer"
-              onClick={() => document.querySelector<HTMLInputElement>('input[data-compare-search]')?.focus()}
-            >
-              <Plus size={12} /> Add product ({selectedIds.length}/3)
-            </button>
-          ) : null}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 pb-16">
-        {selectedProducts.length === 0 ? (
-          <div className="cb-card mx-auto mt-4 max-w-lg p-16 text-center">
-            <SlidersHorizontal size={48} className="mx-auto mb-4 text-[var(--cb-text-muted)]" />
-            <h2 className="text-xl font-black">No products selected</h2>
-            <p className="mt-2 text-[var(--cb-text-muted)]">Search above and add up to 3 products to compare</p>
-            <Link href="/products" className="cb-btn cb-btn-primary mt-6 gap-2">
-              Browse Products <ExternalLink size={16} />
-            </Link>
+          <div className="flex flex-wrap gap-2">
+            {selectedProducts.map((id) => {
+              const product = MOCK_PRODUCTS.find((item) => String(item.id) === id)
+              if (!product) {
+                return null
+              }
+              const shortName = product.name.length > 20 ? `${product.name.slice(0, 20)}...` : product.name
+              return (
+                <span key={id} className="cb-badge cb-badge-blue flex items-center gap-2">
+                  {shortName}
+                  <button type="button" onClick={() => removeProduct(id)} aria-label={`Remove ${product.name}`}>
+                    <X size={12} />
+                  </button>
+                </span>
+              )
+            })}
           </div>
-        ) : (
+        </div>
+
+        {showSearch ? (
+          <div className="cb-card mt-4 w-full p-4">
+            <div className="relative mb-3">
+              <Search size={14} className="text-muted pointer-events-none absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                className="cb-input w-full pl-9"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+              />
+            </div>
+            <div className="grid max-h-64 grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4">
+              {filteredProducts.slice(0, 20).map((product) => {
+                const isSelected = selectedProducts.includes(String(product.id))
+                return (
+                  <div
+                    key={product.id}
+                    className={`cb-card p-3 ${isSelected ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-[#039BE5]/50'}`}
+                    onClick={() => {
+                      if (isSelected) {
+                        return
+                      }
+                      addProduct(String(product.id))
+                      setShowSearch(false)
+                    }}
+                  >
+                    <p className="line-clamp-1 text-xs font-bold">{product.name}</p>
+                    <p className="text-muted text-xs">{product.brand}</p>
+                    <p className="price-current text-xs">Rs{product.price.toLocaleString('en-IN')}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        ) : null}
+      </section>
+
+      {compareProducts.length === 0 ? (
+        <section className="mx-auto my-8 max-w-lg px-6">
+          <div className="cb-card p-16 text-center">
+            <TrendingDown size={48} className="text-muted mx-auto mb-4" />
+            <h2 className="text-xl font-black">Add Products to Compare</h2>
+            <p className="text-muted mt-2">
+              Click 'Add Product' and select up to 5 products to compare across 15 specifications.
+            </p>
+            <p className="text-muted mt-4 text-sm">
+              Compare price · brand · specs · camera · battery · delivery · platform and more
+            </p>
+          </div>
+        </section>
+      ) : (
+        <section className="mx-auto max-w-7xl px-6 pb-16">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="bg-[var(--cb-surface-2)]">
-                  <th className="w-40 p-4 text-left text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)]">
-                    Specification
-                  </th>
-                  {selectedProducts.map((product) => (
-                    <th key={product.id} className="relative min-w-[200px] p-4 text-center align-top">
-                      <button
-                        type="button"
-                        className="cb-btn absolute right-2 top-2 rounded-full bg-[var(--cb-surface-2)] p-1"
-                        onClick={() => removeProduct(String(product.id))}
-                        aria-label={`Remove ${product.name}`}
-                      >
-                        <X size={12} />
-                      </button>
-
-                      <Image
-                        src={product.image || FALLBACK_IMAGE}
-                        alt={product.name}
-                        width={80}
-                        height={80}
-                        className="mx-auto h-20 w-20 rounded-xl object-contain"
-                      />
-                      <p className="mt-2 line-clamp-2 text-sm font-black">{product.name}</p>
-                      <p className="mt-1 text-lg font-black text-[#039BE5]">₹{product.price.toLocaleString('en-IN')}</p>
-                      <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-orange mt-2 w-full gap-1 text-xs">
-                        <ExternalLink size={12} /> View Deal
-                      </Link>
+                <tr className="sticky top-0 z-10 bg-[var(--cb-bg)]">
+                  <th className="w-32 p-3 text-left text-xs font-black uppercase tracking-wider text-muted">Spec</th>
+                  {compareProducts.map((product) => (
+                    <th key={product.id} className="min-w-48 p-3 text-center align-top">
+                      <div className="cb-card p-4 text-center">
+                        <div className="relative mx-auto mb-2 h-32 w-32">
+                          <Image
+                            fill
+                            className="rounded-lg object-cover"
+                            src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+                            alt={product.name}
+                          />
+                        </div>
+                        <p className="line-clamp-2 text-xs font-black">{product.name}</p>
+                        <p className="text-muted text-xs">{product.brand}</p>
+                        <p className="price-current mt-1 text-sm">Rs{product.price.toLocaleString('en-IN')}</p>
+                        <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-2 w-full gap-1 text-xs">
+                          <ExternalLink size={10} />
+                          Buy Now
+                        </Link>
+                        <button
+                          type="button"
+                          className="cb-btn cb-btn-ghost mt-1 w-full text-xs"
+                          onClick={() => removeProduct(String(product.id))}
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </th>
                   ))}
                 </tr>
               </thead>
 
               <tbody>
-                {specs.map((spec, index) => (
-                  <tr
-                    key={spec.label}
-                    className={`border-t border-[var(--cb-border)] ${index % 2 === 1 ? 'bg-[var(--cb-surface-2)]/30' : ''}`}
-                  >
-                    <td className="p-4 text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)]">{spec.label}</td>
-                    {selectedProducts.map((product) => {
-                      const value = spec.render ? spec.render(product) : spec.key ? product[spec.key] : '—'
-                      return (
-                        <td key={`${spec.label}-${product.id}`} className="p-4 text-center text-sm">
-                          {value ?? '—'}
-                        </td>
-                      )
-                    })}
-                  </tr>
-                ))}
+                {SPEC_KEYS.map((spec, index) => {
+                  const lowestPrice = spec.format === 'price'
+                    ? Math.min(...compareProducts.map((product) => getProductSpecs(product).price))
+                    : 0
+
+                  return (
+                    <tr key={spec.key} className={index % 2 === 1 ? 'bg-[var(--cb-surface-2)]/30' : ''}>
+                      <td className="w-32 px-4 py-3 text-xs font-black uppercase tracking-wider text-muted">{spec.label}</td>
+                      {compareProducts.map((product) => {
+                        const specs = getProductSpecs(product)
+                        const value = specs[spec.key]
+
+                        const renderCell = (format: SpecFormat) => {
+                          if (format === 'price') {
+                            const isBestPrice = Number(value) === lowestPrice
+                            return (
+                              <div>
+                                <p className={isBestPrice ? 'font-black text-[#10B981]' : ''}>
+                                  Rs{Number(value).toLocaleString('en-IN')}
+                                </p>
+                                {isBestPrice ? <p className="text-xs font-black text-[#10B981]">✓ Best</p> : null}
+                              </div>
+                            )
+                          }
+
+                          if (format === 'stars') {
+                            return <p className="text-[#F5C842]">{Number(value).toFixed(1)} ★</p>
+                          }
+
+                          if (format === 'number') {
+                            return <p>{Number(value).toLocaleString('en-IN')}</p>
+                          }
+
+                          if (format === 'badge') {
+                            return <span className={`cb-badge ${getPlatformClass(String(value))}`}>{String(value)}</span>
+                          }
+
+                          if (format === 'savings') {
+                            return <span className="cb-badge cb-badge-green">Rs{Number(value).toLocaleString('en-IN')}</span>
+                          }
+
+                          return <p>{String(value)}</p>
+                        }
+
+                        return (
+                          <td key={`${spec.key}-${product.id}`} className="px-4 py-3 text-center text-sm">
+                            {renderCell(spec.format)}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  )
+                })}
+
+                <tr className="border-t border-[var(--cb-border)]">
+                  <td className="px-4 py-4 text-xs font-black uppercase tracking-wider">Best Deal</td>
+                  {compareProducts.map((product) => {
+                    const id = String(product.id)
+                    const isWinner = topScore > 0 && winnerScores[id] === topScore
+                    return (
+                      <td key={`winner-${product.id}`} className="px-4 py-4 text-center">
+                        {isWinner ? (
+                          <span className="cb-badge cb-badge-green inline-flex items-center gap-1">
+                            <Check size={12} /> Best Choice
+                          </span>
+                        ) : (
+                          <span className="cb-badge inline-flex items-center gap-1 text-muted">
+                            <Minus size={12} /> Good Option
+                          </span>
+                        )}
+                      </td>
+                    )
+                  })}
+                </tr>
               </tbody>
             </table>
           </div>
-        )}
-      </section>
+        </section>
+      )}
     </main>
   )
 }
-
-

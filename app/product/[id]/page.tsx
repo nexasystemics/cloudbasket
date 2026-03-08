@@ -10,10 +10,12 @@ import {
   TrendingDown,
   ChevronRight,
   Share2,
-  Heart,
   BarChart2,
 } from 'lucide-react'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
+import RecentlyViewed, { ProductViewTracker } from '@/components/RecentlyViewed'
+import ProductActions from '@/components/ProductActions'
+import WishlistButton from '@/components/WishlistButton'
 
 type Product = (typeof MOCK_PRODUCTS)[number]
 
@@ -25,6 +27,78 @@ type PriceEntry = {
   eta: string
   best: boolean
 }
+
+type MockReview = {
+  name: string
+  city: string
+  rating: number
+  date: string
+  title: string
+  body: string
+  verified: boolean
+  helpful: number
+}
+
+const MOCK_REVIEWS: MockReview[] = [
+  {
+    name: 'Rahul M.',
+    city: 'Mumbai',
+    rating: 5,
+    date: 'Feb 28, 2026',
+    title: 'Excellent value for money',
+    body: 'Been using for 3 months. Battery life is outstanding. Camera quality surprised me at this price point. Highly recommend.',
+    verified: true,
+    helpful: 24,
+  },
+  {
+    name: 'Priya S.',
+    city: 'Bengaluru',
+    rating: 4,
+    date: 'Feb 20, 2026',
+    title: 'Good phone, minor issues',
+    body: 'Overall very happy with the purchase. Heating under heavy load is the only concern. Display and camera are top notch.',
+    verified: true,
+    helpful: 18,
+  },
+  {
+    name: 'Arjun K.',
+    city: 'Delhi',
+    rating: 5,
+    date: 'Feb 15, 2026',
+    title: 'Best in segment',
+    body: 'Compared 6 phones before buying this. Nothing comes close at this price. Fast charging works as advertised.',
+    verified: false,
+    helpful: 31,
+  },
+  {
+    name: 'Sneha T.',
+    city: 'Pune',
+    rating: 3,
+    date: 'Feb 10, 2026',
+    title: 'Average camera in low light',
+    body: 'Day time photos are great. Night mode is disappointing compared to what was advertised. Rest of the phone is solid.',
+    verified: true,
+    helpful: 12,
+  },
+  {
+    name: 'Vikram R.',
+    city: 'Chennai',
+    rating: 5,
+    date: 'Feb 5, 2026',
+    title: 'CloudBasket saved me Rs3,200',
+    body: 'Found this same phone for Rs3,200 more on another site. CloudBasket showed me the best price instantly. Love this platform.',
+    verified: true,
+    helpful: 45,
+  },
+]
+
+const RATING_BREAKDOWN = [
+  { stars: 5, width: '65%', count: '987' },
+  { stars: 4, width: '20%', count: '304' },
+  { stars: 3, width: '8%', count: '121' },
+  { stars: 2, width: '4%', count: '61' },
+  { stars: 1, width: '3%', count: '45' },
+] as const
 
 function getPlatformBadgeClass(platform: PriceEntry['platform']): string {
   if (platform === 'Amazon') {
@@ -53,8 +127,8 @@ function RelatedCard({ product }: { product: Product }) {
       <div className="flex flex-1 flex-col gap-1 p-3">
         <p className="line-clamp-2 text-xs font-bold">{product.name}</p>
         <div className="mt-1 flex items-baseline gap-2">
-          <p className="price-current">₹{product.price.toLocaleString('en-IN')}</p>
-          <p className="price-original text-xs">₹{originalPrice.toLocaleString('en-IN')}</p>
+          <p className="price-current">Rs{product.price.toLocaleString('en-IN')}</p>
+          <p className="price-original text-xs">Rs{originalPrice.toLocaleString('en-IN')}</p>
         </div>
         <p className="price-savings text-xs">Save {discount}%</p>
         <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-auto w-full py-2 text-xs">
@@ -102,7 +176,7 @@ export default async function ProductPage({
       platform: 'Flipkart',
       platformSlug: 'flipkart',
       price: Math.round(product.price * 1.03),
-      delivery: '₹40 delivery',
+      delivery: 'Rs40 delivery',
       eta: '3-5 days',
       best: false,
     },
@@ -123,6 +197,8 @@ export default async function ProductPage({
 
   return (
     <main className="bg-[var(--cb-bg)]">
+      <ProductViewTracker id={String(product.id)} />
+
       <section className="mx-auto max-w-7xl px-6 py-4">
         <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--cb-text-muted)]">
           <Link href="/">Home</Link>
@@ -204,7 +280,7 @@ export default async function ProductPage({
                 </div>
 
                 <div className="text-right">
-                  <p className="price-current text-lg">₹{entry.price.toLocaleString('en-IN')}</p>
+                  <p className="price-current text-lg">Rs{entry.price.toLocaleString('en-IN')}</p>
                   {entry.best ? <span className="cb-badge cb-badge-green mt-1">Best Price</span> : null}
                   <div>
                     <Link href={`/go/${entry.platformSlug}-${product.id}`} className="cb-btn cb-btn-primary mt-2 gap-1 text-xs">
@@ -232,12 +308,11 @@ export default async function ProductPage({
           </div>
 
           <div className="mt-4 flex flex-wrap gap-3">
-            <button type="button" className="cb-btn cb-btn-ghost gap-2">
-              <Heart size={16} /> Wishlist
-            </button>
+            <WishlistButton productId={String(product.id)} productName={product.name} />
             <button type="button" className="cb-btn cb-btn-ghost gap-2">
               <Share2 size={16} /> Share
             </button>
+            <ProductActions productName={product.name} currentPrice={product.price} />
             <Link href="/compare" className="cb-btn cb-btn-ghost gap-2">
               <BarChart2 size={16} /> Compare
             </Link>
@@ -262,11 +337,70 @@ export default async function ProductPage({
             <span>Today</span>
           </div>
           <div className="mt-4 flex flex-wrap gap-8 text-sm">
-            <p>Lowest: ₹{Math.round(product.price * 0.9).toLocaleString('en-IN')}</p>
-            <p>Highest: ₹{Math.round(product.price * 1.15).toLocaleString('en-IN')}</p>
-            <p>Current: ₹{product.price.toLocaleString('en-IN')}</p>
+            <p>Lowest: Rs{Math.round(product.price * 0.9).toLocaleString('en-IN')}</p>
+            <p>Highest: Rs{Math.round(product.price * 1.15).toLocaleString('en-IN')}</p>
+            <p>Current: Rs{product.price.toLocaleString('en-IN')}</p>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-8">
+        <h2 className="mb-2 text-2xl font-black tracking-tighter">Customer Reviews</h2>
+
+        <div className="cb-card mb-6 p-6">
+          <div className="flex items-center gap-8">
+            <div className="text-center">
+              <p className="text-6xl font-black text-[#F5C842]">4.4</p>
+              <p className="text-xl text-[#F5C842]">★★★★½</p>
+              <p className="text-muted text-xs">Based on 1,518 reviews</p>
+            </div>
+            <div className="flex flex-1 flex-col gap-2">
+              {RATING_BREAKDOWN.map((row) => (
+                <div key={row.stars} className="flex items-center gap-3">
+                  <p className="text-muted w-4 text-xs">{row.stars}</p>
+                  <div className="h-2 flex-1 rounded-full bg-[var(--cb-surface-2)]">
+                    <div className="h-2 rounded-full bg-[#F5C842]" style={{ width: row.width }} />
+                  </div>
+                  <p className="text-muted w-8 text-xs">{row.count}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          {MOCK_REVIEWS.map((review) => (
+            <div key={`${review.name}-${review.date}`} className="cb-card p-6">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#039BE5]/10 text-sm font-black text-[#039BE5]">
+                    {review.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold">{review.name}</p>
+                    <p className="text-muted text-xs">
+                      {review.city} · {review.date}
+                    </p>
+                  </div>
+                </div>
+                {review.verified ? <span className="cb-badge cb-badge-green text-xs">✓ Verified</span> : null}
+              </div>
+
+              <p className="mt-3 text-sm text-[#F5C842]">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</p>
+              <h3 className="mt-2 text-sm font-bold">{review.title}</h3>
+              <p className="text-muted mt-1 text-sm leading-relaxed">{review.body}</p>
+
+              <div className="text-muted mt-4 flex justify-between border-t border-[var(--cb-border)] pt-3 text-xs">
+                <p>Helpful ({review.helpful})</p>
+                <button type="button" className="cb-btn cb-btn-ghost py-1 text-xs">
+                  Helpful
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <RecentlyViewed />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-16">

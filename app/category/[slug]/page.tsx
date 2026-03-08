@@ -1,10 +1,67 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, SlidersHorizontal, ChevronDown, Star, Zap, TrendingDown } from 'lucide-react'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
+const CATEGORY_META: Record<string, { title: string; description: string }> = {
+  mobiles: {
+    title: 'Mobile Phones - Best Prices in India',
+    description: 'Compare mobile phone prices across Amazon, Flipkart & more. Find the lowest price on iPhone, Samsung, OnePlus & all brands.'
+  },
+  laptops: {
+    title: 'Laptops - Best Prices in India',
+    description: 'Compare laptop prices. Best deals on MacBook, Dell, HP, Lenovo across all major stores.'
+  },
+  fashion: {
+    title: 'Fashion - Best Deals on Clothing & Accessories',
+    description: 'Best fashion deals from Amazon, Flipkart, Myntra. Clothing, shoes, bags at lowest prices.'
+  },
+  home: {
+    title: 'Home & Kitchen - Best Prices',
+    description: 'Compare home appliance and furniture prices. Best deals on kitchen, decor and more.'
+  },
+  beauty: {
+    title: 'Beauty & Personal Care - Best Deals',
+    description: 'Best prices on beauty, skincare and personal care products across all stores.'
+  },
+  sports: {
+    title: 'Sports & Fitness - Best Prices',
+    description: 'Compare prices on sports equipment, fitness gear and outdoor products.'
+  },
+  toys: {
+    title: 'Toys & Games - Best Prices for Kids',
+    description: 'Best deals on toys, board games and kids products across Amazon and Flipkart.'
+  },
+  grocery: {
+    title: 'Grocery - Best Online Prices',
+    description: 'Compare grocery prices across Blinkit, Zepto, Amazon Fresh and more.'
+  },
+  automotive: {
+    title: 'Automotive - Best Prices on Car Accessories',
+    description: 'Best deals on car accessories, tools and automotive products.'
+  },
+  books: {
+    title: 'Books - Best Prices in India',
+    description: 'Compare book prices across Amazon, Flipkart and more. Best deals on all genres.'
+  },
+}
 
-const CATEGORY_META = {
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params
+  const meta = CATEGORY_META[slug] ?? {
+    title: `${slug.charAt(0).toUpperCase() + slug.slice(1)} - Best Prices`,
+    description: `Compare ${slug} prices across Amazon, Flipkart and more.`,
+  }
+  return {
+    title: meta.title,
+    description: meta.description,
+  }
+}
+
+const CATEGORY_CONTENT = {
   mobiles: {
     title: 'Mobiles & Smartphones',
     desc: 'Best prices on smartphones from Samsung, Apple, OnePlus & more',
@@ -77,7 +134,7 @@ const CATEGORY_META = {
   },
 } as const
 
-type CategorySlug = keyof typeof CATEGORY_META
+type CategorySlug = keyof typeof CATEGORY_CONTENT
 
 type Product = (typeof MOCK_PRODUCTS)[number]
 
@@ -91,7 +148,7 @@ const PLATFORM_FILTERS: ReadonlyArray<{ name: string; dotClass: string }> = [
 ]
 
 function isCategorySlug(value: string): value is CategorySlug {
-  return value in CATEGORY_META
+  return value in CATEGORY_CONTENT
 }
 
 function getSourceBadgeClass(source: Product['source']): string {
@@ -115,7 +172,7 @@ export default async function CategoryPage({
     notFound()
   }
 
-  const meta = CATEGORY_META[slug]
+  const meta = CATEGORY_CONTENT[slug]
 
   const byCategory = MOCK_PRODUCTS.filter((product) => product.mainCategory.toLowerCase() === slug)
   const products = (byCategory.length < 8 ? MOCK_PRODUCTS : byCategory).slice(0, 48)
@@ -327,3 +384,4 @@ export default async function CategoryPage({
     </main>
   )
 }
+

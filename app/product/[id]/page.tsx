@@ -16,6 +16,7 @@ import SchemaMarkup from '@/components/SchemaMarkup'
 import RecentlyViewed, { ProductViewTracker } from '@/components/RecentlyViewed'
 import ProductActions from '@/components/ProductActions'
 import SocialProofWidget from '@/components/SocialProof'
+import TrackBehavior from '@/components/TrackBehavior'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import WishlistButton from '@/components/WishlistButton'
 
@@ -200,6 +201,7 @@ export default async function ProductPage({
   return (
     <main className="bg-[var(--cb-bg)]">
       <ProductViewTracker id={String(product.id)} />
+      <TrackBehavior category={product.mainCategory.toLowerCase()} productId={String(product.id)} />
       <SchemaMarkup
         type="product"
         data={{

@@ -5,7 +5,7 @@ import { ArrowRight, ExternalLink, Zap, Clock, TrendingDown } from 'lucide-react
 import CategoryGrid from '@/components/CategoryGrid'
 import HeroSection from '@/components/HeroSection'
 import NewsletterSection from '@/components/NewsletterSection'
-import TrustSection from '@/components/TrustSection'
+import PersonalizedGrid from '@/components/PersonalizedGrid'
 import TrustScoreWidget from '@/components/TrustScoreWidget'
 import { DEALS } from '@/lib/deals-data'
 import { PRODUCTS } from '@/lib/mock-data'
@@ -159,11 +159,10 @@ export default function HomePage() {
     <main>
       <HeroSection />
       <DealOfTheDay />
-      <CategoryGrid />
       <TrustScoreWidget />
-      <FeaturedDeals />
+      <CategoryGrid />
+      <PersonalizedGrid />
       <NewsletterSection />
-      <TrustSection />
     </main>
   )
 }

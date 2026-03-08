@@ -5,19 +5,54 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { ExternalLink, MessageCircle, Star, TrendingDown, Zap } from 'lucide-react'
-import type { Product } from '@/lib/types'
 import { useGlobal } from '@/context/GlobalContext'
 
+type ProductSource = 'Amazon' | 'Flipkart' | 'CJ' | 'Direct'
+type AffiliatePlatform = 'amazon' | 'flipkart' | 'cj' | 'pod' | 'vcm'
+
+export interface ProductCardItem {
+  id: number | string
+  name: string
+  image: string
+  brand: string
+  price: number
+  originalPrice: number | null
+  discount: number | null
+  rating: number
+  reviewCount?: number
+  reviews?: number
+  source?: ProductSource
+  affiliatePlatform?: AffiliatePlatform
+  isTrending?: boolean
+}
+
 interface ProductCardProps {
-  product: Product
+  product: ProductCardItem
   variant?: 'grid' | 'list'
+  personalScore?: number
 }
 
 const STAR_INDICES: number[] = [1, 2, 3, 4, 5]
 const CARD_TRANSITION = { type: 'spring', stiffness: 300, damping: 28 } as const
 
-const toDealPath = (id: number): string => `/go/amazon-${id}`
-const toProductPath = (id: number): string => `/product/${id}`
+const toDealPath = (id: number | string, affiliatePlatform?: AffiliatePlatform): string => {
+  const platform =
+    affiliatePlatform === 'flipkart'
+      ? 'flipkart'
+      : affiliatePlatform === 'cj'
+        ? 'cj'
+        : affiliatePlatform === 'pod'
+          ? 'pod'
+          : 'amazon'
+  return `/go/${platform}-${id}`
+}
+
+const toProductPath = (id: number | string): string => {
+  if (typeof id === 'number') {
+    return `/product/${id}`
+  }
+  return '/products'
+}
 
 const formatCompactNumber = (value: number): string => {
   return new Intl.NumberFormat('en-IN', {
@@ -26,7 +61,14 @@ const formatCompactNumber = (value: number): string => {
   }).format(value)
 }
 
-const sourceBadgeClass = (source: Product['source']): string => {
+const resolveSource = (product: ProductCardItem): ProductSource => {
+  if (product.source) return product.source
+  if (product.affiliatePlatform === 'flipkart') return 'Flipkart'
+  if (product.affiliatePlatform === 'cj') return 'CJ'
+  return 'Amazon'
+}
+
+const sourceBadgeClass = (source: ProductSource): string => {
   if (source === 'Amazon') {
     return 'cb-badge cb-badge-orange'
   }
@@ -39,7 +81,7 @@ const sourceBadgeClass = (source: Product['source']): string => {
   return 'cb-badge cb-badge-red'
 }
 
-const getLowestPriceBadge = (product: Product): { label: string; className: string } | null => {
+const getLowestPriceBadge = (product: ProductCardItem): { label: string; className: string } | null => {
   if (product.originalPrice === null) {
     return null
   }
@@ -61,26 +103,28 @@ const getLowestPriceBadge = (product: Product): { label: string; className: stri
   return null
 }
 
-export default function ProductCard({ product, variant = 'grid' }: ProductCardProps) {
+export function ProductCard({ product, variant = 'grid', personalScore }: ProductCardProps) {
   const router = useRouter()
   const { formatPrice } = useGlobal()
   const [imgError, setImgError] = useState<boolean>(false)
 
+  const source = useMemo(() => resolveSource(product), [product])
+  const reviewCount = product.reviewCount ?? product.reviews ?? 0
   const roundedRating = useMemo<number>(() => Math.round(product.rating), [product.rating])
-  const reviewCountLabel = useMemo<string>(() => formatCompactNumber(product.reviewCount), [product.reviewCount])
+  const reviewCountLabel = useMemo<string>(() => formatCompactNumber(reviewCount), [reviewCount])
   const lowestBadge = useMemo(() => getLowestPriceBadge(product), [product])
   const isList = variant === 'list'
 
   const handleCardClick = useCallback((): void => {
-    router.push(toDealPath(product.id))
-  }, [product.id, router])
+    router.push(toDealPath(product.id, product.affiliatePlatform))
+  }, [product.affiliatePlatform, product.id, router])
 
   const handleDealClick = useCallback(
     (event: MouseEvent<HTMLButtonElement>): void => {
       event.stopPropagation()
-      router.push(toDealPath(product.id))
+      router.push(toDealPath(product.id, product.affiliatePlatform))
     },
-    [product.id, router],
+    [product.affiliatePlatform, product.id, router],
   )
 
   const handleQuickView = useCallback(
@@ -95,10 +139,10 @@ export default function ProductCard({ product, variant = 'grid' }: ProductCardPr
     (event: MouseEvent<HTMLButtonElement>): void => {
       event.stopPropagation()
       const shareText = `${product.name} on CloudBasket`
-      const shareUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText} https://cloudbasket.in${toDealPath(product.id)}`)}`
+      const shareUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText} https://cloudbasket.in${toDealPath(product.id, product.affiliatePlatform)}`)}`
       window.open(shareUrl, '_blank', 'noopener,noreferrer')
     },
-    [product.id, product.name],
+    [product.affiliatePlatform, product.id, product.name],
   )
 
   const handleImageError = useCallback((): void => {
@@ -152,6 +196,16 @@ export default function ProductCard({ product, variant = 'grid' }: ProductCardPr
           </div>
         ) : null}
 
+        {typeof personalScore === 'number' ? (
+          <div className="absolute bottom-2 left-2">
+            {personalScore >= 0.85 ? (
+              <span className="cb-badge bg-[#8B5CF6] text-[10px] text-white">Perfect Match</span>
+            ) : personalScore >= 0.7 ? (
+              <span className="cb-badge cb-badge-green text-[10px]">✓ Great Match</span>
+            ) : null}
+          </div>
+        ) : null}
+
         <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
           <button
             type="button"
@@ -173,7 +227,7 @@ export default function ProductCard({ product, variant = 'grid' }: ProductCardPr
       </div>
 
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <span className={`${sourceBadgeClass(product.source)} w-fit`}>{product.source}</span>
+        <span className={`${sourceBadgeClass(source)} w-fit`}>{source}</span>
 
         <p className="font-mono-cb text-[10px] uppercase tracking-widest text-[var(--cb-text-muted)]">{product.brand}</p>
 
@@ -212,3 +266,5 @@ export default function ProductCard({ product, variant = 'grid' }: ProductCardPr
     </motion.article>
   )
 }
+
+export default ProductCard

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, SlidersHorizontal, ChevronDown, Star, Zap, TrendingDown } from 'lucide-react'
+import TrackBehavior from '@/components/TrackBehavior'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   mobiles: {
@@ -179,6 +180,7 @@ export default async function CategoryPage({
 
   return (
     <main className="bg-[var(--cb-bg)]">
+      <TrackBehavior category={slug} />
       <section className="relative h-64 overflow-hidden">
         <Image fill className="object-cover" src={meta.image} alt={meta.title} priority />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />

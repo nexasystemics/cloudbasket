@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp } from 'lucide-react'
+import TrackBehavior from '@/components/TrackBehavior'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 
 type Product = (typeof MOCK_PRODUCTS)[number]
@@ -67,6 +68,7 @@ function SearchPageContent() {
 
   return (
     <main className="bg-[var(--cb-bg)]">
+      <TrackBehavior searchTerm={query.trim() || undefined} />
       <section className="bg-[var(--cb-surface-2)] py-12">
         <div className="mx-auto max-w-4xl px-6">
           <h1 className="mb-6 text-center text-3xl font-black tracking-tighter">

@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'images.amazon.in', pathname: '/**' },
+      { protocol: 'https', hostname: 'm.media-amazon.com', pathname: '/**' },
       { protocol: 'https', hostname: 'rukminim2.flixcart.com', pathname: '/**' },
       { protocol: 'https', hostname: 'www.cjdropshipping.com', pathname: '/**' },
       { protocol: 'https', hostname: 'via.placeholder.com', pathname: '/**' },

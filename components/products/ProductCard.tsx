@@ -252,6 +252,16 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
             <span className="price-savings">SAVE {product.discount}%</span>
           ) : null}
         </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {product.price >= 5000 ? (
+            <span className="text-[10px] text-[#10B981]">
+              EMI from Rs{Math.ceil(product.price / 12).toLocaleString('en-IN')}/mo
+            </span>
+          ) : null}
+          {(product.affiliatePlatform === 'amazon' || product.affiliatePlatform === 'flipkart') ? (
+            <span className="cb-badge text-[10px]">COD</span>
+          ) : null}
+        </div>
 
         <button
           type="button"

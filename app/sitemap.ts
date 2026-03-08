@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/legal/privacy',
     '/legal/terms',
     '/cookies',
+    '/api/feed/google',
   ].map((route) => ({
     url: `${BASE_URL}${route}`,
     lastModified: new Date(),

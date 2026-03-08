@@ -7,14 +7,14 @@ const VCOMMISSION_BASE = 'https://www.vcommission.com'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  context: { params: Promise<unknown> },
 ): Promise<NextResponse> {
   const amazonTag = process.env.AMAZON_ASSOCIATE_TAG ?? 'cloudbasket-21'
   const flipkartAffid = process.env.FLIPKART_AFFID ?? 'cb-flipkart-pending'
   const vcommissionId = process.env.VCOMMISSION_ID ?? 'cb-vcm-pending'
   const cjPublisherId = process.env.CJ_PUBLISHER_ID ?? 'cb-cj-pending'
 
-  const { id } = await params
+  const { id } = (await context.params) as { id?: string }
   const normalizedId = decodeURIComponent(id ?? '').trim()
 
   if (!normalizedId) {

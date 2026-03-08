@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import Script from 'next/script'
 import CookieConsent from '@/components/CookieConsent'
 import FestivalBanner from '@/components/FestivalBanner'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import { IndiaTrustBar } from '@/components/IndiaTrustBar'
+import PWAInstallPrompt from '@/components/PWAInstallPrompt'
 import SchemaMarkup from '@/components/SchemaMarkup'
 import CBThemeProvider from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/constants'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -50,11 +52,25 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   icons: { icon: '/brand/favicon.svg' },
+  themeColor: '#039BE5',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'CloudBasket',
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="dns-prefetch" href="//www.amazon.in" />
+        <link rel="dns-prefetch" href="//www.flipkart.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+      </head>
       <body className="bg-[var(--cb-surface)] font-sans text-[var(--cb-text-primary)] antialiased transition-colors duration-300">
         <GlobalProvider>
           <CBThemeProvider>
@@ -62,8 +78,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <FestivalBanner />
             <Header />
             <main>{children}</main>
+            <IndiaTrustBar />
             <Footer />
+            <PWAInstallPrompt />
             <CookieConsent />
+            <Script id="sw-register" strategy="afterInteractive">
+              {`if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+              }`}
+            </Script>
           </CBThemeProvider>
         </GlobalProvider>
       </body>

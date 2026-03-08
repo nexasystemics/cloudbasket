@@ -1,0 +1,23 @@
+{
+  "name": "CloudBasket - Best Deals in India",
+  "short_name": "CloudBasket",
+  "description": "Discover the best deals across Amazon, Flipkart & top brands. India's smartest price comparison.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090B",
+  "theme_color": "#039BE5",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icons/icon-72.png", "sizes": "72x72", "type": "image/png" },
+    { "src": "/icons/icon-96.png", "sizes": "96x96", "type": "image/png" },
+    { "src": "/icons/icon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["shopping", "lifestyle"],
+  "lang": "en-IN",
+  "shortcuts": [
+    { "name": "Flash Deals", "url": "/deals/flash", "description": "Today's flash deals" },
+    { "name": "Compare Products", "url": "/compare", "description": "Compare products side by side" }
+  ]
+}

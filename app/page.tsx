@@ -6,6 +6,7 @@ import CategoryGrid from '@/components/CategoryGrid'
 import HeroSection from '@/components/HeroSection'
 import NewsletterSection from '@/components/NewsletterSection'
 import PersonalizedGrid from '@/components/PersonalizedGrid'
+import { TelegramCTA } from '@/components/TelegramCTA'
 import TrustScoreWidget from '@/components/TrustScoreWidget'
 import { DEALS } from '@/lib/deals-data'
 import { PRODUCTS } from '@/lib/mock-data'
@@ -161,6 +162,9 @@ export default function HomePage() {
       <DealOfTheDay />
       <TrustScoreWidget />
       <CategoryGrid />
+      <section className="mx-auto max-w-7xl px-6 py-4">
+        <TelegramCTA />
+      </section>
       <PersonalizedGrid />
       <NewsletterSection />
     </main>

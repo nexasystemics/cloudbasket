@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, TrendingDown, ExternalLink, Tag } from 'lucide-react'
+import { TelegramCTA } from '@/components/TelegramCTA'
 
 export const metadata: Metadata = {
   title: "Today's Best Deals — Up to 75% Off",
@@ -219,6 +220,10 @@ export default function DealsPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-6">
+        <TelegramCTA />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-4">

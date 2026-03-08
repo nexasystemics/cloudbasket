@@ -11,6 +11,7 @@ import {
   ChevronRight,
   BarChart2,
 } from 'lucide-react'
+import { CATALOG, type Product as CatalogProduct } from '@/lib/intelligence/catalog'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 import SchemaMarkup from '@/components/SchemaMarkup'
 import RecentlyViewed, { ProductViewTracker } from '@/components/RecentlyViewed'
@@ -19,8 +20,28 @@ import SocialProofWidget from '@/components/SocialProof'
 import TrackBehavior from '@/components/TrackBehavior'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import WishlistButton from '@/components/WishlistButton'
+import { TelegramCTA } from '@/components/TelegramCTA'
+import { CODBadge } from '@/components/products/CODBadge'
+import { DealShareCard } from '@/components/products/DealShareCard'
+import { EMIBadge } from '@/components/products/EMIBadge'
+import { PincodeChecker } from '@/components/products/PincodeChecker'
 
-type Product = (typeof MOCK_PRODUCTS)[number]
+type MockProduct = (typeof MOCK_PRODUCTS)[number]
+
+type DisplayProduct = {
+  id: string
+  name: string
+  image: string
+  brand: string
+  price: number
+  originalPrice: number
+  discount: number
+  rating: number
+  reviewCount: number
+  mainCategory: string
+  affiliatePlatform: 'amazon' | 'flipkart' | 'cj' | 'pod' | 'vcm'
+  badge?: string
+}
 
 type PriceEntry = {
   platform: 'Amazon' | 'Flipkart' | 'CJ Global'
@@ -113,10 +134,48 @@ function getPlatformBadgeClass(platform: PriceEntry['platform']): string {
   return 'cb-badge-green'
 }
 
-function RelatedCard({ product }: { product: Product }) {
-  const originalPrice = product.originalPrice ?? Math.round(product.price * 1.2)
-  const discount = product.discount ?? Math.max(1, Math.round(((originalPrice - product.price) / originalPrice) * 100))
+function getProductPath(id: string): string {
+  return `/product/${id}`
+}
 
+function getDealPath(platform: DisplayProduct['affiliatePlatform'], id: string): string {
+  return `/go/${platform}-${id}`
+}
+
+function toDisplayFromCatalog(product: CatalogProduct): DisplayProduct {
+  return {
+    id: product.id,
+    name: product.name,
+    image: product.image,
+    brand: product.brand,
+    price: product.price,
+    originalPrice: product.originalPrice,
+    discount: Math.max(1, Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)),
+    rating: product.rating,
+    reviewCount: product.reviews,
+    mainCategory: product.category,
+    affiliatePlatform: product.affiliatePlatform,
+    badge: product.badge,
+  }
+}
+
+function toDisplayFromMock(product: MockProduct): DisplayProduct {
+  return {
+    id: String(product.id),
+    name: product.name,
+    image: product.image,
+    brand: product.brand,
+    price: product.price,
+    originalPrice: product.originalPrice ?? Math.round(product.price * 1.15),
+    discount: product.discount ?? 0,
+    rating: product.rating,
+    reviewCount: product.reviewCount,
+    mainCategory: product.mainCategory,
+    affiliatePlatform: product.source === 'Flipkart' ? 'flipkart' : 'amazon',
+  }
+}
+
+function RelatedCard({ product }: { product: DisplayProduct }) {
   return (
     <article className="cb-card group flex flex-col overflow-hidden">
       <div className="relative h-40">
@@ -131,10 +190,10 @@ function RelatedCard({ product }: { product: Product }) {
         <p className="line-clamp-2 text-xs font-bold">{product.name}</p>
         <div className="mt-1 flex items-baseline gap-2">
           <p className="price-current">Rs{product.price.toLocaleString('en-IN')}</p>
-          <p className="price-original text-xs">Rs{originalPrice.toLocaleString('en-IN')}</p>
+          <p className="price-original text-xs">Rs{product.originalPrice.toLocaleString('en-IN')}</p>
         </div>
-        <p className="price-savings text-xs">Save {discount}%</p>
-        <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-auto w-full py-2 text-xs">
+        <p className="price-savings text-xs">Save {product.discount}%</p>
+        <Link href={getDealPath(product.affiliatePlatform, product.id)} className="cb-btn cb-btn-primary mt-auto w-full py-2 text-xs">
           View Deal <ExternalLink size={12} />
         </Link>
       </div>
@@ -148,23 +207,25 @@ export default async function ProductPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+
+  const catalogProduct = id.startsWith('cb-') ? CATALOG.find((item) => item.id === id) : undefined
+
   const numericId = Number.parseInt(id, 10)
+  const mockProduct = Number.isNaN(numericId) ? undefined : MOCK_PRODUCTS.find((item) => item.id === numericId)
 
-  if (Number.isNaN(numericId)) {
-    notFound()
-  }
-
-  const product = MOCK_PRODUCTS.find((item) => item.id === numericId)
+  const product = catalogProduct ? toDisplayFromCatalog(catalogProduct) : mockProduct ? toDisplayFromMock(mockProduct) : null
 
   if (!product) {
     notFound()
   }
 
-  const related = MOCK_PRODUCTS.filter(
-    (item) => item.mainCategory === product.mainCategory && item.id !== product.id,
-  ).slice(0, 4)
-
-  const reviewCount = product.reviewCount
+  const related = catalogProduct
+    ? CATALOG.filter((item) => item.category === catalogProduct.category && item.id !== catalogProduct.id)
+        .slice(0, 4)
+        .map(toDisplayFromCatalog)
+    : MOCK_PRODUCTS.filter((item) => item.mainCategory === product.mainCategory && String(item.id) !== product.id)
+        .slice(0, 4)
+        .map(toDisplayFromMock)
 
   const priceComparison: readonly PriceEntry[] = [
     {
@@ -270,10 +331,19 @@ export default async function ProductPage({
               <Star size={14} />
             </span>
             <span className="text-sm">{product.rating.toFixed(1)} out of 5</span>
-            <span className="cb-badge">{reviewCount.toLocaleString('en-IN')} reviews</span>
+            <span className="cb-badge">{product.reviewCount.toLocaleString('en-IN')} reviews</span>
           </div>
 
           <SocialProofWidget productId={String(product.id)} className="mt-4" />
+
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <EMIBadge price={product.price} />
+            <CODBadge platform={product.affiliatePlatform} />
+          </div>
+
+          <div className="mt-4">
+            <PincodeChecker />
+          </div>
 
           <div className="cb-card mt-6 p-6">
             <p className="mb-3 text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Price Comparison</p>
@@ -308,6 +378,16 @@ export default async function ProductPage({
             ))}
           </div>
 
+          <div className="cb-card mt-6 p-6">
+            <DealShareCard
+              productName={product.name}
+              price={product.price}
+              originalPrice={product.originalPrice}
+              productId={product.id}
+              badge={product.badge}
+            />
+          </div>
+
           <div className="mt-4 flex flex-wrap gap-3 text-xs text-[var(--cb-text-muted)]">
             <span className="inline-flex items-center gap-2">
               <Shield size={13} /> Secure Redirect
@@ -330,6 +410,10 @@ export default async function ProductPage({
             <Link href="/compare" className="cb-btn cb-btn-ghost gap-2">
               <BarChart2 size={16} /> Compare
             </Link>
+          </div>
+
+          <div className="mt-3">
+            <TelegramCTA variant="inline" />
           </div>
         </div>
       </section>

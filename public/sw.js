@@ -1,0 +1,24 @@
+const CACHE = 'cloudbasket-v1'
+const OFFLINE_URL = '/offline'
+const PRECACHE = ['/', '/offline', '/deals', '/products']
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(PRECACHE)))
+  self.skipWaiting()
+})
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))),
+  )
+  self.clients.claim()
+})
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).catch(() => caches.match(OFFLINE_URL)))
+    return
+  }
+
+  event.respondWith(caches.match(event.request).then((response) => response || fetch(event.request)))
+})

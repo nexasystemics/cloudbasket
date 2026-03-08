@@ -48,13 +48,21 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
   },
 }
 
+const CATEGORY_ALIASES: Record<string, keyof typeof CATEGORY_CONTENT> = {
+  electronics: 'mobiles',
+  health: 'beauty',
+  food: 'grocery',
+  auto: 'automotive',
+}
+
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const { slug } = await params
-  const meta = CATEGORY_META[slug] ?? {
-    title: `${slug.charAt(0).toUpperCase() + slug.slice(1)} - Best Prices`,
-    description: `Compare ${slug} prices across Amazon, Flipkart and more.`,
+  const resolvedSlug = CATEGORY_ALIASES[slug] ?? slug
+  const meta = CATEGORY_META[resolvedSlug] ?? {
+    title: `${resolvedSlug.charAt(0).toUpperCase() + resolvedSlug.slice(1)} - Best Prices`,
+    description: `Compare ${resolvedSlug} prices across Amazon, Flipkart and more.`,
   }
   return {
     title: meta.title,
@@ -168,19 +176,20 @@ export default async function CategoryPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
+  const resolvedSlug = CATEGORY_ALIASES[slug] ?? slug
 
-  if (!isCategorySlug(slug)) {
+  if (!isCategorySlug(resolvedSlug)) {
     notFound()
   }
 
-  const meta = CATEGORY_CONTENT[slug]
+  const meta = CATEGORY_CONTENT[resolvedSlug]
 
-  const byCategory = MOCK_PRODUCTS.filter((product) => product.mainCategory.toLowerCase() === slug)
+  const byCategory = MOCK_PRODUCTS.filter((product) => product.mainCategory.toLowerCase() === resolvedSlug)
   const products = (byCategory.length < 8 ? MOCK_PRODUCTS : byCategory).slice(0, 48)
 
   return (
     <main className="bg-[var(--cb-bg)]">
-      <TrackBehavior category={slug} />
+      <TrackBehavior category={resolvedSlug} />
       <section className="relative h-64 overflow-hidden">
         <Image fill className="object-cover" src={meta.image} alt={meta.title} priority />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />

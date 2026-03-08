@@ -9,12 +9,14 @@ import {
   RefreshCw,
   TrendingDown,
   ChevronRight,
-  Share2,
   BarChart2,
 } from 'lucide-react'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
+import SchemaMarkup from '@/components/SchemaMarkup'
 import RecentlyViewed, { ProductViewTracker } from '@/components/RecentlyViewed'
 import ProductActions from '@/components/ProductActions'
+import SocialProofWidget from '@/components/SocialProof'
+import WhatsAppShare from '@/components/WhatsAppShare'
 import WishlistButton from '@/components/WishlistButton'
 
 type Product = (typeof MOCK_PRODUCTS)[number]
@@ -198,6 +200,16 @@ export default async function ProductPage({
   return (
     <main className="bg-[var(--cb-bg)]">
       <ProductViewTracker id={String(product.id)} />
+      <SchemaMarkup
+        type="product"
+        data={{
+          name: product.name,
+          brand: product.brand,
+          price: product.price,
+          rating: product.rating,
+          reviews: product.reviewCount,
+        }}
+      />
 
       <section className="mx-auto max-w-7xl px-6 py-4">
         <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--cb-text-muted)]">
@@ -259,6 +271,8 @@ export default async function ProductPage({
             <span className="cb-badge">{reviewCount.toLocaleString('en-IN')} reviews</span>
           </div>
 
+          <SocialProofWidget productId={String(product.id)} className="mt-4" />
+
           <div className="cb-card mt-6 p-6">
             <p className="mb-3 text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Price Comparison</p>
 
@@ -309,9 +323,7 @@ export default async function ProductPage({
 
           <div className="mt-4 flex flex-wrap gap-3">
             <WishlistButton productId={String(product.id)} productName={product.name} />
-            <button type="button" className="cb-btn cb-btn-ghost gap-2">
-              <Share2 size={16} /> Share
-            </button>
+            <WhatsAppShare productName={product.name} price={product.price} />
             <ProductActions productName={product.name} currentPrice={product.price} />
             <Link href="/compare" className="cb-btn cb-btn-ghost gap-2">
               <BarChart2 size={16} /> Compare

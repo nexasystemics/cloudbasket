@@ -12,6 +12,7 @@ import {
   TrendingDown,
   Share2,
 } from 'lucide-react'
+import SchemaMarkup from '@/components/SchemaMarkup'
 
 type BlogContentBlock =
   | { type: 'intro'; text: string }
@@ -205,6 +206,16 @@ export default async function BlogPostPage({
 
   return (
     <main className="bg-[var(--cb-bg)]">
+      <SchemaMarkup
+        type="article"
+        data={{
+          title: post.title,
+          excerpt: post.excerpt,
+          author: post.author,
+          date: post.date,
+          image: post.image,
+        }}
+      />
       <section className="relative h-72 md:h-96">
         <Image fill className="object-cover" src={post.image} alt={post.title} priority />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />

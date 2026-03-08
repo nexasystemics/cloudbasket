@@ -39,6 +39,28 @@ const sourceBadgeClass = (source: Product['source']): string => {
   return 'cb-badge cb-badge-red'
 }
 
+const getLowestPriceBadge = (product: Product): { label: string; className: string } | null => {
+  if (product.originalPrice === null) {
+    return null
+  }
+
+  if (product.price <= product.originalPrice * 0.75) {
+    return {
+      label: 'Lowest in 90 Days',
+      className: 'cb-badge border-[#10B981] bg-[#10B981] text-white',
+    }
+  }
+
+  if (product.price <= product.originalPrice * 0.85) {
+    return {
+      label: 'Near Lowest Price',
+      className: 'cb-badge cb-badge-green',
+    }
+  }
+
+  return null
+}
+
 export default function ProductCard({ product, variant = 'grid' }: ProductCardProps) {
   const router = useRouter()
   const { formatPrice } = useGlobal()
@@ -46,6 +68,7 @@ export default function ProductCard({ product, variant = 'grid' }: ProductCardPr
 
   const roundedRating = useMemo<number>(() => Math.round(product.rating), [product.rating])
   const reviewCountLabel = useMemo<string>(() => formatCompactNumber(product.reviewCount), [product.reviewCount])
+  const lowestBadge = useMemo(() => getLowestPriceBadge(product), [product])
   const isList = variant === 'list'
 
   const handleCardClick = useCallback((): void => {
@@ -122,6 +145,12 @@ export default function ProductCard({ product, variant = 'grid' }: ProductCardPr
             </span>
           ) : null}
         </div>
+
+        {lowestBadge ? (
+          <div className="absolute right-2 top-2">
+            <span className={lowestBadge.className}>{lowestBadge.label}</span>
+          </div>
+        ) : null}
 
         <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
           <button

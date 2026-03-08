@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import CookieConsent from '@/components/CookieConsent'
+import FestivalBanner from '@/components/FestivalBanner'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import SchemaMarkup from '@/components/SchemaMarkup'
 import CBThemeProvider from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/constants'
@@ -56,6 +58,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="bg-[var(--cb-surface)] font-sans text-[var(--cb-text-primary)] antialiased transition-colors duration-300">
         <GlobalProvider>
           <CBThemeProvider>
+            <SchemaMarkup type="website" data={{}} />
+            <FestivalBanner />
             <Header />
             <main>{children}</main>
             <Footer />

@@ -36,9 +36,23 @@ function getPlatformLabel(source: Product['source']): string {
   return source === 'CJ' ? 'CJ Global' : source
 }
 
+function getLowestPriceBadge(product: Product): { label: string; className: string } | null {
+  if (product.originalPrice === null) {
+    return null
+  }
+  if (product.price <= product.originalPrice * 0.75) {
+    return { label: 'Lowest in 90 Days', className: 'cb-badge border-[#10B981] bg-[#10B981] text-white' }
+  }
+  if (product.price <= product.originalPrice * 0.85) {
+    return { label: 'Near Lowest Price', className: 'cb-badge cb-badge-green' }
+  }
+  return null
+}
+
 function ProductCard({ product }: { product: Product }) {
   const originalPrice = product.originalPrice ?? Math.round(product.price * 1.2)
   const discount = product.discount ?? Math.max(1, Math.round(((originalPrice - product.price) / originalPrice) * 100))
+  const lowestBadge = getLowestPriceBadge(product)
 
   return (
     <article key={product.id} className="cb-card group flex flex-col overflow-hidden">
@@ -54,6 +68,11 @@ function ProductCard({ product }: { product: Product }) {
           {discount ? <span className="cb-badge cb-badge-green">-{discount}%</span> : null}
           {product.isTrending ? <span className="cb-badge cb-badge-orange">Trending</span> : null}
         </div>
+        {lowestBadge ? (
+          <div className="absolute right-2 top-2">
+            <span className={lowestBadge.className}>{lowestBadge.label}</span>
+          </div>
+        ) : null}
 
         <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
           <Link href={`/product/${product.id}`} className="cb-btn bg-white px-4 py-2 text-xs text-[#09090B]">

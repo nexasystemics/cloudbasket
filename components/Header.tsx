@@ -9,9 +9,8 @@ import {
   type FormEvent,
   type JSX,
 } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import {
   Search,
@@ -36,12 +35,12 @@ type DropdownItem = {
   icon: LucideIcon
 }
 
-type NavigationItem = {
-  id: 'products' | 'deals' | 'pod' | 'compare' | 'blog'
-  label: string
-  href: string
-  dropdown: DropdownItem[]
-}
+type NavigationItem = {
+  id: 'products' | 'deals' | 'pod' | 'compare' | 'blog' | 'quiz'
+  label: string
+  href: string
+  dropdown: DropdownItem[]
+}
 
 const PROMO_TICKER_ITEMS: readonly string[] = [
   ' Flash Sale: Up to 70% off Mobiles',
@@ -92,7 +91,6 @@ export default function Header(): JSX.Element {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [activeDropdown, setActiveDropdown] = useState<NavigationItem['id'] | null>(null)
   const [scrolled, setScrolled] = useState<boolean>(false)
-  const [logoError, setLogoError] = useState<boolean>(false)
 
   const searchInputRef = useRef<HTMLInputElement | null>(null)
   const dropdownTimeoutRef = useRef<number | null>(null)
@@ -114,15 +112,16 @@ export default function Header(): JSX.Element {
       href: ROUTES.DEALS,
       dropdown: [...DEAL_DROPDOWN],
     },
-    {
-      id: 'pod',
-      label: 'POD',
-      href: ROUTES.POD,
-      dropdown: [...POD_DROPDOWN],
-    },
-    { id: 'compare', label: 'Compare', href: ROUTES.COMPARE, dropdown: [] },
-    { id: 'blog', label: 'Blog', href: ROUTES.BLOG, dropdown: [] },
-  ]
+    {
+      id: 'pod',
+      label: 'POD',
+      href: ROUTES.POD,
+      dropdown: [...POD_DROPDOWN],
+    },
+    { id: 'quiz', label: '🧠 Deal Quiz', href: '/quiz', dropdown: [] },
+    { id: 'compare', label: 'Compare', href: ROUTES.COMPARE, dropdown: [] },
+    { id: 'blog', label: 'Blog', href: ROUTES.BLOG, dropdown: [] },
+  ]
 
   useEffect(() => {
     setMounted(true)
@@ -253,26 +252,16 @@ export default function Header(): JSX.Element {
         </div>
       ) : null}
 
-      <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-3 lg:h-16 lg:px-6">
-        <Link href={ROUTES.HOME} className="inline-flex items-center gap-2" aria-label="CloudBasket Home">
-          {logoError ? (
-            <span className="inline-flex items-center gap-2">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-skyline-primary text-xs font-black text-white">
-                CB
-              </span>
-              <span className="font-display text-xl font-black tracking-tight text-[var(--cb-text-primary)]">CloudBasket</span>
-            </span>
-          ) : (
-            <Image
-              src="/brand/logo-full.svg"
-              alt="CloudBasket"
-              width={150}
-              height={36}
-              priority
-              onError={() => setLogoError(true)}
-            />
-          )}
-        </Link>
+      <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4 px-3 lg:h-16 lg:px-6">
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0 min-w-0">
+          <div className="w-8 h-8 bg-[#039BE5] rounded-lg flex items-center justify-center flex-shrink-0">
+            <span className="text-white font-black text-xs">CB</span>
+          </div>
+          <span className="font-black text-lg tracking-tight whitespace-nowrap hidden sm:block">
+            <span className="text-[#039BE5]">Cloud</span>
+            <span className="text-[var(--cb-text-primary)]">Basket</span>
+          </span>
+        </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
           {navItems.map((item) => {

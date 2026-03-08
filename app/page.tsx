@@ -4,7 +4,9 @@ import Link from 'next/link'
 import { ArrowRight, ExternalLink, Zap, Clock, TrendingDown } from 'lucide-react'
 import CategoryGrid from '@/components/CategoryGrid'
 import HeroSection from '@/components/HeroSection'
+import NewsletterSection from '@/components/NewsletterSection'
 import TrustSection from '@/components/TrustSection'
+import TrustScoreWidget from '@/components/TrustScoreWidget'
 import { DEALS } from '@/lib/deals-data'
 import { PRODUCTS } from '@/lib/mock-data'
 
@@ -158,7 +160,9 @@ export default function HomePage() {
       <HeroSection />
       <DealOfTheDay />
       <CategoryGrid />
+      <TrustScoreWidget />
       <FeaturedDeals />
+      <NewsletterSection />
       <TrustSection />
     </main>
   )

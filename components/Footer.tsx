@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { MessageCircle } from 'lucide-react'
 import { ROUTES, SITE_NAME } from '@/lib/constants'
 
 const discoverLinks = [
@@ -58,6 +59,18 @@ export default function Footer() {
             </a>
             <p className="mt-1 text-xs text-[#334155]">v2.0.0 · March 2026</p>
           </div>
+
+          <div className="mt-4 flex items-center gap-2">
+            <a
+              href="https://wa.me/919999999999"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white transition-opacity hover:opacity-90"
+              aria-label="Join CloudBasket WhatsApp Community"
+            >
+              <MessageCircle size={14} />
+            </a>
+          </div>
         </div>
 
         <div>
@@ -103,7 +116,11 @@ export default function Footer() {
       <div className="border-t border-[#1E293B] py-6">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center sm:flex-row sm:text-start">
           <p className="text-xs text-[#334155]">© 2026 CloudBasket. All rights reserved.</p>
-          <p className="text-xs text-[#1E293B]">Powered by NEXQON Sovereign Technology</p>
+          <div className="flex items-center gap-2">
+            <p className="text-xs text-[#1E293B]">Powered by NEXQON Sovereign Technology</p>
+            <span className="cb-badge border-[#FF9933]/30 bg-[#FF9933]/10 text-xs text-[#FF9933]">🇮🇳 Made for Bharat</span>
+            <span className="cb-badge text-xs">Serving India & Globe</span>
+          </div>
           <p className="font-mono-cb text-xs text-[#1E293B]">v2.0.0-sovereign</p>
         </div>
       </div>

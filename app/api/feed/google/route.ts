@@ -3,7 +3,7 @@ import { CATALOG } from '@/lib/intelligence/catalog'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 86400
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://cloudbasket.co'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.co'
 
 export async function GET() {
   const items = CATALOG.slice(0, 500)

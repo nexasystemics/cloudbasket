@@ -23,6 +23,7 @@ export const SUPPORTED_COUNTRIES = {
 
 export const ROUTES = {
   HOME: '/',
+  CATEGORIES: '/categories',
   PRODUCTS: '/products',
   DEALS: '/deals',
   POD: '/pod',

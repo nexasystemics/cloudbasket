@@ -53,6 +53,14 @@ const CATEGORY_ALIASES: Record<string, keyof typeof CATEGORY_CONTENT> = {
   health: 'beauty',
   food: 'grocery',
   auto: 'automotive',
+  finance: 'books',
+  gaming: 'toys',
+  investments: 'books',
+  jewellery: 'fashion',
+  music: 'books',
+  courses: 'books',
+  travel: 'automotive',
+  watches: 'fashion',
 }
 
 export async function generateMetadata(

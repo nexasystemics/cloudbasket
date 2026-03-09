@@ -36,7 +36,7 @@ type DropdownItem = {
 }
 
 type NavigationItem = {
-  id: 'products' | 'deals' | 'pod' | 'compare' | 'blog' | 'quiz'
+  id: 'products' | 'categories' | 'deals' | 'pod' | 'compare' | 'blog' | 'quiz'
   label: string
   href: string
   dropdown: DropdownItem[]
@@ -95,23 +95,42 @@ export default function Header(): JSX.Element {
   const searchInputRef = useRef<HTMLInputElement | null>(null)
   const dropdownTimeoutRef = useRef<number | null>(null)
 
-  const navItems: readonly NavigationItem[] = [
-    {
-      id: 'products',
-      label: 'Products',
-      href: ROUTES.PRODUCTS,
-      dropdown: MAIN_CATEGORIES.map((category) => ({
-        label: category,
-        href: `/category/${encodeURIComponent(category.toLowerCase())}`,
-        icon: Globe,
-      })),
-    },
-    {
-      id: 'deals',
-      label: 'Deals',
-      href: ROUTES.DEALS,
-      dropdown: [...DEAL_DROPDOWN],
-    },
+  const navItems: readonly NavigationItem[] = [
+
+    {
+
+      id: 'products',
+
+      label: 'Products',
+
+      href: ROUTES.PRODUCTS,
+
+      dropdown: MAIN_CATEGORIES.map((category) => ({
+
+        label: category,
+
+        href: `/category/${encodeURIComponent(category.toLowerCase())}`,
+
+        icon: Globe,
+
+      })),
+
+    },
+
+    {
+
+      id: 'deals',
+
+      label: 'Deals',
+
+      href: ROUTES.DEALS,
+
+      dropdown: [...DEAL_DROPDOWN],
+
+    },
+
+    { id: 'categories', label: 'Categories', href: ROUTES.CATEGORIES, dropdown: [] },
+
     {
       id: 'pod',
       label: 'POD',
@@ -121,8 +140,7 @@ export default function Header(): JSX.Element {
     { id: 'quiz', label: '🧠 Deal Quiz', href: '/quiz', dropdown: [] },
     { id: 'compare', label: 'Compare', href: ROUTES.COMPARE, dropdown: [] },
     { id: 'blog', label: 'Blog', href: ROUTES.BLOG, dropdown: [] },
-  ]
-
+  ]
   useEffect(() => {
     setMounted(true)
     const dismissed = window.localStorage.getItem(PROMO_DISMISS_KEY)
@@ -467,4 +485,9 @@ export default function Header(): JSX.Element {
     </header>
   )
 }
+
+
+
+
+
 

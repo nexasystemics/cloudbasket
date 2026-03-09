@@ -3,6 +3,7 @@ import { MessageCircle } from 'lucide-react'
 import { ROUTES, SITE_NAME } from '@/lib/constants'
 
 const discoverLinks = [
+  { label: 'Categories', href: ROUTES.CATEGORIES },
   { label: 'Products', href: ROUTES.PRODUCTS },
   { label: 'Deals', href: ROUTES.DEALS },
   { label: 'Compare', href: ROUTES.COMPARE },
@@ -74,7 +75,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-[#334155]">Discover</p>
+          <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-[#334155]">Browse</p>
           {discoverLinks.map((link) => (
             <Link
               key={link.href}

@@ -3,10 +3,9 @@ import { CATALOG } from '@/lib/intelligence/catalog'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 86400
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://cloudbasket.co'
 
 export async function GET() {
-  const baseUrl = 'https://cloudbasket.vercel.app'
-
   const items = CATALOG.slice(0, 500)
     .map(
       (product) => `
@@ -14,7 +13,7 @@ export async function GET() {
       <g:id>${product.id}</g:id>
       <g:title>${escapeXML(product.name)}</g:title>
       <g:description>${escapeXML(product.description)}</g:description>
-      <g:link>${baseUrl}/product/${product.id}</g:link>
+      <g:link>${BASE_URL}/product/${product.id}</g:link>
       <g:image_link>${escapeXML(product.image)}</g:image_link>
       <g:price>${product.price} INR</g:price>
       <g:sale_price>${product.price} INR</g:sale_price>
@@ -32,7 +31,7 @@ export async function GET() {
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
   <channel>
     <title>CloudBasket — Best Deals India</title>
-    <link>${baseUrl}</link>
+    <link>${BASE_URL}</link>
     <description>Curated deals across Amazon, Flipkart and top Indian brands</description>
     ${items}
   </channel>

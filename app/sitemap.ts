@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-const BASE_URL = 'https://cloudbasket.vercel.app'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://cloudbasket.co'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [

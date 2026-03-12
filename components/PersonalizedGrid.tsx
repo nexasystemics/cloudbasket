@@ -49,7 +49,7 @@ export default function PersonalizedGrid() {
               {profile?.cityTier ? (
                 <span className="flex items-center gap-1">
                   <MapPin size={12} />
-                  {profile.cityTier === 'tier1' ? 'Metro' : profile.cityTier === 'tier2' ? 'City' : 'Bharat'} Picks
+                  {profile.cityTier === 'tier1' ? 'Metro' : profile.cityTier === 'tier2' ? 'City' : 'Local'} Picks
                 </span>
               ) : null}
               <span className="flex items-center gap-1">
@@ -121,3 +121,4 @@ export default function PersonalizedGrid() {
     </section>
   )
 }
+

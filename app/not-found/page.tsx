@@ -63,8 +63,9 @@ export default function NotFoundRoutePage() {
           Back to home
         </Link>
 
-        <p className="text-muted mt-12 text-xs">Powered by NEXQON Sovereign Technology v2.0.0</p>
+        <p className="text-muted mt-12 text-xs">Powered by NEXQON HOLDINGS Technology</p>
       </div>
     </main>
   )
 }
+

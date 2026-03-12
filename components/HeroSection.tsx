@@ -151,7 +151,7 @@ export default function HeroSection() {
         >
           <span className="cb-badge cb-badge-blue inline-flex items-center gap-1 px-3 py-1">
             <Zap size={12} />
-            India&apos;s Sovereign Price Aggregator
+            The World&apos;s Smartest Price Aggregator
           </span>
         </motion.div>
 
@@ -303,3 +303,4 @@ export default function HeroSection() {
     </section>
   )
 }
+

@@ -54,3 +54,4 @@ export async function GET(
   const fallback = `${AMAZON_BASE}/s?k=${encodeURIComponent(normalizedId)}&tag=${encodeURIComponent(amazonTag)}`
   return NextResponse.redirect(fallback, { status: 302 })
 }
+

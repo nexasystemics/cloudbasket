@@ -21,7 +21,7 @@ const FAQ_CATEGORIES: readonly FAQCategory[] = [
     items: [
       {
         q: 'What is CloudBasket?',
-        a: "CloudBasket is India's sovereign price comparison platform. We track prices across 50+ retailers including Amazon, Flipkart, and CJ Global to help you find the best deal. We never sell products directly — we only show you where to buy at the lowest price.",
+        a: "CloudBasket is the world's smartest price comparison platform. We track prices across 50+ retailers including Amazon, Flipkart, and CJ Global to help you find the best deal. We never sell products directly — we only show you where to buy at the lowest price.",
       },
       {
         q: 'Is CloudBasket free to use?',
@@ -158,5 +158,6 @@ export default function FAQPage() {
     </main>
   )
 }
+
 
 

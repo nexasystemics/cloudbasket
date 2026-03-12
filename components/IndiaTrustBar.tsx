@@ -1,11 +1,11 @@
 export function IndiaTrustBar() {
   const badges = [
-    { icon: '🇮🇳', label: 'Made for Bharat', sub: 'India-first platform' },
+    { icon: '🇮🇳', label: 'Global Price Discovery', sub: 'Zero checkout. Pure discovery.' },
     { icon: '🔐', label: 'DPDP Compliant', sub: 'Data stored in India' },
     { icon: '✅', label: 'RBI Partners', sub: 'Razorpay · Cashfree' },
     { icon: '⚡', label: 'ONDC Ready', sub: 'Open commerce protocol' },
     { icon: '🏛️', label: 'Startup India', sub: 'DIPP recognised' },
-    { icon: '📈', label: '500M+ UPI Users', sub: 'Trusted payment network' },
+    { icon: '📈', label: '50+ Stores Compared', sub: 'Updated every hour' },
   ]
 
   return (
@@ -27,3 +27,4 @@ export function IndiaTrustBar() {
     </div>
   )
 }
+

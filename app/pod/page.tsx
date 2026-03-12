@@ -77,7 +77,7 @@ const POD_FEATURES = [
   {
     icon: Shield,
     title: 'NEXQON Backed',
-    desc: 'Sovereign product line by NEXQON Holdings.',
+    desc: 'Premium product line by NEXQON Holdings.',
   },
 ] as const
 
@@ -146,4 +146,5 @@ export default function PODPage() {
     </main>
   )
 }
+
 

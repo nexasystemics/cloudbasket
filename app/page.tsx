@@ -13,10 +13,10 @@ import { PRODUCTS } from '@/lib/mock-data'
 
 export const metadata: Metadata = {
   title: 'CloudBasket - Everything in One Basket',
-  description: "India's sovereign price aggregator. Compare deals from Amazon, Flipkart and 50+ stores.",
+  description: "Discover and compare the best prices across Amazon, Flipkart and 50+ stores worldwide. Zero checkout. Pure discovery.",
   openGraph: {
     title: 'CloudBasket - Everything in One Basket',
-    description: "India's sovereign price aggregator.",
+    description: "Discover and compare the best prices worldwide. Zero checkout. Pure discovery.",
     images: [{ url: '/og/default.png' }],
   },
 }
@@ -170,3 +170,5 @@ export default function HomePage() {
     </main>
   )
 }
+
+

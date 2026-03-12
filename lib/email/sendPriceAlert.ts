@@ -49,7 +49,7 @@ export async function sendPriceAlertEmail(data: PriceAlertEmailData) {
         </a>
         <div style="border-top:1px solid #1E293B;padding-top:16px;text-align:center">
           <p style="color:#334155;font-size:12px">This alert was set by you on CloudBasket.<br/><a href="https://cloudbasket.vercel.app/dashboard" style="color:#039BE5">Manage your alerts</a></p>
-          <p style="color:#1E293B;font-size:11px;margin-top:8px">Powered by NEXQON Sovereign Technology</p>
+          <p style="color:#1E293B;font-size:11px;margin-top:8px">Powered by NEXQON HOLDINGS</p>
         </div>
       </div>
     `,
@@ -73,3 +73,4 @@ export async function sendPriceAlertEmail(data: PriceAlertEmailData) {
     return { success: false, reason: 'network_error' }
   }
 }
+

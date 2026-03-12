@@ -4,28 +4,27 @@ import { ROUTES, SITE_NAME } from '@/lib/constants'
 
 const discoverLinks = [
   { label: 'Categories', href: ROUTES.CATEGORIES },
-  { label: 'Products', href: ROUTES.PRODUCTS },
-  { label: 'Deals', href: ROUTES.DEALS },
   { label: 'Compare', href: ROUTES.COMPARE },
-  { label: 'POD', href: ROUTES.POD },
+  { label: 'Deals', href: ROUTES.DEALS },
   { label: 'Blog', href: ROUTES.BLOG },
+  { label: 'POD', href: ROUTES.POD },
+  { label: 'Products', href: ROUTES.PRODUCTS },
 ] as const
 
 const companyLinks = [
   { label: 'About', href: ROUTES.ABOUT },
-  { label: 'Associates', href: ROUTES.ASSOCIATES },
   { label: 'Careers', href: '/careers' },
   { label: 'Contact', href: ROUTES.CONTACT },
   { label: 'FAQ', href: '/faq' },
 ] as const
 
 const legalLinks = [
+  { label: 'Affiliate Disclosure', href: ROUTES.AFFILIATE },
   { label: 'Privacy Policy', href: ROUTES.PRIVACY },
   { label: 'Terms', href: ROUTES.TERMS },
-  { label: 'Affiliate Disclosure', href: ROUTES.AFFILIATE },
 ] as const
 
-const complianceBadges = ['DPDPA 2023', 'GDPR', 'FTC Compliant'] as const
+const complianceBadges = ['DPDPA 2023', 'GDPR', 'FTC Compliant', 'ONDC Ready', 'Startup India'] as const
 
 export default function Footer() {
   return (
@@ -37,7 +36,7 @@ export default function Footer() {
           </div>
           <p className="mt-3 text-2xl font-black tracking-tighter text-white">{SITE_NAME}</p>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-[#64748B]">
-            India&apos;s sovereign price aggregator. Zero checkout. Pure discovery.
+            The World&apos;s Smartest Price Aggregator. Zero checkout. Pure discovery.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -49,25 +48,25 @@ export default function Footer() {
           </div>
 
           <div className="mt-6 text-sm text-[#64748B]">
-            <p>Built with sovereignty by</p>
-            <a
+            <p>Powered by</p>
+            
               href="https://nexqon.com"
               target="_blank"
               rel="noopener noreferrer"
               className="font-bold text-skyline-primary hover:underline"
             >
-              NEXQON Engineering
+              NEXQON HOLDINGS
             </a>
-            <p className="mt-1 text-xs text-[#334155]">v2.0.0 · March 2026</p>
+            <p className="mt-1 text-xs text-[#334155]">cloudbasket vs.cb.1.0 · March 2026</p>
           </div>
 
           <div className="mt-4 flex items-center gap-2">
-            <a
-              href="https://wa.me/919999999999"
+            
+              href={`https://wa.me/${process.env.NEXT_PUBLIC_WA_NUMBER ?? ''}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white transition-opacity hover:opacity-90"
-              aria-label="Join CloudBasket WhatsApp Community"
+              aria-label="Chat with CloudBasket on WhatsApp"
             >
               <MessageCircle size={14} />
             </a>
@@ -116,13 +115,9 @@ export default function Footer() {
 
       <div className="border-t border-[#1E293B] py-6">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center sm:flex-row sm:text-start">
-          <p className="text-xs text-[#334155]">© 2026 CloudBasket. All rights reserved.</p>
-          <div className="flex items-center gap-2">
-            <p className="text-xs text-[#1E293B]">Powered by NEXQON Sovereign Technology</p>
-            <span className="cb-badge border-[#FF9933]/30 bg-[#FF9933]/10 text-xs text-[#FF9933]">🇮🇳 Made for Bharat</span>
-            <span className="cb-badge text-xs">Serving India & Globe</span>
-          </div>
-          <p className="font-mono-cb text-xs text-[#1E293B]">v2.0.0-sovereign</p>
+          <p className="text-xs text-[#334155]">Created by VERSION STATE {'{VS.IN+}'}</p>
+          <p className="text-xs text-[#334155]">cloudbasket vs.cb.1.0 · March 2026</p>
+          <p className="text-xs text-[#334155]">Powered by NEXQON HOLDINGS</p>
         </div>
       </div>
     </footer>

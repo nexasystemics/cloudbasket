@@ -4,7 +4,7 @@ import { MapPin, Clock, Briefcase, ArrowRight, Code, PenTool, TrendingUp, Search
 
 export const metadata: Metadata = {
   title: "Careers at NEXQON — Join Our Team",
-  description: "Join NEXQON Engineering and build India's sovereign digital infrastructure.",
+  description: "Join NEXQON HOLDINGS and build India's global digital infrastructure.",
 }
 const BENEFITS: ReadonlyArray<{ title: string; desc: string }> = [
   { title: 'Remote First', desc: 'Work from anywhere in India' },
@@ -21,7 +21,7 @@ const JOBS_DATA = [
     type: 'Full-time',
     icon: Code,
     color: '#039BE5',
-    desc: 'Build sovereign-grade React/Next.js interfaces at NEXQON scale.',
+    desc: 'Build global-grade React/Next.js interfaces at NEXQON scale.',
   },
   {
     title: 'Product Manager — Commerce',
@@ -66,7 +66,7 @@ const JOBS_DATA = [
     type: 'Full-time',
     icon: PenTool,
     color: '#EF4444',
-    desc: 'Design sovereign-grade interfaces for 18+ NEXQON products.',
+    desc: 'Design global-grade interfaces for 18+ NEXQON products.',
   },
 ] as const
 
@@ -78,9 +78,9 @@ export default function CareersPage() {
           <span className="cb-badge cb-badge-blue mb-6">
             <Briefcase size={14} /> We're Hiring
           </span>
-          <h1 className="text-5xl font-black tracking-tighter">Join NEXQON Engineering</h1>
+          <h1 className="text-5xl font-black tracking-tighter">Join NEXQON HOLDINGS</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-[var(--cb-text-muted)]">
-            We are building India's sovereign digital infrastructure. 18+ products. 1 mission. Remote first.
+            We are building India's global digital infrastructure. 18+ products. 1 mission. Remote first.
           </p>
         </div>
       </section>
@@ -144,4 +144,5 @@ export default function CareersPage() {
     </main>
   )
 }
+
 

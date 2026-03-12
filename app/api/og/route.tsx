@@ -10,7 +10,7 @@ const clampTitle = (value: string): string => {
 export async function GET(request: NextRequest): Promise<ImageResponse> {
   const { searchParams } = request.nextUrl
   const title = clampTitle(searchParams.get('title') ?? 'CloudBasket — Everything in One Basket')
-  const subtitle = searchParams.get('sub') ?? "India's Sovereign Price Aggregator"
+  const subtitle = searchParams.get('sub') ?? "The World's Smartest Price Aggregator"
 
   return new ImageResponse(
     (
@@ -69,3 +69,4 @@ export async function GET(request: NextRequest): Promise<ImageResponse> {
     { width: 1200, height: 630 },
   )
 }
+

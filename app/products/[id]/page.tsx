@@ -4,3 +4,4 @@ export default async function ProductsIdRedirect({ params }: { params: Promise<{
   const { id } = await params
   redirect('/product/' + id)
 }
+

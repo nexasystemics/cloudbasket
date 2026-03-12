@@ -126,7 +126,7 @@ export default function AdminPage() {
             <Shield size={24} className="text-[#039BE5]" />
             <div>
               <p className="font-black text-white">CloudBasket Admin</p>
-              <p className="text-xs text-[var(--cb-text-muted)]">NEXQON Sovereign Control Panel</p>
+              <p className="text-xs text-[var(--cb-text-muted)]">NEXQON Control Panel</p>
             </div>
           </div>
           <div className="flex gap-3">
@@ -390,3 +390,4 @@ export default function AdminPage() {
     </main>
   )
 }
+

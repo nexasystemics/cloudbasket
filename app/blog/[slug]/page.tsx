@@ -170,7 +170,7 @@ const BLOG_POSTS: BlogPost[] = [
       { type: 'paragraph', text: 'Every deal link on CloudBasket uses our Income Shield - a /go/ redirect that routes you to the retailer with the best current price. We earn a small affiliate commission. You pay nothing extra.' },
       { type: 'heading', text: 'Zero Checkout Philosophy' },
       { type: 'paragraph', text: 'By never handling payments, we eliminate risk for you. No data breaches, no payment failures, no refund hassles. Just the best price, direct from the retailer.' },
-      { type: 'conclusion', text: 'CloudBasket is built by NEXQON Holdings - sovereign digital infrastructure for India.' }
+      { type: 'conclusion', text: 'CloudBasket is built by NEXQON HOLDINGS — global price intelligence platform.' }
     ],
     tags: ['About', 'How It Works', 'NEXQON']
   }
@@ -332,3 +332,4 @@ export default async function BlogPostPage({
     </main>
   )
 }
+

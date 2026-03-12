@@ -11,7 +11,7 @@ export async function proxy(request: NextRequest) {
         '.box{text-align:center;}.title{font-size:48px;font-weight:900;color:#039BE5;}' +
         '.sub{color:#64748B;margin-top:12px;}</style></head>' +
         '<body><div class="box"><div class="title">CloudBasket</div>' +
-        '<div class="sub">Coming Soon. Something sovereign is loading.</div>' +
+        '<div class="sub">Coming Soon. Something amazing is loading.</div>' +
         '</div></body></html>',
       {
         status: 503,
@@ -58,3 +58,4 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: ['/((?!_next|api|brand|favicon).*)'],
 }
+

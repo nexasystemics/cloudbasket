@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     'cloudbasket',
     'deal finder india',
   ],
-  authors: [{ name: 'NEXQON Engineering', url: 'https://nexqon.com' }],
+  authors: [{ name: 'NEXQON HOLDINGS', url: 'https://nexqon.com' }],
   creator: 'NEXQON Holdings',
   publisher: 'CloudBasket',
   robots: {
@@ -93,3 +93,4 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     </html>
   )
 }
+

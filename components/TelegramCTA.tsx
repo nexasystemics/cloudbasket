@@ -34,10 +34,11 @@ export function TelegramCTA({ variant = 'banner' }: { variant?: 'banner' | 'inli
         </Link>
       </div>
       <div className="flex flex-wrap gap-3 mt-4 text-xs text-muted">
-        {['📱 Mobile alerts', '⚡ Instant flash deals', '🔕 Mute anytime', '🇮🇳 India deals only'].map((text) => (
+        {['📱 Mobile alerts', '⚡ Instant flash deals', '🔕 Mute anytime', '🌍 Global deals'].map((text) => (
           <span key={text}>{text}</span>
         ))}
       </div>
     </div>
   )
 }
+

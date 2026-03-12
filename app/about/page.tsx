@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { Shield, Zap, Globe, TrendingDown, Users, Award, Target, Heart } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: "About CloudBasket — India's Sovereign Price Aggregator",
-  description: "Learn how CloudBasket compares prices across 50+ stores to save Indian shoppers money.",
+  title: "About CloudBasket — The World's Smartest Price Aggregator",
+  description: "Learn how CloudBasket compares prices across 50+ global stores to help shoppers find the best deals.",
 }
 const STATS: ReadonlyArray<{ value: string; label: string }> = [
   { value: '2,000+', label: 'Products Tracked' },
@@ -54,10 +54,10 @@ export default function AboutPage() {
         <div className="mx-auto max-w-4xl px-6 text-center">
           <span className="cb-badge cb-badge-blue mb-6">About CloudBasket</span>
           <h1 className="text-5xl font-black leading-tight tracking-tighter">
-            India's Sovereign Commerce Intelligence Platform
+            The World's Smartest Price Intelligence Platform
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-[var(--cb-text-muted)]">
-            CloudBasket was built with one mission: help every Indian shopper find the absolute best price without
+            CloudBasket was built with one mission: help every shopper find the absolute best price without
             ever trusting a single retailer. We compare. You decide. You save.
           </p>
           <div className="mt-8 flex justify-center gap-4">
@@ -97,15 +97,14 @@ export default function AboutPage() {
             <h2 className="text-3xl font-black tracking-tighter">Zero Checkout. Pure Discovery.</h2>
             <p className="mt-3 leading-relaxed text-[var(--cb-text-muted)]">
               We are not a store. We never hold inventory. We never process payments. CloudBasket is pure
-              intelligence, a sovereign price aggregator that scans 50+ retailers every hour to surface the best deals
-              for Indian shoppers. Every rupee saved is a win for our users.
+              intelligence, a global price aggregator that scans 50+ retailers every hour to surface the best deals
+              worldwide. Every dollar saved is a win for our users.
             </p>
             <p className="mt-3 leading-relaxed text-[var(--cb-text-muted)]">
-              Built by NEXQON Engineering, CloudBasket is part of India's sovereign digital infrastructure stack,
-              designed to last 20 years.
+              Built by NEXQON HOLDINGS, CloudBasket is engineered for global scale, designed to last 20 years.
             </p>
             <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#039BE5]">
-              <Target size={16} /> Sovereign architecture. Measurable savings.
+              <Target size={16} /> Global architecture. Measurable savings.
             </div>
           </div>
         </div>
@@ -137,19 +136,20 @@ export default function AboutPage() {
       <section className="mt-10 bg-[var(--cb-surface-2)] py-16">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Shield size={32} className="mx-auto mb-4 text-[#039BE5]" />
-          <p className="text-lg font-black">Built by NEXQON Engineering</p>
+          <p className="text-lg font-black">Powered by NEXQON HOLDINGS</p>
           <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
-            © 2026 NEXQON Holdings · CloudBasket Sovereign Platform · v2.0.0
+            © 2026 NEXQON Holdings · cloudbasket vs.cb.1.0 · v2.0.0
           </p>
           <p className="mt-1 text-xs text-[var(--cb-text-muted)]">
-            DPDPA 2023 Compliant · Zero Checkout · Sovereign Architecture
+            DPDPA 2023 · GDPR · FTC Compliant · Zero Checkout
           </p>
           <p className="mt-3 inline-flex items-center gap-1 text-xs text-[#039BE5]">
-            <Heart size={12} /> Built in India for Indian shoppers
+            <Heart size={12} /> Built for shoppers worldwide
           </p>
         </div>
       </section>
     </main>
   )
 }
+
 

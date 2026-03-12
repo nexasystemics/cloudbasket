@@ -102,11 +102,12 @@ export default function TermsPage() {
             </Link>
           </div>
           <p className="mt-3 inline-flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
-            <AlertCircle size={12} /> NEXQON sovereign compliance coverage active
+            <AlertCircle size={12} /> NEXQON compliance coverage active
           </p>
         </article>
       </section>
     </main>
   )
 }
+
 

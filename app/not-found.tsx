@@ -57,8 +57,9 @@ export default function NotFound() {
           Back to home
         </Link>
 
-        <p className="text-muted mt-12 text-xs">Powered by NEXQON Sovereign Technology v2.0.0</p>
+        <p className="text-muted mt-12 text-xs">Powered by NEXQON HOLDINGS v2.0.0</p>
       </div>
     </main>
   )
 }
+

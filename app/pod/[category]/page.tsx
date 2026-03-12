@@ -46,7 +46,7 @@ const POD_META: Record<string, PODCategory> = {
       { id: 'tshirt-9', name: 'Minimal White Tee', image: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=600&q=80', price: 579, originalPrice: 879, rating: 4.2, reviews: 55, colors: ['#FFFFFF', '#E5E7EB', '#D1D5DB'], sizes: TSHIRT_SIZES },
       { id: 'tshirt-10', name: 'Retro Gradient Tee', image: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80', price: 849, originalPrice: 1249, rating: 4.8, reviews: 141, colors: ['#F97316', '#8B5CF6', '#14B8A6'], sizes: TSHIRT_SIZES },
       { id: 'tshirt-11', name: 'Creator Edition Tee', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80', price: 689, originalPrice: 989, rating: 4.5, reviews: 93, colors: ['#111827', '#10B981', '#F59E0B'], sizes: TSHIRT_SIZES },
-      { id: 'tshirt-12', name: 'Sovereign Blue Tee', image: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=600&q=80', price: 769, originalPrice: 1149, rating: 4.7, reviews: 176, colors: ['#039BE5', '#1D4ED8', '#60A5FA'], sizes: TSHIRT_SIZES },
+      { id: 'tshirt-12', name: 'Midnight Blue Tee', image: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=600&q=80', price: 769, originalPrice: 1149, rating: 4.7, reviews: 176, colors: ['#039BE5', '#1D4ED8', '#60A5FA'], sizes: TSHIRT_SIZES },
     ],
   },
   mugs: {
@@ -58,7 +58,7 @@ const POD_META: Record<string, PODCategory> = {
       { id: 'mug-1', name: 'India Pride Mug', image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80', price: 349, originalPrice: 549, rating: 4.6, reviews: 322, colors: ['#FFFFFF', '#111827', '#EF4444'], sizes: MUG_SIZES },
       { id: 'mug-2', name: 'CloudBasket Mug', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80', price: 399, originalPrice: 599, rating: 4.7, reviews: 178, colors: ['#039BE5', '#FFFFFF', '#0F172A'], sizes: MUG_SIZES },
       { id: 'mug-3', name: 'Minimal White Mug', image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&q=80', price: 329, originalPrice: 499, rating: 4.4, reviews: 95, colors: ['#FFFFFF', '#E5E7EB', '#94A3B8'], sizes: MUG_SIZES },
-      { id: 'mug-4', name: 'Sovereign Black Mug', image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80', price: 379, originalPrice: 569, rating: 4.5, reviews: 111, colors: ['#000000', '#374151', '#6B7280'], sizes: MUG_SIZES },
+      { id: 'mug-4', name: 'Classic Black Mug', image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80', price: 379, originalPrice: 569, rating: 4.5, reviews: 111, colors: ['#000000', '#374151', '#6B7280'], sizes: MUG_SIZES },
       { id: 'mug-5', name: 'Motivation Quote Mug', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80', price: 299, originalPrice: 449, rating: 4.2, reviews: 67, colors: ['#F59E0B', '#FFFFFF', '#111827'], sizes: MUG_SIZES },
       { id: 'mug-6', name: 'Code Fuel Mug', image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&q=80', price: 429, originalPrice: 629, rating: 4.8, reviews: 206, colors: ['#111827', '#10B981', '#22C55E'], sizes: MUG_SIZES },
       { id: 'mug-7', name: 'Blue Circuit Mug', image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80', price: 389, originalPrice: 579, rating: 4.3, reviews: 88, colors: ['#1D4ED8', '#60A5FA', '#DBEAFE'], sizes: MUG_SIZES },
@@ -230,3 +230,4 @@ export default async function PODCategoryPage({
     </main>
   )
 }
+

@@ -12,7 +12,8 @@ export default function OfflinePage() {
       <button onClick={() => window.location.reload()} className="cb-btn cb-btn-primary">
         Try Again
       </button>
-      <p className="text-xs text-muted">Powered by NEXQON Sovereign Technology v2.0.0</p>
+      <p className="text-xs text-muted">Powered by NEXQON HOLDINGS Technology</p>
     </div>
   )
 }
+

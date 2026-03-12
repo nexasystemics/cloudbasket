@@ -49,19 +49,12 @@ const PROMO_TICKER_ITEMS: readonly string[] = [
   ' 50+ stores compared in real-time',
 ]
 
-const COUNTRY_OPTIONS: ReadonlyArray<{ value: CountryCode; label: string }> = [
-  { value: 'IN', label: 'India' },
-  { value: 'US', label: 'USA' },
-  { value: 'EU', label: 'Europe' },
-  { value: 'GB', label: 'United Kingdom' },
-]
-
-const COUNTRY_FLAGS: Record<CountryCode, string> = {
-  IN: '🇮🇳',
-  US: '🇺🇸',
-  EU: '🇪🇺',
-  GB: '🇬🇧',
-}
+const COUNTRY_OPTIONS: ReadonlyArray<{ value: CountryCode; label: string }> = [
+  { value: 'IN', label: 'India' },
+  { value: 'US', label: 'United States' },
+  { value: 'EU', label: 'Europe' },
+  { value: 'GB', label: 'United Kingdom' },
+]
 
 const DEAL_DROPDOWN: readonly DropdownItem[] = [
   { label: 'Flash Sales', href: '/deals/flash', icon: Zap },
@@ -241,16 +234,17 @@ export default function Header(): JSX.Element {
     [setCountry],
   )
 
-  const toggleTheme = useCallback(() => {
-    if (resolvedTheme === 'dark') {
-      setTheme('light')
-      return
-    }
+  const toggleTheme = useCallback(() => {
+    if (resolvedTheme === 'dark') {
+      setTheme('light')
+      return
+    }
     setTheme('dark')
   }, [resolvedTheme, setTheme])
-
-  const authRoute = user?.role === 'Admin' ? ROUTES.ADMIN : ROUTES.LOGIN
-  const authLabel = user?.role === 'Admin' ? 'Admin' : 'Sign In'
+
+  const authRoute = user?.role === 'Admin' ? ROUTES.ADMIN : ROUTES.LOGIN
+  const authLabel = user?.role === 'Admin' ? 'Admin' : 'Sign In'
+  const selectedCountry: CountryCode = mounted ? country : 'IN'
 
   const isItemActive = useCallback(
     (href: string): boolean => pathname === href || pathname.startsWith(`${href}/`),
@@ -364,18 +358,18 @@ export default function Header(): JSX.Element {
 
           <label className="glass-panel flex h-9 items-center gap-1 rounded-lg px-2 text-[11px]">
             <Globe size={13} className="text-[var(--cb-text-muted)]" />
-            <select
-              value={country}
-              onChange={handleCountryChange}
-              className="bg-transparent text-[11px] font-semibold text-[var(--cb-text-primary)] outline-none"
-              aria-label="Select country"
-            >
-              {COUNTRY_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {COUNTRY_FLAGS[option.value]} {option.label}
-                </option>
-              ))}
-            </select>
+            <select
+              value={selectedCountry}
+              onChange={handleCountryChange}
+              className="bg-transparent text-[11px] font-semibold text-[var(--cb-text-primary)] outline-none"
+              aria-label="Select country"
+            >
+              {COUNTRY_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </label>
 
           <button
@@ -462,18 +456,18 @@ export default function Header(): JSX.Element {
           <div className="mt-4 flex items-center gap-2">
             <label className="glass-panel flex h-10 flex-1 items-center gap-2 rounded-lg px-3">
               <Globe size={14} className="text-[var(--cb-text-muted)]" />
-              <select
-                value={country}
-                onChange={handleCountryChange}
-                className="w-full bg-transparent text-sm outline-none"
-                aria-label="Select country mobile"
-              >
-                {COUNTRY_OPTIONS.map((option) => (
-                  <option key={`mobile-${option.value}`} value={option.value}>
-                    {COUNTRY_FLAGS[option.value]} {option.label}
-                  </option>
-                ))}
-              </select>
+              <select
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                className="w-full bg-transparent text-sm outline-none"
+                aria-label="Select country mobile"
+              >
+                {COUNTRY_OPTIONS.map((option) => (
+                  <option key={`mobile-${option.value}`} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </label>
 
             <button

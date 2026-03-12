@@ -31,12 +31,12 @@
 
 /* ── LIGHT MODE TOKENS ── */
 :root {
-  --cb-bg               : #FFFFFF;
-  --cb-surface          : #FFFFFF;
+  --cb-bg               : #ffffff;
+  --cb-surface          : #f8fafc;
   --cb-surface-2        : #F8FAFC;
   --cb-surface-3        : #F1F5F9;
-  --cb-border           : #E2E8F0;
-  --cb-text-primary     : #09090B;
+  --cb-border           : #e2e8f0;
+  --cb-text-primary     : #0f172a;
   --cb-text-secondary   : #334155;
   --cb-text-muted       : #64748B;
   --cb-shadow           : 0 1px 3px rgba(0,0,0,0.08),
@@ -54,12 +54,12 @@
 
 /* ── DARK MODE TOKENS ── */
 .dark {
-  --cb-bg               : #09090B;
-  --cb-surface          : #0F172A;
+  --cb-bg               : #09090b;
+  --cb-surface          : #18181b;
   --cb-surface-2        : #1E293B;
   --cb-surface-3        : #334155;
-  --cb-border           : #1E293B;
-  --cb-text-primary     : #F8FAFC;
+  --cb-border           : #27272a;
+  --cb-text-primary     : #f4f4f5;
   --cb-text-secondary   : #CBD5E1;
   --cb-text-muted       : #94A3B8;
   --cb-shadow           : 0 1px 3px rgba(0,0,0,0.4);

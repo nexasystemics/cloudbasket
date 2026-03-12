@@ -3,10 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { SlidersHorizontal, ExternalLink, Grid3X3, List, ChevronLeft, ChevronRight } from 'lucide-react'
 import { PRODUCTS as CATALOG } from '@/lib/products-data'
 
 type Product = (typeof CATALOG)[number]
+type CategoryFilter = 'All' | Product['category']
 
 const PAGE_SIZE = 20
 
@@ -20,6 +22,23 @@ const SORT_OPTIONS = [
 ] as const
 
 type SortValue = typeof SORT_OPTIONS[number]['value']
+
+const CATEGORY_LOOKUP: Readonly<Record<string, CategoryFilter>> = CATALOG.reduce<Record<string, CategoryFilter>>(
+  (lookup, product) => {
+    lookup[product.category.toLowerCase()] = product.category
+    return lookup
+  },
+  { all: 'All' },
+)
+
+function normalizeCategory(categoryParam: string | null): CategoryFilter {
+  if (categoryParam === null) {
+    return 'All'
+  }
+
+  const normalized = categoryParam.trim().toLowerCase()
+  return CATEGORY_LOOKUP[normalized] ?? 'All'
+}
 
 function getPlatformBadgeClass(platform: Product['platform']): string {
   if (platform === 'Amazon') return 'bg-[#FF9900]/10 text-[#FF9900] border border-[#FF9900]/20'
@@ -66,7 +85,13 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 export default function ProductsPageClient() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All')
+  const searchParams = useSearchParams()
+  const categoryParam = searchParams.get('category')
+  const requestedCategory = useMemo(
+    () => normalizeCategory(categoryParam),
+    [categoryParam],
+  )
+  const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>(requestedCategory)
   const [sortBy, setSortBy] = useState<SortValue>('relevance')
   const [minRating, setMinRating] = useState<number>(0)
   const [page, setPage] = useState(1)
@@ -89,6 +114,10 @@ export default function ProductsPageClient() {
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+
+  useEffect(() => {
+    setSelectedCategory(requestedCategory)
+  }, [requestedCategory])
 
   useEffect(() => { setPage(1) }, [selectedCategory, sortBy, minRating])
 

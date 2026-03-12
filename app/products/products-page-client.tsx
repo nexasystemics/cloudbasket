@@ -3,308 +3,183 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { SlidersHorizontal, ExternalLink, Grid3X3, List, TrendingDown, Zap } from 'lucide-react'
+import { SlidersHorizontal, ExternalLink, Grid3X3, List, ChevronLeft, ChevronRight } from 'lucide-react'
 import { PRODUCTS as CATALOG } from '@/lib/products-data'
 
 type Product = (typeof CATALOG)[number]
 
-const PAGE_SIZE = 48
+const PAGE_SIZE = 20
 
-const CATEGORIES_FILTER: readonly string[] = [
-  'All',
-  'Mobiles',
-  'Laptops',
-  'Fashion',
-  'Home',
-  'Beauty',
-  'Sports',
-  'Books',
-  'Toys',
-]
+const CATEGORIES_FILTER = ['All','Mobiles','Laptops','Fashion','Home','Beauty','Sports','Books','Toys'] as const
 
-function getPlatformBadgeClass(source: Product['platform']): string {
-  if (platform === 'Amazon') {
-    return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
-  }
-  if (platform === 'Flipkart') {
-    return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
-  }
-  return 'cb-badge-green'
+const SORT_OPTIONS = [
+  { value: 'relevance', label: 'Relevance' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'rating', label: 'Top Rated' },
+] as const
+
+type SortValue = typeof SORT_OPTIONS[number]['value']
+
+function getPlatformBadgeClass(platform: Product['platform']): string {
+  if (platform === 'Amazon') return 'bg-[#FF9900]/10 text-[#FF9900] border border-[#FF9900]/20'
+  if (platform === 'Flipkart') return 'bg-[#2874F0]/10 text-[#2874F0] border border-[#2874F0]/20'
+  return 'bg-green-500/10 text-green-400 border border-green-500/20'
 }
 
-function getPlatformLabel(source: Product['platform']): string {
-  return platform === 'Myntra' ? 'Myntra' : source
-}
-
-function getLowestPriceBadge(product: Product): { label: string; className: string } | null {
-  if (product.originalPrice === null) {
-    return null
-  }
-  if (product.price <= product.originalPrice * 0.75) {
-    return { label: 'Lowest in 90 Days', className: 'cb-badge border-[#10B981] bg-[#10B981] text-white' }
-  }
-  if (product.price <= product.originalPrice * 0.85) {
-    return { label: 'Near Lowest Price', className: 'cb-badge cb-badge-green' }
-  }
-  return null
-}
-
-function ProductCard({ product, index }: { product: Product; index: number }) {
-  const originalPrice = product.originalPrice ?? Math.round(product.price * 1.2)
-  const discount = product.discount ?? Math.max(1, Math.round(((originalPrice - product.price) / originalPrice) * 100))
-  const lowestBadge = getLowestPriceBadge(product)
+function ProductCard({ product }: { product: Product }) {
+  const originalPrice = typeof product.originalPrice === 'string'
+    ? parseInt(product.originalPrice.replace(/[₹,]/g, ''), 10)
+    : product.priceValue * 1.2
+  const discount = Math.max(1, Math.round(((originalPrice - product.priceValue) / originalPrice) * 100))
 
   return (
-    <article id={`product-card-${index}`} className="cb-card group flex flex-col overflow-hidden">
-      <div className="relative h-48">
-        <Image
-          fill
-          className="object-cover"
-          src={product.imageUrlUrl || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
-          alt={product.name}
-        />
-
-        <div className="absolute left-2 top-2 flex flex-col gap-1">
-          {discount ? <span className="cb-badge cb-badge-green">-{discount}%</span> : null}
-          {product.inStock ? <span className="cb-badge cb-badge-orange">Trending</span> : null}
-        </div>
-        {lowestBadge ? (
-          <div className="absolute right-2 top-2">
-            <span className={lowestBadge.className}>{lowestBadge.label}</span>
-          </div>
-        ) : null}
-
-        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-          <Link href={`/product/${product.id}`} className="cb-btn bg-white px-4 py-2 text-xs text-[#09090B]">
-            Quick View
-          </Link>
-        </div>
-      </div>
-
-      <div className="flex flex-1 flex-col gap-1 p-3">
-        <span className={`cb-badge w-fit text-[10px] ${getPlatformBadgeClass(product.platform)}`}>
-          {getPlatformLabel(product.platform)}
+    <Link href={`/product/${product.id}`} className="cb-card group flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
+      <div className="relative h-48 bg-[var(--cb-surface-2)]">
+        <Image src={product.imageUrl} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+        <span className="absolute top-2 left-2 text-xs font-black bg-rose-600 text-white px-2 py-1 rounded-full">
+          -{discount}%
         </span>
-
-        <p className="text-[10px] font-black uppercase text-[var(--cb-text-muted)]">{product.brand}</p>
-
-        <h3 className="line-clamp-2 text-xs font-bold">{product.name}</h3>
-
-        <p className="text-xs text-[#F5C842]">★★★★☆</p>
-
-        <div className="mt-1 flex items-baseline gap-2">
-          <p className="price-current">₹{product.price.toLocaleString('en-IN')}</p>
-          <p className="price-original text-xs">₹{originalPrice.toLocaleString('en-IN')}</p>
+      </div>
+      <div className="p-4 flex flex-col gap-2 flex-1">
+        <p className="text-xs font-semibold text-muted uppercase tracking-wide">{product.brand}</p>
+        <p className="font-bold text-sm leading-snug line-clamp-2">{product.name}</p>
+        <div className="flex items-center gap-1 text-xs">
+          <span className="text-yellow-400">{'★'.repeat(Math.round(product.rating))}</span>
+          <span className="text-muted">({product.reviews})</span>
         </div>
-        <p className="price-savings text-xs">Save {discount}%</p>
-
-        <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-auto w-full py-2 text-xs">
-          View Deal <ExternalLink size={12} />
-        </Link>
+        <div className="mt-auto flex items-center justify-between pt-2">
+          <div>
+            <p className="text-lg font-black">₹{product.priceValue.toLocaleString('en-IN')}</p>
+            <p className="text-xs text-muted line-through">{product.originalPrice}</p>
+          </div>
+          <span className={`text-xs font-semibold px-2 py-1 rounded ${getPlatformBadgeClass(product.platform)}`}>
+            {product.platform}
+          </span>
+        </div>
+        <button className="w-full cb-btn cb-btn-primary mt-2 flex items-center justify-center gap-2 text-sm">
+          <ExternalLink size={14} /> View Deal
+        </button>
       </div>
-    </article>
-  )
-}
-
-function ProductSkeleton({ index }: { index: number }) {
-  return (
-    <div
-      key={`skeleton-${index}`}
-      className="cb-card flex animate-pulse flex-col overflow-hidden"
-      aria-hidden="true"
-    >
-      <div className="h-48 bg-white/5" />
-      <div className="space-y-2 p-3">
-        <div className="h-3 w-16 rounded bg-white/10" />
-        <div className="h-3 w-24 rounded bg-white/10" />
-        <div className="h-4 w-full rounded bg-white/10" />
-        <div className="h-4 w-4/5 rounded bg-white/10" />
-        <div className="h-4 w-2/5 rounded bg-white/10" />
-        <div className="mt-4 h-8 w-full rounded bg-white/10" />
-      </div>
-    </div>
+    </Link>
   )
 }
 
 export default function ProductsPageClient() {
-  const [count, setCount] = useState(PAGE_SIZE)
-  const [isPaginating, setIsPaginating] = useState(false)
-  const prevCountRef = useRef(PAGE_SIZE)
+  const [selectedCategory, setSelectedCategory] = useState<string>('All')
+  const [sortBy, setSortBy] = useState<SortValue>('relevance')
+  const [minRating, setMinRating] = useState<number>(0)
+  const [page, setPage] = useState(1)
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const topRef = useRef<HTMLDivElement>(null)
 
-  const visibleCount = Math.min(count, CATALOG.length)
-  const visibleProducts = useMemo(() => CATALOG.slice(0, visibleCount), [visibleCount])
-  const hasMore = visibleCount < CATALOG.length
+  const filtered = useMemo(() => {
+    let result = [...CATALOG]
+    if (selectedCategory !== 'All') {
+      result = result.filter((p) => p.category === selectedCategory)
+    }
+    if (minRating > 0) {
+      result = result.filter((p) => p.rating >= minRating)
+    }
+    if (sortBy === 'price-asc') result.sort((a, b) => a.priceValue - b.priceValue)
+    else if (sortBy === 'price-desc') result.sort((a, b) => b.priceValue - a.priceValue)
+    else if (sortBy === 'rating') result.sort((a, b) => b.rating - a.rating)
+    return result
+  }, [selectedCategory, sortBy, minRating])
 
-  useEffect(() => {
-    if (visibleCount <= prevCountRef.current) {
-      return
-    }
-    const firstNewCard = document.getElementById(`product-card-${prevCountRef.current}`)
-    if (firstNewCard) {
-      firstNewCard.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-    prevCountRef.current = visibleCount
-  }, [visibleCount])
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
-  const onLoadMore = () => {
-    if (!hasMore || isPaginating) {
-      return
-    }
-    setIsPaginating(true)
-    window.setTimeout(() => {
-      setCount((prev) => Math.min(prev + PAGE_SIZE, CATALOG.length))
-      setIsPaginating(false)
-    }, 180)
-  }
+  useEffect(() => { setPage(1) }, [selectedCategory, sortBy, minRating])
+
+  const scrollTop = () => topRef.current?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <main className="bg-[var(--cb-bg)]">
-      <section className="bg-[var(--cb-surface-2)] py-12">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-4xl font-black tracking-tighter">All Products</h1>
-            <p className="mt-2 text-[var(--cb-text-muted)]">2,000+ deals tracked across Amazon, Flipkart & Myntra</p>
-          </div>
-          <div className="flex gap-3">
-            <Link href="/deals/flash" className="cb-btn cb-btn-primary gap-2">
-              <Zap size={16} /> Flash Deals
-            </Link>
-            <button type="button" className="cb-btn cb-btn-ghost gap-2">
-              <SlidersHorizontal size={16} /> Filters
-            </button>
-          </div>
+    <main className="bg-[var(--cb-bg)] min-h-screen" ref={topRef}>
+      <section className="bg-[var(--cb-surface-2)] py-10">
+        <div className="mx-auto max-w-6xl px-6">
+          <h1 className="text-3xl font-black tracking-tighter">All Products</h1>
+          <p className="mt-1 text-muted">Compare prices across Amazon, Flipkart and more</p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-6">
-        <div className="flex flex-wrap gap-2">
-          {CATEGORIES_FILTER.map((category, index) => (
-            <span
-              key={category}
-              className={`cb-badge cursor-pointer px-4 py-2 text-sm ${index === 0 ? 'cb-badge-blue' : 'hover:cb-badge-blue'}`}
-            >
-              {category}
-            </span>
+      <section className="mx-auto max-w-6xl px-6 py-6">
+        <div className="flex flex-wrap gap-2 mb-6">
+          {CATEGORIES_FILTER.map((cat) => (
+            <button key={cat} onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition ${
+                selectedCategory === cat
+                  ? 'bg-blue-600 text-white border-blue-600'
+                  : 'border-[var(--cb-border)] text-muted hover:text-white hover:border-white'
+              }`}>
+              {cat}
+            </button>
           ))}
         </div>
-      </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-4">
-        <div className="ad-slot-leaderboard">Advertisement · Google AdSense · 728×90</div>
-      </section>
-
-      <section className="mx-auto flex max-w-7xl gap-6 px-6 pb-16">
-        <aside className="hidden w-56 flex-shrink-0 md:block">
-          <div className="cb-card p-5">
-            <div className="mb-5 flex items-center gap-2">
-              <SlidersHorizontal size={16} className="text-[#039BE5]" />
-              <p className="text-sm font-black">Filters</p>
-            </div>
-
-            <div>
-              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Price Range</p>
-              <div className="grid grid-cols-2 gap-2">
-                <input className="cb-input py-2 text-xs" placeholder="Min ₹" />
-                <input className="cb-input py-2 text-xs" placeholder="Max ₹" />
-              </div>
-            </div>
-
-            <div className="mt-5">
-              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Sort By</p>
-              <select className="cb-input w-full py-2 text-xs">
-                <option>Relevance</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Newest</option>
-                <option>Top Rated</option>
-              </select>
-            </div>
-
-            <div className="mt-5">
-              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Brands</p>
-              {['Samsung', 'Apple', 'OnePlus', 'Xiaomi', 'HP', 'Dell', 'Sony', 'Nike'].map((brand) => (
-                <label key={brand} className="flex items-center gap-2 py-1">
-                  <input type="checkbox" className="rounded" />
-                  <span className="text-sm text-[var(--cb-text-secondary)]">{brand}</span>
-                </label>
+        <div className="flex flex-wrap items-center gap-4 mb-6">
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal size={16} className="text-muted" />
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortValue)}
+              className="cb-input text-sm py-1.5 px-3">
+              {SORT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
-            </div>
-
-            <div className="mt-5">
-              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Rating</p>
-              {['4★+', '3★+', 'Any'].map((rating) => (
-                <span key={rating} className="cb-badge mb-1 block w-fit cursor-pointer">
-                  {rating}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-5">
-              <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Platform</p>
-              {['Amazon', 'Flipkart', 'Myntra'].map((platform) => (
-                <label key={platform} className="flex items-center gap-2 py-1">
-                  <input type="checkbox" className="rounded" />
-                  <span className="text-sm text-[var(--cb-text-secondary)]">{platform}</span>
-                </label>
-              ))}
-            </div>
-
-            <button type="button" className="cb-btn cb-btn-primary mt-6 w-full">
-              Apply Filters
-            </button>
-            <button type="button" className="cb-btn cb-btn-ghost mt-2 w-full">
-              Reset
-            </button>
+            </select>
           </div>
-
-          <div className="ad-slot-rectangle mt-4">Advertisement · 300×250</div>
-        </aside>
-
-        <div className="flex-1">
-          <div className="mb-6 flex items-center justify-between gap-3">
-            <p className="text-sm text-[var(--cb-text-muted)]">
-              Showing {visibleCount.toLocaleString('en-IN')} of {CATALOG.length.toLocaleString('en-IN')} products
-            </p>
-            <div className="flex items-center gap-2">
-              <select className="cb-input w-auto py-1.5 text-xs">
-                <option>Relevance</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Top Rated</option>
-              </select>
-              <button type="button" className="cb-btn cb-btn-ghost p-2" aria-label="Grid view">
-                <Grid3X3 size={15} />
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted">Min Rating:</span>
+            {[0, 3, 4].map((r) => (
+              <button key={r} onClick={() => setMinRating(r)}
+                className={`px-3 py-1 rounded-full text-xs font-semibold border transition ${
+                  minRating === r ? 'bg-blue-600 text-white border-blue-600' : 'border-[var(--cb-border)] text-muted hover:border-white'
+                }`}>
+                {r === 0 ? 'Any' : `${r}★+`}
               </button>
-              <button type="button" className="cb-btn cb-btn-ghost p-2" aria-label="List view">
-                <List size={15} />
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {visibleProducts.map((product, index) => (
-              <ProductCard key={product.id} product={product} index={index} />
             ))}
-            {isPaginating ? Array.from({ length: PAGE_SIZE }, (_, index) => <ProductSkeleton key={index} index={index} />) : null}
           </div>
-
-          {hasMore ? (
-            <div className="mt-10 flex flex-col items-center gap-3">
-              <button type="button" className="cb-btn cb-btn-primary min-w-36" onClick={onLoadMore} disabled={isPaginating}>
-                {isPaginating ? 'Loading...' : 'Load More'}
-              </button>
-              <p className="text-xs text-[var(--cb-text-muted)]">
-                Showing {visibleCount.toLocaleString('en-IN')} of {CATALOG.length.toLocaleString('en-IN')} products
-              </p>
-            </div>
-          ) : null}
+          <div className="ml-auto flex items-center gap-2">
+            <button onClick={() => setViewMode('grid')} className={`p-1.5 rounded ${viewMode === 'grid' ? 'text-blue-400' : 'text-muted'}`}><Grid3X3 size={18} /></button>
+            <button onClick={() => setViewMode('list')} className={`p-1.5 rounded ${viewMode === 'list' ? 'text-blue-400' : 'text-muted'}`}><List size={18} /></button>
+          </div>
         </div>
-      </section>
 
-      <div className="mx-auto mb-8 flex max-w-7xl items-center justify-center gap-2 px-6 text-xs text-[var(--cb-text-muted)]">
-        <TrendingDown size={12} /> NEXQON price intelligence updates every hour
-      </div>
+        <p className="text-sm text-muted mb-4">
+          Showing {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length} products
+        </p>
+
+        <div className={viewMode === 'grid' ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5' : 'flex flex-col gap-4'}>
+          {paginated.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-3 mt-10">
+            <button onClick={() => { setPage((p) => Math.max(1, p - 1)); scrollTop() }}
+              disabled={page === 1}
+              className="p-2 rounded-lg border border-[var(--cb-border)] disabled:opacity-30 hover:border-white transition">
+              <ChevronLeft size={18} />
+            </button>
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              const pageNum = Math.max(1, Math.min(page - 2, totalPages - 4)) + i
+              return (
+                <button key={pageNum} onClick={() => { setPage(pageNum); scrollTop() }}
+                  className={`w-9 h-9 rounded-lg text-sm font-bold border transition ${
+                    pageNum === page ? 'bg-blue-600 text-white border-blue-600' : 'border-[var(--cb-border)] text-muted hover:border-white'
+                  }`}>
+                  {pageNum}
+                </button>
+              )
+            })}
+            <button onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); scrollTop() }}
+              disabled={page === totalPages}
+              className="p-2 rounded-lg border border-[var(--cb-border)] disabled:opacity-30 hover:border-white transition">
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        )}
+      </section>
     </main>
   )
 }
-

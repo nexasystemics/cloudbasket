@@ -69,12 +69,24 @@ const DEAL_DROPDOWN: readonly DropdownItem[] = [
   { label: 'CJ Network', href: '/cj', icon: Globe },
 ]
 
-const POD_DROPDOWN: readonly DropdownItem[] = [
-  { label: 'T-Shirts', href: '/pod/tshirts', icon: Zap },
-  { label: 'Mugs', href: '/pod/mugs', icon: TrendingDown },
-  { label: 'Phone Cases', href: '/pod/phone-cases', icon: Shield },
+const POD_DROPDOWN: readonly DropdownItem[] = [
+  { label: '👕 T-Shirts', href: '/pod/tshirts', icon: Zap },
+  { label: '☕ Mugs', href: '/pod/mugs', icon: TrendingDown },
+  { label: '📱 Phone Cases', href: '/pod/phone-cases', icon: Shield },
+  { label: '💼 Laptop Bags', href: '/pod/laptop-bags', icon: Globe },
+  { label: '👜 Tote Bags', href: '/pod/tote-bags', icon: Globe },
+  { label: '🧥 Hoodies', href: '/pod/hoodies', icon: Globe },
 ]
 
+const CATEGORY_EMOJI: Record<string, string> = {
+  'Mobiles': '📱', 'Laptops': '💻', 'Fashion': '👗', 'Home': '🏠',
+  'Beauty': '💄', 'Sports': '⚽', 'Books': '📚', 'Toys': '🧸',
+  'Gaming': '🎮', 'Health': '💊', 'Travel': '✈️', 'Grocery': '🛒',
+  'Automotive': '🚗', 'Appliances': '🔌', 'Furniture': '🪑',
+  'Baby': '👶', 'Pets': '🐾', 'Garden': '🌿', 'Office': '🖨️',
+  'Cameras': '📷', 'Audio': '🎧',
+}
+
 const PROMO_DISMISS_KEY = 'cb-promo-dismissed'
 
 export default function Header(): JSX.Element {
@@ -107,10 +119,8 @@ export default function Header(): JSX.Element {
 
       dropdown: MAIN_CATEGORIES.map((category) => ({
 
-        label: category,
-
+        label: `${CATEGORY_EMOJI[category] ?? "🛍️"} ${category}`,
         href: `/category/${encodeURIComponent(category.toLowerCase())}`,
-
         icon: Globe,
 
       })),
@@ -485,6 +495,7 @@ export default function Header(): JSX.Element {
     </header>
   )
 }
+
 
 
 

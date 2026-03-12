@@ -56,6 +56,14 @@ const POD_CATEGORIES = [
     count: 20,
     startPrice: 449,
   },
+  {
+    slug: 'laptop-bags',
+    name: 'Laptop Bags',
+    desc: 'Custom printed sleeves and bags for laptops',
+    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80',
+    count: 16,
+    startPrice: 799,
+  },
 ] as const
 
 const POD_FEATURES = [
@@ -76,8 +84,8 @@ const POD_FEATURES = [
   },
   {
     icon: Shield,
-    title: 'NEXQON Backed',
-    desc: 'Premium product line by NEXQON Holdings.',
+    title: 'CloudBasket Assured',
+    desc: 'Every order quality-checked before dispatch.',
   },
 ] as const
 
@@ -146,5 +154,6 @@ export default function PODPage() {
     </main>
   )
 }
+
 
 

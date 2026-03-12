@@ -1,7 +1,7 @@
 export const SITE_NAME = 'CloudBasket'
 export const SITE_URL = 'https://cloudbasket.in'
-export const SITE_DESCRIPTION = "The World's Smartest Price Aggregator"
-export const SITE_TAGLINE = 'Discover. Compare. Save.'
+export const SITE_DESCRIPTION = "Compare Prices. Discover Deals. Shop Smarter."
+export const SITE_TAGLINE = 'One platform. Every store. Zero confusion.'
 
 export const AFFILIATE_TAGS = {
   AMAZON: 'cloudbasket-21',
@@ -44,25 +44,26 @@ export const ROUTES = {
 
 export const MAIN_CATEGORIES = [
   'Automotive',
-  'Beauty',
+  'Beauty & Care',
   'Books',
   'Electronics',
   'Fashion',
   'Finance',
+  'Food & Grocery',
   'Gaming',
-  'Grocery',
   'Health',
-  'Home',
-  'Laptops',
-  'Mobiles',
-  'POD',
-  'Sports',
-  'Toys',
-  'Travel',
-  'Watches',
-  'Jewellery',
-  'Courses',
+  'Home & Kitchen',
   'Investments',
+  'Jewellery',
+  'Kids & Toys',
+  'Laptops & PCs',
+  'Mobiles',
+  'Music',
+  'Online Courses',
+  'Print on Demand',
+  'Sports',
+  'Travel & Hotels',
+  'Watches',
 ] as const
 
 export const PAGINATION = {

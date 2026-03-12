@@ -1,32 +1,65 @@
+import Link from 'next/link'
+
 export function IndiaTrustBar() {
   const badges = [
-    { icon: '🇮🇳', label: 'Global Price Discovery', sub: 'Zero checkout. Pure discovery.' },
-    { icon: '🔐', label: 'DPDP Compliant', sub: 'Data stored in India' },
-    { icon: '✅', label: 'RBI Partners', sub: 'Razorpay · Cashfree' },
-    { icon: '⚡', label: 'ONDC Ready', sub: 'Open commerce protocol' },
-    { icon: '🏛️', label: 'Startup India', sub: 'DIPP recognised' },
-    { icon: '📈', label: '50+ Stores Compared', sub: 'Updated every hour' },
+    {
+      icon: '🌐',
+      label: 'Global Price Discovery',
+      sub: 'Compare prices worldwide',
+      href: '/about',
+    },
+    {
+      icon: '🔐',
+      label: 'DPDPA 2023',
+      sub: 'Your data is protected',
+      href: '/legal/privacy#dpdpa',
+    },
+    {
+      icon: '🛡️',
+      label: 'GDPR Compliant',
+      sub: 'EU privacy standards',
+      href: '/legal/privacy#gdpr',
+    },
+    {
+      icon: '📋',
+      label: 'FTC Compliant',
+      sub: 'Transparent affiliate links',
+      href: '/affiliate-disclosure',
+    },
+    {
+      icon: '⚡',
+      label: 'ONDC Ready',
+      sub: 'Open commerce protocol',
+      href: '/about#ondc',
+    },
+    {
+      icon: '🚀',
+      label: 'Startup India',
+      sub: 'DPIIT recognised',
+      href: '/about#startup-india',
+    },
   ]
 
   return (
     <div className="border-t border-white/5 bg-[#09090B] py-8">
       <div className="max-w-7xl mx-auto px-6">
         <p className="text-center text-xs text-muted mb-6 tracking-widest uppercase font-semibold">
-          Trusted Commerce Infrastructure
+          Verified Commerce Platform
         </p>
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
           {badges.map((badge) => (
-            <div key={badge.label} className="flex flex-col items-center text-center gap-1.5 p-3 rounded-lg bg-white/2 hover:bg-white/5 transition">
+            <Link
+              key={badge.label}
+              href={badge.href}
+              className="flex flex-col items-center text-center gap-1.5 p-3 rounded-lg bg-white/2 hover:bg-white/5 transition cursor-pointer"
+            >
               <span className="text-2xl">{badge.icon}</span>
               <p className="font-bold text-xs text-white">{badge.label}</p>
               <p className="text-[10px] text-muted">{badge.sub}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
     </div>
   )
 }
-
-
-

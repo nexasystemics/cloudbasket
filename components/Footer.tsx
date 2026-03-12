@@ -24,40 +24,35 @@ const legalLinks = [
   { label: 'Terms', href: ROUTES.TERMS },
 ] as const
 
-const complianceBadges = ['DPDPA 2023', 'GDPR', 'FTC Compliant', 'ONDC Ready', 'Startup India'] as const
+const complianceBadges = [
+  { label: 'DPDPA 2023', href: '/legal/privacy#dpdpa' },
+  { label: 'GDPR', href: '/legal/privacy#gdpr' },
+  { label: 'FTC Compliant', href: '/affiliate-disclosure' },
+] as const
 
 export default function Footer() {
   return (
     <footer className="border-t border-[#1E293B] bg-[#09090B] text-white dark:bg-[#020206]">
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-12 px-6 py-16 md:grid-cols-5">
         <div className="md:col-span-2">
-          <div className="grid h-12 w-12 place-items-center rounded-xl bg-skyline-primary text-xl font-black text-white">
+          <div className="grid h-12 w-12 place-items-center rounded-xl bg-blue-600 text-xl font-black text-white">
             CB
           </div>
           <p className="mt-3 text-2xl font-black tracking-tighter text-white">{SITE_NAME}</p>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-[#64748B]">
-            The World&apos;s Smartest Price Aggregator. Zero checkout. Pure discovery.
+            Compare Prices. Discover Deals. Shop Smarter.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
             {complianceBadges.map((badge) => (
-              <span key={badge} className="cb-badge cb-badge-blue">
-                {badge}
-              </span>
+              <Link
+                key={badge.label}
+                href={badge.href}
+                className="inline-block rounded-full border border-blue-600/30 bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-400 hover:bg-blue-600/20 transition"
+              >
+                {badge.label}
+              </Link>
             ))}
-          </div>
-
-          <div className="mt-6 text-sm text-[#64748B]">
-            <p>Powered by</p>
-            
-              href="https://nexqon.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold text-skyline-primary hover:underline"
-            >
-              NEXQON HOLDINGS
-            </a>
-            <p className="mt-1 text-xs text-[#334155]">cloudbasket vs.cb.1.0 · March 2026</p>
           </div>
 
           <div className="mt-4 flex items-center gap-2">
@@ -115,9 +110,12 @@ export default function Footer() {
 
       <div className="border-t border-[#1E293B] py-6">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center sm:flex-row sm:text-start">
-          <p className="text-xs text-[#334155]">Created by VERSION STATE {'{VS.IN+}'}</p>
-          <p className="text-xs text-[#334155]">cloudbasket vs.cb.1.0 · March 2026</p>
-          <p className="text-xs text-[#334155]">Powered by NEXQON HOLDINGS</p>
+          <p className="text-xs text-[#94A3B8]">Created by VERSION STATE {'{VS.IN+}'}</p>
+          <p className="text-xs text-[#94A3B8]">CloudBasket vs.cb.1.0 · March 2026</p>
+          <p className="text-xs text-[#94A3B8]">Powered by NEXQON HOLDINGS</p>
+        </div>
+        <div className="mx-auto mt-3 w-full max-w-7xl px-6 text-center">
+          <p className="text-xs text-[#475569]">© 2026 CloudBasket. All rights reserved.</p>
         </div>
       </div>
     </footer>

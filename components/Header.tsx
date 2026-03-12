@@ -56,11 +56,11 @@ const COUNTRY_OPTIONS: ReadonlyArray<{ value: CountryCode; label: string }> = [
   { value: 'GB', label: 'United Kingdom' },
 ]
 
-const COUNTRY_FLAGS: Record<CountryCode, string> = {
-  IN: 'IN',
-  US: 'US',
-  EU: 'EU',
-  GB: 'GB',
+const COUNTRY_FLAGS: Record<CountryCode, string> = {
+  IN: '🇮🇳',
+  US: '🇺🇸',
+  EU: '🇪🇺',
+  GB: '🇬🇧',
 }
 
 const DEAL_DROPDOWN: readonly DropdownItem[] = [
@@ -485,6 +485,7 @@ export default function Header(): JSX.Element {
     </header>
   )
 }
+
 
 
 

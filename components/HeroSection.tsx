@@ -162,7 +162,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className={`font-display text-5xl font-black tracking-tighter sm:text-6xl lg:text-8xl ${
+              className={`font-display text-5xl font-black tracking-tighter sm:text-6xl lg:text-6xl ${
                 line === 'Basket.' ? 'text-skyline-primary' : 'text-[var(--cb-text-primary)]'
               }`}
             >
@@ -172,7 +172,7 @@ export default function HeroSection() {
         </div>
 
         <div className="mt-6 max-w-xl space-y-1 text-lg text-[var(--cb-text-secondary)]">
-          <p>Compare prices across Amazon, Flipkart and 50+ stores.</p>
+          <p>Compare prices across 50+ global stores.</p>
           <p>Zero checkout. Pure discovery. Maximum savings.</p>
         </div>
 
@@ -303,4 +303,5 @@ export default function HeroSection() {
     </section>
   )
 }
+
 

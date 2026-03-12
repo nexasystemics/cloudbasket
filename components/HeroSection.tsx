@@ -43,7 +43,7 @@ const DEMO_COLUMNS: readonly DemoColumn[] = [
   },
 ]
 
-const TYPING_TEXT = '$500 smartphone'
+const TYPING_TEXT = '₹35,000 smartphone'
 
 const logoBadgeByPlatform: Record<DemoColumn['id'], { label: string; className: string }> = {
   amazon: { label: 'a', className: 'bg-[#F97316] text-white' },
@@ -303,5 +303,6 @@ export default function HeroSection() {
     </section>
   )
 }
+
 
 

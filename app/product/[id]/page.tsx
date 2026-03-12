@@ -396,7 +396,7 @@ export default async function ProductPage({
               <Truck size={13} /> Direct from Retailer
             </span>
             <span className="inline-flex items-center gap-2">
-              <RefreshCw size={13} /> No Hidden Fees
+              <RefreshCw size={13} /> Transparent Pricing
             </span>
             <span className="inline-flex items-center gap-2">
               <TrendingDown size={13} /> Best Price Tracked
@@ -512,4 +512,5 @@ export default async function ProductPage({
     </main>
   )
 }
+
 

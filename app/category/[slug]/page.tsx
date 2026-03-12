@@ -215,7 +215,7 @@ export default async function CategoryPage({
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-4">
-        <div className="ad-slot-leaderboard">Advertisement · Google AdSense · 728×90</div>
+        <div className="ad-slot-leaderboard">Ad Space · Contact us to advertise</div>
       </section>
 
       <section className="mx-auto flex max-w-7xl gap-6 px-6 py-8">
@@ -296,7 +296,7 @@ export default async function CategoryPage({
             <button className="cb-btn cb-btn-ghost mt-2 w-full">Reset All</button>
           </div>
 
-          <div className="ad-slot-rectangle mt-4">Advertisement · 300×250</div>
+          <div className="ad-slot-rectangle mt-4">Ad Space · Contact us to advertise</div>
         </aside>
 
         <div className="min-w-0 flex-1">
@@ -397,11 +397,12 @@ export default async function CategoryPage({
         </div>
 
         <aside className="hidden w-40 flex-shrink-0 xl:block">
-          <div className="ad-slot-skyscraper">Advertisement · 160×600</div>
+          <div className="ad-slot-skyscraper">Ad Space · Contact us to advertise</div>
         </aside>
       </section>
     </main>
   )
 }
+
 
 

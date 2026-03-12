@@ -121,6 +121,7 @@ h1,h2,h3,h4,h5,h6 {
 .dark .glass-header {
   background: rgba(15,23,42,0.85);
 }
+.glass-header { isolation: isolate; }
 .glass-header.scrolled {
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
 }
@@ -490,4 +491,5 @@ h1,h2,h3,h4,h5,h6 {
   transform: scale(1.1);
   box-shadow: 0 6px 24px rgba(37,211,102,0.5);
 }
+
 

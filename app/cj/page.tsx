@@ -98,7 +98,7 @@ export default function CJPage() {
           </span>
           <h1 className="text-5xl font-black tracking-tighter">Shop Global. Save Big.</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-[var(--cb-text-muted)]">
-            Access international products via Commission Junction. Best USD/INR rates. Direct shipping to India.
+            Access international products via Commission Junction. Best USD/INR rates. Delivered via CJ partner network.
           </p>
           <Link href="#featured-cj" className="cb-btn cb-btn-primary mt-8 gap-2">
             Browse CJ Products <ArrowRight size={16} />
@@ -151,4 +151,5 @@ export default function CJPage() {
     </main>
   )
 }
+
 

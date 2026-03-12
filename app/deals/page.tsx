@@ -227,7 +227,7 @@ export default function DealsPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-4">
-        <div className="ad-slot-leaderboard">Advertisement · Google AdSense · 728×90</div>
+        <div className="ad-slot-leaderboard">Ad Space · Contact us to advertise</div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-10">
@@ -286,9 +286,10 @@ export default function DealsPage() {
       </section>
 
       <section className="mx-auto flex max-w-7xl justify-center px-6 pb-10">
-        <div className="ad-slot-leaderboard">Advertisement · Google AdSense · 728×90</div>
+        <div className="ad-slot-leaderboard">Ad Space · Contact us to advertise</div>
       </section>
     </main>
   )
 }
+
 

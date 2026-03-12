@@ -290,7 +290,7 @@ export default function HeroSection() {
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-skyline-glow)]">
               <TrendingDown size={13} className="text-skyline-primary" />
             </span>
-            <span>50+ Stores Compared</span>
+            <Link href="/compare" className="hover:underline underline-offset-2">50+ Stores Compared</Link>
           </div>
           <div className="inline-flex items-center gap-2 text-xs text-[var(--cb-text-muted)]">
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-skyline-glow)]">
@@ -303,6 +303,7 @@ export default function HeroSection() {
     </section>
   )
 }
+
 
 
 

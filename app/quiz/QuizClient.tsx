@@ -75,10 +75,18 @@ export default function QuizClient() {
 
   const recommendations = useMemo(() => {
     const category = mapCategory(answers[0])
+    const budgetAnswer = answers[1] ?? ""
+    let minPrice = 0
+    let maxPrice = Infinity
+    if (budgetAnswer.includes("Under")) { minPrice = 0; maxPrice = 5000 }
+    else if (budgetAnswer.includes("5,000–")) { minPrice = 5000; maxPrice = 15000 }
+    else if (budgetAnswer.includes("15,000–")) { minPrice = 15000; maxPrice = 50000 }
+    else if (budgetAnswer.includes("50,000+")) { minPrice = 50000; maxPrice = Infinity }
     const seed = category
-      ? MOCK_PRODUCTS.filter((product) => product.mainCategory === category)
+      ? MOCK_PRODUCTS.filter((p) => p.mainCategory === category)
       : MOCK_PRODUCTS
-    return seed.slice(0, 4)
+    const filtered = seed.filter((p) => p.price >= minPrice && p.price <= maxPrice)
+    return (filtered.length > 0 ? filtered : seed).slice(0, 4)
   }, [answers])
 
   const handleOptionClick = (option: string) => {
@@ -174,3 +182,4 @@ export default function QuizClient() {
     </main>
   )
 }
+

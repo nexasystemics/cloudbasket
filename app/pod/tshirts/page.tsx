@@ -6,7 +6,7 @@ import { PRODUCTS } from '@/lib/mock-data'
 
 export default function TshirtsPage() {
   const tshirtProducts = PRODUCTS.filter(
-    (product) => product.mainCategory === 'Fashion' && product.subCategory === 'Activewear',
+    (product) => product.mainCategory === 'Fashion' && product.subCategory === 'T-Shirts',
   ).slice(0, 12)
 
   return (
@@ -63,6 +63,8 @@ export default function TshirtsPage() {
     </div>
   )
 }
+
+
 
 
 

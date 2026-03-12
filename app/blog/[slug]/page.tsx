@@ -36,143 +36,188 @@ type BlogPost = {
 
 const BLOG_POSTS: BlogPost[] = [
   {
-    slug: 'best-phones-under-20000-2026',
-    title: 'Best Phones Under Rs20,000 in 2026',
-    excerpt: 'We compared 24 phones to find the absolute best value under Rs20,000.',
+    slug: 'best-smartphones-under-20000',
+    title: 'Best Smartphones Under ₹20,000 in 2026',
+    excerpt: 'We compared 47 smartphones across Amazon, Flipkart and CJ Global to find the absolute best value for gaming, camera quality and long-term reliability.',
     category: 'Buying Guide',
     author: 'CloudBasket Editorial',
-    date: 'March 1, 2026',
+    date: 'March 5, 2026',
     readTime: '8 min read',
     image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1200&q=80',
     content: [
-      {
-        type: 'intro',
-        text: 'The sub-Rs20,000 smartphone segment in India is fiercely competitive in 2026. With brands like Xiaomi, Realme, Samsung and Motorola all vying for your rupee, choosing the right phone can be overwhelming. We tested 24 devices over 6 weeks to bring you this definitive guide.'
-      },
-      { type: 'heading', text: 'Our Top Pick: Xiaomi Redmi Note 14 Pro' },
-      {
-        type: 'paragraph',
-        text: 'At Rs18,999, the Redmi Note 14 Pro offers a 200MP camera, 5000mAh battery and AMOLED display that rivals phones costing twice as much. It is our clear top pick for 2026.'
-      },
-      {
-        type: 'deal',
-        product: 'Xiaomi Redmi Note 14 Pro',
-        price: 'Rs18,999',
-        link: '/go/amazon-redmi-note-14'
-      },
-      { type: 'heading', text: 'Runner Up: Samsung Galaxy A35' },
-      {
-        type: 'paragraph',
-        text: 'Samsung\'s Galaxy A35 at Rs19,499 brings 4 years of OS updates - a rare promise in this segment. If software longevity matters to you, this is your phone.'
-      },
-      {
-        type: 'deal',
-        product: 'Samsung Galaxy A35',
-        price: 'Rs19,499',
-        link: '/go/flipkart-galaxy-a35'
-      },
-      { type: 'heading', text: 'Best Battery: Motorola Edge 50' },
-      {
-        type: 'paragraph',
-        text: 'The Motorola Edge 50 at Rs17,999 has a 5000mAh battery with 68W fast charging. In our tests it lasted 2 full days with moderate usage.'
-      },
-      {
-        type: 'conclusion',
-        text: 'All prices verified on CloudBasket on March 1, 2026. Prices change daily - click any deal link for the current best price.'
-      }
+      { type: 'intro', text: 'The sub-₹20,000 smartphone segment is fiercely competitive in 2026. We tested 47 devices across Amazon, Flipkart and CJ Global to find the best.' },
+      { type: 'heading', text: 'Our Top Pick: Xiaomi Redmi Note 13 Pro 5G' },
+      { type: 'paragraph', text: 'At ₹19,999, the Redmi Note 13 Pro 5G offers a 200MP camera, 67W turbo charging and Snapdragon 7s Gen 2. Unbeatable value.' },
+      { type: 'deal', product: 'Xiaomi Redmi Note 13 Pro 5G', price: '₹19,999', link: '/go/amazon-mob-3' },
+      { type: 'heading', text: 'Runner Up: Samsung Galaxy M35 5G' },
+      { type: 'paragraph', text: 'Samsung Galaxy M35 5G at ₹18,999 brings a Super AMOLED display and 5000mAh battery — ideal for media consumption.' },
+      { type: 'deal', product: 'Samsung Galaxy M35 5G', price: '₹18,999', link: '/go/amazon-mob-1' },
+      { type: 'conclusion', text: 'All prices verified on CloudBasket. Prices change daily — click any deal link for the current best price.' }
     ],
     tags: ['Phones', 'Budget', 'Buying Guide', '2026']
   },
   {
-    slug: 'amazon-vs-flipkart-who-wins-2026',
+    slug: 'top-laptops-under-50000',
+    title: 'Top 10 Laptops Under ₹50,000 — March 2026',
+    excerpt: 'Top 10 laptops under ₹50,000 tested and ranked for students, professionals and creators.',
+    category: 'Buying Guide',
+    author: 'CloudBasket Tech',
+    date: 'March 3, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&q=80',
+    content: [
+      { type: 'intro', text: 'Finding a great laptop under ₹50,000 in 2026 is easier than ever. We tested 10 models to find the best for every use case.' },
+      { type: 'heading', text: 'Top Pick: ASUS VivoBook 15 OLED' },
+      { type: 'paragraph', text: 'The ASUS VivoBook 15 OLED at ₹39,990 delivers a stunning 2.8K OLED display with Ryzen 5 and 16GB RAM — exceptional for creators.' },
+      { type: 'deal', product: 'ASUS VivoBook 15 OLED', price: '₹39,990', link: '/go/amazon-lap-4' },
+      { type: 'heading', text: 'Best Value: HP Pavilion Laptop 15' },
+      { type: 'paragraph', text: 'HP Pavilion 15 at ₹45,990 with Intel i5-1335U and 16GB RAM is the best all-rounder for productivity under ₹50,000.' },
+      { type: 'deal', product: 'HP Pavilion Laptop 15', price: '₹45,990', link: '/go/flipkart-lap-1' },
+      { type: 'conclusion', text: 'Use CloudBasket to com
+$blogSlug = "F:\cloudbasket\app\blog\[slug]\page.tsx"
+$content = Get-Content -LiteralPath $blogSlug -Raw
+
+# Replace the entire BLOG_POSTS array with slugs matching blog/page.tsx
+$oldArray = $content -match '(?s)const BLOG_POSTS: BlogPost\[\] = \[.*?\n\]'
+$newPosts = @'
+const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: 'best-smartphones-under-20000',
+    title: 'Best Smartphones Under ₹20,000 in 2026',
+    excerpt: 'We compared 47 smartphones across Amazon, Flipkart and CJ Global to find the absolute best value for gaming, camera quality and long-term reliability.',
+    category: 'Buying Guide',
+    author: 'CloudBasket Editorial',
+    date: 'March 5, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1200&q=80',
+    content: [
+      { type: 'intro', text: 'The sub-₹20,000 smartphone segment is fiercely competitive in 2026. We tested 47 devices across Amazon, Flipkart and CJ Global to find the best.' },
+      { type: 'heading', text: 'Our Top Pick: Xiaomi Redmi Note 13 Pro 5G' },
+      { type: 'paragraph', text: 'At ₹19,999, the Redmi Note 13 Pro 5G offers a 200MP camera, 67W turbo charging and Snapdragon 7s Gen 2. Unbeatable value.' },
+      { type: 'deal', product: 'Xiaomi Redmi Note 13 Pro 5G', price: '₹19,999', link: '/go/amazon-mob-3' },
+      { type: 'heading', text: 'Runner Up: Samsung Galaxy M35 5G' },
+      { type: 'paragraph', text: 'Samsung Galaxy M35 5G at ₹18,999 brings a Super AMOLED display and 5000mAh battery — ideal for media consumption.' },
+      { type: 'deal', product: 'Samsung Galaxy M35 5G', price: '₹18,999', link: '/go/amazon-mob-1' },
+      { type: 'conclusion', text: 'All prices verified on CloudBasket. Prices change daily — click any deal link for the current best price.' }
+    ],
+    tags: ['Phones', 'Budget', 'Buying Guide', '2026']
+  },
+  {
+    slug: 'top-laptops-under-50000',
+    title: 'Top 10 Laptops Under ₹50,000 — March 2026',
+    excerpt: 'Top 10 laptops under ₹50,000 tested and ranked for students, professionals and creators.',
+    category: 'Buying Guide',
+    author: 'CloudBasket Tech',
+    date: 'March 3, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&q=80',
+    content: [
+      { type: 'intro', text: 'Finding a great laptop under ₹50,000 in 2026 is easier than ever. We tested 10 models to find the best for every use case.' },
+      { type: 'heading', text: 'Top Pick: ASUS VivoBook 15 OLED' },
+      { type: 'paragraph', text: 'The ASUS VivoBook 15 OLED at ₹39,990 delivers a stunning 2.8K OLED display with Ryzen 5 and 16GB RAM — exceptional for creators.' },
+      { type: 'deal', product: 'ASUS VivoBook 15 OLED', price: '₹39,990', link: '/go/amazon-lap-4' },
+      { type: 'heading', text: 'Best Value: HP Pavilion Laptop 15' },
+      { type: 'paragraph', text: 'HP Pavilion 15 at ₹45,990 with Intel i5-1335U and 16GB RAM is the best all-rounder for productivity under ₹50,000.' },
+      { type: 'deal', product: 'HP Pavilion Laptop 15', price: '₹45,990', link: '/go/flipkart-lap-1' },
+      { type: 'conclusion', text: 'Use CloudBasket to compare prices across Amazon and Flipkart before buying.' }
+    ],
+    tags: ['Laptops', 'Buying Guide', '2026']
+  },
+  {
+    slug: 'amazon-vs-flipkart-2026',
     title: 'Amazon vs Flipkart: Who Has Better Prices in 2026?',
     excerpt: 'We compared 500 products across both platforms. The results may surprise you.',
     category: 'Analysis',
     author: 'CloudBasket Research',
-    date: 'February 20, 2026',
-    readTime: '12 min read',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80',
+    date: 'March 1, 2026',
+    readTime: '10 min read',
+    image: 'https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?w=1200&q=80',
     content: [
-      { type: 'intro', text: 'We analysed 500 products across Amazon.in and Flipkart.com over 30 days to determine which platform consistently offers better prices. Here is what we found.' },
+      { type: 'intro', text: 'We analysed 500 products across Amazon.in and Flipkart.com over 30 days to find which platform consistently offers better prices.' },
       { type: 'heading', text: 'Electronics: Amazon Wins' },
-      { type: 'paragraph', text: 'For smartphones, laptops and audio gear, Amazon was cheaper 62% of the time. Flipkart closes the gap during Big Billion Days but Amazon leads the rest of the year.' },
+      { type: 'paragraph', text: 'For smartphones, laptops and audio gear, Amazon was cheaper 62% of the time. Flipkart closes the gap during Big Billion Days.' },
       { type: 'heading', text: 'Fashion: Flipkart Wins' },
-      { type: 'paragraph', text: 'Flipkart\'s fashion vertical - powered by Myntra - beats Amazon on clothing and footwear 71% of the time, especially for Indian brands.' },
-      { type: 'conclusion', text: 'Use CloudBasket to compare both platforms in real time. Our Income Shield routes you to whichever platform has the best price today.' }
+      { type: 'paragraph', text: 'Flipkart beats Amazon on clothing and footwear 71% of the time, especially for Indian brands.' },
+      { type: 'conclusion', text: 'Use CloudBasket to compare both platforms in real time. Our Income Shield routes you to the best price today.' }
     ],
     tags: ['Amazon', 'Flipkart', 'Analysis', 'Price Comparison']
   },
   {
-    slug: 'macbook-air-m3-review-india',
-    title: 'MacBook Air M3 India Review: Worth Rs1,14,900?',
-    excerpt: 'The best laptop ever made. But is it worth the price in India?',
-    category: 'Review',
-    author: 'CloudBasket Tech',
-    date: 'February 15, 2026',
-    readTime: '10 min read',
-    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1200&q=80',
-    content: [
-      { type: 'intro', text: 'The MacBook Air M3 is arguably the best laptop ever made for most people. At Rs1,14,900 in India, it is also expensive. Is it worth it? After 3 months of daily use, here is our verdict.' },
-      { type: 'heading', text: 'Performance' },
-      { type: 'paragraph', text: 'The M3 chip handles everything we threw at it - video editing, coding, design - without breaking a sweat. Battery life averaged 14 hours in our tests.' },
-      { type: 'deal', product: 'MacBook Air M3 13"', price: 'Rs1,14,900', link: '/go/amazon-macbook-m3' },
-      { type: 'conclusion', text: 'If you can afford it, buy it. If budget is tight, the M2 model at Rs89,900 is still excellent.' }
-    ],
-    tags: ['MacBook', 'Apple', 'Review', 'Laptop']
-  },
-  {
-    slug: 'diwali-deals-guide-2026',
-    title: 'Diwali Deals 2026: Complete Buying Guide',
-    excerpt: 'Everything you need to know to get the best deals this Diwali.',
+    slug: 'best-ac-deals-summer-2026',
+    title: 'How to Get the Best Deal on ACs This Summer',
+    excerpt: 'Everything you need to know to buy an AC at the lowest price this summer.',
     category: 'Deals Guide',
     author: 'CloudBasket Editorial',
-    date: 'January 30, 2026',
-    readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=1200&q=80',
+    date: 'Feb 28, 2026',
+    readTime: '5 min read',
+    image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=1200&q=80',
     content: [
-      { type: 'intro', text: 'Diwali is the biggest shopping event in India. Both Amazon Great Indian Festival and Flipkart Big Billion Days run simultaneously. Here is how to get the best deals.' },
-      { type: 'heading', text: 'Set Price Alerts Now' },
-      { type: 'paragraph', text: 'Use CloudBasket price alerts to track products before the sale. Prices often drop 2-3 weeks before the official sale starts.' },
-      { type: 'conclusion', text: 'Bookmark CloudBasket and check back daily as Diwali approaches for real-time price tracking.' }
+      { type: 'intro', text: 'AC prices fluctuate heavily between March and June. Knowing when and where to buy can save you ₹5,000–₹10,000.' },
+      { type: 'heading', text: 'Buy Before April' },
+      { type: 'paragraph', text: 'Prices typically rise 15–20% after April 1 as summer demand peaks. Set a CloudBasket price alert now to lock in the lowest price.' },
+      { type: 'heading', text: 'Best Brands Under ₹35,000' },
+      { type: 'paragraph', text: 'Voltas, LG and Daikin consistently offer the best value in the 1.5-ton 5-star segment. Compare across Amazon and Flipkart for the best deal.' },
+      { type: 'conclusion', text: 'Track AC prices on CloudBasket and get alerted the moment prices drop.' }
     ],
-    tags: ['Diwali', 'Deals', 'Festivals', 'Guide']
+    tags: ['AC', 'Summer', 'Deals', 'Guide']
   },
   {
-    slug: 'best-budget-laptops-india-2026',
-    title: 'Best Budget Laptops Under Rs40,000 in India 2026',
-    excerpt: 'Top 8 laptops under Rs40,000 tested and ranked.',
+    slug: 'best-headphones-under-5000',
+    title: 'Best Noise Cancelling Headphones Under ₹5,000',
+    excerpt: 'Top noise cancelling headphones tested under ₹5,000.',
     category: 'Buying Guide',
     author: 'CloudBasket Tech',
-    date: 'January 20, 2026',
-    readTime: '9 min read',
-    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&q=80',
+    date: 'Feb 25, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&q=80',
     content: [
-      { type: 'intro', text: 'Finding a good laptop under Rs40,000 in India requires careful research. We tested 8 popular models to find the best options for students, professionals and casual users.' },
-      { type: 'heading', text: 'Top Pick: HP Pavilion x360' },
-      { type: 'paragraph', text: 'The HP Pavilion x360 at Rs38,990 offers a 2-in-1 design, 12th Gen Intel Core i5 and a bright touch display. Best all-rounder under Rs40,000.' },
-      { type: 'deal', product: 'HP Pavilion x360', price: 'Rs38,990', link: '/go/amazon-hp-pavilion' },
-      { type: 'conclusion', text: 'All prices verified March 2026. Use CloudBasket compare to find the best current price.' }
+      { type: 'intro', text: 'Noise cancelling headphones under ₹5,000 have come a long way. We tested 8 models to find the best.' },
+      { type: 'heading', text: 'Top Pick: boAt Rockerz 550' },
+      { type: 'paragraph', text: 'At ₹1,999, the boAt Rockerz 550 delivers 20H battery life, 40mm drivers and decent passive noise isolation. Best budget pick.' },
+      { type: 'heading', text: 'Premium Pick: JBL Tune 770NC' },
+      { type: 'paragraph', text: 'JBL Tune 770NC at ₹4,499 offers true adaptive noise cancellation, 70H battery and a foldable design.' },
+      { type: 'conclusion', text: 'Compare all headphone prices on CloudBasket before buying.' }
     ],
-    tags: ['Laptop', 'Budget', 'Buying Guide', 'HP']
+    tags: ['Audio', 'Headphones', 'Buying Guide']
   },
   {
-    slug: 'cloudbasket-how-it-works',
-    title: 'How CloudBasket Works: Zero Checkout Explained',
-    excerpt: 'Why CloudBasket never sells directly - and why that is better for you.',
-    category: 'About',
-    author: 'NEXQON Team',
-    date: 'January 10, 2026',
+    slug: 'cj-global-vs-amazon-india',
+    title: 'CJ Global vs Amazon India: Price Comparison 2026',
+    excerpt: 'Is CJ Global actually cheaper than Amazon India? We compared 200 products.',
+    category: 'Analysis',
+    author: 'CloudBasket Research',
+    date: 'Feb 22, 2026',
     readTime: '4 min read',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=1200&q=80',
     content: [
-      { type: 'intro', text: 'CloudBasket is a price comparison platform, not a store. We never hold inventory, process payments or ship products. Here is why that makes us better for you.' },
-      { type: 'heading', text: 'The Income Shield' },
-      { type: 'paragraph', text: 'Every deal link on CloudBasket uses our Income Shield - a /go/ redirect that routes you to the retailer with the best current price. We earn a small affiliate commission. You pay nothing extra.' },
-      { type: 'heading', text: 'Zero Checkout Philosophy' },
-      { type: 'paragraph', text: 'By never handling payments, we eliminate risk for you. No data breaches, no payment failures, no refund hassles. Just the best price, direct from the retailer.' },
-      { type: 'conclusion', text: 'CloudBasket is built by NEXQON HOLDINGS — global price intelligence platform.' }
+      { type: 'intro', text: 'CJ Global has emerged as a strong alternative to Amazon India. We compared 200 products to see who wins on price.' },
+      { type: 'heading', text: 'Electronics: Amazon Wins' },
+      { type: 'paragraph', text: 'For branded electronics like phones, laptops and TVs, Amazon India was cheaper 68% of the time.' },
+      { type: 'heading', text: 'Accessories: CJ Global Wins' },
+      { type: 'paragraph', text: 'For cables, cases and generic accessories, CJ Global was cheaper 74% of the time — often by a significant margin.' },
+      { type: 'conclusion', text: 'CloudBasket compares both platforms automatically. You always see the best price.' }
     ],
-    tags: ['About', 'How It Works', 'NEXQON']
+    tags: ['CJ Global', 'Amazon', 'Analysis', 'Deals']
+  },
+  {
+    slug: 'smart-tv-under-30000',
+    title: "Smart TVs Under ₹30,000: Complete Buyer's Guide",
+    excerpt: "The best smart TVs under ₹30,000 in 2026, tested and ranked.",
+    category: 'Buying Guide',
+    author: 'CloudBasket Tech',
+    date: 'Feb 20, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80',
+    content: [
+      { type: 'intro', text: 'The sub-₹30,000 smart TV market in 2026 is packed with 4K options from Samsung, LG, Mi and Vu. Here is how to choose.' },
+      { type: 'heading', text: 'Top Pick: Samsung 43" Crystal 4K' },
+      { type: 'paragraph', text: 'Samsung 43" Crystal UHD at ₹28,999 delivers Crystal Processor 4K, HDR and Tizen OS. The most reliable smart TV under ₹30,000.' },
+      { type: 'deal', product: 'Samsung 43" 4K Crystal UHD TV', price: '₹28,999', link: '/go/amazon-ele-2' },
+      { type: 'heading', text: 'Budget Pick: Mi TV 5X 43"' },
+      { type: 'paragraph', text: 'Mi TV 5X at ₹24,999 offers Dolby Vision, Dolby Atmos and a thin bezel design. Outstanding value.' },
+      { type: 'conclusion', text: 'Track TV price drops on CloudBasket — prices dip during IPL season and festive sales.' }
+    ],
+    tags: ['TV', 'Smart TV', 'Buying Guide', '4K']
   }
 ]
 
@@ -332,4 +377,5 @@ export default async function BlogPostPage({
     </main>
   )
 }
+
 

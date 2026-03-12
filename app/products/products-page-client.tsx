@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SlidersHorizontal, ExternalLink, Grid3X3, List, TrendingDown, Zap } from 'lucide-react'
-import { PRODUCTS as CATALOG } from '@/lib/mock-data'
+import { PRODUCTS as CATALOG } from '@/lib/products-data'
 
 type Product = (typeof CATALOG)[number]
 
@@ -22,18 +22,18 @@ const CATEGORIES_FILTER: readonly string[] = [
   'Toys',
 ]
 
-function getPlatformBadgeClass(source: Product['source']): string {
-  if (source === 'Amazon') {
+function getPlatformBadgeClass(source: Product['platform']): string {
+  if (platform === 'Amazon') {
     return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
   }
-  if (source === 'Flipkart') {
+  if (platform === 'Flipkart') {
     return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
   }
   return 'cb-badge-green'
 }
 
-function getPlatformLabel(source: Product['source']): string {
-  return source === 'CJ' ? 'CJ Global' : source
+function getPlatformLabel(source: Product['platform']): string {
+  return platform === 'Myntra' ? 'Myntra' : source
 }
 
 function getLowestPriceBadge(product: Product): { label: string; className: string } | null {
@@ -60,13 +60,13 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         <Image
           fill
           className="object-cover"
-          src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+          src={product.imageUrlUrl || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
           alt={product.name}
         />
 
         <div className="absolute left-2 top-2 flex flex-col gap-1">
           {discount ? <span className="cb-badge cb-badge-green">-{discount}%</span> : null}
-          {product.isTrending ? <span className="cb-badge cb-badge-orange">Trending</span> : null}
+          {product.inStock ? <span className="cb-badge cb-badge-orange">Trending</span> : null}
         </div>
         {lowestBadge ? (
           <div className="absolute right-2 top-2">
@@ -82,8 +82,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       </div>
 
       <div className="flex flex-1 flex-col gap-1 p-3">
-        <span className={`cb-badge w-fit text-[10px] ${getPlatformBadgeClass(product.source)}`}>
-          {getPlatformLabel(product.source)}
+        <span className={`cb-badge w-fit text-[10px] ${getPlatformBadgeClass(product.platform)}`}>
+          {getPlatformLabel(product.platform)}
         </span>
 
         <p className="text-[10px] font-black uppercase text-[var(--cb-text-muted)]">{product.brand}</p>
@@ -163,7 +163,7 @@ export default function ProductsPageClient() {
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-4xl font-black tracking-tighter">All Products</h1>
-            <p className="mt-2 text-[var(--cb-text-muted)]">2,000+ deals tracked across Amazon, Flipkart & CJ Global</p>
+            <p className="mt-2 text-[var(--cb-text-muted)]">2,000+ deals tracked across Amazon, Flipkart & Myntra</p>
           </div>
           <div className="flex gap-3">
             <Link href="/deals/flash" className="cb-btn cb-btn-primary gap-2">
@@ -241,7 +241,7 @@ export default function ProductsPageClient() {
 
             <div className="mt-5">
               <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Platform</p>
-              {['Amazon', 'Flipkart', 'CJ Global'].map((platform) => (
+              {['Amazon', 'Flipkart', 'Myntra'].map((platform) => (
                 <label key={platform} className="flex items-center gap-2 py-1">
                   <input type="checkbox" className="rounded" />
                   <span className="text-sm text-[var(--cb-text-secondary)]">{platform}</span>
@@ -307,3 +307,4 @@ export default function ProductsPageClient() {
     </main>
   )
 }
+

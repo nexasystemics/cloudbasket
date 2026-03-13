@@ -241,8 +241,9 @@ const generateProducts = (): Product[] => {
   for (const mainCategory of MAIN_CATEGORIES) {
     const subCategories = SUB_CATEGORIES[mainCategory]
     const imageIds = CATEGORY_IMAGES[mainCategory]
+    const cats = Array.isArray(subCategories) ? subCategories : []
 
-    for (const subCategory of subCategories) {
+    for (const subCategory of cats) {
       for (let i = 1; i <= 20; i += 1) {
         const brand = randomBrand()
         const name = `${subCategory} Pro ${i} — ${brand}`
@@ -294,4 +295,3 @@ export const PRODUCTS: Product[] = generateProducts()
 export const MOCK_PRODUCTS: Product[] = PRODUCTS
 
 export { SUB_CATEGORIES, CATEGORY_IMAGES }
-

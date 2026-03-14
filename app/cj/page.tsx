@@ -129,7 +129,13 @@ export default function CJPage() {
           {CJ_PRODUCTS.map((product, index) => (
             <article key={product.name} className="cb-card group overflow-hidden">
               <div className="relative h-48">
-                <Image fill className="object-cover" src={product.image} alt={product.name} />
+                <Image
+                  fill
+                  className="object-cover"
+                  src={product.image}
+                  alt={product.name}
+                  sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
+                />
               </div>
               <div className="p-4">
                 <span className="cb-badge cb-badge-green mb-2">

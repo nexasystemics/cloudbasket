@@ -3,69 +3,20 @@ import type { Product } from '@/lib/types'
 
 type MainCategory = (typeof MAIN_CATEGORIES)[number]
 
-const CATEGORY_IMAGES: Record<MainCategory, string[]> = {
-  Mobiles: [
-    '1511707171634-5f897ff02aa9',
-    '1512941937669-90a1b58e7e9c',
-    '1592750475338-74b7b21085ab',
-    '1565849904461-04a58ad377e0',
-    '1496181133206-80ce9b88a853',
-  ],
-  Laptops: [
-    '1496181133206-80ce9b88a853',
-    '1525547719571-a2d4ac8945e2',
-    '1588872657578-7efd1f1555ed',
-    '1593642632559-0c6d3fc62b89',
-    '1541807084-5c52e6e76cf3',
-  ],
-  Fashion: [
-    '1483985988355-763728e1935b',
-    '1539109136881-3be0616acf4b',
-    '1445205170230-053b83e26dd7',
-    '1490481651871-ab68de25d43d',
-    '1512436991641-6745cae8528e',
-  ],
-  Home: [
-    '1513519245088-0e12902e5a38',
-    '1524758631624-e2822e304c36',
-    '1505693416388-ac5ce068fe85',
-    '1556909114-f6e7ad7d3136',
-    '1484101403633-562f891dc89a',
-  ],
-  Beauty: [
-    '1512446819047-4c62175c2005',
-    '1522335777465-50149b6e1f41',
-    '1596462502278-27bfdc403348',
-    '1571781926291-c77da103c14e',
-    '1503236823255-152405cbe7c2',
-  ],
-  Sports: [
-    '1517836357463-d25dfeac3438',
-    '1517438984742-1262db08379e',
-    '1434596954615-59fbd0c0b557',
-    '1526506118085-60ce8714f8c5',
-    '1549060279-7e168fcee0c2',
-  ],
-  Toys: [
-    '1537655780520-1e392ede8139',
-    '1558060370-d644479cb6f7',
-    '1515488042361-ee00e0ddd4e4',
-    '1587654780291-39c9404d58be',
-    '1472457897821-70d3819a0e24',
-  ],
-  Grocery: [
-    '1542838132-92c53300491e',
-    '1506368249639-73a05d6f6488',
-    '1543168253-40520932252c',
-    '1610832958506-a03559b6e838',
-    '1488459716781-31db52582fe9',
-  ],
+const SEEDED_CATEGORY_IMAGES: Partial<Record<MainCategory, string[]>> = {
   Automotive: [
     '1492144531155-ad8d5f4c2921',
     '1503376780353-7e6692767b70',
     '1533473359331-0135ef1b58bf',
     '1544636331-e28e68a17c9e',
     '1549317661-cf369843f2af',
+  ],
+  'Beauty & Care': [
+    '1512446819047-4c62175c2005',
+    '1522335777465-50149b6e1f41',
+    '1596462502278-27bfdc403348',
+    '1571781926291-c77da103c14e',
+    '1503236823255-152405cbe7c2',
   ],
   Books: [
     '1495442358998-961f6d17fbb5',
@@ -74,105 +25,58 @@ const CATEGORY_IMAGES: Record<MainCategory, string[]> = {
     '1550399105-c4db5952163d',
     '1481627834876-b7833e8f5570',
   ],
-}
-
-const SUB_CATEGORIES: Record<MainCategory, string[]> = {
-  Mobiles: [
-    'Flagship',
-    'Budget',
-    'Mid-range',
-    '5G Phones',
-    'iPhones',
-    'Refurbished',
-    'Gaming Phones',
-    'Tablets',
-    'Foldables',
-    'Accessories',
-  ],
-  Laptops: [
-    'Workstations',
-    'Gaming',
-    'Ultrabooks',
-    'Student',
-    'MacBooks',
-    'Chromebooks',
-    '2-in-1s',
-    'Monitors',
-    'Peripherals',
-    'Servers',
-  ],
   Fashion: [
-    'Menswear',
-    'Womenswear',
-    'Kids',
-    'Footwear',
-    'Watches',
-    'Jewelry',
-    'Bags',
-    'Activewear',
-    'Winterwear',
-    'Luxury',
+    '1483985988355-763728e1935b',
+    '1539109136881-3be0616acf4b',
+    '1445205170230-053b83e26dd7',
+    '1490481651871-ab68de25d43d',
+    '1512436991641-6745cae8528e',
   ],
-  Home: [
-    'Furniture',
-    'Kitchen',
-    'Decor',
-    'Bedding',
-    'Lighting',
-    'Garden',
-    'Smart Home',
-    'Appliances',
-    'Storage',
-    'Wall Art',
+  'Food & Grocery': [
+    '1542838132-92c53300491e',
+    '1506368249639-73a05d6f6488',
+    '1543168253-40520932252c',
+    '1610832958506-a03559b6e838',
+    '1488459716781-31db52582fe9',
   ],
-  Beauty: [
-    'Skincare',
-    'Makeup',
-    'Haircare',
-    'Fragrance',
-    'Bath & Body',
-    'Tools',
-    'Mens Grooming',
-    'Natural',
-    'Sunscreen',
-    'Professional',
+  'Home & Kitchen': [
+    '1513519245088-0e12902e5a38',
+    '1524758631624-e2822e304c36',
+    '1505693416388-ac5ce068fe85',
+    '1556909114-f6e7ad7d3136',
+    '1484101403633-562f891dc89a',
+  ],
+  'Kids & Toys': [
+    '1537655780520-1e392ede8139',
+    '1558060370-d644479cb6f7',
+    '1515488042361-ee00e0ddd4e4',
+    '1587654780291-39c9404d58be',
+    '1472457897821-70d3819a0e24',
+  ],
+  'Laptops & PCs': [
+    '1496181133206-80ce9b88a853',
+    '1525547719571-a2d4ac8945e2',
+    '1588872657578-7efd1f1555ed',
+    '1593642632559-0c6d3fc62b89',
+    '1541807084-5c52e6e76cf3',
+  ],
+  Mobiles: [
+    '1511707171634-5f897ff02aa9',
+    '1512941937669-90a1b58e7e9c',
+    '1592750475338-74b7b21085ab',
+    '1565849904461-04a58ad377e0',
+    '1496181133206-80ce9b88a853',
   ],
   Sports: [
-    'Fitness',
-    'Running',
-    'Cycling',
-    'Swimming',
-    'Cricket',
-    'Football',
-    'Yoga',
-    'Racket Sports',
-    'Golf',
-    'Adventure',
+    '1517836357463-d25dfeac3438',
+    '1517438984742-1262db08379e',
+    '1434596954615-59fbd0c0b557',
+    '1526506118085-60ce8714f8c5',
+    '1549060279-7e168fcee0c2',
   ],
-  Toys: [
-    'Education',
-    'Action Figures',
-    'Dolls',
-    'Board Games',
-    'Puzzles',
-    'Lego',
-    'Remote Control',
-    'Plush',
-    'Outdoors',
-    'Collectibles',
-  ],
-  Grocery: [
-    'Beverages',
-    'Snacks',
-    'Pantry',
-    'Organic',
-    'Dairy',
-    'Frozen',
-    'Health Food',
-    'Sweets',
-    'Spices',
-    'International',
-  ],
+}
+
+const SEEDED_SUB_CATEGORIES: Partial<Record<MainCategory, string[]>> = {
   Automotive: [
     'Car Care',
     'Accessories',
@@ -184,6 +88,18 @@ const SUB_CATEGORIES: Record<MainCategory, string[]> = {
     'Safety',
     'Motorbike',
     'Cleaning',
+  ],
+  'Beauty & Care': [
+    'Skincare',
+    'Makeup',
+    'Haircare',
+    'Fragrance',
+    'Bath & Body',
+    'Tools',
+    'Mens Grooming',
+    'Natural',
+    'Sunscreen',
+    'Professional',
   ],
   Books: [
     'Fiction',
@@ -197,7 +113,131 @@ const SUB_CATEGORIES: Record<MainCategory, string[]> = {
     'Education',
     'Biography',
   ],
+  Fashion: [
+    'Menswear',
+    'Womenswear',
+    'Kids',
+    'Footwear',
+    'Watches',
+    'Jewelry',
+    'Bags',
+    'Activewear',
+    'Winterwear',
+    'Luxury',
+  ],
+  'Food & Grocery': [
+    'Beverages',
+    'Snacks',
+    'Pantry',
+    'Organic',
+    'Dairy',
+    'Frozen',
+    'Health Food',
+    'Sweets',
+    'Spices',
+    'International',
+  ],
+  'Home & Kitchen': [
+    'Furniture',
+    'Kitchen',
+    'Decor',
+    'Bedding',
+    'Lighting',
+    'Garden',
+    'Smart Home',
+    'Appliances',
+    'Storage',
+    'Wall Art',
+  ],
+  'Kids & Toys': [
+    'Education',
+    'Action Figures',
+    'Dolls',
+    'Board Games',
+    'Puzzles',
+    'Lego',
+    'Remote Control',
+    'Plush',
+    'Outdoors',
+    'Collectibles',
+  ],
+  'Laptops & PCs': [
+    'Workstations',
+    'Gaming',
+    'Ultrabooks',
+    'Student',
+    'MacBooks',
+    'Chromebooks',
+    '2-in-1s',
+    'Monitors',
+    'Peripherals',
+    'Servers',
+  ],
+  Mobiles: [
+    'Flagship',
+    'Budget',
+    'Mid-range',
+    '5G Phones',
+    'iPhones',
+    'Refurbished',
+    'Gaming Phones',
+    'Tablets',
+    'Foldables',
+    'Accessories',
+  ],
+  Sports: [
+    'Fitness',
+    'Running',
+    'Cycling',
+    'Swimming',
+    'Cricket',
+    'Football',
+    'Yoga',
+    'Racket Sports',
+    'Golf',
+    'Adventure',
+  ],
 }
+
+const OUTPUT_MAIN_CATEGORY: Record<MainCategory, string> = {
+  Automotive: 'Automotive',
+  'Beauty & Care': 'Beauty',
+  Books: 'Books',
+  Electronics: 'Electronics',
+  Fashion: 'Fashion',
+  Finance: 'Finance',
+  'Food & Grocery': 'Grocery',
+  Gaming: 'Gaming',
+  Health: 'Health',
+  'Home & Kitchen': 'Home',
+  Investments: 'Investments',
+  Jewellery: 'Jewellery',
+  'Kids & Toys': 'Toys',
+  'Laptops & PCs': 'Laptops',
+  Mobiles: 'Mobiles',
+  Music: 'Music',
+  'Online Courses': 'Online Courses',
+  'Print on Demand': 'Print on Demand',
+  Sports: 'Sports',
+  'Travel & Hotels': 'Travel & Hotels',
+  Watches: 'Watches',
+}
+
+const CATEGORY_IMAGES: Record<MainCategory, string[]> = MAIN_CATEGORIES.reduce(
+  (accumulator, category) => {
+    accumulator[category] = SEEDED_CATEGORY_IMAGES[category] ?? []
+    return accumulator
+  },
+  {} as Record<MainCategory, string[]>,
+)
+
+const SUB_CATEGORIES: Record<MainCategory, string[]> = MAIN_CATEGORIES.reduce(
+  (accumulator, category) => {
+    accumulator[category] = SEEDED_SUB_CATEGORIES[category] ?? []
+    return accumulator
+  },
+  {} as Record<MainCategory, string[]>,
+)
 
 const BRANDS: string[] = [
   'Samsung',
@@ -241,16 +281,20 @@ const generateProducts = (): Product[] => {
   for (const mainCategory of MAIN_CATEGORIES) {
     const subCategories = SUB_CATEGORIES[mainCategory]
     const imageIds = CATEGORY_IMAGES[mainCategory]
-    const cats = Array.isArray(subCategories) ? subCategories : []
+    const generatedMainCategory = OUTPUT_MAIN_CATEGORY[mainCategory]
 
-    for (const subCategory of cats) {
+    if (subCategories.length === 0 || imageIds.length === 0) {
+      continue
+    }
+
+    for (const subCategory of subCategories) {
       for (let i = 1; i <= 20; i += 1) {
         const brand = randomBrand()
         const name = `${subCategory} Pro ${i} — ${brand}`
         const price = randomInt(1299, 86999)
         const createdAt = new Date().toISOString()
-        const primaryImageIndex = i % 5
-        const galleryIndexes = [(i + 1) % 5, (i + 2) % 5, (i + 3) % 5]
+        const primaryImageIndex = i % imageIds.length
+        const galleryIndexes = [(i + 1) % imageIds.length, (i + 2) % imageIds.length, (i + 3) % imageIds.length]
 
         products.push({
           id,
@@ -259,8 +303,8 @@ const generateProducts = (): Product[] => {
           price,
           originalPrice: Math.round(price * 1.15),
           discount: 15,
-          description: `${name} is engineered for reliable ${subCategory.toLowerCase()} performance with high-quality components and global standards. This ${mainCategory.toLowerCase()} product is curated for professional and everyday buyers who need consistent value.`,
-          mainCategory,
+          description: `${name} is engineered for reliable ${subCategory.toLowerCase()} performance with high-quality components and global standards. This ${generatedMainCategory.toLowerCase()} product is curated for professional and everyday buyers who need consistent value.`,
+          mainCategory: generatedMainCategory,
           subCategory,
           image: toImageUrl(imageIds[primaryImageIndex]),
           images: galleryIndexes.map((imageIndex) => toImageUrl(imageIds[imageIndex])),

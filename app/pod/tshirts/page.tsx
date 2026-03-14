@@ -1,12 +1,18 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Shirt } from 'lucide-react'
 import { ROUTES } from '@/lib/constants'
 import { PRODUCTS } from '@/lib/mock-data'
 
+export const metadata: Metadata = {
+  title: 'POD Graphic T-Shirts',
+  description: 'Shop CloudBasket graphic t-shirts from the print-on-demand collection with curated designs and external partner redirects.',
+}
+
 export default function TshirtsPage() {
   const tshirtProducts = PRODUCTS.filter(
-    (product) => product.mainCategory === 'Fashion' && product.subCategory === 'T-Shirts',
+    (product) => product.mainCategory === 'Fashion' && product.subCategory === 'Activewear',
   ).slice(0, 12)
 
   return (
@@ -40,7 +46,13 @@ export default function TshirtsPage() {
           {tshirtProducts.map((product) => (
             <article key={product.id} className="cb-card cursor-pointer overflow-hidden">
               <div className="relative aspect-square">
-                <Image src={product.image} alt={product.name} fill className="object-cover" />
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                />
               </div>
               <div className="p-3">
                 <h2 className="line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">{product.name}</h2>
@@ -63,6 +75,7 @@ export default function TshirtsPage() {
     </div>
   )
 }
+
 
 
 

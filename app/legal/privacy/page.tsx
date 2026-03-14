@@ -4,7 +4,8 @@ import { Shield, Lock, Eye, Database, UserCheck, Clock, Mail, AlertCircle } from
 
 export const metadata: Metadata = {
   title: "Privacy Policy — DPDPA 2023 Compliant",
-  description: "CloudBasket privacy policy. DPDPA 2023 and GDPR compliant.",
+  description:
+    'Read the CloudBasket Privacy Policy to learn how we handle personal data, cookies, tracking, security, and clearly explain your rights under applicable laws.',
 }
 const LAST_UPDATED = 'March 1, 2026'
 const DPO_EMAIL = 'privacy@cloudbasket.in'
@@ -140,4 +141,3 @@ export default function PrivacyPage() {
     </main>
   )
 }
-

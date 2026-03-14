@@ -102,7 +102,7 @@ export default function CategoryGrid() {
     <section className="bg-[var(--cb-surface-2)] py-20">
       <div className="mx-auto w-full max-w-7xl px-6">
         <div className="mb-12 flex items-end justify-between gap-4">
-          <div>
+          <div className="min-h-[60px]">
             <h2 className="font-display text-3xl font-black uppercase tracking-tighter text-[var(--cb-text-primary)]">
               Explore Categories
             </h2>
@@ -119,16 +119,22 @@ export default function CategoryGrid() {
             const Icon = category.icon
             const slug = encodeURIComponent(category.label.toLowerCase())
             return (
-              <Link key={category.label} href={`/category/${slug}`} className="category-card">
+              <Link key={category.label} href={`/category/${slug}`} className="category-card min-h-[196px]">
                 <div className="relative h-32 w-full overflow-hidden rounded-xl">
-                  <Image src={category.image} alt={category.label} fill className="object-cover" sizes="240px" />
+                  <Image
+                    src={category.image}
+                    alt={category.label}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
+                  />
                   <div className={`absolute inset-0 bg-gradient-to-t ${category.gradient} opacity-70`} />
                   <div className="absolute bottom-3 start-3">
                     <Icon size={24} className="text-white" />
                   </div>
                 </div>
 
-                <div className="pt-3">
+                <div className="min-h-[52px] pt-3">
                   <p className="category-card-label">{category.label}</p>
                   <span className="cb-badge cb-badge-blue mt-1">{category.count}</span>
                 </div>
@@ -140,4 +146,3 @@ export default function CategoryGrid() {
     </section>
   )
 }
-

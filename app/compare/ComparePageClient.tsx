@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { startTransition, useDeferredValue, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Search, X, Plus, ExternalLink, Check, Minus, TrendingDown } from 'lucide-react'
+import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
 
 const MAX_PRODUCTS = 5
@@ -47,7 +48,26 @@ type ProductSpecs = {
   savings: number
 }
 
-function getProductSpecs(product: any): ProductSpecs {
+type CompareEntry = {
+  product: (typeof MOCK_PRODUCTS)[number]
+  specs: ProductSpecs
+}
+
+type CompareProduct = (typeof MOCK_PRODUCTS)[number] & Partial<{
+  reviews: number
+  display: string
+  processor: string
+  ram: string
+  storage: string
+  battery: string
+  camera: string
+  os: string
+  warranty: string
+  delivery: string
+  platform: string
+}>
+
+function getProductSpecs(product: CompareProduct): ProductSpecs {
   return {
     price: product.price,
     brand: product.brand ?? 'N/A',
@@ -78,7 +98,7 @@ function getPlatformClass(platform: string): string {
   return 'cb-badge-green'
 }
 
-function getBestIds(compareProducts: typeof MOCK_PRODUCTS): Record<SpecKey, Set<string>> {
+function getBestIds(compareEntries: CompareEntry[]): Record<SpecKey, Set<string>> {
   const best: Record<SpecKey, Set<string>> = {
     price: new Set<string>(),
     brand: new Set<string>(),
@@ -97,49 +117,49 @@ function getBestIds(compareProducts: typeof MOCK_PRODUCTS): Record<SpecKey, Set<
     savings: new Set<string>(),
   }
 
-  if (compareProducts.length === 0) {
+  if (compareEntries.length === 0) {
     return best
   }
 
-  const specsById = new Map(compareProducts.map((product) => [String(product.id), getProductSpecs(product)]))
+  const specsById = new Map(compareEntries.map((entry) => [String(entry.product.id), entry.specs]))
 
-  const minPrice = Math.min(...compareProducts.map((product) => getProductSpecs(product).price))
-  compareProducts.forEach((product) => {
-    if (getProductSpecs(product).price === minPrice) {
-      best.price.add(String(product.id))
+  const minPrice = Math.min(...compareEntries.map((entry) => entry.specs.price))
+  compareEntries.forEach((entry) => {
+    if (entry.specs.price === minPrice) {
+      best.price.add(String(entry.product.id))
     }
   })
 
-  const maxRating = Math.max(...compareProducts.map((product) => getProductSpecs(product).rating))
-  compareProducts.forEach((product) => {
-    if (getProductSpecs(product).rating === maxRating) {
-      best.rating.add(String(product.id))
+  const maxRating = Math.max(...compareEntries.map((entry) => entry.specs.rating))
+  compareEntries.forEach((entry) => {
+    if (entry.specs.rating === maxRating) {
+      best.rating.add(String(entry.product.id))
     }
   })
 
-  const maxReviews = Math.max(...compareProducts.map((product) => getProductSpecs(product).reviews))
-  compareProducts.forEach((product) => {
-    if (getProductSpecs(product).reviews === maxReviews) {
-      best.reviews.add(String(product.id))
+  const maxReviews = Math.max(...compareEntries.map((entry) => entry.specs.reviews))
+  compareEntries.forEach((entry) => {
+    if (entry.specs.reviews === maxReviews) {
+      best.reviews.add(String(entry.product.id))
     }
   })
 
-  const maxSavings = Math.max(...compareProducts.map((product) => getProductSpecs(product).savings))
-  compareProducts.forEach((product) => {
-    if (getProductSpecs(product).savings === maxSavings) {
-      best.savings.add(String(product.id))
+  const maxSavings = Math.max(...compareEntries.map((entry) => entry.specs.savings))
+  compareEntries.forEach((entry) => {
+    if (entry.specs.savings === maxSavings) {
+      best.savings.add(String(entry.product.id))
     }
   })
 
-  const deliveryDays = compareProducts.map((product) => {
-    const value = specsById.get(String(product.id))?.delivery ?? ''
+  const deliveryDays = compareEntries.map((entry) => {
+    const value = specsById.get(String(entry.product.id))?.delivery ?? ''
     const match = value.match(/(\d+)(?:\s*-\s*(\d+))?\s*days?/i)
     if (!match) {
-      return { id: String(product.id), days: Number.POSITIVE_INFINITY }
+      return { id: String(entry.product.id), days: Number.POSITIVE_INFINITY }
     }
     const low = Number.parseInt(match[1], 10)
     const high = match[2] ? Number.parseInt(match[2], 10) : low
-    return { id: String(product.id), days: Math.min(low, high) }
+    return { id: String(entry.product.id), days: Math.min(low, high) }
   })
   const minDelivery = Math.min(...deliveryDays.map((item) => item.days))
   deliveryDays.forEach((item) => {
@@ -155,28 +175,43 @@ export default function ComparePageClient() {
   const [selectedProducts, setSelectedProducts] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [showSearch, setShowSearch] = useState<boolean>(false)
+  const deferredSearchQuery = useDeferredValue(searchQuery)
 
   const filteredProducts = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase()
+    const query = deferredSearchQuery.trim().toLowerCase()
     return MOCK_PRODUCTS.filter((product) => {
       if (!query) {
         return true
       }
       return product.name.toLowerCase().includes(query) || product.brand.toLowerCase().includes(query)
     })
-  }, [searchQuery])
+  }, [deferredSearchQuery])
 
-  const compareProducts = useMemo(() => {
+  const productById = useMemo(() => {
+    return new Map(MOCK_PRODUCTS.map((product) => [String(product.id), product]))
+  }, [])
+
+  const compareEntries = useMemo<CompareEntry[]>(() => {
     return selectedProducts
-      .map((id) => MOCK_PRODUCTS.find((product) => String(product.id) === id))
-      .filter(Boolean) as typeof MOCK_PRODUCTS
-  }, [selectedProducts])
+      .map((id) => {
+        const product = productById.get(id)
+        if (!product) {
+          return null
+        }
 
-  const bestIdsBySpec = useMemo(() => getBestIds(compareProducts), [compareProducts])
+        return {
+          product,
+          specs: getProductSpecs(product),
+        }
+      })
+      .filter((entry): entry is CompareEntry => entry !== null)
+  }, [productById, selectedProducts])
+
+  const bestIdsBySpec = useMemo(() => getBestIds(compareEntries), [compareEntries])
 
   const winnerScores = useMemo(() => {
     const scores: Record<string, number> = {}
-    compareProducts.forEach((product) => {
+    compareEntries.forEach(({ product }) => {
       scores[String(product.id)] = 0
     })
 
@@ -187,7 +222,7 @@ export default function ComparePageClient() {
     })
 
     return scores
-  }, [compareProducts, bestIdsBySpec])
+  }, [compareEntries, bestIdsBySpec])
 
   const topScore = useMemo(() => {
     const values = Object.values(winnerScores)
@@ -195,16 +230,20 @@ export default function ComparePageClient() {
   }, [winnerScores])
 
   const addProduct = (id: string) => {
-    setSelectedProducts((current) => {
-      if (current.includes(id) || current.length >= MAX_PRODUCTS) {
-        return current
-      }
-      return [...current, id]
+    startTransition(() => {
+      setSelectedProducts((current) => {
+        if (current.includes(id) || current.length >= MAX_PRODUCTS) {
+          return current
+        }
+        return [...current, id]
+      })
     })
   }
 
   const removeProduct = (id: string) => {
-    setSelectedProducts((current) => current.filter((item) => item !== id))
+    startTransition(() => {
+      setSelectedProducts((current) => current.filter((item) => item !== id))
+    })
   }
 
   return (
@@ -221,7 +260,15 @@ export default function ComparePageClient() {
 
       <section className="mx-auto max-w-7xl px-6 py-6">
         <div className="flex flex-wrap items-center gap-3">
-          <button type="button" className="cb-btn cb-btn-primary gap-2" onClick={() => setShowSearch((value) => !value)}>
+          <button
+            type="button"
+            className="cb-btn cb-btn-primary gap-2"
+            onClick={() => {
+              startTransition(() => {
+                setShowSearch((value) => !value)
+              })
+            }}
+          >
             <Plus size={16} />
             Add Product
             {selectedProducts.length > 0 ? ` (${selectedProducts.length}/5)` : ''}
@@ -254,7 +301,12 @@ export default function ComparePageClient() {
                 className="cb-input w-full pl-9"
                 placeholder="Search products..."
                 value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
+                onChange={(event) => {
+                  const nextQuery = event.target.value
+                  startTransition(() => {
+                    setSearchQuery(nextQuery)
+                  })
+                }}
               />
             </div>
             <div className="grid max-h-64 grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4">
@@ -283,7 +335,7 @@ export default function ComparePageClient() {
         ) : null}
       </section>
 
-      {compareProducts.length === 0 ? (
+      {compareEntries.length === 0 ? (
         <section className="mx-auto my-8 max-w-lg px-6">
           <div className="cb-card p-16 text-center">
             <TrendingDown size={48} className="text-muted mx-auto mb-4" />
@@ -303,15 +355,16 @@ export default function ComparePageClient() {
               <thead>
                 <tr className="sticky top-0 z-10 bg-[var(--cb-bg)]">
                   <th className="w-32 p-3 text-left text-xs font-black uppercase tracking-wider text-muted">Spec</th>
-                  {compareProducts.map((product) => (
+                  {compareEntries.map(({ product }) => (
                     <th key={product.id} className="min-w-48 p-3 text-center align-top">
                       <div className="cb-card p-4 text-center">
                         <div className="relative mx-auto mb-2 h-32 w-32">
                           <Image
                             fill
                             className="rounded-lg object-cover"
-                            src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+                            src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)}
                             alt={product.name}
+                            sizes="128px"
                           />
                         </div>
                         <p className="line-clamp-2 text-xs font-black">{product.name}</p>
@@ -337,14 +390,13 @@ export default function ComparePageClient() {
               <tbody>
                 {SPEC_KEYS.map((spec, index) => {
                   const lowestPrice = spec.format === 'price'
-                    ? Math.min(...compareProducts.map((product) => getProductSpecs(product).price))
+                    ? Math.min(...compareEntries.map((entry) => entry.specs.price))
                     : 0
 
                   return (
                     <tr key={spec.key} className={index % 2 === 1 ? 'bg-[var(--cb-surface-2)]/30' : ''}>
                       <td className="w-32 px-4 py-3 text-xs font-black uppercase tracking-wider text-muted">{spec.label}</td>
-                      {compareProducts.map((product) => {
-                        const specs = getProductSpecs(product)
+                      {compareEntries.map(({ product, specs }) => {
                         const value = specs[spec.key]
 
                         const renderCell = (format: SpecFormat) => {
@@ -391,7 +443,7 @@ export default function ComparePageClient() {
 
                 <tr className="border-t border-[var(--cb-border)]">
                   <td className="px-4 py-4 text-xs font-black uppercase tracking-wider">Best Deal</td>
-                  {compareProducts.map((product) => {
+                  {compareEntries.map(({ product }) => {
                     const id = String(product.id)
                     const isWinner = topScore > 0 && winnerScores[id] === topScore
                     return (

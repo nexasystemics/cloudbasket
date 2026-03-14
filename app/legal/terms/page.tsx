@@ -4,7 +4,8 @@ import { FileText, Scale, AlertCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: "Terms of Service — CloudBasket",
-  description: "CloudBasket terms of service. Governed by Indian law.",
+  description:
+    'Review CloudBasket Terms of Service to understand platform rules, affiliate disclosures, acceptable use, and the legal terms that govern your online access.',
 }
 const LAST_UPDATED = 'March 1, 2026'
 const EFFECTIVE_DATE = 'March 1, 2026'

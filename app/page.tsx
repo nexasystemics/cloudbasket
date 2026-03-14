@@ -4,11 +4,10 @@ import Link from 'next/link'
 import { ArrowRight, ExternalLink, Zap, Clock, TrendingDown } from 'lucide-react'
 import CategoryGrid from '@/components/CategoryGrid'
 import HeroSection from '@/components/HeroSection'
-import NewsletterSection from '@/components/NewsletterSection'
-import PersonalizedGrid from '@/components/PersonalizedGrid'
+import HomeDeferredSections from '@/components/HomeDeferredSections'
 import { TelegramCTA } from '@/components/TelegramCTA'
-import TrustScoreWidget from '@/components/TrustScoreWidget'
 import { DEALS } from '@/lib/deals-data'
+import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { PRODUCTS } from '@/lib/mock-data'
 
 export const metadata: Metadata = {
@@ -17,7 +16,27 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'CloudBasket - Everything in One Basket',
     description: "Discover and compare the best prices worldwide. Zero checkout. Pure discovery.",
-    images: [{ url: '/og/default.png' }],
+    url: 'https://cloudbasket.in',
+    images: [{ url: '/og-image.svg' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CloudBasket - Everything in One Basket',
+    description: "Discover and compare the best prices worldwide. Zero checkout. Pure discovery.",
+    images: ['/og-image.svg'],
+  },
+}
+
+const WEBSITE_STRUCTURED_DATA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'CloudBasket',
+  url: 'https://cloudbasket.in',
+  description: "The World's Smartest Price Aggregator",
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://cloudbasket.in/search?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
   },
 }
 
@@ -49,7 +68,7 @@ function DealOfTheDay() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F97316]">
               <Zap size={20} className="text-white" />
             </div>
-            <div>
+            <div className="min-h-[52px]">
               <h2 className="text-2xl font-black tracking-tighter">Deal of the Day</h2>
               <p className="text-muted text-xs">Refreshes midnight IST</p>
             </div>
@@ -63,18 +82,24 @@ function DealOfTheDay() {
         <div className="cb-card overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="relative h-64 min-h-64 md:h-auto">
-              <Image fill className="object-cover" src={DEAL_OF_DAY.image} alt={DEAL_OF_DAY.name} />
+              <Image
+                fill
+                className="object-cover"
+                src={DEAL_OF_DAY.image}
+                alt={DEAL_OF_DAY.name}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
               <span className="cb-badge absolute left-4 top-4 border-[#F97316] bg-[#F97316] text-lg font-black text-white">
                 -{DEAL_OF_DAY.discount}% OFF
               </span>
             </div>
 
-            <div className="flex flex-col justify-center p-8">
+            <div className="flex min-h-[320px] flex-col justify-center p-8">
               <span className="cb-badge cb-badge-blue mb-3">{DEAL_OF_DAY.platform}</span>
               <p className="text-muted mb-1 text-xs font-black uppercase tracking-widest">{DEAL_OF_DAY.brand}</p>
               <h3 className="text-2xl font-black leading-tight tracking-tighter">{DEAL_OF_DAY.name}</h3>
 
-              <div className="my-4 flex flex-col gap-2">
+              <div className="my-4 flex min-h-[120px] flex-col gap-2">
                 {DEAL_OF_DAY.features.map((feature) => (
                   <p key={feature} className="flex items-center gap-2 text-sm">
                     <span className="font-black text-[#10B981]">✓</span>
@@ -107,7 +132,7 @@ function DealOfTheDay() {
   )
 }
 
-function FeaturedDeals() {
+function FlashDealsPreview() {
   const flashDeals = DEALS.filter((deal) => deal.isFlash).slice(0, 4)
 
   return (
@@ -126,13 +151,14 @@ function FeaturedDeals() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {flashDeals.map((deal) => {
           const product = PRODUCTS.find((item) => item.id === deal.productId)
-          const imageSrc = product?.image ?? '/brand/logo-mark.svg'
+          const imageSrc = resolveImageSource(product?.image, IMAGE_ASSETS.brandMark)
+
           return (
             <article key={deal.id} className="cb-card overflow-hidden">
               <div className="relative h-48">
                 <Image src={imageSrc} alt={deal.title} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
               </div>
-              <div className="p-4">
+              <div className="min-h-[146px] p-4">
                 <span className="cb-badge cb-badge-orange">Flash</span>
                 <h3 className="mt-2 line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">{deal.title}</h3>
                 <p className="mt-2 font-display text-xl font-black text-[#F97316]">-{deal.discount}%</p>
@@ -158,17 +184,15 @@ function FeaturedDeals() {
 export default function HomePage() {
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_STRUCTURED_DATA) }} />
       <HeroSection />
       <DealOfTheDay />
-      <TrustScoreWidget />
+      <FlashDealsPreview />
       <CategoryGrid />
       <section className="mx-auto max-w-7xl px-6 py-4">
         <TelegramCTA />
       </section>
-      <PersonalizedGrid />
-      <NewsletterSection />
+      <HomeDeferredSections />
     </main>
   )
 }
-
-

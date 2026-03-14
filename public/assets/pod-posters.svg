@@ -1,0 +1,20 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="48" fill="#431407"/>
+  <rect x="70" y="70" width="1060" height="760" rx="40" fill="url(#bg)"/>
+  <rect x="280" y="165" width="640" height="420" rx="24" fill="#F8FAFC"/>
+  <rect x="330" y="215" width="540" height="320" rx="12" fill="url(#art)"/>
+  <circle cx="470" cy="345" r="74" fill="#F97316" fill-opacity="0.85"/>
+  <path d="M360 470L505 345L620 445L720 290L840 470" stroke="#F8FAFC" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="110" y="778" fill="#FFEDD5" font-family="Arial, sans-serif" font-size="72" font-weight="700">CloudBasket Posters</text>
+  <text x="110" y="840" fill="#FED7AA" font-family="Arial, sans-serif" font-size="34">Wall art, desk prints and creator drops</text>
+  <defs>
+    <linearGradient id="bg" x1="100" y1="100" x2="1080" y2="780" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C2D12"/>
+      <stop offset="1" stop-color="#EA580C"/>
+    </linearGradient>
+    <linearGradient id="art" x1="330" y1="215" x2="870" y2="535" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+</svg>

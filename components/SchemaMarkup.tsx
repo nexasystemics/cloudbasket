@@ -1,9 +1,39 @@
 import type { ReactElement } from 'react'
 
-interface SchemaMarkupProps {
-  type: 'product' | 'article' | 'website'
-  data: any
+type ProductSchemaData = {
+  name: string
+  brand: string
+  price: number
+  rating?: number
+  reviews?: number
 }
+
+type ArticleSchemaData = {
+  title: string
+  excerpt: string
+  author: string
+  date: string
+  image: string
+}
+
+type WebsiteSchemaProps = {
+  type: 'website'
+  data?: Record<string, never>
+}
+
+type ProductSchemaProps = {
+  type: 'product'
+  data: ProductSchemaData
+}
+
+type ArticleSchemaProps = {
+  type: 'article'
+  data: ArticleSchemaData
+}
+
+type SchemaMarkupProps = WebsiteSchemaProps | ProductSchemaProps | ArticleSchemaProps
+
+const BASE_URL = 'https://cloudbasket.in'
 
 export default function SchemaMarkup({ type, data }: SchemaMarkupProps): ReactElement {
   let schema: Record<string, unknown>
@@ -44,7 +74,7 @@ export default function SchemaMarkup({ type, data }: SchemaMarkupProps): ReactEl
         name: 'CloudBasket',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://cloudbasket.vercel.app/og-image.svg',
+          url: `${BASE_URL}/brand/logo-full.svg`,
         },
       },
       datePublished: data.date,
@@ -55,11 +85,11 @@ export default function SchemaMarkup({ type, data }: SchemaMarkupProps): ReactEl
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'CloudBasket',
-      url: 'https://cloudbasket.vercel.app',
+      url: BASE_URL,
       description: "India's best price comparison platform",
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://cloudbasket.vercel.app/search?q={search_term_string}',
+        target: `${BASE_URL}/search?q={search_term_string}`,
         'query-input': 'required name=search_term_string',
       },
     }

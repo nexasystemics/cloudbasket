@@ -1,6 +1,4 @@
-'use client'
-
-import { useState } from 'react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   DollarSign,
@@ -25,13 +23,41 @@ import {
 
 const purpleTheme = '#039BE5'
 
+export const metadata: Metadata = {
+  title: 'CloudBasket Affiliate Program',
+  description:
+    'Join the CloudBasket affiliate program to earn commissions, track clicks and conversions, and grow revenue by sharing verified products and deals today.',
+}
+
+const FAQS = [
+  {
+    question: 'How do I get paid?',
+    answer:
+      'We process payments weekly via bank transfer, UPI, or PayPal. You need to reach the minimum payout threshold of ₹500 before your first payment. All payments are processed automatically every Monday.',
+  },
+  {
+    question: 'When do I receive commission?',
+    answer:
+      'Commissions are credited to your account immediately after a successful sale. However, there is a 7-day return window before the commission is finalized. Once finalized, commissions are included in the next weekly payout cycle.',
+  },
+  {
+    question: 'Can I promote on social media?',
+    answer:
+      'Yes! You can promote CloudBasket products on any platform including Instagram, Facebook, Twitter, YouTube, TikTok, and your blog. Just make sure to disclose that you are using affiliate links as per FTC and ASCI guidelines.',
+  },
+  {
+    question: 'What products can I promote?',
+    answer:
+      'You can promote any of the 10,000+ products available on CloudBasket. This includes electronics, fashion, home & kitchen, books, and more from Amazon, Flipkart, and other partner retailers.',
+  },
+  {
+    question: 'How do I track my earnings?',
+    answer:
+      "Once you sign up, you'll get access to your affiliate dashboard where you can track clicks, conversions, earnings, and top-performing products in real-time. You can also download detailed reports and analytics.",
+  },
+] as const
+
 export default function AffiliatePage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
-
-  const toggleFaq = (index: number) => {
-    setOpenFaq(openFaq === index ? null : index)
-  }
-
   // Mock earnings data for chart (last 7 days)
   const earningsData = [
     { day: 'Mon', amount: 1200 },
@@ -456,57 +482,22 @@ export default function AffiliatePage() {
           Frequently Asked Questions
         </h2>
         <div className="space-y-4">
-          {[
-            {
-              question: 'How do I get paid?',
-              answer:
-                'We process payments weekly via bank transfer, UPI, or PayPal. You need to reach the minimum payout threshold of ₹500 before your first payment. All payments are processed automatically every Monday.',
-            },
-            {
-              question: 'When do I receive commission?',
-              answer:
-                'Commissions are credited to your account immediately after a successful sale. However, there is a 7-day return window before the commission is finalized. Once finalized, commissions are included in the next weekly payout cycle.',
-            },
-            {
-              question: 'Can I promote on social media?',
-              answer:
-                'Yes! You can promote CloudBasket products on any platform including Instagram, Facebook, Twitter, YouTube, TikTok, and your blog. Just make sure to disclose that you are using affiliate links as per FTC and ASCI guidelines.',
-            },
-            {
-              question: 'What products can I promote?',
-              answer:
-                'You can promote any of the 10,000+ products available on CloudBasket. This includes electronics, fashion, home & kitchen, books, and more from Amazon, Flipkart, and other partner retailers.',
-            },
-            {
-              question: 'How do I track my earnings?',
-              answer:
-                'Once you sign up, you\'ll get access to your affiliate dashboard where you can track clicks, conversions, earnings, and top-performing products in real-time. You can also download detailed reports and analytics.',
-            },
-          ].map((faq, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-lg border border-gray-200 overflow-hidden"
+          {FAQS.map((faq) => (
+            <details
+              key={faq.question}
+              className="group overflow-hidden rounded-lg border border-gray-200 bg-white"
             >
-              <button
-                onClick={() => toggleFaq(index)}
-                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-              >
-                <span className="font-semibold text-gray-900 flex items-center gap-2">
+              <summary className="flex cursor-pointer list-none items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors">
+                <span className="flex items-center gap-2 font-semibold text-gray-900">
                   <HelpCircle className="w-5 h-5" style={{ color: purpleTheme }} />
                   {faq.question}
                 </span>
-                <ChevronDown
-                  className={`w-5 h-5 text-gray-400 transition-transform ${
-                    openFaq === index ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
-              {openFaq === index && (
-                <div className="px-6 py-4 border-t border-gray-200 text-gray-600">
-                  {faq.answer}
-                </div>
-              )}
-            </div>
+                <ChevronDown className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="border-t border-gray-200 px-6 py-4 text-gray-600">
+                {faq.answer}
+              </div>
+            </details>
           ))}
         </div>
       </section>

@@ -5,14 +5,13 @@ import CategoriesHubClient from '@/components/CategoriesHubClient'
 const syne = Syne({
   subsets: ['latin'],
   weight: ['400', '700', '800'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: {
-    absolute: 'All Categories | CloudBasket',
-  },
+  title: 'All Categories | CloudBasket',
   description:
-    'Browse 20 categories — Electronics, Fashion, Finance, Travel and more. Best deals across every category.',
+    'Browse CloudBasket categories to compare prices across electronics, fashion, home, beauty, and more with faster access to the latest verified deals online.',
 }
 
 export default function CategoriesPage() {
@@ -22,3 +21,6 @@ export default function CategoriesPage() {
     </div>
   )
 }
+
+
+

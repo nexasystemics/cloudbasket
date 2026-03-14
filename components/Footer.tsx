@@ -1,8 +1,6 @@
-'use client'
-
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import { MessageCircle } from 'lucide-react'
+import FooterComplianceBadges from '@/components/FooterComplianceBadges'
 import { ROUTES, SITE_NAME } from '@/lib/constants'
 
 const discoverLinks = [
@@ -60,28 +58,7 @@ const complianceBadges = [
   },
 ] as const
 
-type ComplianceBadge = (typeof complianceBadges)[number]
-
 export default function Footer() {
-  const [activeBadge, setActiveBadge] = useState<ComplianceBadge | null>(null)
-
-  useEffect(() => {
-    if (activeBadge === null) {
-      return
-    }
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setActiveBadge(null)
-      }
-    }
-
-    window.addEventListener('keydown', handleEscape)
-    return () => {
-      window.removeEventListener('keydown', handleEscape)
-    }
-  }, [activeBadge])
-
   return (
     <>
       <footer className="border-t border-[#1E293B] bg-[#09090B] text-white dark:bg-[#020206]">
@@ -95,18 +72,7 @@ export default function Footer() {
               Compare Prices. Discover Deals. Shop Smarter.
             </p>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              {complianceBadges.map((badge) => (
-                <button
-                  key={badge.label}
-                  type="button"
-                  onClick={() => setActiveBadge(badge)}
-                  className="inline-block rounded-full border border-blue-600/30 bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-400 transition hover:bg-blue-600/20"
-                >
-                  {badge.label}
-                </button>
-              ))}
-            </div>
+            <FooterComplianceBadges badges={complianceBadges} />
 
             <div className="mt-4 flex items-center gap-2">
               <a
@@ -172,35 +138,6 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-
-      {activeBadge !== null ? (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 px-4"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="footer-compliance-title"
-          onClick={() => setActiveBadge(null)}
-        >
-          <div
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <h3 id="footer-compliance-title" className="text-xl font-black text-slate-900">
-              {activeBadge.title}
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600">
-              {activeBadge.description}
-            </p>
-            <button
-              type="button"
-              onClick={() => setActiveBadge(null)}
-              className="mt-5 inline-flex rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      ) : null}
     </>
   )
 }

@@ -9,7 +9,7 @@ export default function PersonalizedGrid() {
 
   if (isLoading) {
     return (
-      <section className="py-12">
+      <section className="min-h-[640px] py-12">
         <div className="mx-auto max-w-7xl px-6">
           <div className="cb-card mb-8 flex animate-pulse items-center gap-3 p-4">
             <div className="h-6 w-6 rounded-full bg-[#039BE5]/20" />
@@ -26,9 +26,9 @@ export default function PersonalizedGrid() {
   }
 
   return (
-    <section className="py-12">
+    <section className="min-h-[640px] py-12">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="cb-card mb-8 border-[#039BE5]/30 bg-[#039BE5]/5 p-4">
+        <div className="cb-card mb-8 min-h-[88px] border-[#039BE5]/30 bg-[#039BE5]/5 p-4">
           <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
             <div className="flex items-center gap-3">
               <Sparkles size={20} className="flex-shrink-0 text-[#039BE5]" />
@@ -72,7 +72,7 @@ export default function PersonalizedGrid() {
           </div>
         ) : null}
 
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 flex min-h-[40px] items-center justify-between">
           <h2 className="text-2xl font-black tracking-tighter">
             {festivalLabel ? '🎯 Festival Deals For You' : seasonLabel ?? '✨ Picked For You'}
           </h2>

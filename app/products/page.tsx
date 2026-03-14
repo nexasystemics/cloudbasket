@@ -4,7 +4,8 @@ import ProductsPageClient from './products-page-client'
 
 export const metadata: Metadata = {
   title: "All Products — 2,000+ Deals Tracked",
-  description: "Browse 2,000+ products tracked across Amazon, Flipkart and CJ Global.",
+  description:
+    'Browse CloudBasket products across major categories, compare prices from trusted stores, and discover verified deals matched to your budget and needs.',
 }
 
 export default function ProductsPage() {

@@ -1,8 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { Bell } from 'lucide-react'
-import PriceAlertModal from '@/components/PriceAlertModal'
+
+const PriceAlertModal = dynamic(() => import('@/components/PriceAlertModal'), {
+  ssr: false,
+  loading: () => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4" aria-hidden="true">
+      <div className="cb-card min-h-[320px] w-full max-w-md bg-[var(--cb-surface)]" />
+    </div>
+  ),
+})
 
 interface ProductActionsProps {
   productName: string

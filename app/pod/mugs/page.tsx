@@ -1,4 +1,12 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { IMAGE_ASSETS } from '@/lib/image-assets'
+
+export const metadata: Metadata = {
+  title: 'POD Mugs and Drinkware',
+  description: 'Explore CloudBasket print-on-demand mugs and drinkware with affiliate redirects to verified creator storefronts.',
+}
 
 export default function PodMugsPage() {
   return (
@@ -22,7 +30,13 @@ export default function PodMugsPage() {
             className="w-14 h-14 rounded-full overflow-hidden mx-auto mb-4"
             style={{ backgroundColor: '#1B5E20' }}
           >
-            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=56&h=56&fit=crop" alt="Mug" className="w-full h-full object-cover" loading="lazy" />
+            <Image
+              src={IMAGE_ASSETS.pod.mugs}
+              alt="Mug"
+              width={56}
+              height={56}
+              className="w-full h-full object-cover"
+            />
           </div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">Mug Collection</h2>
           <p className="text-gray-600 text-sm max-w-md mx-auto">

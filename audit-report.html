@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QA Audit Report — 12/3/2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; padding: 2rem; }
+  h1 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #38bdf8; }
+  .meta { color: #94a3b8; margin-bottom: 2rem; font-size: 0.9rem; }
+  .summary { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .card { background: #1e293b; border-radius: 8px; padding: 1rem 1.5rem; min-width: 120px; }
+  .card .num { font-size: 2rem; font-weight: bold; }
+  .card .label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  th { background: #1e293b; padding: 0.75rem 1rem; text-align: left; color: #38bdf8; border-bottom: 1px solid #334155; }
+  td { padding: 0.75rem 1rem; border-bottom: 1px solid #1e293b; vertical-align: top; }
+  tr:hover td { background: #1e293b44; }
+  a { color: #38bdf8; }
+</style>
+</head>
+<body>
+<h1>🔍 QA Audit Report</h1>
+<p class="meta">Target: http://localhost:3000 · Audited: 34 pages · Generated: 12/3/2026, 3:42:34 pm</p>
+<div class="summary">
+  <div class="card"><div class="num" style="color:#22c55e">0</div><div class="label">Pass</div></div>
+  <div class="card"><div class="num" style="color:#f59e0b">0</div><div class="label">Warn</div></div>
+  <div class="card"><div class="num" style="color:#ef4444">18</div><div class="label">Fail</div></div>
+  <div class="card"><div class="num" style="color:#7f1d1d">16</div><div class="label">Critical</div></div>
+  <div class="card"><div class="num" style="color:#94a3b8">123</div><div class="label">Total Issues</div></div>
+</div>
+<table>
+  <thead>
+    <tr><th>Page</th><th>Status</th><th>Title</th><th>Load</th><th>Issues</th><th>Screenshot</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:3000/" target="_blank">/</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>779ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/home.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/products" target="_blank">/products</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>All Products — 2,000+ Deals Tracked | CloudBasket</td>
+      <td>305ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/products.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/deals" target="_blank">/deals</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>Today's Best Deals — Up to 75% Off | CloudBasket</td>
+      <td>858ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/deals.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/deals/flash" target="_blank">/deals/flash</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>CloudBasket — India's Best Price Comparison</td>
+      <td>672ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/deals_flash.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/compare" target="_blank">/compare</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>Compare Products — Side by Side | CloudBasket</td>
+      <td>961ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/compare.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/search" target="_blank">/search</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>CloudBasket — India's Best Price Comparison</td>
+      <td>659ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/search.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/quiz" target="_blank">/quiz</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>Find Your Perfect Deal - CloudBasket Quiz | CloudBasket</td>
+      <td>523ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/quiz.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/categories" target="_blank">/categories</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>All Categories | CloudBasket</td>
+      <td>304ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "₹0 Fees" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "Zero hidden fees" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/categories.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/electronics" target="_blank">/category/electronics</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>1421ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_electronics.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/fashion" target="_blank">/category/fashion</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>942ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_fashion.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/home" target="_blank">/category/home</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>960ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_home.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/health" target="_blank">/category/health</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>914ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_health.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/books" target="_blank">/category/books</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>923ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_books.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/sports" target="_blank">/category/sports</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>1005ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_sports.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/beauty" target="_blank">/category/beauty</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>953ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_beauty.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/food" target="_blank">/category/food</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>894ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_food.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/toys" target="_blank">/category/toys</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>924ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_toys.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/category/automotive" target="_blank">/category/automotive</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>926ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/category_automotive.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/product/cb-00001" target="_blank">/product/cb-00001</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>987ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/product_cb-00001.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/blog" target="_blank">/blog</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>Deals Intelligence & Buying Guides | CloudBasket</td>
+      <td>430ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/blog.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/pod" target="_blank">/pod</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>CloudBasket Originals — Print on Demand | CloudBasket</td>
+      <td>913ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span><br><span style="color:#f59e0b">[MEDIUM] Broken Images: 1 broken: http://localhost:3000/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556821840-3a63f15732ce%3Fw%3D600%26q%3D80&w=1920&q=75</span></td>
+      <td><img src="audit-screenshots/pod.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/pod/tshirts" target="_blank">/pod/tshirts</a></td>
+      <td style="color:#7f1d1d;font-weight:bold">CRITICAL</td>
+      <td>—</td>
+      <td>1106ms</td>
+      <td><span style="color:#7f1d1d">[CRITICAL] HTTP Error: Status 500</span><br><span style="color:#ef4444">[HIGH] Missing Title: Page has no <title></span><br><span style="color:#ef4444">[HIGH] Wrong Currency: Found $ pricing: $23, $6</span><br><span style="color:#ef4444">[HIGH] Missing Element: Header/Nav present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Footer present</span><br><span style="color:#ef4444">[HIGH] Missing Element: Page title exists</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/pod_tshirts.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/pod/mugs" target="_blank">/pod/mugs</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>CloudBasket — India's Best Price Comparison</td>
+      <td>258ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/pod_mugs.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/pod/phone-cases" target="_blank">/pod/phone-cases</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>CloudBasket — India's Best Price Comparison</td>
+      <td>593ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/pod_phone-cases.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/login" target="_blank">/login</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>CloudBasket — India's Best Price Comparison</td>
+      <td>595ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/login.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/register" target="_blank">/register</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>CloudBasket — India's Best Price Comparison</td>
+      <td>693ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/register.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/about" target="_blank">/about</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>About CloudBasket — The World's Smartest Price Aggregator | CloudBasket</td>
+      <td>794ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "AdSense" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "Google AdSense" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "Associates Program" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/about.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/contact" target="_blank">/contact</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>Contact Us — CloudBasket | CloudBasket</td>
+      <td>704ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "hello@cloudbasket.in" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "+91 98765" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "Associates Program" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/contact.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/faq" target="_blank">/faq</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>FAQ — Frequently Asked Questions | CloudBasket</td>
+      <td>831ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "Associates Program" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span><br><span style="color:#f59e0b">[MEDIUM] Dark Mode Not Applying: Body background still white/transparent in dark mode</span></td>
+      <td><img src="audit-screenshots/faq.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/affiliate-disclosure" target="_blank">/affiliate-disclosure</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>Affiliate Disclosure — CloudBasket | CloudBasket</td>
+      <td>818ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/affiliate-disclosure.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/legal/privacy" target="_blank">/legal/privacy</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>Privacy Policy — DPDPA 2023 Compliant | CloudBasket</td>
+      <td>757ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/legal_privacy.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/legal/terms" target="_blank">/legal/terms</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>Terms of Service — CloudBasket | CloudBasket</td>
+      <td>921ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "Associates Program" found on page</span><br><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/legal_terms.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/cookies" target="_blank">/cookies</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>Cookie Policy — CloudBasket | CloudBasket</td>
+      <td>825ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span></td>
+      <td><img src="audit-screenshots/cookies.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  
+    <tr>
+      <td><a href="http://localhost:3000/cj" target="_blank">/cj</a></td>
+      <td style="color:#ef4444;font-weight:bold">FAIL</td>
+      <td>CJ Global Network — International Products | CloudBasket</td>
+      <td>940ms</td>
+      <td><span style="color:#ef4444">[HIGH] Banned Text Found: "NaN" found on page</span><br><span style="color:#ef4444">[HIGH] Wrong Currency: Found $ pricing: $49, $99, $39</span></td>
+      <td><img src="audit-screenshots/cj.png" style="width:120px;border:1px solid #333;border-radius:4px"></td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

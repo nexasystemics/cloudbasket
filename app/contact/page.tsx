@@ -3,7 +3,8 @@ import ContactPageClient from './ContactPageClient'
 
 export const metadata: Metadata = {
   title: "Contact Us — CloudBasket",
-  description: "Get in touch with the CloudBasket team. We respond within 24 hours.",
+  description:
+    'Contact CloudBasket for support, partnerships, feedback, or press queries, and get direct help with deals, products, alerts, and platform questions today.',
 }
 
 export default ContactPageClient

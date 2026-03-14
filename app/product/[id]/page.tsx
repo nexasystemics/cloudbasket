@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,9 +15,8 @@ import {
 import { CATALOG, type Product as CatalogProduct } from '@/lib/intelligence/catalog'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 import SchemaMarkup from '@/components/SchemaMarkup'
+import ProductPageClientWidgets from './ProductPageClientWidgets'
 import RecentlyViewed, { ProductViewTracker } from '@/components/RecentlyViewed'
-import ProductActions from '@/components/ProductActions'
-import SocialProofWidget from '@/components/SocialProof'
 import TrackBehavior from '@/components/TrackBehavior'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import WishlistButton from '@/components/WishlistButton'
@@ -25,6 +25,8 @@ import { CODBadge } from '@/components/products/CODBadge'
 import { DealShareCard } from '@/components/products/DealShareCard'
 import { EMIBadge } from '@/components/products/EMIBadge'
 import { PincodeChecker } from '@/components/products/PincodeChecker'
+import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
+
 
 type MockProduct = (typeof MOCK_PRODUCTS)[number]
 
@@ -175,6 +177,45 @@ function toDisplayFromMock(product: MockProduct): DisplayProduct {
   }
 }
 
+function findDisplayProductById(id: string): DisplayProduct | null {
+  const catalogProduct = id.startsWith('cb-') ? CATALOG.find((item) => item.id === id) : undefined
+  const numericId = Number.parseInt(id, 10)
+  const mockProduct = Number.isNaN(numericId) ? undefined : MOCK_PRODUCTS.find((item) => item.id === numericId)
+
+  if (catalogProduct !== undefined) {
+    return toDisplayFromCatalog(catalogProduct)
+  }
+
+  if (mockProduct !== undefined) {
+    return toDisplayFromMock(mockProduct)
+  }
+
+  return null
+}
+
+function buildProductDescription(product: DisplayProduct): string {
+  return `Compare prices for ${product.name} on CloudBasket, track current offers, verify discounts, and find the best ${product.mainCategory} deal from trusted stores.`
+}
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ id: string }> },
+): Promise<Metadata> {
+  const { id } = await params
+  const product = findDisplayProductById(id)
+
+  if (product === null) {
+    return {
+      title: 'Product Not Found | CloudBasket',
+      description: 'The requested CloudBasket product could not be found.',
+    }
+  }
+
+  return {
+    title: `${product.name} | CloudBasket`,
+    description: buildProductDescription(product),
+  }
+}
+
 function RelatedCard({ product }: { product: DisplayProduct }) {
   return (
     <article className="cb-card group flex flex-col overflow-hidden">
@@ -182,8 +223,9 @@ function RelatedCard({ product }: { product: DisplayProduct }) {
         <Image
           fill
           className="object-cover"
-          src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+          src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)}
           alt={product.name}
+          sizes="(max-width: 768px) 50vw, 25vw"
         />
       </div>
       <div className="flex flex-1 flex-col gap-1 p-3">
@@ -207,13 +249,8 @@ export default async function ProductPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-
   const catalogProduct = id.startsWith('cb-') ? CATALOG.find((item) => item.id === id) : undefined
-
-  const numericId = Number.parseInt(id, 10)
-  const mockProduct = Number.isNaN(numericId) ? undefined : MOCK_PRODUCTS.find((item) => item.id === numericId)
-
-  const product = catalogProduct ? toDisplayFromCatalog(catalogProduct) : mockProduct ? toDisplayFromMock(mockProduct) : null
+  const product = findDisplayProductById(id)
 
   if (!product) {
     notFound()
@@ -293,8 +330,9 @@ export default async function ProductPage({
               <Image
                 fill
                 className="object-cover"
-                src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+                src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)}
                 alt={product.name}
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
             <div className="flex gap-2 p-4">
@@ -308,8 +346,9 @@ export default async function ProductPage({
                   <Image
                     fill
                     className="object-cover"
-                    src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+                    src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)}
                     alt={`${product.name} preview ${thumb + 1}`}
+                    sizes="64px"
                   />
                 </div>
               ))}
@@ -334,7 +373,11 @@ export default async function ProductPage({
             <span className="cb-badge">{product.reviewCount.toLocaleString('en-IN')} reviews</span>
           </div>
 
-          <SocialProofWidget productId={String(product.id)} className="mt-4" />
+          <ProductPageClientWidgets
+            productId={String(product.id)}
+            productName={product.name}
+            currentPrice={product.price}
+          />
 
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <EMIBadge price={product.price} />
@@ -406,7 +449,6 @@ export default async function ProductPage({
           <div className="mt-4 flex flex-wrap gap-3">
             <WishlistButton productId={String(product.id)} productName={product.name} />
             <WhatsAppShare productName={product.name} price={product.price} />
-            <ProductActions productName={product.name} currentPrice={product.price} />
             <Link href="/compare" className="cb-btn cb-btn-ghost gap-2">
               <BarChart2 size={16} /> Compare
             </Link>

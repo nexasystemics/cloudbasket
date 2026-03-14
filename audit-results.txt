@@ -1,0 +1,45 @@
+
+≡ƒöì CloudBasket QA Auditor
+Target: http://localhost:3000
+Pages: 34
+
+Γ¥î / ΓÇö 4 issues (779ms)
+Γ¥î /products ΓÇö 1 issues (305ms)
+Γ¥î /deals ΓÇö 1 issues (858ms)
+Γ¥î /deals/flash ΓÇö 1 issues (672ms)
+Γ¥î /compare ΓÇö 4 issues (961ms)
+Γ¥î /search ΓÇö 4 issues (659ms)
+Γ¥î /quiz ΓÇö 5 issues (523ms)
+Γ¥î /categories ΓÇö 4 issues (304ms)
+Γ¥î /category/electronics ΓÇö 6 issues (1421ms)
+Γ¥î /category/fashion ΓÇö 6 issues (942ms)
+Γ¥î /category/home ΓÇö 6 issues (960ms)
+Γ¥î /category/health ΓÇö 6 issues (914ms)
+Γ¥î /category/books ΓÇö 6 issues (923ms)
+Γ¥î /category/sports ΓÇö 6 issues (1005ms)
+Γ¥î /category/beauty ΓÇö 6 issues (953ms)
+Γ¥î /category/food ΓÇö 6 issues (894ms)
+Γ¥î /category/toys ΓÇö 4 issues (924ms)
+Γ¥î /category/automotive ΓÇö 6 issues (926ms)
+Γ¥î /product/cb-00001 ΓÇö 6 issues (987ms)
+Γ¥î /blog ΓÇö 1 issues (430ms)
+Γ¥î /pod ΓÇö 2 issues (913ms)
+Γ¥î /pod/tshirts ΓÇö 7 issues (1106ms)
+Γ¥î /pod/mugs ΓÇö 1 issues (258ms)
+Γ¥î /pod/phone-cases ΓÇö 1 issues (593ms)
+Γ¥î /login ΓÇö 2 issues (595ms)
+Γ¥î /register ΓÇö 2 issues (693ms)
+Γ¥î /about ΓÇö 4 issues (794ms)
+Γ¥î /contact ΓÇö 5 issues (704ms)
+Γ¥î /faq ΓÇö 3 issues (831ms)
+Γ¥î /affiliate-disclosure ΓÇö 1 issues (818ms)
+Γ¥î /legal/privacy ΓÇö 1 issues (757ms)
+Γ¥î /legal/terms ΓÇö 2 issues (921ms)
+Γ¥î /cookies ΓÇö 1 issues (825ms)
+Γ¥î /cj ΓÇö 2 issues (940ms)
+
+≡ƒôè Report saved: ./audit-report.html
+≡ƒôü Screenshots: ./audit-screenshots/
+
+Γ£à PASS: 0 | ΓÜá∩╕Å WARN: 0 | Γ¥î FAIL: 18 | ≡ƒö┤ CRITICAL: 16
+Total issues found: 123

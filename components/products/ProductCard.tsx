@@ -3,7 +3,6 @@
 import { useCallback, useMemo, useState, type MouseEvent } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
 import { ExternalLink, MessageCircle, Star, TrendingDown, Zap } from 'lucide-react'
 import { useGlobal } from '@/context/GlobalContext'
 
@@ -33,7 +32,6 @@ interface ProductCardProps {
 }
 
 const STAR_INDICES: number[] = [1, 2, 3, 4, 5]
-const CARD_TRANSITION = { type: 'spring', stiffness: 300, damping: 28 } as const
 
 const toDealPath = (id: number | string, affiliatePlatform?: AffiliatePlatform): string => {
   const platform =
@@ -150,13 +148,10 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
   }, [])
 
   return (
-    <motion.article
-      layout
-      whileHover={{ y: -3 }}
-      transition={CARD_TRANSITION}
+    <article
       className={`cb-card group cursor-pointer overflow-hidden ${
         isList ? 'flex flex-row' : 'flex h-full flex-col'
-      }`}
+      } transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg`}
       onClick={handleCardClick}
     >
       <div className={`product-card-img relative flex-shrink-0 ${isList ? 'h-[200px] w-[220px]' : 'h-[200px] w-full'}`}>
@@ -169,7 +164,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-200 group-hover:scale-105"
             sizes={isList ? '220px' : '(max-width: 768px) 100vw, (max-width: 1280px) 30vw, 22vw'}
             onError={handleImageError}
           />
@@ -252,13 +247,13 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
             <span className="price-savings">SAVE {product.discount}%</span>
           ) : null}
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex min-h-[20px] flex-wrap items-center gap-2">
           {product.price >= 5000 ? (
             <span className="text-[10px] text-[#10B981]">
               EMI from Rs{Math.ceil(product.price / 12).toLocaleString('en-IN')}/mo
             </span>
           ) : null}
-          {(product.affiliatePlatform === 'amazon' || product.affiliatePlatform === 'flipkart') ? (
+          {product.affiliatePlatform === 'amazon' || product.affiliatePlatform === 'flipkart' ? (
             <span className="cb-badge text-[10px]">COD</span>
           ) : null}
         </div>
@@ -273,7 +268,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
           <ExternalLink size={14} />
         </button>
       </div>
-    </motion.article>
+    </article>
   )
 }
 

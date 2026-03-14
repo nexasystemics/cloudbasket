@@ -272,7 +272,7 @@ export default async function BlogPostPage({
         }}
       />
       <section className="relative h-72 md:h-96">
-        <Image fill className="object-cover" src={post.image} alt={post.title} priority />
+        <Image fill className="object-cover" src={post.image} alt={post.title} priority sizes="100vw" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 mx-auto w-full max-w-3xl px-6 pb-8">
           <span className="cb-badge cb-badge-blue mb-3">{post.category}</span>
@@ -373,7 +373,13 @@ export default async function BlogPostPage({
           {relatedPosts.map((relatedPost) => (
             <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`} className="cb-card group overflow-hidden">
               <div className="relative h-40">
-                <Image fill className="object-cover" src={relatedPost.image} alt={relatedPost.title} />
+                <Image
+                  fill
+                  className="object-cover"
+                  src={relatedPost.image}
+                  alt={relatedPost.title}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
               </div>
               <div className="p-4">
                 <span className="cb-badge text-xs">{relatedPost.category}</span>

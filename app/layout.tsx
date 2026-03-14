@@ -1,19 +1,31 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import Script from 'next/script'
-import CookieConsent from '@/components/CookieConsent'
-import FestivalBanner from '@/components/FestivalBanner'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
-import { IndiaTrustBar } from '@/components/IndiaTrustBar'
-import PWAInstallPrompt from '@/components/PWAInstallPrompt'
+import LayoutBottomEnhancements from '@/components/LayoutBottomEnhancements'
+import LayoutTopEnhancements from '@/components/LayoutTopEnhancements'
 import SchemaMarkup from '@/components/SchemaMarkup'
 import CBThemeProvider from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
 import './globals.css'
 
+function getSupabaseOrigin(): string | null {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+
+  if (!supabaseUrl) {
+    return null
+  }
+
+  try {
+    return new URL(supabaseUrl).origin
+  } catch {
+    return null
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://cloudbasket.vercel.app'),
+  metadataBase: new URL('https://cloudbasket.in'),
   title: {
     default: "CloudBasket — India's Best Price Comparison",
     template: '%s | CloudBasket',
@@ -39,19 +51,28 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://cloudbasket.vercel.app',
+    url: 'https://cloudbasket.in',
     siteName: 'CloudBasket',
     title: "CloudBasket — India's Best Price Comparison",
     description: 'Compare prices across 50+ stores. Zero checkout.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CloudBasket — Price Comparison' }],
+    images: [{ url: '/og-image.svg', width: 1200, height: 630, alt: 'CloudBasket — Price Comparison' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "CloudBasket — India's Best Price Comparison",
     description: 'Compare prices across 50+ stores. Zero checkout.',
-    images: ['/og-image.png'],
+    images: ['/og-image.svg'],
   },
-  icons: { icon: '/brand/favicon.svg' },
+  icons: {
+    icon: [
+      { url: '/brand/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' }],
+    shortcut: ['/brand/favicon.svg'],
+  },
+  manifest: '/manifest.json',
   themeColor: '#039BE5',
   appleWebApp: {
     capable: true,
@@ -64,24 +85,29 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const supabaseOrigin = getSupabaseOrigin()
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="dns-prefetch" href="//www.amazon.in" />
         <link rel="dns-prefetch" href="//www.flipkart.com" />
+        <link rel="dns-prefetch" href="//m.media-amazon.com" />
+        <link rel="dns-prefetch" href="//rukminim2.flixcart.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        {supabaseOrigin ? <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" /> : null}
       </head>
       <body className="bg-[var(--cb-surface)] font-sans text-[var(--cb-text-primary)] antialiased transition-colors duration-300">
         <GlobalProvider>
           <CBThemeProvider>
-            <SchemaMarkup type="website" data={{}} />
-            <FestivalBanner />
+            <SchemaMarkup type="website" />
+            <LayoutTopEnhancements />
             <Header />
             <main>{children}</main>
-            <IndiaTrustBar />
             <Footer />
-            <PWAInstallPrompt />
-            <CookieConsent />
+            <LayoutBottomEnhancements />
             <Script id="sw-register" strategy="afterInteractive">
               {`if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/sw.js')
@@ -93,4 +119,3 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     </html>
   )
 }
-

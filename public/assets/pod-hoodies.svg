@@ -1,0 +1,15 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="48" fill="#1F2937"/>
+  <rect x="70" y="70" width="1060" height="760" rx="40" fill="url(#bg)"/>
+  <path d="M445 210C470 150 528 120 600 120C672 120 730 150 755 210L830 280L775 390L710 350V720H490V350L425 390L370 280L445 210Z" fill="#E5E7EB"/>
+  <path d="M530 210C544 180 570 165 600 165C630 165 656 180 670 210" stroke="#94A3B8" stroke-width="22" stroke-linecap="round"/>
+  <rect x="535" y="460" width="130" height="110" rx="18" stroke="#039BE5" stroke-width="20"/>
+  <text x="110" y="778" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="72" font-weight="700">CloudBasket Hoodies</text>
+  <text x="110" y="840" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="34">Heavy fleece layers without brittle remote imagery</text>
+  <defs>
+    <linearGradient id="bg" x1="100" y1="100" x2="1080" y2="780" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#374151"/>
+    </linearGradient>
+  </defs>
+</svg>

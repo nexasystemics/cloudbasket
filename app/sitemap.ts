@@ -1,59 +1,52 @@
 import type { MetadataRoute } from 'next'
+import { BLOG_POSTS } from '@/lib/blog-data'
+import { CATALOG_PRODUCTS, CATEGORY_DEFINITIONS } from '@/lib/cloudbasket-data'
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.co'
+const BASE_URL = 'https://cloudbasket.in'
+const LAST_MODIFIED = new Date()
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = [
-    '/',
-    '/products',
-    '/categories',
-    '/deals',
-    '/deals/flash',
-    '/compare',
-    '/blog',
-    '/about',
-    '/contact',
-    '/careers',
-    '/associates',
-    '/pod',
-    '/pod/tshirts',
-    '/pod/mugs',
-    '/pod/phone-cases',
-    '/pod/posters',
-    '/pod/hoodies',
-    '/pod/tote-bags',
-    '/cj',
-    '/search',
-    '/faq',
-    '/affiliate-disclosure',
-    '/legal/privacy',
-    '/legal/terms',
-    '/cookies',
-    '/api/feed/google',
-  ].map((route) => ({
-    url: `${BASE_URL}${route}`,
-    lastModified: new Date(),
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/`, lastModified: LAST_MODIFIED, changeFrequency: 'daily', priority: 1.0 },
+    { url: `${BASE_URL}/products`, lastModified: LAST_MODIFIED, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${BASE_URL}/categories`, lastModified: LAST_MODIFIED, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${BASE_URL}/deals`, lastModified: LAST_MODIFIED, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${BASE_URL}/blog`, lastModified: LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${BASE_URL}/about`, lastModified: LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/contact`, lastModified: LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/careers`, lastModified: LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.5 },
+    { url: `${BASE_URL}/faq`, lastModified: LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/pod`, lastModified: LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${BASE_URL}/affiliate`, lastModified: LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/compare`, lastModified: LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE_URL}/deals/flash`, lastModified: LAST_MODIFIED, changeFrequency: 'daily', priority: 0.7 },
+    { url: `${BASE_URL}/pod/tshirts`, lastModified: LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE_URL}/pod/mugs`, lastModified: LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE_URL}/pod/phone-cases`, lastModified: LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE_URL}/legal/privacy`, lastModified: LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE_URL}/legal/terms`, lastModified: LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
+  ]
+
+  const categoryRoutes = CATEGORY_DEFINITIONS.map((category) => ({
+    url: category.slug === 'pod' ? `${BASE_URL}/pod` : `${BASE_URL}/category/${category.slug}`,
+    lastModified: LAST_MODIFIED,
     changeFrequency: 'daily' as const,
-    priority: route === '/' ? 1 : 0.8,
+    priority: 0.8,
   }))
 
-  const categoryRoutes = [
-    'mobiles',
-    'laptops',
-    'fashion',
-    'home',
-    'beauty',
-    'sports',
-    'toys',
-    'grocery',
-    'automotive',
-    'books',
-  ].map((slug) => ({
-    url: `${BASE_URL}/category/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'daily' as const,
-    priority: 0.9,
+  const productRoutes = CATALOG_PRODUCTS.map((product) => ({
+    url: `${BASE_URL}/product/${product.id}`,
+    lastModified: new Date(product.publishedAt),
+    changeFrequency: 'weekly' as const,
+    priority: 0.6,
   }))
 
-  return [...staticRoutes, ...categoryRoutes]
+  const blogRoutes = BLOG_POSTS.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: LAST_MODIFIED,
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...categoryRoutes, ...productRoutes, ...blogRoutes]
 }

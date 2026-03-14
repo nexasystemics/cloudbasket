@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { startTransition, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { SlidersHorizontal, ExternalLink, Grid3X3, List, ChevronLeft, ChevronRight } from 'lucide-react'
+import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { PRODUCTS as CATALOG } from '@/lib/products-data'
 
 type Product = (typeof CATALOG)[number]
@@ -55,7 +56,13 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/product/${product.id}`} className="cb-card group flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative h-48 bg-[var(--cb-surface-2)]">
-        <Image src={product.imageUrl} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+        <Image
+          src={resolveImageSource(product.imageUrl, IMAGE_ASSETS.noImage)}
+          alt={product.name}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
+        />
         <span className="absolute top-2 left-2 text-xs font-black bg-rose-600 text-white px-2 py-1 rounded-full">
           -{discount}%
         </span>
@@ -97,23 +104,31 @@ export default function ProductsPageClient() {
   const [page, setPage] = useState(1)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const topRef = useRef<HTMLDivElement>(null)
+  const deferredCategory = useDeferredValue(selectedCategory)
+  const deferredSortBy = useDeferredValue(sortBy)
+  const deferredMinRating = useDeferredValue(minRating)
 
   const filtered = useMemo(() => {
     let result = [...CATALOG]
-    if (selectedCategory !== 'All') {
-      result = result.filter((p) => p.category === selectedCategory)
+    if (deferredCategory !== 'All') {
+      result = result.filter((p) => p.category === deferredCategory)
     }
-    if (minRating > 0) {
-      result = result.filter((p) => p.rating >= minRating)
+    if (deferredMinRating > 0) {
+      result = result.filter((p) => p.rating >= deferredMinRating)
     }
-    if (sortBy === 'price-asc') result.sort((a, b) => a.priceValue - b.priceValue)
-    else if (sortBy === 'price-desc') result.sort((a, b) => b.priceValue - a.priceValue)
-    else if (sortBy === 'rating') result.sort((a, b) => b.rating - a.rating)
+    if (deferredSortBy === 'price-asc') result.sort((a, b) => a.priceValue - b.priceValue)
+    else if (deferredSortBy === 'price-desc') result.sort((a, b) => b.priceValue - a.priceValue)
+    else if (deferredSortBy === 'rating') result.sort((a, b) => b.rating - a.rating)
     return result
-  }, [selectedCategory, sortBy, minRating])
+  }, [deferredCategory, deferredMinRating, deferredSortBy])
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+  const visiblePageNumbers = useMemo(() => {
+    return Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+      return Math.max(1, Math.min(page - 2, totalPages - 4)) + i
+    })
+  }, [page, totalPages])
 
   useEffect(() => {
     setSelectedCategory(requestedCategory)
@@ -135,7 +150,13 @@ export default function ProductsPageClient() {
       <section className="mx-auto max-w-6xl px-6 py-6">
         <div className="flex flex-wrap gap-2 mb-6">
           {CATEGORIES_FILTER.map((cat) => (
-            <button key={cat} onClick={() => setSelectedCategory(cat)}
+            <button
+              key={cat}
+              onClick={() => {
+                startTransition(() => {
+                  setSelectedCategory(cat)
+                })
+              }}
               className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition ${
                 selectedCategory === cat
                   ? 'bg-blue-600 text-white border-blue-600'
@@ -149,7 +170,14 @@ export default function ProductsPageClient() {
         <div className="flex flex-wrap items-center gap-4 mb-6">
           <div className="flex items-center gap-2">
             <SlidersHorizontal size={16} className="text-muted" />
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortValue)}
+            <select
+              value={sortBy}
+              onChange={(e) => {
+                const nextSort = e.target.value as SortValue
+                startTransition(() => {
+                  setSortBy(nextSort)
+                })
+              }}
               className="cb-input text-sm py-1.5 px-3">
               {SORT_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -159,7 +187,13 @@ export default function ProductsPageClient() {
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted">Min Rating:</span>
             {[0, 3, 4].map((r) => (
-              <button key={r} onClick={() => setMinRating(r)}
+              <button
+                key={r}
+                onClick={() => {
+                  startTransition(() => {
+                    setMinRating(r)
+                  })
+                }}
                 className={`px-3 py-1 rounded-full text-xs font-semibold border transition ${
                   minRating === r ? 'bg-blue-600 text-white border-blue-600' : 'border-[var(--cb-border)] text-muted hover:border-white'
                 }`}>
@@ -185,15 +219,14 @@ export default function ProductsPageClient() {
 
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-3 mt-10">
-            <button onClick={() => { setPage((p) => Math.max(1, p - 1)); scrollTop() }}
+            <button onClick={() => { startTransition(() => { setPage((p) => Math.max(1, p - 1)) }); scrollTop() }}
               disabled={page === 1}
               className="p-2 rounded-lg border border-[var(--cb-border)] disabled:opacity-30 hover:border-white transition">
               <ChevronLeft size={18} />
             </button>
-            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-              const pageNum = Math.max(1, Math.min(page - 2, totalPages - 4)) + i
+            {visiblePageNumbers.map((pageNum) => {
               return (
-                <button key={pageNum} onClick={() => { setPage(pageNum); scrollTop() }}
+                <button key={pageNum} onClick={() => { startTransition(() => { setPage(pageNum) }); scrollTop() }}
                   className={`w-9 h-9 rounded-lg text-sm font-bold border transition ${
                     pageNum === page ? 'bg-blue-600 text-white border-blue-600' : 'border-[var(--cb-border)] text-muted hover:border-white'
                   }`}>
@@ -201,7 +234,7 @@ export default function ProductsPageClient() {
                 </button>
               )
             })}
-            <button onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); scrollTop() }}
+            <button onClick={() => { startTransition(() => { setPage((p) => Math.min(totalPages, p + 1)) }); scrollTop() }}
               disabled={page === totalPages}
               className="p-2 rounded-lg border border-[var(--cb-border)] disabled:opacity-30 hover:border-white transition">
               <ChevronRight size={18} />

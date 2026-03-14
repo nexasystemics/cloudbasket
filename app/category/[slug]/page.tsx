@@ -70,11 +70,16 @@ export async function generateMetadata(
   const resolvedSlug = CATEGORY_ALIASES[slug] ?? slug
   const meta = CATEGORY_META[resolvedSlug] ?? {
     title: `${resolvedSlug.charAt(0).toUpperCase() + resolvedSlug.slice(1)} - Best Prices`,
-    description: `Compare ${resolvedSlug} prices across Amazon, Flipkart and more.`,
+    description: `Compare ${resolvedSlug} prices on CloudBasket across Amazon, Flipkart, and more with verified deals and faster product discovery.`,
   }
+
+  const description = meta.description.includes('CloudBasket')
+    ? meta.description
+    : `${meta.description} Shop smarter with CloudBasket.`
+
   return {
     title: meta.title,
-    description: meta.description,
+    description,
   }
 }
 

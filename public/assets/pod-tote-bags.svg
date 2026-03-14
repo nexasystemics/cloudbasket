@@ -1,0 +1,16 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="48" fill="#365314"/>
+  <rect x="70" y="70" width="1060" height="760" rx="40" fill="url(#bg)"/>
+  <path d="M420 270H780V695H420V270Z" fill="#FEF3C7"/>
+  <path d="M500 270V220C500 165 545 120 600 120C655 120 700 165 700 220V270" stroke="#FEF3C7" stroke-width="32" stroke-linecap="round"/>
+  <path d="M495 450H705" stroke="#039BE5" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="600" cy="550" r="46" fill="#F97316"/>
+  <text x="110" y="778" fill="#F7FEE7" font-family="Arial, sans-serif" font-size="72" font-weight="700">CloudBasket Tote Bags</text>
+  <text x="110" y="840" fill="#D9F99D" font-family="Arial, sans-serif" font-size="34">Reusable bags with creator-led prints</text>
+  <defs>
+    <linearGradient id="bg" x1="100" y1="100" x2="1080" y2="780" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3F6212"/>
+      <stop offset="1" stop-color="#84CC16"/>
+    </linearGradient>
+  </defs>
+</svg>

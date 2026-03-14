@@ -39,9 +39,10 @@ export default function SocialProofWidget({ className = '' }: SocialProofProps) 
   const [viewingCount, setViewingCount] = useState<number>(() => randomBetween(8, 47))
 
   useEffect(() => {
+    let revealTimeout: number | undefined
     const interval = window.setInterval(() => {
       setVisible(false)
-      window.setTimeout(() => {
+      revealTimeout = window.setTimeout(() => {
         setCurrent(Math.floor(Math.random() * NOTIFICATIONS.length))
         setViewingCount(randomBetween(8, 47))
         setVisible(true)
@@ -50,6 +51,9 @@ export default function SocialProofWidget({ className = '' }: SocialProofProps) 
 
     return () => {
       window.clearInterval(interval)
+      if (revealTimeout !== undefined) {
+        window.clearTimeout(revealTimeout)
+      }
     }
   }, [])
 

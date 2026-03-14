@@ -1,0 +1,475 @@
+CloudBasket Session Backup
+Generated: 2026-03-14 16:57:45 +05:30
+Project Root: F:\cloudbasket
+Project Domain: cloudbasket.in
+Stack: Next.js 16.1.6 | React 19.2.3 | TypeScript 5 | Tailwind CSS v4 | Supabase | pnpm
+Current Latest Commit: b7ceae8 Guard subCategories iteration in mock data generator
+
+========================================================================
+1. Backup Purpose
+========================================================================
+
+This file is a consolidated backup of the recorded CloudBasket sessions and
+the work completed in the active Codex session through 14 March 2026.
+
+It combines:
+- existing saved session files in the repo
+- the project status report created on 14 March 2026
+- the Sprint 4 execution and verification outcomes
+- the residual domain cleanup that followed Sprint 4
+- Sprint 5 Section 1 performance work completed and verified
+- the current working tree snapshot at export time
+
+========================================================================
+2. Existing Session Artifacts Found
+========================================================================
+
+Session and backup files present in the project root:
+
+- SESSION_RECAP_2026_03_01.md
+- SESSION_2026_03_13.md
+- SESSION_COMPLETE_BACK_2026_03_13.md
+- cbcodexps14032026.txt
+
+========================================================================
+3. Historical Session Summaries
+========================================================================
+
+3.1 Session Recap 2026-03-01
+Source: SESSION_RECAP_2026_03_01.md
+
+Recorded status:
+- Build Stable (SUCCESS)
+- Version noted: 1.0.0-PROD
+
+Key recorded work:
+- dark mode and UI stability repair
+- header migration and toggle consolidation
+- hydration warning mitigation in layout
+- Unsplash image mapping system and fallback image handling
+- complete zero-checkout purge
+- redirect logic verification under app/go/[id]/route.ts
+- successful pnpm build with zero remaining cart references
+
+Important architectural note from that session:
+- checkout/cart-era functionality was intentionally removed to align the app
+  with the affiliate aggregator model
+
+3.2 Session 2026-03-13
+Source: SESSION_2026_03_13.md
+
+Recorded contents:
+- local shell did not return rows for git log --since=2026-03-13 in that file
+- recent commits verified at that time:
+  - bae1a7d fix: add contact API and normalize product catalog
+  - 458f2ab fix: vs.cbf29-30 dark mode CSS variables, compliance badge modals
+- current sprint state at that point:
+  - vs.cbf25 to vs.cbf32 marked completed
+- pending items at that point:
+  - lib/mock-data.ts TypeScript errors
+  - Sprint 4 UI fixes
+  - product image integration
+  - contact form Resend env vars
+- last known working state:
+  - pnpm dev on localhost:3000
+
+3.3 Complete Backup 2026-03-13
+Source: SESSION_COMPLETE_BACK_2026_03_13.md
+
+Recorded commits in that file:
+- b7ceae8 Guard subCategories iteration in mock data generator
+- bae1a7d fix: add contact API and normalize product catalog
+- 458f2ab fix: vs.cbf29-30 dark mode CSS variables, compliance badge modals
+
+Recorded uncommitted state in that file:
+- multiple modified app pages
+- app/sitemap/page.tsx deleted
+- multiple audit and session artifacts untracked
+
+Recorded notes in that file:
+- lib/mock-data.ts runtime guard fixed
+- metadata, robots, sitemap, homepage JSON-LD, dynamic route metadata, and POD
+  image usage had been updated
+- pnpm type-check was noted as failing in older state due to audit and mock-data
+  issues
+
+========================================================================
+4. Project Status Report Created On 2026-03-14
+========================================================================
+
+Source: cbcodexps14032026.txt
+
+Key findings recorded in that report:
+
+- project type:
+  Next.js 16 App Router affiliate aggregator + POD storefront
+- working tree at that inspection moment:
+  34 changed/untracked entries
+- first-party footprint:
+  79 directories, 163 files
+- full repo footprint including deps/artifacts:
+  7,385 directories, 57,060 files
+- route footprint:
+  41 page routes, 5 API routes, 7 app-level client components
+- canonical storefront categories:
+  20
+- categories with explicit curated products:
+  16
+- empty curated categories:
+  courses, investments, jewellery, travel
+- curated catalog total:
+  122 items
+  - 98 explicit records
+  - 16 sports extension records
+  - 8 POD case extension records
+- catalog/data fragmentation across:
+  - lib/cloudbasket-data.ts
+  - lib/products-data.ts
+  - lib/mock-data.ts
+  - lib/intelligence/catalog.ts
+- QA artifact status from audit-results.txt:
+  - 34 pages scanned
+  - 123 total issues
+  - 16 critical
+  - 18 fail
+
+Important architectural mismatch recorded:
+- lib/mock-data.ts category keys did not align with lib/constants.ts
+- effective generated mock total under the older mismatch was estimated at
+  roughly 1,000 items instead of the intended 2,000
+
+========================================================================
+5. 14 March 2026 Session Baseline Alignment
+========================================================================
+
+During the active Codex session on 14 March 2026, the following baseline was
+confirmed before implementation work continued:
+
+- project: CloudBasket
+- root: F:\cloudbasket
+- domain: cloudbasket.in
+- latest local commit: b7ceae8
+- fix history confirmed locally:
+  cbf25 through cbf39 visible in git history
+- app surface:
+  41 page routes | 5 API routes | 7 app-level client components
+- catalog:
+  20 categories | 16 populated | 4 empty
+- curated catalog:
+  122 items
+- next.config.ts security headers already present before Sprint 4:
+  - X-DNS-Prefetch-Control
+  - X-Frame-Options
+  - X-Content-Type-Options
+  - Referrer-Policy
+  - Permissions-Policy
+- HSTS and CSP were still absent at that point
+
+Also confirmed:
+- several older Sprint 4 notes had become stale and no longer matched the
+  current tree
+- robots.ts, globals.css, and sitemap basics were already corrected before the
+  new Sprint 4 execution began
+
+========================================================================
+6. Sprint 4 Work Completed On 14 March 2026
+========================================================================
+
+Sprint 4 tasks executed in order and verified:
+
+6.1 Canonical domain and OG corrections
+Files updated:
+- app/layout.tsx
+- app/page.tsx
+- components/SchemaMarkup.tsx
+
+Results:
+- cloudbasket.vercel.app references replaced with https://cloudbasket.in
+- broken OG paths replaced with /og-image.svg
+- SchemaMarkup URLs corrected
+- data: any removed from SchemaMarkup and replaced with typed unions
+
+6.2 Metadata coverage added
+Files updated or created:
+- app/deals/flash/page.tsx
+- app/deals/flash/FlashSalePageClient.tsx
+- app/search/page.tsx
+- app/search/SearchPageClient.tsx
+- app/login/page.tsx
+- app/register/page.tsx
+- app/register/RegisterPageClient.tsx
+- app/pod/mugs/page.tsx
+- app/pod/phone-cases/page.tsx
+- app/pod/tshirts/page.tsx
+
+Results:
+- title and description metadata added to the requested public routes
+- client-only pages were refactored into server wrappers plus client files so
+  metadata could be defined legally in Next.js App Router
+
+6.3 Sitemap cleanup
+File updated:
+- app/sitemap.ts
+
+Results:
+- expanded category coverage to the canonical category definitions in
+  lib/cloudbasket-data.ts
+- removed mock inventory from sitemap product URL generation
+- product URLs now draw from curated catalog data
+
+6.4 Security headers completion
+File updated:
+- next.config.ts
+
+Results:
+- Strict-Transport-Security added
+- Content-Security-Policy added
+- existing headers preserved
+
+6.5 Mock data/category alignment
+File updated:
+- lib/mock-data.ts
+
+Results:
+- SUB_CATEGORIES and CATEGORY_IMAGES aligned to MAIN_CATEGORIES naming
+- compatibility preserved for current consumer flows by mapping generated
+  output names where needed
+
+6.6 Schema typing and domain verification
+File updated:
+- components/SchemaMarkup.tsx
+
+Results:
+- removed data: any
+- enforced typed schema prop shapes
+- verified schema URLs now point to https://cloudbasket.in
+
+6.7 Sprint 4 verification
+- pnpm build passed after Sprint 4 changes
+- no cloudbasket.vercel.app remained in the touched Sprint 4 files
+- no data: any remained in the touched Sprint 4 files
+
+========================================================================
+7. Residual Domain Cleanup After Sprint 4
+========================================================================
+
+Follow-up task executed:
+- replace remaining cloudbasket.vercel.app references in three files only
+
+Files updated:
+- components/WhatsAppShare.tsx
+- components/products/DealShareCard.tsx
+- lib/email/sendPriceAlert.ts
+
+Exact lines corrected:
+- WhatsAppShare default URL fallback now uses https://cloudbasket.in
+- DealShareCard product URL now uses https://cloudbasket.in/product/{id}
+- sendPriceAlert dashboard management link now uses
+  https://cloudbasket.in/dashboard
+
+Verification:
+- pnpm build passed after the cleanup
+
+========================================================================
+8. Sprint 5 Progress In This Session
+========================================================================
+
+Section status:
+- Section 1 completed
+- Sections 2 through 8 not started in this session
+
+8.1 Sprint 5 Section 1 scope completed
+Theme:
+- Core Web Vitals and load performance
+
+Completed outcomes:
+
+Task 1.1
+- audited app/layout.tsx
+- confirmed there were no synchronous blocking third-party scripts or external
+  stylesheet tags in head requiring defer/async conversion
+- moved noncritical global client UI behind deferred client wrappers
+
+Task 1.2
+- implemented route-level deferred loading for noncritical client blocks via
+  client wrapper components and next/dynamic
+
+Task 1.3
+- added @next/bundle-analyzer support in next.config.ts
+- package.json and pnpm-lock.yaml updated accordingly
+- removed framer-motion from critical homepage and product grid/card path
+
+Task 1.4
+- verified optimizePackageImports against installed packages
+- final list remained:
+  - lucide-react
+  - framer-motion
+
+Task 1.5
+- added or retained resource hints for:
+  - fonts.googleapis.com
+  - fonts.gstatic.com
+  - images.unsplash.com
+  - Amazon and Flipkart origins
+  - conditional Supabase origin from NEXT_PUBLIC_SUPABASE_URL
+
+Task 1.6
+- applied CLS stability fixes across homepage and product/detail surfaces
+- removed staged hero animation and reserved layout space across cards and
+  dynamic sections
+
+8.2 Sprint 5 Section 1 files created
+- components/LayoutTopEnhancements.tsx
+- components/LayoutBottomEnhancements.tsx
+- components/HomeDeferredSections.tsx
+- app/product/[id]/ProductPageClientWidgets.tsx
+
+8.3 Sprint 5 Section 1 files modified
+- app/layout.tsx
+- app/page.tsx
+- app/product/[id]/page.tsx
+- components/HeroSection.tsx
+- components/CategoryGrid.tsx
+- components/PersonalizedGrid.tsx
+- components/ProductActions.tsx
+- components/ProductCard.tsx
+- components/products/ProductCard.tsx
+- components/products/ProductGrid.tsx
+- next.config.ts
+- package.json
+- pnpm-lock.yaml
+
+8.4 Sprint 5 Section 1 build verification
+- pnpm build passed after Section 1 changes
+
+8.5 Explicit stop point
+The session was intentionally stopped after Section 1.
+User instruction recorded:
+- do not begin Section 2
+- save and close the session
+- Sections 2 through 8 to be handled in a fresh session
+
+========================================================================
+9. Current Repo Snapshot At Export Time
+========================================================================
+
+9.1 Latest commits visible
+- b7ceae8 Guard subCategories iteration in mock data generator
+- bae1a7d fix: add contact API and normalize product catalog
+- 458f2ab fix: vs.cbf29-30 dark mode CSS variables, compliance badge modals
+
+9.2 Current working tree counts
+- Modified: 45
+- Deleted: 1
+- Untracked: 16
+- Total changed entries: 61
+
+9.3 Current modified paths reported by git status
+- .unlighthouse/localhost/4ab5/assets/payload.js
+- app/about/page.tsx
+- app/affiliate/page.tsx
+- app/blog/page.tsx
+- app/careers/page.tsx
+- app/categories/page.tsx
+- app/category/[slug]/page.tsx
+- app/contact/page.tsx
+- app/deals/flash/page.tsx
+- app/deals/page.tsx
+- app/faq/page.tsx
+- app/layout.tsx
+- app/legal/privacy/page.tsx
+- app/legal/terms/page.tsx
+- app/login/page.tsx
+- app/not-found.tsx
+- app/page.tsx
+- app/pod/mugs/page.tsx
+- app/pod/page.tsx
+- app/pod/phone-cases/page.tsx
+- app/pod/tshirts/page.tsx
+- app/product/[id]/page.tsx
+- app/products/page.tsx
+- app/register/page.tsx
+- app/robots.ts
+- app/search/page.tsx
+- app/sitemap.ts
+- components/CategoryGrid.tsx
+- components/HeroSection.tsx
+- components/PersonalizedGrid.tsx
+- components/ProductActions.tsx
+- components/ProductCard.tsx
+- components/SchemaMarkup.tsx
+- components/WhatsAppShare.tsx
+- components/products/DealShareCard.tsx
+- components/products/ProductCard.tsx
+- components/products/ProductGrid.tsx
+- lib/email/sendPriceAlert.ts
+- lib/mock-data.ts
+- next-env.d.ts
+- next.config.ts
+- package-lock.json
+- package.json
+- pnpm-lock.yaml
+
+9.4 Current deleted path reported by git status
+- app/sitemap/page.tsx
+
+9.5 Current untracked paths reported by git status
+- .unlighthouse/localhost/4ab5/reports/payload.html
+- SESSION_2026_03_13.md
+- SESSION_COMPLETE_BACK_2026_03_13.md
+- app/deals/flash/FlashSalePageClient.tsx
+- app/product/[id]/ProductPageClientWidgets.tsx
+- app/register/RegisterPageClient.tsx
+- app/search/SearchPageClient.tsx
+- audit-report.html
+- audit-results.txt
+- audit-screenshots.zip
+- audit-screenshots/
+- cbcodexps14032026.txt
+- components/HomeDeferredSections.tsx
+- components/LayoutBottomEnhancements.tsx
+- components/LayoutTopEnhancements.tsx
+- qa-audit.js
+
+========================================================================
+10. Current Build and Technical Status
+========================================================================
+
+Current verified state from the active Codex session:
+- pnpm build passes
+- no cloudbasket.vercel.app URLs were reintroduced in touched files during the
+  completed Sprint 4 and Sprint 5 Section 1 work
+- no data: any types were introduced in touched files during those phases
+
+Open warnings still visible in build output:
+- unsupported metadata themeColor warnings remain on multiple routes
+- those warnings pre-existed as a broader cleanup area and were not part of
+  the stop point for this session backup
+
+========================================================================
+11. Suggested Resume Point For Next Session
+========================================================================
+
+Recommended resume point:
+- Sprint 5 Section 2
+
+Known clean checkpoint:
+- Sprint 4 closed
+- Sprint 5 Section 1 completed and build-verified
+- session intentionally ended before Section 2 began
+
+Priority context for next session:
+- continue from image and asset optimisation work
+- preserve the Section 1 performance and dynamic-loading structure
+- keep package manager policy as pnpm only
+- avoid secret-file access
+
+========================================================================
+12. Backup Conclusion
+========================================================================
+
+This backup captures the known CloudBasket session trail available in the repo
+plus the verified work completed in the active session through 14 March 2026.
+
+It should be used as the fresh-session handoff reference for continuing
+Sections 2 through 8 after the completed Section 1 performance checkpoint.

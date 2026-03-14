@@ -5,7 +5,8 @@ import { Calendar, Clock, ArrowRight, Tag } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: "Deals Intelligence & Buying Guides",
-  description: "Expert buying guides and price comparison analysis for Indian shoppers.",
+  description:
+    'Read CloudBasket buying guides, deal analysis, and price comparison insights designed to help shoppers research products, trends, and smarter purchases.',
 }
 type BlogPost = {
   title: string
@@ -100,7 +101,13 @@ export default function BlogPage() {
       <section className="mx-auto max-w-7xl px-6 py-10">
         <article className="cb-card overflow-hidden md:flex">
           <div className="relative h-64 min-h-[240px] md:h-auto md:w-1/2">
-            <Image fill className="object-cover" src={featured.image} alt={featured.title} />
+            <Image
+              fill
+              className="object-cover"
+              src={featured.image}
+              alt={featured.title}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
           </div>
           <div className="flex flex-col justify-center p-8 md:w-1/2">
             <span className="cb-badge cb-badge-orange mb-3 w-fit">Featured</span>
@@ -132,6 +139,7 @@ export default function BlogPage() {
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                   src={post.image}
                   alt={post.title}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                 />
               </div>
               <div className="p-4">
@@ -156,4 +164,3 @@ export default function BlogPage() {
     </main>
   )
 }
-

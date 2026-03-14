@@ -4,7 +4,8 @@ import { MapPin, Clock, Briefcase, ArrowRight, Code, PenTool, TrendingUp, Search
 
 export const metadata: Metadata = {
   title: "Careers at NEXQON — Join Our Team",
-  description: "Join NEXQON HOLDINGS and build India's global digital infrastructure.",
+  description:
+    'Explore careers at CloudBasket and help build price intelligence, shopping discovery, and consumer tools that make smarter savings easier for shoppers.',
 }
 const BENEFITS: ReadonlyArray<{ title: string; desc: string }> = [
   { title: 'Remote First', desc: 'Work from anywhere in India' },

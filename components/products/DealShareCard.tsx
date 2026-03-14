@@ -15,7 +15,7 @@ interface DealShareCardProps {
 export function DealShareCard({ productName, price, originalPrice, productId, badge }: DealShareCardProps) {
   const [copied, setCopied] = useState(false)
   const discount = Math.round((1 - price / originalPrice) * 100)
-  const dealUrl = `https://cloudbasket.vercel.app/product/${productId}`
+  const dealUrl = `https://cloudbasket.in/product/${productId}`
 
   const whatsappText = encodeURIComponent(
     `🔥 *${discount}% OFF — DEAL ALERT!*\n\n${productName}\n\nNow: ₹${price.toLocaleString('en-IN')}\n~~₹${originalPrice.toLocaleString('en-IN')}~~\n\n${badge ? `${badge}\n\n` : ''}Buy here: ${dealUrl}\n\n_via CloudBasket — India's Deal Engine_`,

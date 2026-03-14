@@ -2,17 +2,19 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Printer, Package, Truck, Shield, ArrowRight } from 'lucide-react'
+import { IMAGE_ASSETS } from '@/lib/image-assets'
 
 export const metadata: Metadata = {
   title: "CloudBasket Originals — Print on Demand",
-  description: "Custom merchandise printed fresh for every order. Ships pan-India.",
+  description:
+    'Explore CloudBasket Originals for print-on-demand apparel, mugs, cases, and custom merch with fresh production, quality prints, and India-wide delivery.',
 }
 const POD_CATEGORIES = [
   {
     slug: 'tshirts',
     name: 'T-Shirts',
     desc: 'Premium cotton tees with custom prints',
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80',
+    image: IMAGE_ASSETS.pod.tshirts,
     count: 48,
     startPrice: 599,
   },
@@ -20,7 +22,7 @@ const POD_CATEGORIES = [
     slug: 'mugs',
     name: 'Mugs & Drinkware',
     desc: 'Ceramic mugs, travel cups and more',
-    image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80',
+    image: IMAGE_ASSETS.pod.mugs,
     count: 32,
     startPrice: 349,
   },
@@ -28,7 +30,7 @@ const POD_CATEGORIES = [
     slug: 'phone-cases',
     name: 'Phone Cases',
     desc: 'Custom cases for all major phone models',
-    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80',
+    image: IMAGE_ASSETS.pod['phone-cases'],
     count: 64,
     startPrice: 299,
   },
@@ -36,7 +38,7 @@ const POD_CATEGORIES = [
     slug: 'posters',
     name: 'Posters & Prints',
     desc: 'High-quality art prints for your walls',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+    image: IMAGE_ASSETS.pod.posters,
     count: 28,
     startPrice: 449,
   },
@@ -44,7 +46,7 @@ const POD_CATEGORIES = [
     slug: 'hoodies',
     name: 'Hoodies',
     desc: 'Comfortable hoodies with custom designs',
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=600&q=80',
+    image: IMAGE_ASSETS.pod.hoodies,
     count: 24,
     startPrice: 999,
   },
@@ -52,7 +54,7 @@ const POD_CATEGORIES = [
     slug: 'tote-bags',
     name: 'Tote Bags',
     desc: 'Eco-friendly canvas tote bags',
-    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&q=80',
+    image: IMAGE_ASSETS.pod['tote-bags'],
     count: 20,
     startPrice: 449,
   },
@@ -60,7 +62,7 @@ const POD_CATEGORIES = [
     slug: 'laptop-bags',
     name: 'Laptop Bags',
     desc: 'Custom printed sleeves and bags for laptops',
-    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80',
+    image: IMAGE_ASSETS.pod['laptop-bags'],
     count: 16,
     startPrice: 799,
   },
@@ -136,7 +138,13 @@ export default function PODPage() {
           {POD_CATEGORIES.map((category) => (
             <Link key={category.slug} href={`/pod/${category.slug}`} className="cb-card group cursor-pointer overflow-hidden">
               <div className="relative h-52">
-                <Image fill className="object-cover" src={category.image} alt={category.name} />
+                <Image
+                  fill
+                  className="object-cover"
+                  src={category.image}
+                  alt={category.name}
+                  sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 24vw"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <h3 className="text-lg font-black text-white">{category.name}</h3>

@@ -6,7 +6,8 @@ import { TelegramCTA } from '@/components/TelegramCTA'
 
 export const metadata: Metadata = {
   title: "Today's Best Deals — Up to 75% Off",
-  description: "Best deals today from Amazon, Flipkart & CJ Global. Updated every hour.",
+  description:
+    'Discover CloudBasket deals updated throughout the day, with price drops, limited offers, and verified savings across top stores, brands, and categories.',
 }
 type DealItem = {
   id: string
@@ -242,7 +243,13 @@ export default function DealsPage() {
           {DEALS_DATA.map((deal) => (
             <article key={deal.id} className="cb-card group relative flex flex-col overflow-hidden">
               <div className="relative h-52">
-                <Image fill className="object-cover" src={deal.image} alt={deal.title} />
+                <Image
+                  fill
+                  className="object-cover"
+                  src={deal.image}
+                  alt={deal.title}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
                 <span className={`absolute left-3 top-3 ${getBadgeClass(deal.badge)}`}>{deal.badge}</span>

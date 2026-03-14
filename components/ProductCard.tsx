@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, Star, ChevronRight } from 'lucide-react'
@@ -41,12 +41,8 @@ export default function ProductCard({
 }: ProductCardProps) {
   const [imgSrc, setImgSrc] = useState(imageUrl)
 
-  useEffect(() => {
-    setImgSrc(imageUrl)
-  }, [imageUrl])
-
   return (
-    <div className="group bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-black/40 transition-all duration-500 flex flex-col h-full relative">
+    <div className="group bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-black/40 transition-all duration-500 flex min-h-[440px] flex-col h-full relative">
       <div className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800 flex-shrink-0">
         <Link href={`/products/${id}`} className="block w-full h-full">
           <Image
@@ -70,7 +66,7 @@ export default function ProductCard({
         )}
       </div>
 
-      <div className="p-4 flex flex-col flex-grow space-y-3">
+      <div className="p-4 flex min-h-[216px] flex-col flex-grow space-y-3">
         <Link href={`/products/${id}`} className="block group/title">
           <h3 className="text-sm font-black text-gray-900 dark:text-white line-clamp-2 min-h-[2.5rem] group-hover/title:text-skyline-primary transition-colors duration-300">
             {name}

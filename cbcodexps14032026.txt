@@ -1,0 +1,1147 @@
+CloudBasket Project Status Report
+Generated: 2026-03-14
+Project Root: F:\cloudbasket
+Report Scope: Read-only repository inspection, current workspace state, visible non-secret files only
+
+========================================================================
+1. Executive Summary
+========================================================================
+
+- Project type: Next.js 16 App Router affiliate aggregator + POD storefront
+- Current app posture: Zero-checkout affiliate model remains documented and visible in code/docs
+- Current workspace state: dirty working tree with 34 changed/untracked entries
+- First-party application footprint: 79 directories, 163 files
+- Full repository footprint including dependencies/build artifacts: 7,385 directories, 57,060 files
+- Route footprint: 41 page routes, 5 API routes, 7 app-level client components
+- Main catalog situation:
+  - 20 storefront categories are defined in lib/cloudbasket-data.ts
+  - 16 of those categories currently contain explicit curated products
+  - Total curated storefront catalog size is 122 items:
+    - 98 explicit catalog records
+    - 16 generated sports extension records
+    - 8 generated POD case extension records
+- Product data sources are fragmented across multiple files:
+  - lib/cloudbasket-data.ts
+  - lib/products-data.ts
+  - lib/mock-data.ts
+  - lib/intelligence/catalog.ts
+- QA artifact status from audit-results.txt:
+  - 34 pages scanned
+  - 123 total issues reported
+  - 16 critical
+  - 18 fail
+  - 0 pass recorded in that artifact
+
+========================================================================
+2. Current Project Status
+========================================================================
+
+2.1 Repository and Runtime Status
+
+- Framework: Next.js 16.1.6
+- React: 19.2.3
+- TypeScript: ^5
+- Tailwind CSS: ^4
+- Supabase packages present
+- Playwright present
+- Package manager policy in repo guidance: pnpm only
+
+2.2 Working Tree Status
+
+Current git status shows the repository is not clean. Observed changes/untracked items:
+
+- Modified:
+  - .unlighthouse/localhost/4ab5/assets/payload.js
+  - app/about/page.tsx
+  - app/affiliate/page.tsx
+  - app/blog/page.tsx
+  - app/careers/page.tsx
+  - app/categories/page.tsx
+  - app/category/[slug]/page.tsx
+  - app/contact/page.tsx
+  - app/deals/page.tsx
+  - app/faq/page.tsx
+  - app/layout.tsx
+  - app/legal/privacy/page.tsx
+  - app/legal/terms/page.tsx
+  - app/not-found.tsx
+  - app/page.tsx
+  - app/pod/mugs/page.tsx
+  - app/pod/page.tsx
+  - app/pod/phone-cases/page.tsx
+  - app/pod/tshirts/page.tsx
+  - app/product/[id]/page.tsx
+  - app/products/page.tsx
+  - app/robots.ts
+  - app/sitemap.ts
+  - package-lock.json
+  - package.json
+- Deleted:
+  - app/sitemap/page.tsx
+- Untracked:
+  - .unlighthouse/localhost/4ab5/reports/payload.html
+  - SESSION_2026_03_13.md
+  - SESSION_COMPLETE_BACK_2026_03_13.md
+  - audit-report.html
+  - audit-results.txt
+  - audit-screenshots.zip
+  - audit-screenshots/
+  - qa-audit.js
+
+2.3 Route and Application Surface
+
+- Page routes: 41
+- API routes: 5
+- App-local client components: 7
+
+Key route groups present:
+
+- Core:
+  - /
+  - /about
+  - /affiliate
+  - /affiliate-disclosure
+  - /associates
+  - /blog
+  - /careers
+  - /categories
+  - /category/[slug]
+  - /cj
+  - /compare
+  - /contact
+  - /cookies
+  - /dashboard
+  - /deals
+  - /deals/flash
+  - /deals/[id]
+  - /faq
+  - /login
+  - /offline
+  - /pod
+  - /pod/mugs
+  - /pod/phone-cases
+  - /pod/tshirts
+  - /pod/[category]
+  - /product/[id]
+  - /products
+  - /products/[id]
+  - /quiz
+  - /register
+  - /search
+- Legal:
+  - /legal/privacy
+  - /legal/terms
+  - /privacy
+  - /terms
+- Redirect/API:
+  - /go/[id]
+  - /api/alerts/trigger
+  - /api/contact
+  - /api/feed/google
+  - /api/og
+
+2.4 QA and Audit Status
+
+Artifact summary from audit-results.txt:
+
+- Pages scanned: 34
+- Total issues: 123
+- Critical: 16
+- Fail: 18
+
+Examples of routes called out in the artifact:
+
+- /
+- /products
+- /deals
+- /deals/flash
+- /compare
+- /search
+- /quiz
+- /categories
+- /category/electronics
+- /category/fashion
+- /category/home
+- /category/health
+- /category/books
+- /category/sports
+- /category/beauty
+- /category/food
+- /category/toys
+- /category/automotive
+- /product/cb-00001
+- /blog
+- /pod
+- /pod/tshirts
+- /pod/mugs
+- /pod/phone-cases
+- /login
+- /register
+- /about
+- /contact
+- /faq
+- /affiliate-disclosure
+- /legal/privacy
+- /legal/terms
+- /cookies
+- /cj
+
+2.5 Current Risks and Inconsistencies
+
+1. Stale documentation exists.
+- CloudBasket_Session_Summary.md and PENDING_TASKS.md still refer to checkout/cart era work such as app/checkout/page.tsx and app/order-success/page.tsx.
+- Those routes are not present in the current app tree.
+
+2. Category schema mismatch exists between lib/constants.ts and lib/mock-data.ts.
+- MAIN_CATEGORIES in lib/constants.ts contains values like:
+  - Beauty & Care
+  - Food & Grocery
+  - Home & Kitchen
+  - Laptops & PCs
+  - Print on Demand
+- SUB_CATEGORIES in lib/mock-data.ts is keyed by:
+  - Beauty
+  - Grocery
+  - Home
+  - Laptops
+  - Toys
+- Exact overlap between the two sets is only:
+  - Automotive
+  - Books
+  - Fashion
+  - Mobiles
+  - Sports
+- Result:
+  - The current generateProducts() logic in lib/mock-data.ts is consistent only for those exact matches.
+  - Estimated current generated mock total under current code shape is 1,000 items, not 2,000.
+
+3. Product data is duplicated across multiple layers.
+- lib/cloudbasket-data.ts contains the curated storefront catalog.
+- lib/products-data.ts contains a separate 48-product normalized grid catalog.
+- lib/mock-data.ts contains generated mock products for compare/search/admin style flows.
+- lib/intelligence/catalog.ts contains another curated intelligence-oriented catalog.
+
+4. Category coverage is uneven.
+- 20 storefront categories are defined.
+- Explicit curated products currently exist in 16 categories.
+- No explicit curated products were found in:
+  - courses
+  - investments
+  - jewellery
+  - travel
+
+========================================================================
+3. Root Folder Structure
+========================================================================
+
+Top-level visible project contents:
+
+- .claude
+- .git
+- .next
+- .tmp-headless
+- .unlighthouse
+- .vercel
+- app
+- audit
+- audit-screenshots
+- cc-output
+- components
+- context
+- hooks
+- lib
+- logs
+- node_modules
+- public
+- services
+- supabase
+- test-results
+- utils
+- .env.example
+- .env.local
+- .gitignore
+- .npmrc
+- audit-report.html
+- audit-results.txt
+- audit-screenshots.zip
+- CBGemini06032026.txt
+- CHANGELOG.md
+- CLAUDE.md
+- CloudBasket_Day2_Cart_Final.txt
+- CloudBasket_Day2_Final_Archive.txt
+- CloudBasket_Day2_Final_Safety_Archive.txt
+- CloudBasket_Day2_Interaction_Final.txt
+- CloudBasket_Day2_Launch.txt
+- CloudBasket_Day2_Routing_Final.txt
+- CloudBasket_Day3_Final_Launch_Ready.txt
+- CloudBasket_Day3_Marketplace_Success.txt
+- CloudBasket_Session_Report.md
+- CloudBasket_Session_Summary.md
+- eslint.config.mjs
+- final_audit_report.txt
+- GEMINI.md
+- header-blog-post.png
+- header-compare.png
+- header-home.png
+- header-product-1.png
+- HERO_SPEC.md
+- lint_audit.txt
+- lint_errors.txt
+- next-env.d.ts
+- next.config.ts
+- package-lock.json
+- package.json
+- PENDING_TASKS.md
+- pnpm-lock.yaml
+- pnpm-workspace.yaml
+- postcss.config.mjs
+- proxy.ts
+- qa-audit.js
+- README.md
+- SESSION_2026_03_13.md
+- SESSION_COMPLETE_BACK_2026_03_13.md
+- SESSION_DAY10_history.csv
+- SESSION_DAY5.txt
+- SESSION_DAY9_history.csv
+- SESSION_RECAP_2026_03_01.md
+- SESSION_SAVE_2026-03-07.txt
+- structure.txt
+- tailwind.config.ts
+- tmp-day10-dev-err.log
+- tmp-day10-dev-out.log
+- tmp-dev-err.log
+- tmp-dev-out.log
+- tsc_errors.txt
+- tsconfig.json
+- tsconfig.tsbuildinfo
+- vercel.json
+
+Generated/vendor/runtime-heavy folders present but not expanded recursively in this report:
+
+- .git
+- .next
+- .tmp-headless
+- .unlighthouse
+- .vercel
+- node_modules
+- logs
+- test-results
+- audit-screenshots
+
+========================================================================
+4. First-Party Source Tree
+========================================================================
+
+4.1 app
+
+F:\cloudbasket\app
+|   favicon.ico
+|   globals.css
+|   layout.tsx
+|   manifest.ts
+|   not-found.tsx
+|   page.tsx
+|   robots.ts
+|   sitemap.ts
+|
++---about
+|       page.tsx
+|
++---admin
+|   |   page.tsx
+|   |
+|   +---affiliate-keys
+|   |       page.tsx
+|   |
+|   +---associates
+|   |       page.tsx
+|   |
+|   +---lister
+|   |       page.tsx
+|   |
+|   +---marketing
+|   |       page.tsx
+|   |
+|   +---moderation
+|   |       page.tsx
+|   |
+|   \---pod
+|       \---upload
+|               page.tsx
+|
++---affiliate
+|       page.tsx
+|
++---affiliate-disclosure
+|       page.tsx
+|
++---api
+|   +---alerts
+|   |   \---trigger
+|   |           route.ts
+|   |
+|   +---contact
+|   |       route.ts
+|   |
+|   +---feed
+|   |   \---google
+|   |           route.ts
+|   |
+|   \---og
+|           route.tsx
+|
++---associates
+|       page.tsx
+|
++---blog
+|   |   page.tsx
+|   |
+|   \---[slug]
+|           page.tsx
+|
++---careers
+|       page.tsx
+|
++---categories
+|       CategoriesHubClient.tsx
+|       page.tsx
+|
++---category
+|   \---[slug]
+|           page.tsx
+|
++---cj
+|       page.tsx
+|
++---compare
+|       ComparePageClient.tsx
+|       page.tsx
+|
++---contact
+|       ContactPageClient.tsx
+|       page.tsx
+|
++---cookies
+|       page.tsx
+|
++---dashboard
+|       page.tsx
+|
++---deals
+|   |   page.tsx
+|   |
+|   +---flash
+|   |       page.tsx
+|   |
+|   \---[id]
+|           page.tsx
+|
++---faq
+|       FAQPageClient.tsx
+|       page.tsx
+|
++---go
+|   \---[id]
+|           route.ts
+|
++---legal
+|   +---privacy
+|   |       page.tsx
+|   |
+|   \---terms
+|           page.tsx
+|
++---login
+|       LoginClient.tsx
+|       page.tsx
+|
++---not-found
++---offline
+|       page.tsx
+|
++---pod
+|   |   page.tsx
+|   |
+|   +---mugs
+|   |       page.tsx
+|   |
+|   +---phone-cases
+|   |       page.tsx
+|   |
+|   +---tshirts
+|   |       page.tsx
+|   |
+|   \---[category]
+|           page.tsx
+|
++---privacy
++---product
+|   \---[id]
+|           page.tsx
+|
++---products
+|   |   page.tsx
+|   |   products-page-client.tsx
+|   |
+|   \---[id]
+|           page.tsx
+|
++---quiz
+|       page.tsx
+|       QuizClient.tsx
+|
++---register
+|       page.tsx
+|
++---search
+|       page.tsx
+|
+\---terms
+
+4.2 components
+
+F:\cloudbasket\components
+|   AdBanner.tsx
+|   CategoriesHubClient.tsx
+|   CategoryGrid.tsx
+|   ChatBot.tsx
+|   CookieConsent.tsx
+|   FestivalBanner.tsx
+|   Footer.tsx
+|   Header.tsx
+|   HeroSection.tsx
+|   HeroVideo.tsx
+|   IndiaTrustBar.tsx
+|   Navigation.tsx
+|   NewsletterSection.tsx
+|   Pagination.tsx
+|   PersonalizedGrid.tsx
+|   PODCard.tsx
+|   PriceAlertModal.tsx
+|   ProductActions.tsx
+|   ProductCard.tsx
+|   PromotionSidebar.tsx
+|   PWAInstallPrompt.tsx
+|   RecentlyViewed.tsx
+|   SchemaMarkup.tsx
+|   SettingsBar.tsx
+|   SocialCTA.tsx
+|   SocialProof.tsx
+|   TelegramCTA.tsx
+|   ThemeProvider.tsx
+|   TrackBehavior.tsx
+|   TrustScoreWidget.tsx
+|   TrustSection.tsx
+|   WhatsAppButton.tsx
+|   WhatsAppShare.tsx
+|   WishlistButton.tsx
+|
++---layout
+|       .gitkeep
+|
++---marketing
+|       .gitkeep
+|
++---products
+|       .gitkeep
+|       CODBadge.tsx
+|       DealShareCard.tsx
+|       EMIBadge.tsx
+|       PincodeChecker.tsx
+|       ProductCard.tsx
+|       ProductFilter.tsx
+|       ProductGrid.tsx
+|       PromotionSidebar.tsx
+|
+\---ui
+        .gitkeep
+
+4.3 lib
+
+F:\cloudbasket\lib
+|   api-helpers.ts
+|   auth.ts
+|   blog-data.ts
+|   cloudbasket-data.ts
+|   constants.ts
+|   currency-service.ts
+|   deals-data.ts
+|   design-system.ts
+|   mock-data.ts
+|   module-shims.ts
+|   products-data.ts
+|   roles.ts
+|   supabase-server.ts
+|   supabase.ts
+|   tenant-config.ts
+|   themes.ts
+|   types.ts
+|
++---email
+|       sendPriceAlert.ts
+|
++---intelligence
+|       calendar.ts
+|       catalog.ts
+|       location.ts
+|       profile.ts
+|       scorer.ts
+|
+\---supabase
+        client.ts
+        server.ts
+
+4.4 services
+
+F:\cloudbasket\services
++---affiliate-engine
+|   \---adapters
++---ai-engine
++---email-engine
+|   |   plunk-client.ts
+|   |
+|   \---templates
++---price-engine
+|   |   scraper.ts
+|   |
+|   \---scrapers
+\---search-engine
+
+4.5 public
+
+F:\cloudbasket\public
+|   manifest.json
+|   og-image.svg
+|   sw.js
+|
++---assets
+|       no-image.webp
+|       placeholder.svg
+|
++---brand
+|       favicon.svg
+|       icon-dark.svg
+|       icon-light.svg
+|       logo-dark.svg
+|       logo-full-dark.svg
+|       logo-full.svg
+|       logo-light.svg
+|       logo-small.svg
+|
++---icons
+|       .gitkeep
+|       icon-128.png
+|       icon-192.png
+|       icon-512.png
+|       icon-72.png
+|       icon-96.png
+|
+\---og
+        .gitkeep
+
+4.6 hooks
+
+F:\cloudbasket\hooks
+    .gitkeep
+    usePersonalization.ts
+
+4.7 supabase
+
+F:\cloudbasket\supabase
+|   .gitignore
+|   config.toml
+|
++---.branches
+|       _current_branch
+|
++---.temp
+|       cli-latest
+|
++---migrations
+|       20260301160842_schema_and_seed.sql
+|       20260301213842_schema_and_seed.sql
+|
+\---snippets
+        Untitled query 673.sql
+
+4.8 utils
+
+F:\cloudbasket\utils
+    .gitkeep
+
+========================================================================
+5. Product and Subproduct Inventory
+========================================================================
+
+5.1 Canonical Storefront Categories from lib/cloudbasket-data.ts
+
+Defined category slugs and labels:
+
+- automotive | Automotive
+- beauty | Beauty
+- books | Books
+- courses | Courses
+- electronics | Electronics
+- fashion | Fashion
+- finance | Finance
+- gaming | Gaming
+- grocery | Grocery
+- health | Health
+- home | Home
+- investments | Investments
+- jewellery | Jewellery
+- laptops | Laptops
+- mobiles | Mobiles
+- pod | POD
+- sports | Sports
+- toys | Toys
+- travel | Travel
+- watches | Watches
+
+Category count: 20
+
+5.2 Curated Storefront Catalog from lib/cloudbasket-data.ts
+
+Catalog size summary:
+
+- Explicit catalog records: 98
+- Generated sports extension records: 16
+- Generated POD case extension records: 8
+- Total exported CATALOG_PRODUCTS size: 122
+
+Explicit catalog counts by category:
+
+- automotive: 6
+- beauty: 7
+- books: 5
+- electronics: 6
+- fashion: 5
+- finance: 7
+- gaming: 5
+- grocery: 7
+- health: 7
+- home: 7
+- laptops: 9
+- mobiles: 10
+- pod: 4
+- sports: 8
+- toys: 3
+- watches: 2
+
+Defined but not explicitly populated in this catalog:
+
+- courses
+- investments
+- jewellery
+- travel
+
+5.2.1 Explicit curated product titles by category
+
+mobiles
+- Samsung Galaxy A55 5G
+- Apple iPhone 15 128GB
+- OnePlus 12R 5G
+- Xiaomi Redmi Note 13 Pro 5G
+- realme 12 Pro+ 5G
+- Oppo Reno12 5G
+- vivo V30 5G
+- Motorola Edge 50 Pro
+- Nothing Phone (2a) Plus
+- Apple iPhone 16 Pro 128GB
+
+laptops
+- Dell Inspiron 14 5440
+- HP Pavilion Plus 14
+- Lenovo IdeaPad Slim 5
+- ASUS Vivobook 15 OLED
+- Apple MacBook Air M3 13-inch
+- Acer Swift Go 14
+- MSI Thin GF63 Gaming Laptop
+- Microsoft Surface Laptop 6
+- Samsung Galaxy Book4
+
+electronics
+- Logitech MX Master 3S
+- Samsung Crystal 4K UHD TV 55-inch
+- Sony WH-1000XM5
+- Canon EOS R50 Mirrorless Kit
+- LG UltraWide Monitor 29-inch
+- Anker 737 Power Bank
+
+beauty
+- L'Oreal Paris Hyaluron Moisture Shampoo
+- Maybelline Fit Me Matte + Poreless Foundation
+- Lakme 9to5 Vitamin C Day Cream
+- Biotique Bio Neem Face Wash
+- Nykaa SKINRX Ceramide Barrier Moisturizer
+- Forest Essentials Facial Cleanser Kashmiri Saffron
+- Himalaya Purifying Neem Pack
+
+grocery
+- Amul Pure Ghee 1L Pack
+- Nestle Everyday Dairy Whitener 1kg
+- Aashirvaad Shudh Chakki Atta 10kg
+- Britannia Good Day Cashew Cookies Combo
+- Haldirams Bhujia Namkeen Family Pack
+- MDH Kitchen King Masala Value Pack
+- Tata Sampann Unpolished Toor Dal 1kg
+
+health
+- Ensure Diabetes Care Vanilla 400g
+- Cipla Maxirich Daily Multivitamin
+- Himalaya Liv.52 Tablets
+- Dabur Chyawanprash 1kg
+- Apollo Premium Digital Thermometer
+- Omron HEM 7120 BP Monitor
+- Tata 1mg Whey Protein Concentrate 1kg
+
+home
+- Philips Air Fryer NA120/00
+- Prestige PIC 20 Induction Cooktop
+- Havells Stealth Air Ceiling Fan
+- Crompton InstaBliss Water Heater
+- Bosch Series 4 Dishwasher
+- IFB Front Load Washing Machine 8kg
+- Godrej Double Door Refrigerator 244L
+
+automotive
+- Bosch Aerotwin Front Wiper Blades
+- 3M Car Care Interior Cleaner
+- Castrol Magnatec Engine Oil 3.5L
+- Michelin Portable Digital Tyre Inflator
+- JBL Stage 9603 Coaxial Car Speakers
+- Meguiar's Ultimate Wash & Wax
+
+books
+- Atomic Habits
+- The Psychology of Money
+- The Alchemist
+- Harry Potter and the Philosopher's Stone
+- Oxford School Atlas
+
+finance
+- HDFC Millennia Credit Card
+- SBI Health Insurance Family Floater
+- Axis Ace Credit Card
+- Bajaj Finance Insta EMI Card
+- Groww Stocks + Mutual Funds Account
+- Zerodha Demat + Trading Account
+- Policy Bazaar Term Life Cover
+
+gaming
+- Sony PlayStation 5 Slim Console
+- Xbox Series S 512GB
+- Razer BlackShark V2 X Gaming Headset
+- HyperX Alloy Origins Core Keyboard
+- Corsair HS55 Stereo Gaming Headset
+
+fashion
+- Nike Dri-FIT Training Tee
+- Levi's 511 Slim Fit Jeans
+- Puma Smashic Sneakers
+- Biba Printed Kurta Set
+- Zara Structured Mini Crossbody Bag
+
+sports
+- Nike Everyday Cushioned Training Socks 3-Pack
+- Adidas Training Yoga Mat 6mm
+- Puma Resistance Bands Set
+- Decathlon Domyos Kettlebell 8kg
+- Garmin Forerunner 165
+- Fitbit Charge 6
+- Reebok Adjustable Dumbbell Set
+- Under Armour Training Backpack
+
+toys
+- LEGO Classic Creative Bricks Box
+- Hot Wheels Track Builder Launch Kit
+- Hasbro Monopoly Classic Board Game
+
+watches
+- Titan Neo Analog Watch
+- Noise ColorFit Pro 5
+
+pod
+- CloudBasket Graphic Tee - Classic Black
+- NEXQON Logo Tee - Navy Blue
+- CloudBasket Desk Mug - Midnight Blue
+- CloudBasket Matte Black Case - iPhone 15
+
+5.2.2 Generated catalog additions included in CATALOG_PRODUCTS
+
+Generated sports extension products:
+
+- Adidas Training Essential 1
+- Decathlon Training Essential 2
+- Fitbit Training Essential 3
+- Garmin Training Essential 4
+- Nike Training Essential 5
+- Puma Training Essential 6
+- Reebok Training Essential 7
+- Under Armour Training Essential 8
+- Adidas Training Essential 9
+- Decathlon Training Essential 10
+- Fitbit Training Essential 11
+- Garmin Training Essential 12
+- Nike Training Essential 13
+- Puma Training Essential 14
+- Reebok Training Essential 15
+- Under Armour Training Essential 16
+
+Generated POD case extension products:
+
+- NEXQON Clear Case - Samsung S24 1
+- CloudBasket Studio Case - iPhone 15 2
+- NEXQON Clear Case - Samsung S24 3
+- CloudBasket Studio Case - iPhone 15 4
+- NEXQON Clear Case - Samsung S24 5
+- CloudBasket Studio Case - iPhone 15 6
+- NEXQON Clear Case - Samsung S24 7
+- CloudBasket Studio Case - iPhone 15 8
+
+5.3 POD Dynamic Category Inventory from app/pod/[category]/page.tsx
+
+Dynamic POD categories and declared design counts:
+
+- tshirts | T-Shirts | 48
+- mugs | Mugs & Drinkware | 32
+- phone-cases | Phone Cases | 64
+- posters | Posters & Prints | 28
+- hoodies | Hoodies | 24
+- tote-bags | Tote Bags | 20
+
+Notes:
+
+- The dynamic POD route supports more categories than the dedicated static pod pages.
+- Static dedicated pod pages exist for:
+  - /pod/tshirts
+  - /pod/mugs
+  - /pod/phone-cases
+- Additional dynamic-only categories currently visible in app/pod/[category]/page.tsx:
+  - posters
+  - hoodies
+  - tote-bags
+
+5.4 Normalized Products Grid Dataset from lib/products-data.ts
+
+This is a separate, smaller, normalized product source used by /products UI flows.
+
+Dataset size:
+
+- 48 products total
+- 12 categories
+- 4 products per category
+
+Categories present:
+
+- Mobiles
+- Laptops
+- Fashion
+- Home
+- Cameras
+- Gaming
+- Electronics
+- Footwear
+- Books
+- Beauty
+- Sports
+- Toys
+
+Product titles in lib/products-data.ts:
+
+Mobiles
+- Samsung Galaxy S25
+- Apple iPhone 16
+- OnePlus 13R
+- Xiaomi 14T Pro
+
+Laptops
+- Dell XPS 13
+- HP Envy x360 14
+- Lenovo Yoga Slim 7i
+- Apple MacBook Air 13-inch
+
+Fashion
+- Nike Dri-FIT Club Tee
+- Adidas Essentials Fleece Hoodie
+- Zara Straight Leg Denim
+- Levis Trucker Jacket
+
+Home
+- Philips 3000 Series Air Fryer
+- Bosch Series 2 Vacuum Cleaner
+- Dyson Purifier Cool TP10
+- Philips Hue White Starter Kit
+
+Cameras
+- Canon EOS R50 Kit
+- Sony ZV-E10
+- GoPro HERO12 Black
+- Fujifilm Instax Mini 12
+
+Gaming
+- Sony DualSense Wireless Controller
+- Nintendo Switch OLED
+- Logitech G Pro X Superlight 2
+- Razer BlackShark V2 X
+
+Electronics
+- Sony WH-1000XM5
+- Samsung Smart Monitor M8
+- Bose SoundLink Flex
+- Sony ZV-1F
+
+Footwear
+- Nike Revolution 7
+- Adidas Grand Court 2.0
+- New Balance 574 Core
+- Crocs Classic Clog
+
+Books
+- Atomic Habits
+- The Alchemist
+- The Psychology of Money
+- Deep Work
+
+Beauty
+- LOreal Revitalift Hyaluronic Serum
+- Maybelline Sky High Mascara
+- Nivea Soft Moisturizing Cream
+- LOreal Elvive Hyaluron Shampoo
+
+Sports
+- Nike Pegasus 41
+- Adidas UCL Club Ball
+- Decathlon Domyos Yoga Mat 8mm
+- Nike Brasilia Training Duffel
+
+Toys
+- LEGO Classic Creative Box
+- Hasbro Nerf Elite Disruptor
+- Mattel Barbie Dream Closet
+- LEGO City Space Rover
+
+5.5 Generated Mock Catalog from lib/mock-data.ts
+
+This file generates synthetic products based on category/subcategory arrays.
+
+Important status note:
+
+- The current code does not cleanly align MAIN_CATEGORIES from lib/constants.ts with SUB_CATEGORIES keys in lib/mock-data.ts.
+- Exact matched main categories are only:
+  - Automotive
+  - Books
+  - Fashion
+  - Mobiles
+  - Sports
+- Under the current exact-string alignment, the active generated mock total is estimated at:
+  - 5 matched main categories
+  - 10 subcategories each
+  - 20 generated products per subcategory
+  - Estimated total: 1,000 generated products
+
+Matched mock categories and subcategories:
+
+Mobiles
+- Flagship
+- Budget
+- Mid-range
+- 5G Phones
+- iPhones
+- Refurbished
+- Gaming Phones
+- Tablets
+- Foldables
+- Accessories
+
+Fashion
+- Menswear
+- Womenswear
+- Kids
+- Footwear
+- Watches
+- Jewelry
+- Bags
+- Activewear
+- Winterwear
+- Luxury
+
+Sports
+- Fitness
+- Running
+- Cycling
+- Swimming
+- Cricket
+- Football
+- Yoga
+- Racket Sports
+- Golf
+- Adventure
+
+Automotive
+- Car Care
+- Accessories
+- Parts
+- Electronics
+- Tools
+- Tyres
+- Oil & Fluids
+- Safety
+- Motorbike
+- Cleaning
+
+Books
+- Fiction
+- Non-Fiction
+- Business
+- Tech
+- Self-Help
+- Children
+- Cookbooks
+- Comics
+- Education
+- Biography
+
+Unmatched MAIN_CATEGORIES currently present in lib/constants.ts:
+
+- Beauty & Care
+- Electronics
+- Finance
+- Food & Grocery
+- Gaming
+- Health
+- Home & Kitchen
+- Investments
+- Jewellery
+- Kids & Toys
+- Laptops & PCs
+- Music
+- Online Courses
+- Print on Demand
+- Travel & Hotels
+- Watches
+
+These unmatched names indicate the mock generation layer is currently out of sync with the main category naming system.
+
+========================================================================
+6. Final Status Assessment
+========================================================================
+
+Overall project condition:
+
+- The repository contains a broad and mostly complete application surface for a marketplace/affiliate/POD product.
+- The app tree is much larger and more mature than the older high-level project docs imply.
+- The project is currently in an active in-progress state, not a clean release state.
+
+Most important status conclusions:
+
+1. The codebase is active but the working tree is dirty.
+2. QA artifacts indicate significant unresolved issues remain.
+3. Product/catalog architecture is fragmented across multiple datasets.
+4. The mock-data generation layer is currently misaligned with the main category system.
+5. The curated storefront catalog is substantially populated, but several defined categories still have no explicit products.
+
+Secret-file handling note:
+
+- This report was prepared without reading .env.local or any other secret-bearing credential file.
+

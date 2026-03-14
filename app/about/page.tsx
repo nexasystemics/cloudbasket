@@ -5,7 +5,8 @@ import { Shield, Zap, Globe, TrendingDown, Users, Award, Target, Heart } from 'l
 
 export const metadata: Metadata = {
   title: "About CloudBasket — The World's Smartest Price Aggregator",
-  description: "Learn how CloudBasket compares prices across 50+ global stores to help shoppers find the best deals.",
+  description:
+    'Learn how CloudBasket compares prices across leading stores, tracks daily deal changes, and helps shoppers discover smarter savings without checkout friction.',
 }
 const STATS: ReadonlyArray<{ value: string; label: string }> = [
   { value: '2,000+', label: 'Products Tracked' },

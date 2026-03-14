@@ -1,5 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Home, Search, TrendingDown, ArrowLeft, Zap } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: '404 Not Found',
+  description: 'Page not found on CloudBasket.',
+}
 
 const CATEGORIES = [
   { name: 'Mobiles', slug: 'mobiles' },
@@ -23,7 +29,7 @@ export default function NotFound() {
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link href="/" className="cb-btn cb-btn-primary gap-2">
+          <Link href="/" className="cb-btn cb-btn-primary gap-2" aria-label="Go back to the CloudBasket homepage">
             <Home size={16} />
             Go Home
           </Link>
@@ -52,7 +58,7 @@ export default function NotFound() {
           </div>
         </div>
 
-        <Link href="/" className="text-muted mt-10 inline-flex items-center gap-1 text-xs">
+        <Link href="/" className="text-muted mt-10 inline-flex items-center gap-1 text-xs" aria-label="Return to the CloudBasket homepage">
           <ArrowLeft size={14} />
           Back to home
         </Link>

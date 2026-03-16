@@ -11,7 +11,8 @@ import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
 
 const POPULAR_SEARCHES = [
   "iPhone 16", "Samsung Galaxy S25", "Nike shoes", "boAt earphones", 
-  "Levi's jeans", "Atomic Habits", "PS5", "air fryer", "yoga mat", "Titan watch"
+  "Levi's jeans", "Atomic Habits", "PS5", "air fryer", "yoga mat", "Titan watch",
+  "OnePlus 13R", "Puma sneakers", "Adidas hoodie", "LEGO set", "PlayStation 5",
 ]
 
 function SearchPageContent() {
@@ -22,6 +23,7 @@ function SearchPageContent() {
   const [query, setQuery] = useState<string>(initialQuery)
   const [sortBy, setSortBy] = useState<string>('relevance')
   const [showSuggestions, setShowSuggestions] = useState(false)
+  const [isInputFocused, setIsInputFocused] = useState(false)
   const deferredQuery = useDeferredValue(query)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -49,10 +51,20 @@ function SearchPageContent() {
 
   const suggestions = useMemo(() => {
     if (!query.trim()) return []
-    return POPULAR_SEARCHES.filter(s => 
-      s.toLowerCase().includes(query.toLowerCase())
+    return POPULAR_SEARCHES.filter((suggestion) => 
+      suggestion.toLowerCase().includes(query.toLowerCase())
     ).slice(0, 5)
   }, [query])
+
+  const triggerSearch = (nextQuery: string) => {
+    const trimmedQuery = nextQuery.trim()
+    setQuery(trimmedQuery)
+    setShowSuggestions(false)
+
+    if (trimmedQuery) {
+      router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`)
+    }
+  }
 
   const results = useMemo(() => {
     const normalized = deferredQuery.trim().toLowerCase()
@@ -81,11 +93,7 @@ function SearchPageContent() {
     return filtered
   }, [deferredQuery, sortBy])
 
-  const handleSuggestionClick = (s: string) => {
-    setQuery(s)
-    setShowSuggestions(false)
-    router.push(`/search?q=${encodeURIComponent(s)}`)
-  }
+  const handleSuggestionClick = (suggestion: string) => triggerSearch(suggestion)
 
   return (
     <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
@@ -103,10 +111,20 @@ function SearchPageContent() {
               <input
                 className="w-full bg-transparent pl-12 pr-12 py-4 text-zinc-900 dark:text-white font-medium outline-none placeholder:text-zinc-400 text-lg"
                 value={query}
-                onFocus={() => setShowSuggestions(true)}
+                onFocus={() => {
+                  setIsInputFocused(true)
+                  setShowSuggestions(true)
+                }}
+                onBlur={() => setIsInputFocused(false)}
                 onChange={(e) => {
                   setQuery(e.target.value)
                   setShowSuggestions(true)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    triggerSearch(query)
+                  }
                 }}
                 placeholder="What are you looking for today?"
               />
@@ -121,7 +139,7 @@ function SearchPageContent() {
               )}
             </div>
 
-            {showSuggestions && suggestions.length > 0 && (
+            {showSuggestions && isInputFocused && query.trim().length >= 1 && suggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="p-2">
                   {suggestions.map((s) => (
@@ -173,9 +191,9 @@ function SearchPageContent() {
               onChange={(e) => setSortBy(e.target.value)}
             >
               <option value="relevance">Relevance</option>
-              <option value="price-low">Price Low-High</option>
-              <option value="price-high">Price High-Low</option>
-              <option value="discount">Highest Discount</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="discount">Discount: Highest First</option>
             </select>
           </div>
         </div>
@@ -185,14 +203,14 @@ function SearchPageContent() {
             <div className="w-20 h-20 bg-zinc-50 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6">
               <SearchX size={40} className="text-zinc-300 dark:text-zinc-600" />
             </div>
-            <h2 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">No results matched</h2>
-            <p className="mt-3 text-zinc-500 dark:text-zinc-400 font-medium">We couldn't find anything for "{query}". Try one of these:</p>
+            <h2 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">No results found</h2>
+            <p className="mt-3 text-zinc-500 dark:text-zinc-400 font-medium">No results for '{query}'</p>
             
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              {["iPhone", "Shoes", "Laptops"].map(chip => (
+              {['iPhone 16', 'PS5', 'air fryer'].map((chip) => (
                 <button 
                   key={chip}
-                  onClick={() => handleSuggestionClick(chip)}
+                  onClick={() => triggerSearch(chip)}
                   className="px-6 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 text-[11px] font-black uppercase tracking-widest text-skyline-primary hover:bg-skyline-primary hover:text-white transition-all shadow-sm"
                 >
                   {chip}
@@ -212,8 +230,18 @@ function SearchPageContent() {
                 product={{
                   ...product,
                   name: product.title,
-                  rating: 4.5,
-                  discount: Math.round(((product.mrp - product.price) / product.mrp) * 100)
+                  originalPrice: product.mrp,
+                  rating: product.rating,
+                  discount: Math.round(((product.mrp - product.price) / product.mrp) * 100),
+                  source: product.platform === 'CJ Global' ? 'CJ' : product.platform === 'Flipkart' ? 'Flipkart' : 'Amazon',
+                  affiliatePlatform:
+                    product.platform === 'Flipkart'
+                      ? 'flipkart'
+                      : product.platform === 'CJ Global'
+                        ? 'cj'
+                        : product.platform === 'Print on Demand'
+                          ? 'pod'
+                          : 'amazon',
                 }} 
               />
             ))}

@@ -123,25 +123,26 @@ export default function PODPage() {
           {[
             { 
               icon: MousePointerClick, 
-              title: "Pick Design", 
-              desc: "Select from hundreds of curated CloudBasket originals across 7+ categories." 
+              title: "Choose a Design", 
+              desc: "Browse CloudBasket originals and pick the artwork that fits your style." 
             },
             { 
               icon: Paintbrush, 
-              title: "Choose Color", 
-              desc: "Personalize your item with our premium color palette and fit options." 
+              title: "Customise Your Product", 
+              desc: "Select colours and product variations before sending it to print." 
             },
             { 
               icon: Truck, 
-              title: "Swift Delivery", 
-              desc: "We print fresh and ship within 5-7 days anywhere in India." 
+              title: "We Handle Printing and Delivery", 
+              desc: "We print each order fresh and deliver it to your doorstep across India." 
             }
           ].map((step, i) => (
             <article key={i} className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-8 text-center shadow-sm">
               <div className="w-16 h-16 bg-skyline-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <step.icon size={32} className="text-skyline-primary" />
               </div>
-              <h3 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tight mb-3">{step.title}</h3>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-zinc-400">Step {i + 1}</p>
+              <h3 className="mt-3 text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tight">{step.title}</h3>
               <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 leading-relaxed">{step.desc}</p>
             </article>
           ))}

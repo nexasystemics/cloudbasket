@@ -29,7 +29,7 @@ const DEALS_DATA: readonly DealItem[] = [
   { id: 'deal-8', title: 'Xiaomi Redmi Note 13 Pro 5G', subtitle: '256GB · 200MP · 67W charge', discount: 17, originalPrice: 28999, dealPrice: 23999, platform: 'Flipkart', image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400&q=80', badge: 'Hot', productId: 'mob-004' },
 ]
 
-function getSecondsUntilMidnightIST(): number {
+function getMillisecondsUntilMidnightIST(): number {
   const now = new Date()
   const utcNow = now.getTime() + now.getTimezoneOffset() * 60000
   const istNow = new Date(utcNow + 3600000 * 5.5)
@@ -37,13 +37,14 @@ function getSecondsUntilMidnightIST(): number {
   const istMidnight = new Date(istNow)
   istMidnight.setHours(24, 0, 0, 0)
   
-  return Math.floor((istMidnight.getTime() - istNow.getTime()) / 1000)
+  return Math.max(istMidnight.getTime() - istNow.getTime(), 0)
 }
 
-function formatTime(seconds: number): string {
-  const h = Math.floor(seconds / 3600).toString().padStart(2, '0')
-  const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0')
-  const s = (seconds % 60).toString().padStart(2, '0')
+function formatTime(milliseconds: number): string {
+  const totalSeconds = Math.floor(milliseconds / 1000)
+  const h = Math.floor(totalSeconds / 3600).toString().padStart(2, '0')
+  const m = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0')
+  const s = (totalSeconds % 60).toString().padStart(2, '0')
   return `${h}:${m}:${s}`
 }
 
@@ -59,12 +60,18 @@ export default function FlashSalePageClient() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   useEffect(() => {
-    setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-    setTimeLeft(getSecondsUntilMidnightIST())
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setPrefersReducedMotion(mediaQuery.matches)
+    setTimeLeft(getMillisecondsUntilMidnightIST())
+
+    if (mediaQuery.matches) {
+      return
+    }
 
     const timer = setInterval(() => {
-      setTimeLeft(getSecondsUntilMidnightIST())
+      setTimeLeft(getMillisecondsUntilMidnightIST())
     }, 1000)
+
     return () => clearInterval(timer)
   }, [])
 
@@ -84,15 +91,15 @@ export default function FlashSalePageClient() {
           </div>
           <p className="mb-8 text-rose-100 font-bold uppercase tracking-widest text-sm">Limited time. Maximum savings. Verified redirects.</p>
           
-          <div className="inline-flex flex-col items-center gap-2 rounded-3xl bg-black/30 backdrop-blur-md px-10 py-6 border border-white/10 shadow-2xl">
-            <div className="flex items-center gap-2 text-yellow-300 mb-1">
+          <div className="inline-flex flex-col items-center gap-2 rounded-3xl border border-white/10 bg-black/30 px-10 py-6 shadow-2xl backdrop-blur-md">
+            <div className="mb-1 flex items-center gap-2 text-yellow-300">
               <Clock size={18} />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Next Refresh (IST)</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Sale ends in:</span>
             </div>
             {prefersReducedMotion ? (
-              <span className="text-3xl font-black tracking-widest text-white">Ends at Midnight</span>
+              <span className="text-3xl font-black tracking-widest text-white">Sale ends at midnight IST</span>
             ) : (
-              <span className="tabular-nums text-5xl font-black tracking-tighter text-white drop-shadow-lg">{displayTime}</span>
+              <span className="font-mono text-5xl font-black tracking-tighter text-white drop-shadow-lg tabular-nums">{displayTime}</span>
             )}
           </div>
         </div>
@@ -150,4 +157,3 @@ export default function FlashSalePageClient() {
     </main>
   )
 }
-

@@ -192,8 +192,6 @@ const DEALS_DATA: readonly DealItem[] = [
   },
 ]
 
-const CATEGORIES = ['All Deals', 'Mobiles', 'Laptops', 'Fashion', 'Home', 'Electronics']
-
 function getBadgeClass(badge: DealItem['badge']): string {
   if (badge === 'Flash') return 'bg-orange-500 text-white border-orange-500'
   if (badge === 'Hot') return 'bg-red-500 text-white border-red-500'
@@ -203,10 +201,11 @@ function getBadgeClass(badge: DealItem['badge']): string {
 
 export default function DealsPage() {
   const [activeCategory, setActiveCategory] = useState('All Deals')
+  const categories = useMemo(() => ['All Deals', ...Array.from(new Set(DEALS_DATA.map((deal) => deal.category)))], [])
 
   const filteredDeals = useMemo(() => {
     if (activeCategory === 'All Deals') return DEALS_DATA
-    return DEALS_DATA.filter(deal => deal.category === activeCategory)
+    return DEALS_DATA.filter((deal) => deal.category === activeCategory)
   }, [activeCategory])
 
   return (
@@ -225,7 +224,7 @@ export default function DealsPage() {
         <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-100 dark:border-zinc-800 p-6">
           <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
             <div className="flex items-center overflow-x-auto no-scrollbar gap-2 pb-2 -mx-2 px-2 scroll-smooth">
-              {CATEGORIES.map((cat) => (
+              {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}

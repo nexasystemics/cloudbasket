@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import BlogListingClient from './BlogListingClient'
+import BlogListingPageClient from './BlogListingPageClient'
 import { BLOG_POSTS as LIB_BLOG_POSTS } from '@/lib/blog-data'
 
 export const metadata: Metadata = {
@@ -9,21 +9,19 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
-  // Normalize data for the client component
-  const posts = LIB_BLOG_POSTS.map(post => ({
+  const posts = LIB_BLOG_POSTS.map((post) => ({
+    slug: post.slug,
     title: post.title,
     excerpt: post.excerpt,
     image: `https://images.unsplash.com/photo-${post.imageId}?w=800&q=80`,
-    tag: post.category,
+    category: post.category,
     date: post.date,
-    readTime: post.readTime,
-    slug: post.slug,
-    content: post.content
+    content: post.content ?? post.excerpt,
   }))
 
   return (
     <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen pt-12">
-      <BlogListingClient posts={posts} />
+      <BlogListingPageClient posts={posts} />
     </main>
   )
 }

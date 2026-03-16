@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ExternalLink, Star, ChevronRight, Heart, RefreshCw } from 'lucide-react'
+import { ExternalLink, Star, ChevronRight, Heart } from 'lucide-react'
 
 export interface ProductCardProps {
   id: string
@@ -79,30 +79,26 @@ export default function ProductCard({
   }, [id])
 
   return (
-    <div className="group bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl dark:hover:shadow-black/60 transition-all duration-500 motion-reduce:transition-none flex min-h-[440px] flex-col h-full relative">
-      <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-zinc-800 flex-shrink-0">
+    <div className="group relative flex h-full min-h-[440px] flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-zinc-800">
         <Link href={`/products/${id}`} className="block w-full h-full">
           <Image
             src={imgSrc}
             alt={name}
             fill
-            className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out motion-reduce:transform-none"
+            className="object-cover transition-transform duration-200 group-hover:scale-105 motion-reduce:transform-none"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 25vw, 20vw"
             onError={() => setImgSrc(FALLBACK_IMAGE)}
           />
         </Link>
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
-          <span className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-zinc-900 dark:text-white px-2.5 py-1.5 rounded-lg shadow-sm border border-zinc-100 dark:border-zinc-800">
-            {platform}
+
+        {discountPercent > 15 ? (
+          <span className="absolute left-3 top-3 rounded-full bg-red-500 px-3 py-1 text-[10px] font-black text-white shadow-sm">
+            {discountPercent}% OFF
           </span>
-          {discountPercent > 15 && (
-            <span className="bg-green-500 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg shadow-lg animate-pulse motion-reduce:animate-none">
-              Best Price
-            </span>
-          )}
-        </div>
-        
-        <button 
+        ) : null}
+
+        <button
           onClick={toggleWishlist}
           className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
             isSaved 
@@ -111,17 +107,11 @@ export default function ProductCard({
           }`}
           aria-label={isSaved ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart size={16} fill={isSaved ? 'currentColor' : 'none'} />
+          <Heart size={16} className={isSaved ? 'fill-current' : ''} />
         </button>
-
-        {discountPercent > 0 && (
-          <div className="absolute bottom-3 right-3 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-lg shadow-lg">
-            -{discountPercent}%
-          </div>
-        )}
       </div>
 
-      <div className="p-4 flex min-h-[216px] flex-col flex-grow space-y-3">
+      <div className="flex min-h-[216px] flex-1 flex-col space-y-3 p-4">
         <Link href={`/products/${id}`} className="block group/title">
           <h3 className="text-sm font-black text-zinc-900 dark:text-white line-clamp-2 min-h-[2.5rem] group-hover/title:text-skyline-primary transition-colors duration-300">
             {name}
@@ -155,29 +145,30 @@ export default function ProductCard({
               {originalPrice}
             </span>
           </div>
-          <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-tighter mt-0.5">
-            via {platform}
+          <p className="mt-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+            {platform}
           </p>
+          <Link
+            href={`/compare?product=${id}`}
+            className="mt-1 inline-block text-xs text-zinc-500 underline underline-offset-2 transition-colors hover:text-skyline-primary"
+          >
+            Compare prices
+          </Link>
         </div>
 
-        <div className="pt-2 space-y-3">
+        <div className="space-y-3 pt-2">
           <a
             href={`/go/${id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white rounded-xl py-3.5 transition-all active:scale-95 shadow-lg shadow-orange-500/20 hover:opacity-90 motion-reduce:transition-none"
+            className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-orange-500/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start"
             style={{ backgroundColor: theme?.accentColor || '#E65100' }}
           >
-            View Deal <ExternalLink size={14} />
+            View Deal
+            <ExternalLink size={14} />
           </a>
           
           <div className="flex items-center justify-between">
-            <Link
-              href={`/compare?product=${id}`}
-              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-skyline-primary hover:underline"
-            >
-              <RefreshCw size={10} /> Compare Prices
-            </Link>
             <Link
               href={`/products/${id}`}
               className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-zinc-400 hover:text-skyline-primary transition-colors"
@@ -190,4 +181,3 @@ export default function ProductCard({
     </div>
   )
 }
-

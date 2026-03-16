@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
+  ArrowRight,
   ExternalLink,
   Star,
   Shield,
@@ -10,20 +11,23 @@ import {
   RefreshCw,
   TrendingDown,
   ChevronRight,
-  BarChart2,
-  Bell,
 } from 'lucide-react'
 import { CATALOG, type Product as CatalogProduct } from '@/lib/intelligence/catalog'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
+import {
+  CATALOG_PRODUCTS,
+  getCategoryDefinition,
+  getSavePercent,
+  type CatalogProduct as CloudbasketCatalogProduct,
+} from '@/lib/cloudbasket-data'
 import SchemaMarkup from '@/components/SchemaMarkup'
-import ProductPageClientWidgets from './ProductPageClientWidgets'
+import ProductDetailActions, { PriceAlertTriggerButton } from '@/components/ProductDetailActions'
 import RecentlyViewed, { ProductViewTracker } from '@/components/RecentlyViewed'
 import TrackBehavior from '@/components/TrackBehavior'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import WishlistButton from '@/components/WishlistButton'
 import { TelegramCTA } from '@/components/TelegramCTA'
 import { CODBadge } from '@/components/products/CODBadge'
-import { DealShareCard } from '@/components/products/DealShareCard'
 import { EMIBadge } from '@/components/products/EMIBadge'
 import { PincodeChecker } from '@/components/products/PincodeChecker'
 import { ProductCard } from '@/components/products/ProductCard'
@@ -127,22 +131,30 @@ const RATING_BREAKDOWN = [
   { stars: 1, width: '3%', count: '45' },
 ] as const
 
-function getPlatformBadgeClass(platform: PriceEntry['platform']): string {
-  if (platform === 'Amazon') {
-    return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
-  }
-  if (platform === 'Flipkart') {
-    return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
-  }
-  return 'cb-badge-green'
-}
-
-function getProductPath(id: string): string {
-  return `/product/${id}`
-}
-
 function getDealPath(platform: DisplayProduct['affiliatePlatform'], id: string): string {
   return `/go/${platform}-${id}`
+}
+
+function getCloudbasketAffiliatePlatform(product: CloudbasketCatalogProduct): DisplayProduct['affiliatePlatform'] {
+  if (product.platform === 'Flipkart') return 'flipkart'
+  if (product.platform === 'CJ Global') return 'cj'
+  if (product.platform === 'Print on Demand') return 'pod'
+  return 'amazon'
+}
+
+function getCategoryDetails(product: DisplayProduct, cloudbasketProduct?: CloudbasketCatalogProduct) {
+  if (cloudbasketProduct) {
+    const categoryDefinition = getCategoryDefinition(cloudbasketProduct.category)
+    return {
+      label: categoryDefinition?.label ?? cloudbasketProduct.category,
+      slug: cloudbasketProduct.category,
+    }
+  }
+
+  return {
+    label: product.mainCategory,
+    slug: product.mainCategory.toLowerCase().replace(/\s+/g, '-'),
+  }
 }
 
 function toDisplayFromCatalog(product: CatalogProduct): DisplayProduct {
@@ -223,20 +235,32 @@ export default async function ProductPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const catalogProduct = id.startsWith('cb-') ? CATALOG.find((item) => item.id === id) : undefined
+  const cloudbasketProduct = CATALOG_PRODUCTS.find((item) => item.id === id)
   const product = findDisplayProductById(id)
 
   if (!product) {
     notFound()
   }
 
-  const related = catalogProduct
-    ? CATALOG.filter((item) => item.category === catalogProduct.category && item.id !== catalogProduct.id)
+  const categoryDetails = getCategoryDetails(product, cloudbasketProduct)
+  const dealPath = getDealPath(product.affiliatePlatform, String(product.id))
+  const relatedProducts = cloudbasketProduct
+    ? CATALOG_PRODUCTS.filter((item) => item.category === cloudbasketProduct.category && item.id !== cloudbasketProduct.id)
         .slice(0, 4)
-        .map(toDisplayFromCatalog)
-    : MOCK_PRODUCTS.filter((item) => item.mainCategory === product.mainCategory && String(item.id) !== product.id)
-        .slice(0, 4)
-        .map(toDisplayFromMock)
+        .map((item) => ({
+          id: item.id,
+          name: item.title,
+          image: item.image,
+          brand: item.brand,
+          price: item.price,
+          originalPrice: item.mrp,
+          discount: getSavePercent(item),
+          rating: item.rating,
+          reviewCount: item.reviewCount,
+          source: item.platform === 'CJ Global' ? ('CJ' as const) : item.platform === 'Flipkart' ? ('Flipkart' as const) : ('Amazon' as const),
+          affiliatePlatform: getCloudbasketAffiliatePlatform(item),
+        }))
+    : []
 
   const priceComparison: readonly PriceEntry[] = [
     {
@@ -270,9 +294,8 @@ export default async function ProductPage({
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
-      { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://cloudbasket.in/products' },
-      { '@type': 'ListItem', position: 3, name: product.mainCategory, item: `https://cloudbasket.in/category/${product.mainCategory.toLowerCase()}` },
-      { '@type': 'ListItem', position: 4, name: product.name },
+      { '@type': 'ListItem', position: 2, name: categoryDetails.label, item: `https://cloudbasket.in/category/${categoryDetails.slug}` },
+      { '@type': 'ListItem', position: 3, name: product.name, item: `https://cloudbasket.in/product/${product.id}` },
     ],
   }
 
@@ -280,7 +303,7 @@ export default async function ProductPage({
     <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_DATA) }} />
       <ProductViewTracker id={String(product.id)} />
-      <TrackBehavior category={product.mainCategory.toLowerCase()} productId={String(product.id)} />
+      <TrackBehavior category={categoryDetails.slug} productId={String(product.id)} />
       <SchemaMarkup
         type="product"
         data={{
@@ -296,16 +319,14 @@ export default async function ProductPage({
         <div className="flex flex-wrap items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-400">
           <Link href="/" className="hover:text-skyline-primary transition-colors">Home</Link>
           <ChevronRight size={10} />
-          <Link href="/products" className="hover:text-skyline-primary transition-colors">Products</Link>
-          <ChevronRight size={10} />
-          <Link href={`/category/${product.mainCategory.toLowerCase()}`} className="hover:text-skyline-primary transition-colors">{product.mainCategory}</Link>
+          <Link href={`/category/${categoryDetails.slug}`} className="hover:text-skyline-primary transition-colors">{categoryDetails.label}</Link>
           <ChevronRight size={10} />
           <span className="text-zinc-900 dark:text-white line-clamp-1">{product.name}</span>
         </div>
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-6 lg:grid-cols-2">
-        <div className="space-y-6">
+        <div>
           <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 overflow-hidden shadow-2xl">
             <div className="relative aspect-square">
               <Image
@@ -336,56 +357,12 @@ export default async function ProductPage({
               ))}
             </div>
           </div>
-          
-          <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-black uppercase tracking-tight text-zinc-900 dark:text-white">Price History (30D)</h2>
-              <button className="cb-btn-ghost gap-2 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl">
-                <Bell size={14} /> Set Price Alert
-              </button>
-            </div>
-            <div className="relative h-40 w-full mb-6">
-              <svg className="w-full h-full" viewBox="0 0 400 100" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="var(--cb-primary)" stopOpacity="0.2" />
-                    <stop offset="100%" stopColor="var(--cb-primary)" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                <path 
-                  d="M0,80 Q50,20 100,60 T200,40 T300,70 T400,30 V100 H0 Z" 
-                  fill="url(#gradient)" 
-                />
-                <path 
-                  d="M0,80 Q50,20 100,60 T200,40 T300,70 T400,30" 
-                  fill="none" 
-                  stroke="var(--cb-primary)" 
-                  strokeWidth="3" 
-                  strokeLinecap="round" 
-                />
-              </svg>
-            </div>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center">
-                <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Lowest</p>
-                <p className="text-sm font-black text-green-500 mt-1">₹{(product.price * 0.9).toLocaleString('en-IN')}</p>
-              </div>
-              <div className="text-center">
-                <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Highest</p>
-                <p className="text-sm font-black text-zinc-900 dark:text-white mt-1">₹{(product.price * 1.15).toLocaleString('en-IN')}</p>
-              </div>
-              <div className="text-center">
-                <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Avg</p>
-                <p className="text-sm font-black text-zinc-900 dark:text-white mt-1">₹{(product.price * 1.02).toLocaleString('en-IN')}</p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="flex flex-col">
           <div className="flex items-center gap-2 mb-4">
             <span className="bg-skyline-primary/10 text-skyline-primary text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-lg">
-              {product.mainCategory}
+              {categoryDetails.label}
             </span>
             {product.badge && (
               <span className="bg-orange-500 text-white text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-lg shadow-lg">
@@ -410,11 +387,11 @@ export default async function ProductPage({
           </div>
 
           <div className="mt-8">
-            <ProductPageClientWidgets
+            <ProductDetailActions
               productId={String(product.id)}
               productName={product.name}
               currentPrice={product.price}
-              affiliatePlatform={product.affiliatePlatform}
+              dealPath={dealPath}
             />
           </div>
 
@@ -476,6 +453,35 @@ export default async function ProductPage({
                 <span className="text-[9px] font-black uppercase tracking-tighter text-zinc-500 dark:text-zinc-400">{feature.label}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-6">
+        <div className="rounded-3xl border border-zinc-100 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h2 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">Price History</h2>
+            <PriceAlertTriggerButton
+              productName={product.name}
+              currentPrice={product.price}
+              className="cb-btn-ghost flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest"
+            >
+              <span>Set Price Alert</span>
+            </PriceAlertTriggerButton>
+          </div>
+          <div className="mt-6">
+            <svg className="h-[120px] w-full" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
+              <path
+                d="M0 78 C60 24, 120 24, 180 64 S300 108, 360 62 S480 18, 600 44"
+                fill="none"
+                stroke="#039BE5"
+                strokeWidth="4"
+                strokeLinecap="round"
+              />
+            </svg>
+            <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
+              Price tracking coming soon — set a price alert to be notified of drops.
+            </p>
           </div>
         </div>
       </section>
@@ -553,34 +559,35 @@ export default async function ProductPage({
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 border-t border-zinc-100 dark:border-zinc-800">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <h2 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight italic">You Might Also Like</h2>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">Curated alternatives in {product.mainCategory}</p>
-          </div>
-          <Link href={`/category/${product.mainCategory.toLowerCase()}`} className="cb-btn-ghost gap-2 text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-xl border border-zinc-200">
-            View All <ArrowRight size={14} />
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {related.map((item) => (
-            <ProductCard 
-              key={item.id} 
-              product={{
-                ...item,
-                image: item.image,
-                name: item.name,
-                rating: item.rating,
-                reviews: item.reviewCount
-              }} 
-            />
-          ))}
-        </div>
-      </section>
-
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <RecentlyViewed />
+        {relatedProducts.length >= 2 ? (
+          <div className="border-t border-zinc-100 py-16 dark:border-zinc-800">
+            <div className="mb-10 flex items-end justify-between">
+              <div>
+                <h2 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight italic">You Might Also Like</h2>
+                <p className="mt-1 text-xs font-bold uppercase tracking-widest text-zinc-400">
+                  Curated alternatives in {categoryDetails.label}
+                </p>
+              </div>
+              <Link href={`/category/${categoryDetails.slug}`} className="cb-btn-ghost gap-2 rounded-xl border border-zinc-200 px-6 py-3 text-[10px] font-black uppercase tracking-widest">
+                View All <ArrowRight size={14} />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {relatedProducts.map((item) => (
+                <ProductCard
+                  key={item.id}
+                  product={{
+                    ...item,
+                    rating: item.rating,
+                    reviews: item.reviewCount,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null}
         <div className="mt-12">
           <TelegramCTA variant="inline" />
         </div>

@@ -1,3 +1,4 @@
+import BackToTop from '@/components/BackToTop'
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import Script from 'next/script'
@@ -107,6 +108,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Header />
             <main>{children}</main>
             <Footer />
+            <BackToTop />
             <LayoutBottomEnhancements />
             <Script id="sw-register" strategy="afterInteractive">
               {`if ('serviceWorker' in navigator) {

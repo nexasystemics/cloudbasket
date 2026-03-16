@@ -1,10 +1,10 @@
 'use client'
 
-import { useCallback, useMemo, useState, useEffect, type MouseEvent } from 'react'
+import { useCallback, useMemo, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ExternalLink, Star, TrendingDown, Zap, Heart, RefreshCw, ChevronRight } from 'lucide-react'
+import { ExternalLink, Star, Heart, ChevronRight } from 'lucide-react'
 import { useGlobal } from '@/context/GlobalContext'
 
 type ProductSource = 'Amazon' | 'Flipkart' | 'CJ' | 'Direct'
@@ -77,6 +77,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
   const roundedRating = useMemo<number>(() => Math.round(product.rating), [product.rating])
   const reviewCountLabel = useMemo<string>(() => formatCompactNumber(reviewCount), [reviewCount])
   const isList = variant === 'list'
+  const discountPercent = product.discount ?? 0
 
   useEffect(() => {
     try {
@@ -92,9 +93,10 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
     }
   }, [product.id])
 
-  const toggleWishlist = useCallback((e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+  const toggleWishlist = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+
     try {
       const saved = localStorage.getItem(WISHLIST_KEY)
       let parsed: string[] = saved ? JSON.parse(saved) : []
@@ -102,12 +104,13 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
 
       const productId = String(product.id)
       if (parsed.includes(productId)) {
-        parsed = parsed.filter(item => item !== productId)
+        parsed = parsed.filter((item) => item !== productId)
         setIsSaved(false)
       } else {
         parsed.push(productId)
         setIsSaved(true)
       }
+
       localStorage.setItem(WISHLIST_KEY, JSON.stringify(parsed))
     } catch (error) {
       console.error('Failed to update wishlist in localStorage:', error)
@@ -118,32 +121,20 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
     router.push(toProductPath(product.id))
   }, [product.id, router])
 
-  const handleDealClick = useCallback(
-    (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>): void => {
-      event.stopPropagation()
-      // Already handled by link href but for consistency
-    },
-    [],
-  )
-
   const handleImageError = useCallback((): void => {
     setImgError(true)
   }, [])
 
-  const discountPercent = product.discount ?? 0
-
   return (
     <article
-      className={`group relative bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl dark:hover:shadow-black/60 transition-all duration-500 motion-reduce:transition-none flex ${
-        isList ? 'flex-row min-h-[220px]' : 'flex-col h-full min-h-[440px]'
+      className={`group relative flex overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900 ${
+        isList ? 'min-h-[220px] flex-row' : 'h-full min-h-[440px] flex-col'
       }`}
       onClick={handleCardClick}
     >
-      <div className={`relative flex-shrink-0 bg-zinc-50 dark:bg-zinc-800 overflow-hidden ${
-        isList ? 'h-full w-[240px]' : 'h-[240px] w-full'
-      }`}>
+      <div className={`relative flex-shrink-0 overflow-hidden bg-zinc-50 dark:bg-zinc-800 ${isList ? 'h-full w-[240px]' : 'h-[240px] w-full'}`}>
         {imgError ? (
-          <div className="flex h-full w-full items-center justify-center text-xs text-zinc-400 font-bold uppercase tracking-widest bg-zinc-100 dark:bg-zinc-800">
+          <div className="flex h-full w-full items-center justify-center bg-zinc-100 text-xs font-bold uppercase tracking-widest text-zinc-400 dark:bg-zinc-800">
             No Image
           </div>
         ) : (
@@ -151,63 +142,53 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110 motion-reduce:transform-none"
+            className="object-cover transition-transform duration-200 group-hover:scale-105 motion-reduce:transform-none"
             sizes={isList ? '240px' : '(max-width: 768px) 100vw, (max-width: 1280px) 30vw, 22vw'}
             onError={handleImageError}
           />
         )}
 
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
-          <span className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-zinc-900 dark:text-white px-2.5 py-1.5 rounded-lg shadow-sm border border-zinc-100 dark:border-zinc-800">
-            {source}
+        {discountPercent > 15 ? (
+          <span className="absolute left-3 top-3 rounded-full bg-red-500 px-3 py-1 text-[10px] font-black text-white shadow-sm">
+            {discountPercent}% OFF
           </span>
-          {discountPercent > 15 && (
-            <span className="bg-green-500 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg shadow-lg animate-pulse motion-reduce:animate-none">
-              Best Price
-            </span>
-          )}
-          {product.isTrending && (
-            <span className="bg-orange-500 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg shadow-lg">
-              Trending
-            </span>
-          )}
-        </div>
+        ) : null}
 
-        <button 
+        {product.isTrending ? (
+          <span className="absolute left-3 top-12 rounded-full bg-orange-500 px-3 py-1 text-[10px] font-black text-white shadow-sm">
+            Trending
+          </span>
+        ) : null}
+
+        <button
           onClick={toggleWishlist}
-          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 z-10 ${
-            isSaved 
-              ? 'bg-red-500 text-white' 
-              : 'bg-white/80 dark:bg-zinc-900/80 text-zinc-400 hover:text-red-500'
+          className={`absolute right-3 top-3 z-10 rounded-full p-2 backdrop-blur-md transition-all duration-300 ${
+            isSaved
+              ? 'bg-red-500 text-white'
+              : 'bg-white/80 text-zinc-400 hover:text-red-500 dark:bg-zinc-900/80'
           }`}
           aria-label={isSaved ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart size={16} fill={isSaved ? 'currentColor' : 'none'} />
+          <Heart size={16} className={isSaved ? 'fill-current' : ''} />
         </button>
 
-        {discountPercent > 0 && (
-          <div className="absolute bottom-3 right-3 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-lg shadow-lg">
-            -{discountPercent}%
-          </div>
-        )}
-        
-        {typeof personalScore === 'number' && personalScore >= 0.7 && (
+        {typeof personalScore === 'number' && personalScore >= 0.7 ? (
           <div className="absolute bottom-3 left-3">
-            <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg shadow-md backdrop-blur-md ${
-              personalScore >= 0.85 ? 'bg-indigo-600 text-white' : 'bg-green-100 text-green-700 border border-green-200'
+            <span className={`rounded-lg px-2.5 py-1.5 text-[9px] font-black uppercase tracking-widest shadow-md backdrop-blur-md ${
+              personalScore >= 0.85 ? 'bg-indigo-600 text-white' : 'border border-green-200 bg-green-100 text-green-700'
             }`}>
               {personalScore >= 0.85 ? 'Perfect Match' : 'Great Match'}
             </span>
           </div>
-        )}
+        ) : null}
       </div>
 
-      <div className="p-4 flex flex-col flex-grow space-y-3">
+      <div className="flex flex-grow flex-col space-y-3 p-4">
         <div>
-          <h3 className="text-sm font-black text-zinc-900 dark:text-white line-clamp-2 min-h-[2.5rem] group-hover:text-skyline-primary transition-colors duration-300">
+          <h3 className="min-h-[2.5rem] line-clamp-2 text-sm font-black text-zinc-900 transition-colors duration-300 group-hover:text-skyline-primary dark:text-white">
             {product.name}
           </h3>
-          <p className="text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">
+          <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
             {product.brand}
           </p>
         </div>
@@ -222,48 +203,43 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
               />
             ))}
           </div>
-          <span className="text-[10px] text-zinc-400 font-medium">({reviewCountLabel})</span>
+          <span className="text-[10px] font-medium text-zinc-400">({reviewCountLabel})</span>
         </div>
 
         <div className="mt-auto pt-2">
           <div className="flex items-baseline gap-2">
-            <span className="text-lg font-black text-skyline-primary">
-              {formatPrice(product.price)}
-            </span>
-            {product.originalPrice && (
-              <span className="text-xs text-zinc-400 line-through font-bold">
-                {formatPrice(product.originalPrice)}
-              </span>
-            )}
+            <span className="text-lg font-black text-skyline-primary">{formatPrice(product.price)}</span>
+            {product.originalPrice ? (
+              <span className="text-xs font-bold text-zinc-400 line-through">{formatPrice(product.originalPrice)}</span>
+            ) : null}
           </div>
-          <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-tighter mt-0.5">
-            via {source}
-          </p>
+          <p className="mt-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">{source}</p>
+          <Link
+            href={`/compare?product=${product.id}`}
+            onClick={(event) => event.stopPropagation()}
+            className="mt-1 inline-block text-xs text-zinc-500 underline underline-offset-2 transition-colors hover:text-skyline-primary"
+          >
+            Compare prices
+          </Link>
         </div>
 
-        <div className="pt-2 space-y-3">
+        <div className="space-y-3 pt-2">
           <Link
             href={toDealPath(product.id, product.affiliatePlatform)}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="w-full flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-skyline-primary rounded-xl py-3.5 transition-all active:scale-95 shadow-lg shadow-skyline-primary/20 hover:opacity-90 motion-reduce:transition-none"
+            onClick={(event) => event.stopPropagation()}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-skyline-primary py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-skyline-primary/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start"
           >
-            View Deal <ExternalLink size={14} />
+            View Deal
+            <ExternalLink size={14} />
           </Link>
-          
+
           <div className="flex items-center justify-between">
             <Link
-              href={`/compare?product=${product.id}`}
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-skyline-primary hover:underline"
-            >
-              <RefreshCw size={10} /> Compare Prices
-            </Link>
-            <Link
               href={toProductPath(product.id)}
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-zinc-400 hover:text-skyline-primary transition-colors"
+              onClick={(event) => event.stopPropagation()}
+              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-zinc-400 transition-colors hover:text-skyline-primary"
             >
               Specs <ChevronRight size={12} />
             </Link>
@@ -275,4 +251,3 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
 }
 
 export default ProductCard
-

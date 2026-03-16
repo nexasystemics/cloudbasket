@@ -1,3 +1,4 @@
+// Purpose: Displays a horizontally scrollable strip of the strongest flash-worthy deals on the homepage.
 'use client'
 
 import Image from 'next/image'
@@ -7,7 +8,7 @@ import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
 
 export default function DealsBar() {
   const topDeals = [...CATALOG_PRODUCTS]
-    .filter(p => p.mrp > p.price)
+    .filter((p) => p.mrp > p.price)
     .sort((a, b) => {
       const discountA = ((a.mrp - a.price) / a.mrp) * 100
       const discountB = ((b.mrp - b.price) / b.mrp) * 100
@@ -18,7 +19,7 @@ export default function DealsBar() {
   return (
     <div className="bg-white dark:bg-zinc-900 border-y border-zinc-100 dark:border-zinc-800">
       <div className="mx-auto flex max-w-7xl items-center px-6 py-3">
-        <Link 
+        <Link
           href="/deals/flash"
           className="flex flex-shrink-0 items-center gap-2 pr-6 border-r border-zinc-100 dark:border-zinc-800 group"
         >
@@ -30,14 +31,14 @@ export default function DealsBar() {
           </span>
         </Link>
 
-        <div className="flex flex-1 overflow-x-auto no-scrollbar gap-6 px-6 items-center snap-x">
+        <div className="no-scrollbar flex flex-1 items-center gap-6 overflow-x-auto px-6 snap-x snap-mandatory">
           {topDeals.map((deal) => {
             const discount = Math.round(((deal.mrp - deal.price) / deal.mrp) * 100)
             return (
               <Link
                 key={deal.id}
                 href={`/products/${deal.id}`}
-                className="flex flex-shrink-0 items-center gap-3 snap-start group"
+                className="group flex min-w-[220px] flex-shrink-0 snap-start items-center gap-3"
               >
                 <div className="relative h-10 w-10 overflow-hidden rounded-lg bg-zinc-50 border border-zinc-100 dark:border-zinc-800">
                   <Image
@@ -48,12 +49,12 @@ export default function DealsBar() {
                     sizes="40px"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-[11px] font-bold text-zinc-900 dark:text-white truncate max-w-[120px]">
+                <div className="min-w-0">
+                  <span className="block truncate text-[11px] font-bold text-zinc-900 dark:text-white">
                     {deal.title}
                   </span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-black text-red-500 uppercase">
+                  <div className="mt-1 flex items-center gap-2">
+                    <span className="rounded-full bg-red-500 px-2 py-0.5 text-[9px] font-black text-white">
                       {discount}% OFF
                     </span>
                     <span className="text-[9px] font-bold text-zinc-400 uppercase">

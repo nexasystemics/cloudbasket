@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useRef, useMemo } from 'react'
-import { ArrowRight, Search, Shield, TrendingDown, Zap, Users, CheckCircle } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { ArrowRight, Search, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/lib/constants'
@@ -9,7 +9,9 @@ import { ROUTES } from '@/lib/constants'
 const PLACEHOLDERS = [
   "Search for iPhone 16...",
   "Search for Nike shoes...",
-  "Search for boAt earphones..."
+  "Search for boAt earphones...",
+  "Search for PS5...",
+  "Search for air fryer...",
 ]
 
 export default function HeroSection() {
@@ -21,9 +23,22 @@ export default function HeroSection() {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(mediaQuery.matches)
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches)
+    updatePreference()
 
-    if (mediaQuery.matches) {
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', updatePreference)
+      return () => mediaQuery.removeEventListener('change', updatePreference)
+    }
+
+    mediaQuery.addListener(updatePreference)
+    return () => mediaQuery.removeListener(updatePreference)
+  }, [])
+
+  useEffect(() => {
+    let animationFrameId = 0
+
+    if (prefersReducedMotion) {
       setProductCount(122)
       return
     }
@@ -39,12 +54,16 @@ export default function HeroSection() {
       setProductCount(Math.floor(percentage * finalCount))
 
       if (progress < duration) {
-        requestAnimationFrame(animate)
+        animationFrameId = requestAnimationFrame(animate)
       }
     }
 
-    requestAnimationFrame(animate)
-  }, [])
+    animationFrameId = requestAnimationFrame(animate)
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [prefersReducedMotion])
 
   useEffect(() => {
     if (prefersReducedMotion) return
@@ -76,57 +95,55 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute -end-20 top-0 h-[300px] w-[300px] rounded-full bg-skyline-primary/30 blur-3xl opacity-20" />
       <div className="pointer-events-none absolute -start-12 bottom-8 h-[200px] w-[200px] rounded-full bg-[#F97316]/30 blur-3xl opacity-20" />
 
-      <div className="relative mx-auto flex min-h-[80vh] max-w-7xl flex-col justify-center items-center text-center">
+      <div className="relative mx-auto flex min-h-[80vh] max-w-7xl flex-col items-center justify-center text-center">
         <div className="mb-8 inline-flex">
-          <span className="cb-badge cb-badge-blue inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold">
+          <span className="cb-badge cb-badge-blue inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold">
             <Zap size={14} className="fill-current" />
-            Tracking {productCount}+ curated deals today
+            Live India deal radar
           </span>
         </div>
 
-        <div className="space-y-4 max-w-4xl">
+        <div className="max-w-4xl space-y-4">
           <h1 className="font-display text-5xl font-black tracking-tight text-zinc-900 dark:text-white sm:text-7xl lg:text-8xl">
             Compare. Discover. <span className="text-skyline-primary">Save.</span>
           </h1>
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-skyline-primary sm:text-base">
+            {productCount}+ curated products tracked daily
+          </p>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-zinc-500 dark:text-zinc-400 sm:text-xl">
             Everything in one basket. Compare prices across 50+ stores in India. Zero checkout, just pure savings.
           </p>
         </div>
 
-        <form 
+        <form
           onSubmit={handleSearch}
-          className="mt-12 w-full max-w-2xl px-4"
+          className="mt-12 w-full max-w-[600px]"
         >
-          <div className="relative flex items-center p-1.5 bg-white dark:bg-zinc-900 rounded-full shadow-2xl shadow-skyline-primary/10 border border-zinc-200 dark:border-zinc-800 ring-4 ring-skyline-primary/5 focus-within:ring-skyline-primary/20 transition-all duration-300">
+          <div className="relative flex items-center rounded-full border border-zinc-200 bg-white p-1.5 shadow-2xl shadow-skyline-primary/10 ring-4 ring-skyline-primary/5 transition-all duration-300 focus-within:ring-skyline-primary/20 dark:border-zinc-800 dark:bg-zinc-900">
             <Search className="absolute left-6 text-zinc-400" size={20} />
-            <input 
+            <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={prefersReducedMotion ? "Search for deals..." : PLACEHOLDERS[placeholderIndex]}
-              className="w-full bg-transparent pl-14 pr-32 py-4 text-zinc-900 dark:text-white font-medium outline-none placeholder:text-zinc-400"
+              placeholder={prefersReducedMotion ? 'Search for the best deals in India...' : PLACEHOLDERS[placeholderIndex]}
+              className="w-full bg-transparent py-4 pl-14 pr-32 font-medium text-zinc-900 outline-none placeholder:text-zinc-400 dark:text-white"
             />
-            <button 
+            <button
               type="submit"
-              className="absolute right-2 cb-btn-primary h-12 px-6 rounded-full font-bold shadow-lg shadow-skyline-primary/20"
+              className="cb-btn-primary absolute right-2 h-12 rounded-full px-6 font-bold shadow-lg shadow-skyline-primary/20"
             >
               Search Deals
             </button>
           </div>
         </form>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          {[
-            { label: '₹2Cr+ saved by users', icon: TrendingDown },
-            { label: '50K+ deals tracked', icon: Users },
-            { label: '4.8★ user rating', icon: CheckCircle }
-          ].map((stat, i) => (
-            <div 
-              key={i}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm border border-zinc-200 dark:border-zinc-700 text-[11px] font-black uppercase tracking-wider text-zinc-600 dark:text-zinc-300"
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {['₹2Cr+ saved by users', '50K+ deals tracked', '4.8★ user rating'].map((stat) => (
+            <div
+              key={stat}
+              className="rounded-full border border-white/40 bg-white/60 px-4 py-2 text-[11px] font-black text-zinc-700 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200"
             >
-              <stat.icon size={14} className="text-skyline-primary" />
-              {stat.label}
+              {stat}
             </div>
           ))}
         </div>
@@ -144,4 +161,3 @@ export default function HeroSection() {
     </section>
   )
 }
-

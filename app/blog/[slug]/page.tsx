@@ -1,43 +1,66 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { BLOG_POSTS as LIB_BLOG_POSTS, type BlogPost as LibraryBlogPost } from '@/lib/blog-data'
-import BlogPostClient from './BlogPostClient'
+import BlogArticlePageClient from './BlogArticlePageClient'
 
-type BlogContentBlock =
-  | { type: 'intro'; text: string }
-  | { type: 'heading'; text: string }
-  | { type: 'paragraph'; text: string }
-  | { type: 'deal'; product: string; price: string; link: string }
-  | { type: 'conclusion'; text: string }
+interface BlogArticleSection {
+  id: string
+  heading: string
+  body: string
+}
 
-type BlogPost = {
+interface BlogArticlePost {
   slug: string
   title: string
   excerpt: string
   category: string
   author: string
   date: string
-  readTime: string
   image: string
-  content: BlogContentBlock[]
-  tags: string[]
+  intro: string
+  conclusion: string
+  sections: BlogArticleSection[]
 }
 
-function buildContentBlocks(content: string): BlogContentBlock[] {
-  const paragraphs = content
-    .split(/\n\s*\n/)
-    .map((paragraph) => paragraph.trim())
-    .filter((paragraph) => paragraph.length > 0)
-
-  return paragraphs.map((paragraph, index) => {
-    if (index === 0) return { type: 'intro', text: paragraph }
-    if (index === paragraphs.length - 1) return { type: 'conclusion', text: paragraph }
-    return { type: 'paragraph', text: paragraph }
-  })
+function sentenceToHeading(sentence: string, index: number): string {
+  const words = sentence.replace(/[.!?]+$/, '').split(/\s+/).slice(0, 7)
+  const heading = words.join(' ').trim()
+  return heading.length > 0 ? heading : `Section ${index + 1}`
 }
 
-function convertLibraryPost(post: LibraryBlogPost): BlogPost | null {
+function buildArticleSections(content: string): Pick<BlogArticlePost, 'intro' | 'conclusion' | 'sections'> {
+  const sentences = content
+    .replace(/\s+/g, ' ')
+    .match(/[^.!?]+[.!?]?/g)
+    ?.map((sentence) => sentence.trim())
+    .filter((sentence) => sentence.length > 0) ?? []
+
+  const intro = sentences[0] ?? content
+  const conclusion = sentences[sentences.length - 1] ?? content
+  const middleSentences = sentences.slice(1, Math.max(sentences.length - 1, 1))
+  const sections: BlogArticleSection[] = []
+
+  for (let index = 0; index < middleSentences.length; index += 2) {
+    const chunk = middleSentences.slice(index, index + 2)
+    if (chunk.length === 0) continue
+
+    sections.push({
+      id: `section-${sections.length + 1}`,
+      heading: sentenceToHeading(chunk[0], sections.length),
+      body: chunk.join(' '),
+    })
+  }
+
+  return {
+    intro,
+    conclusion,
+    sections,
+  }
+}
+
+function convertLibraryPost(post: LibraryBlogPost): BlogArticlePost | null {
   if (post.author === undefined || post.content === undefined) return null
+
   return {
     slug: post.slug,
     title: post.title,
@@ -45,14 +68,12 @@ function convertLibraryPost(post: LibraryBlogPost): BlogPost | null {
     category: post.category,
     author: post.author,
     date: post.date,
-    readTime: post.readTime,
     image: `https://images.unsplash.com/photo-${post.imageId}?w=1200&q=80`,
-    content: buildContentBlocks(post.content),
-    tags: [post.category, 'CloudBasket', 'Shopping'],
+    ...buildArticleSections(post.content),
   }
 }
 
-const BLOG_POSTS = LIB_BLOG_POSTS.map(convertLibraryPost).filter((p): p is BlogPost => p !== null)
+const BLOG_POSTS = LIB_BLOG_POSTS.map(convertLibraryPost).filter((post): post is BlogArticlePost => post !== null)
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }))
@@ -60,17 +81,32 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const post = BLOG_POSTS.find((p) => p.slug === slug)
-  if (!post) return { title: 'Post Not Found' }
-  return { title: `${post.title} | CloudBasket Intelligence`, description: post.excerpt }
+  const post = BLOG_POSTS.find((entry) => entry.slug === slug)
+
+  if (!post) {
+    return { title: 'Post Not Found' }
+  }
+
+  return {
+    title: `${post.title} | CloudBasket Intelligence`,
+    description: post.excerpt,
+  }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post = BLOG_POSTS.find((p) => p.slug === slug)
-  if (!post) notFound()
+  const post = BLOG_POSTS.find((entry) => entry.slug === slug)
 
-  const relatedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 2)
+  if (!post) {
+    notFound()
+  }
 
-  return <BlogPostClient post={post} relatedPosts={relatedPosts} />
+  const relatedPosts = BLOG_POSTS.filter((entry) => entry.slug !== post.slug).slice(0, 2).map((entry) => ({
+    slug: entry.slug,
+    title: entry.title,
+    image: entry.image,
+    category: entry.category,
+  }))
+
+  return <BlogArticlePageClient post={post} relatedPosts={relatedPosts} />
 }

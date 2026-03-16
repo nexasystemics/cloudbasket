@@ -1,9 +1,10 @@
 'use client'
 
-import { useCallback, useMemo, useState, type MouseEvent } from 'react'
+import { useCallback, useMemo, useState, useEffect, type MouseEvent } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { ExternalLink, MessageCircle, Star, TrendingDown, Zap } from 'lucide-react'
+import Link from 'next/link'
+import { ExternalLink, Star, TrendingDown, Zap, Heart, RefreshCw, ChevronRight } from 'lucide-react'
 import { useGlobal } from '@/context/GlobalContext'
 
 type ProductSource = 'Amazon' | 'Flipkart' | 'CJ' | 'Direct'
@@ -31,9 +32,11 @@ interface ProductCardProps {
   personalScore?: number
 }
 
+const WISHLIST_KEY = 'cb_saved_products'
 const STAR_INDICES: number[] = [1, 2, 3, 4, 5]
 
 const toDealPath = (id: number | string, affiliatePlatform?: AffiliatePlatform): string => {
+  if (String(id).includes('-')) return `/go/${id}`
   const platform =
     affiliatePlatform === 'flipkart'
       ? 'flipkart'
@@ -46,10 +49,7 @@ const toDealPath = (id: number | string, affiliatePlatform?: AffiliatePlatform):
 }
 
 const toProductPath = (id: number | string): string => {
-  if (typeof id === 'number') {
-    return `/product/${id}`
-  }
-  return '/products'
+  return `/products/${id}`
 }
 
 const formatCompactNumber = (value: number): string => {
@@ -66,97 +66,84 @@ const resolveSource = (product: ProductCardItem): ProductSource => {
   return 'Amazon'
 }
 
-const sourceBadgeClass = (source: ProductSource): string => {
-  if (source === 'Amazon') {
-    return 'cb-badge cb-badge-orange'
-  }
-  if (source === 'Flipkart') {
-    return 'cb-badge cb-badge-blue'
-  }
-  if (source === 'CJ') {
-    return 'cb-badge cb-badge-green'
-  }
-  return 'cb-badge cb-badge-red'
-}
-
-const getLowestPriceBadge = (product: ProductCardItem): { label: string; className: string } | null => {
-  if (product.originalPrice === null) {
-    return null
-  }
-
-  if (product.price <= product.originalPrice * 0.75) {
-    return {
-      label: 'Lowest in 90 Days',
-      className: 'cb-badge border-[#10B981] bg-[#10B981] text-white',
-    }
-  }
-
-  if (product.price <= product.originalPrice * 0.85) {
-    return {
-      label: 'Near Lowest Price',
-      className: 'cb-badge cb-badge-green',
-    }
-  }
-
-  return null
-}
-
 export function ProductCard({ product, variant = 'grid', personalScore }: ProductCardProps) {
   const router = useRouter()
   const { formatPrice } = useGlobal()
   const [imgError, setImgError] = useState<boolean>(false)
+  const [isSaved, setIsSaved] = useState(false)
 
   const source = useMemo(() => resolveSource(product), [product])
   const reviewCount = product.reviewCount ?? product.reviews ?? 0
   const roundedRating = useMemo<number>(() => Math.round(product.rating), [product.rating])
   const reviewCountLabel = useMemo<string>(() => formatCompactNumber(reviewCount), [reviewCount])
-  const lowestBadge = useMemo(() => getLowestPriceBadge(product), [product])
   const isList = variant === 'list'
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(WISHLIST_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved) as string[]
+        if (Array.isArray(parsed)) {
+          setIsSaved(parsed.includes(String(product.id)))
+        }
+      }
+    } catch (error) {
+      console.error('Failed to read wishlist from localStorage:', error)
+    }
+  }, [product.id])
+
+  const toggleWishlist = useCallback((e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    try {
+      const saved = localStorage.getItem(WISHLIST_KEY)
+      let parsed: string[] = saved ? JSON.parse(saved) : []
+      if (!Array.isArray(parsed)) parsed = []
+
+      const productId = String(product.id)
+      if (parsed.includes(productId)) {
+        parsed = parsed.filter(item => item !== productId)
+        setIsSaved(false)
+      } else {
+        parsed.push(productId)
+        setIsSaved(true)
+      }
+      localStorage.setItem(WISHLIST_KEY, JSON.stringify(parsed))
+    } catch (error) {
+      console.error('Failed to update wishlist in localStorage:', error)
+    }
+  }, [product.id])
+
   const handleCardClick = useCallback((): void => {
-    router.push(toDealPath(product.id, product.affiliatePlatform))
-  }, [product.affiliatePlatform, product.id, router])
+    router.push(toProductPath(product.id))
+  }, [product.id, router])
 
   const handleDealClick = useCallback(
-    (event: MouseEvent<HTMLButtonElement>): void => {
+    (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>): void => {
       event.stopPropagation()
-      router.push(toDealPath(product.id, product.affiliatePlatform))
+      // Already handled by link href but for consistency
     },
-    [product.affiliatePlatform, product.id, router],
-  )
-
-  const handleQuickView = useCallback(
-    (event: MouseEvent<HTMLButtonElement>): void => {
-      event.stopPropagation()
-      router.push(toProductPath(product.id))
-    },
-    [product.id, router],
-  )
-
-  const handleShareClick = useCallback(
-    (event: MouseEvent<HTMLButtonElement>): void => {
-      event.stopPropagation()
-      const shareText = `${product.name} on CloudBasket`
-      const shareUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText} https://cloudbasket.in${toDealPath(product.id, product.affiliatePlatform)}`)}`
-      window.open(shareUrl, '_blank', 'noopener,noreferrer')
-    },
-    [product.affiliatePlatform, product.id, product.name],
+    [],
   )
 
   const handleImageError = useCallback((): void => {
     setImgError(true)
   }, [])
 
+  const discountPercent = product.discount ?? 0
+
   return (
     <article
-      className={`cb-card group cursor-pointer overflow-hidden ${
-        isList ? 'flex flex-row' : 'flex h-full flex-col'
-      } transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg`}
+      className={`group relative bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl dark:hover:shadow-black/60 transition-all duration-500 motion-reduce:transition-none flex ${
+        isList ? 'flex-row min-h-[220px]' : 'flex-col h-full min-h-[440px]'
+      }`}
       onClick={handleCardClick}
     >
-      <div className={`product-card-img relative flex-shrink-0 ${isList ? 'h-[200px] w-[220px]' : 'h-[200px] w-full'}`}>
+      <div className={`relative flex-shrink-0 bg-zinc-50 dark:bg-zinc-800 overflow-hidden ${
+        isList ? 'h-full w-[240px]' : 'h-[240px] w-full'
+      }`}>
         {imgError ? (
-          <div className="flex h-full w-full items-center justify-center bg-[var(--cb-surface-2)] text-xs text-[var(--cb-text-muted)]">
+          <div className="flex h-full w-full items-center justify-center text-xs text-zinc-400 font-bold uppercase tracking-widest bg-zinc-100 dark:bg-zinc-800">
             No Image
           </div>
         ) : (
@@ -164,112 +151,128 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover transition-transform duration-200 group-hover:scale-105"
-            sizes={isList ? '220px' : '(max-width: 768px) 100vw, (max-width: 1280px) 30vw, 22vw'}
+            className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110 motion-reduce:transform-none"
+            sizes={isList ? '240px' : '(max-width: 768px) 100vw, (max-width: 1280px) 30vw, 22vw'}
             onError={handleImageError}
           />
         )}
 
-        <div className="absolute start-2 top-2 flex flex-col gap-1">
-          {product.isTrending ? (
-            <span className="cb-badge cb-badge-orange gap-1">
-              <Zap size={10} />
+        <div className="absolute top-3 left-3 flex flex-col gap-2">
+          <span className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-zinc-900 dark:text-white px-2.5 py-1.5 rounded-lg shadow-sm border border-zinc-100 dark:border-zinc-800">
+            {source}
+          </span>
+          {discountPercent > 15 && (
+            <span className="bg-green-500 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg shadow-lg animate-pulse motion-reduce:animate-none">
+              Best Price
+            </span>
+          )}
+          {product.isTrending && (
+            <span className="bg-orange-500 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg shadow-lg">
               Trending
             </span>
-          ) : null}
-          {product.discount !== null && product.discount > 0 ? (
-            <span className="cb-badge cb-badge-green gap-1">
-              <TrendingDown size={10} />
-              -{product.discount}%
-            </span>
-          ) : null}
+          )}
         </div>
 
-        {lowestBadge ? (
-          <div className="absolute right-2 top-2">
-            <span className={lowestBadge.className}>{lowestBadge.label}</span>
-          </div>
-        ) : null}
-
-        {typeof personalScore === 'number' ? (
-          <div className="absolute bottom-2 left-2">
-            {personalScore >= 0.85 ? (
-              <span className="cb-badge bg-[#8B5CF6] text-[10px] text-white">Perfect Match</span>
-            ) : personalScore >= 0.7 ? (
-              <span className="cb-badge cb-badge-green text-[10px]">✓ Great Match</span>
-            ) : null}
-          </div>
-        ) : null}
-
-        <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-          <button
-            type="button"
-            onClick={handleQuickView}
-            className="rounded-md bg-white px-3 py-1 text-xs font-bold text-[#0F172A]"
-          >
-            Quick View
-          </button>
-        </div>
-
-        <button
-          type="button"
-          onClick={handleShareClick}
-          className="absolute bottom-2 end-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-          aria-label={`Share ${product.name} on WhatsApp`}
+        <button 
+          onClick={toggleWishlist}
+          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 z-10 ${
+            isSaved 
+              ? 'bg-red-500 text-white' 
+              : 'bg-white/80 dark:bg-zinc-900/80 text-zinc-400 hover:text-red-500'
+          }`}
+          aria-label={isSaved ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <MessageCircle size={14} />
+          <Heart size={16} fill={isSaved ? 'currentColor' : 'none'} />
         </button>
+
+        {discountPercent > 0 && (
+          <div className="absolute bottom-3 right-3 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-lg shadow-lg">
+            -{discountPercent}%
+          </div>
+        )}
+        
+        {typeof personalScore === 'number' && personalScore >= 0.7 && (
+          <div className="absolute bottom-3 left-3">
+            <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg shadow-md backdrop-blur-md ${
+              personalScore >= 0.85 ? 'bg-indigo-600 text-white' : 'bg-green-100 text-green-700 border border-green-200'
+            }`}>
+              {personalScore >= 0.85 ? 'Perfect Match' : 'Great Match'}
+            </span>
+          </div>
+        )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 p-4">
-        <span className={`${sourceBadgeClass(source)} w-fit`}>{source}</span>
-
-        <p className="font-mono-cb text-[10px] uppercase tracking-widest text-[var(--cb-text-muted)]">{product.brand}</p>
-
-        <h3 className="line-clamp-2 text-[13px] font-bold leading-snug text-[var(--cb-text-primary)]">{product.name}</h3>
-
-        <div className="flex items-center gap-1">
-          {STAR_INDICES.map((star) => (
-            <Star
-              key={`${product.id}-${star}`}
-              size={12}
-              className={star <= roundedRating ? 'fill-[#F5C842] text-[#F5C842]' : 'text-[var(--cb-text-muted)]'}
-            />
-          ))}
-          <span className="ms-1 font-mono-cb text-[11px] text-[var(--cb-text-muted)]">{product.rating.toFixed(1)}</span>
-          <span className="font-mono-cb text-[11px] text-[var(--cb-text-muted)]">({reviewCountLabel})</span>
+      <div className="p-4 flex flex-col flex-grow space-y-3">
+        <div>
+          <h3 className="text-sm font-black text-zinc-900 dark:text-white line-clamp-2 min-h-[2.5rem] group-hover:text-skyline-primary transition-colors duration-300">
+            {product.name}
+          </h3>
+          <p className="text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">
+            {product.brand}
+          </p>
         </div>
 
-        <div className="mt-1 flex items-end gap-2">
-          <span className="price-current">{formatPrice(product.price)}</span>
-          {product.originalPrice !== null ? <span className="price-original">{formatPrice(product.originalPrice)}</span> : null}
-          {product.discount !== null && product.discount > 0 ? (
-            <span className="price-savings">SAVE {product.discount}%</span>
-          ) : null}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            {STAR_INDICES.map((star) => (
+              <Star
+                key={`${product.id}-${star}`}
+                size={12}
+                className={star <= roundedRating ? 'fill-yellow-500 text-yellow-500' : 'text-zinc-200 dark:text-zinc-700'}
+              />
+            ))}
+          </div>
+          <span className="text-[10px] text-zinc-400 font-medium">({reviewCountLabel})</span>
         </div>
-        <div className="flex min-h-[20px] flex-wrap items-center gap-2">
-          {product.price >= 5000 ? (
-            <span className="text-[10px] text-[#10B981]">
-              EMI from Rs{Math.ceil(product.price / 12).toLocaleString('en-IN')}/mo
+
+        <div className="mt-auto pt-2">
+          <div className="flex items-baseline gap-2">
+            <span className="text-lg font-black text-skyline-primary">
+              {formatPrice(product.price)}
             </span>
-          ) : null}
-          {product.affiliatePlatform === 'amazon' || product.affiliatePlatform === 'flipkart' ? (
-            <span className="cb-badge text-[10px]">COD</span>
-          ) : null}
+            {product.originalPrice && (
+              <span className="text-xs text-zinc-400 line-through font-bold">
+                {formatPrice(product.originalPrice)}
+              </span>
+            )}
+          </div>
+          <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-tighter mt-0.5">
+            via {source}
+          </p>
         </div>
 
-        <button
-          type="button"
-          className="cb-btn-primary mt-auto w-full justify-center gap-2"
-          onClick={handleDealClick}
-          aria-label={`View deal for ${product.name}`}
-        >
-          View Deal
-          <ExternalLink size={14} />
-        </button>
+        <div className="pt-2 space-y-3">
+          <Link
+            href={toDealPath(product.id, product.affiliatePlatform)}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="w-full flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-skyline-primary rounded-xl py-3.5 transition-all active:scale-95 shadow-lg shadow-skyline-primary/20 hover:opacity-90 motion-reduce:transition-none"
+          >
+            View Deal <ExternalLink size={14} />
+          </Link>
+          
+          <div className="flex items-center justify-between">
+            <Link
+              href={`/compare?product=${product.id}`}
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-skyline-primary hover:underline"
+            >
+              <RefreshCw size={10} /> Compare Prices
+            </Link>
+            <Link
+              href={toProductPath(product.id)}
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-zinc-400 hover:text-skyline-primary transition-colors"
+            >
+              Specs <ChevronRight size={12} />
+            </Link>
+          </div>
+        </div>
       </div>
     </article>
   )
 }
 
 export default ProductCard
+

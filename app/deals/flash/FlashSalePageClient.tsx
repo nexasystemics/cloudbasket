@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, ExternalLink } from 'lucide-react'
@@ -29,11 +29,15 @@ const DEALS_DATA: readonly DealItem[] = [
   { id: 'deal-8', title: 'Xiaomi Redmi Note 13 Pro 5G', subtitle: '256GB · 200MP · 67W charge', discount: 17, originalPrice: 28999, dealPrice: 23999, platform: 'Flipkart', image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400&q=80', badge: 'Hot', productId: 'mob-004' },
 ]
 
-function getSecondsUntilMidnight(): number {
+function getSecondsUntilMidnightIST(): number {
   const now = new Date()
-  const midnight = new Date()
-  midnight.setHours(24, 0, 0, 0)
-  return Math.floor((midnight.getTime() - now.getTime()) / 1000)
+  const utcNow = now.getTime() + now.getTimezoneOffset() * 60000
+  const istNow = new Date(utcNow + 3600000 * 5.5)
+  
+  const istMidnight = new Date(istNow)
+  istMidnight.setHours(24, 0, 0, 0)
+  
+  return Math.floor((istMidnight.getTime() - istNow.getTime()) / 1000)
 }
 
 function formatTime(seconds: number): string {
@@ -51,67 +55,91 @@ const BADGE_STYLES: Record<DealItem['badge'], string> = {
 }
 
 export default function FlashSalePageClient() {
-  const [timeLeft, setTimeLeft] = useState(getSecondsUntilMidnight())
+  const [timeLeft, setTimeLeft] = useState<number | null>(null)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   useEffect(() => {
+    setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    setTimeLeft(getSecondsUntilMidnightIST())
+
     const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev <= 1 ? getSecondsUntilMidnight() : prev - 1))
+      setTimeLeft(getSecondsUntilMidnightIST())
     }, 1000)
     return () => clearInterval(timer)
   }, [])
 
+  const displayTime = useMemo(() => {
+    if (timeLeft === null) return '00:00:00'
+    return formatTime(timeLeft)
+  }, [timeLeft])
+
   return (
-    <main className="min-h-screen bg-[var(--cb-bg)]">
-      <section className="bg-gradient-to-r from-rose-600 to-orange-500 py-12">
-        <div className="mx-auto max-w-6xl px-6 text-center text-white">
+    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+      <section className="bg-gradient-to-r from-rose-600 to-orange-500 py-12 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+        <div className="mx-auto max-w-6xl px-6 text-center text-white relative z-10">
           <div className="mb-3 flex items-center justify-center gap-2">
-            <Zap size={28} className="text-yellow-300" />
-            <h1 className="text-4xl font-black tracking-tighter">Flash Sales</h1>
+            <Zap size={32} className="text-yellow-300 fill-yellow-300 animate-pulse motion-reduce:animate-none" />
+            <h1 className="text-5xl font-black tracking-tighter uppercase italic">Flash Sales</h1>
           </div>
-          <p className="mb-6 text-rose-100">Limited time. Maximum savings. Move fast.</p>
-          <div className="inline-flex items-center gap-3 rounded-2xl bg-black/30 px-6 py-3">
-            <Clock size={20} className="text-yellow-300" />
-            <span className="text-sm font-semibold text-rose-100">Resets in</span>
-            <span className="tabular-nums text-3xl font-black tracking-widest text-white">{formatTime(timeLeft)}</span>
+          <p className="mb-8 text-rose-100 font-bold uppercase tracking-widest text-sm">Limited time. Maximum savings. Verified redirects.</p>
+          
+          <div className="inline-flex flex-col items-center gap-2 rounded-3xl bg-black/30 backdrop-blur-md px-10 py-6 border border-white/10 shadow-2xl">
+            <div className="flex items-center gap-2 text-yellow-300 mb-1">
+              <Clock size={18} />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Next Refresh (IST)</span>
+            </div>
+            {prefersReducedMotion ? (
+              <span className="text-3xl font-black tracking-widest text-white">Ends at Midnight</span>
+            ) : (
+              <span className="tabular-nums text-5xl font-black tracking-tighter text-white drop-shadow-lg">{displayTime}</span>
+            )}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-10">
-        <p className="mb-6 text-sm text-muted">Showing {DEALS_DATA.length} flash deals · Prices update every hour</p>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="mx-auto max-w-6xl px-6 py-12">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">Active Flash Drops</h2>
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Updated hourly</p>
+        </div>
+        
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {DEALS_DATA.map((deal) => (
             <Link
               key={deal.id}
-              href={`/product/${deal.productId}`}
-              className="cb-card group flex flex-col overflow-hidden transition-shadow hover:shadow-lg"
+              href={`/products/${deal.productId}`}
+              className="group relative bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl transition-all duration-500"
             >
-              <div className="relative h-48 bg-[var(--cb-surface-2)]">
+              <div className="relative h-52 overflow-hidden">
                 <Image
                   src={deal.image}
                   alt={deal.title}
                   fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
                 />
-                <span className={`absolute left-2 top-2 rounded-full px-2 py-1 text-xs font-black ${BADGE_STYLES[deal.badge]}`}>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <span className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-lg ${BADGE_STYLES[deal.badge]}`}>
                   {deal.badge}
                 </span>
-                <span className="absolute right-2 top-2 rounded-full bg-rose-600 px-2 py-1 text-xs font-black text-white">
+                <span className="absolute right-3 top-3 bg-white text-zinc-900 px-2.5 py-1 rounded-lg text-[10px] font-black shadow-lg">
                   -{deal.discount}%
                 </span>
               </div>
-              <div className="flex flex-1 flex-col gap-2 p-4">
-                <p className="line-clamp-2 text-sm font-bold leading-snug">{deal.title}</p>
-                <p className="text-xs text-muted">{deal.subtitle}</p>
-                <div className="mt-auto flex items-center justify-between pt-2">
-                  <div>
-                    <p className="text-lg font-black">₹{deal.dealPrice.toLocaleString('en-IN')}</p>
-                    <p className="text-xs text-muted line-through">₹{deal.originalPrice.toLocaleString('en-IN')}</p>
-                  </div>
-                  <span className="rounded bg-[var(--cb-surface-2)] px-2 py-1 text-xs font-semibold">{deal.platform}</span>
+              <div className="flex flex-1 flex-col gap-3 p-5">
+                <div>
+                  <p className="line-clamp-2 text-sm font-black leading-snug group-hover:text-rose-500 transition-colors">{deal.title}</p>
+                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">{deal.subtitle}</p>
                 </div>
-                <button className="cb-btn cb-btn-primary mt-2 flex w-full items-center justify-center gap-2 text-sm">
+                <div className="mt-auto flex items-end justify-between">
+                  <div>
+                    <p className="text-xl font-black text-zinc-900 dark:text-white">₹{deal.dealPrice.toLocaleString('en-IN')}</p>
+                    <p className="text-xs font-bold text-zinc-400 line-through tracking-tighter">₹{deal.originalPrice.toLocaleString('en-IN')}</p>
+                  </div>
+                  <span className="rounded-lg bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 px-2.5 py-1 text-[9px] font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">{deal.platform}</span>
+                </div>
+                <button className="cb-btn-primary h-11 rounded-xl mt-2 flex w-full items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest">
                   <ExternalLink size={14} /> Grab Deal
                 </button>
               </div>
@@ -122,3 +150,4 @@ export default function FlashSalePageClient() {
     </main>
   )
 }
+

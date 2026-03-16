@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, ExternalLink, Zap, Clock, TrendingDown } from 'lucide-react'
 import CategoryGrid from '@/components/CategoryGrid'
 import HeroSection from '@/components/HeroSection'
+import DealsBar from '@/components/DealsBar'
 import HomeDeferredSections from '@/components/HomeDeferredSections'
 import { TelegramCTA } from '@/components/TelegramCTA'
 import { DEALS } from '@/lib/deals-data'
@@ -186,9 +187,10 @@ export default function HomePage() {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_STRUCTURED_DATA) }} />
       <HeroSection />
+      <DealsBar />
+      <CategoryGrid />
       <DealOfTheDay />
       <FlashDealsPreview />
-      <CategoryGrid />
       <section className="mx-auto max-w-7xl px-6 py-4">
         <TelegramCTA />
       </section>

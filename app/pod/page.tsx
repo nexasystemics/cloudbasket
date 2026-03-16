@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Printer, Package, Truck, Shield, ArrowRight } from 'lucide-react'
+import { Printer, Package, Truck, Shield, ArrowRight, MousePointerClick, Paintbrush } from 'lucide-react'
 import { IMAGE_ASSETS } from '@/lib/image-assets'
 
 export const metadata: Metadata = {
@@ -111,6 +111,40 @@ export default function PODPage() {
               Shop Mugs <ArrowRight size={16} />
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 py-12">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-black tracking-tighter text-zinc-900 dark:text-white uppercase italic">How It Works</h2>
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-2">Your designs, printed on demand</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { 
+              icon: MousePointerClick, 
+              title: "Pick Design", 
+              desc: "Select from hundreds of curated CloudBasket originals across 7+ categories." 
+            },
+            { 
+              icon: Paintbrush, 
+              title: "Choose Color", 
+              desc: "Personalize your item with our premium color palette and fit options." 
+            },
+            { 
+              icon: Truck, 
+              title: "Swift Delivery", 
+              desc: "We print fresh and ship within 5-7 days anywhere in India." 
+            }
+          ].map((step, i) => (
+            <article key={i} className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-8 text-center shadow-sm">
+              <div className="w-16 h-16 bg-skyline-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <step.icon size={32} className="text-skyline-primary" />
+              </div>
+              <h3 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tight mb-3">{step.title}</h3>
+              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 leading-relaxed">{step.desc}</p>
+            </article>
+          ))}
         </div>
       </section>
 

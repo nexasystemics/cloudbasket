@@ -1,226 +1,222 @@
 'use client'
 
-import { Suspense, startTransition, useDeferredValue, useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { Suspense, useDeferredValue, useEffect, useMemo, useState, useRef } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp } from 'lucide-react'
+import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp, SearchX } from 'lucide-react'
 import TrackBehavior from '@/components/TrackBehavior'
-import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
-import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
+import { ProductCard } from '@/components/products/ProductCard'
+import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
 
-type Product = (typeof MOCK_PRODUCTS)[number]
-
-type IndexedProduct = {
-  product: Product
-  searchText: string
-  originalPrice: number
-  discount: number
-}
-
-const TRENDING_SEARCHES: readonly string[] = [
-  'iPhone 16',
-  'Samsung S25',
-  'MacBook Air M3',
-  'Nike Air Max',
-  'Sony Headphones',
-  'iPad Pro',
-  'OnePlus 13',
+const POPULAR_SEARCHES = [
+  "iPhone 16", "Samsung Galaxy S25", "Nike shoes", "boAt earphones", 
+  "Levi's jeans", "Atomic Habits", "PS5", "air fryer", "yoga mat", "Titan watch"
 ]
-
-const SEARCH_INDEX: readonly IndexedProduct[] = MOCK_PRODUCTS.map((product) => {
-  const originalPrice = product.originalPrice ?? Math.round(product.price * 1.2)
-  const discount =
-    product.discount ?? Math.max(1, Math.round(((originalPrice - product.price) / originalPrice) * 100))
-
-  return {
-    product,
-    searchText: `${product.name} ${product.brand} ${product.mainCategory}`.toLowerCase(),
-    originalPrice,
-    discount,
-  }
-})
-
-function getPlatformBadgeClass(source: Product['source']): string {
-  if (source === 'Amazon') {
-    return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
-  }
-  if (source === 'Flipkart') {
-    return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
-  }
-  return 'cb-badge-green'
-}
 
 function SearchPageContent() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const initialQuery = searchParams.get('q') ?? ''
 
   const [query, setQuery] = useState<string>(initialQuery)
   const [sortBy, setSortBy] = useState<string>('relevance')
+  const [showSuggestions, setShowSuggestions] = useState(false)
   const deferredQuery = useDeferredValue(query)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const nextQuery = searchParams.get('q') ?? ''
-    startTransition(() => {
-      setQuery(nextQuery)
-    })
+    setQuery(nextQuery)
   }, [searchParams])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false)
+      }
+    }
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowSuggestions(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleEscape)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [])
+
+  const suggestions = useMemo(() => {
+    if (!query.trim()) return []
+    return POPULAR_SEARCHES.filter(s => 
+      s.toLowerCase().includes(query.toLowerCase())
+    ).slice(0, 5)
+  }, [query])
 
   const results = useMemo(() => {
     const normalized = deferredQuery.trim().toLowerCase()
+    if (!normalized) return CATALOG_PRODUCTS.slice(0, 20)
 
-    const filtered = !normalized
-      ? SEARCH_INDEX.slice(0, 20)
-      : SEARCH_INDEX.filter(({ searchText }) => searchText.includes(normalized))
+    let filtered = CATALOG_PRODUCTS.filter(p => 
+      p.title.toLowerCase().includes(normalized) || 
+      p.brand.toLowerCase().includes(normalized) ||
+      p.category.toLowerCase().includes(normalized)
+    )
 
     if (sortBy === 'price-low') {
-      return [...filtered].sort((a, b) => a.product.price - b.product.price)
+      return [...filtered].sort((a, b) => a.price - b.price)
     }
     if (sortBy === 'price-high') {
-      return [...filtered].sort((a, b) => b.product.price - a.product.price)
+      return [...filtered].sort((a, b) => b.price - a.price)
     }
-    if (sortBy === 'rating') {
-      return [...filtered].sort((a, b) => b.product.rating - a.product.rating)
+    if (sortBy === 'discount') {
+      return [...filtered].sort((a, b) => {
+        const dA = ((a.mrp - a.price) / a.mrp)
+        const dB = ((b.mrp - b.price) / b.mrp)
+        return dB - dA
+      })
     }
 
     return filtered
   }, [deferredQuery, sortBy])
 
+  const handleSuggestionClick = (s: string) => {
+    setQuery(s)
+    setShowSuggestions(false)
+    router.push(`/search?q=${encodeURIComponent(s)}`)
+  }
+
   return (
-    <main className="bg-[var(--cb-bg)]">
+    <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
       <TrackBehavior searchTerm={deferredQuery.trim() || undefined} />
-      <section className="bg-[var(--cb-surface-2)] py-12">
-        <div className="mx-auto max-w-4xl px-6">
-          <h1 className="mb-6 text-center text-3xl font-black tracking-tighter">
-            {query ? `Results for "${query}"` : 'Search CloudBasket'}
+      
+      <section className="bg-white dark:bg-zinc-900 border-b border-zinc-100 dark:border-zinc-800 py-12">
+        <div className="mx-auto max-w-3xl px-6" ref={containerRef}>
+          <h1 className="mb-8 text-center text-4xl font-black tracking-tighter text-zinc-900 dark:text-white uppercase italic">
+            Search Deals
           </h1>
 
-          <div className="relative">
-            <Search size={20} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
-            <input
-              className="cb-input w-full py-4 pl-12 pr-12 text-base"
-              value={query}
-              onChange={(event) => {
-                const nextQuery = event.target.value
-                startTransition(() => {
-                  setQuery(nextQuery)
-                })
-              }}
-              placeholder="Search products, brands, categories..."
-            />
-            {query ? (
-              <button
-                type="button"
-                onClick={() => {
-                  startTransition(() => {
-                    setQuery('')
-                  })
+          <div className="relative group">
+            <div className="relative flex items-center p-1.5 bg-zinc-50 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 ring-4 ring-skyline-primary/5 focus-within:ring-skyline-primary/20 transition-all duration-300">
+              <Search className="absolute left-5 text-zinc-400" size={20} />
+              <input
+                className="w-full bg-transparent pl-12 pr-12 py-4 text-zinc-900 dark:text-white font-medium outline-none placeholder:text-zinc-400 text-lg"
+                value={query}
+                onFocus={() => setShowSuggestions(true)}
+                onChange={(e) => {
+                  setQuery(e.target.value)
+                  setShowSuggestions(true)
                 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
-                aria-label="Clear search"
-              >
-                <X size={18} />
-              </button>
-            ) : null}
+                placeholder="What are you looking for today?"
+              />
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => { setQuery(''); setShowSuggestions(false); }}
+                  className="absolute right-5 p-1 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-400"
+                >
+                  <X size={20} />
+                </button>
+              )}
+            </div>
+
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="p-2">
+                  {suggestions.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => handleSuggestionClick(s)}
+                      className="w-full text-left px-4 py-3 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800 flex items-center gap-3 transition-colors"
+                    >
+                      <TrendingUp size={14} className="text-skyline-primary" />
+                      <span className="font-bold text-zinc-700 dark:text-zinc-200">{s}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
-          {!query ? (
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-              <p className="mr-2 inline-flex items-center gap-1 text-xs text-[var(--cb-text-muted)]">
-                <TrendingUp size={12} /> Trending:
-              </p>
-              {TRENDING_SEARCHES.map((term) => (
-                <button
-                  key={term}
-                  type="button"
-                  className="cb-badge cb-badge-blue cursor-pointer"
-                  onClick={() => {
-                    startTransition(() => {
-                      setQuery(term)
-                    })
-                  }}
-                >
-                  {term}
-                </button>
-              ))}
-            </div>
-          ) : null}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            <p className="mr-2 text-[10px] font-black uppercase tracking-widest text-zinc-400">Popular:</p>
+            {POPULAR_SEARCHES.slice(0, 4).map((term) => (
+              <button
+                key={term}
+                onClick={() => handleSuggestionClick(term)}
+                className="px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[10px] font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-400 hover:bg-skyline-primary hover:text-white transition-all"
+              >
+                {term}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-8">
-        <div className="mb-6 flex items-center justify-between gap-3">
-          <p className="text-sm text-[var(--cb-text-muted)]">
-            {query ? `${results.length} results for '${query}'` : 'Showing popular products'}
-          </p>
-          <div className="flex items-center gap-2">
-            <SlidersHorizontal size={14} className="text-[var(--cb-text-muted)]" />
+      <section className="mx-auto max-w-7xl px-6 py-10">
+        <div className="mb-8 flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h2 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">
+              {query ? `Results for "${query}"` : 'Top Trending Deals'}
+            </h2>
+            <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">
+              {results.length} verified price points found
+            </p>
+          </div>
+          
+          <div className="flex items-center gap-3 bg-white dark:bg-zinc-900 px-4 py-2 rounded-xl border border-zinc-100 dark:border-zinc-800">
+            <SlidersHorizontal size={14} className="text-zinc-400" />
             <select
-              className="cb-input w-auto py-1.5 text-xs"
+              className="bg-transparent text-[10px] font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-300 outline-none cursor-pointer"
               value={sortBy}
-              onChange={(event) => {
-                const nextSort = event.target.value
-                startTransition(() => {
-                  setSortBy(nextSort)
-                })
-              }}
+              onChange={(e) => setSortBy(e.target.value)}
             >
               <option value="relevance">Relevance</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="rating">Top Rated</option>
+              <option value="price-low">Price Low-High</option>
+              <option value="price-high">Price High-Low</option>
+              <option value="discount">Highest Discount</option>
             </select>
           </div>
         </div>
 
         {results.length === 0 ? (
-          <div className="cb-card mx-auto max-w-md p-16 text-center">
-            <Search size={48} className="mx-auto mb-4 text-[var(--cb-text-muted)]" />
-            <h2 className="text-xl font-black">No results found</h2>
-            <p className="mt-2 text-[var(--cb-text-muted)]">Try different keywords or browse categories</p>
-            <Link href="/products" className="cb-btn cb-btn-primary mt-4">
-              Browse All Products
+          <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-20 text-center shadow-xl">
+            <div className="w-20 h-20 bg-zinc-50 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6">
+              <SearchX size={40} className="text-zinc-300 dark:text-zinc-600" />
+            </div>
+            <h2 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">No results matched</h2>
+            <p className="mt-3 text-zinc-500 dark:text-zinc-400 font-medium">We couldn't find anything for "{query}". Try one of these:</p>
+            
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              {["iPhone", "Shoes", "Laptops"].map(chip => (
+                <button 
+                  key={chip}
+                  onClick={() => handleSuggestionClick(chip)}
+                  className="px-6 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 text-[11px] font-black uppercase tracking-widest text-skyline-primary hover:bg-skyline-primary hover:text-white transition-all shadow-sm"
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
+            
+            <Link href="/products" className="cb-btn-ghost mt-10 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em]">
+              Browse Full Catalog <ExternalLink size={14} />
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {results.map(({ product, originalPrice, discount }) => {
-              return (
-                <article key={product.id} className="cb-card group flex flex-col overflow-hidden">
-                  <div className="relative h-44">
-                    <Image
-                      fill
-                      className="object-cover"
-                      src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)}
-                      alt={product.name}
-                      sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
-                    />
-                    <div className="absolute left-2 top-2 flex flex-col gap-1">
-                      {discount ? <span className="cb-badge cb-badge-green">-{discount}%</span> : null}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-1 flex-col gap-1 p-3">
-                    <span className={`cb-badge w-fit text-[10px] ${getPlatformBadgeClass(product.source)}`}>
-                      {product.source === 'CJ' ? 'CJ Global' : product.source}
-                    </span>
-                    <p className="text-[10px] font-black uppercase text-[var(--cb-text-muted)]">{product.brand}</p>
-                    <h3 className="line-clamp-2 text-xs font-bold">{product.name}</h3>
-                    <p className="text-xs text-[#F5C842]">★★★★☆</p>
-
-                    <div className="mt-1 flex items-baseline gap-2">
-                      <p className="price-current">₹{product.price.toLocaleString('en-IN')}</p>
-                      <p className="price-original text-xs">₹{originalPrice.toLocaleString('en-IN')}</p>
-                    </div>
-                    <p className="price-savings text-xs">Save {discount}%</p>
-
-                    <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-auto w-full py-2 text-xs">
-                      View Deal <ExternalLink size={12} />
-                    </Link>
-                  </div>
-                </article>
-              )
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {results.map((product) => (
+              <ProductCard 
+                key={product.id} 
+                product={{
+                  ...product,
+                  name: product.title,
+                  rating: 4.5,
+                  discount: Math.round(((product.mrp - product.price) / product.mrp) * 100)
+                }} 
+              />
+            ))}
           </div>
         )}
       </section>
@@ -232,7 +228,9 @@ export default function SearchPageClient() {
   return (
     <Suspense
       fallback={
-        <main className="bg-[var(--cb-bg)] px-6 py-16 text-center text-sm text-[var(--cb-text-muted)]">Loading search...</main>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-skyline-primary border-t-transparent"></div>
+        </div>
       }
     >
       <SearchPageContent />

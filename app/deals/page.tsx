@@ -1,18 +1,16 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, TrendingDown, ExternalLink, Tag } from 'lucide-react'
 import { TelegramCTA } from '@/components/TelegramCTA'
 
-export const metadata: Metadata = {
-  title: "Today's Best Deals — Up to 75% Off",
-  description:
-    'Discover CloudBasket deals updated throughout the day, with price drops, limited offers, and verified savings across top stores, brands, and categories.',
-}
 type DealItem = {
   id: string
   title: string
   subtitle: string
+  category: string
   discount: number
   originalPrice: number
   dealPrice: number
@@ -28,9 +26,10 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-1',
     title: 'Samsung Galaxy S25 Ultra',
     subtitle: '256GB • Snapdragon flagship • 5G',
+    category: 'Mobiles',
     discount: 33,
-    originalPrice: 44999,
-    dealPrice: 29999,
+    originalPrice: 134999,
+    dealPrice: 89999,
     platform: 'Amazon',
     image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80',
     badge: 'Flash',
@@ -41,6 +40,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-2',
     title: 'MacBook Air M3',
     subtitle: '13-inch • 16GB RAM • 512GB SSD',
+    category: 'Laptops',
     discount: 22,
     originalPrice: 114990,
     dealPrice: 89990,
@@ -54,6 +54,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-3',
     title: 'Sony WH-1000XM5',
     subtitle: 'Industry-leading ANC wireless headphones',
+    category: 'Electronics',
     discount: 43,
     originalPrice: 34990,
     dealPrice: 19999,
@@ -67,6 +68,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-4',
     title: 'Nike Air Max 270',
     subtitle: 'Men running shoes • multiple colorways',
+    category: 'Fashion',
     discount: 50,
     originalPrice: 9995,
     dealPrice: 4999,
@@ -80,6 +82,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-5',
     title: 'Instant Pot Duo',
     subtitle: '7-in-1 electric pressure cooker',
+    category: 'Home',
     discount: 45,
     originalPrice: 10995,
     dealPrice: 5999,
@@ -93,6 +96,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-6',
     title: 'iPad Pro 11"',
     subtitle: 'M4 chip • Liquid Retina display',
+    category: 'Electronics',
     discount: 22,
     originalPrice: 89900,
     dealPrice: 69900,
@@ -106,6 +110,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-7',
     title: "Levi's 511 Jeans",
     subtitle: 'Slim fit stretch denim for daily wear',
+    category: 'Fashion',
     discount: 55,
     originalPrice: 3999,
     dealPrice: 1799,
@@ -119,6 +124,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-8',
     title: 'Dyson V15 Vacuum',
     subtitle: 'Cordless vacuum with laser detection',
+    category: 'Home',
     discount: 36,
     originalPrice: 54900,
     dealPrice: 34900,
@@ -132,6 +138,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-9',
     title: 'OnePlus 13',
     subtitle: 'Flagship killer • 120Hz AMOLED',
+    category: 'Mobiles',
     discount: 27,
     originalPrice: 54999,
     dealPrice: 39999,
@@ -145,6 +152,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-10',
     title: 'Boat Rockerz 450',
     subtitle: 'Bluetooth on-ear headphones',
+    category: 'Electronics',
     discount: 75,
     originalPrice: 3990,
     dealPrice: 999,
@@ -158,6 +166,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-11',
     title: 'Instant Pot Air Fryer',
     subtitle: 'Crisp technology • family size basket',
+    category: 'Home',
     discount: 50,
     originalPrice: 8999,
     dealPrice: 4499,
@@ -171,6 +180,7 @@ const DEALS_DATA: readonly DealItem[] = [
     id: 'deal-12',
     title: 'Canon EOS R50',
     subtitle: 'Mirrorless camera with RF-S lens kit',
+    category: 'Electronics',
     discount: 23,
     originalPrice: 64999,
     dealPrice: 49999,
@@ -182,121 +192,124 @@ const DEALS_DATA: readonly DealItem[] = [
   },
 ]
 
+const CATEGORIES = ['All Deals', 'Mobiles', 'Laptops', 'Fashion', 'Home', 'Electronics']
+
 function getBadgeClass(badge: DealItem['badge']): string {
-  if (badge === 'Flash') {
-    return 'cb-badge-orange'
-  }
-  if (badge === 'Hot') {
-    return 'cb-badge bg-red-500 text-white border-red-500'
-  }
-  if (badge === 'Exclusive') {
-    return 'cb-badge border-purple-500 bg-purple-500 text-white'
-  }
-  return 'cb-badge-green'
+  if (badge === 'Flash') return 'bg-orange-500 text-white border-orange-500'
+  if (badge === 'Hot') return 'bg-red-500 text-white border-red-500'
+  if (badge === 'Exclusive') return 'bg-purple-500 text-white border-purple-500'
+  return 'bg-green-500 text-white border-green-500'
 }
 
 export default function DealsPage() {
-  return (
-    <main className="bg-[var(--cb-bg)]">
-      <section className="bg-gradient-to-r from-[#039BE5] to-[#0277BD] py-16">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <span className="cb-badge mb-4 border-white/30 bg-white/20 text-white">
-            <Zap size={14} /> Live Deals
-          </span>
-          <h1 className="text-5xl font-black tracking-tighter text-white">Today's Best Deals</h1>
-          <p className="mt-3 text-lg text-white/80">Curated from 50+ stores. Updated every hour.</p>
+  const [activeCategory, setActiveCategory] = useState('All Deals')
 
-          <div className="mt-8 flex justify-center gap-12 text-white">
-            <div>
-              <p className="text-3xl font-black">12</p>
-              <p className="text-xs uppercase tracking-widest text-white/70">Active Deals</p>
+  const filteredDeals = useMemo(() => {
+    if (activeCategory === 'All Deals') return DEALS_DATA
+    return DEALS_DATA.filter(deal => deal.category === activeCategory)
+  }, [activeCategory])
+
+  return (
+    <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
+      <section className="bg-gradient-to-r from-skyline-primary to-skyline-primary-dark py-16">
+        <div className="mx-auto max-w-7xl px-6 text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-1.5 text-xs font-black text-white uppercase tracking-widest mb-4">
+            <Zap size={14} className="fill-current" /> Live Deals
+          </span>
+          <h1 className="text-5xl font-black tracking-tighter text-white sm:text-6xl">Today's Best Deals</h1>
+          <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto">Compare price drops from 50+ stores. Verified savings updated in real-time.</p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 -mt-8">
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-100 dark:border-zinc-800 p-6">
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+            <div className="flex items-center overflow-x-auto no-scrollbar gap-2 pb-2 -mx-2 px-2 scroll-smooth">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`flex-shrink-0 px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${
+                    activeCategory === cat 
+                      ? 'bg-skyline-primary text-white shadow-lg shadow-skyline-primary/20' 
+                      : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
-            <div>
-              <p className="text-3xl font-black">50+</p>
-              <p className="text-xs uppercase tracking-widest text-white/70">Stores</p>
-            </div>
-            <div>
-              <p className="text-3xl font-black">₹0</p>
-              <p className="text-xs uppercase tracking-widest text-white/70">Platform fee</p>
-            </div>
+            <Link href="/deals/flash" className="cb-btn-orange rounded-full px-6 py-2.5 text-xs font-black flex items-center gap-2">
+              <Zap size={16} className="fill-current" /> Flash Sales
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredDeals.map((deal) => (
+              <article key={deal.id} className="group relative flex flex-col bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl transition-all duration-500">
+                <div className="relative h-52 overflow-hidden">
+                  <Image
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    src={deal.image}
+                    alt={deal.title}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+
+                  <span className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border shadow-lg ${getBadgeClass(deal.badge)}`}>
+                    {deal.badge}
+                  </span>
+                  <p className="absolute right-3 top-3 text-2xl font-black text-white drop-shadow-md">-{deal.discount}%</p>
+                  <span className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md text-[9px] font-black text-zinc-900 dark:text-white uppercase tracking-widest shadow-sm">
+                    <Tag size={10} /> {deal.platform}
+                  </span>
+                </div>
+
+                <div className="flex flex-1 flex-col gap-3 p-5">
+                  <div>
+                    <h3 className="line-clamp-2 text-sm font-black leading-snug group-hover:text-skyline-primary transition-colors">{deal.title}</h3>
+                    <p className="line-clamp-1 text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">{deal.subtitle}</p>
+                  </div>
+
+                  <div className="mt-auto">
+                    <div className="flex items-baseline gap-2">
+                      <p className="text-xl font-black text-zinc-900 dark:text-white">₹{deal.dealPrice.toLocaleString('en-IN')}</p>
+                      <p className="text-xs font-bold text-zinc-400 line-through">₹{deal.originalPrice.toLocaleString('en-IN')}</p>
+                    </div>
+                    <p className="text-[10px] font-black text-green-500 uppercase tracking-tight mt-1">
+                      Save ₹{(deal.originalPrice - deal.dealPrice).toLocaleString('en-IN')} today
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-zinc-50 dark:border-zinc-800">
+                    <div className="flex items-center gap-1.5">
+                      <Clock size={12} className="text-orange-500" />
+                      <p className="text-[10px] font-black text-orange-500 uppercase tracking-tighter">Ends in {deal.endsIn}</p>
+                    </div>
+                    <Link href={`/go/amazon-${deal.productId}`} className="cb-btn-primary h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                      Grab Deal <ExternalLink size={14} />
+                    </Link>
+                  </div>
+                </div>
+
+                <span className="absolute bottom-2 right-2 text-[9px] font-bold text-zinc-300 dark:text-zinc-700 pointer-events-none">
+                  <TrendingDown size={10} className="inline mr-1" /> VERIFIED REDIRECT
+                </span>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-6">
+      <section className="mx-auto max-w-7xl px-6 py-12">
         <TelegramCTA />
       </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-4">
-        <div className="ad-slot-leaderboard">Ad Space · Contact us to advertise</div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-10">
-        <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-2xl font-black tracking-tighter">All Deals</h2>
-          <Link href="/deals/flash" className="cb-btn cb-btn-orange gap-2">
-            <Zap size={16} /> Flash Sales
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {DEALS_DATA.map((deal) => (
-            <article key={deal.id} className="cb-card group relative flex flex-col overflow-hidden">
-              <div className="relative h-52">
-                <Image
-                  fill
-                  className="object-cover"
-                  src={deal.image}
-                  alt={deal.title}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
-                <span className={`absolute left-3 top-3 ${getBadgeClass(deal.badge)}`}>{deal.badge}</span>
-                <p className="absolute right-3 top-3 text-2xl font-black text-white">-{deal.discount}%</p>
-                <span className="cb-badge absolute bottom-3 left-3 border-white/30 bg-white/20 text-[10px] text-white">
-                  <Tag size={10} /> {deal.platform}
-                </span>
-              </div>
-
-              <div className="flex flex-1 flex-col gap-2 p-4">
-                <h3 className="line-clamp-2 text-sm font-black leading-snug">{deal.title}</h3>
-                <p className="line-clamp-1 text-xs text-[var(--cb-text-muted)]">{deal.subtitle}</p>
-
-                <div className="mt-1 flex items-baseline gap-2">
-                  <p className="price-current">₹{deal.dealPrice.toLocaleString('en-IN')}</p>
-                  <p className="price-original text-xs">₹{deal.originalPrice.toLocaleString('en-IN')}</p>
-                </div>
-
-                <p className="price-savings text-xs">
-                  You save ₹{(deal.originalPrice - deal.dealPrice).toLocaleString('en-IN')}
-                </p>
-
-                <div className="mt-1 flex items-center gap-1">
-                  <Clock size={12} className="text-[#F97316]" />
-                  <p className="text-xs font-bold text-[#F97316]">Ends in {deal.endsIn}</p>
-                </div>
-
-                <div className="mt-auto pt-3">
-                  <Link href={`/go/amazon-${deal.productId}`} className="cb-btn cb-btn-orange w-full text-sm">
-                    <ExternalLink size={14} /> Grab This Deal
-                  </Link>
-                </div>
-              </div>
-
-              <span className="absolute bottom-2 right-2 text-[10px] text-[var(--cb-text-muted)]">
-                <TrendingDown size={10} className="inline" /> verified
-              </span>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto flex max-w-7xl justify-center px-6 pb-10">
-        <div className="ad-slot-leaderboard">Ad Space · Contact us to advertise</div>
-      </section>
+      
+      <style jsx global>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </main>
   )
 }
-
-

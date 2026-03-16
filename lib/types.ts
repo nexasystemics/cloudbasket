@@ -36,6 +36,7 @@ export interface Product {
   isFeatured: boolean
   isTrending: boolean
   createdAt: string
+  affiliateSource?: string
 }
 
 export interface Deal {

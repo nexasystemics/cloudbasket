@@ -115,7 +115,7 @@ export default function CategoryGrid() {
               <Link 
                 key={category.slug} 
                 href={isEmpty ? '#' : href} 
-                className={`group relative overflow-hidden rounded-2xl border border-zinc-100 bg-white transition-transform duration-200 hover:-translate-y-1 dark:border-zinc-800 dark:bg-zinc-900 motion-reduce:hover:translate-y-0 ${isEmpty ? 'cursor-not-allowed opacity-80' : ''}`}
+                className={`group relative overflow-hidden rounded-2xl border border-zinc-100 bg-white transition-transform duration-200 hover:-translate-y-1 dark:border-zinc-800 dark:bg-zinc-900 motion-reduce:hover:translate-y-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 ${isEmpty ? 'cursor-not-allowed opacity-80' : ''}`}
               >
                 <div className="relative h-32 w-full overflow-hidden">
                   <Image

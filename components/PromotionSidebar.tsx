@@ -42,7 +42,7 @@ export default function PromotionSidebar({ selectedCategory }: PromotionSidebarP
               <div className="flex gap-4">
                 <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0">
                   <Image
-                    src={product.image}
+                    src={product.image || ''}
                     alt={product.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"

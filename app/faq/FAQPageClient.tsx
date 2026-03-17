@@ -133,7 +133,7 @@ export default function FAQPage() {
                   <article key={id} className="cb-card mb-2 cursor-pointer overflow-hidden">
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between p-5 text-left"
+                      className="flex w-full items-center justify-between p-5 text-left focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 rounded-xl"
                       onClick={() => toggleItem(id)}
                     >
                       <p className="text-sm font-bold">{item.q}</p>

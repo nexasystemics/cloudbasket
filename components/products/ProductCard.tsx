@@ -1,3 +1,4 @@
+// DEPRECATED: Use components/ProductCard.tsx instead. Retained for backward compatibility.
 'use client'
 
 import { useCallback, useMemo, useState, useEffect } from 'react'
@@ -13,14 +14,14 @@ type AffiliatePlatform = 'amazon' | 'flipkart' | 'cj' | 'pod' | 'vcm'
 export interface ProductCardItem {
   id: number | string
   name: string
-  image: string
-  brand: string
+  image: string | undefined
+  brand: string | undefined
   price: number
-  originalPrice: number | null
-  discount: number | null
+  originalPrice: number | undefined | null
+  discount: number | undefined | null
   rating: number
-  reviewCount?: number
-  reviews?: number
+  reviewCount?: number | undefined
+  reviews?: number | undefined
   source?: ProductSource
   affiliatePlatform?: AffiliatePlatform
   isTrending?: boolean
@@ -127,7 +128,15 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
 
   return (
     <article
-      className={`group relative flex overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900 ${
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          handleCardClick()
+        }
+      }}
+      className={`group relative flex overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 dark:border-zinc-800 dark:bg-zinc-900 ${
         isList ? 'min-h-[220px] flex-row' : 'h-full min-h-[440px] flex-col'
       }`}
       onClick={handleCardClick}
@@ -139,7 +148,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
           </div>
         ) : (
           <Image
-            src={product.image}
+            src={product.image || ''}
             alt={product.name}
             fill
             className="object-cover transition-transform duration-200 group-hover:scale-105 motion-reduce:transform-none"
@@ -217,7 +226,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
           <Link
             href={`/compare?product=${product.id}`}
             onClick={(event) => event.stopPropagation()}
-            className="mt-1 inline-block text-xs text-zinc-500 underline underline-offset-2 transition-colors hover:text-skyline-primary"
+            className="mt-1 inline-block text-xs text-zinc-500 underline underline-offset-2 transition-colors hover:text-skyline-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
           >
             Compare prices
           </Link>
@@ -229,7 +238,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
             target="_blank"
             rel="noopener noreferrer"
             onClick={(event) => event.stopPropagation()}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-skyline-primary py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-skyline-primary/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-skyline-primary py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-skyline-primary/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
           >
             View Deal
             <ExternalLink size={14} />
@@ -239,7 +248,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
             <Link
               href={toProductPath(product.id)}
               onClick={(event) => event.stopPropagation()}
-              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-zinc-400 transition-colors hover:text-skyline-primary"
+              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-zinc-400 transition-colors hover:text-skyline-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
             >
               Specs <ChevronRight size={12} />
             </Link>

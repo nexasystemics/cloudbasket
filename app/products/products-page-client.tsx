@@ -7,6 +7,8 @@ import { useSearchParams } from 'next/navigation'
 import { SlidersHorizontal, ExternalLink, Grid3X3, List, ChevronLeft, ChevronRight } from 'lucide-react'
 import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { PRODUCTS as CATALOG } from '@/lib/products-data'
+import PriceAlertBanner from '@/components/PriceAlertBanner'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 type Product = (typeof CATALOG)[number]
 type CategoryFilter = 'All' | Product['category']
@@ -242,6 +244,9 @@ export default function ProductsPageClient() {
           </div>
         )}
       </section>
+      <ErrorBoundary>
+        <PriceAlertBanner />
+      </ErrorBoundary>
     </main>
   )
 }

@@ -1,13 +1,15 @@
-export default function CategoriesLoading() {
+// app/categories/loading.tsx
+export default function Loading() {
   return (
-    <div className="animate-pulse bg-zinc-50 dark:bg-zinc-950 min-h-screen py-20">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-10 h-10 w-64 rounded-xl bg-zinc-200 dark:bg-zinc-800" />
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i} className="rounded-2xl bg-zinc-200 dark:bg-zinc-800 h-44" />
-          ))}
-        </div>
+    <div className="mx-auto max-w-7xl px-6 py-20 animate-pulse">
+      <div className="mb-12">
+        <div className="h-10 w-64 bg-zinc-100 dark:bg-zinc-800 rounded mb-2" />
+        <div className="h-5 w-96 bg-zinc-100 dark:bg-zinc-800 rounded" />
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+          <div key={i} className="h-48 rounded-2xl bg-zinc-100 dark:bg-zinc-800" />
+        ))}
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, ExternalLink } from 'lucide-react'
+import AffiliateDisclosureBanner from '@/components/AffiliateDisclosureBanner'
 
 type DealItem = {
   id: string
@@ -82,6 +83,7 @@ export default function FlashSalePageClient() {
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+      <AffiliateDisclosureBanner />
       <section className="bg-gradient-to-r from-rose-600 to-orange-500 py-12 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
         <div className="mx-auto max-w-6xl px-6 text-center text-white relative z-10">

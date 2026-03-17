@@ -1,29 +1,53 @@
+// Estimated: ~160 lines
+// Purpose: Main site footer with navigation sitemap, compliance badges and legal info.
+
+'use client'
+
 import Link from 'next/link'
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle, ArrowUp } from 'lucide-react'
 import FooterComplianceBadges from '@/components/FooterComplianceBadges'
 import { ROUTES, SITE_NAME } from '@/lib/constants'
 
-const discoverLinks = [
-  { label: 'Categories', href: ROUTES.CATEGORIES },
-  { label: 'Compare', href: ROUTES.COMPARE },
-  { label: 'Deals', href: ROUTES.DEALS },
-  { label: 'Blog', href: ROUTES.BLOG },
-  { label: 'POD', href: ROUTES.POD },
-  { label: 'Products', href: ROUTES.PRODUCTS },
-] as const
-
-const companyLinks = [
-  { label: 'About', href: ROUTES.ABOUT },
-  { label: 'Careers', href: '/careers' },
-  { label: 'Contact', href: ROUTES.CONTACT },
-  { label: 'FAQ', href: '/faq' },
-] as const
-
-const legalLinks = [
-  { label: 'Affiliate Disclosure', href: ROUTES.AFFILIATE },
-  { label: 'Privacy Policy', href: ROUTES.PRIVACY },
-  { label: 'Terms', href: ROUTES.TERMS },
-] as const
+const sitemap = [
+  {
+    title: 'Shop',
+    links: [
+      { label: 'Products', href: ROUTES.PRODUCTS },
+      { label: 'Deals', href: ROUTES.DEALS },
+      { label: 'Flash Deals', href: '/deals/flash' },
+      { label: 'Categories', href: ROUTES.CATEGORIES },
+      { label: 'Compare', href: ROUTES.COMPARE },
+      { label: 'Search', href: '/search' },
+    ],
+  },
+  {
+    title: 'POD',
+    links: [
+      { label: 'T-Shirts', href: '/pod/tshirts' },
+      { label: 'Mugs', href: '/pod/mugs' },
+      { label: 'Phone Cases', href: '/pod/phone-cases' },
+    ],
+  },
+  {
+    title: 'Info',
+    links: [
+      { label: 'About', href: ROUTES.ABOUT },
+      { label: 'Blog', href: ROUTES.BLOG },
+      { label: 'FAQ', href: '/faq' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Affiliate', href: '/associates' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Privacy Policy', href: ROUTES.PRIVACY },
+      { label: 'Terms', href: ROUTES.TERMS },
+      { label: 'Cookies', href: '/cookies' },
+      { label: 'Affiliate Disclosure', href: ROUTES.AFFILIATE },
+    ],
+  },
+]
 
 const complianceBadges = [
   {
@@ -59,88 +83,97 @@ const complianceBadges = [
 ] as const
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear()
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
-    <>
-      <footer className="border-t border-[#1E293B] bg-[#09090B] text-white dark:bg-[#020206]">
-        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-12 px-6 py-16 md:grid-cols-5">
-          <div className="md:col-span-2">
-            <div className="grid h-12 w-12 place-items-center rounded-xl bg-blue-600 text-xl font-black text-white">
-              CB
-            </div>
-            <p className="mt-3 text-2xl font-black tracking-tighter text-white">{SITE_NAME}</p>
-            <p className="mt-2 max-w-xs text-sm leading-relaxed text-[#64748B]">
-              Compare Prices. Discover Deals. Shop Smarter.
+    <footer className="border-t border-zinc-800 bg-zinc-950 text-white pt-16 pb-8">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-6">
+          <div className="col-span-2">
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+            >
+              <div className="w-10 h-10 bg-[#039BE5] rounded-xl flex items-center justify-center">
+                <span className="text-white font-black text-sm">CB</span>
+              </div>
+              <span className="text-2xl font-black tracking-tighter text-white">{SITE_NAME}</span>
+            </Link>
+            
+            <p className="mt-4 max-w-xs text-sm font-bold text-zinc-400 leading-relaxed uppercase tracking-tight italic">
+              India&apos;s Smartest Price Aggregator — No checkout, no storage, just the best prices.
             </p>
 
-            <FooterComplianceBadges badges={complianceBadges} />
+            <div className="mt-6">
+              <FooterComplianceBadges badges={complianceBadges} />
+            </div>
 
-            <div className="mt-4 flex items-center gap-2">
+            <div className="mt-6 flex items-center gap-4">
               <a
                 href={`https://wa.me/${process.env.NEXT_PUBLIC_WA_NUMBER ?? ''}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white transition-opacity hover:opacity-90"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
                 aria-label="Chat with CloudBasket on WhatsApp"
               >
-                <MessageCircle size={14} />
+                <MessageCircle size={18} />
               </a>
+              <button
+                onClick={scrollToTop}
+                className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 rounded-lg p-1"
+              >
+                Back to top <ArrowUp size={14} />
+              </button>
             </div>
           </div>
 
-          <div>
-            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-[#334155]">Browse</p>
-            {discoverLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-1 text-sm text-[#64748B] transition-colors hover:text-white"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          <div>
-            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-[#334155]">Company</p>
-            {companyLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-1 text-sm text-[#64748B] transition-colors hover:text-white"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          <div>
-            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-[#334155]">Legal</p>
-            {legalLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-1 text-sm text-[#64748B] transition-colors hover:text-white"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          {sitemap.map((section) => (
+            <div key={section.title}>
+              <p className="mb-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">
+                {section.title}
+              </p>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-xs font-bold text-zinc-400 transition-colors hover:text-skyline-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 rounded-md p-1 -m-1"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <div className="border-t border-[#1E293B] py-6">
-          <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center sm:flex-row sm:text-start">
-            <p className="text-xs text-[#94A3B8]">Created by VERSION STATE {'{VS.IN+}'}</p>
-            <p className="text-xs text-[#94A3B8]">CloudBasket vs.cb.1.0 · March 2026</p>
-            <p className="text-xs text-[#94A3B8]">Powered by NEXQON HOLDINGS</p>
-          </div>
-          <div className="mx-auto mt-3 w-full max-w-7xl px-6 text-center">
-            <p className="text-xs text-[#475569]">© 2026 CloudBasket. All rights reserved.</p>
+        <div className="mt-16 border-t border-zinc-900 pt-8">
+          <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
+            <div className="text-center md:text-left">
+              <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                © {currentYear} {SITE_NAME}. All rights reserved.
+              </p>
+              <p className="mt-1 text-[9px] font-bold text-zinc-700 uppercase tracking-widest">
+                Powered by NEXQON HOLDINGS · VERSION STATE {'{VS.IN+}'}
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-4">
+              <div className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 text-[9px] font-black text-zinc-500 uppercase tracking-[0.15em]">
+                DPDPA 2023 Compliant
+              </div>
+              <div className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 text-[9px] font-black text-zinc-500 uppercase tracking-[0.15em]">
+                GDPR Verified
+              </div>
+            </div>
           </div>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   )
 }
-
-
-

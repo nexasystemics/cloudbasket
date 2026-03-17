@@ -17,16 +17,17 @@ export interface Product {
   name: string
   slug: string
   price: number
-  originalPrice: number | null
-  discount: number | null
-  description: string
+  originalPrice: number | undefined // optional — may not be present in all catalog entries
+  discount: number | undefined // optional — may not be present in all catalog entries
+  description: string | undefined // optional — may not be present in all catalog entries
   mainCategory: string
   subCategory: string
-  image: string
+  image: string | undefined // optional — may not be present in all catalog entries
   images: string[]
-  brand: string
+  brand: string | undefined // optional — may not be present in all catalog entries
   rating: number
-  reviewCount: number
+  ratingValue?: number | undefined // optional — may not be present in all catalog entries
+  reviewCount: number | undefined // optional — may not be present in all catalog entries
   stock: number
   warranty: string
   specs: Record<string, string>
@@ -36,7 +37,8 @@ export interface Product {
   isFeatured: boolean
   isTrending: boolean
   createdAt: string
-  affiliateSource?: string
+  affiliateSource?: string | undefined // optional — may not be present in all catalog entries
+  prices?: { platform: string; price: number; url: string; badge?: string }[] // optional — may not be present in all catalog entries
 }
 
 export interface Deal {

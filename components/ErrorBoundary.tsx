@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 interface ErrorBoundaryProps {
@@ -11,6 +13,10 @@ interface ErrorBoundaryState {
   error: Error | null
 }
 
+/**
+ * Standard Error Boundary for CloudBasket.
+ * Catches runtime errors in child components and displays a fallback UI.
+ */
 export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props)
@@ -23,6 +29,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
 
   componentDidCatch(error: Error, info: React.ErrorInfo): void {
     this.props.onError?.(error, info)
+    console.error('ErrorBoundary caught an error:', error, info)
   }
 
   render(): React.ReactNode {
@@ -31,7 +38,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
         return this.props.fallback
       }
       return (
-        <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-zinc-100 bg-white p-8 text-center dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-zinc-100 bg-white p-8 text-center dark:border-zinc-800 dark:bg-zinc-900 shadow-sm">
           <p className="text-sm font-bold text-zinc-500 dark:text-zinc-400">Something went wrong</p>
           <button
             type="button"

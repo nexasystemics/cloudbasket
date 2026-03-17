@@ -1,6 +1,6 @@
 import BackToTop from '@/components/BackToTop'
 import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
+import { ReactNode, Suspense } from 'react'
 import Script from 'next/script'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
@@ -119,7 +119,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer />
             <BackToTop />
             <ErrorBoundary>
-              <FeedbackWidget />
+              <Suspense>
+                <FeedbackWidget />
+              </Suspense>
             </ErrorBoundary>
             <LayoutBottomEnhancements />
             <Script id="sw-register" strategy="afterInteractive">
@@ -133,3 +135,4 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     </html>
   )
 }
+

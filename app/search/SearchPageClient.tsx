@@ -8,6 +8,7 @@ import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp, SearchX } from 
 import TrackBehavior from '@/components/TrackBehavior'
 import { ProductCard } from '@/components/products/ProductCard'
 import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
+import TrendingSearches from '@/components/TrendingSearches'
 
 const POPULAR_SEARCHES = [
   "iPhone 16", "Samsung Galaxy S25", "Nike shoes", "boAt earphones", 
@@ -171,6 +172,8 @@ function SearchPageContent() {
           </div>
         </div>
       </section>
+
+      <TrendingSearches />
 
       <section className="mx-auto max-w-7xl px-6 py-10">
         <div className="mb-8 flex items-center justify-between flex-wrap gap-4">

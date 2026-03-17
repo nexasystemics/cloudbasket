@@ -21,7 +21,7 @@ export default function DealsBar() {
       <div className="mx-auto flex max-w-7xl items-center px-6 py-3">
         <Link
           href="/deals/flash"
-          className="flex flex-shrink-0 items-center gap-2 pr-6 border-r border-zinc-100 dark:border-zinc-800 group"
+          className="flex flex-shrink-0 items-center gap-2 pr-6 border-r border-zinc-100 dark:border-zinc-800 group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 rounded-lg"
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-500 text-white shadow-lg shadow-red-500/20 group-hover:scale-110 transition-transform">
             <Zap size={16} fill="currentColor" />
@@ -38,7 +38,7 @@ export default function DealsBar() {
               <Link
                 key={deal.id}
                 href={`/products/${deal.id}`}
-                className="group flex min-w-[220px] flex-shrink-0 snap-start items-center gap-3"
+                className="group flex min-w-[220px] flex-shrink-0 snap-start items-center gap-3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 rounded-xl"
               >
                 <div className="relative h-10 w-10 overflow-hidden rounded-lg bg-zinc-50 border border-zinc-100 dark:border-zinc-800">
                   <Image

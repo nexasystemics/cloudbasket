@@ -5,8 +5,13 @@ import { ArrowRight, ExternalLink, Zap, Clock, TrendingDown } from 'lucide-react
 import CategoryGrid from '@/components/CategoryGrid'
 import HeroSection from '@/components/HeroSection'
 import DealsBar from '@/components/DealsBar'
+import ErrorBoundary from '@/components/ErrorBoundary'
+import TopDealsToday from '@/components/TopDealsToday'
+import PriceAlertBanner from '@/components/PriceAlertBanner'
 import HomeDeferredSections from '@/components/HomeDeferredSections'
 import { TelegramCTA } from '@/components/TelegramCTA'
+import PlatformTrustBar from '@/components/PlatformTrustBar'
+import TrendingSearches from '@/components/TrendingSearches'
 import { DEALS } from '@/lib/deals-data'
 import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { PRODUCTS } from '@/lib/mock-data'
@@ -187,13 +192,19 @@ export default function HomePage() {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_STRUCTURED_DATA) }} />
       <HeroSection />
+      <PlatformTrustBar />
+      <TrendingSearches />
       <DealsBar />
+      <TopDealsToday />
       <CategoryGrid />
       <DealOfTheDay />
       <FlashDealsPreview />
       <section className="mx-auto max-w-7xl px-6 py-4">
         <TelegramCTA />
       </section>
+      <ErrorBoundary>
+        <PriceAlertBanner />
+      </ErrorBoundary>
       <HomeDeferredSections />
     </main>
   )

@@ -81,7 +81,7 @@ export default function ProductCard({
   return (
     <div className="group relative flex h-full min-h-[440px] flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
       <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-zinc-800">
-        <Link href={`/products/${id}`} className="block w-full h-full">
+        <Link href={`/products/${id}`} className="block w-full h-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
           <Image
             src={imgSrc}
             alt={name}
@@ -113,7 +113,7 @@ export default function ProductCard({
       </div>
 
       <div className="flex min-h-[216px] flex-1 flex-col space-y-3 p-4">
-        <Link href={`/products/${id}`} className="block group/title">
+        <Link href={`/products/${id}`} className="block group/title rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
           <h3 className="text-sm font-black text-zinc-900 dark:text-white line-clamp-2 min-h-[2.5rem] group-hover/title:text-skyline-primary transition-colors duration-300">
             {name}
           </h3>
@@ -151,7 +151,7 @@ export default function ProductCard({
           </p>
           <Link
             href={`/compare?product=${id}`}
-            className="mt-1 inline-block text-xs text-zinc-500 underline underline-offset-2 transition-colors hover:text-skyline-primary"
+            className="mt-1 inline-block text-xs text-zinc-500 underline underline-offset-2 transition-colors hover:text-skyline-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
           >
             Compare prices
           </Link>
@@ -162,7 +162,7 @@ export default function ProductCard({
             href={`/go/${id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-orange-500/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start"
+            className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-orange-500/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
             style={{ backgroundColor: theme?.accentColor || '#E65100' }}
           >
             View Deal
@@ -172,7 +172,7 @@ export default function ProductCard({
           <div className="flex items-center justify-between">
             <Link
               href={`/products/${id}`}
-              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-zinc-400 hover:text-skyline-primary transition-colors"
+              className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-zinc-400 hover:text-skyline-primary transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
             >
               Specs <ChevronRight size={12} />
             </Link>

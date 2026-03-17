@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, TrendingDown, ExternalLink, Tag } from 'lucide-react'
 import { TelegramCTA } from '@/components/TelegramCTA'
+import AffiliateDisclosureBanner from '@/components/AffiliateDisclosureBanner'
 
 type DealItem = {
   id: string
@@ -210,6 +211,7 @@ export default function DealsPage() {
 
   return (
     <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
+      <AffiliateDisclosureBanner />
       <section className="bg-gradient-to-r from-skyline-primary to-skyline-primary-dark py-16">
         <div className="mx-auto max-w-7xl px-6 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-1.5 text-xs font-black text-white uppercase tracking-widest mb-4">

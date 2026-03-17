@@ -1,3 +1,6 @@
+// Estimated: ~450 lines
+// Purpose: Product detail page with structured data (Product, Breadcrumb), dynamic metadata and price comparison.
+
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -12,17 +15,21 @@ import {
   TrendingDown,
   ChevronRight,
 } from 'lucide-react'
-import { CATALOG, type Product as CatalogProduct } from '@/lib/intelligence/catalog'
+import { CATALOG } from '@/lib/intelligence/catalog'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 import {
   CATALOG_PRODUCTS,
   getCategoryDefinition,
   getSavePercent,
+  getProductById,
+  toProduct,
   type CatalogProduct as CloudbasketCatalogProduct,
 } from '@/lib/cloudbasket-data'
 import SchemaMarkup from '@/components/SchemaMarkup'
+import ErrorBoundary from '@/components/ErrorBoundary'
 import ProductDetailActions, { PriceAlertTriggerButton } from '@/components/ProductDetailActions'
 import RecentlyViewed, { ProductViewTracker } from '@/components/RecentlyViewed'
+import PriceComparisonTable from '@/components/PriceComparisonTable'
 import TrackBehavior from '@/components/TrackBehavior'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import WishlistButton from '@/components/WishlistButton'
@@ -32,6 +39,7 @@ import { EMIBadge } from '@/components/products/EMIBadge'
 import { PincodeChecker } from '@/components/products/PincodeChecker'
 import { ProductCard } from '@/components/products/ProductCard'
 import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
+import AffiliateDisclosureBanner from '@/components/AffiliateDisclosureBanner'
 
 type MockProduct = (typeof MOCK_PRODUCTS)[number]
 
@@ -48,6 +56,7 @@ type DisplayProduct = {
   mainCategory: string
   affiliatePlatform: 'amazon' | 'flipkart' | 'cj' | 'pod' | 'vcm'
   badge?: string
+  description: string
 }
 
 type PriceEntry = {
@@ -157,57 +166,51 @@ function getCategoryDetails(product: DisplayProduct, cloudbasketProduct?: Cloudb
   }
 }
 
-function toDisplayFromCatalog(product: CatalogProduct): DisplayProduct {
+function toDisplayFromCatalog(product: any): DisplayProduct {
   return {
     id: product.id,
-    name: product.name,
-    image: product.image,
-    brand: product.brand,
+    name: product.name || product.title,
+    image: product.image || '',
+    brand: product.brand || '',
     price: product.price,
-    originalPrice: product.originalPrice,
-    discount: Math.max(1, Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)),
+    originalPrice: product.originalPrice || product.mrp || product.price,
+    discount: Math.max(1, Math.round((((product.originalPrice || product.mrp || product.price) - product.price) / (product.originalPrice || product.mrp || product.price)) * 100)),
     rating: product.rating,
-    reviewCount: product.reviews,
-    mainCategory: product.category,
-    affiliatePlatform: product.affiliatePlatform,
+    reviewCount: product.reviews || product.reviewCount || 0,
+    mainCategory: product.category || product.mainCategory,
+    affiliatePlatform: product.affiliatePlatform || (product.platform === 'Flipkart' ? 'flipkart' : 'amazon'),
     badge: product.badge,
-  }
-}
-
-function toDisplayFromMock(product: MockProduct): DisplayProduct {
-  return {
-    id: String(product.id),
-    name: product.name,
-    image: product.image,
-    brand: product.brand,
-    price: product.price,
-    originalPrice: product.originalPrice ?? Math.round(product.price * 1.15),
-    discount: product.discount ?? 0,
-    rating: product.rating,
-    reviewCount: product.reviewCount,
-    mainCategory: product.mainCategory,
-    affiliatePlatform: product.source === 'Flipkart' ? 'flipkart' : 'amazon',
+    description: product.description || '',
   }
 }
 
 function findDisplayProductById(id: string): DisplayProduct | null {
-  const catalogProduct = id.startsWith('cb-') ? CATALOG.find((item) => item.id === id) : undefined
+  const cbProduct = getProductById(id)
+  if (cbProduct) return toDisplayFromCatalog(cbProduct)
+
+  const catalogProduct = CATALOG.find((item) => item.id === id)
+  if (catalogProduct) return toDisplayFromCatalog(catalogProduct)
+
   const numericId = Number.parseInt(id, 10)
   const mockProduct = Number.isNaN(numericId) ? undefined : MOCK_PRODUCTS.find((item) => item.id === numericId)
-
-  if (catalogProduct !== undefined) {
-    return toDisplayFromCatalog(catalogProduct)
-  }
-
-  if (mockProduct !== undefined) {
-    return toDisplayFromMock(mockProduct)
+  if (mockProduct) {
+    return {
+      id: String(mockProduct.id),
+      name: mockProduct.name,
+      image: mockProduct.image || '',
+      brand: mockProduct.brand || '',
+      price: mockProduct.price,
+      originalPrice: mockProduct.originalPrice ?? Math.round(mockProduct.price * 1.15),
+      discount: mockProduct.discount ?? 0,
+      rating: mockProduct.rating,
+      reviewCount: mockProduct.reviewCount || 0,
+      mainCategory: mockProduct.mainCategory,
+      affiliatePlatform: mockProduct.source === 'Flipkart' ? 'flipkart' : 'amazon',
+      description: '',
+    }
   }
 
   return null
-}
-
-function buildProductDescription(product: DisplayProduct): string {
-  return `Compare prices for ${product.name} on CloudBasket, track current offers, verify discounts, and find the best ${product.mainCategory} deal from trusted stores.`
 }
 
 export async function generateMetadata(
@@ -223,9 +226,39 @@ export async function generateMetadata(
     }
   }
 
+  const title = `${product.name} - Best Price Comparison | CloudBasket`
+  const description = `Compare prices for ${product.name} on CloudBasket. Find the best ${product.mainCategory} deals from Amazon, Flipkart and more. Verified links.`
+  const url = `https://cloudbasket.in/products/${id}`
+  const ogImage = `https://cloudbasket.in/api/og?title=${encodeURIComponent(product.name)}&type=product`
+
   return {
-    title: `${product.name} | CloudBasket`,
-    description: buildProductDescription(product),
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'CloudBasket',
+      locale: 'en_IN',
+      type: 'website',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
   }
 }
 
@@ -235,32 +268,31 @@ export default async function ProductPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const cloudbasketProduct = CATALOG_PRODUCTS.find((item) => item.id === id)
   const product = findDisplayProductById(id)
 
   if (!product) {
     notFound()
   }
 
+  const cloudbasketProduct = CATALOG_PRODUCTS.find((item) => item.id === id)
   const categoryDetails = getCategoryDetails(product, cloudbasketProduct)
   const dealPath = getDealPath(product.affiliatePlatform, String(product.id))
-  const relatedProducts = cloudbasketProduct
-    ? CATALOG_PRODUCTS.filter((item) => item.category === cloudbasketProduct.category && item.id !== cloudbasketProduct.id)
-        .slice(0, 4)
-        .map((item) => ({
-          id: item.id,
-          name: item.title,
-          image: item.image,
-          brand: item.brand,
-          price: item.price,
-          originalPrice: item.mrp,
-          discount: getSavePercent(item),
-          rating: item.rating,
-          reviewCount: item.reviewCount,
-          source: item.platform === 'CJ Global' ? ('CJ' as const) : item.platform === 'Flipkart' ? ('Flipkart' as const) : ('Amazon' as const),
-          affiliatePlatform: getCloudbasketAffiliatePlatform(item),
-        }))
-    : []
+  
+  const relatedProducts = CATALOG_PRODUCTS.filter((item) => item.category === categoryDetails.slug && item.id !== id)
+    .slice(0, 4)
+    .map((item) => ({
+      id: item.id,
+      name: item.title,
+      image: item.image,
+      brand: item.brand,
+      price: item.price,
+      originalPrice: item.mrp,
+      discount: getSavePercent(item),
+      rating: item.rating,
+      reviewCount: item.reviewCount,
+      source: item.platform === 'CJ Global' ? ('CJ' as const) : item.platform === 'Flipkart' ? ('Flipkart' as const) : ('Amazon' as const),
+      affiliatePlatform: getCloudbasketAffiliatePlatform(item),
+    }))
 
   const priceComparison: readonly PriceEntry[] = [
     {
@@ -289,7 +321,7 @@ export default async function ProductPage({
     },
   ]
 
-  const BREADCRUMB_DATA = {
+  const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
@@ -299,27 +331,43 @@ export default async function ProductPage({
     ],
   }
 
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    'name': product.name,
+    'description': product.description || `Compare prices for ${product.name} on CloudBasket.`,
+    'image': product.image,
+    'brand': {
+      '@type': 'Brand',
+      'name': product.brand
+    },
+    'aggregateRating': {
+      '@type': 'AggregateRating',
+      'ratingValue': product.rating,
+      'reviewCount': product.reviewCount
+    },
+    'offers': {
+      '@type': 'Offer',
+      'priceCurrency': 'INR',
+      'price': product.price,
+      'availability': 'https://schema.org/InStock',
+      'url': `https://cloudbasket.in/go/${product.id}`
+    }
+  }
+
   return (
     <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_DATA) }} />
+      <AffiliateDisclosureBanner />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <ProductViewTracker id={String(product.id)} />
       <TrackBehavior category={categoryDetails.slug} productId={String(product.id)} />
-      <SchemaMarkup
-        type="product"
-        data={{
-          name: product.name,
-          brand: product.brand,
-          price: product.price,
-          rating: product.rating,
-          reviews: product.reviewCount,
-        }}
-      />
 
       <section className="mx-auto max-w-7xl px-6 py-6">
         <div className="flex flex-wrap items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-400">
-          <Link href="/" className="hover:text-skyline-primary transition-colors">Home</Link>
+          <Link href="/" className="hover:text-skyline-primary transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 rounded">Home</Link>
           <ChevronRight size={10} />
-          <Link href={`/category/${categoryDetails.slug}`} className="hover:text-skyline-primary transition-colors">{categoryDetails.label}</Link>
+          <Link href={`/category/${categoryDetails.slug}`} className="hover:text-skyline-primary transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 rounded">{categoryDetails.label}</Link>
           <ChevronRight size={10} />
           <span className="text-zinc-900 dark:text-white line-clamp-1">{product.name}</span>
         </div>
@@ -422,7 +470,10 @@ export default async function ProductPage({
                       <p className="text-xl font-black text-zinc-900 dark:text-white">₹{entry.price.toLocaleString('en-IN')}</p>
                       {entry.best && <p className="text-[9px] font-black text-green-500 uppercase tracking-widest mt-0.5">Price Winner</p>}
                     </div>
-                    <Link href={`/go/${entry.platformSlug}-${product.id}`} className="cb-btn-primary h-11 px-6 rounded-xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest">
+                    <Link 
+                      href={`/go/${entry.platformSlug}-${product.id}`} 
+                      className="cb-btn-primary h-11 px-6 rounded-xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+                    >
                       Visit <ExternalLink size={14} />
                     </Link>
                   </div>
@@ -457,6 +508,8 @@ export default async function ProductPage({
         </div>
       </section>
 
+      <PriceComparisonTable productId={String(product.id)} />
+
       <section className="mx-auto max-w-7xl px-6 py-6">
         <div className="rounded-3xl border border-zinc-100 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -464,7 +517,7 @@ export default async function ProductPage({
             <PriceAlertTriggerButton
               productName={product.name}
               currentPrice={product.price}
-              className="cb-btn-ghost flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest"
+              className="cb-btn-ghost flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
             >
               <span>Set Price Alert</span>
             </PriceAlertTriggerButton>
@@ -496,12 +549,12 @@ export default async function ProductPage({
           <div className="lg:col-span-1">
             <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-8 sticky top-24">
               <div className="text-center mb-8">
-                <p className="text-7xl font-black text-yellow-500">4.4</p>
+                <p className="text-7xl font-black text-yellow-500">{product.rating.toFixed(1)}</p>
                 <div className="flex justify-center gap-1 my-2">
                   {[1,2,3,4].map(s => <Star key={s} size={20} className="fill-yellow-500 text-yellow-500" />)}
                   <Star size={20} className="text-yellow-500" />
                 </div>
-                <p className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">Based on 1,518 reports</p>
+                <p className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">Based on {product.reviewCount.toLocaleString()} reports</p>
               </div>
               <div className="space-y-3">
                 {RATING_BREAKDOWN.map((row) => (
@@ -549,7 +602,7 @@ export default async function ProductPage({
 
                 <div className="mt-8 flex items-center justify-between pt-6 border-t border-zinc-50 dark:border-zinc-800">
                   <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest italic">Community Trust: {review.helpful} Helpful Votes</p>
-                  <button type="button" className="cb-btn-ghost px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest">
+                  <button type="button" className="cb-btn-ghost px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
                     Support Review
                   </button>
                 </div>
@@ -560,7 +613,9 @@ export default async function ProductPage({
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-20">
-        <RecentlyViewed />
+        <ErrorBoundary>
+          <RecentlyViewed />
+        </ErrorBoundary>
         {relatedProducts.length >= 2 ? (
           <div className="border-t border-zinc-100 py-16 dark:border-zinc-800">
             <div className="mb-10 flex items-end justify-between">
@@ -570,7 +625,10 @@ export default async function ProductPage({
                   Curated alternatives in {categoryDetails.label}
                 </p>
               </div>
-              <Link href={`/category/${categoryDetails.slug}`} className="cb-btn-ghost gap-2 rounded-xl border border-zinc-200 px-6 py-3 text-[10px] font-black uppercase tracking-widest">
+              <Link 
+                href={`/category/${categoryDetails.slug}`} 
+                className="cb-btn-ghost gap-2 rounded-xl border border-zinc-200 px-6 py-3 text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+              >
                 View All <ArrowRight size={14} />
               </Link>
             </div>
@@ -595,6 +653,3 @@ export default async function ProductPage({
     </main>
   )
 }
-
-
-

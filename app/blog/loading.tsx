@@ -1,28 +1,23 @@
-export default function BlogLoading() {
+// app/blog/loading.tsx
+export default function Loading() {
   return (
-    <div className="animate-pulse bg-zinc-50 dark:bg-zinc-950 min-h-screen">
-      {/* Hero */}
-      <div className="bg-zinc-200 dark:bg-zinc-800 py-20">
-        <div className="mx-auto max-w-4xl px-6 text-center space-y-4">
-          <div className="h-12 w-64 rounded-xl bg-zinc-300 dark:bg-zinc-700 mx-auto" />
-          <div className="h-4 w-96 rounded-lg bg-zinc-300 dark:bg-zinc-700 mx-auto" />
-        </div>
+    <div className="mx-auto max-w-7xl px-6 py-20 animate-pulse">
+      <div className="mb-12 text-center">
+        <div className="h-10 w-48 bg-zinc-100 dark:bg-zinc-800 rounded mx-auto mb-4" />
+        <div className="h-6 w-96 bg-zinc-100 dark:bg-zinc-800 rounded mx-auto" />
       </div>
-
-      {/* Post grid */}
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="rounded-2xl bg-white dark:bg-zinc-900 overflow-hidden border border-zinc-100 dark:border-zinc-800">
-              <div className="h-52 bg-zinc-200 dark:bg-zinc-800" />
-              <div className="p-6 space-y-3">
-                <div className="h-4 w-20 rounded bg-zinc-200 dark:bg-zinc-800" />
-                <div className="h-6 w-full rounded bg-zinc-200 dark:bg-zinc-800" />
-                <div className="h-4 w-3/4 rounded bg-zinc-200 dark:bg-zinc-800" />
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div key={i} className="rounded-3xl border border-zinc-100 dark:border-zinc-800 overflow-hidden">
+            <div className="h-56 bg-zinc-100 dark:bg-zinc-800" />
+            <div className="p-6">
+              <div className="h-4 w-24 bg-zinc-100 dark:bg-zinc-800 rounded mb-4" />
+              <div className="h-7 w-full bg-zinc-100 dark:bg-zinc-800 rounded mb-4" />
+              <div className="h-4 w-full bg-zinc-100 dark:bg-zinc-800 rounded mb-2" />
+              <div className="h-4 w-2/3 bg-zinc-100 dark:bg-zinc-800 rounded" />
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   )

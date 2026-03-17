@@ -1,22 +1,27 @@
-// Purpose: Validates required environment variables on module load and exports a typed env object.
-// Import this module in app/layout.tsx to ensure env validation runs at startup.
+/**
+ * Environment variables validation and export.
+ * This module ensures that required environment variables are present and provides a typed interface.
+ */
 
-const REQUIRED_VARS = [
-  'NEXT_PUBLIC_SUPABASE_URL',
-  'NEXT_PUBLIC_SUPABASE_ANON_KEY',
-  'NEXT_PUBLIC_SITE_URL',
-] as const
+if (typeof window === 'undefined') {
+  // Server-side validation
+  const requiredEnvVars = [
+    'NEXT_PUBLIC_SUPABASE_URL',
+    'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+    'NEXT_PUBLIC_SITE_URL',
+  ]
 
-type RequiredVar = (typeof REQUIRED_VARS)[number]
-
-for (const key of REQUIRED_VARS) {
-  if (!process.env[key]) {
-    console.warn(`[env] Missing environment variable: ${key}`)
-  }
+  requiredEnvVars.forEach((envVar) => {
+    if (!process.env[envVar]) {
+      console.warn(`[lib/env] WARNING: Missing environment variable: ${envVar}`)
+    }
+  })
 }
 
 export const env = {
-  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
-  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.in',
-} satisfies Record<RequiredVar, string>
+  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://cloudbasket.in',
+} as const
+
+export type Env = typeof env

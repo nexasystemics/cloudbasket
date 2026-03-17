@@ -17,6 +17,7 @@ import {
   User,
 } from 'lucide-react'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
+import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 
 type TabKey = 'overview' | 'wishlist' | 'alerts' | 'earnings' | 'settings'
 
@@ -187,7 +188,7 @@ export default function DashboardPage() {
             {wishlist.map((item) => (
               <article key={item.id} className="cb-card overflow-hidden">
                 <div className="relative h-40">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
+                  <Image src={resolveImageSource(item.image, IMAGE_ASSETS.noImage)} alt={item.name} fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
                 </div>
                 <div className="p-3">
                   <p className="line-clamp-2 text-xs font-bold">{item.name}</p>

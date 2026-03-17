@@ -46,10 +46,10 @@ export default async function DealDetailPage({ params }: DealDetailPageProps) {
     minute: '2-digit',
   })
 
-  const hasPrice = product && product.originalPrice !== null
-  const savings = hasPrice ? (product.originalPrice as number) - product.price : 0
+  const hasPrice = product && product.originalPrice !== undefined && product.originalPrice !== null
+  const savings = hasPrice ? (product!.originalPrice as number) - product!.price : 0
   const description =
-    product && product.description.length > 200
+    product && product.description && product.description.length > 200
       ? `${product.description.slice(0, 200)}...`
       : product?.description ?? 'Verified affiliate deal available for a limited period.'
 
@@ -70,7 +70,7 @@ export default async function DealDetailPage({ params }: DealDetailPageProps) {
 
         <article className="cb-card overflow-hidden">
           <div className="relative h-72">
-            {product ? (
+            {product && product.image ? (
               <Image src={product.image} alt={deal.title} fill className="object-cover" />
             ) : (
               <div className="h-full w-full bg-[var(--cb-surface-3)]" />
@@ -100,7 +100,7 @@ export default async function DealDetailPage({ params }: DealDetailPageProps) {
                   <span className="font-display text-3xl font-black text-[var(--cb-text-primary)]">
                     {formatInr(product.price)}
                   </span>
-                  {product.originalPrice !== null && (
+                  {product.originalPrice !== undefined && product.originalPrice !== null && (
                     <span className="text-lg text-[var(--cb-text-muted)] line-through">
                       {formatInr(product.originalPrice)}
                     </span>

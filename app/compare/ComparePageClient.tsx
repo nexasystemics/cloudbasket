@@ -183,7 +183,7 @@ export default function ComparePageClient() {
       if (!query) {
         return true
       }
-      return product.name.toLowerCase().includes(query) || product.brand.toLowerCase().includes(query)
+      return (product.name?.toLowerCase().includes(query) || false) || (product.brand?.toLowerCase().includes(query) || false)
     })
   }, [deferredSearchQuery])
 
@@ -254,6 +254,10 @@ export default function ComparePageClient() {
           <p className="text-muted mt-2">
             Compare up to 5 products across 15 specifications. Apple-to-apple comparison.
           </p>
+          <div className="md:hidden mt-4 text-[10px] font-black uppercase tracking-widest text-skyline-primary flex items-center gap-2">
+            <TrendingDown size={14} className="rotate-90" />
+            ← Swipe to compare →
+          </div>
           <span className="cb-badge cb-badge-blue mt-3">{selectedProducts.length}/5 products selected</span>
         </div>
       </section>
@@ -349,12 +353,13 @@ export default function ComparePageClient() {
           </div>
         </section>
       ) : (
-        <section className="mx-auto max-w-7xl px-6 pb-16">
+        <section className="mx-auto max-w-7xl px-6 pb-16 relative">
+          <div className="absolute right-6 top-0 bottom-16 w-12 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent pointer-events-none z-20 md:hidden" />
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="sticky top-0 z-10 bg-[var(--cb-bg)]">
-                  <th className="w-32 p-3 text-left text-xs font-black uppercase tracking-wider text-muted">Spec</th>
+                  <th className="sticky left-0 z-30 bg-white dark:bg-zinc-950 w-32 p-3 text-left text-xs font-black uppercase tracking-wider text-muted border-r border-zinc-100 dark:border-zinc-800">Spec</th>
                   {compareEntries.map(({ product }) => (
                     <th key={product.id} className="min-w-48 p-3 text-center align-top">
                       <div className="cb-card p-4 text-center">
@@ -395,7 +400,7 @@ export default function ComparePageClient() {
 
                   return (
                     <tr key={spec.key} className={index % 2 === 1 ? 'bg-[var(--cb-surface-2)]/30' : ''}>
-                      <td className="w-32 px-4 py-3 text-xs font-black uppercase tracking-wider text-muted">{spec.label}</td>
+                      <td className="sticky left-0 z-20 bg-white dark:bg-zinc-950 w-32 px-4 py-3 text-xs font-black uppercase tracking-wider text-muted border-r border-zinc-100 dark:border-zinc-800">{spec.label}</td>
                       {compareEntries.map(({ product, specs }) => {
                         const value = specs[spec.key]
 
@@ -442,7 +447,7 @@ export default function ComparePageClient() {
                 })}
 
                 <tr className="border-t border-[var(--cb-border)]">
-                  <td className="px-4 py-4 text-xs font-black uppercase tracking-wider">Best Deal</td>
+                  <td className="sticky left-0 z-20 bg-white dark:bg-zinc-950 px-4 py-4 text-xs font-black uppercase tracking-wider border-r border-zinc-100 dark:border-zinc-800">Best Deal</td>
                   {compareEntries.map(({ product }) => {
                     const id = String(product.id)
                     const isWinner = topScore > 0 && winnerScores[id] === topScore

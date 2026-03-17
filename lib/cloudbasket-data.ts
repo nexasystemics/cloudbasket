@@ -637,6 +637,66 @@ export function getSearchBuckets(query: string): SearchResultBucket {
   return { products, deals, categories }
 }
 
+import { Product, AffiliateSource, ProductStatus } from '@/lib/types'
+
 export function getProductDropdownCategories(): CategoryDefinition[] {
   return CATEGORY_DEFINITIONS
+}
+
+export function toProduct(catalogProduct: CatalogProduct): Product {
+  const discount = catalogProduct.mrp && catalogProduct.mrp > catalogProduct.price
+    ? Math.round(((catalogProduct.mrp - catalogProduct.price) / catalogProduct.mrp) * 100)
+    : 0;
+
+  let affiliateSource: AffiliateSource;
+  switch (catalogProduct.platform) {
+    case 'Amazon':
+      affiliateSource = 'Amazon';
+      break;
+    case 'Flipkart':
+      affiliateSource = 'Flipkart';
+      break;
+    case 'CJ Global':
+      affiliateSource = 'CJ';
+      break;
+    case 'Print on Demand':
+      affiliateSource = 'Direct'; // Assuming POD products are direct or can be mapped to 'Direct'
+      break;
+    default:
+      affiliateSource = 'Direct'; // Default to Direct if platform is unknown
+  }
+
+  // Convert specs string[] to Record<string, string>
+  const specsRecord: Record<string, string> = {};
+  catalogProduct.specs.forEach((spec, index) => {
+    // Basic conversion, might need more sophisticated parsing for complex specs
+    specsRecord[`spec${index + 1}`] = spec;
+  });
+
+
+  return {
+    id: Number(catalogProduct.id.replace(/[^0-9]/g, '')), // Convert string ID to number, removing non-numeric chars
+    name: catalogProduct.title,
+    slug: catalogProduct.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-*|-*$/g, ''),
+    price: catalogProduct.price,
+    originalPrice: catalogProduct.mrp,
+    discount: discount,
+    description: catalogProduct.description,
+    mainCategory: catalogProduct.category,
+    subCategory: catalogProduct.category, // Using mainCategory as subCategory for simplicity
+    image: catalogProduct.image,
+    images: [catalogProduct.image],
+    brand: catalogProduct.brand,
+    rating: catalogProduct.rating,
+    reviewCount: catalogProduct.reviewCount,
+    stock: 100, // Default stock value
+    warranty: '1 Year Manufacturer Warranty', // Default warranty
+    specs: specsRecord,
+    affiliateUrl: catalogProduct.affiliateUrl,
+    source: affiliateSource,
+    status: 'Approved', // Default status
+    isFeatured: false, // Default
+    isTrending: false, // Default
+    createdAt: catalogProduct.publishedAt,
+  };
 }

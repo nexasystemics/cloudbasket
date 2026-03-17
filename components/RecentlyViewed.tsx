@@ -1,81 +1,99 @@
+// Estimated: ~110 lines
+// Purpose: Displays a horizontally scrollable shelf of recently viewed products from localStorage.
+
 'use client'
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Clock, ExternalLink } from 'lucide-react'
-import { MOCK_PRODUCTS } from '@/lib/mock-data'
+import { CATALOG_PRODUCTS, type CatalogProduct } from '@/lib/cloudbasket-data'
 
-export function trackProductView(id: string): void {
-  try {
-    const existing = JSON.parse(localStorage.getItem('cb-recently-viewed') ?? '[]') as string[]
-    const updated = [id, ...existing.filter((item: string) => item !== id)].slice(0, 10)
-    localStorage.setItem('cb-recently-viewed', JSON.stringify(updated))
-  } catch {
-    localStorage.setItem('cb-recently-viewed', JSON.stringify([id]))
-  }
-}
+const STORAGE_KEY = 'cb_recently_viewed'
+const MAX_RECENT = 10
 
+/**
+ * ProductViewTracker is a small client component that tracks the product ID.
+ * It is meant to be mounted on the Product detail page.
+ */
 export function ProductViewTracker({ id }: { id: string }) {
   useEffect(() => {
-    trackProductView(id)
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      let ids: string[] = []
+      if (stored) {
+        ids = JSON.parse(stored)
+      }
+      
+      // Filter out current ID if it exists and push to front
+      const updated = [id, ...ids.filter((existingId) => existingId !== id)].slice(0, MAX_RECENT)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    } catch (error) {
+      console.error('Failed to update cb_recently_viewed in localStorage', error)
+    }
   }, [id])
 
   return null
 }
 
 export default function RecentlyViewed() {
-  const [recentProducts, setRecentProducts] = useState<typeof MOCK_PRODUCTS>([])
+  const [products, setProducts] = useState<CatalogProduct[]>([])
 
   useEffect(() => {
     try {
-      const ids = JSON.parse(localStorage.getItem('cb-recently-viewed') ?? '[]') as string[]
-      const products = ids
-        .map((id) => MOCK_PRODUCTS.find((product) => String(product.id) === id))
-        .filter(Boolean)
+      const stored = localStorage.getItem(STORAGE_KEY)
+      if (!stored) return
 
-      setRecentProducts(products.slice(0, 6) as typeof MOCK_PRODUCTS)
-    } catch {
-      setRecentProducts([])
+      const ids: string[] = JSON.parse(stored)
+      const foundProducts = ids
+        .map((id) => CATALOG_PRODUCTS.find((p) => p.id === id))
+        .filter((p): p is CatalogProduct => !!p)
+
+      setProducts(foundProducts)
+    } catch (error) {
+      console.error('Failed to read cb_recently_viewed from localStorage', error)
+      setProducts([])
     }
   }, [])
 
-  if (recentProducts.length === 0) {
+  if (products.length < 2) {
     return null
   }
 
   return (
-    <section className="my-8">
-      <h2 className="mb-4 flex items-center gap-2 text-xl font-black tracking-tighter">
-        <Clock size={18} className="text-[#039BE5]" />
+    <div className="py-12 border-t border-zinc-100 dark:border-zinc-800">
+      <h2 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight italic mb-8">
         Recently Viewed
       </h2>
-      <div className="flex gap-3 overflow-x-auto pb-2">
-        {recentProducts.map((product) => (
-          <article key={product.id} className="cb-card group w-40 flex-shrink-0 overflow-hidden">
-            <div className="relative h-32">
-              <Link href={`/product/${product.id}`}>
-                <Image
-                  fill
-                  className="object-cover"
-                  src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
-                  alt={product.name}
-                />
-              </Link>
+      <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+        {products.map((product) => (
+          <Link
+            key={product.id}
+            href={`/product/${product.id}`}
+            className="flex-shrink-0 w-48 group"
+          >
+            <div className="relative aspect-square rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 transition-shadow group-hover:shadow-lg">
+              <Image
+                src={product.image}
+                alt={product.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="192px"
+              />
             </div>
-            <div className="p-3">
-              <Link href={`/product/${product.id}`} className="line-clamp-2 block text-xs font-bold">
-                {product.name}
-              </Link>
-              <p className="price-current mt-1 text-xs">Rs{product.price.toLocaleString('en-IN')}</p>
-              <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-2 w-full py-1.5 text-xs">
-                <ExternalLink size={10} />
-                Deal
-              </Link>
+            <div className="mt-3">
+              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest truncate">
+                {product.brand}
+              </p>
+              <h3 className="text-sm font-black text-zinc-900 dark:text-white truncate mt-0.5">
+                {product.title}
+              </h3>
+              <p className="text-lg font-black text-skyline-primary mt-1">
+                ₹{product.price.toLocaleString('en-IN')}
+              </p>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
-    </section>
+    </div>
   )
 }

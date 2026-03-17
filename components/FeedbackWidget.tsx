@@ -136,7 +136,7 @@ export default function FeedbackWidget() {
               type="button"
               onClick={closeModal}
               aria-label="Close feedback"
-              className="absolute right-5 top-5 p-1.5 rounded-full text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="absolute right-5 top-5 p-1.5 rounded-full text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -163,7 +163,7 @@ export default function FeedbackWidget() {
                       aria-label={label}
                       aria-pressed={rating === symbol}
                       onClick={() => setRating(symbol)}
-                      className={`text-3xl p-2 rounded-xl transition-all ${
+                      className={`text-3xl p-2 rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 ${
                         rating === symbol
                           ? 'bg-[#039BE5]/10 ring-2 ring-[#039BE5] scale-110'
                           : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
@@ -180,7 +180,7 @@ export default function FeedbackWidget() {
                     onChange={(e) => setComment(e.target.value.slice(0, MAX_COMMENT_LENGTH))}
                     placeholder="Tell us more (optional)…"
                     rows={3}
-                    className="w-full resize-none rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 p-4 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#039BE5]/30"
+                    className="w-full resize-none rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 p-4 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
                   />
                   <span className="absolute bottom-3 right-3 text-[10px] font-bold text-zinc-400">
                     {MAX_COMMENT_LENGTH - comment.length}
@@ -191,7 +191,7 @@ export default function FeedbackWidget() {
                   type="button"
                   onClick={handleSubmit}
                   disabled={!rating}
-                  className="w-full h-12 rounded-xl bg-[#039BE5] text-white text-[11px] font-black uppercase tracking-widest disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0288cc] transition-colors"
+                  className="w-full h-12 rounded-xl bg-[#039BE5] text-white text-[11px] font-black uppercase tracking-widest disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0288cc] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
                 >
                   Submit Feedback
                 </button>

@@ -14,22 +14,35 @@ export default function CookieConsent() {
       return
     }
 
-    const consent = window.localStorage.getItem('cb-cookie-consent')
-    if (consent === null) {
+    try {
+      const consent = window.localStorage.getItem('cb-cookie-consent')
+      if (consent === null) {
+        setVisible(true)
+      }
+    } catch (error) {
+      console.error('Failed to read from localStorage:', error)
       setVisible(true)
     }
   }, [])
 
   const handleAccept = () => {
     if (typeof window !== 'undefined') {
-      window.localStorage.setItem('cb-cookie-consent', 'accepted')
+      try {
+        window.localStorage.setItem('cb-cookie-consent', 'accepted')
+      } catch (error) {
+        console.error('Failed to save to localStorage:', error)
+      }
     }
     setVisible(false)
   }
 
   const handleDecline = () => {
     if (typeof window !== 'undefined') {
-      window.localStorage.setItem('cb-cookie-consent', 'declined')
+      try {
+        window.localStorage.setItem('cb-cookie-consent', 'declined')
+      } catch (error) {
+        console.error('Failed to save to localStorage:', error)
+      }
     }
     setVisible(false)
   }

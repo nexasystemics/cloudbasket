@@ -11,8 +11,13 @@ export default function PWAInstallPrompt() {
     const handler = (event: any) => {
       event.preventDefault()
       setDeferredPrompt(event)
-      const dismissed = localStorage.getItem('pwa-dismissed')
-      if (!dismissed) setShow(true)
+      try {
+        const dismissed = localStorage.getItem('pwa-dismissed')
+        if (!dismissed) setShow(true)
+      } catch (error) {
+        console.error('Failed to read from localStorage:', error)
+        setShow(true)
+      }
     }
 
     window.addEventListener('beforeinstallprompt', handler)
@@ -29,7 +34,11 @@ export default function PWAInstallPrompt() {
 
   const dismiss = () => {
     setShow(false)
-    localStorage.setItem('pwa-dismissed', '1')
+    try {
+      localStorage.setItem('pwa-dismissed', '1')
+    } catch (error) {
+      console.error('Failed to save to localStorage:', error)
+    }
   }
 
   if (!show) return null

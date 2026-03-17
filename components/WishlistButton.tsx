@@ -19,24 +19,34 @@ export default function WishlistButton({ productId, productName }: WishlistButto
   const [feedback, setFeedback] = useState<string>('')
 
   useEffect(() => {
-    const existing = JSON.parse(localStorage.getItem('cb-wishlist') ?? '[]') as WishlistEntry[]
-    setIsWishlisted(existing.some((item) => item.id === productId))
+    try {
+      const existing = JSON.parse(localStorage.getItem('cb-wishlist') ?? '[]') as WishlistEntry[]
+      setIsWishlisted(existing.some((item) => item.id === productId))
+    } catch (error) {
+      console.error('Failed to read from localStorage:', error)
+      setIsWishlisted(false)
+    }
   }, [productId])
 
   const toggleWishlist = () => {
-    const existing = JSON.parse(localStorage.getItem('cb-wishlist') ?? '[]') as WishlistEntry[]
-    const alreadyWishlisted = existing.some((item) => item.id === productId)
+    try {
+      const existing = JSON.parse(localStorage.getItem('cb-wishlist') ?? '[]') as WishlistEntry[]
+      const alreadyWishlisted = existing.some((item) => item.id === productId)
 
-    if (alreadyWishlisted) {
-      const updated = existing.filter((item) => item.id !== productId)
-      localStorage.setItem('cb-wishlist', JSON.stringify(updated))
-      setIsWishlisted(false)
-      setFeedback('Removed')
-    } else {
-      const updated = [...existing, { id: productId, name: productName, addedAt: Date.now() }]
-      localStorage.setItem('cb-wishlist', JSON.stringify(updated))
-      setIsWishlisted(true)
-      setFeedback('Added to wishlist ✓')
+      if (alreadyWishlisted) {
+        const updated = existing.filter((item) => item.id !== productId)
+        localStorage.setItem('cb-wishlist', JSON.stringify(updated))
+        setIsWishlisted(false)
+        setFeedback('Removed')
+      } else {
+        const updated = [...existing, { id: productId, name: productName, addedAt: Date.now() }]
+        localStorage.setItem('cb-wishlist', JSON.stringify(updated))
+        setIsWishlisted(true)
+        setFeedback('Added to wishlist ✓')
+      }
+    } catch (error) {
+      console.error('Failed to update localStorage:', error)
+      setFeedback('Error updating wishlist')
     }
 
     window.setTimeout(() => setFeedback(''), 2000)

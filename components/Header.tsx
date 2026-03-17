@@ -146,8 +146,13 @@ export default function Header(): JSX.Element {
   ]
   useEffect(() => {
     setMounted(true)
-    const dismissed = window.localStorage.getItem(PROMO_DISMISS_KEY)
-    setPromoDismissed(dismissed === 'true')
+    try {
+      const dismissed = window.localStorage.getItem(PROMO_DISMISS_KEY)
+      setPromoDismissed(dismissed === 'true')
+    } catch (error) {
+      console.error('Failed to read from localStorage:', error)
+      setPromoDismissed(false)
+    }
   }, [])
 
   useEffect(() => {
@@ -224,7 +229,11 @@ export default function Header(): JSX.Element {
 
   const handlePromoDismiss = useCallback(() => {
     setPromoDismissed(true)
-    window.localStorage.setItem(PROMO_DISMISS_KEY, 'true')
+    try {
+      window.localStorage.setItem(PROMO_DISMISS_KEY, 'true')
+    } catch (error) {
+      console.error('Failed to save to localStorage:', error)
+    }
   }, [])
 
   const handleCountryChange = useCallback(

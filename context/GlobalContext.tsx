@@ -84,21 +84,25 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
       return
     }
 
-    const savedCountry = window.localStorage.getItem('cb-country')
-    const savedCurrency = window.localStorage.getItem('cb-currency')
-    const savedDirection = window.localStorage.getItem('cb-dir')
+    try {
+      const savedCountry = window.localStorage.getItem('cb-country')
+      const savedCurrency = window.localStorage.getItem('cb-currency')
+      const savedDirection = window.localStorage.getItem('cb-dir')
 
-    if (savedCountry !== null && isCountryCode(savedCountry)) {
-      setCountryState(savedCountry)
-    }
+      if (savedCountry !== null && isCountryCode(savedCountry)) {
+        setCountryState(savedCountry)
+      }
 
-    if (savedCurrency !== null && isCurrencyCode(savedCurrency)) {
-      setCurrencyState(savedCurrency)
-    }
+      if (savedCurrency !== null && isCurrencyCode(savedCurrency)) {
+        setCurrencyState(savedCurrency)
+      }
 
-    if (savedDirection !== null && isDirection(savedDirection)) {
-      setDirectionState(savedDirection)
-      document.documentElement.dir = savedDirection
+      if (savedDirection !== null && isDirection(savedDirection)) {
+        setDirectionState(savedDirection)
+        document.documentElement.dir = savedDirection
+      }
+    } catch (error) {
+      console.error('Failed to read from localStorage:', error)
     }
 
     setIsReady(true)
@@ -107,8 +111,12 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
   const setCountry = useCallback((countryCode: CountryCode) => {
     const nextCurrency = COUNTRY_CURRENCY_MAP[countryCode]
     if (typeof window !== 'undefined') {
-      window.localStorage.setItem('cb-country', countryCode)
-      window.localStorage.setItem('cb-currency', nextCurrency)
+      try {
+        window.localStorage.setItem('cb-country', countryCode)
+        window.localStorage.setItem('cb-currency', nextCurrency)
+      } catch (error) {
+        console.error('Failed to save to localStorage:', error)
+      }
     }
     setCountryState(countryCode)
     setCurrencyState(nextCurrency)
@@ -116,14 +124,22 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
 
   const setCurrency = useCallback((currencyCode: CurrencyCode) => {
     if (typeof window !== 'undefined') {
-      window.localStorage.setItem('cb-currency', currencyCode)
+      try {
+        window.localStorage.setItem('cb-currency', currencyCode)
+      } catch (error) {
+        console.error('Failed to save to localStorage:', error)
+      }
     }
     setCurrencyState(currencyCode)
   }, [])
 
   const setDirection = useCallback((newDirection: Direction) => {
     if (typeof window !== 'undefined') {
-      window.localStorage.setItem('cb-dir', newDirection)
+      try {
+        window.localStorage.setItem('cb-dir', newDirection)
+      } catch (error) {
+        console.error('Failed to save to localStorage:', error)
+      }
       document.documentElement.dir = newDirection
     }
     setDirectionState(newDirection)

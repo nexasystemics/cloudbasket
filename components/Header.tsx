@@ -265,7 +265,7 @@ export default function Header(): JSX.Element {
             <button
               type="button"
               onClick={handlePromoDismiss}
-              className="ms-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 hover:bg-white/20"
+              className="ms-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
               aria-label="Dismiss promo ticker"
             >
               <X size={12} />
@@ -334,7 +334,7 @@ export default function Header(): JSX.Element {
             <button
               type="button"
               onClick={() => setSearchOpen((current) => !current)}
-              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg"
+              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
               aria-label="Toggle search"
             >
               <Search size={15} className="text-[var(--cb-text-secondary)]" />
@@ -375,7 +375,7 @@ export default function Header(): JSX.Element {
           <button
             type="button"
             onClick={toggleTheme}
-            className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg"
+            className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
             aria-label="Toggle theme"
           >
             {mounted && resolvedTheme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
@@ -409,7 +409,7 @@ export default function Header(): JSX.Element {
             <button
               type="button"
               onClick={() => setMobileOpen(false)}
-              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg"
+              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
               aria-label="Close menu"
             >
               <X size={16} />
@@ -473,7 +473,7 @@ export default function Header(): JSX.Element {
             <button
               type="button"
               onClick={toggleTheme}
-              className="glass-panel inline-flex h-10 w-10 items-center justify-center rounded-lg"
+              className="glass-panel inline-flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
               aria-label="Toggle theme mobile"
             >
               {mounted && resolvedTheme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}

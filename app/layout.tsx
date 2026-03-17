@@ -6,7 +6,10 @@ import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import LayoutBottomEnhancements from '@/components/LayoutBottomEnhancements'
 import LayoutTopEnhancements from '@/components/LayoutTopEnhancements'
+import FeedbackWidget from '@/components/FeedbackWidget'
+import ErrorBoundary from '@/components/ErrorBoundary'
 import SchemaMarkup from '@/components/SchemaMarkup'
+import '@/lib/env'
 import CBThemeProvider from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
 import './globals.css'
@@ -101,14 +104,23 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {supabaseOrigin ? <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" /> : null}
       </head>
       <body className="bg-[var(--cb-surface)] font-sans text-[var(--cb-text-primary)] antialiased transition-colors duration-300">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-blue-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg"
+        >
+          Skip to main content
+        </a>
         <GlobalProvider>
           <CBThemeProvider>
             <SchemaMarkup type="website" />
             <LayoutTopEnhancements />
             <Header />
-            <main>{children}</main>
+            <main id="main-content">{children}</main>
             <Footer />
             <BackToTop />
+            <ErrorBoundary>
+              <FeedbackWidget />
+            </ErrorBoundary>
             <LayoutBottomEnhancements />
             <Script id="sw-register" strategy="afterInteractive">
               {`if ('serviceWorker' in navigator) {

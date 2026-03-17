@@ -99,8 +99,9 @@ export default function ProductCard({
         ) : null}
 
         <button
+          type="button"
           onClick={toggleWishlist}
-          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
+          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 ${
             isSaved 
               ? 'bg-red-500 text-white' 
               : 'bg-white/80 dark:bg-zinc-900/80 text-zinc-400 hover:text-red-500'

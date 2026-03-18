@@ -1,3 +1,4 @@
+// DEPRECATED: Use components/products/ProductCard.tsx instead. Retained for backward compatibility.
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'

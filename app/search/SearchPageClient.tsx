@@ -8,6 +8,13 @@ import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp, SearchX } from 
 import TrackBehavior from '@/components/TrackBehavior'
 import { ProductCard } from '@/components/products/ProductCard'
 import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
+import { getIndiaCatalogAsCatalogProducts } from '@/lib/india-catalog/utils'
+
+const INDIA_AS_CATALOG = getIndiaCatalogAsCatalogProducts()
+const MERGED_PRODUCTS = (() => {
+  const ids = new Set(CATALOG_PRODUCTS.map(p => p.id))
+  return [...CATALOG_PRODUCTS, ...INDIA_AS_CATALOG.filter(p => !ids.has(p.id))]
+})()
 import TrendingSearches from '@/components/TrendingSearches'
 
 const POPULAR_SEARCHES = [
@@ -69,9 +76,9 @@ function SearchPageContent() {
 
   const results = useMemo(() => {
     const normalized = deferredQuery.trim().toLowerCase()
-    if (!normalized) return CATALOG_PRODUCTS.slice(0, 20)
+    if (!normalized) return MERGED_PRODUCTS.slice(0, 20)
 
-    let filtered = CATALOG_PRODUCTS.filter(p => 
+    let filtered = MERGED_PRODUCTS.filter(p =>
       p.title.toLowerCase().includes(normalized) || 
       p.brand.toLowerCase().includes(normalized) ||
       p.category.toLowerCase().includes(normalized)

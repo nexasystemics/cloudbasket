@@ -6,7 +6,52 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { SlidersHorizontal, ExternalLink, Grid3X3, List, ChevronLeft, ChevronRight } from 'lucide-react'
 import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
-import { PRODUCTS as CATALOG } from '@/lib/products-data'
+import { PRODUCTS as BASE_CATALOG, type Product as BaseProduct } from '@/lib/products-data'
+import { INDIA_CATALOG } from '@/lib/india-catalog'
+
+const INDIA_CATEGORY_MAP: Record<string, BaseProduct['category']> = {
+  'personal-care': 'Beauty',
+  'home-appliances': 'Home',
+  'electronics': 'Electronics',
+  'fashion': 'Fashion',
+  'food-grocery': 'Home',
+}
+
+const INDIA_AS_PRODUCTS: BaseProduct[] = INDIA_CATALOG.map(p => {
+  const priceValue = p.price
+  const originalPriceValue = p.originalPrice ?? Math.round(p.price * 1.2)
+  const discountPercent = p.discount ?? Math.max(1, Math.round(((originalPriceValue - priceValue) / originalPriceValue) * 100))
+  const platform = p.affiliatePlatform === 'flipkart' || p.affiliatePlatform === 'myntra' ? 'Flipkart' as const : 'Amazon' as const
+  return {
+    id: p.id,
+    name: p.name,
+    brand: p.brand,
+    platform,
+    originalPrice: `₹${originalPriceValue.toLocaleString('en-IN')}`,
+    discountedPrice: `₹${priceValue.toLocaleString('en-IN')}`,
+    priceValue,
+    rating: p.rating ?? 4.0,
+    reviews: (p.reviewCount ?? 0).toLocaleString(),
+    discountPercent,
+    category: INDIA_CATEGORY_MAP[p.category] ?? 'Electronics',
+    imageUrl: p.image,
+    description: p.description,
+    tags: [...p.tags],
+    inStock: p.inStock,
+    affiliateUrl: p.affiliateUrl,
+    stores: [{
+      name: platform,
+      price: `₹${priceValue.toLocaleString('en-IN')}`,
+      url: p.affiliateUrl,
+    }],
+  }
+})
+
+const CATALOG = (() => {
+  const sponsoredFirst = INDIA_AS_PRODUCTS.filter(p => INDIA_CATALOG.find(ip => ip.id === p.id)?.isSponsored)
+  const rest = [...BASE_CATALOG, ...INDIA_AS_PRODUCTS.filter(p => !sponsoredFirst.includes(p))]
+  return [...sponsoredFirst, ...rest]
+})()
 import PriceAlertBanner from '@/components/PriceAlertBanner'
 import ErrorBoundary from '@/components/ErrorBoundary'
 

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { BLOG_POSTS } from '@/lib/blog-data'
 import { CATALOG_PRODUCTS, CATEGORY_DEFINITIONS } from '@/lib/cloudbasket-data'
+import { INDIA_CATALOG } from '@/lib/india-catalog'
 
 const BASE_URL = 'https://cloudbasket.in'
 const LAST_MODIFIED = new Date()
@@ -48,5 +49,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...categoryRoutes, ...productRoutes, ...blogRoutes]
+  const indiaProductRoutes = INDIA_CATALOG.map((product) => ({
+    url: `${BASE_URL}/product/${product.id}`,
+    lastModified: LAST_MODIFIED,
+    changeFrequency: 'weekly' as const,
+    priority: 0.6,
+  }))
+
+  return [...staticRoutes, ...categoryRoutes, ...productRoutes, ...indiaProductRoutes, ...blogRoutes]
 }

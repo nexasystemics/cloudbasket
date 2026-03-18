@@ -7,12 +7,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, SlidersHorizontal, ChevronDown, Star, Zap, TrendingDown } from 'lucide-react'
 import TrackBehavior from '@/components/TrackBehavior'
-import { 
-  getCategoryDefinition, 
-  getCategoryProducts, 
+import {
+  getCategoryDefinition,
+  getCategoryProducts,
   type CatalogProduct,
   CATEGORY_ALIASES
 } from '@/lib/cloudbasket-data'
+import { getIndiaCatalogBySlug } from '@/lib/india-catalog/utils'
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
@@ -85,7 +86,10 @@ export default async function CategoryPage({
     notFound()
   }
 
-  const products = getCategoryProducts(category.slug)
+  const baseProducts = getCategoryProducts(category.slug)
+  const indiaProducts = getIndiaCatalogBySlug(category.slug)
+  const existingIds = new Set(baseProducts.map(p => p.id))
+  const products = [...baseProducts, ...indiaProducts.filter(p => !existingIds.has(p.id))]
 
   // Structured Data: ItemList
   const jsonLd = {

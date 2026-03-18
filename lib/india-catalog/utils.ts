@@ -1,6 +1,55 @@
-// Estimated: ~90 lines
+// Estimated: ~130 lines
 import { INDIA_CATALOG } from './index'
 import { IndiaProduct, IndiaCategory } from './types'
+import type { CatalogProduct, CategorySlug, PlatformLabel } from '@/lib/cloudbasket-data'
+
+const CATEGORY_MAP: Record<IndiaCategory, CategorySlug> = {
+  'personal-care': 'beauty',
+  'home-appliances': 'home',
+  'electronics': 'electronics',
+  'fashion': 'fashion',
+  'food-grocery': 'grocery',
+} as const
+
+const PLATFORM_MAP: Record<string, PlatformLabel> = {
+  amazon: 'Amazon',
+  flipkart: 'Flipkart',
+  myntra: 'Flipkart',
+  ajio: 'Flipkart',
+  croma: 'Amazon',
+  bigbasket: 'Amazon',
+  'reliance-digital': 'Amazon',
+} as const
+
+function toCatalogProduct(p: IndiaProduct): CatalogProduct {
+  return {
+    id: p.id,
+    brand: p.brand,
+    title: p.name,
+    category: CATEGORY_MAP[p.category],
+    price: p.price,
+    mrp: p.originalPrice ?? Math.round(p.price * 1.2),
+    rating: p.rating ?? 4.0,
+    reviewCount: p.reviewCount ?? 0,
+    image: p.image,
+    platform: PLATFORM_MAP[p.affiliatePlatform] ?? 'Amazon',
+    affiliateUrl: p.affiliateUrl,
+    badge: p.isSponsored ? 'Sponsored' : p.isTrending ? 'Trending' : undefined,
+    description: p.description,
+    specs: p.tags,
+    publishedAt: '2026-03-18',
+  }
+}
+
+export function getIndiaCatalogAsCatalogProducts(): CatalogProduct[] {
+  return INDIA_CATALOG.map(toCatalogProduct)
+}
+
+export function getIndiaCatalogBySlug(slug: CategorySlug): CatalogProduct[] {
+  return INDIA_CATALOG
+    .filter(p => CATEGORY_MAP[p.category] === slug)
+    .map(toCatalogProduct)
+}
 
 /**
  * Filter products by category

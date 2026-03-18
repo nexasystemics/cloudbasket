@@ -144,7 +144,7 @@ function toDisplayFromIndia(p: IndiaProduct): DisplayProduct {
   return {
     id: p.id, name: p.name, image: p.image, brand: p.brand,
     price: p.price, originalPrice, discount,
-    rating: p.rating ?? 4.0, reviewCount: p.reviewCount ?? 0,
+    rating: Number(p.rating ?? 4.0), reviewCount: Number(p.reviewCount ?? 0),
     mainCategory: p.category,
     affiliatePlatform,
     badge: p.isSponsored ? 'Sponsored' : p.isTrending ? 'Trending' : undefined,
@@ -216,7 +216,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     relatedProducts = getRelated(id, 4).map((p) => {
       const origPrice = p.originalPrice ?? Math.round(p.price * 1.2)
       const isFlip = p.affiliatePlatform === 'flipkart' || p.affiliatePlatform === 'myntra' || p.affiliatePlatform === 'ajio'
-      return { id: p.id, name: p.name, image: p.image, brand: p.brand, price: p.price, originalPrice: origPrice, discount: p.discount ?? Math.round(((origPrice - p.price) / origPrice) * 100), rating: p.rating ?? 4.0, reviewCount: p.reviewCount ?? 0, source: isFlip ? 'Flipkart' as const : 'Amazon' as const, affiliatePlatform: isFlip ? 'flipkart' as const : 'amazon' as const }
+      return { id: p.id, name: p.name, image: p.image, brand: p.brand, price: p.price, originalPrice: origPrice, discount: p.discount ?? Math.round(((origPrice - p.price) / origPrice) * 100), rating: Number(p.rating ?? 4.0), reviewCount: Number(p.reviewCount ?? 0), source: isFlip ? 'Flipkart' as const : 'Amazon' as const, affiliatePlatform: isFlip ? 'flipkart' as const : 'amazon' as const }
     })
   } else {
     relatedProducts = CATALOG_PRODUCTS.filter((item) => item.category === categoryDetails.slug && item.id !== id).slice(0, 4).map((item) => ({ id: item.id, name: item.title, image: item.image, brand: item.brand, price: item.price, originalPrice: item.mrp, discount: getSavePercent(item), rating: item.rating, reviewCount: item.reviewCount, source: item.platform === 'CJ Global' ? 'CJ' as const : item.platform === 'Flipkart' ? 'Flipkart' as const : 'Amazon' as const, affiliatePlatform: getCloudbasketAffiliatePlatform(item) }))
@@ -247,8 +247,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     aggregateRating: { '@type': 'AggregateRating', ratingValue: product.rating, reviewCount: product.reviewCount, bestRating: '5', worstRating: '1' },
     offers: {
       '@type': 'AggregateOffer', priceCurrency: 'INR',
-      lowPrice: Math.min(...priceComparison.map((p) => p.price)),
-      highPrice: Math.max(...priceComparison.map((p) => p.price)),
+      lowPrice: priceComparison.reduce((m, p) => Math.min(m, p.price), Infinity),
+      highPrice: priceComparison.reduce((m, p) => Math.max(m, p.price), 0),
       offerCount: priceComparison.length, availability: 'https://schema.org/InStock',
       offers: priceComparison.map((p) => ({ '@type': 'Offer', price: p.price, priceCurrency: 'INR', url: product.affiliateUrl ?? `https://cloudbasket.in/go/${p.platformSlug}-${product.id}`, seller: { '@type': 'Organization', name: p.platform } })),
     },
@@ -470,3 +470,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     </main>
   )
 }
+
+
+

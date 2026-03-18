@@ -4,7 +4,12 @@
       "Bash(cd F:/cloudbasket && pnpm tsc --noEmit 2>&1)",
       "Bash(cd F:/cloudbasket && pnpm add -D @types/pg 2>&1)",
       "Bash(cd:*)",
-      "Bash(pnpm build:*)"
+      "Bash(pnpm build:*)",
+      "Bash(xargs wc:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(grep -c 'id: IN-' lib/india-catalog/personal-care/*.ts lib/india-catalog/home-appliances/*.ts lib/india-catalog/electronics/*.ts lib/india-catalog/fashion/*.ts lib/india-catalog/food-grocery/*.ts)"
     ]
   }
 }

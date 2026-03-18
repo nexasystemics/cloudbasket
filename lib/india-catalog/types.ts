@@ -3,7 +3,7 @@ export type IndiaCategory = 'personal-care' | 'home-appliances' | 'electronics' 
 
 export type AffiliatePlatform = 'amazon' | 'flipkart' | 'croma' | 'myntra' | 'ajio' | 'bigbasket' | 'reliance-digital'
 
-export type AffiliateSource = 'amazon-pa-api' | 'flipkart-affiliate' | 'cj-network' | 'direct-link' | 'static'
+export type AffiliateSource = 'amazon-pa-api' | 'flipkart-affiliate' | 'cj-network' | 'direct-link' | 'static' | 'amazon-pa-api-free' | 'flipkart-affiliate-free'
 
 export type APISource = 'amazon-pa-api-free' | 'flipkart-affiliate-free' | 'open-food-facts-free' | 'static-only' | 'cj-paid' | 'impact-paid'
 

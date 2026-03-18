@@ -1,5 +1,5 @@
 import BackToTop from '@/components/BackToTop'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { ReactNode, Suspense } from 'react'
 import Script from 'next/script'
 import Footer from '@/components/Footer'
@@ -16,16 +16,16 @@ import './globals.css'
 
 function getSupabaseOrigin(): string | null {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-
-  if (!supabaseUrl) {
-    return null
-  }
-
+  if (!supabaseUrl) return null
   try {
     return new URL(supabaseUrl).origin
   } catch {
     return null
   }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#039BE5',
 }
 
 export const metadata: Metadata = {
@@ -77,7 +77,6 @@ export const metadata: Metadata = {
     shortcut: ['/brand/favicon.svg'],
   },
   manifest: '/manifest.json',
-  themeColor: '#039BE5',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -103,12 +102,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         {supabaseOrigin ? <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" /> : null}
       </head>
-      <body className="bg-[var(--cb-surface)] font-sans text-[var(--cb-text-primary)] antialiased transition-colors duration-300">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-blue-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg"
-        >
-          Skip to main content
+      <body className="bg-[var(--cb-surface)] font-sans text-[var(--cb-text-primary)] antialiased transition-colors duration-300">        <a
+        
+            href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-blue-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg">Skip to main content
         </a>
         <GlobalProvider>
           <CBThemeProvider>
@@ -135,4 +132,5 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     </html>
   )
 }
+
 

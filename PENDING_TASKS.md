@@ -1,35 +1,37 @@
 # CloudBasket - Pending Tasks & Audit Report
 
-## 1. Code Cleanup (Unused Imports & Broken Handlers)
-- **Navigation Menu:** `components/Navigation.tsx` is an older multi-tenant navigation component that isn't currently used in the main CloudBasket Header (`components/Header.tsx`). 
-- **Broken Handlers:** The `Navigation.tsx` mobile menu (`☰`) uses a simple `absolute` positioning which might be hidden behind `glass-header` if ever integrated.
-- **Unused Imports (from `pnpm lint`):**
-  - `app/blog/page.tsx`: `theme` is assigned but never used.
-  - `app/cj/page.tsx`: `Info`, `isConnected`, `index` are defined/assigned but unused.
-  - `app/deals/page.tsx`: `TenantTheme` is unused.
-  - `components/Navigation.tsx`: `theme` is unused.
-  - `services/price-engine/scraper.ts`: `ProductPrice`, `e` are unused.
+## SECTION 6 — ACCESSIBILITY (WCAG 2.2 AA)
+- ✅ **Task 6.1: Skip Link** — Added "Skip to main content" in `app/layout.tsx`.
+- ✅ **Task 6.2: Focus Rings** — Added `focus-visible` rings and ARIA roles/attributes to:
+  - `components/Header.tsx` (Promo dismiss, toggles)
+  - `components/CategoryGrid.tsx` (Category links)
+  - `components/ProductCard.tsx` (Modern & Deprecated - Wishlist, links, article)
+  - `components/products/ProductCard.tsx` (Article role/tabIndex/onKeyDown/Focus)
+  - `components/FeedbackWidget.tsx` (Fixed tab, close, emojis, submit)
+  - `components/DealsBar.tsx` (Flash Deals link, deal items)
+- ⬜ **Task 6.3: Compare Page Enhancements** — Sticky column + swipe hint for mobile.
+- ⬜ **Task 6.4: Footer Sitemap** — Expand Footer to 4-column structured sitemap.
 
-## 2. Image Audit (Duplicate URLs)
-The 2,000 items in `lib/mock-data.ts` are generated with unique IDs in the Unsplash URL:
-`https://images.unsplash.com/photo-${1500000000000 + id}?auto=format&fit=crop&q=80&w=800`
-- **Status:** No literal duplicates in generation logic, but Unsplash may serve the same placeholder for sequential large IDs.
-- **Action:** Recommend a curated list of ~50 high-quality category-specific URLs for a more professional look.
+## SECTION 7 — SEO & METADATA
+- ⬜ **Task 7.1: JSON-LD for Categories** — ItemList schema in `category/[slug]`.
+- ⬜ **Task 7.2: JSON-LD for Products** — Product schema in `product/[id]`.
+- ⬜ **Task 7.3: JSON-LD for FAQ** — FAQPage schema in `faq/page`.
+- ⬜ **Task 7.4: Dynamic OG Images** — Implement OG routes for products/categories.
+- ⬜ **Task 7.5: Canonical Alternates** — Ensure canonical tags across all routes.
 
-## 3. Header & UI Interaction Audit
-- **Header Dropdowns:** `components/Header.tsx` uses `onMouseEnter`/`onMouseLeave` correctly.
-- **Theme Switching:** Logo dynamically switches between `logo-full.svg` and `logo-full-dark.svg`.
-- **Z-Index Check:** 
-  - `.glass-header` has `z-50`.
-  - `.glass-sidebar` and `.glass-sidebar-right` are sticky but don't have explicit Z-index, potentially causing them to slide under the header (Good).
-  - **Issue:** The `CartDrawer` and `CartSuccessVideo` need to ensure they are at `z-[100]` to stay above the glass header.
+## SECTION 8 — CODE QUALITY & STABILITY
+- ⚠️ **Task 8.1: Error Boundary Wrapping** — Wrap remaining key components:
+  - ✅ `FeedbackWidget` (in layout)
+  - ⬜ `PriceAlertBanner` (in page/products)
+  - ⬜ `RecentlyViewed` (in product/[id])
+- ⬜ **Task 8.2: Type Safety** — Audit `lib/types.ts` for undefined fields/missing strict types.
+- ⬜ **Task 8.3: Deprecation Cleanup** — Add `@deprecated` JSDoc to root `ProductCard.tsx` (if replacing with `products/ProductCard.tsx` or vice-versa).
+- ✅ **Task 8.4: Environment Config** — `lib/env.ts` created and integrated.
 
-## 4. Performance & Performance
-- **Sync setState Error:** `app/checkout/page.tsx`, `app/order-success/page.tsx`, `app/page.tsx`, `components/Header.tsx`, and `context/CartContext.tsx` have "setState synchronously within an effect" warnings.
-- **Action:** Refactor these to use the `mounted` pattern correctly or move initialization logic out of `useEffect` where possible.
-
-## 5. Mobile UI Density
-- **Action:** The `grid-cols-4` on desktop is great, but ensure mobile remains `grid-cols-1` or `grid-cols-2` for readability.
+## SECTION 9 — PERFORMANCE & UX
+- ✅ **Task 9.1: Loading Skeletons** — Created `loading.tsx` for all major route segments.
+- ⬜ **Task 9.2: Image Optimization** — Curate ~50 high-quality category URLs to replace Unsplash randoms (Ref: Image Audit).
+- ⬜ **Task 9.3: Effect Cleanup** — Fix "setState synchronously within an effect" in `app/page.tsx`, `Header.tsx`, etc.
 
 ---
-*Generated on: March 1, 2026*
+*Last Updated: March 18, 2026*

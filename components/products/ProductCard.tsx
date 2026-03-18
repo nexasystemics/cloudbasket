@@ -171,7 +171,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
 
         <button
           onClick={toggleWishlist}
-          className={`absolute right-3 top-3 z-10 rounded-full p-2 backdrop-blur-md transition-all duration-300 ${
+          className={`absolute right-3 top-3 z-10 rounded-full p-2 backdrop-blur-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 ${
             isSaved
               ? 'bg-red-500 text-white'
               : 'bg-white/80 text-zinc-400 hover:text-red-500 dark:bg-zinc-900/80'

@@ -109,7 +109,7 @@ export default function FeedbackWidget() {
         type="button"
         onClick={openModal}
         aria-label="Open feedback"
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#039BE5] text-white px-2 py-4 rounded-l-xl shadow-xl hover:bg-[#0288cc] transition-colors"
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#039BE5] text-white px-2 py-4 rounded-l-xl shadow-xl hover:bg-[#0288cc] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
         style={{ writingMode: 'vertical-rl' }}
       >
         <span className="text-[11px] font-black uppercase tracking-widest">Feedback</span>

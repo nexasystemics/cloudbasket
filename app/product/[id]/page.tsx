@@ -335,23 +335,38 @@ export default async function ProductPage({
     '@context': 'https://schema.org',
     '@type': 'Product',
     'name': product.name,
-    'description': product.description || `Compare prices for ${product.name} on CloudBasket.`,
+    'description': product.description || `Compare prices for ${product.name} on CloudBasket. Find the best deals across Amazon, Flipkart, and more.`,
     'image': product.image,
     'brand': {
       '@type': 'Brand',
       'name': product.brand
     },
+    'sku': product.id,
+    'mpn': product.id,
     'aggregateRating': {
       '@type': 'AggregateRating',
       'ratingValue': product.rating,
-      'reviewCount': product.reviewCount
+      'reviewCount': product.reviewCount,
+      'bestRating': '5',
+      'worstRating': '1'
     },
     'offers': {
-      '@type': 'Offer',
+      '@type': 'AggregateOffer',
       'priceCurrency': 'INR',
-      'price': product.price,
+      'lowPrice': Math.min(...priceComparison.map(p => p.price)),
+      'highPrice': Math.max(...priceComparison.map(p => p.price)),
+      'offerCount': priceComparison.length,
       'availability': 'https://schema.org/InStock',
-      'url': `https://cloudbasket.in/go/${product.id}`
+      'offers': priceComparison.map(p => ({
+        '@type': 'Offer',
+        'price': p.price,
+        'priceCurrency': 'INR',
+        'url': `https://cloudbasket.in/go/${p.platformSlug}-${product.id}`,
+        'seller': {
+          '@type': 'Organization',
+          'name': p.platform
+        }
+      }))
     }
   }
 

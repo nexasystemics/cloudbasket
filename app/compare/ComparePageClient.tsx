@@ -254,9 +254,15 @@ export default function ComparePageClient() {
           <p className="text-muted mt-2">
             Compare up to 5 products across 15 specifications. Apple-to-apple comparison.
           </p>
-          <div className="md:hidden mt-4 text-[10px] font-black uppercase tracking-widest text-skyline-primary flex items-center gap-2">
-            <TrendingDown size={14} className="rotate-90" />
-            ← Swipe to compare →
+          <div className="md:hidden mt-4 text-[10px] font-black uppercase tracking-widest text-skyline-primary flex items-center gap-3">
+            <div className="flex items-center gap-1 animate-pulse">
+              <TrendingDown size={14} className="rotate-90" />
+              <span>Swipe horizontally to compare</span>
+              <div className="flex gap-1 ml-1">
+                <span className="animate-[bounce_1s_infinite] inline-block">←</span>
+                <span className="animate-[bounce_1s_infinite_0.2s] inline-block">→</span>
+              </div>
+            </div>
           </div>
           <span className="cb-badge cb-badge-blue mt-3">{selectedProducts.length}/5 products selected</span>
         </div>
@@ -272,13 +278,15 @@ export default function ComparePageClient() {
                 setShowSearch((value) => !value)
               })
             }}
+            aria-expanded={showSearch}
+            aria-controls="product-search-panel"
           >
             <Plus size={16} />
             Add Product
             {selectedProducts.length > 0 ? ` (${selectedProducts.length}/5)` : ''}
           </button>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2" aria-label="Selected products">
             {selectedProducts.map((id) => {
               const product = MOCK_PRODUCTS.find((item) => String(item.id) === id)
               if (!product) {
@@ -288,7 +296,12 @@ export default function ComparePageClient() {
               return (
                 <span key={id} className="cb-badge cb-badge-blue flex items-center gap-2">
                   {shortName}
-                  <button type="button" onClick={() => removeProduct(id)} aria-label={`Remove ${product.name}`}>
+                  <button 
+                    type="button" 
+                    onClick={() => removeProduct(id)} 
+                    aria-label={`Remove ${product.name} from comparison`}
+                    className="hover:text-red-500 transition-colors"
+                  >
                     <X size={12} />
                   </button>
                 </span>
@@ -298,13 +311,14 @@ export default function ComparePageClient() {
         </div>
 
         {showSearch ? (
-          <div className="cb-card mt-4 w-full p-4">
+          <div id="product-search-panel" className="cb-card mt-4 w-full p-4 animate-fade-up">
             <div className="relative mb-3">
               <Search size={14} className="text-muted pointer-events-none absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 className="cb-input w-full pl-9"
-                placeholder="Search products..."
+                placeholder="Search products to add..."
                 value={searchQuery}
+                aria-label="Search products"
                 onChange={(event) => {
                   const nextQuery = event.target.value
                   startTransition(() => {
@@ -313,19 +327,28 @@ export default function ComparePageClient() {
                 }}
               />
             </div>
-            <div className="grid max-h-64 grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4">
+            <div className="grid max-h-64 grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4 custom-scrollbar">
               {filteredProducts.slice(0, 20).map((product) => {
                 const isSelected = selectedProducts.includes(String(product.id))
                 return (
                   <div
                     key={product.id}
-                    className={`cb-card p-3 ${isSelected ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-[#039BE5]/50'}`}
+                    role="button"
+                    tabIndex={isSelected ? -1 : 0}
+                    className={`cb-card p-3 ${isSelected ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-[#039BE5]/50 active:scale-95'}`}
                     onClick={() => {
                       if (isSelected) {
                         return
                       }
                       addProduct(String(product.id))
                       setShowSearch(false)
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        if (isSelected) return;
+                        addProduct(String(product.id))
+                        setShowSearch(false)
+                      }
                     }}
                   >
                     <p className="line-clamp-1 text-xs font-bold">{product.name}</p>
@@ -354,16 +377,21 @@ export default function ComparePageClient() {
         </section>
       ) : (
         <section className="mx-auto max-w-7xl px-6 pb-16 relative">
+          {/* Mobile Scroll Indicators */}
           <div className="absolute right-6 top-0 bottom-16 w-12 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent pointer-events-none z-20 md:hidden" />
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+          <div className="absolute left-[152px] top-0 bottom-16 w-8 bg-gradient-to-r from-black/5 dark:from-black/20 to-transparent pointer-events-none z-20 md:hidden" />
+          
+          <div className="overflow-x-auto custom-scrollbar shadow-sm rounded-xl">
+            <table className="w-full border-collapse" aria-label="Product comparison table">
               <thead>
                 <tr className="sticky top-0 z-10 bg-[var(--cb-bg)]">
-                  <th className="sticky left-0 z-30 bg-white dark:bg-zinc-950 w-32 p-3 text-left text-xs font-black uppercase tracking-wider text-muted border-r border-zinc-100 dark:border-zinc-800">Spec</th>
+                  <th scope="col" className="sticky left-0 z-30 bg-white dark:bg-zinc-950 w-32 p-4 text-left text-[10px] font-black uppercase tracking-widest text-muted border-r border-zinc-100 dark:border-zinc-800 shadow-[2px_0_5px_rgba(0,0,0,0.05)]">
+                    Specification
+                  </th>
                   {compareEntries.map(({ product }) => (
-                    <th key={product.id} className="min-w-48 p-3 text-center align-top">
-                      <div className="cb-card p-4 text-center">
-                        <div className="relative mx-auto mb-2 h-32 w-32">
+                    <th key={product.id} scope="col" className="min-w-56 p-4 text-center align-top">
+                      <div className="cb-card p-4 text-center hover:scale-[1.02] transition-transform">
+                        <div className="relative mx-auto mb-3 h-32 w-32 grayscale-[0.2] hover:grayscale-0 transition-all">
                           <Image
                             fill
                             className="rounded-lg object-cover"
@@ -372,16 +400,16 @@ export default function ComparePageClient() {
                             sizes="128px"
                           />
                         </div>
-                        <p className="line-clamp-2 text-xs font-black">{product.name}</p>
-                        <p className="text-muted text-xs">{product.brand}</p>
-                        <p className="price-current mt-1 text-sm">Rs{product.price.toLocaleString('en-IN')}</p>
-                        <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-2 w-full gap-1 text-xs">
-                          <ExternalLink size={10} />
-                          Buy Now
+                        <p className="line-clamp-2 text-[11px] font-black leading-tight h-8 mb-1">{product.name}</p>
+                        <p className="text-muted text-[10px] uppercase tracking-widest font-bold mb-1">{product.brand}</p>
+                        <p className="price-current mt-1 text-base">Rs{product.price.toLocaleString('en-IN')}</p>
+                        <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-3 w-full gap-2 text-[10px] uppercase tracking-widest py-2">
+                          <ExternalLink size={12} />
+                          View Deal
                         </Link>
                         <button
                           type="button"
-                          className="cb-btn cb-btn-ghost mt-1 w-full text-xs"
+                          className="cb-btn cb-btn-ghost mt-2 w-full text-[9px] uppercase tracking-widest py-1 h-8 opacity-70 hover:opacity-100"
                           onClick={() => removeProduct(String(product.id))}
                         >
                           Remove
@@ -392,15 +420,17 @@ export default function ComparePageClient() {
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody className="divide-y divide-zinc-50 dark:divide-zinc-900">
                 {SPEC_KEYS.map((spec, index) => {
                   const lowestPrice = spec.format === 'price'
                     ? Math.min(...compareEntries.map((entry) => entry.specs.price))
                     : 0
 
                   return (
-                    <tr key={spec.key} className={index % 2 === 1 ? 'bg-[var(--cb-surface-2)]/30' : ''}>
-                      <td className="sticky left-0 z-20 bg-white dark:bg-zinc-950 w-32 px-4 py-3 text-xs font-black uppercase tracking-wider text-muted border-r border-zinc-100 dark:border-zinc-800">{spec.label}</td>
+                    <tr key={spec.key} className={index % 2 === 1 ? 'bg-[var(--cb-surface-2)]/40' : 'bg-white/50 dark:bg-zinc-950/50'}>
+                      <td className="sticky left-0 z-20 bg-white dark:bg-zinc-950 w-32 px-4 py-4 text-[10px] font-black uppercase tracking-widest text-muted border-r border-zinc-100 dark:border-zinc-800 shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
+                        {spec.label}
+                      </td>
                       {compareEntries.map(({ product, specs }) => {
                         const value = specs[spec.key]
 
@@ -408,36 +438,49 @@ export default function ComparePageClient() {
                           if (format === 'price') {
                             const isBestPrice = Number(value) === lowestPrice
                             return (
-                              <div>
-                                <p className={isBestPrice ? 'font-black text-[#10B981]' : ''}>
+                              <div className="flex flex-col items-center justify-center">
+                                <p className={`text-sm ${isBestPrice ? 'font-black text-status-success scale-110' : 'font-bold'}`}>
                                   Rs{Number(value).toLocaleString('en-IN')}
                                 </p>
-                                {isBestPrice ? <p className="text-xs font-black text-[#10B981]">✓ Best</p> : null}
+                                {isBestPrice ? (
+                                  <span className="mt-1 px-1.5 py-0.5 rounded bg-status-success/10 text-[8px] font-black text-status-success uppercase tracking-widest">
+                                    Best Value
+                                  </span>
+                                ) : null}
                               </div>
                             )
                           }
 
                           if (format === 'stars') {
-                            return <p className="text-[#F5C842]">{Number(value).toFixed(1)} ★</p>
+                            return (
+                              <div className="flex items-center justify-center gap-1">
+                                <span className="text-status-warning font-black">{Number(value).toFixed(1)}</span>
+                                <span className="text-status-warning">★</span>
+                              </div>
+                            )
                           }
 
                           if (format === 'number') {
-                            return <p>{Number(value).toLocaleString('en-IN')}</p>
+                            return <p className="font-bold">{Number(value).toLocaleString('en-IN')}</p>
                           }
 
                           if (format === 'badge') {
-                            return <span className={`cb-badge ${getPlatformClass(String(value))}`}>{String(value)}</span>
+                            return <span className={`cb-badge ${getPlatformClass(String(value))} text-[9px]`}>{String(value)}</span>
                           }
 
                           if (format === 'savings') {
-                            return <span className="cb-badge cb-badge-green">Rs{Number(value).toLocaleString('en-IN')}</span>
+                            return (
+                              <span className="cb-badge cb-badge-green text-[9px] font-black">
+                                Save Rs{Number(value).toLocaleString('en-IN')}
+                              </span>
+                            )
                           }
 
-                          return <p>{String(value)}</p>
+                          return <p className="text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">{String(value)}</p>
                         }
 
                         return (
-                          <td key={`${spec.key}-${product.id}`} className="px-4 py-3 text-center text-sm">
+                          <td key={`${spec.key}-${product.id}`} className="px-4 py-5 text-center text-sm">
                             {renderCell(spec.format)}
                           </td>
                         )
@@ -446,21 +489,28 @@ export default function ComparePageClient() {
                   )
                 })}
 
-                <tr className="border-t border-[var(--cb-border)]">
-                  <td className="sticky left-0 z-20 bg-white dark:bg-zinc-950 px-4 py-4 text-xs font-black uppercase tracking-wider border-r border-zinc-100 dark:border-zinc-800">Best Deal</td>
+                <tr className="border-t-2 border-[var(--cb-border)]">
+                  <td className="sticky left-0 z-20 bg-[var(--cb-surface-2)] dark:bg-zinc-900 w-32 px-4 py-6 text-[10px] font-black uppercase tracking-[0.2em] border-r border-zinc-200 dark:border-zinc-800 shadow-[2px_0_10px_rgba(0,0,0,0.1)]">
+                    Verdict
+                  </td>
                   {compareEntries.map(({ product }) => {
                     const id = String(product.id)
                     const isWinner = topScore > 0 && winnerScores[id] === topScore
                     return (
-                      <td key={`winner-${product.id}`} className="px-4 py-4 text-center">
+                      <td key={`winner-${product.id}`} className="px-4 py-6 text-center bg-[var(--cb-surface-2)]/30 dark:bg-zinc-900/30">
                         {isWinner ? (
-                          <span className="cb-badge cb-badge-green inline-flex items-center gap-1">
-                            <Check size={12} /> Best Choice
-                          </span>
+                          <div className="flex flex-col items-center gap-2">
+                            <span className="cb-badge cb-badge-green px-3 py-1.5 rounded-lg border-2 border-status-success/30 shadow-lg shadow-status-success/10 scale-110 animate-pulse-glow">
+                              <Check size={14} className="stroke-[3px]" /> Recommended
+                            </span>
+                            <p className="text-[9px] font-black uppercase tracking-widest text-status-success">Top rated specs</p>
+                          </div>
                         ) : (
-                          <span className="cb-badge inline-flex items-center gap-1 text-muted">
-                            <Minus size={12} /> Good Option
-                          </span>
+                          <div className="flex flex-col items-center gap-2 opacity-60">
+                            <span className="cb-badge inline-flex items-center gap-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-500 border-none">
+                              <Minus size={12} /> Solid Choice
+                            </span>
+                          </div>
                         )}
                       </td>
                     )

@@ -91,12 +91,30 @@ export default async function CategoryPage({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    'name': `${category.label} Products`,
+    'name': `${category.label} Products on CloudBasket`,
+    'description': category.heroDescription,
+    'url': `https://cloudbasket.in/category/${slug}`,
+    'numberOfItems': products.length,
     'itemListElement': products.map((product, index) => ({
       '@type': 'ListItem',
       'position': index + 1,
-      'name': product.title,
-      'url': `https://cloudbasket.in/product/${product.id}`
+      'item': {
+        '@type': 'Product',
+        'name': product.title,
+        'image': product.image,
+        'description': product.description,
+        'brand': {
+          '@type': 'Brand',
+          'name': product.brand
+        },
+        'offers': {
+          '@type': 'Offer',
+          'price': product.price,
+          'priceCurrency': 'INR',
+          'availability': 'https://schema.org/InStock',
+          'url': `https://cloudbasket.in/product/${product.id}`
+        }
+      }
     }))
   }
 

@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ExternalLink, Star, Heart, ChevronRight } from 'lucide-react'
-import { useGlobal } from '@/context/GlobalContext'
+import { useLocale } from '@/context/LocaleContext'
 import { trackClick } from '@/lib/intelligence/personalisation'
 import { trackAffiliateClick } from '@/lib/analytics'
 
@@ -71,7 +71,7 @@ const resolveSource = (product: ProductCardItem): ProductSource => {
 
 export function ProductCard({ product, variant = 'grid', personalScore }: ProductCardProps) {
   const router = useRouter()
-  const { formatPrice } = useGlobal()
+  const { formatPrice } = useLocale()
   const [imgError, setImgError] = useState<boolean>(false)
   const [isSaved, setIsSaved] = useState(false)
   const [isCompared, setIsCompared] = useState(false)

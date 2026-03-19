@@ -24,6 +24,7 @@ import {
 } from 'lucide-react'
 import ThemeToggle from '@/components/ThemeToggle'
 import { useGlobal } from '@/context/GlobalContext'
+import { useLocale } from '@/context/LocaleContext'
 import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
 import type { CountryCode } from '@/lib/types'
 
@@ -53,6 +54,12 @@ const COUNTRY_OPTIONS: ReadonlyArray<{ value: CountryCode; label: string }> = [
   { value: 'EU', label: 'Europe' },
   { value: 'GB', label: 'United Kingdom' },
 ]
+
+const LOCALE_OPTIONS = [
+  { value: 'en-IN', label: '🇮🇳 India (₹)' },
+  { value: 'en-US', label: '🇺🇸 US ($)' },
+  { value: 'en-GB', label: '🇬🇧 UK (£)' },
+] as const
 
 const DEAL_DROPDOWN: readonly DropdownItem[] = [
   { label: 'Flash Sales', href: '/deals/flash', icon: Zap },
@@ -84,6 +91,7 @@ export default function Header(): JSX.Element {
   const pathname = usePathname()
   const router = useRouter()
   const { country, setCountry, user } = useGlobal()
+  const { locale, setLocale } = useLocale()
 
   const [mounted, setMounted] = useState<boolean>(false)
   const [promoDismissed, setPromoDismissed] = useState<boolean>(false)
@@ -370,6 +378,22 @@ export default function Header(): JSX.Element {
             </select>
           </label>
 
+          <label className="glass-panel flex h-9 items-center gap-1 rounded-lg px-2 text-[11px]">
+            <span className="text-[var(--cb-text-muted)]">🌐</span>
+            <select
+              value={locale}
+              onChange={(event) => setLocale(event.target.value as 'en-IN' | 'en-US' | 'en-GB')}
+              className="bg-transparent text-[11px] font-semibold text-[var(--cb-text-primary)] outline-none"
+              aria-label="Select locale"
+            >
+              {LOCALE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+
           <ThemeToggle />
 
           <Link href={authRoute} className="cb-btn-primary inline-flex h-9 items-center gap-1 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
@@ -454,6 +478,22 @@ export default function Header(): JSX.Element {
                 aria-label="Select country mobile"
               >
                 {COUNTRY_OPTIONS.map((option) => (
+                  <option key={`mobile-${option.value}`} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="glass-panel flex h-10 flex-1 items-center gap-2 rounded-lg px-3">
+              <span className="text-[var(--cb-text-muted)]">🌍</span>
+              <select
+                value={locale}
+                onChange={(event) => setLocale(event.target.value as 'en-IN' | 'en-US' | 'en-GB')}
+                className="w-full bg-transparent text-sm outline-none"
+                aria-label="Select locale mobile"
+              >
+                {LOCALE_OPTIONS.map((option) => (
                   <option key={`mobile-${option.value}`} value={option.value}>
                     {option.label}
                   </option>

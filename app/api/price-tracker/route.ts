@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
     // 2. Fallback to Supabase Session
     if (!isAuthorized) {
-      const { data: { session } } = await supabase.auth.getSession()
+      const { data: { session } } = await supabase!.auth.getSession()
       if (session) isAuthorized = true
     }
 
@@ -56,3 +56,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
+

@@ -385,14 +385,14 @@ function SearchPageContent() {
                   key={product.unifiedId} 
                   product={{
                     id: product.unifiedId,
-                    name: product.name,
+                    name: (product as any).title ?? (product as any).name ?? '',
                     image: product.image,
                     brand: product.brand,
                     price: product.displayPrice,
                     originalPrice: product.displayOriginalPrice,
                     discount: product.displayDiscount,
-                    rating: product.rating,
-                    reviewCount: product.reviewCount,
+                    rating: product.rating ?? 4.0,
+                    reviewCount: product.reviewCount ?? 0,
                     source: (product.displayPlatform === 'Flipkart' ? 'Flipkart' : (product.displayPlatform === 'CJ Global' ? 'CJ' : 'Amazon')) as any,
                     affiliatePlatform: product.displayPlatform as any,
                   }} 
@@ -581,3 +581,5 @@ export default function SearchPageClient() {
     </Suspense>
   )
 }
+
+

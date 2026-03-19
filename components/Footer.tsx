@@ -1,3 +1,5 @@
+'use client'
+
 // Estimated: ~160 lines
 // Purpose: Main site footer with navigation sitemap, compliance badges and legal info.
 
@@ -181,3 +183,4 @@ export default function Footer() {
     </footer>
   )
 }
+

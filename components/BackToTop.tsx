@@ -1,3 +1,5 @@
+'use client'
+
 // Purpose: Provides a site-wide floating shortcut back to the top of the page.
 'use client'
 
@@ -50,3 +52,4 @@ export default function BackToTop(_: BackToTopProps) {
     </button>
   )
 }
+

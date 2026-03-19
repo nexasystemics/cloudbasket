@@ -3,7 +3,8 @@
 // A20: Search logic for Advanced Search System.
 
 import { CATALOG_PRODUCTS, type CatalogProduct } from '@/lib/cloudbasket-data'
-import { INDIA_CATALOG, type IndiaProduct } from '@/lib/india-catalog'
+import { INDIA_CATALOG } from '@/lib/india-catalog'
+import { type IndiaProduct } from '@/lib/india-catalog/types'
 
 export interface SearchFilters {
   categories?: string[]
@@ -18,6 +19,10 @@ export interface SearchFilters {
 
 // Unified product type for search results
 export type SearchProduct = (IndiaProduct | CatalogProduct) & {
+  name: string // Normalized field: IndiaProduct.name or CatalogProduct.title
+  rating: number
+  reviewCount: number
+  inStock?: boolean // Present on IndiaProduct, assumed true for CatalogProduct
   relevanceScore: number
   displayPrice: number
   displayOriginalPrice: number

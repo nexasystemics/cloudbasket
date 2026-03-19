@@ -1,3 +1,5 @@
+'use client'
+
 // DEPRECATED: Use components/products/ProductCard.tsx instead. Retained for backward compatibility.
 'use client'
 
@@ -188,3 +190,4 @@ export default function ProductCard({
     </div>
   )
 }
+

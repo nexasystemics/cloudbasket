@@ -1,3 +1,5 @@
+'use client'
+
 // Estimated: ~120 lines
 // Purpose: Renders a table comparing prices of a product from different platforms.
 
@@ -107,3 +109,4 @@ export default async function PriceComparisonTable({ productId }: PriceCompariso
     </section>
   );
 }
+

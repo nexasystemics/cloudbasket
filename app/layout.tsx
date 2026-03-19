@@ -13,6 +13,7 @@ import SchemaMarkup from '@/components/SchemaMarkup'
 import '@/lib/env'
 import CBThemeProvider from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
+import { LocaleProvider } from '@/context/LocaleContext'
 import './globals.css'
 
 function getSupabaseOrigin(): string | null {
@@ -35,24 +36,12 @@ export const metadata: Metadata = {
     default: "CloudBasket — India's Best Price Comparison",
     template: '%s | CloudBasket',
   },
-  description:
-    'Compare prices across Amazon, Flipkart & 50+ stores. Find the best deals on mobiles, laptops, fashion and more. Zero checkout. Pure discovery.',
-  keywords: [
-    'price comparison',
-    'best deals india',
-    'amazon flipkart compare',
-    'lowest price',
-    'cloudbasket',
-    'deal finder india',
-  ],
+  description: 'Compare prices across Amazon, Flipkart & 50+ stores. Find the best deals on mobiles, laptops, fashion and more. Zero checkout. Pure discovery.',
+  keywords: ['price comparison', 'best deals india', 'amazon flipkart compare', 'lowest price', 'cloudbasket', 'deal finder india'],
   authors: [{ name: 'NEXQON HOLDINGS', url: 'https://nexqon.com' }],
   creator: 'NEXQON Holdings',
   publisher: 'CloudBasket',
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true },
-  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
@@ -78,14 +67,8 @@ export const metadata: Metadata = {
     shortcut: ['/brand/favicon.svg'],
   },
   manifest: '/manifest.json',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'black-translucent',
-    title: 'CloudBasket',
-  },
-  other: {
-    'mobile-web-app-capable': 'yes',
-  },
+  appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'CloudBasket' },
+  other: { 'mobile-web-app-capable': 'yes' },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -103,36 +86,31 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         {supabaseOrigin ? <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" /> : null}
       </head>
-      <body className="bg-[var(--cb-bg)] text-[var(--cb-text-primary)] font-sans antialiased transition-colors duration-300 dark:bg-zinc-950 dark:text-white">        <a
-        
-            href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-blue-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg">Skip to main content
-        </a>
+      <body className="bg-[var(--cb-bg)] text-[var(--cb-text-primary)] font-sans antialiased transition-colors duration-300 dark:bg-zinc-950 dark:text-white">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-blue-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg">Skip to main content</a>
         <GlobalProvider>
-          <CBThemeProvider>
-            <Analytics />
-            <SchemaMarkup type="website" />
-            <LayoutTopEnhancements />
-            <Header />
-            <main id="main-content">{children}</main>
-            <Footer />
-            <BackToTop />
-            <ErrorBoundary>
-              <Suspense>
-                <FeedbackWidget />
-              </Suspense>
-            </ErrorBoundary>
-            <LayoutBottomEnhancements />
-            <Script id="sw-register" strategy="afterInteractive">
-              {`if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js')
-              }`}
-            </Script>
-          </CBThemeProvider>
+          <LocaleProvider>
+            <CBThemeProvider>
+              <Analytics />
+              <SchemaMarkup type="website" />
+              <LayoutTopEnhancements />
+              <Header />
+              <main id="main-content">{children}</main>
+              <Footer />
+              <BackToTop />
+              <ErrorBoundary>
+                <Suspense>
+                  <FeedbackWidget />
+                </Suspense>
+              </ErrorBoundary>
+              <LayoutBottomEnhancements />
+            </CBThemeProvider>
+          </LocaleProvider>
         </GlobalProvider>
+        <Script id="sw-register" strategy="afterInteractive">
+          {`if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js') }`}
+        </Script>
       </body>
     </html>
   )
 }
-
-

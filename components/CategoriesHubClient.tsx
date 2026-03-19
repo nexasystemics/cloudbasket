@@ -3,9 +3,12 @@
 import Link from 'next/link'
 import { Search } from 'lucide-react'
 import { useMemo, useState, type CSSProperties, type JSX } from 'react'
+import { CATALOG_PRODUCTS, type CategorySlug } from '@/lib/cloudbasket-data'
+import { getIndiaCatalogBySlug } from '@/lib/india-catalog/utils'
 
 type CategoryItem = {
   name: string
+  slug: CategorySlug
   description: string
   color: string
   href: string
@@ -199,30 +202,34 @@ function WatchesIcon(): JSX.Element {
 }
 
 const CATEGORIES: readonly CategoryItem[] = [
-  { name: 'Automotive', description: 'Vehicle essentials', color: '#FF6B35', href: '/category/automotive', Icon: AutomotiveIcon },
-  { name: 'Beauty & Care', description: 'Glow and self-care', color: '#FF69B4', href: '/category/beauty', Icon: BeautyIcon },
-  { name: 'Books', description: 'Read and learn', color: '#A78BFA', href: '/category/books', Icon: BooksIcon },
-  { name: 'Electronics', description: 'Smart tech gear', color: '#039BE5', href: '/category/electronics', Icon: ElectronicsIcon },
-  { name: 'Fashion', description: 'Style picks', color: '#F472B6', href: '/category/fashion', Icon: FashionIcon },
-  { name: 'Finance', description: 'Money and cards', color: '#10B981', href: '/category/finance', Icon: FinanceIcon },
-  { name: 'Food & Grocery', description: 'Daily kitchen needs', color: '#84CC16', href: '/category/food', Icon: GroceryIcon },
-  { name: 'Gaming', description: 'Consoles and games', color: '#C084FC', href: '/category/gaming', Icon: GamingIcon },
-  { name: 'Health', description: 'Wellness essentials', color: '#2DD4BF', href: '/category/health', Icon: HealthIcon },
-  { name: 'Home & Kitchen', description: 'Home must-haves', color: '#FBBF24', href: '/category/home', Icon: HomeIcon },
-  { name: 'Investments', description: 'Grow your money', color: '#22C55E', href: '/category/investments', Icon: InvestmentsIcon },
-  { name: 'Jewellery', description: 'Fine accessories', color: '#F5C842', href: '/category/jewellery', Icon: JewelleryIcon },
-  { name: 'Kids & Toys', description: 'Playtime picks', color: '#FB923C', href: '/category/toys', Icon: KidsIcon },
-  { name: 'Laptops & PCs', description: 'Computing devices', color: '#94A3B8', href: '/category/laptops', Icon: LaptopsIcon },
-  { name: 'Music', description: 'Audio and instruments', color: '#F9A8D4', href: '/category/music', Icon: MusicIcon },
-  { name: 'Online Courses', description: 'Learn new skills', color: '#818CF8', href: '/category/courses', Icon: CoursesIcon },
-  { name: 'Print on Demand', description: 'Custom creations', color: '#F97316', href: '/pod', Icon: PODIcon },
-  { name: 'Sports', description: 'Fitness and outdoors', color: '#EF4444', href: '/category/sports', Icon: SportsIcon },
-  { name: 'Travel & Hotels', description: 'Trips and stays', color: '#38BDF8', href: '/category/travel', Icon: TravelIcon },
-  { name: 'Watches', description: 'Timeless classics', color: '#CBD5E1', href: '/category/watches', Icon: WatchesIcon },
+  { name: 'Automotive', slug: 'automotive', description: 'Vehicle essentials', color: '#FF6B35', href: '/category/automotive', Icon: AutomotiveIcon },
+  { name: 'Beauty & Care', slug: 'beauty', description: 'Glow and self-care', color: '#FF69B4', href: '/category/beauty', Icon: BeautyIcon },
+  { name: 'Books', slug: 'books', description: 'Read and learn', color: '#A78BFA', href: '/category/books', Icon: BooksIcon },
+  { name: 'Electronics', slug: 'electronics', description: 'Smart tech gear', color: '#039BE5', href: '/category/electronics', Icon: ElectronicsIcon },
+  { name: 'Fashion', slug: 'fashion', description: 'Style picks', color: '#F472B6', href: '/category/fashion', Icon: FashionIcon },
+  { name: 'Finance', slug: 'finance', description: 'Money and cards', color: '#10B981', href: '/category/finance', Icon: FinanceIcon },
+  { name: 'Food & Grocery', slug: 'grocery', description: 'Daily kitchen needs', color: '#84CC16', href: '/category/food', Icon: GroceryIcon },
+  { name: 'Gaming', slug: 'gaming', description: 'Consoles and games', color: '#C084FC', href: '/category/gaming', Icon: GamingIcon },
+  { name: 'Health', slug: 'health', description: 'Wellness essentials', color: '#2DD4BF', href: '/category/health', Icon: HealthIcon },
+  { name: 'Home & Kitchen', slug: 'home', description: 'Home must-haves', color: '#FBBF24', href: '/category/home', Icon: HomeIcon },
+  { name: 'Investments', slug: 'investments', description: 'Grow your money', color: '#22C55E', href: '/category/investments', Icon: InvestmentsIcon },
+  { name: 'Jewellery', slug: 'jewellery', description: 'Fine accessories', color: '#F5C842', href: '/category/jewellery', Icon: JewelleryIcon },
+  { name: 'Kids & Toys', slug: 'toys', description: 'Playtime picks', color: '#FB923C', href: '/category/toys', Icon: KidsIcon },
+  { name: 'Laptops & PCs', slug: 'laptops', description: 'Computing devices', color: '#94A3B8', href: '/category/laptops', Icon: LaptopsIcon },
+  { name: 'Music', slug: 'music', description: 'Audio and instruments', color: '#F9A8D4', href: '/category/music', Icon: MusicIcon },
+  { name: 'Online Courses', slug: 'courses', description: 'Learn new skills', color: '#818CF8', href: '/category/courses', Icon: CoursesIcon },
+  { name: 'Print on Demand', slug: 'pod', description: 'Custom creations', color: '#F97316', href: '/pod', Icon: PODIcon },
+  { name: 'Sports', slug: 'sports', description: 'Fitness and outdoors', color: '#EF4444', href: '/category/sports', Icon: SportsIcon },
+  { name: 'Travel & Hotels', slug: 'travel', description: 'Trips and stays', color: '#38BDF8', href: '/category/travel', Icon: TravelIcon },
+  { name: 'Watches', slug: 'watches', description: 'Timeless classics', color: '#CBD5E1', href: '/category/watches', Icon: WatchesIcon },
 ]
 
 function CategoryCell({ category, isMobile }: CategoryCellProps): JSX.Element {
   const [hovered, setHovered] = useState(false)
+  const baseCount = CATALOG_PRODUCTS.filter((p) => p.category === category.slug).length
+  const indiaCount = getIndiaCatalogBySlug(category.slug).length
+  const totalCount = baseCount + indiaCount
+
   const borderColor = hovered ? hexToRgba(category.color, 0.5) : hexToRgba(category.color, 0.19)
   const bgColor = hovered ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.03)'
   const shadow = hovered ? `0 0 24px ${hexToRgba(category.color, 0.25)}` : 'none'
@@ -245,6 +252,14 @@ function CategoryCell({ category, isMobile }: CategoryCellProps): JSX.Element {
         isMobile ? 'h-[112px] w-full rounded-xl px-2 py-3' : 'h-[138px] w-[160px] px-4'
       } ${isMobile ? '' : 'md:[clip-path:polygon(50%_0%,100%_25%,100%_75%,50%_100%,0%_75%,0%_25%)]'}`}
     >
+      {totalCount > 0 && (
+        <span 
+          className="absolute top-2 right-4 md:right-6 rounded-full px-1.5 py-0.5 text-[8px] font-black text-white"
+          style={{ backgroundColor: category.color }}
+        >
+          {totalCount}
+        </span>
+      )}
       <span
         className="mb-2 inline-flex h-10 w-10 items-center justify-center"
         style={{ color: category.color, transform: iconTransform, transition: 'transform 220ms ease, color 220ms ease' }}

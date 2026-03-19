@@ -14,13 +14,14 @@ export type CategorySlug =
   | 'jewellery'
   | 'laptops'
   | 'mobiles'
+  | 'music'
   | 'pod'
   | 'sports'
   | 'toys'
   | 'travel'
   | 'watches'
 
-export type PlatformLabel = 'Amazon' | 'CJ Global' | 'Flipkart' | 'Print on Demand'
+export type PlatformLabel = 'Amazon' | 'CJ Global' | 'Flipkart' | 'Print on Demand' | 'Croma' | 'Myntra' | 'BigBasket' | 'Reliance Digital'
 export type ViewMode = 'grid' | 'list'
 
 export interface CategoryDefinition {

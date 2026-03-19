@@ -1,4 +1,6 @@
-// Estimated: ~130 lines
+// lib/india-catalog/utils.ts
+// A19: Module-level Map cache for all utility functions (static data, no TTL needed).
+
 import { INDIA_CATALOG } from './index'
 import { IndiaProduct, IndiaCategory } from './types'
 import type { CatalogProduct, CategorySlug, PlatformLabel } from '@/lib/cloudbasket-data'
@@ -14,90 +16,89 @@ const CATEGORY_MAP: Record<IndiaCategory, CategorySlug> = {
 const PLATFORM_MAP: Record<string, PlatformLabel> = {
   amazon: 'Amazon',
   flipkart: 'Flipkart',
-  myntra: 'Flipkart',
-  ajio: 'Flipkart',
-  croma: 'Amazon',
-  bigbasket: 'Amazon',
-  'reliance-digital': 'Amazon',
+  myntra: 'Myntra',
+  ajio: 'Flipkart', // AJIO can stay as Flipkart or be separate if needed, but the request didn't list it.
+  croma: 'Croma',
+  bigbasket: 'BigBasket',
+  'reliance-digital': 'Reliance Digital',
 } as const
+
+// ── Module-level caches ───────────────────────────────────────────────────────
+const _categoryCache = new Map<IndiaCategory, IndiaProduct[]>()
+const _brandCache = new Map<string, IndiaProduct[]>()
+const _subCategoryCache = new Map<string, IndiaProduct[]>()
+const _slugCache = new Map<CategorySlug, CatalogProduct[]>()
+let _featuredCache: IndiaProduct[] | null = null
+let _trendingCache: IndiaProduct[] | null = null
+let _allAsCatalogCache: CatalogProduct[] | null = null
 
 function toCatalogProduct(p: IndiaProduct): CatalogProduct {
   return {
-    id: p.id,
-    brand: p.brand,
-    title: p.name,
+    id: p.id, brand: p.brand, title: p.name,
     category: CATEGORY_MAP[p.category],
-    price: p.price,
-    mrp: p.originalPrice ?? Math.round(p.price * 1.2),
-    rating: p.rating ?? 4.0,
-    reviewCount: p.reviewCount ?? 0,
-    image: p.image,
-    platform: PLATFORM_MAP[p.affiliatePlatform] ?? 'Amazon',
+    price: p.price, mrp: p.originalPrice ?? Math.round(p.price * 1.2),
+    rating: p.rating ?? 4.0, reviewCount: p.reviewCount ?? 0,
+    image: p.image, platform: PLATFORM_MAP[p.affiliatePlatform] ?? 'Amazon',
     affiliateUrl: p.affiliateUrl,
     badge: p.isSponsored ? 'Sponsored' : p.isTrending ? 'Trending' : undefined,
-    description: p.description,
-    specs: p.tags,
-    publishedAt: '2026-03-18',
+    description: p.description, specs: p.tags, publishedAt: '2026-03-18',
   }
 }
 
 export function getIndiaCatalogAsCatalogProducts(): CatalogProduct[] {
-  return INDIA_CATALOG.map(toCatalogProduct)
+  if (_allAsCatalogCache) return _allAsCatalogCache
+  _allAsCatalogCache = INDIA_CATALOG.map(toCatalogProduct)
+  return _allAsCatalogCache
 }
 
 export function getIndiaCatalogBySlug(slug: CategorySlug): CatalogProduct[] {
-  return INDIA_CATALOG
-    .filter(p => CATEGORY_MAP[p.category] === slug)
-    .map(toCatalogProduct)
+  const cached = _slugCache.get(slug)
+  if (cached) return cached
+  const result = INDIA_CATALOG.filter(p => CATEGORY_MAP[p.category] === slug).map(toCatalogProduct)
+  _slugCache.set(slug, result)
+  return result
 }
 
-/**
- * Filter products by category
- */
 export function getByCategory(category: IndiaCategory): IndiaProduct[] {
-  return INDIA_CATALOG.filter(p => p.category === category)
+  const cached = _categoryCache.get(category)
+  if (cached) return cached
+  const result = INDIA_CATALOG.filter(p => p.category === category)
+  _categoryCache.set(category, result)
+  return result
 }
 
-/**
- * Filter products by brand (case-insensitive)
- */
 export function getByBrand(brand: string): IndiaProduct[] {
-  const query = brand.toLowerCase()
-  return INDIA_CATALOG.filter(p => p.brand.toLowerCase() === query)
+  const key = brand.toLowerCase()
+  const cached = _brandCache.get(key)
+  if (cached) return cached
+  const result = INDIA_CATALOG.filter(p => p.brand.toLowerCase() === key)
+  _brandCache.set(key, result)
+  return result
 }
 
-/**
- * Filter products by sub-category
- */
 export function getBySubCategory(subCategory: string): IndiaProduct[] {
-  const query = subCategory.toLowerCase()
-  return INDIA_CATALOG.filter(p => p.subCategory.toLowerCase() === query)
+  const key = subCategory.toLowerCase()
+  const cached = _subCategoryCache.get(key)
+  if (cached) return cached
+  const result = INDIA_CATALOG.filter(p => p.subCategory.toLowerCase() === key)
+  _subCategoryCache.set(key, result)
+  return result
 }
 
-/**
- * Get featured products with an optional limit
- */
 export function getFeatured(limit?: number): IndiaProduct[] {
-  const featured = INDIA_CATALOG.filter(p => p.isFeatured)
-  return limit ? featured.slice(0, limit) : featured
+  if (!_featuredCache) _featuredCache = INDIA_CATALOG.filter(p => p.isFeatured)
+  return limit ? _featuredCache.slice(0, limit) : _featuredCache
 }
 
-/**
- * Get trending products with an optional limit
- */
 export function getTrending(limit?: number): IndiaProduct[] {
-  const trending = INDIA_CATALOG.filter(p => p.isTrending)
-  return limit ? trending.slice(0, limit) : trending
+  if (!_trendingCache) _trendingCache = INDIA_CATALOG.filter(p => p.isTrending)
+  return limit ? _trendingCache.slice(0, limit) : _trendingCache
 }
 
-/**
- * Search catalog by name, brand, or sub-brand
- */
 export function searchCatalog(query: string): IndiaProduct[] {
   const term = query.toLowerCase().trim()
   if (!term) return []
-  
-  return INDIA_CATALOG.filter(p => 
+  return INDIA_CATALOG.filter(p =>
     p.name.toLowerCase().includes(term) ||
     p.brand.toLowerCase().includes(term) ||
     p.subBrand.toLowerCase().includes(term) ||
@@ -105,20 +106,12 @@ export function searchCatalog(query: string): IndiaProduct[] {
   )
 }
 
-/**
- * Get related products based on category and sub-category
- */
-export function getRelated(productId: string, limit: number = 4): IndiaProduct[] {
+export function getRelated(productId: string, limit = 4): IndiaProduct[] {
   const product = INDIA_CATALOG.find(p => p.id === productId)
   if (!product) return []
-
   return INDIA_CATALOG
-    .filter(p => 
-      p.id !== productId && 
-      (p.subCategory === product.subCategory || p.category === product.category)
-    )
+    .filter(p => p.id !== productId && (p.subCategory === product.subCategory || p.category === product.category))
     .sort((a, b) => {
-      // Prioritize sub-category matches
       if (a.subCategory === product.subCategory && b.subCategory !== product.subCategory) return -1
       if (a.subCategory !== product.subCategory && b.subCategory === product.subCategory) return 1
       return 0

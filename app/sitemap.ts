@@ -1,3 +1,6 @@
+// app/sitemap.ts
+// A18: Added brand page routes for all 10 India Catalog brands.
+
 import type { MetadataRoute } from 'next'
 import { BLOG_POSTS } from '@/lib/blog-data'
 import { CATALOG_PRODUCTS, CATEGORY_DEFINITIONS } from '@/lib/cloudbasket-data'
@@ -5,6 +8,8 @@ import { INDIA_CATALOG } from '@/lib/india-catalog'
 
 const BASE_URL = 'https://cloudbasket.in'
 const LAST_MODIFIED = new Date()
+
+const INDIA_BRANDS = ['HUL', 'Dabur', 'ITC', 'Godrej', 'Bajaj', 'Havells', 'Philips', 'Prestige', 'boAt', 'Noise']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -28,33 +33,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/legal/terms`, lastModified: LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
   ]
 
-  const categoryRoutes = CATEGORY_DEFINITIONS.map((category) => ({
+  const categoryRoutes = CATEGORY_DEFINITIONS.map(category => ({
     url: category.slug === 'pod' ? `${BASE_URL}/pod` : `${BASE_URL}/category/${category.slug}`,
-    lastModified: LAST_MODIFIED,
-    changeFrequency: 'daily' as const,
-    priority: 0.8,
+    lastModified: LAST_MODIFIED, changeFrequency: 'daily' as const, priority: 0.8,
   }))
 
-  const productRoutes = CATALOG_PRODUCTS.map((product) => ({
+  const productRoutes = CATALOG_PRODUCTS.map(product => ({
     url: `${BASE_URL}/product/${product.id}`,
     lastModified: new Date(product.publishedAt),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
+    changeFrequency: 'weekly' as const, priority: 0.6,
   }))
 
-  const blogRoutes = BLOG_POSTS.map((post) => ({
-    url: `${BASE_URL}/blog/${post.slug}`,
-    lastModified: LAST_MODIFIED,
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }))
-
-  const indiaProductRoutes = INDIA_CATALOG.map((product) => ({
+  const indiaProductRoutes = INDIA_CATALOG.map(product => ({
     url: `${BASE_URL}/product/${product.id}`,
-    lastModified: LAST_MODIFIED,
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
+    lastModified: LAST_MODIFIED, changeFrequency: 'weekly' as const, priority: 0.6,
   }))
 
-  return [...staticRoutes, ...categoryRoutes, ...productRoutes, ...indiaProductRoutes, ...blogRoutes]
+  // A18: Brand pages
+  const brandRoutes = INDIA_BRANDS.map(brand => ({
+    url: `${BASE_URL}/brand/${encodeURIComponent(brand)}`,
+    lastModified: LAST_MODIFIED, changeFrequency: 'weekly' as const, priority: 0.7,
+  }))
+
+  const blogRoutes = BLOG_POSTS.map(post => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: LAST_MODIFIED, changeFrequency: 'weekly' as const, priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...categoryRoutes, ...productRoutes, ...indiaProductRoutes, ...brandRoutes, ...blogRoutes]
 }

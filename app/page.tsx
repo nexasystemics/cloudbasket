@@ -15,6 +15,8 @@ import TrendingSearches from '@/components/TrendingSearches'
 import { DEALS } from '@/lib/deals-data'
 import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { PRODUCTS } from '@/lib/mock-data'
+import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
+import { INDIA_CATALOG } from '@/lib/india-catalog'
 
 export const metadata: Metadata = {
   title: 'CloudBasket - Everything in One Basket',
@@ -191,7 +193,7 @@ export default function HomePage() {
   return (
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_STRUCTURED_DATA) }} />
-      <HeroSection />
+      <HeroSection totalCount={CATALOG_PRODUCTS.length + INDIA_CATALOG.length} />
       <PlatformTrustBar />
       <TrendingSearches />
       <DealsBar />
@@ -209,3 +211,6 @@ export default function HomePage() {
     </main>
   )
 }
+
+
+

@@ -8,6 +8,7 @@ import {
   Gamepad2,
   Home,
   Laptop,
+  Music,
   ShoppingBasket,
   Shirt,
   Smartphone,
@@ -28,6 +29,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ROUTES } from '@/lib/constants'
 import { CATEGORY_DEFINITIONS, CATALOG_PRODUCTS, type CategoryDefinition } from '@/lib/cloudbasket-data'
+import { getIndiaCatalogBySlug } from '@/lib/india-catalog/utils'
 
 const CATEGORY_ICON_MAP: Record<CategoryDefinition['slug'], LucideIcon> = {
   automotive: Car,
@@ -45,6 +47,7 @@ const CATEGORY_ICON_MAP: Record<CategoryDefinition['slug'], LucideIcon> = {
   jewellery: Gem,
   laptops: Laptop,
   mobiles: Smartphone,
+  music: Music,
   pod: Printer,
   sports: Dumbbell,
   toys: Puzzle,
@@ -79,7 +82,9 @@ const GRADIENT_MAP: Record<string, string> = {
 
 export default function CategoryGrid() {
   const categories = CATEGORY_DEFINITIONS.map((cat) => {
-    const count = CATALOG_PRODUCTS.filter((p) => p.category === cat.slug).length
+    const baseCount = CATALOG_PRODUCTS.filter((p) => p.category === cat.slug).length
+    const indiaCount = getIndiaCatalogBySlug(cat.slug).length
+    const count = baseCount + indiaCount
     return {
       ...cat,
       count,

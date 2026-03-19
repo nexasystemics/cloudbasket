@@ -32,8 +32,8 @@ export default function AffiliateDisclosureBanner() {
   if (!visible) return null
 
   return (
-    <div className="w-full bg-amber-50 border-b border-amber-200 px-4 py-2 flex items-center justify-between gap-4">
-      <p className="text-xs font-medium text-amber-900 flex-1 text-center">
+    <div className="w-full bg-amber-50 dark:bg-amber-900 border-b border-amber-200 dark:border-amber-700 px-4 py-2 flex items-center justify-between gap-4">
+      <p className="text-xs font-medium text-amber-900 dark:text-amber-100 flex-1 text-center">
         This platform earns a small commission when you click and buy through our links — at no extra cost to you.{' '}
         <Link
           href="/affiliate-disclosure"

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Bell, X, CheckCircle, TrendingDown } from 'lucide-react'
+import { trackPriceAlertSet } from '@/lib/analytics'
 
 interface PriceAlertModalProps {
   productName: string
@@ -17,6 +18,11 @@ export default function PriceAlertModal({ productName, currentPrice, onClose }: 
   const handleSubmit = () => {
     if (!email || !targetPrice) {
       return
+    }
+    try {
+      trackPriceAlertSet(productName, Number(targetPrice))
+    } catch {
+      // ignore tracking errors
     }
     setSubmitted(true)
   }

@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, Star, ChevronRight, Heart } from 'lucide-react'
+import { trackAffiliateClick } from '@/lib/analytics'
 
 export interface ProductCardProps {
   id: string
@@ -163,6 +164,10 @@ export default function ProductCard({
             href={`/go/${id}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              const priceValue = Number(discountedPrice.toString().replace(/[₹,\s]/g, '')) || 0
+              trackAffiliateClick(id, platform, priceValue)
+            }}
             className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-orange-500/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
             style={{ backgroundColor: theme?.accentColor || '#E65100' }}
           >

@@ -8,6 +8,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { CATALOG_PRODUCTS, type CatalogProduct } from '@/lib/cloudbasket-data'
 
+import { trackView } from '@/lib/intelligence/personalisation'
+import { trackProductView } from '@/lib/analytics'
+
 const STORAGE_KEY = 'cb_recently_viewed'
 const MAX_RECENT = 10
 
@@ -15,9 +18,14 @@ const MAX_RECENT = 10
  * ProductViewTracker is a small client component that tracks the product ID.
  * It is meant to be mounted on the Product detail page.
  */
-export function ProductViewTracker({ id }: { id: string }) {
+export function ProductViewTracker({ id, category, brand, price }: { id: string, category: string, brand: string, price?: number }) {
   useEffect(() => {
     try {
+      // Personalisation tracking
+      trackView(id, category, brand)
+      trackProductView(id, category, price ?? 0)
+
+      // Recently viewed history
       const stored = localStorage.getItem(STORAGE_KEY)
       let ids: string[] = []
       if (stored) {

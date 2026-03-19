@@ -16,9 +16,12 @@ import {
   type CatalogProduct as CloudbasketCatalogProduct,
 } from '@/lib/cloudbasket-data'
 import { INDIA_CATALOG } from '@/lib/india-catalog'
-import { getRelated } from '@/lib/india-catalog/utils'
+import { getIndiaCatalogBySlug, getRelated } from '@/lib/india-catalog/utils'
 import type { IndiaProduct } from '@/lib/india-catalog/types'
+import { priceTracker } from '@/services/price-engine/tracker'
+import { PriceHistoryChart } from '@/components/products/PriceHistoryChart'
 import ErrorBoundary from '@/components/ErrorBoundary'
+
 import ProductDetailActions, { PriceAlertTriggerButton } from '@/components/ProductDetailActions'
 import RecentlyViewed, { ProductViewTracker } from '@/components/RecentlyViewed'
 import PriceComparisonTable from '@/components/PriceComparisonTable'
@@ -201,6 +204,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const product = findDisplayProductById(id)
   if (!product) notFound()
 
+  // Fetch initial price history for the last 30 days
+  const initialHistory = await priceTracker.getPriceHistory(id, 30)
+
   const cloudbasketProduct = CATALOG_PRODUCTS.find((item) => item.id === id)
   const categoryDetails = getCategoryDetails(product, cloudbasketProduct)
   const dealPath = product.affiliateUrl ? `/go/${id}` : getDealPath(product.affiliatePlatform, String(product.id))
@@ -274,7 +280,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <AffiliateDisclosureBanner />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
-      <ProductViewTracker id={String(product.id)} />
+      <ProductViewTracker id={String(product.id)} category={categoryDetails.slug} price={product.price} brand={product.brand} />
       <TrackBehavior category={categoryDetails.slug} productId={String(product.id)} />
 
       <section className="mx-auto max-w-7xl px-6 py-6">
@@ -389,12 +395,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               <span>Set Price Alert</span>
             </PriceAlertTriggerButton>
           </div>
-          <div className="mt-6">
-            <svg className="h-[120px] w-full" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M0 78 C60 24, 120 24, 180 64 S300 108, 360 62 S480 18, 600 44" fill="none" stroke="#039BE5" strokeWidth="4" strokeLinecap="round" />
-            </svg>
-            <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">Price tracking coming soon — set a price alert to be notified of drops.</p>
-          </div>
+          <PriceHistoryChart productId={id} initialHistory={initialHistory} />
+          <p className="mt-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center">Price verified on CloudBasket · Historical data for last 30 days</p>
         </div>
       </section>
 

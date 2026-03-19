@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ExternalLink, Star, Heart, ChevronRight } from 'lucide-react'
 import { useGlobal } from '@/context/GlobalContext'
+import { trackClick } from '@/lib/intelligence/personalisation'
+import { trackAffiliateClick } from '@/lib/analytics'
 
 type ProductSource = 'Amazon' | 'Flipkart' | 'CJ' | 'Direct'
 type AffiliatePlatform = 'amazon' | 'flipkart' | 'cj' | 'pod' | 'vcm'
@@ -72,6 +74,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
   const { formatPrice } = useGlobal()
   const [imgError, setImgError] = useState<boolean>(false)
   const [isSaved, setIsSaved] = useState(false)
+  const [isCompared, setIsCompared] = useState(false)
 
   const source = useMemo(() => resolveSource(product), [product])
   const reviewCount = product.reviewCount ?? product.reviews ?? 0
@@ -89,8 +92,16 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
           setIsSaved(parsed.includes(String(product.id)))
         }
       }
+
+      const compare = localStorage.getItem('cb_compare_list')
+      if (compare) {
+        const parsed = JSON.parse(compare) as string[]
+        if (Array.isArray(parsed)) {
+          setIsCompared(parsed.includes(String(product.id)))
+        }
+      }
     } catch (error) {
-      console.error('Failed to read wishlist from localStorage:', error)
+      console.error('Failed to read wishlist/compare state from localStorage:', error)
     }
   }, [product.id])
 
@@ -125,6 +136,10 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
   const handleImageError = useCallback((): void => {
     setImgError(true)
   }, [])
+
+  const handleViewDealClick = useCallback(() => {
+    trackClick(String(product.id), source)
+  }, [product.id, source])
 
   return (
     <article
@@ -237,7 +252,10 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
             href={toDealPath(product.id, product.affiliatePlatform)}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) => {
+              event.stopPropagation()
+              handleViewDealClick()
+            }}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-skyline-primary py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-skyline-primary/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
           >
             View Deal

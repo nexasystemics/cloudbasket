@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, TrendingDown, ExternalLink, Tag } from 'lucide-react'
 import { TelegramCTA } from '@/components/TelegramCTA'
 import AffiliateDisclosureBanner from '@/components/AffiliateDisclosureBanner'
+import { getDailyDeals, Deal } from '@/lib/deals-engine'
 
-type DealItem = {
+type UI_DealItem = {
   id: string
   title: string
   subtitle: string
@@ -17,197 +18,62 @@ type DealItem = {
   dealPrice: number
   platform: 'Amazon' | 'Flipkart' | 'CJ Global'
   image: string
-  badge: 'Flash' | 'Hot' | 'Exclusive' | 'Limited'
+  badge: string
   endsIn: string
-  productId: number
+  productId: string
 }
 
-const DEALS_DATA: readonly DealItem[] = [
-  {
-    id: 'deal-1',
-    title: 'Samsung Galaxy S25 Ultra',
-    subtitle: '256GB • Snapdragon flagship • 5G',
-    category: 'Mobiles',
-    discount: 33,
-    originalPrice: 134999,
-    dealPrice: 89999,
-    platform: 'Amazon',
-    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80',
-    badge: 'Flash',
-    endsIn: '02h 48m',
-    productId: 101,
-  },
-  {
-    id: 'deal-2',
-    title: 'MacBook Air M3',
-    subtitle: '13-inch • 16GB RAM • 512GB SSD',
-    category: 'Laptops',
-    discount: 22,
-    originalPrice: 114990,
-    dealPrice: 89990,
-    platform: 'Flipkart',
-    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80',
-    badge: 'Hot',
-    endsIn: '05h 21m',
-    productId: 102,
-  },
-  {
-    id: 'deal-3',
-    title: 'Sony WH-1000XM5',
-    subtitle: 'Industry-leading ANC wireless headphones',
-    category: 'Electronics',
-    discount: 43,
-    originalPrice: 34990,
-    dealPrice: 19999,
-    platform: 'CJ Global',
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',
-    badge: 'Exclusive',
-    endsIn: '11h 03m',
-    productId: 103,
-  },
-  {
-    id: 'deal-4',
-    title: 'Nike Air Max 270',
-    subtitle: 'Men running shoes • multiple colorways',
-    category: 'Fashion',
-    discount: 50,
-    originalPrice: 9995,
-    dealPrice: 4999,
-    platform: 'Amazon',
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',
-    badge: 'Flash',
-    endsIn: '01h 42m',
-    productId: 104,
-  },
-  {
-    id: 'deal-5',
-    title: 'Instant Pot Duo',
-    subtitle: '7-in-1 electric pressure cooker',
-    category: 'Home',
-    discount: 45,
-    originalPrice: 10995,
-    dealPrice: 5999,
-    platform: 'Flipkart',
-    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
-    badge: 'Limited',
-    endsIn: '08h 10m',
-    productId: 105,
-  },
-  {
-    id: 'deal-6',
-    title: 'iPad Pro 11"',
-    subtitle: 'M4 chip • Liquid Retina display',
-    category: 'Electronics',
-    discount: 22,
-    originalPrice: 89900,
-    dealPrice: 69900,
-    platform: 'CJ Global',
-    image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&q=80',
-    badge: 'Hot',
-    endsIn: '06h 39m',
-    productId: 106,
-  },
-  {
-    id: 'deal-7',
-    title: "Levi's 511 Jeans",
-    subtitle: 'Slim fit stretch denim for daily wear',
-    category: 'Fashion',
-    discount: 55,
-    originalPrice: 3999,
-    dealPrice: 1799,
-    platform: 'Amazon',
-    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80',
-    badge: 'Flash',
-    endsIn: '03h 25m',
-    productId: 107,
-  },
-  {
-    id: 'deal-8',
-    title: 'Dyson V15 Vacuum',
-    subtitle: 'Cordless vacuum with laser detection',
-    category: 'Home',
-    discount: 36,
-    originalPrice: 54900,
-    dealPrice: 34900,
-    platform: 'Flipkart',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
-    badge: 'Exclusive',
-    endsIn: '09h 57m',
-    productId: 108,
-  },
-  {
-    id: 'deal-9',
-    title: 'OnePlus 13',
-    subtitle: 'Flagship killer • 120Hz AMOLED',
-    category: 'Mobiles',
-    discount: 27,
-    originalPrice: 54999,
-    dealPrice: 39999,
-    platform: 'Amazon',
-    image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80',
-    badge: 'Hot',
-    endsIn: '04h 11m',
-    productId: 109,
-  },
-  {
-    id: 'deal-10',
-    title: 'Boat Rockerz 450',
-    subtitle: 'Bluetooth on-ear headphones',
-    category: 'Electronics',
-    discount: 75,
-    originalPrice: 3990,
-    dealPrice: 999,
-    platform: 'Flipkart',
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',
-    badge: 'Flash',
-    endsIn: '00h 59m',
-    productId: 110,
-  },
-  {
-    id: 'deal-11',
-    title: 'Instant Pot Air Fryer',
-    subtitle: 'Crisp technology • family size basket',
-    category: 'Home',
-    discount: 50,
-    originalPrice: 8999,
-    dealPrice: 4499,
-    platform: 'CJ Global',
-    image: 'https://images.unsplash.com/photo-1585515320310-259814833e62?w=400&q=80',
-    badge: 'Limited',
-    endsIn: '10h 32m',
-    productId: 111,
-  },
-  {
-    id: 'deal-12',
-    title: 'Canon EOS R50',
-    subtitle: 'Mirrorless camera with RF-S lens kit',
-    category: 'Electronics',
-    discount: 23,
-    originalPrice: 64999,
-    dealPrice: 49999,
-    platform: 'Amazon',
-    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&q=80',
-    badge: 'Exclusive',
-    endsIn: '07h 08m',
-    productId: 112,
-  },
-]
+function calculateTimeLeft(expiry: Date): string {
+  const totalSeconds = Math.max(0, Math.floor((expiry.getTime() - Date.now()) / 1000))
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  
+  if (hours > 24) {
+    const days = Math.floor(hours / 24)
+    return `${days}d ${hours % 24}h`
+  }
+  return `${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m`
+}
 
-function getBadgeClass(badge: DealItem['badge']): string {
-  if (badge === 'Flash') return 'bg-orange-500 text-white border-orange-500'
-  if (badge === 'Hot') return 'bg-red-500 text-white border-red-500'
-  if (badge === 'Exclusive') return 'bg-purple-500 text-white border-purple-500'
+function getBadgeClass(badge: string): string {
+  if (badge === 'Flash Deal') return 'bg-orange-500 text-white border-orange-500'
+  if (badge === 'Best Seller') return 'bg-red-500 text-white border-red-500'
+  if (badge === 'Today Only') return 'bg-purple-500 text-white border-purple-500'
   return 'bg-green-500 text-white border-green-500'
 }
 
 export default function DealsPage() {
   const [activeCategory, setActiveCategory] = useState('All Deals')
-  const categories = useMemo(() => ['All Deals', ...Array.from(new Set(DEALS_DATA.map((deal) => deal.category)))], [])
+  const [deals, setDeals] = useState<UI_DealItem[]>([])
+  
+  useEffect(() => {
+    // Hydrate deals on client to avoid server/client time mismatch
+    const engineDeals = getDailyDeals(20)
+    
+    const formattedDeals: UI_DealItem[] = engineDeals.map(d => ({
+      id: d.id,
+      title: d.product.title,
+      subtitle: d.product.description || d.product.brand, // Fallback
+      category: d.product.category.charAt(0).toUpperCase() + d.product.category.slice(1),
+      discount: d.discountPercent,
+      originalPrice: d.originalPrice,
+      dealPrice: d.dealPrice,
+      platform: d.platform as any,
+      image: d.product.image,
+      badge: d.label || 'Deal',
+      endsIn: calculateTimeLeft(d.expiresAt),
+      productId: d.product.id
+    }))
+    
+    setDeals(formattedDeals)
+  }, [])
+
+  const categories = useMemo(() => ['All Deals', ...Array.from(new Set(deals.map((deal) => deal.category)))], [deals])
 
   const filteredDeals = useMemo(() => {
-    if (activeCategory === 'All Deals') return DEALS_DATA
-    return DEALS_DATA.filter((deal) => deal.category === activeCategory)
-  }, [activeCategory])
+    if (activeCategory === 'All Deals') return deals
+    return deals.filter((deal) => deal.category === activeCategory)
+  }, [activeCategory, deals])
 
   return (
     <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
@@ -258,7 +124,7 @@ export default function DealsPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
-                  <span className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border shadow-lg ${getBadgeClass(deal.badge)}`}>
+                  <span className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border shadow-lg ${getBadgeClass(deal.badge || 'Deal')}`}>
                     {deal.badge}
                   </span>
                   <p className="absolute right-3 top-3 text-2xl font-black text-white drop-shadow-md">-{deal.discount}%</p>
@@ -288,7 +154,7 @@ export default function DealsPage() {
                       <Clock size={12} className="text-orange-500" />
                       <p className="text-[10px] font-black text-orange-500 uppercase tracking-tighter">Ends in {deal.endsIn}</p>
                     </div>
-                    <Link href={`/go/amazon-${deal.productId}`} className="cb-btn-primary h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                    <Link href={`/go/${deal.platform.toLowerCase()}-${deal.productId}`} className="cb-btn-primary h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
                       Grab Deal <ExternalLink size={14} />
                     </Link>
                   </div>

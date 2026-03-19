@@ -175,7 +175,34 @@ export default function ComparePageClient() {
   const [selectedProducts, setSelectedProducts] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [showSearch, setShowSearch] = useState<boolean>(false)
+  const [savedCompare, setSavedCompare] = useState<string[] | null>(null)
   const deferredSearchQuery = useDeferredValue(searchQuery)
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('cb_compare_list')
+      if (stored) {
+        const parsed = JSON.parse(stored) as string[]
+        setSavedCompare(parsed)
+      }
+
+      const preselect = localStorage.getItem('cb_compare_selected')
+      if (preselect) {
+        const parsed = JSON.parse(preselect) as string[]
+        setSelectedProducts(parsed)
+      }
+    } catch {
+      // no-op
+    }
+  }, [])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('cb_compare_selected', JSON.stringify(selectedProducts))
+    } catch {
+      // no-op
+    }
+  }, [selectedProducts])
 
   const filteredProducts = useMemo(() => {
     const query = deferredSearchQuery.trim().toLowerCase()
@@ -228,6 +255,32 @@ export default function ComparePageClient() {
     const values = Object.values(winnerScores)
     return values.length ? Math.max(...values) : 0
   }, [winnerScores])
+
+  const recommendations = useMemo(() => {
+    if (selectedProducts.length === 0) {
+      return MOCK_PRODUCTS.slice(0, 4)
+    }
+
+    const selected = new Set(selectedProducts)
+    const selectedItems = MOCK_PRODUCTS.filter((product) => selected.has(String(product.id)))
+    const categories = new Set(selectedItems.map((item) => item.mainCategory))
+    const avgPrice = Math.round(
+      selectedItems.reduce((sum, item) => sum + item.price, 0) / Math.max(1, selectedItems.length),
+    )
+
+    return MOCK_PRODUCTS
+      .filter((product) => !selected.has(String(product.id)))
+      .map((product) => ({
+        product,
+        score:
+          (categories.has(product.mainCategory) ? 30 : 0) +
+          Math.max(0, 30 - Math.abs(product.price - avgPrice) / 1000) +
+          (product.rating ?? 4) * 5,
+      }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 4)
+      .map((item) => item.product)
+  }, [selectedProducts])
 
   const addProduct = (id: string) => {
     startTransition(() => {
@@ -307,6 +360,33 @@ export default function ComparePageClient() {
                 </span>
               )
             })}
+          </div>
+
+          <div className="flex flex-wrap gap-2 mt-2">
+            <button
+              type="button"
+              className="cb-btn cb-btn-primary text-xs"
+              onClick={() => {
+                try {
+                  localStorage.setItem('cb_compare_list', JSON.stringify(selectedProducts))
+                  setSavedCompare(selectedProducts.length ? selectedProducts : null)
+                } catch {
+                  // no-op
+                }
+              }}
+            >
+              Save compare list
+            </button>
+
+            {savedCompare && savedCompare.length > 0 ? (
+              <button
+                type="button"
+                className="cb-btn cb-btn-ghost text-xs"
+                onClick={() => setSelectedProducts(savedCompare)}
+              >
+                Load saved compare
+              </button>
+            ) : null}
           </div>
         </div>
 
@@ -520,6 +600,29 @@ export default function ComparePageClient() {
             </table>
           </div>
         </section>
+
+        {recommendations.length > 0 ? (
+          <section className="mx-auto max-w-7xl px-6 pb-16">
+            <h2 className="mb-4 text-2xl font-black">Recommended For You</h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {recommendations.map((product) => (
+                <article key={product.id} className="cb-card overflow-hidden">
+                  <div className="relative h-36">
+                    <Image src={product.image || ''} alt={product.name} fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
+                  </div>
+                  <div className="p-3">
+                    <p className="line-clamp-2 text-sm font-bold">{product.name}</p>
+                    <p className="text-xs text-[var(--cb-text-muted)]">{product.brand}</p>
+                    <p className="price-current mt-2">₹{product.price.toLocaleString('en-IN')}</p>
+                    <Link href={`/product/${product.id}`} className="cb-btn cb-btn-ghost mt-3 text-xs">
+                      View Product
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
       )}
     </main>
   )

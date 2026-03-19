@@ -1,21 +1,17 @@
 'use client'
 
-import { Suspense, useDeferredValue, useEffect, useMemo, useState, useRef } from 'react'
+import { Suspense, useDeferredValue, useEffect, useMemo, useState, useRef, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp, SearchX } from 'lucide-react'
+import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp, SearchX, ChevronDown, Filter } from 'lucide-react'
 import TrackBehavior from '@/components/TrackBehavior'
 import { ProductCard } from '@/components/products/ProductCard'
-import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
-import { getIndiaCatalogAsCatalogProducts } from '@/lib/india-catalog/utils'
-
-const INDIA_AS_CATALOG = getIndiaCatalogAsCatalogProducts()
-const MERGED_PRODUCTS = (() => {
-  const ids = new Set(CATALOG_PRODUCTS.map(p => p.id))
-  return [...CATALOG_PRODUCTS, ...INDIA_AS_CATALOG.filter(p => !ids.has(p.id))]
-})()
-import TrendingSearches from '@/components/TrendingSearches'
+import { trackSearch } from '@/lib/analytics'
+import { searchProducts, getAvailableFilterOptions, SearchFilters, SearchProduct } from '@/lib/search'
+import { getCategoryDefinition } from '@/lib/cloudbasket-data'
+import Slider from 'rc-slider'
+import 'rc-slider/assets/index.css' // Import slider styles
 
 const POPULAR_SEARCHES = [
   "iPhone 16", "Samsung Galaxy S25", "Nike shoes", "boAt earphones", 
@@ -23,39 +19,144 @@ const POPULAR_SEARCHES = [
   "OnePlus 13R", "Puma sneakers", "Adidas hoodie", "LEGO set", "PlayStation 5",
 ]
 
+// Helper function to parse URL search params into SearchFilters
+function parseSearchParams(params: URLSearchParams): SearchFilters {
+  return {
+    categories: params.has('categories') ? params.get('categories')?.split(',') : undefined,
+    brands: params.has('brands') ? params.get('brands')?.split(',') : undefined,
+    platforms: params.has('platforms') ? params.get('platforms')?.split(',') : undefined,
+    minPrice: params.has('minPrice') ? Number(params.get('minPrice')) : undefined,
+    maxPrice: params.has('maxPrice') ? Number(params.get('maxPrice')) : undefined,
+    minDiscount: params.has('minDiscount') ? Number(params.get('minDiscount')) : undefined,
+    inStock: params.has('inStock') ? params.get('inStock') === 'true' : undefined,
+    sortBy: params.has('sortBy') ? params.get('sortBy') as SearchFilters['sortBy'] : 'relevance',
+  }
+}
+
+// Helper function to convert SearchFilters to URL search params
+function buildSearchParams(query: string, filters: SearchFilters): string {
+  const params = new URLSearchParams()
+  if (query) params.set('q', query)
+  if (filters.categories && filters.categories.length > 0) params.set('categories', filters.categories.join(','))
+  if (filters.brands && filters.brands.length > 0) params.set('brands', filters.brands.join(','))
+  if (filters.platforms && filters.platforms.length > 0) params.set('platforms', filters.platforms.join(','))
+  if (filters.minPrice !== undefined) params.set('minPrice', String(filters.minPrice))
+  if (filters.maxPrice !== undefined) params.set('maxPrice', String(filters.maxPrice))
+  if (filters.minDiscount !== undefined) params.set('minDiscount', String(filters.minDiscount))
+  if (filters.inStock !== undefined) params.set('inStock', String(filters.inStock))
+  if (filters.sortBy && filters.sortBy !== 'relevance') params.set('sortBy', filters.sortBy)
+  return params.toString()
+}
+
 function SearchPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const initialQuery = searchParams.get('q') ?? ''
 
-  const [query, setQuery] = useState<string>(initialQuery)
-  const [sortBy, setSortBy] = useState<string>('relevance')
+  // State for search query and filters
+  const [query, setQuery] = useState<string>(searchParams.get('q') ?? '')
+  const [filters, setFilters] = useState<SearchFilters>(parseSearchParams(searchParams))
+  const deferredQuery = useDeferredValue(query)
+  const deferredFilters = useDeferredValue(filters)
+  
+  // UI state
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [isInputFocused, setIsInputFocused] = useState(false)
-  const deferredQuery = useDeferredValue(query)
+  const [showMobileFilters, setShowMobileFilters] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const nextQuery = searchParams.get('q') ?? ''
-    setQuery(nextQuery)
-  }, [searchParams])
+  // Available filter options (categories, brands, price range)
+  const availableOptions = useMemo(() => getAvailableFilterOptions(), [])
+  
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    filters.minPrice ?? availableOptions.minPrice, 
+    filters.maxPrice ?? availableOptions.maxPrice
+  ])
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setShowSuggestions(false)
-      }
+    // Sync URL params to state on initial load or URL change
+    const newQuery = searchParams.get('q') ?? ''
+    const newFilters = parseSearchParams(searchParams)
+    setQuery(newQuery)
+    setFilters(newFilters)
+    setPriceRange([
+      newFilters.minPrice ?? availableOptions.minPrice, 
+      newFilters.maxPrice ?? availableOptions.maxPrice
+    ])
+  }, [searchParams, availableOptions])
+
+  // Function to apply filters and update URL
+  const applyFilters = useCallback((newQuery: string, newFilters: SearchFilters) => {
+  const paramsString = buildSearchParams(newQuery, newFilters)
+  router.push(`/search?${paramsString}`)
+  const searchResults = searchProducts(newQuery, newFilters)
+  trackSearch(newQuery, searchResults.length) // Track search with updated filters
+  setShowMobileFilters(false) // Close mobile filters after applying
+  }, [router])
+  // Update query state (without immediately triggering search)
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value)
+    setShowSuggestions(true)
+  }
+
+  // Handle Enter key in search input
+  const handleSearchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      applyFilters(query, filters)
+      setShowSuggestions(false)
     }
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setShowSuggestions(false)
+  }
+
+  // Clear search query
+  const clearQuery = () => {
+    setQuery('')
+    applyFilters('', filters)
+    setShowSuggestions(false)
+  }
+
+  // Toggle filter option (category, brand, platform)
+  const toggleFilter = (type: 'categories' | 'brands' | 'platforms', value: string) => {
+    const currentValues = new Set(filters[type])
+    if (currentValues.has(value)) {
+      currentValues.delete(value)
+    } else {
+      currentValues.add(value)
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('keydown', handleEscape)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('keydown', handleEscape)
-    }
-  }, [])
+    applyFilters(deferredQuery, { ...filters, [type]: Array.from(currentValues) })
+  }
+
+  // Handle price range change (from slider or inputs)
+  const handlePriceChange = (value: number | number[]) => {
+    const [min, max] = Array.isArray(value) ? value : [value, value]
+    setPriceRange([min, max])
+    applyFilters(deferredQuery, { ...filters, minPrice: min, maxPrice: max })
+  }
+
+  // Handle discount slider change
+  const handleDiscountChange = (value: number | number[]) => {
+    const min = Array.isArray(value) ? value[0] : value
+    applyFilters(deferredQuery, { ...filters, minDiscount: min })
+  }
+
+  // Toggle in-stock filter
+  const toggleInStock = () => {
+    applyFilters(deferredQuery, { ...filters, inStock: !filters.inStock })
+  }
+
+  // Change sort order
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    applyFilters(deferredQuery, { ...filters, sortBy: e.target.value as SearchFilters['sortBy'] })
+  }
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    applyFilters(query, { sortBy: 'relevance' })
+  }
+
+  const hasActiveFilters = useMemo(() => {
+    const defaultFilters: SearchFilters = { sortBy: 'relevance' }
+    return JSON.stringify(filters) !== JSON.stringify(defaultFilters) || query !== ''
+  }, [filters, query])
 
   const suggestions = useMemo(() => {
     if (!query.trim()) return []
@@ -64,44 +165,28 @@ function SearchPageContent() {
     ).slice(0, 5)
   }, [query])
 
-  const triggerSearch = (nextQuery: string) => {
-    const trimmedQuery = nextQuery.trim()
-    setQuery(trimmedQuery)
+  const handleSuggestionClick = (suggestion: string) => {
+    setQuery(suggestion)
+    applyFilters(suggestion, filters)
     setShowSuggestions(false)
-
-    if (trimmedQuery) {
-      router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`)
-    }
   }
 
-  const results = useMemo(() => {
-    const normalized = deferredQuery.trim().toLowerCase()
-    if (!normalized) return MERGED_PRODUCTS.slice(0, 20)
+  const results = useMemo<SearchProduct[]>(() => {
+    return searchProducts(deferredQuery, deferredFilters)
+  }, [deferredQuery, deferredFilters])
 
-    let filtered = MERGED_PRODUCTS.filter(p =>
-      p.title.toLowerCase().includes(normalized) || 
-      p.brand.toLowerCase().includes(normalized) ||
-      p.category.toLowerCase().includes(normalized)
-    )
-
-    if (sortBy === 'price-low') {
-      return [...filtered].sort((a, b) => a.price - b.price)
-    }
-    if (sortBy === 'price-high') {
-      return [...filtered].sort((a, b) => b.price - a.price)
-    }
-    if (sortBy === 'discount') {
-      return [...filtered].sort((a, b) => {
-        const dA = ((a.mrp - a.price) / a.mrp)
-        const dB = ((b.mrp - b.price) / b.mrp)
-        return dB - dA
-      })
-    }
-
-    return filtered
-  }, [deferredQuery, sortBy])
-
-  const handleSuggestionClick = (suggestion: string) => triggerSearch(suggestion)
+  // Calculate active filter count for the badge
+  const activeFilterCount = useMemo(() => {
+    let count = 0
+    if (filters.categories && filters.categories.length > 0) count += filters.categories.length
+    if (filters.brands && filters.brands.length > 0) count += filters.brands.length
+    if (filters.platforms && filters.platforms.length > 0) count += filters.platforms.length
+    if (filters.minPrice !== undefined && filters.minPrice > availableOptions.minPrice) count++
+    if (filters.maxPrice !== undefined && filters.maxPrice < availableOptions.maxPrice) count++
+    if (filters.minDiscount !== undefined && filters.minDiscount > 0) count++
+    if (filters.inStock === true) count++
+    return count
+  }, [filters, availableOptions])
 
   return (
     <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
@@ -110,7 +195,7 @@ function SearchPageContent() {
       <section className="bg-white dark:bg-zinc-900 border-b border-zinc-100 dark:border-zinc-800 py-12">
         <div className="mx-auto max-w-3xl px-6" ref={containerRef}>
           <h1 className="mb-8 text-center text-4xl font-black tracking-tighter text-zinc-900 dark:text-white uppercase italic">
-            Search Deals
+            Advanced Search
           </h1>
 
           <div className="relative group">
@@ -124,22 +209,14 @@ function SearchPageContent() {
                   setShowSuggestions(true)
                 }}
                 onBlur={() => setIsInputFocused(false)}
-                onChange={(e) => {
-                  setQuery(e.target.value)
-                  setShowSuggestions(true)
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault()
-                    triggerSearch(query)
-                  }
-                }}
+                onChange={handleQueryChange}
+                onKeyDown={handleSearchSubmit}
                 placeholder="What are you looking for today?"
               />
               {query && (
                 <button
                   type="button"
-                  onClick={() => { setQuery(''); setShowSuggestions(false); }}
+                  onClick={clearQuery}
                   className="absolute right-5 p-1 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-400"
                 >
                   <X size={20} />
@@ -180,85 +257,314 @@ function SearchPageContent() {
         </div>
       </section>
 
-      <TrendingSearches />
-
-      <section className="mx-auto max-w-7xl px-6 py-10">
-        <div className="mb-8 flex items-center justify-between flex-wrap gap-4">
-          <div>
-            <h2 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">
-              {query ? `Results for "${query}"` : 'Top Trending Deals'}
-            </h2>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">
-              {results.length} verified price points found
-            </p>
-          </div>
-          
-          <div className="flex items-center gap-3 bg-white dark:bg-zinc-900 px-4 py-2 rounded-xl border border-zinc-100 dark:border-zinc-800">
-            <SlidersHorizontal size={14} className="text-zinc-400" />
-            <select
-              className="bg-transparent text-[10px] font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-300 outline-none cursor-pointer"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-            >
-              <option value="relevance">Relevance</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="discount">Discount: Highest First</option>
-            </select>
-          </div>
+      <div className="mx-auto max-w-7xl px-6 pt-8 lg:grid lg:grid-cols-[240px_1fr] lg:gap-8">
+        {/* Mobile Filter Toggle */}
+        <div className="lg:hidden flex justify-between items-center mb-6">
+          <h2 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">
+            {query ? `Results for "${query}"` : 'Discover Products'}
+          </h2>
+          <button
+            className="cb-btn-secondary relative flex items-center gap-2"
+            onClick={() => setShowMobileFilters(true)}
+          >
+            <Filter size={16} />
+            Filters
+            {activeFilterCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-skyline-primary text-white rounded-full text-[10px] w-5 h-5 flex items-center justify-center font-bold">
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
         </div>
 
-        {results.length === 0 ? (
-          <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-20 text-center shadow-xl">
-            <div className="w-20 h-20 bg-zinc-50 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6">
-              <SearchX size={40} className="text-zinc-300 dark:text-zinc-600" />
+        {/* Mobile Filter Overlay */}
+        {showMobileFilters && (
+          <div className="fixed inset-0 z-50 bg-white dark:bg-zinc-950 lg:hidden">
+            <div className="flex items-center justify-between p-6 border-b border-zinc-100 dark:border-zinc-800">
+              <h2 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">Filters</h2>
+              <button onClick={() => setShowMobileFilters(false)} className="text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors">
+                <X size={24} />
+              </button>
             </div>
-            <h2 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">No results found</h2>
-            <p className="mt-3 text-zinc-500 dark:text-zinc-400 font-medium">No results for '{query}'</p>
+            <div className="p-6 overflow-y-auto h-[calc(100vh-80px)]">
+              {/* Filter sections */}
+              <FilterSections 
+                filters={filters} 
+                toggleFilter={toggleFilter} 
+                handlePriceChange={handlePriceChange}
+                handleDiscountChange={handleDiscountChange}
+                toggleInStock={toggleInStock}
+                availableOptions={availableOptions}
+                priceRange={priceRange}
+              />
+              <div className="mt-8">
+                {hasActiveFilters && (
+                  <button onClick={clearAllFilters} className="cb-btn-ghost text-red-500 w-full py-3">Clear All Filters</button>
+                )}
+                <button onClick={() => setShowMobileFilters(false)} className="cb-btn-primary w-full py-3 mt-2">Show Results</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Desktop Filter Sidebar */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-24 space-y-8">
+            <h2 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tight">Filters</h2>
+            <FilterSections 
+              filters={filters} 
+              toggleFilter={toggleFilter} 
+              handlePriceChange={handlePriceChange}
+              handleDiscountChange={handleDiscountChange}
+              toggleInStock={toggleInStock}
+              availableOptions={availableOptions}
+              priceRange={priceRange}
+            />
+            {hasActiveFilters && (
+              <button onClick={clearAllFilters} className="cb-btn-ghost text-red-500 w-full py-2">Clear All Filters</button>
+            )}
+          </div>
+        </aside>
+
+        {/* Search Results */}
+        <div className="lg:col-start-2">
+          <div className="mb-8 flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h2 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">
+                {query ? `Results for "${query}"` : 'Top Trending Deals'}
+              </h2>
+              <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">
+                {results.length} verified price points found
+              </p>
+            </div>
             
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              {['iPhone 16', 'PS5', 'air fryer'].map((chip) => (
-                <button 
-                  key={chip}
-                  onClick={() => triggerSearch(chip)}
-                  className="px-6 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 text-[11px] font-black uppercase tracking-widest text-skyline-primary hover:bg-skyline-primary hover:text-white transition-all shadow-sm"
-                >
-                  {chip}
-                </button>
+            <div className="flex items-center gap-3 bg-white dark:bg-zinc-900 px-4 py-2 rounded-xl border border-zinc-100 dark:border-zinc-800">
+              <SlidersHorizontal size={14} className="text-zinc-400" />
+              <select
+                className="bg-transparent text-[10px] font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-300 outline-none cursor-pointer"
+                value={filters.sortBy}
+                onChange={handleSortChange}
+              >
+                <option value="relevance">Relevance</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="discount-desc">Discount: Highest First</option>
+                <option value="newest">Newest</option>
+              </select>
+            </div>
+          </div>
+
+          {results.length === 0 ? (
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-20 text-center shadow-xl">
+              <div className="w-20 h-20 bg-zinc-50 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                <SearchX size={40} className="text-zinc-300 dark:text-zinc-600" />
+              </div>
+              <h2 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">No results found</h2>
+              <p className="mt-3 text-zinc-500 dark:text-zinc-400 font-medium">No results for '{query}'</p>
+              
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                {['iPhone 16', 'PS5', 'air fryer'].map((chip) => (
+                  <button 
+                    key={chip}
+                    onClick={() => handleSuggestionClick(chip)}
+                    className="px-6 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 text-[11px] font-black uppercase tracking-widest text-skyline-primary hover:bg-skyline-primary hover:text-white transition-all shadow-sm"
+                  >
+                    {chip}
+                  </button>
+                ))}
+              </div>
+              
+              <Link href="/products" className="cb-btn-ghost mt-10 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em]">
+                Browse Full Catalog <ExternalLink size={14} />
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {results.map((product) => (
+                <ProductCard 
+                  key={product.unifiedId} 
+                  product={{
+                    id: product.unifiedId,
+                    name: product.name,
+                    image: product.image,
+                    brand: product.brand,
+                    price: product.displayPrice,
+                    originalPrice: product.displayOriginalPrice,
+                    discount: product.displayDiscount,
+                    rating: product.rating,
+                    reviewCount: product.reviewCount,
+                    source: (product.displayPlatform === 'Flipkart' ? 'Flipkart' : (product.displayPlatform === 'CJ Global' ? 'CJ' : 'Amazon')) as any,
+                    affiliatePlatform: product.displayPlatform as any,
+                  }} 
+                />
               ))}
             </div>
-            
-            <Link href="/products" className="cb-btn-ghost mt-10 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em]">
-              Browse Full Catalog <ExternalLink size={14} />
-            </Link>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {results.map((product) => (
-              <ProductCard 
-                key={product.id} 
-                product={{
-                  ...product,
-                  name: product.title,
-                  originalPrice: product.mrp,
-                  rating: product.rating,
-                  discount: Math.round(((product.mrp - product.price) / product.mrp) * 100),
-                  source: product.platform === 'CJ Global' ? 'CJ' : product.platform === 'Flipkart' ? 'Flipkart' : 'Amazon',
-                  affiliatePlatform:
-                    product.platform === 'Flipkart'
-                      ? 'flipkart'
-                      : product.platform === 'CJ Global'
-                        ? 'cj'
-                        : product.platform === 'Print on Demand'
-                          ? 'pod'
-                          : 'amazon',
-                }} 
-              />
+          )}
+        </div>
+      </div>
+    </main>
+  )
+}
+
+// Sub-component for filter sections to reduce complexity in main component
+type FilterSectionsProps = {
+  filters: SearchFilters
+  toggleFilter: (type: 'categories' | 'brands' | 'platforms', value: string) => void
+  handlePriceChange: (value: number | number[]) => void
+  handleDiscountChange: (value: number | number[]) => void
+  toggleInStock: () => void
+  availableOptions: ReturnType<typeof getAvailableFilterOptions>
+  priceRange: [number, number]
+}
+
+function FilterSections({
+  filters, toggleFilter, handlePriceChange, handleDiscountChange, toggleInStock, availableOptions, priceRange
+}: FilterSectionsProps) {
+  const [showCategory, setShowCategory] = useState(true)
+  const [showBrand, setShowBrand] = useState(true)
+  const [showPlatform, setShowPlatform] = useState(true)
+  const [showPrice, setShowPrice] = useState(true)
+  const [showDiscount, setShowDiscount] = useState(true)
+
+  return (
+    <div className="space-y-6">
+      {/* Category Filter */}
+      <div className="cb-card p-4">
+        <button className="flex justify-between items-center w-full text-left" onClick={() => setShowCategory(!showCategory)}>
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[var(--cb-text-muted)]">Category</p>
+          <ChevronDown size={16} className={`${showCategory ? 'rotate-180' : ''} transition-transform`} />
+        </button>
+        {showCategory && (
+          <div className="mt-3 space-y-2 max-h-48 overflow-y-auto scrollbar-hide">
+            {availableOptions.categories.map(category => (
+              <label key={category} className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={filters.categories?.includes(category)}
+                  onChange={() => toggleFilter('categories', category)}
+                  className="rounded border-zinc-200 text-skyline-primary focus:ring-skyline-primary"
+                />
+                <span className="text-xs font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
+                  {getCategoryDefinition(category)?.label || category}
+                </span>
+              </label>
             ))}
           </div>
         )}
-      </section>
-    </main>
+      </div>
+
+      {/* Brand Filter */}
+      <div className="cb-card p-4">
+        <button className="flex justify-between items-center w-full text-left" onClick={() => setShowBrand(!showBrand)}>
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[var(--cb-text-muted)]">Brand</p>
+          <ChevronDown size={16} className={`${showBrand ? 'rotate-180' : ''} transition-transform`} />
+        </button>
+        {showBrand && (
+          <div className="mt-3 space-y-2 max-h-48 overflow-y-auto scrollbar-hide">
+            {availableOptions.brands.map(brand => (
+              <label key={brand} className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={filters.brands?.includes(brand)}
+                  onChange={() => toggleFilter('brands', brand)}
+                  className="rounded border-zinc-200 text-skyline-primary focus:ring-skyline-primary"
+                />
+                <span className="text-xs font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">{brand}</span>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Platform Filter */}
+      <div className="cb-card p-4">
+        <button className="flex justify-between items-center w-full text-left" onClick={() => setShowPlatform(!showPlatform)}>
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[var(--cb-text-muted)]">Platform</p>
+          <ChevronDown size={16} className={`${showPlatform ? 'rotate-180' : ''} transition-transform`} />
+        </button>
+        {showPlatform && (
+          <div className="mt-3 space-y-2">
+            {availableOptions.platforms.map(platform => (
+              <label key={platform} className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={filters.platforms?.includes(platform)}
+                  onChange={() => toggleFilter('platforms', platform)}
+                  className="rounded border-zinc-200 text-skyline-primary focus:ring-skyline-primary"
+                />
+                <span className="text-xs font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">{platform}</span>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Price Range Filter */}
+      <div className="cb-card p-4">
+        <button className="flex justify-between items-center w-full text-left" onClick={() => setShowPrice(!showPrice)}>
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[var(--cb-text-muted)]">Price Range</p>
+          <ChevronDown size={16} className={`${showPrice ? 'rotate-180' : ''} transition-transform`} />
+        </button>
+        {showPrice && (
+          <div className="mt-3 px-2">
+            <Slider
+              range
+              min={availableOptions.minPrice}
+              max={availableOptions.maxPrice}
+              defaultValue={[availableOptions.minPrice, availableOptions.maxPrice]}
+              value={priceRange}
+              onChange={handlePriceChange}
+              trackStyle={[{ backgroundColor: '#039BE5' }]}
+              handleStyle={[{ borderColor: '#039BE5', boxShadow: 'none' }, { borderColor: '#039BE5', boxShadow: 'none' }]}
+              railStyle={{ backgroundColor: '#E2E8F0' }}
+            />
+            <div className="flex justify-between text-xs font-bold text-zinc-500 mt-2">
+              <span>₹{priceRange[0].toLocaleString('en-IN')}</span>
+              <span>₹{priceRange[1].toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Minimum Discount Filter */}
+      <div className="cb-card p-4">
+        <button className="flex justify-between items-center w-full text-left" onClick={() => setShowDiscount(!showDiscount)}>
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[var(--cb-text-muted)]">Min. Discount</p>
+          <ChevronDown size={16} className={`${showDiscount ? 'rotate-180' : ''} transition-transform`} />
+        </button>
+        {showDiscount && (
+          <div className="mt-3 px-2">
+            <Slider
+              min={0}
+              max={availableOptions.maxDiscount}
+              defaultValue={filters.minDiscount ?? 0}
+              value={filters.minDiscount ?? 0}
+              onChange={handleDiscountChange}
+              trackStyle={[{ backgroundColor: '#039BE5' }]}
+              handleStyle={[{ borderColor: '#039BE5', boxShadow: 'none' }]}
+              railStyle={{ backgroundColor: '#E2E8F0' }}
+            />
+            <div className="flex justify-between text-xs font-bold text-zinc-500 mt-2">
+              <span>0%</span>
+              <span>{filters.minDiscount ?? 0}%+</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* In Stock Filter */}
+      <div className="cb-card p-4">
+        <label className="flex items-center gap-2 cursor-pointer group">
+          <input
+            type="checkbox"
+            checked={filters.inStock ?? false}
+            onChange={toggleInStock}
+            className="rounded border-zinc-200 text-skyline-primary focus:ring-skyline-primary"
+          />
+          <span className="text-xs font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">Only Show In Stock</span>
+        </label>
+      </div>
+    </div>
   )
 }
 

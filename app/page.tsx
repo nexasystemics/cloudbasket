@@ -15,8 +15,8 @@ import TrendingSearches from '@/components/TrendingSearches'
 import { DEALS } from '@/lib/deals-data'
 import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { PRODUCTS } from '@/lib/mock-data'
-import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
-import { INDIA_CATALOG } from '@/lib/india-catalog'
+
+import { PersonalisedRecommendations } from '@/components/PersonalisedRecommendations'
 
 export const metadata: Metadata = {
   title: 'CloudBasket - Everything in One Basket',
@@ -191,13 +191,14 @@ function FlashDealsPreview() {
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="bg-[var(--cb-bg)] text-[var(--cb-text-primary)] dark:bg-zinc-950 dark:text-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_STRUCTURED_DATA) }} />
-      <HeroSection totalCount={CATALOG_PRODUCTS.length + INDIA_CATALOG.length} />
+      <HeroSection totalCount={PRODUCTS.length} />
       <PlatformTrustBar />
       <TrendingSearches />
       <DealsBar />
       <TopDealsToday />
+      <PersonalisedRecommendations />
       <CategoryGrid />
       <DealOfTheDay />
       <FlashDealsPreview />
@@ -211,6 +212,3 @@ export default function HomePage() {
     </main>
   )
 }
-
-
-

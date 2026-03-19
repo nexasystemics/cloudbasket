@@ -55,6 +55,7 @@ export interface CatalogProduct {
   specs: string[]
   compatibility?: string
   publishedAt: string
+  isTrending?: boolean
 }
 
 export interface SearchResultBucket {
@@ -541,7 +542,7 @@ const catalogProducts: CatalogProduct[] = [
   { id: 'pod-case-001', brand: 'CloudBasket Design Studio', title: 'CloudBasket Matte Black Case — iPhone 15', category: 'pod', price: 349, mrp: 449, rating: 4.5, reviewCount: 64, image: 'https://images.unsplash.com/photo-1601593346740-925612772716?w=800&q=80', platform: 'Print on Demand', affiliateUrl: 'https://www.redbubble.com/i/iphone-case/cloudbasket-matte-black-case-iphone-15/2001', description: 'Clean matte case with mockup imagery and device-specific compatibility.', specs: ['Slim Case', 'Shock Absorb', 'Print on Demand'], compatibility: 'Compatible with iPhone 15 / 14 / 13 series. Available on Redbubble.', publishedAt: date },
 ]
 
-export const CATALOG_PRODUCTS = [
+export const CATALOG_PRODUCTS: Array<CatalogProduct & { isTrending?: boolean }> = [
   ...catalogProducts,
   ...Array.from({ length: 16 }, (_, index) => ({
     id: `spo-extra-${String(index + 1).padStart(3, '0')}`,

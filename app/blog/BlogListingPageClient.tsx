@@ -26,15 +26,36 @@ function getEstimatedReadTime(content: string): string {
 
 export default function BlogListingPageClient({ posts }: BlogListingPageClientProps) {
   const [activeCategory, setActiveCategory] = useState('All')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [recentRead, setRecentRead] = useState<BlogListingPost[]>([])
+
   const categories = useMemo(() => ['All', ...Array.from(new Set(posts.map((post) => post.category)))], [posts])
 
   const filteredPosts = useMemo(() => {
-    if (activeCategory === 'All') {
-      return posts
+    const normalizedQuery = searchQuery.trim().toLowerCase()
+
+    const categoryFiltered = activeCategory === 'All' ? posts : posts.filter((post) => post.category === activeCategory)
+
+    if (!normalizedQuery) {
+      return categoryFiltered
     }
 
-    return posts.filter((post) => post.category === activeCategory)
-  }, [activeCategory, posts])
+    return categoryFiltered.filter((post) => {
+      const haystack = `${post.title} ${post.excerpt} ${post.category}`.toLowerCase()
+      return haystack.includes(normalizedQuery)
+    })
+  }, [activeCategory, posts, searchQuery])
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('cb_blog_recently_read')
+      if (!saved) return
+      const list = JSON.parse(saved) as BlogListingPost[]
+      setRecentRead(list.slice(0, 5))
+    } catch {
+      setRecentRead([])
+    }
+  }, [])
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-20">
@@ -47,22 +68,50 @@ export default function BlogListingPageClient({ posts }: BlogListingPageClientPr
         </p>
       </section>
 
-      <div className="mb-8 flex items-center gap-2 overflow-x-auto pb-2">
-        {categories.map((category) => (
-          <button
-            key={category}
-            type="button"
-            onClick={() => setActiveCategory(category)}
-            className={`rounded-full px-5 py-2 text-xs font-black uppercase tracking-widest transition-colors ${
-              activeCategory === category
-                ? 'bg-skyline-primary text-white'
-                : 'bg-white text-zinc-500 hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800'
-            }`}
-          >
-            {category}
-          </button>
-        ))}
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setActiveCategory(category)}
+              className={`rounded-full px-5 py-2 text-xs font-black uppercase tracking-widest transition-colors ${
+                activeCategory === category
+                  ? 'bg-skyline-primary text-white'
+                  : 'bg-white text-zinc-500 hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search blog articles..."
+          className="w-full max-w-md rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-skyline-primary dark:border-zinc-700 dark:bg-zinc-900 dark:text-white"
+          aria-label="Search blog articles"
+        />
       </div>
+
+      {recentRead.length > 0 && (
+        <section className="mb-8 rounded-3xl border border-zinc-100 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+          <h2 className="mb-3 text-sm font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-400">Recently Read</h2>
+          <div className="flex flex-wrap gap-2">
+            {recentRead.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="inline-flex rounded-full border border-zinc-200 px-4 py-1.5 text-xs font-semibold text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              >
+                {post.title}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {filteredPosts.map((post) => (

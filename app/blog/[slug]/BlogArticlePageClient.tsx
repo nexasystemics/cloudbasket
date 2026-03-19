@@ -85,8 +85,36 @@ export default function BlogArticlePageClient({ post, relatedPosts }: BlogArticl
 
   const whatsappHref = `https://wa.me/?text=${encodeURIComponent(`Check out this article on CloudBasket: ${post.title} https://cloudbasket.in/blog/${post.slug}`)}`
 
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('cb_blog_recently_read')
+      const current = stored ? (JSON.parse(stored) as BlogArticlePost[]) : []
+      const filtered = current.filter((item) => item.slug !== post.slug)
+      const normalized = [
+        { slug: post.slug, title: post.title, excerpt: post.excerpt, image: post.image, category: post.category, date: post.date, content: post.intro },
+        ...filtered,
+      ]
+      localStorage.setItem('cb_blog_recently_read', JSON.stringify(normalized.slice(0, 5)))
+    } catch {
+      // no-op
+    }
+  }, [post])
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    image: post.image,
+    author: { '@type': 'Person', name: post.author },
+    datePublished: post.date,
+    articleSection: post.category,
+    publisher: { '@type': 'Organization', name: 'CloudBasket', logo: { '@type': 'ImageObject', url: 'https://cloudbasket.in/logo.png' } },
+    description: post.excerpt,
+  }
+
   return (
     <div className="relative">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="fixed left-0 top-0 z-[70] h-1 w-full bg-zinc-100 dark:bg-zinc-800">
         <div className="h-full bg-skyline-primary transition-[width] duration-150" style={{ width: `${scrollProgress}%` }} />
       </div>

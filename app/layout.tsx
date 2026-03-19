@@ -1,4 +1,5 @@
 import BackToTop from '@/components/BackToTop'
+import Analytics from '@/components/Analytics'
 import type { Metadata, Viewport } from 'next'
 import { ReactNode, Suspense } from 'react'
 import Script from 'next/script'
@@ -102,13 +103,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         {supabaseOrigin ? <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" /> : null}
       </head>
-      <body className="bg-[var(--cb-surface)] font-sans text-[var(--cb-text-primary)] antialiased transition-colors duration-300">        <a
+      <body className="bg-[var(--cb-bg)] text-[var(--cb-text-primary)] font-sans antialiased transition-colors duration-300 dark:bg-zinc-950 dark:text-white">        <a
         
             href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-blue-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg">Skip to main content
         </a>
         <GlobalProvider>
           <CBThemeProvider>
+            <Analytics />
             <SchemaMarkup type="website" />
             <LayoutTopEnhancements />
             <Header />

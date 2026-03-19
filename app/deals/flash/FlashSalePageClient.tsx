@@ -5,30 +5,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Zap, Clock, ExternalLink } from 'lucide-react'
 import AffiliateDisclosureBanner from '@/components/AffiliateDisclosureBanner'
+import { getFlashDeals, Deal } from '@/lib/deals-engine'
 
-type DealItem = {
-  id: string
-  title: string
-  subtitle: string
-  discount: number
-  originalPrice: number
-  dealPrice: number
-  platform: 'Amazon' | 'Flipkart' | 'CJ Global'
-  image: string
-  badge: 'Flash' | 'Hot' | 'Exclusive' | 'Limited'
-  productId: string
+// Reuse getFlashDeals from engine, map to UI needs if necessary, but here we can use Deal directly
+// with minor adaptations for rendering
+
+const BADGE_STYLES: Record<string, string> = {
+  'Flash Deal': 'bg-rose-500 text-white',
+  'Best Seller': 'bg-orange-500 text-white',
+  'Today Only': 'bg-purple-600 text-white',
+  'Limited Stock': 'bg-blue-600 text-white',
+  'Best Price': 'bg-green-600 text-white',
 }
-
-const DEALS_DATA: readonly DealItem[] = [
-  { id: 'deal-1', title: 'Samsung Galaxy S25 Ultra', subtitle: '256GB · Snapdragon · 5G', discount: 18, originalPrice: 149999, dealPrice: 122999, platform: 'Amazon', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80', badge: 'Flash', productId: 'mob-001' },
-  { id: 'deal-2', title: 'MacBook Air M3 13"', subtitle: '8GB · 256GB SSD · Liquid Retina', discount: 12, originalPrice: 124900, dealPrice: 104900, platform: 'Amazon', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80', badge: 'Hot', productId: 'lap-005' },
-  { id: 'deal-3', title: 'Sony WH-1000XM5', subtitle: 'ANC · 30hr battery · Bluetooth', discount: 17, originalPrice: 29990, dealPrice: 24990, platform: 'Amazon', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80', badge: 'Flash', productId: 'ele-003' },
-  { id: 'deal-4', title: 'OnePlus 12R 5G', subtitle: '256GB · 100W · Snapdragon 8 Gen 2', discount: 15, originalPrice: 45999, dealPrice: 38999, platform: 'Flipkart', image: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?w=400&q=80', badge: 'Limited', productId: 'mob-003' },
-  { id: 'deal-5', title: 'ASUS Vivobook 15 OLED', subtitle: 'Ryzen 5 · 16GB · 512GB SSD', discount: 18, originalPrice: 67990, dealPrice: 55990, platform: 'Amazon', image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&q=80', badge: 'Hot', productId: 'lap-004' },
-  { id: 'deal-6', title: 'Garmin Forerunner 165', subtitle: 'GPS · AMOLED · Running Watch', discount: 18, originalPrice: 33990, dealPrice: 27990, platform: 'Amazon', image: 'https://images.unsplash.com/photo-1517438984742-1262db08379e?w=400&q=80', badge: 'Exclusive', productId: 'spo-005' },
-  { id: 'deal-7', title: 'Philips Air Fryer 4.2L', subtitle: '1400W · Preset menu · Easy clean', discount: 19, originalPrice: 7999, dealPrice: 6499, platform: 'Amazon', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80', badge: 'Flash', productId: 'hom-001' },
-  { id: 'deal-8', title: 'Xiaomi Redmi Note 13 Pro 5G', subtitle: '256GB · 200MP · 67W charge', discount: 17, originalPrice: 28999, dealPrice: 23999, platform: 'Flipkart', image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400&q=80', badge: 'Hot', productId: 'mob-004' },
-]
 
 function getMillisecondsUntilMidnightIST(): number {
   const now = new Date()
@@ -49,18 +37,14 @@ function formatTime(milliseconds: number): string {
   return `${h}:${m}:${s}`
 }
 
-const BADGE_STYLES: Record<DealItem['badge'], string> = {
-  Flash: 'bg-rose-500 text-white',
-  Hot: 'bg-orange-500 text-white',
-  Exclusive: 'bg-purple-600 text-white',
-  Limited: 'bg-blue-600 text-white',
-}
-
 export default function FlashSalePageClient() {
+  const [deals, setDeals] = useState<Deal[]>([])
   const [timeLeft, setTimeLeft] = useState<number | null>(null)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   useEffect(() => {
+    setDeals(getFlashDeals(12))
+    
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     setPrefersReducedMotion(mediaQuery.matches)
     setTimeLeft(getMillisecondsUntilMidnightIST())
@@ -114,32 +98,32 @@ export default function FlashSalePageClient() {
         </div>
         
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {DEALS_DATA.map((deal) => (
+          {deals.map((deal) => (
             <Link
               key={deal.id}
-              href={`/products/${deal.productId}`}
+              href={`/products/${deal.product.id}`}
               className="group relative bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl transition-all duration-500"
             >
               <div className="relative h-52 overflow-hidden">
                 <Image
-                  src={deal.image}
-                  alt={deal.title}
+                  src={deal.product.image}
+                  alt={deal.product.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                <span className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-lg ${BADGE_STYLES[deal.badge]}`}>
-                  {deal.badge}
+                <span className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-lg ${BADGE_STYLES[deal.label || 'Flash Deal']}`}>
+                  {deal.label || 'Flash'}
                 </span>
                 <span className="absolute right-3 top-3 bg-white text-zinc-900 px-2.5 py-1 rounded-lg text-[10px] font-black shadow-lg">
-                  -{deal.discount}%
+                  -{deal.discountPercent}%
                 </span>
               </div>
               <div className="flex flex-1 flex-col gap-3 p-5">
                 <div>
-                  <p className="line-clamp-2 text-sm font-black leading-snug group-hover:text-rose-500 transition-colors">{deal.title}</p>
-                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">{deal.subtitle}</p>
+                  <p className="line-clamp-2 text-sm font-black leading-snug group-hover:text-rose-500 transition-colors">{deal.product.title}</p>
+                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">{deal.product.brand}</p>
                 </div>
                 <div className="mt-auto flex items-end justify-between">
                   <div>

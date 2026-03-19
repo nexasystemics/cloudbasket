@@ -5,6 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { getProductById } from '@/lib/cloudbasket-data';
 import { type CatalogProduct } from '@/lib/cloudbasket-data';
+import { trackAffiliateClick } from '@/lib/analytics';
 
 interface PriceComparisonTableProps {
   productId: string;
@@ -92,6 +93,7 @@ export default async function PriceComparisonTable({ productId }: PriceCompariso
                 <td className="px-6 py-5 whitespace-nowrap">
                   <Link
                     href={`/go/${item.platform.toLowerCase()}-${productId}`}
+                    onClick={() => trackAffiliateClick(productId, item.platform, item.price)}
                     className="cb-btn-primary px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest"
                   >
                     View Deal

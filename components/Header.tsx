@@ -11,20 +11,18 @@ import {
 } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useTheme } from 'next-themes'
 import {
   Search,
   Menu,
   X,
   ChevronDown,
-  Sun,
-  Moon,
   Globe,
   Shield,
   Zap,
   TrendingDown,
   type LucideIcon,
 } from 'lucide-react'
+import ThemeToggle from '@/components/ThemeToggle'
 import { useGlobal } from '@/context/GlobalContext'
 import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
 import type { CountryCode } from '@/lib/types'
@@ -86,7 +84,6 @@ export default function Header(): JSX.Element {
   const pathname = usePathname()
   const router = useRouter()
   const { country, setCountry, user } = useGlobal()
-  const { resolvedTheme, setTheme } = useTheme()
 
   const [mounted, setMounted] = useState<boolean>(false)
   const [promoDismissed, setPromoDismissed] = useState<boolean>(false)
@@ -243,14 +240,6 @@ export default function Header(): JSX.Element {
     [setCountry],
   )
 
-  const toggleTheme = useCallback(() => {
-    if (resolvedTheme === 'dark') {
-      setTheme('light')
-      return
-    }
-    setTheme('dark')
-  }, [resolvedTheme, setTheme])
-
   const authRoute = user?.role === 'Admin' ? ROUTES.ADMIN : ROUTES.LOGIN
   const authLabel = user?.role === 'Admin' ? 'Admin' : 'Sign In'
   const selectedCountry: CountryCode = mounted ? country : 'IN'
@@ -381,14 +370,7 @@ export default function Header(): JSX.Element {
             </select>
           </label>
 
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
-            aria-label="Toggle theme"
-          >
-            {mounted && resolvedTheme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-          </button>
+          <ThemeToggle />
 
           <Link href={authRoute} className="cb-btn-primary inline-flex h-9 items-center gap-1 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
             {user?.role === 'Admin' ? <Shield size={13} /> : null}
@@ -479,14 +461,7 @@ export default function Header(): JSX.Element {
               </select>
             </label>
 
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="glass-panel inline-flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
-              aria-label="Toggle theme mobile"
-            >
-              {mounted && resolvedTheme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
+            <ThemeToggle />
           </div>
 
           <Link href={authRoute} className="cb-btn-primary mt-4 flex w-full items-center justify-center gap-2 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">

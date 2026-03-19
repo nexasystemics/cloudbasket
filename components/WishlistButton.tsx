@@ -52,6 +52,12 @@ export default function WishlistButton({ productId, productName }: WishlistButto
     window.setTimeout(() => setFeedback(''), 2000)
   }
 
+  const shareBase = typeof window !== 'undefined' ? window.location.href : ''
+  const productShareText = encodeURIComponent(`I just added ${productName} to my CloudBasket wishlist. Check it out: ${shareBase}`)
+  const whatsappShare = `https://wa.me/?text=${productShareText}`
+  const telegramShare = `https://t.me/share/url?url=${encodeURIComponent(shareBase)}&text=${encodeURIComponent(`I found this product on CloudBasket: ${productName}`)}`
+  const emailShare = `mailto:?subject=${encodeURIComponent(`Wishlist: ${productName}`)}&body=${productShareText}`
+
   return (
     <div className="relative">
       <button
@@ -63,6 +69,21 @@ export default function WishlistButton({ productId, productName }: WishlistButto
         {isWishlisted ? 'Wishlisted' : 'Wishlist'}
       </button>
       {feedback ? <p className="text-muted absolute -bottom-6 left-0 text-xs">{feedback}</p> : null}
+
+      {isWishlisted ? (
+        <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-300">
+          Share:
+          <a href={whatsappShare} target="_blank" rel="noopener noreferrer" className="text-green-500 hover:underline">
+            WhatsApp
+          </a>
+          <a href={telegramShare} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+            Telegram
+          </a>
+          <a href={emailShare} className="text-zinc-500 hover:underline">
+            Email
+          </a>
+        </div>
+      ) : null}
     </div>
   )
 }

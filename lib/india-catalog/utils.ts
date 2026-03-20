@@ -11,13 +11,16 @@ const CATEGORY_MAP: Record<IndiaCategory, CategorySlug> = {
   'electronics': 'electronics',
   'fashion': 'fashion',
   'food-grocery': 'grocery',
+  'sports': 'electronics',
+  'toys': 'electronics',
+  'books': 'electronics',
 } as const
 
 const PLATFORM_MAP: Record<string, PlatformLabel> = {
   amazon: 'Amazon',
   flipkart: 'Flipkart',
   myntra: 'Myntra',
-  ajio: 'Flipkart', // AJIO can stay as Flipkart or be separate if needed, but the request didn't list it.
+  ajio: 'Flipkart',
   croma: 'Croma',
   bigbasket: 'BigBasket',
   'reliance-digital': 'Reliance Digital',

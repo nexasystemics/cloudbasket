@@ -1,143 +1,126 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Shield, Lock, Eye, Database, UserCheck, Clock, Mail, AlertCircle } from 'lucide-react'
+'use client'
 
-export const metadata: Metadata = {
-  title: "Privacy Policy — DPDPA 2023 Compliant",
-  description:
-    'Read the CloudBasket Privacy Policy to learn how we handle personal data, cookies, tracking, security, and clearly explain your rights under applicable laws.',
+import { useState } from 'react'
+import Link from 'next/link'
+import { ChevronDown, Download, Copy, Check } from 'lucide-react'
+
+const LAST_UPDATED = 'March 2026'
+
+const SECTIONS = [
+  { id: 'fiduciary', title: 'Data Fiduciary Identity' },
+  { id: 'collected', title: 'What Personal Data We Collect' },
+  { id: 'purpose', title: 'Purpose and Legal Basis for Processing' },
+  { id: 'retention', title: 'Data Retention' },
+  { id: 'rights', title: 'Your Rights Under DPDP Act 2023' },
+  { id: 'cookies', title: 'Cookies Policy' },
+  { id: 'thirdparty', title: 'Third-Party Links and Affiliate Partners' },
+  { id: 'children', title: "Children's Privacy" },
+  { id: 'security', title: 'Data Security' },
+  { id: 'changes', title: 'Changes to This Policy' },
+]
+
+function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(true)
+  return (
+    <div id={id} className="border-b border-[var(--cb-border)] py-6">
+      <button type="button" className="flex w-full items-center justify-between text-left" onClick={() => setOpen(!open)}>
+        <h2 className="text-xl font-black tracking-tight">{title}</h2>
+        <ChevronDown size={20} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && <div className="mt-4 space-y-3 text-sm leading-relaxed text-[var(--cb-text-secondary)]">{children}</div>}
+    </div>
+  )
 }
-const LAST_UPDATED = 'March 1, 2026'
-const DPO_EMAIL = 'privacy@cloudbasket.in'
 
 export default function PrivacyPage() {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    try { navigator.clipboard.writeText('https://cloudbasket.in/legal/privacy'); setCopied(true); setTimeout(() => setCopied(false), 2000) } catch { /* no-op */ }
+  }
+
   return (
-    <main className="bg-[var(--cb-bg)]">
-      <section className="bg-[var(--cb-surface-2)] py-16">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <Shield size={40} className="mx-auto mb-4 text-[#039BE5]" />
+    <main className="mx-auto max-w-4xl px-6 py-12">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <div>
           <h1 className="text-4xl font-black tracking-tighter">Privacy Policy</h1>
-          <p className="mt-3 text-[var(--cb-text-muted)]">Last updated: {LAST_UPDATED} · DPDPA 2023 & GDPR Compliant</p>
+          <p className="mt-2 text-sm text-[var(--cb-text-muted)]">Last Updated: {LAST_UPDATED} · DPDP Act 2023 Compliant</p>
         </div>
-      </section>
+        <div className="flex gap-3">
+          <button type="button" onClick={() => window.print()} className="cb-btn cb-btn-ghost gap-2 text-sm"><Download size={16} /> Download PDF</button>
+          <button type="button" onClick={handleCopy} className="cb-btn cb-btn-ghost gap-2 text-sm">{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? 'Copied!' : 'Copy Link'}</button>
+        </div>
+      </div>
 
-      <section className="mx-auto flex max-w-3xl flex-col gap-6 px-6 py-12">
-        <article className="cb-card p-8">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-            <Database size={18} className="text-[#039BE5]" />
-          </div>
-          <h2 className="text-xl font-black">Data We Collect</h2>
-          <ul className="mt-3 list-disc space-y-2 ps-5 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            <li>Email address (registration only)</li>
-            <li>Search queries and filters used</li>
-            <li>Products clicked and deals viewed</li>
-            <li>Device type and browser (analytics)</li>
-            <li>IP address (security only, not stored beyond 30 days)</li>
-          </ul>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            We never collect payment information. All purchases happen on partner sites.
-          </p>
-        </article>
+      <nav className="cb-card mb-10 p-6 print:hidden">
+        <p className="mb-3 text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)]">Table of Contents</p>
+        <ol className="space-y-1.5">
+          {SECTIONS.map((s, i) => (
+            <li key={s.id}><a href={`#${s.id}`} className="text-sm text-skyline-primary hover:underline">{i + 1}. {s.title}</a></li>
+          ))}
+        </ol>
+      </nav>
 
-        <article className="cb-card p-8">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-            <Eye size={18} className="text-[#039BE5]" />
-          </div>
-          <h2 className="text-xl font-black">How We Use Your Data</h2>
-          <ul className="mt-3 list-disc space-y-2 ps-5 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            <li>Personalise deal recommendations</li>
-            <li>Send price drop alerts (if opted in)</li>
-            <li>Improve search relevance</li>
-            <li>Detect and prevent fraud</li>
-            <li>Comply with legal obligations</li>
-          </ul>
-        </article>
+      <Section id="fiduciary" title="1. Data Fiduciary Identity">
+        <p><strong>Platform:</strong> CloudBasket — operated by NEXQON HOLDINGS</p>
+        <p><strong>Privacy Contact:</strong> <a href="mailto:privacy@cloudbasket.in" className="text-skyline-primary underline">privacy@cloudbasket.in</a></p>
+        <p><strong>Grievance Officer:</strong> Contact privacy@cloudbasket.in — responses within 48 hours as required under DPDP Act 2023.</p>
+      </Section>
 
-        <article className="cb-card p-8">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-            <Lock size={18} className="text-[#039BE5]" />
-          </div>
-          <h2 className="text-xl font-black">Affiliate Tracking</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            When you click a deal link, our affiliate partner (Amazon, Flipkart, CJ) may set a tracking cookie. This
-            is standard affiliate practice. See our Affiliate Disclosure for full details.
-          </p>
-          <Link href="/affiliate-disclosure" className="cb-btn cb-btn-ghost mt-4">
-            View Affiliate Disclosure →
-          </Link>
-        </article>
+      <Section id="collected" title="2. What Personal Data We Collect">
+        <p><strong>2.1 Data you provide:</strong> Email address (for price alerts and newsletter), Name (optional, for account), Phone (optional, for WhatsApp alerts).</p>
+        <p><strong>2.2 Data collected automatically:</strong> Pages visited, products viewed, search queries, affiliate link clicks, device type, browser type, approximate city-level location from IP address.</p>
+        <p><strong>2.3 Browser-only data (never transmitted):</strong> Wishlist, recently viewed products, compare list, and feedback — stored in your browser localStorage only.</p>
+        <p><strong>2.4 Third-party data:</strong> Google Analytics anonymous usage data, Google AdSense interaction data.</p>
+      </Section>
 
-        <article className="cb-card p-8">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-            <Database size={18} className="text-[#039BE5]" />
-          </div>
-          <h2 className="text-xl font-black">Cookies</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            Essential cookies keep core platform features working. Analytics cookies help us improve relevance and site
-            speed. Affiliate tracking cookies allow commission attribution to partner networks.
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            You can manage cookies in your browser settings at any time.
-          </p>
-        </article>
+      <Section id="purpose" title="3. Purpose and Legal Basis for Processing">
+        <p><strong>Price alert emails:</strong> Consent-based — you opt in when setting an alert.</p>
+        <p><strong>Analytics:</strong> Legitimate interest — to improve platform performance.</p>
+        <p><strong>Advertising:</strong> Consent-based — managed via our cookie consent banner.</p>
+        <p>We do not sell your data to third parties. We do not use your data for profiling for financial or insurance decisions.</p>
+      </Section>
 
-        <article className="cb-card p-8">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-            <UserCheck size={18} className="text-[#039BE5]" />
-          </div>
-          <h2 className="text-xl font-black">Your Rights (DPDPA 2023)</h2>
-          <ul className="mt-3 list-disc space-y-2 ps-5 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            <li>Right to access your data</li>
-            <li>Right to correction</li>
-            <li>Right to erasure (Right to be Forgotten)</li>
-            <li>Right to data portability</li>
-            <li>Right to withdraw consent</li>
-          </ul>
-          <p className="mt-3 text-sm text-[var(--cb-text-muted)]">To exercise any right, email: {DPO_EMAIL}</p>
-        </article>
+      <Section id="retention" title="4. Data Retention">
+        <p><strong>Email and alert preferences:</strong> Until you withdraw consent or request deletion.</p>
+        <p><strong>Analytics data:</strong> 26 months (Google Analytics default retention).</p>
+        <p><strong>Browser-stored data:</strong> Under your control — clear your browser storage to delete.</p>
+      </Section>
 
-        <article className="cb-card p-8">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-            <Clock size={18} className="text-[#039BE5]" />
-          </div>
-          <h2 className="text-xl font-black">Data Retention</h2>
-          <ul className="mt-3 list-disc space-y-2 ps-5 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            <li>Account data: retained while account is active + 90 days</li>
-            <li>Analytics data: 24 months rolling</li>
-            <li>IP logs: 30 days maximum</li>
-            <li>Affiliate click data: 90 days</li>
-          </ul>
-        </article>
+      <Section id="rights" title="5. Your Rights Under DPDP Act 2023">
+        <p>Under India's Digital Personal Data Protection Act 2023, you have the right to:</p>
+        <ul className="ml-4 list-disc space-y-1">
+          <li>Access your personal data</li>
+          <li>Correction of inaccurate data</li>
+          <li>Erasure of your data</li>
+          <li>Grievance redressal</li>
+          <li>Nominate a representative (in case of death or incapacity)</li>
+        </ul>
+        <p>Submit requests to: <a href="mailto:privacy@cloudbasket.in" className="text-skyline-primary underline">privacy@cloudbasket.in</a>. We will respond within 30 days.</p>
+      </Section>
 
-        <article className="cb-card p-8">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-            <Lock size={18} className="text-[#039BE5]" />
-          </div>
-          <h2 className="text-xl font-black">Data Security</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--cb-text-muted)]">
-            All data is encrypted in transit (TLS 1.3) and at rest (AES-256). We use Supabase hosted on AWS Mumbai
-            (ap-south-1) for Indian data residency.
-          </p>
-        </article>
+      <Section id="cookies" title="6. Cookies Policy">
+        <p>We use essential cookies for session management, optional analytics cookies (Google Analytics 4), and optional advertising cookies (Google AdSense). Manage your preferences via our cookie consent banner or visit our <Link href="/cookies" className="text-skyline-primary underline">Cookie Policy page</Link>.</p>
+      </Section>
 
-        <article className="cb-card p-8">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-            <Mail size={18} className="text-[#039BE5]" />
-          </div>
-          <h2 className="text-xl font-black">Contact Our DPO</h2>
-          <div className="cb-card border-[#039BE5]/20 bg-[#039BE5]/5 p-6">
-            <p className="text-sm font-black">Data Protection Officer</p>
-            <p className="mt-1 text-sm text-[#039BE5]">{DPO_EMAIL}</p>
-            <p className="mt-1 text-sm text-[var(--cb-text-muted)]">Response time: Within 72 hours</p>
-            <p className="mt-2 inline-flex items-center gap-2 text-xs text-[#039BE5]">
-              <AlertCircle size={12} /> Priority handling for legal privacy requests
-            </p>
-            <Link href="/contact" className="cb-btn cb-btn-primary mt-4">
-              Contact DPO
-            </Link>
-          </div>
-        </article>
-      </section>
+      <Section id="thirdparty" title="7. Third-Party Links and Affiliate Partners">
+        <p>Clicking affiliate links transfers you to partner platforms (Amazon, Flipkart, etc.). Their privacy policies apply from that point. CloudBasket is not responsible for partner data practices.</p>
+      </Section>
+
+      <Section id="children" title="8. Children's Privacy">
+        <p>This service is not directed at users under 18 years of age. We do not knowingly collect personal data from minors. If you believe a minor has submitted data, contact privacy@cloudbasket.in immediately.</p>
+      </Section>
+
+      <Section id="security" title="9. Data Security">
+        <p>We implement HTTPS across all pages, Supabase Row Level Security for database access, and do not store any payment data. We conduct regular security reviews. No system is 100% secure — please use strong passwords and notify us of any suspected breach.</p>
+      </Section>
+
+      <Section id="changes" title="10. Changes to This Policy">
+        <p>We may update this policy periodically. Registered users will be notified by email of material changes. Continued use of the platform implies acceptance of the updated policy.</p>
+      </Section>
+
+      <div className="mt-10 flex justify-center print:hidden">
+        <button type="button" onClick={() => window.print()} className="cb-btn cb-btn-primary gap-2"><Download size={16} /> Download PDF</button>
+      </div>
     </main>
   )
 }

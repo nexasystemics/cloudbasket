@@ -2,78 +2,135 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ROUTES } from '@/lib/constants'
+import { X, Cookie, Shield, BarChart2, Megaphone } from 'lucide-react'
+
+type ConsentPrefs = {
+  essential: true
+  analytics: boolean
+  advertising: boolean
+  timestamp: string
+}
+
+function getStoredConsent(): ConsentPrefs | null {
+  try {
+    const raw = localStorage.getItem('cb_cookie_consent')
+    return raw ? JSON.parse(raw) : null
+  } catch { return null }
+}
+
+function saveConsent(prefs: ConsentPrefs) {
+  try { localStorage.setItem('cb_cookie_consent', JSON.stringify(prefs)) } catch { /* no-op */ }
+}
 
 export default function CookieConsent() {
-  const [mounted, setMounted] = useState<boolean>(false)
-  const [visible, setVisible] = useState<boolean>(false)
+  const [show, setShow] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [analytics, setAnalytics] = useState(false)
+  const [advertising, setAdvertising] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    try {
-      const consent = window.localStorage.getItem('cb-cookie-consent')
-      if (consent === null) {
-        setVisible(true)
-      }
-    } catch (error) {
-      console.error('Failed to read from localStorage:', error)
-      setVisible(true)
-    }
+    const stored = getStoredConsent()
+    if (!stored) setShow(true)
   }, [])
 
-  const handleAccept = () => {
-    if (typeof window !== 'undefined') {
-      try {
-        window.localStorage.setItem('cb-cookie-consent', 'accepted')
-      } catch (error) {
-        console.error('Failed to save to localStorage:', error)
-      }
-    }
-    setVisible(false)
+  const acceptAll = () => {
+    saveConsent({ essential: true, analytics: true, advertising: true, timestamp: new Date().toISOString() })
+    setShow(false)
   }
 
-  const handleDecline = () => {
-    if (typeof window !== 'undefined') {
-      try {
-        window.localStorage.setItem('cb-cookie-consent', 'declined')
-      } catch (error) {
-        console.error('Failed to save to localStorage:', error)
-      }
-    }
-    setVisible(false)
+  const savePreferences = () => {
+    saveConsent({ essential: true, analytics, advertising, timestamp: new Date().toISOString() })
+    setShow(false)
+    setShowModal(false)
   }
 
-  if (!mounted || !visible) {
-    return null
-  }
+  if (!show) return null
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[200] px-4">
-      <div className="glass-panel mx-auto mb-4 flex max-w-4xl flex-col items-start gap-4 rounded-card border-t px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-2">
-          <p className="text-[11px] text-[var(--cb-text-secondary)]">
-            We use cookies to enhance your experience and comply with{' '}
-            <Link href={ROUTES.PRIVACY} className="font-semibold text-skyline-primary">
-              DPDPA 2023 &amp; GDPR
-            </Link>{' '}
-            privacy regulations.
-          </p>
-          <span className="cb-badge bg-[var(--cb-primary-glow)] text-skyline-primary">DPDPA 2023 Compliant</span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button type="button" onClick={handleDecline} className="cb-btn-ghost px-3 py-2 text-[11px]">
-            Decline
-          </button>
-          <button type="button" onClick={handleAccept} className="cb-btn-primary px-3 py-2 text-[11px]">
-            Accept All
-          </button>
+    <>
+      {/* Banner */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--cb-border)] bg-white dark:bg-zinc-900 p-4 shadow-2xl md:bottom-4 md:left-4 md:right-auto md:max-w-md md:rounded-2xl md:border">
+        <div className="flex items-start gap-3">
+          <Cookie size={20} className="mt-0.5 flex-shrink-0 text-skyline-primary" />
+          <div className="flex-1">
+            <p className="text-sm font-black">We use cookies</p>
+            <p className="mt-1 text-xs text-[var(--cb-text-muted)]">
+              We use cookies to improve your experience, serve relevant ads, and analyse traffic. Essential cookies are always active.{' '}
+              <Link href="/cookies" className="text-skyline-primary underline">Learn more</Link>
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button type="button" onClick={acceptAll} className="cb-btn cb-btn-primary text-xs px-4 py-2">Accept All</button>
+              <button type="button" onClick={() => setShowModal(true)} className="cb-btn cb-btn-ghost text-xs px-4 py-2">Manage Preferences</button>
+            </div>
+          </div>
+          <button type="button" onClick={() => setShow(false)} className="flex-shrink-0 text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]"><X size={16} /></button>
         </div>
       </div>
-    </div>
+
+      {/* Preferences Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-zinc-900 p-6 shadow-2xl">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-lg font-black">Cookie Preferences</h2>
+              <button type="button" onClick={() => setShowModal(false)} className="text-[var(--cb-text-muted)]"><X size={20} /></button>
+            </div>
+
+            <div className="space-y-4">
+              {/* Essential */}
+              <div className="flex items-start justify-between gap-4 rounded-xl bg-[var(--cb-surface-2)] p-4">
+                <div className="flex items-start gap-3">
+                  <Shield size={18} className="mt-0.5 text-skyline-primary flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-black">Essential <span className="ml-2 text-xs text-[var(--cb-text-muted)] font-normal">Always active</span></p>
+                    <p className="mt-1 text-xs text-[var(--cb-text-muted)]">Required for the website to function. Cannot be disabled.</p>
+                  </div>
+                </div>
+                <div className="h-5 w-9 rounded-full bg-skyline-primary flex-shrink-0 mt-0.5 opacity-60 cursor-not-allowed" />
+              </div>
+
+              {/* Analytics */}
+              <div className="flex items-start justify-between gap-4 rounded-xl border border-[var(--cb-border)] p-4">
+                <div className="flex items-start gap-3">
+                  <BarChart2 size={18} className="mt-0.5 text-[var(--cb-text-muted)] flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-black">Analytics</p>
+                    <p className="mt-1 text-xs text-[var(--cb-text-muted)]">Help us understand how you use the site. Google Analytics 4.</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAnalytics(!analytics)}
+                  className={`h-5 w-9 rounded-full transition-colors flex-shrink-0 mt-0.5 ${analytics ? 'bg-skyline-primary' : 'bg-zinc-300 dark:bg-zinc-600'}`}
+                  aria-label="Toggle analytics cookies"
+                />
+              </div>
+
+              {/* Advertising */}
+              <div className="flex items-start justify-between gap-4 rounded-xl border border-[var(--cb-border)] p-4">
+                <div className="flex items-start gap-3">
+                  <Megaphone size={18} className="mt-0.5 text-[var(--cb-text-muted)] flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-black">Advertising</p>
+                    <p className="mt-1 text-xs text-[var(--cb-text-muted)]">Allow personalised ads via Google AdSense.</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAdvertising(!advertising)}
+                  className={`h-5 w-9 rounded-full transition-colors flex-shrink-0 mt-0.5 ${advertising ? 'bg-skyline-primary' : 'bg-zinc-300 dark:bg-zinc-600'}`}
+                  aria-label="Toggle advertising cookies"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 flex gap-3">
+              <button type="button" onClick={savePreferences} className="cb-btn cb-btn-primary flex-1">Save Preferences</button>
+              <button type="button" onClick={acceptAll} className="cb-btn cb-btn-ghost flex-1">Accept All</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

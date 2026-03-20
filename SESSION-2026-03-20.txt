@@ -1,0 +1,27 @@
+CloudBasket Session Backup — 2026-03-20 03:18
+=====================================================================
+Last Commit: 280802e feat: C1 design tokens + C2 Logo SVG system + OG image
+Branch: main
+Dir: F:\cloudbasket
+
+COMPLETED TODAY:
+- P14 — i18n LocaleProvider + Header locale selector (9bcc584)
+- P15 — PWAInstallBanner (ed72aca)
+- P16 — Admin Analytics dashboard (9b8d180)
+- P17 — Email templates + Newsletter API + Unsubscribed page (9b8d180)
+- P18 — Lighthouse fixes (lang, fonts, preload) (6ce1dab)
+- P19 — DEPLOYMENT.md (6ce1dab)
+- P20 — Final audit passed 1198 pages (6ce1dab)
+- C1 — Design tokens (280802e)
+- C2 — Logo SVG + OG image (280802e)
+
+PENDING TOMORROW:
+- C3 — Dark mode complete (ThemeProvider exists, needs dark: classes)
+- C4 — Typography system (needs Inter font in layout + Typography.tsx)
+- C5 — Terms page rewrite (code ready to paste)
+- C6 through C20 — remaining Set C prompts
+
+RESUME COMMAND:
+pnpm build — fix any errors — then C5 paste — then C6 onwards
+
+SET C REMAINING: C3 C4 C5 C6 C7 C8 C9 C10 C11 C12 C13 C14 C15 C16 C17 C18 C19 C20

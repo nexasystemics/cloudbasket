@@ -52,17 +52,17 @@ export default function DealsPage() {
     
     const formattedDeals: UI_DealItem[] = engineDeals.map(d => ({
       id: d.id,
-      title: d.product.title,
-      subtitle: d.product.description || d.product.brand, // Fallback
-      category: d.product.category.charAt(0).toUpperCase() + d.product.category.slice(1),
+      title: d.title,
+      subtitle: d.title || d.brand, // Fallback
+      category: d.category.charAt(0).toUpperCase() + d.category.slice(1),
       discount: d.discountPercent,
       originalPrice: d.originalPrice,
       dealPrice: d.dealPrice,
       platform: d.platform as any,
-      image: d.product.image,
+      image: d.imageUrl,
       badge: d.label || 'Deal',
       endsIn: calculateTimeLeft(d.expiresAt),
-      productId: d.product.id
+      productId: d.id
     }))
     
     setDeals(formattedDeals)
@@ -180,4 +180,5 @@ export default function DealsPage() {
     </main>
   )
 }
+
 

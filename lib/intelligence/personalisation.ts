@@ -1,95 +1,59 @@
 // lib/intelligence/personalisation.ts
-// Purpose: Client-side personalisation engine based on user behaviour.
-// A20: LocalStorage based preference tracking.
+// Client-side personalisation engine — preference tracking via localStorage.
+// All operations wrapped in try/catch — never crashes if storage unavailable.
 
-type ViewEntry = { productId: string; category: string; brand: string; viewedAt: number }
-type ClickEntry = { productId: string; platform: string; clickedAt: number }
-type SearchEntry = { query: string; searchedAt: number }
+type ViewEntry = { productId: string; category: string; brand: string; viewedAt: string }
+type ClickEntry = { productId: string; platform: string; clickedAt: string }
+type SearchEntry = { query: string; searchedAt: string }
 
-const KEYS = {
-  VIEW_HISTORY: 'cb_view_history',
-  CLICK_HISTORY: 'cb_click_history',
-  SEARCH_HISTORY: 'cb_search_history',
+function readLS<T>(key: string): T[] {
+  try { const s = localStorage.getItem(key); return s ? JSON.parse(s) : [] } catch { return [] }
+}
+function writeLS<T>(key: string, data: T[], max: number): void {
+  try { localStorage.setItem(key, JSON.stringify(data.slice(0, max))) } catch { /* no-op */ }
 }
 
-/**
- * Records a product view.
- */
 export function trackView(productId: string, category: string, brand: string): void {
-  try {
-    const history: ViewEntry[] = JSON.parse(localStorage.getItem(KEYS.VIEW_HISTORY) || '[]')
-    const updated = [{ productId, category, brand, viewedAt: Date.now() }, ...history.filter(h => h.productId !== productId)].slice(0, 50)
-    localStorage.setItem(KEYS.VIEW_HISTORY, JSON.stringify(updated))
-  } catch (err) {
-    console.error('Personalisation trackView error:', err)
-  }
+  const history = readLS<ViewEntry>('cb_view_history')
+  history.unshift({ productId, category, brand, viewedAt: new Date().toISOString() })
+  writeLS('cb_view_history', history, 50)
 }
 
-/**
- * Records a product click (exit to platform).
- */
 export function trackClick(productId: string, platform: string): void {
-  try {
-    const history: ClickEntry[] = JSON.parse(localStorage.getItem(KEYS.CLICK_HISTORY) || '[]')
-    const updated = [{ productId, platform, clickedAt: Date.now() }, ...history].slice(0, 50)
-    localStorage.setItem(KEYS.CLICK_HISTORY, JSON.stringify(updated))
-  } catch (err) {
-    console.error('Personalisation trackClick error:', err)
-  }
+  const history = readLS<ClickEntry>('cb_click_history')
+  history.unshift({ productId, platform, clickedAt: new Date().toISOString() })
+  writeLS('cb_click_history', history, 50)
 }
 
-/**
- * Records a search query.
- */
 export function trackSearch(query: string): void {
   if (!query.trim()) return
-  try {
-    const history: SearchEntry[] = JSON.parse(localStorage.getItem(KEYS.SEARCH_HISTORY) || '[]')
-    const updated = [{ query: query.trim(), searchedAt: Date.now() }, ...history.filter(h => h.query !== query.trim())].slice(0, 20)
-    localStorage.setItem(KEYS.SEARCH_HISTORY, JSON.stringify(updated))
-  } catch (err) {
-    console.error('Personalisation trackSearch error:', err)
-  }
+  const history = readLS<SearchEntry>('cb_search_history')
+  history.unshift({ query: query.trim(), searchedAt: new Date().toISOString() })
+  writeLS('cb_search_history', history, 20)
 }
 
-/**
- * Gets the top 3 preferred categories.
- */
 export function getPreferredCategories(): string[] {
-  try {
-    const history: ViewEntry[] = JSON.parse(localStorage.getItem(KEYS.VIEW_HISTORY) || '[]')
-    const counts: Record<string, number> = {}
-    history.forEach(h => counts[h.category] = (counts[h.category] || 0) + 1)
-    return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(e => e[0]).slice(0, 3)
-  } catch {
-    return []
-  }
+  const history = readLS<ViewEntry>('cb_view_history')
+  const counts: Record<string, number> = {}
+  history.forEach(e => { counts[e.category] = (counts[e.category] || 0) + 1 })
+  return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([cat]) => cat)
 }
 
-/**
- * Gets the top 3 preferred brands.
- */
 export function getPreferredBrands(): string[] {
-  try {
-    const history: ViewEntry[] = JSON.parse(localStorage.getItem(KEYS.VIEW_HISTORY) || '[]')
-    const counts: Record<string, number> = {}
-    history.forEach(h => counts[h.brand] = (counts[h.brand] || 0) + 1)
-    return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(e => e[0]).slice(0, 3)
-  } catch {
-    return []
-  }
+  const history = readLS<ViewEntry>('cb_view_history')
+  const counts: Record<string, number> = {}
+  history.forEach(e => { counts[e.brand] = (counts[e.brand] || 0) + 1 })
+  return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([brand]) => brand)
 }
 
-/**
- * Gets the most clicked platform.
- */
 export function getPreferredPlatform(): string {
-  try {
-    const history: ClickEntry[] = JSON.parse(localStorage.getItem(KEYS.CLICK_HISTORY) || '[]')
-    const counts: Record<string, number> = {}
-    history.forEach(h => counts[h.platform] = (counts[h.platform] || 0) + 1)
-    return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(e => e[0])[0] || ''
-  } catch {
-    return ''
-  }
+  const history = readLS<ClickEntry>('cb_click_history')
+  const counts: Record<string, number> = {}
+  history.forEach(e => { counts[e.platform] = (counts[e.platform] || 0) + 1 })
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1])
+  return sorted[0]?.[0] || 'Amazon'
+}
+
+export function getRecentlyViewed(): string[] {
+  return readLS<ViewEntry>('cb_view_history').slice(0, 10).map(e => e.productId)
 }

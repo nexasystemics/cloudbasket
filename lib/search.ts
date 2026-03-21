@@ -1,12 +1,9 @@
 // lib/search.ts
-// Purpose: Comprehensive client-side search function with multi-filter scoring.
-// A20: Search logic for Advanced Search System.
+// Comprehensive multi-filter product search with relevance scoring.
 
-import { CATALOG_PRODUCTS, type CatalogProduct } from '@/lib/cloudbasket-data'
 import { INDIA_CATALOG } from '@/lib/india-catalog'
-import { type IndiaProduct } from '@/lib/india-catalog/types'
 
-export interface SearchFilters {
+export type SearchFilters = {
   categories?: string[]
   brands?: string[]
   platforms?: string[]
@@ -17,157 +14,72 @@ export interface SearchFilters {
   sortBy?: 'relevance' | 'price-asc' | 'price-desc' | 'discount-desc' | 'newest'
 }
 
-// Unified product type for search results
-export type SearchProduct = (IndiaProduct | CatalogProduct) & {
-  name: string // Normalized field: IndiaProduct.name or CatalogProduct.title
-  rating: number
-  reviewCount: number
-  inStock?: boolean // Present on IndiaProduct, assumed true for CatalogProduct
-  relevanceScore: number
-  displayPrice: number
-  displayOriginalPrice: number
-  displayDiscount: number
-  displayPlatform: string
-  isIndiaProduct: boolean
-  unifiedId: string // A unique ID for deduplication
+export type SearchResult = {
+  id: string; name: string; brand: string; category: string
+  price: number; originalPrice?: number; discount?: number
+  image: string; affiliateUrl: string; platform: string
+  inStock: boolean; relevanceScore: number
 }
 
-const ALL_PRODUCTS: SearchProduct[] = (() => {
-  const unifiedProducts = new Map<string, SearchProduct>();
-
-  [...CATALOG_PRODUCTS, ...INDIA_CATALOG].forEach(p => {
-    let product: SearchProduct
-
-    if ('category' in p && 'affiliatePlatform' in p) { // IndiaProduct
-      const originalPrice = p.originalPrice ?? Math.round(p.price * 1.2)
-      product = {
-        ...p,
-        relevanceScore: 0,
-        displayPrice: p.price,
-        displayOriginalPrice: originalPrice,
-        displayDiscount: Math.max(0, Math.round(((originalPrice - p.price) / originalPrice) * 100)),
-        displayPlatform: p.affiliatePlatform, // Use raw affiliatePlatform for filtering
-        isIndiaProduct: true,
-        unifiedId: p.id,
-      } as SearchProduct
-    } else { // CatalogProduct
-      const originalPrice = p.mrp ?? p.price
-      product = {
-        id: p.id,
-        name: p.title, // Map title to name for consistency
-        image: p.image,
-        brand: p.brand,
-        price: p.price,
-        originalPrice: originalPrice,
-        description: p.description,
-        relevanceScore: 0,
-        displayPrice: p.price,
-        displayOriginalPrice: originalPrice,
-        displayDiscount: Math.max(0, Math.round(((originalPrice - p.price) / originalPrice) * 100)),
-        displayPlatform: p.platform, // Use raw platform for filtering
-        isIndiaProduct: false,
-        unifiedId: p.id,
-      } as SearchProduct
-    }
-    // Deduplicate by ID, India products take precedence if IDs clash
-    if (!unifiedProducts.has(product.unifiedId) || product.isIndiaProduct) {
-      unifiedProducts.set(product.unifiedId, product);
-    }
-  });
-
-  return Array.from(unifiedProducts.values());
-})();
-
-export function searchProducts(query: string, filters: SearchFilters): SearchProduct[] {
-  let results = ALL_PRODUCTS.map(p => ({ ...p, relevanceScore: 0 }))
-  const lowerQuery = query.toLowerCase().trim()
-
-  // 1. Scoring based on query
-  if (lowerQuery) {
-    results = results.map(product => {
-      let score = 0
-      const name = product.name.toLowerCase()
-      const brand = product.brand ? product.brand.toLowerCase() : ''
-      const description = product.description ? product.description.toLowerCase() : ''
-      const tags = (('tags' in product && product.tags) ? product.tags.map((t: string) => t.toLowerCase()) : []).join(' ')
-
-      if (name === lowerQuery) score += 100 // exact name match
-      else if (name.includes(lowerQuery)) score += 80 // name contains query
-      if (brand.includes(lowerQuery)) score += 70 // brand match
-      if (tags.includes(lowerQuery)) score += 50 // tag match
-      if (description.includes(lowerQuery)) score += 30 // description match
-
-      return { ...product, relevanceScore: score }
-    }).filter(product => product.relevanceScore > 0) // Only include products with a score
-  }
-
-  // 2. Apply Filters
-  if (filters.categories && filters.categories.length > 0) {
-    results = results.filter(p => filters.categories?.includes(p.category))
-  }
-  if (filters.brands && filters.brands.length > 0) {
-    results = results.filter(p => p.brand && filters.brands?.includes(p.brand))
-  }
-  if (filters.platforms && filters.platforms.length > 0) {
-    results = results.filter(p => p.displayPlatform && filters.platforms?.includes(p.displayPlatform))
-  }
-  if (filters.minPrice !== undefined) {
-    results = results.filter(p => p.displayPrice >= filters.minPrice!)
-  }
-  if (filters.maxPrice !== undefined) {
-    results = results.filter(p => p.displayPrice <= filters.maxPrice!)
-  }
-  if (filters.minDiscount !== undefined) {
-    results = results.filter(p => p.displayDiscount >= filters.minDiscount!)
-  }
-  if (filters.inStock === true) {
-    results = results.filter(p => p.inStock !== false) // inStock is true or undefined (assumed in stock)
-  }
-
-  // 3. Sorting
-  if (filters.sortBy === 'price-asc') {
-    results.sort((a, b) => a.displayPrice - b.displayPrice)
-  } else if (filters.sortBy === 'price-desc') {
-    results.sort((a, b) => b.displayPrice - a.displayPrice)
-  } else if (filters.sortBy === 'discount-desc') {
-    results.sort((a, b) => b.displayDiscount - a.displayDiscount)
-  } else if (filters.sortBy === 'newest') {
-    // Assuming newer items have higher IDs or a 'publishedAt' date
-    // For simplicity, let's sort by ID for now, or add a 'publishedAt' to unified type
-    results.sort((a, b) => (b.isIndiaProduct ? b.id.localeCompare(a.id) : String(b.id).localeCompare(String(a.id))))
-  } else { // Default to relevance (or if sortBy is 'relevance')
-    results.sort((a, b) => b.relevanceScore - a.relevanceScore)
-  }
-
-  return results
+function scoreProduct(product: any, query: string): number {
+  const q = query.toLowerCase().trim()
+  if (!q) return 50
+  const name = (product.name || product.title || '').toLowerCase()
+  const brand = (product.brand || '').toLowerCase()
+  const tags = ((product.tags || []) as string[]).join(' ').toLowerCase()
+  const desc = (product.description || '').toLowerCase()
+  if (name === q) return 100
+  if (name.startsWith(q)) return 95
+  if (name.includes(q)) return 80
+  if (brand.includes(q)) return 70
+  if (tags.includes(q)) return 50
+  if (desc.includes(q)) return 30
+  return 0
 }
 
-// Helper to get unique values for filters from all products
-export function getAvailableFilterOptions() {
-  const categories = new Set<string>()
-  const brands = new Set<string>()
-  const platforms = new Set<string>()
-  let minPrice = Infinity
-  let maxPrice = 0
-  let minDiscount = 0 // Assuming all products have at least 0% discount
+export function searchProducts(query: string, filters: SearchFilters = {}): SearchResult[] {
+  let results = INDIA_CATALOG as any[]
 
-  ALL_PRODUCTS.forEach(p => {
-    if (p.category) categories.add(p.category)
-    if (p.brand) brands.add(p.brand)
-    if (p.displayPlatform) platforms.add(p.displayPlatform)
+  // Score + filter by query
+  if (query.trim()) {
+    results = results.map(p => ({ ...p, relevanceScore: scoreProduct(p, query) })).filter(p => p.relevanceScore > 0)
+  } else {
+    results = results.map(p => ({ ...p, relevanceScore: 50 }))
+  }
 
-    minPrice = Math.min(minPrice, p.displayPrice)
-    maxPrice = Math.max(maxPrice, p.displayPrice)
-    minDiscount = Math.max(minDiscount, p.displayDiscount) // Update minimum observed discount
+  // Apply filters
+  if (filters.categories?.length) results = results.filter(p => filters.categories!.includes(p.category))
+  if (filters.brands?.length) results = results.filter(p => filters.brands!.includes(p.brand))
+  if (filters.minPrice !== undefined) results = results.filter(p => p.price >= filters.minPrice!)
+  if (filters.maxPrice !== undefined) results = results.filter(p => p.price <= filters.maxPrice!)
+  if (filters.minDiscount !== undefined) results = results.filter(p => (p.discount || 0) >= filters.minDiscount!)
+  if (filters.inStock !== undefined) results = results.filter(p => p.inStock === filters.inStock)
+
+  // Sort
+  switch (filters.sortBy) {
+    case 'price-asc': results.sort((a, b) => a.price - b.price); break
+    case 'price-desc': results.sort((a, b) => b.price - a.price); break
+    case 'discount-desc': results.sort((a, b) => (b.discount || 0) - (a.discount || 0)); break
+    case 'newest': results.reverse(); break
+    default: results.sort((a, b) => b.relevanceScore - a.relevanceScore)
+  }
+
+  return results.slice(0, 100).map(p => ({
+    id: p.id, name: p.name || p.title, brand: p.brand, category: p.category,
+    price: p.price, originalPrice: p.originalPrice, discount: p.discount,
+    image: p.image, affiliateUrl: p.affiliateUrl, platform: p.platform || 'Amazon',
+    inStock: p.inStock !== false, relevanceScore: p.relevanceScore,
+  }))
+}
+
+export function getSearchSuggestions(query: string): string[] {
+  if (!query.trim() || query.length < 2) return []
+  const q = query.toLowerCase()
+  const suggestions = new Set<string>()
+  INDIA_CATALOG.forEach((p: any) => {
+    const name = (p.name || '').toLowerCase()
+    if (name.includes(q)) suggestions.add(p.name || '')
+    if ((p.brand || '').toLowerCase().includes(q)) suggestions.add(p.brand || '')
   })
-
-  return {
-    categories: Array.from(categories).sort(),
-    brands: Array.from(brands).sort(),
-    platforms: Array.from(platforms).sort(),
-    minPrice: Math.floor(minPrice),
-    maxPrice: Math.ceil(maxPrice),
-    minDiscount: 0, // Always start discount slider from 0
-    maxDiscount: Math.ceil(minDiscount), // Max observed discount
-  }
+  return Array.from(suggestions).slice(0, 8)
 }

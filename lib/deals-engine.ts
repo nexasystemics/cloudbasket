@@ -1,89 +1,84 @@
-import { CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
-import { INDIA_CATALOG } from '@/lib/india-catalog/index'
+// lib/deals-engine.ts
+// Deals aggregation engine — powers flash deals, daily deals, category deals.
+
+import { INDIA_CATALOG } from '@/lib/india-catalog'
 
 export type Deal = {
   id: string
   title: string
-  subtitle: string
-  category: string
-  discount: number
+  imageUrl: string
   discountPercent: number
   originalPrice: number
   dealPrice: number
-  platform: 'Amazon' | 'Flipkart' | 'CJ Global'
-  image: string
+  platform: string
   affiliateUrl: string
-  label?: string
-  endsAt?: string
+  category: string
+  brand: string
   expiresAt: Date
-  product: {
-    id: string
-    title: string
-    brand: string
-    category: string
-    description?: string
-    price: number
-    mrp: number
-    platform: 'Amazon' | 'Flipkart' | 'CJ Global'
-    image: string
-    affiliateUrl: string
-  }
+  label?: 'Flash Deal' | 'Today Only' | 'Limited Stock' | 'Best Seller' | 'Best Price'
+  inStock: boolean
 }
 
-function toDeal(p: any): Deal {
-  const originalPrice = p.mrp ?? p.originalPrice ?? Math.round((p.price ?? p.priceValue ?? 0) * 1.2)
-  const dealPrice = p.price ?? p.priceValue ?? 0
-  const discount = originalPrice > 0 ? Math.round(((originalPrice - dealPrice) / originalPrice) * 100) : 0
-  const expiresAt = p.expiresAt ? new Date(p.expiresAt) : p.endsAt ? new Date(p.endsAt) : new Date(Date.now() + 4 * 60 * 60 * 1000)
+function endOfDay(): Date {
+  const d = new Date(); d.setHours(23, 59, 59, 999); return d
+}
 
-  const platform = p.platform === 'Flipkart' ? 'Flipkart' : p.platform === 'CJ Global' ? 'CJ Global' : 'Amazon'
-  const productCategory = p.category ?? ''
-  const productTitle = p.title ?? p.name ?? ''
-  const productImage = p.image ?? p.imageUrl ?? ''
-  const productAffiliateUrl = p.affiliateUrl ?? `/go/${platform.toLowerCase()}-${p.id}`
-  const productId = String(p.id)
+function daysFromNow(days: number): Date {
+  return new Date(Date.now() + days * 86400000)
+}
 
+function productToDeal(p: any): Deal | null {
+  const discount = p.discount || (p.originalPrice && p.price ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0)
+  if (!discount || discount <= 0) return null
+  const originalPrice = p.originalPrice || Math.round(p.price / (1 - discount / 100))
+  const isFlash = discount > 25
   return {
-    id: productId,
-    title: productTitle,
-    subtitle: p.brand ?? '',
-    category: productCategory,
-    discount,
+    id: p.id,
+    title: p.name || p.title,
+    imageUrl: p.image || '',
     discountPercent: discount,
     originalPrice,
-    dealPrice,
-    platform,
-    image: productImage,
-    affiliateUrl: productAffiliateUrl,
-    label: p.badge ?? undefined,
-    endsAt: p.endsAt ?? p.expiresAt ?? undefined,
-    expiresAt,
-    product: {
-      id: productId,
-      title: productTitle,
-      brand: p.brand ?? '',
-      category: productCategory,
-      description: p.description ?? p.brief ?? '',
-      price: dealPrice,
-      mrp: originalPrice,
-      platform,
-      image: productImage,
-      affiliateUrl: productAffiliateUrl,
-    },
+    dealPrice: p.price,
+    platform: p.platform || 'Amazon',
+    affiliateUrl: p.affiliateUrl || `https://www.amazon.in/s?k=${encodeURIComponent(p.name || '')}`,
+    category: p.category,
+    brand: p.brand,
+    expiresAt: isFlash ? endOfDay() : daysFromNow(3 + (Math.abs(p.id.charCodeAt(0) || 0) % 5)),
+    label: isFlash ? 'Flash Deal' : discount > 20 ? 'Today Only' : discount > 15 ? 'Limited Stock' : undefined,
+    inStock: p.inStock !== false,
   }
 }
 
-export function getDailyDeals(limit = 12): Deal[] {
-  const cb = CATALOG_PRODUCTS.map(toDeal)
-  const india = INDIA_CATALOG.map(toDeal)
-  return [...cb, ...india]
-    .filter((d) => d.discount >= 10)
-    .sort((a, b) => b.discount - a.discount)
-    .slice(0, limit)
+let _deals: Deal[] | null = null
+
+function getDeals(): Deal[] {
+  if (_deals) return _deals
+  _deals = (INDIA_CATALOG as any[]).map(productToDeal).filter((d): d is Deal => d !== null).sort((a, b) => b.discountPercent - a.discountPercent)
+  return _deals
+}
+
+export function getDailyDeals(limit = 20): Deal[] {
+  return getDeals().filter(d => d.discountPercent > 10).slice(0, limit)
 }
 
 export function getFlashDeals(limit = 20): Deal[] {
-  return getDailyDeals(50)
-    .sort((a, b) => b.discount - a.discount)
-    .slice(0, limit)
+  return getDeals().filter(d => d.discountPercent > 25 && d.label === 'Flash Deal').slice(0, limit)
+}
+
+export function getDealsByCategory(category: string, limit = 12): Deal[] {
+  return getDeals().filter(d => d.category === category && d.discountPercent > 5).slice(0, limit)
+}
+
+export function getExpiredDeals(): Deal[] {
+  const now = new Date()
+  return getDeals().filter(d => d.expiresAt < now)
+}
+
+export function isFlashDeal(product: any): boolean {
+  const discount = product.discount || 0
+  return discount > 25
+}
+
+export function getDealById(id: string): Deal | undefined {
+  return getDeals().find(d => d.id === id)
 }

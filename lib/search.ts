@@ -83,3 +83,9 @@ export function getSearchSuggestions(query: string): string[] {
   })
   return Array.from(suggestions).slice(0, 8)
 }
+export function getAvailableFilterOptions(): { categories: string[]; brands: string[]; platforms: string[] } {
+  const categories = [...new Set((INDIA_CATALOG as any[]).map(p => p.category).filter(Boolean))]
+  const brands = [...new Set((INDIA_CATALOG as any[]).map(p => p.brand).filter(Boolean))]
+  const platforms = ['Amazon', 'Flipkart', 'Croma', 'Myntra', 'BigBasket', 'Nykaa', 'Meesho']
+  return { categories, brands, platforms }
+}

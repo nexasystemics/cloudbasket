@@ -7,7 +7,13 @@ export default function CatalogSyncPage() {
   const [syncing, setSyncing] = useState<string | null>(null)
   const trigger = async (source: string) => {
     setSyncing(source)
-    try { const r = await fetch('/api/catalog/sync', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source }) }); setResults(p => [await r.json(), ...p.filter(x => x.source !== source)]) } catch { /* no-op */ }
+    const trigger = async (source: string) => {
+    setSyncing(source)
+    try {
+      const r = await fetch('/api/catalog/sync', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source }) })
+      const data = await r.json()
+      setResults(p => [data, ...p.filter(x => x.source !== source)])
+    } catch { /* no-op */ }
     setSyncing(null)
   }
   return (
@@ -27,4 +33,4 @@ export default function CatalogSyncPage() {
       </div>
     </main>
   )
-}
+}}

@@ -101,13 +101,13 @@ export default function FlashSalePageClient() {
           {deals.map((deal) => (
             <Link
               key={deal.id}
-              href={`/products/${deal.product.id}`}
+              href={`/products/${deal.id}`}
               className="group relative bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl transition-all duration-500"
             >
               <div className="relative h-52 overflow-hidden">
                 <Image
-                  src={deal.product.image}
-                  alt={deal.product.title}
+                  src={deal.imageUrl}
+                  alt={deal.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
@@ -122,8 +122,8 @@ export default function FlashSalePageClient() {
               </div>
               <div className="flex flex-1 flex-col gap-3 p-5">
                 <div>
-                  <p className="line-clamp-2 text-sm font-black leading-snug group-hover:text-rose-500 transition-colors">{deal.product.title}</p>
-                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">{deal.product.brand}</p>
+                  <p className="line-clamp-2 text-sm font-black leading-snug group-hover:text-rose-500 transition-colors">{deal.title}</p>
+                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">{deal.brand}</p>
                 </div>
                 <div className="mt-auto flex items-end justify-between">
                   <div>
@@ -143,3 +143,4 @@ export default function FlashSalePageClient() {
     </main>
   )
 }
+

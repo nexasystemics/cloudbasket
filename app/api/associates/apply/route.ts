@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { associateProgram } from '@/services/associates/program'
-
-export async function POST(request: NextRequest) {
+export async function POST(r: NextRequest) {
   try {
-    const body = await request.json()
-    if (!body.name || !body.email || !body.websiteUrl) return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
-    const result = await associateProgram.applyForProgram(body)
-    return NextResponse.json(result)
-  } catch { return NextResponse.json({ error: 'Application failed' }, { status: 500 }) }
+    const b = await r.json()
+    if (!b.name || !b.email || !b.websiteUrl) return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
+    return NextResponse.json(await associateProgram.applyForProgram(b))
+  } catch { return NextResponse.json({ error: 'Failed' }, { status: 500 }) }
 }

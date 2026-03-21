@@ -5,28 +5,10 @@
 import { useEffect, useState } from 'react'
 import { getPreferredCategories, getPreferredBrands } from '@/lib/intelligence/personalisation'
 import { INDIA_CATALOG } from '@/lib/india-catalog'
-import { ProductCard } from './products/ProductCard'
-import type { ProductCardItem } from './products/ProductCard'
-
-function toCardItem(p: any): ProductCardItem {
-  return {
-    id: p.id,
-    name: p.name || p.title || '',
-    image: p.image || '',
-    brand: p.brand || '',
-    price: p.price || 0,
-    originalPrice: p.originalPrice ?? null,
-    discount: p.discount ?? null,
-    rating: p.rating || 4.0,
-    reviewCount: p.reviewCount || p.reviews || 0,
-    source: p.platform === 'Flipkart' ? 'Flipkart' : p.platform === 'CJ' ? 'CJ' : 'Amazon',
-    affiliatePlatform: p.affiliatePlatform || 'amazon',
-    isTrending: p.isTrending || false,
-  }
-}
+import ProductCard from './ProductCard'
 
 export default function PersonalisedRecommendations() {
-  const [products, setProducts] = useState<ProductCardItem[]>([])
+  const [products, setProducts] = useState<any[]>([])
   const [heading, setHeading] = useState('Popular Right Now')
 
   useEffect(() => {
@@ -34,14 +16,14 @@ export default function PersonalisedRecommendations() {
       const cats = getPreferredCategories()
       const brands = getPreferredBrands()
       if (cats.length > 0 || brands.length > 0) {
-        const matched = (INDIA_CATALOG as any[]).filter(p =>
+        const matched = INDIA_CATALOG.filter(p =>
           cats.includes(p.category) || brands.includes(p.brand)
-        ).slice(0, 8).map(toCardItem)
-        if (matched.length >= 4) { setProducts(matched); setHeading('Picked For You'); return }
+        ).slice(0, 8)
+        if (matched.length >= 4) { setProducts(matched); setHeading('Picked For You') ; return }
       }
-      setProducts((INDIA_CATALOG as any[]).filter(p => p.rating && p.rating >= 4.3).slice(0, 8).map(toCardItem))
+      setProducts(INDIA_CATALOG.filter(p => p.rating && p.rating >= 4.3).slice(0, 8))
     } catch {
-      setProducts((INDIA_CATALOG as any[]).slice(0, 8).map(toCardItem))
+      setProducts(INDIA_CATALOG.slice(0, 8))
     }
   }, [])
 

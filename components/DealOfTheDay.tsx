@@ -44,7 +44,7 @@ export default function DealOfTheDay() {
               </span>
             </div>
             <h2 className="text-3xl font-black tracking-tight leading-tight">{deal.title}</h2>
-            <p className="mt-2 text-white/70 text-sm">{deal.subtitle}</p>
+            <p className="mt-2 text-white/70 text-sm">{(deal as any).subtitle}</p>
             <div className="mt-6 flex items-baseline gap-4">
               <span className="text-5xl font-black">₹{deal.dealPrice.toLocaleString('en-IN')}</span>
               <span className="text-xl text-white/50 line-through">₹{deal.originalPrice.toLocaleString('en-IN')}</span>

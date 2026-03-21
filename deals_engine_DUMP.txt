@@ -6,9 +6,7 @@ import { INDIA_CATALOG } from '@/lib/india-catalog'
 export type Deal = {
   id: string
   title: string
-  subtitle?: string
   imageUrl: string
-  image?: string
   discountPercent: number
   originalPrice: number
   dealPrice: number
@@ -19,7 +17,6 @@ export type Deal = {
   expiresAt: Date
   label?: 'Flash Deal' | 'Today Only' | 'Limited Stock' | 'Best Seller' | 'Best Price'
   inStock: boolean
-  product?: { id: string; image: string; title: string }
 }
 
 function endOfDay(): Date {
@@ -35,25 +32,20 @@ function productToDeal(p: any): Deal | null {
   if (!discount || discount <= 0) return null
   const originalPrice = p.originalPrice || Math.round(p.price / (1 - discount / 100))
   const isFlash = discount > 25
-  const imageUrl = p.image || ''
-  const title = p.name || p.title || ''
   return {
     id: p.id,
-    title,
-    subtitle: p.subtitle || p.description?.slice(0, 80) || '',
-    imageUrl,
-    image: imageUrl,
+    title: p.name || p.title,
+    imageUrl: p.image || '',
     discountPercent: discount,
     originalPrice,
     dealPrice: p.price,
     platform: p.platform || 'Amazon',
-    affiliateUrl: p.affiliateUrl || `https://www.amazon.in/s?k=${encodeURIComponent(title)}`,
+    affiliateUrl: p.affiliateUrl || `https://www.amazon.in/s?k=${encodeURIComponent(p.name || '')}`,
     category: p.category,
     brand: p.brand,
     expiresAt: isFlash ? endOfDay() : daysFromNow(3 + (Math.abs(p.id.charCodeAt(0) || 0) % 5)),
     label: isFlash ? 'Flash Deal' : discount > 20 ? 'Today Only' : discount > 15 ? 'Limited Stock' : undefined,
     inStock: p.inStock !== false,
-    product: { id: p.id, image: imageUrl, title },
   }
 }
 

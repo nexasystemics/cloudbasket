@@ -1,0 +1,12 @@
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+components/PersonalisedRecommendations.tsx(37,54): error TS2322: Type '{ key: any; product: any; }' is not assignable to type 'IntrinsicAttributes & ProductCardProps'.
+  Property 'product' does not exist on type 'IntrinsicAttributes & ProductCardProps'.
+components/TopDealsToday.tsx(31,32): error TS2339: Property 'product' does not exist on type 'Deal'.
+lib/email/templates/weekly-deals.ts(13,32): error TS2339: Property 'image' does not exist on type 'Deal'.
+lib/email/templates/weekly-deals.ts(17,78): error TS2339: Property 'subtitle' does not exist on type 'Deal'.
+services/notifications/push-server.ts(9,40): error TS2307: Cannot find module 'web-push' or its corresponding type declarations.
+npm notice
+npm notice New minor version of npm available! 11.9.0 -> 11.12.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.0
+npm notice To update run: npm install -g npm@11.12.0
+npm notice

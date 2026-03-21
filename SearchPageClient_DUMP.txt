@@ -11,7 +11,7 @@ import { trackSearch } from '@/lib/analytics'
 import { getAvailableFilterOptions, SearchFilters, SearchResult } from '@/lib/search'
 import { getCategoryDefinition } from '@/lib/cloudbasket-data'
 import Slider from 'rc-slider'
-import 'rc-slider/assets/index.css'
+import 'rc-slider/assets/index.css' // Import slider styles
 
 const POPULAR_SEARCHES = [
   "iPhone 16", "Samsung Galaxy S25", "Nike shoes", "boAt earphones", 
@@ -19,6 +19,7 @@ const POPULAR_SEARCHES = [
   "OnePlus 13R", "Puma sneakers", "Adidas hoodie", "LEGO set", "PlayStation 5",
 ]
 
+// Helper function to parse URL search params into SearchFilters
 function parseSearchParams(params: URLSearchParams): SearchFilters {
   return {
     categories: params.has('categories') ? params.get('categories')?.split(',') : undefined,
@@ -32,6 +33,7 @@ function parseSearchParams(params: URLSearchParams): SearchFilters {
   }
 }
 
+// Helper function to convert SearchFilters to URL search params
 function buildSearchParams(query: string, filters: SearchFilters): string {
   const params = new URLSearchParams()
   if (query) params.set('q', query)
@@ -50,16 +52,19 @@ function SearchPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
+  // State for search query and filters
   const [query, setQuery] = useState<string>(searchParams.get('q') ?? '')
   const [filters, setFilters] = useState<SearchFilters>(parseSearchParams(searchParams))
   const deferredQuery = useDeferredValue(query)
   const deferredFilters = useDeferredValue(filters)
   
+  // UI state
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [isInputFocused, setIsInputFocused] = useState(false)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
+  // Available filter options (categories, brands, price range)
   const availableOptions = useMemo(() => getAvailableFilterOptions(), [])
   
   const [priceRange, setPriceRange] = useState<[number, number]>([
@@ -68,6 +73,7 @@ function SearchPageContent() {
   ])
 
   useEffect(() => {
+    // Sync URL params to state on initial load or URL change
     const newQuery = searchParams.get('q') ?? ''
     const newFilters = parseSearchParams(searchParams)
     setQuery(newQuery)
@@ -78,18 +84,20 @@ function SearchPageContent() {
     ])
   }, [searchParams, availableOptions])
 
+  // Function to apply filters and update URL
   const applyFilters = useCallback((newQuery: string, newFilters: SearchFilters) => {
-    const paramsString = buildSearchParams(newQuery, newFilters)
-    router.push(`/search?${paramsString}`)
-    trackSearch(newQuery, 0)
-    setShowMobileFilters(false)
+  const paramsString = buildSearchParams(newQuery, newFilters)
+  router.push(`/search?${paramsString}`)
+  trackSearch(newQuery, 0)
+  setShowMobileFilters(false) // Close mobile filters after applying
   }, [router])
-
+  // Update query state (without immediately triggering search)
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
     setShowSuggestions(true)
   }
 
+  // Handle Enter key in search input
   const handleSearchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -98,12 +106,14 @@ function SearchPageContent() {
     }
   }
 
+  // Clear search query
   const clearQuery = () => {
     setQuery('')
     applyFilters('', filters)
     setShowSuggestions(false)
   }
 
+  // Toggle filter option (category, brand, platform)
   const toggleFilter = (type: 'categories' | 'brands' | 'platforms', value: string) => {
     const currentValues = new Set(filters[type])
     if (currentValues.has(value)) {
@@ -114,25 +124,30 @@ function SearchPageContent() {
     applyFilters(deferredQuery, { ...filters, [type]: Array.from(currentValues) })
   }
 
+  // Handle price range change (from slider or inputs)
   const handlePriceChange = (value: number | number[]) => {
     const [min, max] = Array.isArray(value) ? value : [value, value]
     setPriceRange([min, max])
     applyFilters(deferredQuery, { ...filters, minPrice: min, maxPrice: max })
   }
 
+  // Handle discount slider change
   const handleDiscountChange = (value: number | number[]) => {
     const min = Array.isArray(value) ? value[0] : value
     applyFilters(deferredQuery, { ...filters, minDiscount: min })
   }
 
+  // Toggle in-stock filter
   const toggleInStock = () => {
     applyFilters(deferredQuery, { ...filters, inStock: !filters.inStock })
   }
 
+  // Change sort order
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     applyFilters(deferredQuery, { ...filters, sortBy: e.target.value as SearchFilters['sortBy'] })
   }
 
+  // Clear all filters
   const clearAllFilters = () => {
     applyFilters(query, { sortBy: 'relevance' })
   }
@@ -159,6 +174,7 @@ function SearchPageContent() {
     return []
   }, [deferredQuery, deferredFilters])
 
+  // Calculate active filter count for the badge
   const activeFilterCount = useMemo(() => {
     let count = 0
     if (filters.categories && filters.categories.length > 0) count += filters.categories.length
@@ -169,7 +185,7 @@ function SearchPageContent() {
     if (filters.minDiscount !== undefined && filters.minDiscount > 0) count++
     if (filters.inStock === true) count++
     return count
-  }, [filters])
+  }, [filters, availableOptions])
 
   return (
     <main className="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
@@ -270,6 +286,7 @@ function SearchPageContent() {
               </button>
             </div>
             <div className="p-6 overflow-y-auto h-[calc(100vh-80px)]">
+              {/* Filter sections */}
               <FilterSections 
                 filters={filters} 
                 toggleFilter={toggleFilter} 
@@ -388,6 +405,7 @@ function SearchPageContent() {
   )
 }
 
+// Sub-component for filter sections to reduce complexity in main component
 type FilterSectionsProps = {
   filters: SearchFilters
   toggleFilter: (type: 'categories' | 'brands' | 'platforms', value: string) => void
@@ -517,7 +535,7 @@ function FilterSections({
           <div className="mt-3 px-2">
             <Slider
               min={0}
-              max={100}
+              max={availableOptions.maxDiscount}
               defaultValue={filters.minDiscount ?? 0}
               value={filters.minDiscount ?? 0}
               onChange={handleDiscountChange}
@@ -562,3 +580,14 @@ export default function SearchPageClient() {
     </Suspense>
   )
 }
+
+
+
+
+
+
+
+
+
+
+

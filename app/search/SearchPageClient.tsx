@@ -8,7 +8,7 @@ import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp, SearchX, Chevro
 import TrackBehavior from '@/components/TrackBehavior'
 import { ProductCard } from '@/components/products/ProductCard'
 import { trackSearch } from '@/lib/analytics'
-import { searchProducts, getAvailableFilterOptions, SearchFilters, SearchProduct } from '@/lib/search'
+import { SearchResults, getAvailableFilterOptions, SearchFilters, SearchResult } from '@/lib/search'
 import { getCategoryDefinition } from '@/lib/cloudbasket-data'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css' // Import slider styles
@@ -88,7 +88,7 @@ function SearchPageContent() {
   const applyFilters = useCallback((newQuery: string, newFilters: SearchFilters) => {
   const paramsString = buildSearchParams(newQuery, newFilters)
   router.push(`/search?${paramsString}`)
-  const searchResults = searchProducts(newQuery, newFilters)
+  const searchResults = SearchResults(newQuery, newFilters)
   trackSearch(newQuery, searchResults.length) // Track search with updated filters
   setShowMobileFilters(false) // Close mobile filters after applying
   }, [router])
@@ -171,8 +171,8 @@ function SearchPageContent() {
     setShowSuggestions(false)
   }
 
-  const results = useMemo<SearchProduct[]>(() => {
-    return searchProducts(deferredQuery, deferredFilters)
+  const results = useMemo<SearchResult[]>(() => {
+    return SearchResults(deferredQuery, deferredFilters)
   }, [deferredQuery, deferredFilters])
 
   // Calculate active filter count for the badge
@@ -581,5 +581,6 @@ export default function SearchPageClient() {
     </Suspense>
   )
 }
+
 
 

@@ -16,7 +16,7 @@ import { DEALS } from '@/lib/deals-data'
 import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { PRODUCTS } from '@/lib/mock-data'
 
-import { PersonalisedRecommendations } from '@/components/PersonalisedRecommendations'
+import PersonalisedRecommendations from '@/components/PersonalisedRecommendations'
 
 export const metadata: Metadata = {
   title: 'CloudBasket - Everything in One Basket',
@@ -212,3 +212,4 @@ export default function HomePage() {
     </main>
   )
 }
+

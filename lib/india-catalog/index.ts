@@ -2,8 +2,8 @@ import { HUL_PRODUCTS } from './personal-care/hul'
 import { DABUR_PRODUCTS } from './personal-care/dabur'
 import { ITC_PRODUCTS, GODREJ_CONSUMER_PRODUCTS } from './personal-care/itc-godrej'
 import { GODREJ_APPLIANCE_PRODUCTS } from './home-appliances/godrej'
-import { BAJAJ_HAVELLS_PRODUCTS } from './home-appliances/bajaj-havells'
-import { PHILIPS_PRESTIGE_PRODUCTS } from './home-appliances/philips-prestige'
+import { BAJAJ_PRODUCTS, HAVELLS_PRODUCTS } from './home-appliances/bajaj-havells'
+import { PHILIPS_PRODUCTS, PRESTIGE_PRODUCTS } from './home-appliances/philips-prestige'
 import { BOAT_PRODUCTS, NOISE_PRODUCTS } from './electronics/boat-noise'
 import { REALME_PRODUCTS, SAMSUNG_BUDGET_PRODUCTS } from './electronics/realme-samsung'
 import { PUMA_PRODUCTS, BIBA_PRODUCTS } from './fashion/puma-biba'
@@ -15,8 +15,10 @@ export const INDIA_CATALOG = [
   ...ITC_PRODUCTS,
   ...GODREJ_CONSUMER_PRODUCTS,
   ...GODREJ_APPLIANCE_PRODUCTS,
-  ...BAJAJ_HAVELLS_PRODUCTS,
-  ...PHILIPS_PRESTIGE_PRODUCTS,
+  ...BAJAJ_PRODUCTS,
+  ...HAVELLS_PRODUCTS,
+  ...PHILIPS_PRODUCTS,
+  ...PRESTIGE_PRODUCTS,
   ...BOAT_PRODUCTS,
   ...NOISE_PRODUCTS,
   ...REALME_PRODUCTS,

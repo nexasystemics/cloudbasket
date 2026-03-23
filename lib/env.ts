@@ -1,8 +1,12 @@
-// lib/env.ts — F-set extended env vars added
+// lib/env.ts
+// Environment variables — typed interface for all Set A through Set F variables.
+// All variables have safe fallbacks — missing keys log warnings, never crash.
+
 if (typeof window === 'undefined') {
   const required = ['NEXT_PUBLIC_SUPABASE_URL','NEXT_PUBLIC_SUPABASE_ANON_KEY','NEXT_PUBLIC_SITE_URL']
   required.forEach(v => { if (!process.env[v]) console.warn(`[env] WARNING: Missing: ${v}`) })
 }
+
 export const env = {
   NEXT_PUBLIC_SUPABASE_URL:        process.env.NEXT_PUBLIC_SUPABASE_URL        || '',
   NEXT_PUBLIC_SUPABASE_ANON_KEY:   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY   || '',
@@ -61,23 +65,25 @@ export const env = {
   REMOVE_BG_API_KEY:               process.env.REMOVE_BG_API_KEY                || '',
   REPLICATE_API_TOKEN:             process.env.REPLICATE_API_TOKEN              || '',
   NEXT_PUBLIC_PLAY_STORE_URL:      process.env.NEXT_PUBLIC_PLAY_STORE_URL       || '',
-  HUBSPOT_API_KEY:                 process.env.HUBSPOT_API_KEY                  || '',
-  ZOHO_ACCESS_TOKEN:               process.env.ZOHO_ACCESS_TOKEN                || '',
   FRESHDESK_API_KEY:               process.env.FRESHDESK_API_KEY                || '',
   FRESHDESK_DOMAIN:                process.env.FRESHDESK_DOMAIN                 || '',
-  GOOGLE_CLIENT_ID:                process.env.GOOGLE_CLIENT_ID                 || '',
-  GOOGLE_CLIENT_SECRET:            process.env.GOOGLE_CLIENT_SECRET             || '',
-  GITHUB_CLIENT_ID:                process.env.GITHUB_CLIENT_ID                 || '',
-  GITHUB_CLIENT_SECRET:            process.env.GITHUB_CLIENT_SECRET             || '',
-  MICROSOFT_CLIENT_ID:             process.env.MICROSOFT_CLIENT_ID              || '',
-  MSG91_OTP_TEMPLATE_ID:           process.env.MSG91_OTP_TEMPLATE_ID            || '',
+  FRESHDESK_WEBHOOK_SECRET:        process.env.FRESHDESK_WEBHOOK_SECRET         || '',
+  HUBSPOT_API_KEY:                 process.env.HUBSPOT_API_KEY                  || '',
+  HUBSPOT_APP_ID:                  process.env.HUBSPOT_APP_ID                   || '',
+  ZOHO_ACCESS_TOKEN:               process.env.ZOHO_ACCESS_TOKEN                || '',
+  ZOHO_CLIENT_ID:                  process.env.ZOHO_CLIENT_ID                   || '',
+  ZOHO_CLIENT_SECRET:              process.env.ZOHO_CLIENT_SECRET               || '',
 } as const
+
 export type Env = typeof env
+
 export function isConfigured(key: keyof Env): boolean {
   const val = env[key]
   return typeof val === 'string' && val.length > 0 && !val.startsWith('your_') && !val.includes('pending')
 }
+
 export function hasSupabase(): boolean {
   return isConfigured('NEXT_PUBLIC_SUPABASE_URL') && isConfigured('NEXT_PUBLIC_SUPABASE_ANON_KEY')
 }
+
 export default env

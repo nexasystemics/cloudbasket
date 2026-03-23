@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, Star, ChevronRight, Heart } from 'lucide-react'
 import { trackAffiliateClick } from '@/lib/analytics'
+import { getProductImage } from '@/lib/utils/product-image'
 
 export interface ProductCardProps {
   id: string
@@ -27,7 +28,6 @@ export interface ProductCardProps {
   }
 }
 
-const FALLBACK_IMAGE = '/assets/no-image.webp'
 const WISHLIST_KEY = 'cb_saved_products'
 
 export default function ProductCard({
@@ -44,8 +44,12 @@ export default function ProductCard({
   category,
   theme
 }: ProductCardProps) {
-  const [imgSrc, setImgSrc] = useState(imageUrl)
+  const [imgSrc, setImgSrc] = useState(getProductImage(imageUrl, category || 'default'))
   const [isSaved, setIsSaved] = useState(false)
+
+  useEffect(() => {
+    setImgSrc(getProductImage(imageUrl, category || 'default'))
+  }, [imageUrl, category])
 
   useEffect(() => {
     try {
@@ -92,7 +96,12 @@ export default function ProductCard({
             fill
             className="object-cover transition-transform duration-200 group-hover:scale-105 motion-reduce:transform-none"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 25vw, 20vw"
-            onError={() => setImgSrc(FALLBACK_IMAGE)}
+            onError={() => {
+              const fallback = getProductImage('', category || 'default')
+              if (imgSrc !== fallback) {
+                setImgSrc(fallback)
+              }
+            }}
           />
         </Link>
 

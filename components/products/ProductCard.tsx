@@ -9,6 +9,7 @@ import { ExternalLink, Star, Heart, ChevronRight } from 'lucide-react'
 import { useLocale } from '@/context/LocaleContext'
 import { trackClick } from '@/lib/intelligence/personalisation'
 import { trackAffiliateClick } from '@/lib/analytics'
+import { getProductImage } from '@/lib/utils/product-image'
 
 type ProductSource = 'Amazon' | 'Flipkart' | 'CJ' | 'Direct'
 type AffiliatePlatform = 'amazon' | 'flipkart' | 'cj' | 'pod' | 'vcm'
@@ -17,6 +18,7 @@ export interface ProductCardItem {
   id: number | string
   name: string
   image: string | undefined
+  category?: string
   brand: string | undefined
   price: number
   originalPrice: number | undefined | null
@@ -163,7 +165,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
           </div>
         ) : (
           <Image
-            src={product.image || ''}
+            src={getProductImage(product.image, product.category || 'default')}
             alt={product.name}
             fill
             className="object-cover transition-transform duration-200 group-hover:scale-105 motion-reduce:transform-none"

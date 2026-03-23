@@ -4,8 +4,8 @@ import { startTransition, useEffect, useDeferredValue, useMemo, useState } from 
 import Image from 'next/image'
 import Link from 'next/link'
 import { Search, X, Plus, ExternalLink, Check, Minus, TrendingDown } from 'lucide-react'
-import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
+import { getProductImage } from '@/lib/utils/product-image'
 
 const MAX_PRODUCTS = 5
 
@@ -306,7 +306,7 @@ export default function ComparePageClient() {
                     <th key={product.id} scope="col" className="min-w-56 p-4 text-center align-top">
                       <div className="cb-card p-4 text-center">
                         <div className="relative mx-auto mb-3 h-32 w-32">
-                          <Image fill className="rounded-lg object-cover" src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)} alt={product.name} sizes="128px" />
+                          <Image fill className="rounded-lg object-cover" src={getProductImage(product.image, product.mainCategory ?? 'default')} alt={product.name} sizes="128px" />
                         </div>
                         <p className="line-clamp-2 text-[11px] font-black leading-tight h-8 mb-1">{product.name}</p>
                         <p className="text-muted text-[10px] uppercase tracking-widest font-bold mb-1">{product.brand}</p>
@@ -388,7 +388,7 @@ export default function ComparePageClient() {
             {recommendations.map((product) => (
               <article key={product.id} className="cb-card overflow-hidden">
                 <div className="relative h-36">
-                  <Image src={product.image || ''} alt={product.name} fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
+                  <Image src={getProductImage(product.image, product.mainCategory ?? 'default')} alt={product.name} fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
                 </div>
                 <div className="p-3">
                   <p className="line-clamp-2 text-sm font-bold">{product.name}</p>

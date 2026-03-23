@@ -8,7 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, Star, Zap, X, SlidersHorizontal } from 'lucide-react'
 import type { CatalogProduct } from '@/lib/cloudbasket-data'
-import { resolveImageSource, IMAGE_ASSETS } from '@/lib/image-assets'
+import { getProductImage } from '@/lib/utils/product-image'
 
 type Props = {
   products: CatalogProduct[]
@@ -268,7 +268,7 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
                   <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-zinc-900">
                     <Image
                       fill className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)}
+                      src={getProductImage(product.image, product.category)}
                       alt={product.title}
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                     />

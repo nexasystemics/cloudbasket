@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Globe, ExternalLink, DollarSign, Zap, ArrowRight, Package } from 'lucide-react'
+import { getProductImage } from '@/lib/utils/product-image'
 
 export const metadata: Metadata = {
   title: "CJ Global Network — International Products",
@@ -132,7 +133,7 @@ export default function CJPage() {
                 <Image
                   fill
                   className="object-cover"
-                  src={product.image}
+                  src={getProductImage(product.image, 'electronics')}
                   alt={product.name}
                   sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
                 />
@@ -157,5 +158,6 @@ export default function CJPage() {
     </main>
   )
 }
+
 
 

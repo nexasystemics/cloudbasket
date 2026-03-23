@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { CatalogProduct } from '@/lib/cloudbasket-data'
+import { getProductImage } from '@/lib/utils/product-image'
 
 interface PODCollectionClientProps {
   title: string
@@ -55,7 +56,7 @@ export default function PODCollectionClient({ title, description, products }: PO
               <article key={product.id} className="cb-card overflow-hidden">
                 <div className="relative aspect-square">
                   <Image
-                    src={product.image}
+                    src={getProductImage(product.image, product.category)}
                     alt={product.title}
                     fill
                     className="object-cover"

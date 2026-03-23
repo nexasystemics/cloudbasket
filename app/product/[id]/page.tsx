@@ -33,7 +33,7 @@ import { CODBadge } from '@/components/products/CODBadge'
 import { EMIBadge } from '@/components/products/EMIBadge'
 import { PincodeChecker } from '@/components/products/PincodeChecker'
 import { ProductCard } from '@/components/products/ProductCard'
-import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
+import { getProductImage } from '@/lib/utils/product-image'
 import AffiliateDisclosureBanner from '@/components/AffiliateDisclosureBanner'
 
 type DisplayProduct = {
@@ -297,12 +297,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div>
           <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 overflow-hidden shadow-2xl">
             <div className="relative aspect-square">
-              <Image fill className="object-cover" src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)} alt={product.name} sizes="(max-width: 1024px) 100vw, 50vw" priority />
+              <Image fill className="object-cover" src={getProductImage(product.image, product.mainCategory)} alt={product.name} sizes="(max-width: 1024px) 100vw, 50vw" priority />
             </div>
             <div className="flex gap-3 p-6 border-t border-zinc-50 dark:border-zinc-800">
               {[0, 1, 2].map((thumb) => (
                 <div key={thumb} className={`relative h-20 w-20 cursor-pointer overflow-hidden rounded-2xl border-2 transition-all ${thumb === 0 ? 'border-skyline-primary ring-4 ring-skyline-primary/10' : 'border-transparent hover:border-zinc-200'}`}>
-                  <Image fill className="object-cover" src={resolveImageSource(product.image, IMAGE_ASSETS.noImage)} alt={`${product.name} preview ${thumb + 1}`} sizes="80px" />
+                  <Image fill className="object-cover" src={getProductImage(product.image, product.mainCategory)} alt={`${product.name} preview ${thumb + 1}`} sizes="80px" />
                 </div>
               ))}
             </div>

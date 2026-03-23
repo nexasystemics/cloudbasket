@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingBag, Star, Printer } from 'lucide-react'
+import { getProductImage } from '@/lib/utils/product-image'
 
 type PODProduct = {
   id: string
@@ -176,7 +177,7 @@ export default async function PODCategoryPage({
           {meta.products.map((product) => (
             <article key={product.id} className="cb-card group overflow-hidden">
               <div className="relative h-56">
-                <Image fill className="object-cover" src={product.image} alt={product.name} />
+                <Image fill className="object-cover" src={getProductImage(product.image, 'fashion')} alt={product.name} />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
                   <button type="button" className="cb-btn bg-white text-xs text-[#09090B]">
                     Quick View
@@ -230,6 +231,7 @@ export default async function PODCategoryPage({
     </main>
   )
 }
+
 
 
 

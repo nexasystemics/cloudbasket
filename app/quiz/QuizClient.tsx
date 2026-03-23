@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { MOCK_PRODUCTS } from '@/lib/mock-data'
+import { getProductImage } from '@/lib/utils/product-image'
 
 type Question = {
   title: string
@@ -154,7 +155,7 @@ export default function QuizClient() {
                     <Image
                       fill
                       className="object-cover"
-                      src={product.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80'}
+                      src={getProductImage(product.image, product.mainCategory ?? 'default')}
                       alt={product.name}
                     />
                   </div>
@@ -182,4 +183,5 @@ export default function QuizClient() {
     </main>
   )
 }
+
 

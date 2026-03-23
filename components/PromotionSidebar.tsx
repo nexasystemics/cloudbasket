@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Zap, ExternalLink, Gift, Clock, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
 import { PRODUCTS } from '@/lib/mock-data'
+import { getProductImage } from '@/lib/utils/product-image'
 
 interface PromotionSidebarProps {
   selectedCategory?: string
@@ -42,7 +43,7 @@ export default function PromotionSidebar({ selectedCategory }: PromotionSidebarP
               <div className="flex gap-4">
                 <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0">
                   <Image
-                    src={product.image || ''}
+                    src={getProductImage(product.image, product.mainCategory ?? 'default')}
                     alt={product.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"

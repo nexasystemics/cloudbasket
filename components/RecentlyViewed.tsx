@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { CATALOG_PRODUCTS, type CatalogProduct } from '@/lib/cloudbasket-data'
+import { getProductImage } from '@/lib/utils/product-image'
 
 import { trackView } from '@/lib/intelligence/personalisation'
 import { trackProductView } from '@/lib/analytics'
@@ -81,7 +82,7 @@ export default function RecentlyViewed() {
           >
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 transition-shadow group-hover:shadow-lg">
               <Image
-                src={product.image}
+                src={getProductImage(product.image, product.category)}
                 alt={product.title}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"

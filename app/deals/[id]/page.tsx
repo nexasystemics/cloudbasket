@@ -6,6 +6,7 @@ import { Clock, ExternalLink, Shield, Tag } from 'lucide-react'
 import { DEALS } from '@/lib/deals-data'
 import { PRODUCTS } from '@/lib/mock-data'
 import { ROUTES } from '@/lib/constants'
+import { getProductImage } from '@/lib/utils/product-image'
 
 interface DealDetailPageProps {
   params: Promise<{ id: string }>
@@ -70,8 +71,8 @@ export default async function DealDetailPage({ params }: DealDetailPageProps) {
 
         <article className="cb-card overflow-hidden">
           <div className="relative h-72">
-            {product && product.image ? (
-              <Image src={product.image} alt={deal.title} fill className="object-cover" />
+            {product ? (
+              <Image src={getProductImage(product.image, product.mainCategory ?? 'default')} alt={deal.title} fill className="object-cover" />
             ) : (
               <div className="h-full w-full bg-[var(--cb-surface-3)]" />
             )}

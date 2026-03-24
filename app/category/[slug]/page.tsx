@@ -11,6 +11,7 @@ import {
   getCategoryDefinition, getCategoryProducts, CATEGORY_ALIASES,
 } from '@/lib/cloudbasket-data'
 import { getIndiaCatalogBySlug } from '@/lib/india-catalog/utils'
+import { getCategoryIcon, getCategoryGradient } from '@/lib/category-icons'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -42,6 +43,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const existingIds = new Set(baseProducts.map(p => p.id))
   const products = [...baseProducts, ...indiaProducts.filter(p => !existingIds.has(p.id))]
 
+  const Icon = getCategoryIcon(category.slug)
+  const gradient = getCategoryGradient(category.slug)
+
   // A18: Combined ItemList JSON-LD
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -69,14 +73,20 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       <TrackBehavior category={category.slug} />
 
       {/* Hero */}
-      <section className="relative h-64 overflow-hidden">
+      <section className="relative h-72 overflow-hidden">
         <Image fill className="object-cover" src={category.image} alt={category.label} priority sizes="100vw" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-        <div className="absolute inset-0 mx-auto flex w-full max-w-7xl items-end px-8 pb-10">
-          <div>
-            <p className="mb-3 text-xs text-white/60">Home / Category / {category.label}</p>
-            <h1 className="text-4xl font-black tracking-tighter text-white">{category.heroTitle}</h1>
-            <p className="mt-1 text-sm text-white/70">{category.heroDescription}</p>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
+        <div className="absolute inset-0 mx-auto flex w-full max-w-7xl items-end px-8 pb-12">
+          <div className="relative z-10 w-full">
+            <div className={`mb-4 h-1 w-24 rounded-full bg-gradient-to-r ${gradient}`} />
+            <p className="mb-3 text-[10px] font-black uppercase tracking-widest text-white/50">Home / Category / {category.label}</p>
+            <div className="flex items-center gap-4">
+              <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl shadow-skyline-primary/20`}>
+                <Icon size={24} className="text-white" />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-white uppercase">{category.heroTitle}</h1>
+            </div>
+            <p className="mt-4 max-w-2xl text-sm md:text-base font-medium text-white/70 leading-relaxed">{category.heroDescription}</p>
           </div>
         </div>
       </section>

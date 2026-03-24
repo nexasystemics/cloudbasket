@@ -1,6 +1,5 @@
 'use client'
 
-
 import {
   useState,
   useEffect,
@@ -26,7 +25,9 @@ import {
 import ThemeToggle from '@/components/ThemeToggle'
 import { useGlobal } from '@/context/GlobalContext'
 import { useLocale } from '@/context/LocaleContext'
-import { MAIN_CATEGORIES, ROUTES } from '@/lib/constants'
+import { ROUTES } from '@/lib/constants'
+import { CATEGORY_DEFINITIONS } from '@/lib/cloudbasket-data'
+import { getCategoryIcon } from '@/lib/category-icons'
 import type { CountryCode } from '@/lib/types'
 
 type DropdownItem = {
@@ -77,15 +78,6 @@ const POD_DROPDOWN: readonly DropdownItem[] = [
   { label: '🧥 Hoodies', href: '/pod/hoodies', icon: Globe },
 ]
 
-const CATEGORY_EMOJI: Record<string, string> = {
-  'Mobiles': '📱', 'Laptops': '💻', 'Fashion': '👗', 'Home': '🏠',
-  'Beauty': '💄', 'Sports': '⚽', 'Books': '📚', 'Toys': '🧸',
-  'Gaming': '🎮', 'Health': '💊', 'Travel': '✈️', 'Grocery': '🛒',
-  'Automotive': '🚗', 'Appliances': '🔌', 'Furniture': '🪑',
-  'Baby': '👶', 'Pets': '🐾', 'Garden': '🌿', 'Office': '🖨️',
-  'Cameras': '📷', 'Audio': '🎧',
-}
-
 const PROMO_DISMISS_KEY = 'cb-promo-dismissed'
 
 export default function Header(): JSX.Element {
@@ -107,39 +99,23 @@ export default function Header(): JSX.Element {
   const dropdownTimeoutRef = useRef<number | null>(null)
 
   const navItems: readonly NavigationItem[] = [
-
     {
-
       id: 'products',
-
       label: 'Products',
-
       href: ROUTES.PRODUCTS,
-
-      dropdown: MAIN_CATEGORIES.map((category) => ({
-
-        label: `${CATEGORY_EMOJI[category] ?? "🛍️"} ${category}`,
-        href: `/category/${encodeURIComponent(category.toLowerCase())}`,
-        icon: Globe,
-
+      dropdown: CATEGORY_DEFINITIONS.map((category) => ({
+        label: category.label,
+        href: `/category/${category.slug}`,
+        icon: getCategoryIcon(category.slug),
       })),
-
     },
-
     {
-
       id: 'deals',
-
       label: 'Deals',
-
       href: ROUTES.DEALS,
-
       dropdown: [...DEAL_DROPDOWN],
-
     },
-
     { id: 'categories', label: 'Categories', href: ROUTES.CATEGORIES, dropdown: [] },
-
     {
       id: 'pod',
       label: 'POD',
@@ -150,6 +126,7 @@ export default function Header(): JSX.Element {
     { id: 'compare', label: 'Compare', href: ROUTES.COMPARE, dropdown: [] },
     { id: 'blog', label: 'Blog', href: ROUTES.BLOG, dropdown: [] },
   ]
+
   useEffect(() => {
     setMounted(true)
     try {
@@ -162,28 +139,18 @@ export default function Header(): JSX.Element {
   }, [])
 
   useEffect(() => {
-    if (promoDismissed) {
-      return
-    }
+    if (promoDismissed) return
     const interval = window.setInterval(() => {
       setPromoIndex((current) => (current + 1) % PROMO_TICKER_ITEMS.length)
     }, 3000)
-
-    return () => {
-      window.clearInterval(interval)
-    }
+    return () => window.clearInterval(interval)
   }, [promoDismissed])
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 8)
-    }
-
+    const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-    }
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
@@ -193,9 +160,7 @@ export default function Header(): JSX.Element {
   }, [pathname])
 
   useEffect(() => {
-    if (searchOpen) {
-      searchInputRef.current?.focus()
-    }
+    if (searchOpen) searchInputRef.current?.focus()
   }, [searchOpen])
 
   const clearDropdownTimer = useCallback(() => {
@@ -224,9 +189,7 @@ export default function Header(): JSX.Element {
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       const query = searchQuery.trim()
-      if (query.length === 0) {
-        return
-      }
+      if (query.length === 0) return
       router.push(`/search?q=${encodeURIComponent(query)}`)
       setSearchOpen(false)
     },
@@ -282,7 +245,7 @@ export default function Header(): JSX.Element {
       ) : null}
 
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4 px-3 lg:h-16 lg:px-6">
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0 min-w-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0 min-w-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
           <div className="w-8 h-8 bg-[#039BE5] rounded-lg flex items-center justify-center flex-shrink-0">
             <span className="text-white font-black text-xs">CB</span>
           </div>
@@ -324,7 +287,7 @@ export default function Header(): JSX.Element {
                           href={entry.href}
                           className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)] hover:text-[var(--cb-text-primary)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
                         >
-                          <ItemIcon size={14} />
+                          <ItemIcon size={14} className="flex-shrink-0" />
                           <span>{entry.label}</span>
                         </Link>
                       )
@@ -383,7 +346,7 @@ export default function Header(): JSX.Element {
             <span className="text-[var(--cb-text-muted)]">🌐</span>
             <select
               value={locale}
-              onChange={(event) => setLocale(event.target.value as 'en-IN' | 'en-US' | 'en-GB')}
+              onChange={(event) => setLocale(event.target.value as any)}
               className="bg-transparent text-[11px] font-semibold text-[var(--cb-text-primary)] outline-none"
               aria-label="Select locale"
             >
@@ -419,7 +382,7 @@ export default function Header(): JSX.Element {
           mobileOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
-        <div className="h-full w-full bg-[var(--cb-surface)] p-4">
+        <div className="h-full w-full bg-[var(--cb-surface)] p-4 overflow-y-auto">
           <div className="mb-4 flex items-center justify-between">
             <p className="font-display text-xl font-black">Menu</p>
             <button
@@ -443,7 +406,7 @@ export default function Header(): JSX.Element {
             />
           </form>
 
-          <div className="space-y-1">
+          <div className="space-y-1 pb-4">
             {navItems.map((item) => (
               <div key={item.id} className="rounded-xl border border-[var(--cb-border)] p-2">
                 <Link
@@ -454,15 +417,19 @@ export default function Header(): JSX.Element {
                 </Link>
                 {item.dropdown.length > 0 ? (
                   <div className="mt-1 grid grid-cols-1 gap-1 px-2 pb-1">
-                    {item.dropdown.map((entry) => (
-                      <Link
-                        key={`${item.id}-${entry.href}`}
-                        href={entry.href}
-                        className="rounded-md px-2 py-1 text-xs text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
-                      >
-                        {entry.label}
-                      </Link>
-                    ))}
+                    {item.dropdown.map((entry) => {
+                      const EntryIcon = entry.icon
+                      return (
+                        <Link
+                          key={`${item.id}-${entry.href}`}
+                          href={entry.href}
+                          className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+                        >
+                          <EntryIcon size={12} className="flex-shrink-0" />
+                          <span>{entry.label}</span>
+                        </Link>
+                      )
+                    })}
                   </div>
                 ) : null}
               </div>
@@ -490,7 +457,7 @@ export default function Header(): JSX.Element {
               <span className="text-[var(--cb-text-muted)]">🌍</span>
               <select
                 value={locale}
-                onChange={(event) => setLocale(event.target.value as 'en-IN' | 'en-US' | 'en-GB')}
+                onChange={(event) => setLocale(event.target.value as any)}
                 className="w-full bg-transparent text-sm outline-none"
                 aria-label="Select locale mobile"
               >
@@ -514,15 +481,3 @@ export default function Header(): JSX.Element {
     </header>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-

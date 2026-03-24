@@ -1,84 +1,14 @@
 'use client'
 
-import {
-  ArrowRight,
-  BookOpen,
-  Car,
-  Dumbbell,
-  Gamepad2,
-  Home,
-  Laptop,
-  Music,
-  ShoppingBasket,
-  Shirt,
-  Smartphone,
-  Sparkles,
-  TrendingUp,
-  Heart,
-  Puzzle,
-  Watch,
-  GraduationCap,
-  BarChart2,
-  Gem,
-  Plane,
-  Printer,
-  Cpu,
-  type LucideIcon,
-} from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ROUTES } from '@/lib/constants'
-import { CATEGORY_DEFINITIONS, CATALOG_PRODUCTS, type CategoryDefinition } from '@/lib/cloudbasket-data'
+import { CATEGORY_DEFINITIONS, CATALOG_PRODUCTS } from '@/lib/cloudbasket-data'
 import { getIndiaCatalogBySlug } from '@/lib/india-catalog/utils'
-
-const CATEGORY_ICON_MAP: Record<CategoryDefinition['slug'], LucideIcon> = {
-  automotive: Car,
-  beauty: Sparkles,
-  books: BookOpen,
-  courses: GraduationCap,
-  electronics: Cpu,
-  fashion: Shirt,
-  finance: TrendingUp,
-  gaming: Gamepad2,
-  grocery: ShoppingBasket,
-  health: Heart,
-  home: Home,
-  investments: BarChart2,
-  jewellery: Gem,
-  laptops: Laptop,
-  mobiles: Smartphone,
-  music: Music,
-  pod: Printer,
-  sports: Dumbbell,
-  toys: Puzzle,
-  travel: Plane,
-  watches: Watch,
-}
+import { getCategoryIcon, getCategoryGradient } from '@/lib/category-icons'
 
 const COMING_SOON_CATEGORIES = new Set(['courses', 'investments', 'jewellery', 'travel'])
-
-const GRADIENT_MAP: Record<string, string> = {
-  electronics: 'from-blue-600 to-blue-400',
-  mobiles: 'from-indigo-600 to-indigo-400',
-  fashion: 'from-rose-600 to-rose-400',
-  home: 'from-amber-600 to-amber-400',
-  books: 'from-emerald-600 to-emerald-400',
-  sports: 'from-orange-600 to-orange-400',
-  automotive: 'from-slate-600 to-slate-400',
-  gaming: 'from-purple-600 to-purple-400',
-  beauty: 'from-pink-600 to-pink-400',
-  finance: 'from-cyan-600 to-cyan-400',
-  grocery: 'from-lime-600 to-lime-400',
-  health: 'from-red-600 to-red-400',
-  music: 'from-violet-600 to-violet-400',
-  toys: 'from-yellow-600 to-yellow-400',
-  watches: 'from-sky-600 to-sky-400',
-  courses: 'from-teal-600 to-teal-400',
-  investments: 'from-green-600 to-green-400',
-  jewellery: 'from-fuchsia-600 to-fuchsia-400',
-  travel: 'from-blue-500 to-cyan-500',
-  pod: 'from-zinc-600 to-zinc-400',
-}
 
 export default function CategoryGrid() {
   const categories = CATEGORY_DEFINITIONS.map((cat) => {
@@ -88,8 +18,8 @@ export default function CategoryGrid() {
     return {
       ...cat,
       count,
-      icon: CATEGORY_ICON_MAP[cat.slug],
-      gradient: GRADIENT_MAP[cat.slug] || 'from-zinc-600 to-zinc-400',
+      icon: getCategoryIcon(cat.slug),
+      gradient: getCategoryGradient(cat.slug),
     }
   })
 
@@ -159,4 +89,3 @@ export default function CategoryGrid() {
     </section>
   )
 }
-

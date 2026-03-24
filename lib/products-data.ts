@@ -111,7 +111,7 @@ function getCategoryImage(category: Category): string {
     case 'Gaming':
       return 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=400&fit=crop'
     case 'Electronics':
-      return 'https://images.unsplash.com/photo-1593359677879-a4bb92f829e1?w=400&h=400&fit=crop'
+      return 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=400&fit=crop'
     case 'Footwear':
       return 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop'
     case 'Books':
@@ -952,3 +952,4 @@ export function searchProducts(query: string): Product[] {
       product.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery)),
   )
 }
+

@@ -5,7 +5,7 @@ type MainCategory = (typeof MAIN_CATEGORIES)[number]
 
 const SEEDED_CATEGORY_IMAGES: Partial<Record<MainCategory, string[]>> = {
   Automotive: [
-    '1492144531155-ad8d5f4c2921',
+    '1498050108023-c5249f4df085',
     '1503376780353-7e6692767b70',
     '1533473359331-0135ef1b58bf',
     '1544636331-e28e68a17c9e',
@@ -339,3 +339,4 @@ export const PRODUCTS: Product[] = generateProducts()
 export const MOCK_PRODUCTS: Product[] = PRODUCTS
 
 export { SUB_CATEGORIES, CATEGORY_IMAGES }
+

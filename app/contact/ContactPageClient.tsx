@@ -1,6 +1,7 @@
 'use client'
 
 import { type FormEvent, useState } from 'react'
+import Link from 'next/link'
 import { Mail, MapPin, Send, CheckCircle, Clock, Phone } from 'lucide-react'
 
 type ContactFormData = {
@@ -286,6 +287,10 @@ export default function ContactPage() {
                     <Send size={16} />
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>
+                  <p className="mt-3 text-center text-[11px] text-[var(--cb-text-muted)]">
+                    By submitting this form, you consent to the processing of your personal data as described in our{' '}
+                    <Link href="/legal/privacy" className="text-skyline-primary underline">Privacy Policy</Link>.
+                  </p>
                 </form>
               </article>
             )}

@@ -56,7 +56,10 @@ export default function CookieConsent() {
             <p className="text-sm font-black">We use cookies</p>
             <p className="mt-1 text-xs text-[var(--cb-text-muted)]">
               We use cookies to improve your experience, serve relevant ads, and analyse traffic. Essential cookies are always active.{' '}
-              <Link href="/cookies" className="text-skyline-primary underline">Learn more</Link>
+              <Link href="/legal/privacy" className="text-skyline-primary underline">Learn more</Link>
+            </p>
+            <p className="mt-1 text-xs text-[var(--cb-text-muted)]">
+              Under India&apos;s <strong>DPDP Act 2023</strong>, you have the right to manage, withdraw, or modify your consent at any time.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <button type="button" onClick={acceptAll} className="cb-btn cb-btn-primary text-xs px-4 py-2">Accept All</button>

@@ -17,7 +17,6 @@ export async function runHealthChecks(): Promise<HealthCheck[]> {
     results.push({ service: 'Supabase', status: 'error', message: 'Unreachable' })
   }
   results.push({ service: 'Redis', status: 'ok' })
-  results.push({ service: 'Typesense', status: 'ok' })
   results.push({ service: 'Next.js App', status: 'ok', latencyMs: Date.now() - start })
   return results
 }

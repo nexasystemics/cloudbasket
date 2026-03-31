@@ -1,6 +1,7 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { User, Package, Heart, Bell, Settings, CreditCard, Star, TrendingUp } from 'lucide-react'
+import { Package, Heart, Bell, Settings, Star, TrendingUp } from 'lucide-react'
 export const metadata: Metadata = { title: 'My Dashboard — CloudBasket', description: 'Manage your CloudBasket account, orders, wishlist and preferences.' }
 const MENU = [
   { href: '/dashboard/orders', icon: Package, label: 'My Orders', desc: 'Track and manage orders' },

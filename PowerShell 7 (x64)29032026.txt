@@ -1,0 +1,420 @@
+PowerShell 7.6.0
+PS C:\Users\nexqo> f:
+PS F:\> cd cloudbasket
+PS F:\cloudbasket> cd F:\cloudbasket
+PS F:\cloudbasket> npx ts-node audit-deep.ts
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+(node:8608) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/cloudbasket/audit-deep.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to F:\cloudbasket\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+╔══════════════════════════════════════════════╗
+║  CloudBasket DEEP CRAWL — All 1200+ Pages   ║
+╚══════════════════════════════════════════════╝
+
+🔍 Discovering routes from sitemap...
+  ✅ Found 4 routes in sitemap
+
+📋 Total routes to crawl: 55
+   Static:  51
+   Dynamic: 4
+   Workers: 4 parallel tabs
+
+🚀 Starting crawl...
+
+  [████████████████████] 100% (55/55) ❌ /admin/settings
+
+══════════════════════════════════════════════
+  DEEP AUDIT COMPLETE
+══════════════════════════════════════════════
+  Pages crawled:    55
+  ✅ Clean:         0
+  ❌ With issues:   55
+  ↪  Redirected:   0
+  💀 Timeouts:     4
+  🖼 Broken imgs:  0
+  🏷 Missing alts: 0
+  🔗 Empty links:  0
+
+  📄 HTML: F:\cloudbasket\audit-deep-results\deep-audit-report.html
+  📋 JSON: F:\cloudbasket\audit-deep-results\deep-audit-report.json
+
+  TOP 10 PAGES WITH MOST ISSUES:
+  1. /app                                          6 issues
+  2. /associates                                   6 issues
+  3. /best-deals                                   6 issues
+  4. /blog                                         6 issues
+  5. /brands                                       6 issues
+  6. /careers                                      6 issues
+  7. /categories                                   6 issues
+  8. /cj                                           6 issues
+  9. /contact                                      6 issues
+  10. /cookies                                      6 issues
+
+npm notice
+npm notice New minor version of npm available! 11.9.0 -> 11.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+npm notice To update run: npm install -g npm@11.12.1
+npm notice
+PS F:\cloudbasket> # Backup deep crawler before session ends
+PS F:\cloudbasket> Copy-Item "F:\cloudbasket\audit-deep.ts" "E:\cloudbasket-docs\audit-deep.ts" -Force
+PS F:\cloudbasket> git add audit-deep.ts
+warning: in the working copy of 'audit-deep.ts', LF will be replaced by CRLF the next time Git touches it
+PS F:\cloudbasket> git commit -m "audit: add full 1200+ page deep crawl tool"
+[main 5c74077] audit: add full 1200+ page deep crawl tool
+ 1 file changed, 439 insertions(+)
+ create mode 100644 audit-deep.ts
+PS F:\cloudbasket> git push origin main
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 6.17 KiB | 6.17 MiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/nexasystemics/cloudbasket.git
+   79b5424..5c74077  main -> main
+PS F:\cloudbasket> # Save audit-deep-v2.ts to F:\cloudbasket\ then:
+PS F:\cloudbasket> cd F:\cloudbasket
+PS F:\cloudbasket> npx ts-node audit-deep-v2.ts
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+(node:22128) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/cloudbasket/audit-deep-v2.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to F:\cloudbasket\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+╔══════════════════════════════════════════════╗
+║  CloudBasket Deep Crawl v2 — FIXED          ║
+╚══════════════════════════════════════════════╝
+
+🔍 Discovering dynamic routes from sitemap...
+  ✅ 0 dynamic routes from sitemap
+
+📋 Routes: 90 (69 static + 21 dynamic)
+   Workers: 2 | Hydration wait: 1200ms
+
+  [█████████████████████████] 100% (90/90) 🚫 /pod/tshirt
+
+══════════════════════════════════════════════
+  DONE
+══════════════════════════════════════════════
+  Pages:          90
+  ✅ Clean:       0
+  ❌ Issues:      90
+  🚫 Real 404s:   67
+  💀 Timeouts:    1
+  🖼 Broken imgs: 0
+  🔘 No-label btns:42
+
+  📄 F:\cloudbasket\audit-deep-results\deep-audit-v2.html
+  📋 F:\cloudbasket\audit-deep-results\deep-audit-v2.json
+
+  🚫 REAL 404 ROUTES (need fixing):
+     /about
+     /affiliate
+     /affiliate-disclosure
+     /app
+     /associates
+     /best-deals
+     /blog
+     /brands
+     /careers
+     /categories
+     /cj
+     /contact
+     /cookies
+     /dashboard
+     /dashboard/rewards
+     /dashboard/settings
+     /deals/flash
+     /faq
+     /login
+     /offline
+     /partners
+     /pod
+     /pod/designs
+     /pod/mugs
+     /pod/phone-cases
+     /pod/tshirts
+     /pod/upload
+     /pricing
+     /products
+     /quiz
+     /register
+     /sale
+     /sitemap-page
+     /support/ticket
+     /unsubscribed
+     /admin/catalog
+     /admin/health
+     /admin/monitoring
+     /admin/revenue
+     /admin/seo
+     /admin/settings
+     /admin/affiliates
+     /admin/content
+     /admin/cro
+     /admin/emails
+     /admin/gap-analysis
+     /admin/lister
+     /admin/marketing
+     /admin/moderation
+     /admin/performance
+     /admin/referrals
+     /admin/social
+     /admin/sponsored
+     /admin/support
+     /admin/tax
+     /admin/pod/ai-studio
+     /admin/pod/orders
+     /admin/pod/listings
+     /admin/pod/pricing
+     /admin/pod/quality
+     /admin/pod/upload
+     /brand/boat
+     /brand/realme
+     /brand/puma
+     /blog/best-deals-india
+     /blog/top-earphones-under-2000
+     /pod/tshirt
+
+  TOP 10 WORST PAGES:
+  1. /search                                       6 issues
+  2. /admin/analytics                              6 issues
+  3. /                                             5 issues
+  4. /compare                                      5 issues
+  5. /deals                                        5 issues
+  6. /legal/privacy                                5 issues
+  7. /legal/terms                                  5 issues
+  8. /product/mob-001                              5 issues
+  9. /product/mob-002                              5 issues
+  10. /product/mob-003                              5 issues
+
+PS F:\cloudbasket> cd F:\cloudbasket
+PS F:\cloudbasket> pnpm build
+
+> cloudbasket@2.0.0 build F:\cloudbasket
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+✓ Finished TypeScript in 6.1s
+⚠ Using edge runtime on a page currently disables static generation for that page
+✓ Collecting page data using 15 workers in 10.5s
+✓ Generating static pages using 15 workers (1309/1309) in 25.2s
+✓ Finalizing page optimization in 56.5ms
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /admin
+├ ○ /admin/affiliate-keys
+├ ○ /admin/affiliates
+├ ○ /admin/analytics
+├ ○ /admin/associates
+├ ○ /admin/catalog
+├ ○ /admin/catalog/sync
+├ ○ /admin/content
+├ ○ /admin/content/blog
+├ ○ /admin/cro
+├ ○ /admin/cro/ab-tests
+├ ○ /admin/emails
+├ ○ /admin/gap-analysis
+├ ○ /admin/health
+├ ○ /admin/lister
+├ ○ /admin/marketing
+├ ○ /admin/marketing/influencer
+├ ○ /admin/messaging/whatsapp
+├ ○ /admin/moderation
+├ ○ /admin/monitoring
+├ ○ /admin/monitoring/freshness
+├ ○ /admin/performance
+├ ○ /admin/pod/ai-studio
+├ ○ /admin/pod/amazon-merch
+├ ○ /admin/pod/analytics
+├ ○ /admin/pod/b2b
+├ ○ /admin/pod/bulk-titles
+├ ○ /admin/pod/campaigns
+├ ○ /admin/pod/e-set-dashboard
+├ ○ /admin/pod/etsy-connect
+├ ○ /admin/pod/library
+├ ○ /admin/pod/listings
+├ ○ /admin/pod/orders
+├ ○ /admin/pod/pricing
+├ ○ /admin/pod/quality
+├ ○ /admin/pod/redbubble
+├ ○ /admin/pod/seo
+├ ○ /admin/pod/sync
+├ ○ /admin/pod/upload
+├ ○ /admin/referrals
+├ ○ /admin/revenue
+├ ○ /admin/seo
+├ ○ /admin/seo/search-console
+├ ○ /admin/settings
+├ ○ /admin/social
+├ ○ /admin/sponsored
+├ ○ /admin/support
+├ ○ /admin/tax
+├ ○ /affiliate
+├ ○ /affiliate-disclosure
+├ ƒ /api/alerts/trigger
+├ ƒ /api/amazon/product
+├ ƒ /api/amazon/search
+├ ƒ /api/analytics/ads
+├ ƒ /api/associates/apply
+├ ƒ /api/auth/[provider]
+├ ƒ /api/auth/[provider]/callback
+├ ƒ /api/auth/otp/send
+├ ƒ /api/auth/otp/verify
+├ ƒ /api/automation/webhook
+├ ƒ /api/barcode/lookup
+├ ƒ /api/catalog/prices
+├ ƒ /api/catalog/sync
+├ ƒ /api/cj/products
+├ ƒ /api/cj/track
+├ ƒ /api/contact
+├ ƒ /api/content/generate-description
+├ ƒ /api/crm/contact
+├ ƒ /api/cron/daily-deals
+├ ƒ /api/cron/weekly-digest
+├ ƒ /api/currency/rates
+├ ƒ /api/deals/discover
+├ ƒ /api/documents/invoice
+├ ƒ /api/email/send-alert
+├ ƒ /api/extension/price-check
+├ ƒ /api/feed/google
+├ ƒ /api/feeds/google
+├ ƒ /api/flipkart/deals
+├ ƒ /api/flipkart/search
+├ ƒ /api/intelligence/competitive
+├ ƒ /api/intelligence/deals
+├ ƒ /api/mobile/deals
+├ ƒ /api/mobile/products
+├ ƒ /api/newsletter/subscribe
+├ ƒ /api/newsletter/unsubscribe
+├ ƒ /api/og
+├ ƒ /api/pod/ai-generate
+├ ƒ /api/pod/checkout/create-order
+├ ƒ /api/pod/checkout/verify-payment
+├ ƒ /api/pod/gift-cards/create
+├ ƒ /api/pod/gift-cards/redeem
+├ ƒ /api/pod/sync
+├ ƒ /api/price-tracker
+├ ƒ /api/prices
+├ ƒ /api/push/subscribe
+├ ƒ /api/push/vapid-key
+├ ƒ /api/revenue/click
+├ ƒ /api/reviews
+├ ƒ /api/search/index-products
+├ ƒ /api/seo/audit
+├ ƒ /api/sms/subscribe
+├ ƒ /api/social/generate
+├ ƒ /api/sponsored/click
+├ ƒ /api/sponsored/impression
+├ ƒ /api/stock
+├ ƒ /api/support/ticket
+├ ƒ /api/telegram/webhook
+├ ƒ /api/ugc
+├ ƒ /api/user/data-export
+├ ƒ /api/user/delete-account
+├ ƒ /api/vitals
+├ ƒ /api/webhooks/printful
+├ ƒ /api/webhooks/printify
+├ ƒ /api/webhooks/shopify
+├ ƒ /api/whatsapp/subscribe
+├ ƒ /api/whatsapp/webhook
+├ ○ /app
+├ ○ /associates
+├ ○ /best-deals
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/how-to-track-flash-sales
+│ ├ /blog/best-price-comparison-tips
+│ └ /blog/save-money-online-shopping
+├ ● /brand/[brandName]
+│ ├ /brand/HUL
+│ ├ /brand/Dabur
+│ ├ /brand/ITC
+│ └ [+13 more paths]
+├ ○ /brands
+├ ○ /careers
+├ ○ /categories
+├ ƒ /category/[slug]
+├ ○ /cj
+├ ○ /compare
+├ ○ /contact
+├ ○ /cookies
+├ ○ /dashboard
+├ ○ /dashboard/rewards
+├ ○ /dashboard/settings
+├ ○ /deals
+├ ● /deals/[id]
+│ ├ /deals/flash-1
+│ ├ /deals/flash-2
+│ ├ /deals/flash-3
+│ └ [+9 more paths]
+├ ○ /deals/flash
+├ ○ /faq
+├ ƒ /go/[id]
+├ ○ /legal/privacy
+├ ○ /legal/terms
+├ ○ /login
+├ ○ /manifest.webmanifest
+├ ○ /offline
+├ ○ /partners
+├ ○ /pod
+├ ƒ /pod/[category]
+├ ○ /pod/designs
+├ ○ /pod/mugs
+├ ○ /pod/phone-cases
+├ ○ /pod/tshirts
+├ ○ /pod/upload
+├ ○ /pricing
+├ ● /product/[id]
+│ ├ /product/mob-001
+│ ├ /product/mob-002
+│ ├ /product/mob-003
+│ └ [+1119 more paths]
+├ ○ /products
+├ ƒ /products/[id]
+├ ○ /quiz
+├ ○ /register
+├ ○ /robots.txt
+├ ○ /sale
+├ ○ /search
+├ ○ /sitemap-page
+├ ○ /sitemap.xml
+├ ○ /support/ticket
+└ ○ /unsubscribed
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+PS F:\cloudbasket> pnpm start
+
+> cloudbasket@2.0.0 start F:\cloudbasket
+> next start
+
+⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ELIFECYCLE  Command failed with exit code 1.
+PS F:\cloudbasket>

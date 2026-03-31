@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 'use client'
 import { useState } from 'react'
 import { Save } from 'lucide-react'
@@ -30,7 +31,7 @@ export default function SettingsPage() {
           </select>
         </div>
         <button onClick={save} className="cb-btn cb-btn-primary w-full gap-2">
-          <Save size={16} />{saved ? 'Saved ✓' : 'Save Settings'}
+          <Save size={16} />{saved ? 'Saved' : 'Save Settings'}
         </button>
       </div>
     </main>

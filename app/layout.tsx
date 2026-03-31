@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket app/layout.tsx
 import BackToTop from '@/components/BackToTop'
 import Analytics from '@/components/Analytics'
 import type { Metadata, Viewport } from 'next'
@@ -14,7 +15,20 @@ import '@/lib/env'
 import CBThemeProvider from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
 import { LocaleProvider } from '@/context/LocaleContext'
+import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+})
 
 function getSupabaseOrigin(): string | null {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -75,14 +89,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const supabaseOrigin = getSupabaseOrigin()
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link rel="dns-prefetch" href="//www.amazon.in" />
         <link rel="dns-prefetch" href="//www.flipkart.com" />
         <link rel="dns-prefetch" href="//m.media-amazon.com" />
         <link rel="dns-prefetch" href="//rukminim2.flixcart.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         {supabaseOrigin ? <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" /> : null}
       </head>

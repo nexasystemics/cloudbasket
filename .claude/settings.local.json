@@ -9,7 +9,22 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(grep -c 'id: IN-' lib/india-catalog/personal-care/*.ts lib/india-catalog/home-appliances/*.ts lib/india-catalog/electronics/*.ts lib/india-catalog/fashion/*.ts lib/india-catalog/food-grocery/*.ts)"
+      "Bash(grep -c 'id: IN-' lib/india-catalog/personal-care/*.ts lib/india-catalog/home-appliances/*.ts lib/india-catalog/electronics/*.ts lib/india-catalog/fashion/*.ts lib/india-catalog/food-grocery/*.ts)",
+      "Bash(find F:cloudbasket -type f -name *.ts -o -name *.tsx -o -name *.json -o -name *.md -o -name *.sql -o -name .env*)",
+      "Bash(grep -r anyb F:/cloudbasket/lib F:/cloudbasket/components F:/cloudbasket/app --include=*.ts --include=*.tsx -l)",
+      "Bash(grep -r console.log F:/cloudbasket/lib F:/cloudbasket/components F:/cloudbasket/app --include=*.ts --include=*.tsx -l)",
+      "Bash(grep -r \"console\\\\.warn\\\\|console\\\\.error\" F:/cloudbasket/lib F:/cloudbasket/services --include=*.ts -l)",
+      "Bash(ls F:/cloudbasket/*.md)",
+      "Bash(grep -r \"import.*from.*''''ioredis''''\\\\|import.*from.*''''puppeteer''''\\\\|import.*from.*''''pg''''\\\\|import.*from.*''''razorpay''''\" F:/cloudbasket/services F:/cloudbasket/lib --include=*.ts)",
+      "Bash(\"F:/cloudbasket/cc-output/response-full-audit-30032026.txt\":*)",
+      "Bash(find F:cloudbasket -type f \\\\\\(-not -path */node_modules/* -not -path */.next/* -not -path */.git/* -not -name *.lock -not -path */dist/* -not -path */build/* -not -path */coverage/* \\\\\\))",
+      "Bash(ls:*)",
+      "Bash(find E:cloudbasket-docs -type f -name *.txt -o -name *.md)",
+      "Bash(find F:cloudbasket -maxdepth 1 -type f \\\\\\(-name *.ts -o -name *.json -o -name *.md -o -name *.txt -o -name *.js \\\\\\))",
+      "Bash(find F:cloudbasket -type d \\\\\\(-not -path */node_modules/* -not -path */.next/* -not -path */.git/* -not -path */dist/* -not -path */build/* -not -path */coverage/* \\\\\\))",
+      "Bash(find F:cloudbasketlib -maxdepth 2 -type f -name *.ts -o -name *.tsx)",
+      "Bash(find F:cloudbasketservices -maxdepth 2 -type f -name *.ts -o -name *.tsx)",
+      "Bash(pnpm tsc:*)"
     ]
   }
 }

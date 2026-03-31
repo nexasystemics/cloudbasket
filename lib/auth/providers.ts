@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket providers.ts
 // lib/auth/providers.ts — F06: OAuth providers config
 export const AUTH_PROVIDERS = {
   google: {

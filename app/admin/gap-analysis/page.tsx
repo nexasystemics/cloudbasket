@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 import type { Metadata } from 'next'
 export const metadata: Metadata = { title: 'GAP Analysis — Admin | CloudBasket' }
 const GAPS = [
@@ -32,7 +33,7 @@ export default function GapAnalysisPage() {
       <div className="cb-card p-6 mt-8 bg-[var(--cb-surface-2)]">
         <h2 className="font-black mb-3">Pre-Launch Checklist</h2>
         <div className="grid grid-cols-2 gap-2 text-sm">
-          {['Set NEXT_PUBLIC_SUPABASE_URL to cloud project','Set RAZORPAY live keys','Set PLUNK_API_KEY','Generate VAPID keys','Set GOOGLE_CLIENT_ID for OAuth','Wire PRINTIFY_API_KEY','Set AMAZON_ASSOCIATE_TAG','Deploy to Vercel/Railway','Point cloudbasket.co DNS','Run pnpm build final check'].map((item, i) => (
+          {['Set NEXT_PUBLIC_SUPABASE_URL to cloud project','Set RAZORPAY live keys','Set PLUNK_API_KEY','Generate VAPID keys','Set GOOGLE_CLIENT_ID for OAuth','Wire PRINTIFY_API_KEY','Set AMAZON_ASSOCIATE_TAG','Deploy to Vercel/Railway','Point cloudbasket.in DNS','Run pnpm build final check'].map((item, i) => (
             <label key={i} className="flex items-center gap-2 cursor-pointer"><input type="checkbox" className="rounded" /><span>{item}</span></label>
           ))}
         </div>

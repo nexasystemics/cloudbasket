@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CloudBasket Deep Audit — 29/3/2026</title>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:Inter,system-ui,sans-serif;background:#09090B;color:#f4f4f5;margin:0;padding:24px;font-size:14px}
+  h1{color:#039BE5;font-size:26px;margin:0 0 4px}
+  .sub{color:#64748B;font-size:13px;margin-bottom:28px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:28px}
+  .stat{background:#18181b;border:1px solid #27272a;border-radius:10px;padding:14px 18px}
+  .stat-n{font-size:28px;font-weight:900;line-height:1}
+  .stat-l{color:#64748B;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+  .green{color:#10B981}.red{color:#EF4444}.yellow{color:#F5C842}.orange{color:#F97316}.blue{color:#039BE5}
+  .filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .filter-btn{padding:6px 14px;border-radius:6px;border:1px solid #27272a;background:#18181b;
+    color:#94A3B8;cursor:pointer;font-size:12px;font-weight:700}
+  .filter-btn.active,.filter-btn:hover{border-color:#039BE5;color:#039BE5}
+  table{width:100%;border-collapse:collapse;background:#18181b;border-radius:10px;overflow:hidden;font-size:13px}
+  th{background:#0f172a;padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;
+     letter-spacing:.06em;color:#64748B;border-bottom:1px solid #27272a;white-space:nowrap}
+  td{padding:10px 12px;border-bottom:1px solid #1e293b;vertical-align:top}
+  tr:hover td{background:#1E293B}
+  a{color:#039BE5;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .search-box{width:100%;padding:10px 14px;background:#18181b;border:1px solid #27272a;
+    border-radius:8px;color:#f4f4f5;font-size:14px;margin-bottom:12px;outline:none}
+  .search-box:focus{border-color:#039BE5}
+</style>
+</head>
+<body>
+<h1>☁️ CloudBasket — Deep Site Audit</h1>
+<p class="sub">Generated: 29/3/2026, 1:13:02 am | Base: http://localhost:3000 | Pages: 55 | Concurrency: 4</p>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">55</div><div class="stat-l">Pages Crawled</div></div>
+  <div class="stat"><div class="stat-n green">0</div><div class="stat-l">Clean ✅</div></div>
+  <div class="stat"><div class="stat-n red">55</div><div class="stat-l">With Issues</div></div>
+  <div class="stat"><div class="stat-n yellow">0</div><div class="stat-l">Redirected</div></div>
+  <div class="stat"><div class="stat-n red">4</div><div class="stat-l">Timeouts</div></div>
+  <div class="stat"><div class="stat-n red">0</div><div class="stat-l">Broken Images</div></div>
+  <div class="stat"><div class="stat-n orange">0</div><div class="stat-l">Missing Alts</div></div>
+  <div class="stat"><div class="stat-n orange">0</div><div class="stat-l">Empty Links</div></div>
+  <div class="stat"><div class="stat-n yellow">8</div><div class="stat-l">No Meta Desc</div></div>
+  <div class="stat"><div class="stat-n blue">8296ms</div><div class="stat-l">Avg Load</div></div>
+</div>
+
+<input class="search-box" type="text" placeholder="🔍 Filter routes..." oninput="filterRows(this.value)">
+
+<div class="filters">
+  <button class="filter-btn active" onclick="showAll()">All (55)</button>
+  <button class="filter-btn" onclick="filterStatus('error')">Errors (55)</button>
+  <button class="filter-btn" onclick="filterStatus('redirect')">Redirects (0)</button>
+  <button class="filter-btn" onclick="filterBroken()">Broken Images (0)</button>
+  <button class="filter-btn" onclick="filterNoMeta()">No Meta (8)</button>
+  <button class="filter-btn" onclick="filterStatus('timeout')">Timeouts (4)</button>
+</div>
+
+<table id="audit-table">
+  <thead>
+    <tr>
+      <th>Route</th>
+      <th>Status</th>
+      <th>Load</th>
+      <th>🖼 Broken</th>
+      <th>🏷 Alt</th>
+      <th>🔗 Links</th>
+      <th>Meta</th>
+      <th>H1</th>
+      <th>Issues</th>
+    </tr>
+  </thead>
+  <tbody id="table-body"><tr>
+      <td><a href="http://localhost:3000https://skybluecloud.com" target="_blank">https://skybluecloud.com</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">TIMEOUT</td>
+      <td style="white-space:nowrap">6ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">TIMEOUT/ERROR: Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000https://skybluecloud.com/compare" target="_blank">https://skybluecloud.com/compare</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">TIMEOUT</td>
+      <td style="white-space:nowrap">5ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">TIMEOUT/ERROR: Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000https://skybluecloud.com/deals" target="_blank">https://skybluecloud.com/deals</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">TIMEOUT</td>
+      <td style="white-space:nowrap">2ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">TIMEOUT/ERROR: Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000https://skybluecloud.com/search" target="_blank">https://skybluecloud.com/search</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">TIMEOUT</td>
+      <td style="white-space:nowrap">3ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">TIMEOUT/ERROR: Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/app" target="_blank">/app</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">546ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/associates" target="_blank">/associates</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">776ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/best-deals" target="_blank">/best-deals</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">796ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/blog" target="_blank">/blog</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">797ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/brands" target="_blank">/brands</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">621ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/careers" target="_blank">/careers</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">851ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/categories" target="_blank">/categories</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">872ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/cj" target="_blank">/cj</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">857ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/contact" target="_blank">/contact</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">835ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/cookies" target="_blank">/cookies</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">834ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/dashboard" target="_blank">/dashboard</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">814ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/dashboard/rewards" target="_blank">/dashboard/rewards</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">796ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/dashboard/settings" target="_blank">/dashboard/settings</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">851ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/deals/flash" target="_blank">/deals/flash</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">855ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/faq" target="_blank">/faq</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">851ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/login" target="_blank">/login</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">1002ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/offline" target="_blank">/offline</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">765ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/partners" target="_blank">/partners</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">836ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/pod" target="_blank">/pod</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">839ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/pod/designs" target="_blank">/pod/designs</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">790ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/pod/mugs" target="_blank">/pod/mugs</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">764ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/pod/phone-cases" target="_blank">/pod/phone-cases</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">844ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/pod/tshirts" target="_blank">/pod/tshirts</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">823ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/pod/upload" target="_blank">/pod/upload</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">799ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/pricing" target="_blank">/pricing</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">796ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/products" target="_blank">/products</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">866ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/quiz" target="_blank">/quiz</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">872ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/register" target="_blank">/register</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">849ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/sale" target="_blank">/sale</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">848ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/sitemap-page" target="_blank">/sitemap-page</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">894ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/unsubscribed" target="_blank">/unsubscribed</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">842ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/support/ticket" target="_blank">/support/ticket</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">887ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/catalog" target="_blank">/admin/catalog</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">1029ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/health" target="_blank">/admin/health</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">1019ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/monitoring" target="_blank">/admin/monitoring</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">911ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/revenue" target="_blank">/admin/revenue</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">928ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/seo" target="_blank">/admin/seo</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">878ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/pod/ai-studio" target="_blank">/admin/pod/ai-studio</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">861ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/pod/orders" target="_blank">/admin/pod/orders</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">681ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/settings" target="_blank">/admin/settings</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">621ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/affiliate" target="_blank">/affiliate</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">1058ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/about" target="_blank">/about</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">1067ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/affiliate-disclosure" target="_blank">/affiliate-disclosure</a></td>
+      <td style="color:#EF4444;font-weight:700;white-space:nowrap">404</td>
+      <td style="white-space:nowrap">1057ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>1 console errors<br>HTTP 404</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin" target="_blank">/admin</a></td>
+      <td style="color:#F5C842;font-weight:700;white-space:nowrap">200</td>
+      <td style="white-space:nowrap">1187ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>❌</td>
+      <td>❌ 0</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons<br>1 console errors</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/compare" target="_blank">/compare</a></td>
+      <td style="color:#F5C842;font-weight:700;white-space:nowrap">200</td>
+      <td style="white-space:nowrap">682ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>❌</td>
+      <td>❌ 0</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/deals" target="_blank">/deals</a></td>
+      <td style="color:#F5C842;font-weight:700;white-space:nowrap">200</td>
+      <td style="white-space:nowrap">1192ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>❌</td>
+      <td>❌ 0</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/legal/privacy" target="_blank">/legal/privacy</a></td>
+      <td style="color:#F5C842;font-weight:700;white-space:nowrap">200</td>
+      <td style="white-space:nowrap">1146ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>❌</td>
+      <td>❌ 0</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/legal/terms" target="_blank">/legal/terms</a></td>
+      <td style="color:#F5C842;font-weight:700;white-space:nowrap">200</td>
+      <td style="white-space:nowrap">1162ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>❌</td>
+      <td>❌ 0</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/search" target="_blank">/search</a></td>
+      <td style="color:#F5C842;font-weight:700;white-space:nowrap">200</td>
+      <td style="white-space:nowrap">894ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>❌</td>
+      <td>❌ 0</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/admin/analytics" target="_blank">/admin/analytics</a></td>
+      <td style="color:#F5C842;font-weight:700;white-space:nowrap">200</td>
+      <td style="white-space:nowrap">1184ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>❌</td>
+      <td>❌ 0</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1<br>3 unlabelled buttons</td>
+    </tr><tr>
+      <td><a href="http://localhost:3000/" target="_blank">/</a></td>
+      <td style="color:#F5C842;font-weight:700;white-space:nowrap">200</td>
+      <td style="white-space:nowrap">849ms</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>❌</td>
+      <td>❌ 0</td>
+      <td style="font-size:12px">Missing title<br>No meta description<br>No H1</td>
+    </tr></tbody>
+</table>
+
+<script>
+const allRows = document.querySelectorAll('#table-body tr')
+
+function showAll() { allRows.forEach(r => r.style.display = '') }
+
+function filterStatus(status) {
+  allRows.forEach(r => {
+    const s = r.children[1].textContent
+    r.style.display = (
+      status === 'error'    ? (s.includes('4') || s.includes('5') || s.includes('TIMEOUT')) :
+      status === 'redirect' ? s.includes('↪') :
+      status === 'timeout'  ? s.includes('TIMEOUT') : true
+    ) ? '' : 'none'
+  })
+}
+
+function filterBroken() {
+  allRows.forEach(r => {
+    const broken = r.children[3].textContent.trim()
+    r.style.display = broken && broken !== '—' ? '' : 'none'
+  })
+}
+
+function filterNoMeta() {
+  allRows.forEach(r => {
+    const meta = r.children[6].textContent.trim()
+    r.style.display = meta === '❌' ? '' : 'none'
+  })
+}
+
+function filterRows(q) {
+  const lq = q.toLowerCase()
+  allRows.forEach(r => {
+    r.style.display = r.textContent.toLowerCase().includes(lq) ? '' : 'none'
+  })
+}
+</script>
+</body>
+</html>

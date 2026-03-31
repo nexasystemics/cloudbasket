@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { AUTH_PROVIDERS, type AuthProvider } from '@/lib/auth/providers'
 export async function GET(request: NextRequest, { params }: { params: Promise<{ provider: string }> }) {

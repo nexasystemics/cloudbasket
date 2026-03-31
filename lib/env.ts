@@ -1,5 +1,5 @@
-// lib/env.ts
-// Environment variables — typed interface for all Set A through Set F variables.
+// © 2026 NEXQON HOLDINGS — CloudBasket env.ts
+// lib/env.ts — Environment variables — typed interface for all Set A through Set F variables.
 // All variables have safe fallbacks — missing keys log warnings, never crash.
 
 if (typeof window === 'undefined') {
@@ -40,6 +40,7 @@ export const env = {
   RAZORPAY_KEY_SECRET:             process.env.RAZORPAY_KEY_SECRET              || '',
   NEXT_PUBLIC_RAZORPAY_KEY_ID:     process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID      || '',
   MSG91_AUTH_KEY:                  process.env.MSG91_AUTH_KEY                   || '',
+  MSG91_OTP_TEMPLATE_ID:           process.env.MSG91_OTP_TEMPLATE_ID            || '',
   NEXT_PUBLIC_VAPID_PUBLIC_KEY:    process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY     || '',
   VAPID_PRIVATE_KEY:               process.env.VAPID_PRIVATE_KEY                || '',
   VAPID_EMAIL:                     process.env.VAPID_EMAIL                      || 'admin@cloudbasket.in',
@@ -51,8 +52,10 @@ export const env = {
   SUPABASE_STORAGE_BUCKET:         process.env.SUPABASE_STORAGE_BUCKET          || 'product-images',
   PRINTIFY_API_KEY:                process.env.PRINTIFY_API_KEY                 || '',
   PRINTIFY_SHOP_ID:                process.env.PRINTIFY_SHOP_ID                 || '',
+  PRINTIFY_WEBHOOK_SECRET:         process.env.PRINTIFY_WEBHOOK_SECRET          || '',
   PRINTFUL_API_KEY:                process.env.PRINTFUL_API_KEY                 || '',
   PRINTFUL_STORE_ID:               process.env.PRINTFUL_STORE_ID                || '',
+  PRINTFUL_WEBHOOK_SECRET:         process.env.PRINTFUL_WEBHOOK_SECRET          || '',
   ETSY_API_KEY:                    process.env.ETSY_API_KEY                     || '',
   ETSY_SHARED_SECRET:              process.env.ETSY_SHARED_SECRET               || '',
   ETSY_REDIRECT_URI:               process.env.ETSY_REDIRECT_URI                || '',
@@ -73,6 +76,11 @@ export const env = {
   ZOHO_ACCESS_TOKEN:               process.env.ZOHO_ACCESS_TOKEN                || '',
   ZOHO_CLIENT_ID:                  process.env.ZOHO_CLIENT_ID                   || '',
   ZOHO_CLIENT_SECRET:              process.env.ZOHO_CLIENT_SECRET               || '',
+  GOOGLE_CLIENT_ID:                process.env.GOOGLE_CLIENT_ID                 || '',
+  GOOGLE_CLIENT_SECRET:            process.env.GOOGLE_CLIENT_SECRET             || '',
+  GITHUB_CLIENT_ID:                process.env.GITHUB_CLIENT_ID                 || '',
+  GITHUB_CLIENT_SECRET:            process.env.GITHUB_CLIENT_SECRET             || '',
+  MICROSOFT_CLIENT_ID:             process.env.MICROSOFT_CLIENT_ID              || '',
 } as const
 
 export type Env = typeof env

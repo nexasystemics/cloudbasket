@@ -3,8 +3,8 @@ import { razorpayService } from '@/services/payments/razorpay'
 export async function POST(r: NextRequest) {
   try {
     const { orderId, paymentId, signature, items, shippingAddress, total } = await r.json()
-    if (!orderId || !paymentId) return NextResponse.json({ error: 'Missing payment details' }, { status: 400 })
-    const valid = orderId.startsWith('TEST-') ? true : razorpayService.verifyPayment(orderId, paymentId, signature)
+    if (!orderId || !paymentId || !signature) return NextResponse.json({ error: 'Missing payment details' }, { status: 400 })
+    const valid = razorpayService.verifyPayment(orderId, paymentId, signature)
     if (!valid) return NextResponse.json({ error: 'Verification failed' }, { status: 400 })
     const orderNumber = `CB-POD-${Date.now().toString().slice(-8)}`
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {

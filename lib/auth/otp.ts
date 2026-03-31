@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket otp.ts
 // lib/auth/otp.ts — F18: OTP System
 import { env, isConfigured } from '@/lib/env'
 import crypto from 'crypto'

@@ -1,0 +1,7 @@
+# PROJECT GOVERNANCE RULES
+- ALWAYS scan @documents folder first to establish the "Project Truth".
+- ALWAYS compare code logic against @documents requirements.
+- DO NOT read files: .env, *.pem, *.key, credentials.*, secrets.*
+- DO NOT output any strings matching API keys or passwords.
+- FORMAT: All audits must be in a Markdown Table [Requirement | Status | Gap | Fix].
+- DETAIL: Read every line to identify "TODO" comments and logic mismatches.

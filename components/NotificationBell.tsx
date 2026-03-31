@@ -1,25 +1,44 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket NotificationBell.tsx
 'use client'
 import { useEffect, useState } from 'react'
 import { Bell } from 'lucide-react'
 import type { Notification } from '@/lib/realtime/notifications'
+
+type SupabaseNotificationRow = {
+  id: string
+  user_id: string
+  type: Notification['type']
+  title: string
+  message: string
+  read: boolean
+  data: Record<string, unknown>
+  created_at: string
+}
+
 export default function NotificationBell({ userId }: { userId?: string }) {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [open, setOpen] = useState(false)
   const unread = notifications.filter(n => !n.read).length
+
+  function mapRow(n: SupabaseNotificationRow): Notification {
+    return { id: n.id, userId: n.user_id, type: n.type, title: n.title, message: n.message, read: n.read, data: n.data, createdAt: n.created_at }
+  }
+
   useEffect(() => {
     if (!userId || !process.env.NEXT_PUBLIC_SUPABASE_URL) return
     import('@supabase/supabase-js').then(({ createClient }) => {
       const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
       sb.from('notifications').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(10).then(({ data }) => {
-        if (data) setNotifications(data.map((n: any) => ({ id: n.id, userId: n.user_id, type: n.type, title: n.title, message: n.message, read: n.read, data: n.data, createdAt: n.created_at })))
+        if (data) setNotifications((data as SupabaseNotificationRow[]).map(mapRow))
       })
       const channel = sb.channel(`notifications:${userId}`).on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${userId}` }, (payload) => {
-        const n = payload.new as any
-        setNotifications(prev => [{ id: n.id, userId: n.user_id, type: n.type, title: n.title, message: n.message, read: false, data: n.data, createdAt: n.created_at }, ...prev])
+        const n = payload.new as SupabaseNotificationRow
+        setNotifications(prev => [mapRow(n), ...prev])
       }).subscribe()
       return () => { sb.removeChannel(channel) }
     }).catch(() => {})
   }, [userId])
+
   return (
     <div className="relative">
       <button onClick={() => setOpen(!open)} className="relative p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">

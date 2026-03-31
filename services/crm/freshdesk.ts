@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket freshdesk.ts
 // services/crm/freshdesk.ts — F02: Freshdesk Support CRM
 import { env, isConfigured } from '@/lib/env'
 export type FreshdeskTicket = { subject: string; description: string; email: string; priority?: 1|2|3|4; type?: string; tags?: string[] }

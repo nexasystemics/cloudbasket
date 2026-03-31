@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket zoho.ts
 // services/crm/zoho.ts — F01: Zoho CRM Integration
 import { env, isConfigured } from '@/lib/env'
 export type ZohoLead = { Last_Name: string; Email: string; Phone?: string; Lead_Source?: string; Company?: string }

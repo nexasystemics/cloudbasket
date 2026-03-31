@@ -1,0 +1,166 @@
+PowerShell 7.6.0
+PS C:\Users\nexqo> f:
+PS F:\> cd cloudbasket
+PS F:\cloudbasket> # In a second terminal:
+PS F:\cloudbasket> npx ts-node audit-deep-v2.ts
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+(node:14372) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/cloudbasket/audit-deep-v2.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to F:\cloudbasket\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+╔══════════════════════════════════════════════╗
+║  CloudBasket Deep Crawl v2 — FIXED          ║
+╚══════════════════════════════════════════════╝
+
+🔍 Discovering dynamic routes from sitemap...
+  ✅ 0 dynamic routes from sitemap
+
+📋 Routes: 90 (69 static + 21 dynamic)
+   Workers: 2 | Hydration wait: 1200ms
+
+  [█████████████████████████] 100% (90/90) 🚫 /pod/tshirt
+
+══════════════════════════════════════════════
+  DONE
+══════════════════════════════════════════════
+  Pages:          90
+  ✅ Clean:       0
+  ❌ Issues:      90
+  🚫 Real 404s:   68
+  💀 Timeouts:    0
+  🖼 Broken imgs: 0
+  🔘 No-label btns:42
+
+  📄 F:\cloudbasket\audit-deep-results\deep-audit-v2.html
+  📋 F:\cloudbasket\audit-deep-results\deep-audit-v2.json
+
+  🚫 REAL 404 ROUTES (need fixing):
+     /about
+     /affiliate
+     /affiliate-disclosure
+     /app
+     /associates
+     /best-deals
+     /blog
+     /brands
+     /careers
+     /categories
+     /cj
+     /contact
+     /cookies
+     /dashboard
+     /dashboard/rewards
+     /dashboard/settings
+     /deals/flash
+     /faq
+     /login
+     /offline
+     /partners
+     /pod
+     /pod/designs
+     /pod/mugs
+     /pod/phone-cases
+     /pod/tshirts
+     /pod/upload
+     /pricing
+     /products
+     /quiz
+     /register
+     /sale
+     /sitemap-page
+     /support/ticket
+     /unsubscribed
+     /admin/catalog
+     /admin/health
+     /admin/monitoring
+     /admin/revenue
+     /admin/seo
+     /admin/settings
+     /admin/affiliates
+     /admin/content
+     /admin/cro
+     /admin/emails
+     /admin/gap-analysis
+     /admin/lister
+     /admin/marketing
+     /admin/moderation
+     /admin/performance
+     /admin/referrals
+     /admin/social
+     /admin/sponsored
+     /admin/support
+     /admin/tax
+     /admin/pod/ai-studio
+     /admin/pod/orders
+     /admin/pod/listings
+     /admin/pod/pricing
+     /admin/pod/quality
+     /admin/pod/upload
+     /brand/boat
+     /brand/realme
+     /brand/puma
+     /blog/best-deals-india
+     /blog/top-earphones-under-2000
+     /deals/deal-001
+     /pod/tshirt
+
+  TOP 10 WORST PAGES:
+  1. /                                             5 issues
+  2. /compare                                      5 issues
+  3. /deals                                        5 issues
+  4. /legal/privacy                                5 issues
+  5. /legal/terms                                  5 issues
+  6. /search                                       5 issues
+  7. /admin/analytics                              5 issues
+  8. /product/mob-001                              5 issues
+  9. /product/mob-002                              5 issues
+  10. /product/mob-003                              5 issues
+
+PS F:\cloudbasket> cd F:\cloudbasket
+PS F:\cloudbasket> npx ts-node audit-deep-v2.ts
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+(node:19244) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/cloudbasket/audit-deep-v2.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to F:\cloudbasket\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+╔══════════════════════════════════════════════╗
+║  CloudBasket Deep Crawl v2 — FIXED          ║
+╚══════════════════════════════════════════════╝
+
+🔍 Discovering dynamic routes from sitemap...
+  ✅ 1160 dynamic routes from sitemap
+
+📋 Routes: 1237 (69 static + 1168 dynamic)
+   Workers: 2 | Hydration wait: 1200ms
+
+  [█████████████████████████] 100% (1237/1237) 💀 /pod/tshirt
+
+══════════════════════════════════════════════
+  DONE
+══════════════════════════════════════════════
+  Pages:          1237
+  ✅ Clean:       0
+  ❌ Issues:      1237
+  🚫 Real 404s:   0
+  💀 Timeouts:    1235
+  🖼 Broken imgs: 11
+  🔘 No-label btns:2
+
+  📄 F:\cloudbasket\audit-deep-results\deep-audit-v2.html
+  📋 F:\cloudbasket\audit-deep-results\deep-audit-v2.json
+
+  TOP 10 WORST PAGES:
+  1. /                                             4 issues
+  2. /about                                        1 issues
+  3. /affiliate                                    1 issues
+  4. /affiliate-disclosure                         1 issues
+  5. /app                                          1 issues
+  6. /associates                                   1 issues
+  7. /best-deals                                   1 issues
+  8. /blog                                         1 issues
+  9. /brands                                       1 issues
+  10. /careers                                      1 issues
+
+PS F:\cloudbasket>

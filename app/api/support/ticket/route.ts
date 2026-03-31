@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { freshdeskAPI } from '@/services/crm/freshdesk'
 export async function POST(request: NextRequest) {

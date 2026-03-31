@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket hubspot.ts
 // services/crm/hubspot.ts — F01: HubSpot CRM Integration
 import { env, isConfigured } from '@/lib/env'
 const BASE = 'https://api.hubapi.com'

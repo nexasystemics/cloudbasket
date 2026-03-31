@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { generateOTP, sendEmailOTP, sendSMSOTP } from '@/lib/auth/otp'
 import { hasSupabase, env } from '@/lib/env'

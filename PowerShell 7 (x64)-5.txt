@@ -1,0 +1,286 @@
+PowerShell 7.6.0
+PS C:\Users\nexqo> f:
+PS F:\> cd cloudbasket
+PS F:\cloudbasket> # Open a NEW PowerShell window, run this:
+PS F:\cloudbasket> Invoke-WebRequest http://localhost:3000/sitemap.xml | Select-Object -ExpandProperty Content | Select-String "<loc>" | Select-Object -First 20
+Invoke-WebRequest: No connection could be made because the target machine actively refused it.
+PS F:\cloudbasket> cd F:\cloudbasket
+PS F:\cloudbasket> pnpm build
+
+> cloudbasket@2.0.0 build F:\cloudbasket
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 11.6s
+  Running TypeScript  ...
+PS F:\cloudbasket> pnpm start
+
+> cloudbasket@2.0.0 start F:\cloudbasket
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.13:3000
+
+✓ Starting...
+Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id
+    at ignore-listed frames
+ ELIFECYCLE  Command failed with exit code 1.
+PS F:\cloudbasket> ```
+``: The term '``' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS F:\cloudbasket>
+PS F:\cloudbasket> Wait until you see:
+Wait: The term 'Wait' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS F:\cloudbasket> ```
+``: The term '``' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS F:\cloudbasket> ▲ Next.js 16.1.6
+▲: The term '▲' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[General Feedback]
+  The most similar commands are:
+    > %, ?, h, r
+
+PS F:\cloudbasket> - Local: http://localhost:3000^C
+PS F:\cloudbasket> pnpm build
+
+> cloudbasket@2.0.0 build F:\cloudbasket
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.0s
+✓ Finished TypeScript in 5.6s
+⚠ Using edge runtime on a page currently disables static generation for that page
+✓ Collecting page data using 15 workers in 8.9s
+✓ Generating static pages using 15 workers (1309/1309) in 6.1s
+✓ Finalizing page optimization in 36.5ms
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /admin
+├ ○ /admin/affiliate-keys
+├ ○ /admin/affiliates
+├ ○ /admin/analytics
+├ ○ /admin/associates
+├ ○ /admin/catalog
+├ ○ /admin/catalog/sync
+├ ○ /admin/content
+├ ○ /admin/content/blog
+├ ○ /admin/cro
+├ ○ /admin/cro/ab-tests
+├ ○ /admin/emails
+├ ○ /admin/gap-analysis
+├ ○ /admin/health
+├ ○ /admin/lister
+├ ○ /admin/marketing
+├ ○ /admin/marketing/influencer
+├ ○ /admin/messaging/whatsapp
+├ ○ /admin/moderation
+├ ○ /admin/monitoring
+├ ○ /admin/monitoring/freshness
+├ ○ /admin/performance
+├ ○ /admin/pod/ai-studio
+├ ○ /admin/pod/amazon-merch
+├ ○ /admin/pod/analytics
+├ ○ /admin/pod/b2b
+├ ○ /admin/pod/bulk-titles
+├ ○ /admin/pod/campaigns
+├ ○ /admin/pod/e-set-dashboard
+├ ○ /admin/pod/etsy-connect
+├ ○ /admin/pod/library
+├ ○ /admin/pod/listings
+├ ○ /admin/pod/orders
+├ ○ /admin/pod/pricing
+├ ○ /admin/pod/quality
+├ ○ /admin/pod/redbubble
+├ ○ /admin/pod/seo
+├ ○ /admin/pod/sync
+├ ○ /admin/pod/upload
+├ ○ /admin/referrals
+├ ○ /admin/revenue
+├ ○ /admin/seo
+├ ○ /admin/seo/search-console
+├ ○ /admin/settings
+├ ○ /admin/social
+├ ○ /admin/sponsored
+├ ○ /admin/support
+├ ○ /admin/tax
+├ ○ /affiliate
+├ ○ /affiliate-disclosure
+├ ƒ /api/alerts/trigger
+├ ƒ /api/amazon/product
+├ ƒ /api/amazon/search
+├ ƒ /api/analytics/ads
+├ ƒ /api/associates/apply
+├ ƒ /api/auth/[provider]
+├ ƒ /api/auth/[provider]/callback
+├ ƒ /api/auth/otp/send
+├ ƒ /api/auth/otp/verify
+├ ƒ /api/automation/webhook
+├ ƒ /api/barcode/lookup
+├ ƒ /api/catalog/prices
+├ ƒ /api/catalog/sync
+├ ƒ /api/cj/products
+├ ƒ /api/cj/track
+├ ƒ /api/contact
+├ ƒ /api/content/generate-description
+├ ƒ /api/crm/contact
+├ ƒ /api/cron/daily-deals
+├ ƒ /api/cron/weekly-digest
+├ ƒ /api/currency/rates
+├ ƒ /api/deals/discover
+├ ƒ /api/documents/invoice
+├ ƒ /api/email/send-alert
+├ ƒ /api/extension/price-check
+├ ƒ /api/feed/google
+├ ƒ /api/feeds/google
+├ ƒ /api/flipkart/deals
+├ ƒ /api/flipkart/search
+├ ƒ /api/intelligence/competitive
+├ ƒ /api/intelligence/deals
+├ ƒ /api/mobile/deals
+├ ƒ /api/mobile/products
+├ ƒ /api/newsletter/subscribe
+├ ƒ /api/newsletter/unsubscribe
+├ ƒ /api/og
+├ ƒ /api/pod/ai-generate
+├ ƒ /api/pod/checkout/create-order
+├ ƒ /api/pod/checkout/verify-payment
+├ ƒ /api/pod/gift-cards/create
+├ ƒ /api/pod/gift-cards/redeem
+├ ƒ /api/pod/sync
+├ ƒ /api/price-tracker
+├ ƒ /api/prices
+├ ƒ /api/push/subscribe
+├ ƒ /api/push/vapid-key
+├ ƒ /api/revenue/click
+├ ƒ /api/reviews
+├ ƒ /api/search/index-products
+├ ƒ /api/seo/audit
+├ ƒ /api/sms/subscribe
+├ ƒ /api/social/generate
+├ ƒ /api/sponsored/click
+├ ƒ /api/sponsored/impression
+├ ƒ /api/stock
+├ ƒ /api/support/ticket
+├ ƒ /api/telegram/webhook
+├ ƒ /api/ugc
+├ ƒ /api/user/data-export
+├ ƒ /api/user/delete-account
+├ ƒ /api/vitals
+├ ƒ /api/webhooks/printful
+├ ƒ /api/webhooks/printify
+├ ƒ /api/webhooks/shopify
+├ ƒ /api/whatsapp/subscribe
+├ ƒ /api/whatsapp/webhook
+├ ○ /app
+├ ○ /associates
+├ ○ /best-deals
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/how-to-track-flash-sales
+│ ├ /blog/best-price-comparison-tips
+│ └ /blog/save-money-online-shopping
+├ ● /brand/[brandName]
+│ ├ /brand/HUL
+│ ├ /brand/Dabur
+│ ├ /brand/ITC
+│ └ [+13 more paths]
+├ ○ /brands
+├ ○ /careers
+├ ○ /categories
+├ ƒ /category/[slug]
+├ ○ /cj
+├ ○ /compare
+├ ○ /contact
+├ ○ /cookies
+├ ○ /dashboard
+├ ○ /dashboard/rewards
+├ ○ /dashboard/settings
+├ ○ /deals
+├ ● /deals/[id]
+│ ├ /deals/flash-1
+│ ├ /deals/flash-2
+│ ├ /deals/flash-3
+│ └ [+9 more paths]
+├ ○ /deals/flash
+├ ○ /faq
+├ ƒ /go/[id]
+├ ○ /legal/privacy
+├ ○ /legal/terms
+├ ○ /login
+├ ○ /manifest.webmanifest
+├ ○ /offline
+├ ○ /partners
+├ ○ /pod
+├ ƒ /pod/[category]
+├ ○ /pod/designs
+├ ○ /pod/mugs
+├ ○ /pod/phone-cases
+├ ○ /pod/tshirts
+├ ○ /pod/upload
+├ ○ /pricing
+├ ● /product/[id]
+│ ├ /product/mob-001
+│ ├ /product/mob-002
+│ ├ /product/mob-003
+│ └ [+1119 more paths]
+├ ○ /products
+├ ƒ /products/[id]
+├ ○ /quiz
+├ ○ /register
+├ ○ /robots.txt
+├ ○ /sale
+├ ○ /search
+├ ○ /sitemap-page
+├ ○ /sitemap.xml
+├ ○ /support/ticket
+└ ○ /unsubscribed
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+PS F:\cloudbasket> cd F:\cloudbasket
+PS F:\cloudbasket> pnpm start
+
+> cloudbasket@2.0.0 start F:\cloudbasket
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.13:3000
+
+✓ Starting...
+✓ Ready in 391ms
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-001.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-002.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-036.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-037.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-009.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-001.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-002.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-036.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-037.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-008.jpg received null
+⨯ The requested resource isn't a valid image for /assets/products/IN-EL-BOT-009.jpg received null
+ ELIFECYCLE  Command failed with exit code 3221226356.
+PS F:\cloudbasket>

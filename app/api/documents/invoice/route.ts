@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { generateInvoiceHTML } from '@/lib/documents/pdf-generator'
 export async function POST(request: NextRequest) {

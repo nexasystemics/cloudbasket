@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket sw.js
 const CACHE_NAME = 'cloudbasket-v2'
 const STATIC_ASSETS = ['/', '/offline', '/manifest.webmanifest']
 

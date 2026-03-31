@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 // F12: Affiliate Partners Panel
 import type { Metadata } from 'next'
 export const metadata: Metadata = { title: 'Affiliate Partners — CloudBasket Admin' }
@@ -16,11 +17,11 @@ export default function AffiliatesPage() {
       <div className="cb-card p-6">
         <h2 className="font-black mb-4">Platform Configuration</h2>
         <div className="space-y-2 text-sm">
-          {[['AMAZON_ASSOCIATE_TAG','cloudbasket-21','✅'],['FLIPKART_AFFILIATE_TOKEN','—','⚠️ Add to .env'],['CJ_API_KEY','—','⚠️ Add to .env'],['NEXT_PUBLIC_ADSENSE_CLIENT','—','⚠️ Add to .env']].map(([key, val, status]) => (
+          {[['AMAZON_ASSOCIATE_TAG','cloudbasket-21','Active'],['FLIPKART_AFFILIATE_TOKEN','—','Add to .env'],['CJ_API_KEY','—','Add to .env'],['NEXT_PUBLIC_ADSENSE_CLIENT','—','Add to .env']].map(([key, val, status]) => (
             <div key={key} className="flex items-center gap-3 p-3 bg-[var(--cb-surface-2)] rounded-xl">
               <code className="text-xs flex-1">{key}</code>
               <span className="text-xs text-[var(--cb-text-muted)]">{val}</span>
-              <span>{status}</span>
+              <span className="text-xs">{status}</span>
             </div>
           ))}
         </div>

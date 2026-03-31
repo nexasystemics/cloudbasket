@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket OnboardingModal.tsx
 // F23: Complete Onboarding Flow Modal
 'use client'
 import { useState, useEffect } from 'react'
@@ -67,7 +68,7 @@ export default function OnboardingModal() {
 
           {step === 3 && (
             <div className="space-y-3 mb-6">
-              <button type="button" onClick={enableNotifs} className="cb-btn cb-btn-primary w-full gap-2">🔔 Enable Price Alerts</button>
+              <button type="button" onClick={enableNotifs} className="cb-btn cb-btn-primary w-full gap-2">Enable Price Alerts</button>
               <button type="button" onClick={() => setStep(4)} className="cb-btn cb-btn-ghost w-full">Skip for now</button>
             </div>
           )}
@@ -82,7 +83,7 @@ export default function OnboardingModal() {
 
           {step !== 3 && (
             <button type="button" onClick={() => step < 4 ? setStep(s => s + 1) : complete()} className="cb-btn cb-btn-primary w-full gap-2">
-              {step === 4 ? 'Start Shopping 🛒' : 'Next'}<ChevronRight size={16} />
+              {step === 4 ? 'Start Shopping' : 'Next'}<ChevronRight size={16} />
             </button>
           )}
         </div>

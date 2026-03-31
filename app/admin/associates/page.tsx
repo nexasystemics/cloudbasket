@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 // F11: Associate Panel — Complete Self-Service Dashboard
 import type { Metadata } from 'next'
 export const metadata: Metadata = { title: 'Associates Panel — CloudBasket Admin' }

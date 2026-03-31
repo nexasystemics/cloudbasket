@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 // F35: Complete Monitoring Dashboard
 import type { Metadata } from 'next'
 import { runHealthChecks } from '@/lib/monitoring/health'

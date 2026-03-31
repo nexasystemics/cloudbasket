@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket image-optimizer.ts
 // F82: Mobile-First Performance
 export function getOptimizedImageUrl(src: string, width: number, quality = 75): string {
   if (!src) return '/images/placeholder.jpg'

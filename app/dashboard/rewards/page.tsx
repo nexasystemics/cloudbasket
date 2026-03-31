@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 'use client'
 import { useState, useEffect } from 'react'
 import { getUserPoints } from '@/lib/gamification/points'
@@ -24,7 +25,7 @@ export default function RewardsPage() {
       </div>
       <div className="cb-card p-6">
         <h2 className="font-black mb-4">How to earn points</h2>
-        {[['🔐 Sign Up', '100 pts'],['🛍️ First Purchase', '500 pts'],['⭐ Write Review', '50 pts'],['👥 Refer a Friend', '200 pts'],['📅 Daily Visit', '5 pts'],['💙 Add to Wishlist', '2 pts'],['📤 Share Product', '10 pts']].map(([action, pts]) => (
+        {[['Sign Up', '100 pts'],['First Purchase', '500 pts'],['Write Review', '50 pts'],['Refer a Friend', '200 pts'],['Daily Visit', '5 pts'],['Add to Wishlist', '2 pts'],['Share Product', '10 pts']].map(([action, pts]) => (
           <div key={action} className="flex justify-between py-2 border-b border-[var(--cb-border)] last:border-0 text-sm">
             <span>{action}</span><span className="font-black text-skyline-primary">{pts}</span>
           </div>

@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { searchProducts } from '@/lib/search'
 export async function POST(request: NextRequest) {

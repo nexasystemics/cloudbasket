@@ -1,7 +1,10 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket typesense-client.ts
 // F22: Advanced Search with Typesense
+import type { IndiaProduct } from '@/lib/india-catalog/types'
+
 export type TypesenseSearchParams = { q: string; query_by?: string; filter_by?: string; sort_by?: string; per_page?: number; page?: number }
-export type TypesenseHit = { document: Record<string, any>; highlights: any[]; text_match: number }
-export type TypesenseResult = { hits: TypesenseHit[]; found: number; page: number; request_params: any }
+export type TypesenseHit = { document: Record<string, unknown>; highlights: unknown[]; text_match: number }
+export type TypesenseResult = { hits: TypesenseHit[]; found: number; page: number; request_params: unknown }
 
 function isConfigured(): boolean { return !!(process.env.TYPESENSE_HOST && process.env.TYPESENSE_API_KEY) }
 
@@ -14,14 +17,14 @@ export async function typesenseSearch(params: TypesenseSearchParams): Promise<Ty
   } catch { return null }
 }
 
-export async function indexProductsToTypesense(products: any[]): Promise<{ success: number; errors: number }> {
+export async function indexProductsToTypesense(products: IndiaProduct[]): Promise<{ success: number; errors: number }> {
   if (!isConfigured()) return { success: 0, errors: products.length }
   let success = 0; let errors = 0
-  const chunks = []
+  const chunks: IndiaProduct[][] = []
   for (let i = 0; i < products.length; i += 50) chunks.push(products.slice(i, i + 50))
   for (const chunk of chunks) {
     try {
-      const body = chunk.map(p => JSON.stringify({ id: String(p.id), name: p.name || p.title || '', brand: p.brand || '', category: p.category || '', price: p.price || 0, discount: p.discount || 0, platform: p.platform || 'Amazon', in_stock: p.inStock !== false })).join('\n')
+      const body = chunk.map(p => JSON.stringify({ id: String(p.id), name: p.name || '', brand: p.brand || '', category: p.category || '', price: p.price || 0, discount: p.discount || 0, platform: p.affiliatePlatform || 'amazon', in_stock: p.inStock !== false })).join('\n')
       const r = await fetch(`https://${process.env.TYPESENSE_HOST}/collections/products/documents/import?action=upsert`, { method: 'POST', headers: { 'X-TYPESENSE-API-KEY': process.env.TYPESENSE_API_KEY!, 'Content-Type': 'text/plain' }, body })
       if (r.ok) success += chunk.length; else errors += chunk.length
     } catch { errors += chunk.length }

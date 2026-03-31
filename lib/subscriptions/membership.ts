@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket membership.ts
 // F53: Subscription + Membership System
 import { hasSupabase, env } from '@/lib/env'
 

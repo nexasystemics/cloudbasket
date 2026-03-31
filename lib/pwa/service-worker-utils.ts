@@ -1,14 +1,14 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket service-worker-utils.ts
 // F83: Offline-First PWA Capabilities
 export function registerServiceWorker(): void {
   if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').then(reg => {
-      console.log('[SW] Registered:', reg.scope)
       reg.addEventListener('updatefound', () => {
         const worker = reg.installing
-        if (worker) worker.addEventListener('statechange', () => { if (worker.state === 'installed' && navigator.serviceWorker.controller) console.log('[SW] Update available') })
+        if (worker) worker.addEventListener('statechange', () => { /* update available when installed + controller exists */ })
       })
-    }).catch(err => console.error('[SW] Registration failed:', err))
+    }).catch(() => { /* registration failed — silent in production */ })
   })
 }
 

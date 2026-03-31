@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 // F56: Revenue Forecasting + BI Dashboard
 import type { Metadata } from 'next'
 export const metadata: Metadata = { title: 'Revenue Dashboard — CloudBasket Admin' }

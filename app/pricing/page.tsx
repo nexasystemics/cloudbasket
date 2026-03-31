@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket page.tsx
 import type { Metadata } from 'next'
 import { MEMBERSHIP_PLANS } from '@/lib/subscriptions/membership'
 import { Check } from 'lucide-react'

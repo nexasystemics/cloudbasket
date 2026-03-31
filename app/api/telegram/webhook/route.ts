@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket route.ts
 // F87: Telegram Bot Integration
 import { NextRequest, NextResponse } from 'next/server'
 import { getDailyDeals } from '@/lib/deals-engine'
@@ -20,26 +21,26 @@ export async function POST(request: NextRequest) {
     const text = message.text || ''
 
     if (text === '/start') {
-      await sendTelegramMessage(chatId, '🛒 <b>Welcome to CloudBasket Bot!</b>\n\nCommands:\n/deals — Top deals today\n/flash — Flash deals\n/search [query] — Search products')
+      await sendTelegramMessage(chatId, '<b>Welcome to CloudBasket Bot!</b>\n\nCommands:\n/deals — Top deals today\n/flash — Flash deals\n/search [query] — Search products')
     } else if (text === '/deals') {
       const deals = getDailyDeals(5)
       const msg = deals.map(d => `• <b>${d.title}</b>\n  ₹${d.dealPrice} (${d.discountPercent}% off) — ${d.platform}`).join('\n\n')
-      await sendTelegramMessage(chatId, `🔥 <b>Top Deals Today</b>\n\n${msg}`)
+      await sendTelegramMessage(chatId, `<b>Top Deals Today</b>\n\n${msg}`)
     } else if (text === '/flash') {
       const { getFlashDeals } = await import('@/lib/deals-engine')
       const deals = getFlashDeals(5)
-      if (!deals.length) { await sendTelegramMessage(chatId, '⚡ No flash deals right now. Check back soon!'); return NextResponse.json({ ok: true }) }
-      const msg = deals.map(d => `⚡ <b>${d.title}</b>\n  ₹${d.dealPrice} (${d.discountPercent}% off)`).join('\n\n')
-      await sendTelegramMessage(chatId, `⚡ <b>Flash Deals</b>\n\n${msg}`)
+      if (!deals.length) { await sendTelegramMessage(chatId, 'No flash deals right now. Check back soon!'); return NextResponse.json({ ok: true }) }
+      const msg = deals.map(d => `<b>${d.title}</b>\n  ₹${d.dealPrice} (${d.discountPercent}% off)`).join('\n\n')
+      await sendTelegramMessage(chatId, `<b>Flash Deals</b>\n\n${msg}`)
     } else if (text.startsWith('/search ')) {
       const query = text.replace('/search ', '').trim()
       const { searchProducts } = await import('@/lib/search')
       const results = searchProducts(query, { sortBy: 'price-asc' }).slice(0, 3)
-      if (!results.length) { await sendTelegramMessage(chatId, `❌ No results for "${query}"`); return NextResponse.json({ ok: true }) }
+      if (!results.length) { await sendTelegramMessage(chatId, `No results for "${query}"`); return NextResponse.json({ ok: true }) }
       const msg = results.map(r => `• <b>${r.name}</b>\n  ₹${r.price} — ${r.platform}`).join('\n\n')
-      await sendTelegramMessage(chatId, `🔍 Results for "${query}"\n\n${msg}`)
+      await sendTelegramMessage(chatId, `Results for "${query}"\n\n${msg}`)
     } else {
-      await sendTelegramMessage(chatId, '❓ Unknown command. Type /start for help.')
+      await sendTelegramMessage(chatId, 'Unknown command. Type /start for help.')
     }
     return NextResponse.json({ ok: true })
   } catch { return NextResponse.json({ ok: true }) }

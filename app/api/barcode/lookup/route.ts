@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket route.ts
 // F96: Barcode / QR Product Lookup
 import { NextRequest, NextResponse } from 'next/server'
 import { searchProducts } from '@/lib/search'

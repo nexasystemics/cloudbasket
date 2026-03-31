@@ -1,6 +1,10 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket leaderboard.ts
 // F24: Gamification Leaderboard
 import { hasSupabase, env } from '@/lib/env'
+
 export type LeaderboardEntry = { rank: number; userId: string; displayName: string; points: number; level: string; badge: string }
+
+type LeaderboardRow = { user_id: string; display_name: string | null; total_points: number }
 
 export function getLevel(points: number): { level: string; badge: string; nextLevel: number } {
   if (points >= 10000) return { level: 'Legend', badge: '👑', nextLevel: 99999 }
@@ -17,7 +21,7 @@ export async function getLeaderboard(limit = 10): Promise<LeaderboardEntry[]> {
     const { createClient } = await import('@supabase/supabase-js')
     const sb = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
     const { data } = await sb.rpc('get_points_leaderboard', { p_limit: limit })
-    return (data || []).map((row: any, i: number) => {
+    return (data || []).map((row: LeaderboardRow, i: number) => {
       const { level, badge } = getLevel(row.total_points)
       return { rank: i + 1, userId: row.user_id, displayName: row.display_name || `User ${row.user_id.slice(0, 6)}`, points: row.total_points, level, badge }
     })

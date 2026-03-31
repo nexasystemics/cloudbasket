@@ -1,3 +1,4 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket chrome-extension-api.ts
 // F86: Browser Extension API endpoints
 export type ExtensionProduct = { id: string; name: string; price: number; site: string; foundAt: string }
 

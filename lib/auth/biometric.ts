@@ -1,4 +1,5 @@
-// F27-style: Biometric Auth using WebAuthn
+// © 2026 NEXQON HOLDINGS — CloudBasket biometric.ts
+// F27: Biometric Auth using WebAuthn
 export type BiometricResult = { success: boolean; credentialId?: string; error?: string }
 
 export async function isBiometricAvailable(): Promise<boolean> {

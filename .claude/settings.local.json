@@ -24,7 +24,9 @@
       "Bash(find F:cloudbasket -type d \\\\\\(-not -path */node_modules/* -not -path */.next/* -not -path */.git/* -not -path */dist/* -not -path */build/* -not -path */coverage/* \\\\\\))",
       "Bash(find F:cloudbasketlib -maxdepth 2 -type f -name *.ts -o -name *.tsx)",
       "Bash(find F:cloudbasketservices -maxdepth 2 -type f -name *.ts -o -name *.tsx)",
-      "Bash(pnpm tsc:*)"
+      "Bash(pnpm tsc:*)",
+      "Bash(node -e \"require.resolve\\(''puppeteer''\\)\")",
+      "Bash(rm:*)"
     ]
   }
 }

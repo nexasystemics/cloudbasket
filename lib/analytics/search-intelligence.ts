@@ -29,6 +29,6 @@ export async function getZeroResultQueries(limit = 20): Promise<string[]> {
     const { createClient } = await import('@supabase/supabase-js')
     const sb = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
     const { data } = await sb.from('search_queries').select('query').eq('results_count', 0).order('created_at', { ascending: false }).limit(limit)
-    return (data || []).map((r: any) => r.query)
+    return (data || []).map((r: { query: string }) => r.query)
   } catch { return [] }
 }

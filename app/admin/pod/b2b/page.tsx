@@ -17,6 +17,14 @@ export default function B2BOrdersPage() {
     setQuote(q); setLoading(false)
   }
 
+  type StringFormField = 'companyName' | 'contactEmail' | 'contactPhone' | 'gstNumber'
+  const stringFields: [StringFormField, string, string][] = [
+    ['companyName', 'Company Name', 'text'],
+    ['contactEmail', 'Contact Email', 'email'],
+    ['contactPhone', 'Contact Phone', 'tel'],
+    ['gstNumber', 'GST Number (optional)', 'text'],
+  ]
+
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
       <h1 className="text-3xl font-black tracking-tighter mb-2 flex items-center gap-3"><Building2 size={28} /> B2B Bulk Orders</h1>
@@ -24,9 +32,9 @@ export default function B2BOrdersPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="cb-card p-6 space-y-4">
           <h2 className="font-black">Request Quote</h2>
-          {[['companyName','Company Name','text'],['contactEmail','Contact Email','email'],['contactPhone','Contact Phone','tel'],['gstNumber','GST Number (optional)','text']].map(([k, label, type]) => (
+          {stringFields.map(([k, label, type]) => (
             <div key={k}><label className="text-xs font-black uppercase tracking-widest block mb-1">{label}</label>
-              <input type={type} className="cb-input w-full" value={(form as any)[k] || ''} onChange={e => setForm(p => ({ ...p, [k]: e.target.value }))} /></div>
+              <input type={type} className="cb-input w-full" value={form[k] || ''} onChange={e => setForm(p => ({ ...p, [k]: e.target.value }))} /></div>
           ))}
           <div><label className="text-xs font-black uppercase tracking-widest block mb-1">Product</label>
             <select className="cb-input w-full" value={form.productType} onChange={e => setForm(p => ({ ...p, productType: e.target.value }))}>
@@ -45,7 +53,7 @@ export default function B2BOrdersPage() {
           <div className="cb-card p-6">
             <h2 className="font-black mb-4">Quote #{quote.id}</h2>
             <div className="space-y-2 text-sm">
-              {[['Company', quote.companyName],['Product', quote.productType],['Quantity', quote.quantity],['Unit Price', `₹${quote.unitPrice}`],['Subtotal', `₹${quote.totalPrice.toLocaleString('en-IN')}`],['GST 18%', `₹${quote.gstAmount.toLocaleString('en-IN')}`],['Grand Total', `₹${quote.grandTotal.toLocaleString('en-IN')}`],['Valid Until', new Date(quote.validUntil).toLocaleDateString('en-IN')]].map(([k, v]) => (
+              {([['Company', quote.companyName],['Product', quote.productType],['Quantity', quote.quantity],['Unit Price', `₹${quote.unitPrice}`],['Subtotal', `₹${quote.totalPrice.toLocaleString('en-IN')}`],['GST 18%', `₹${quote.gstAmount.toLocaleString('en-IN')}`],['Grand Total', `₹${quote.grandTotal.toLocaleString('en-IN')}`],['Valid Until', new Date(quote.validUntil).toLocaleDateString('en-IN')]] as [string, string | number][]).map(([k, v]) => (
                 <div key={String(k)} className="flex justify-between border-b border-[var(--cb-border)] pb-1"><span className="text-[var(--cb-text-muted)]">{k}</span><span className="font-bold">{v}</span></div>
               ))}
             </div>

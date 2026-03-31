@@ -1,7 +1,7 @@
 // E42: Mobile App API Endpoints (React Native ready)
 import { NextRequest, NextResponse } from 'next/server'
 import { getDailyDeals } from '@/lib/deals-engine'
-import { searchProducts } from '@/lib/search'
+import { searchProducts, type SearchFilters } from '@/lib/search'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -9,7 +9,9 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get('category') || ''
   const page = Number(searchParams.get('page') || 1)
   const limit = Number(searchParams.get('limit') || 20)
-  const sort = searchParams.get('sort') as any || 'relevance'
+  const sortParam = searchParams.get('sort')
+  const validSorts = ['relevance', 'price-asc', 'price-desc', 'discount-desc', 'newest'] as const
+  const sort: SearchFilters['sortBy'] = (validSorts as readonly string[]).includes(sortParam ?? '') ? sortParam as SearchFilters['sortBy'] : 'relevance'
 
   const results = q || category
     ? searchProducts(q, { categories: category ? [category] : undefined, sortBy: sort })

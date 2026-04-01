@@ -1,147 +1,87 @@
-import puppeteer, { Browser } from 'puppeteer';
-import Redis from 'ioredis';
-import { Pool } from 'pg';
+// © 2026 NEXQON HOLDINGS — CloudBasket scraper.ts
+// services/price-engine/scraper.ts — Puppeteer price scraper with Upstash cache.
+import puppeteer, { Browser } from 'puppeteer'
+import { Pool } from 'pg'
+import { cacheGet, cacheSet } from '@/lib/cache/redis'
 
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ connectionString: process.env.DATABASE_URL })
 
 interface ProductPrice {
-  productId: string;
-  price: number;
-  currency: string;
-  source: string;
+  productId: string
+  price: number
+  currency: string
+  source: string
 }
 
 export class PriceScraper {
-  private browser: Browser | null = null;
+  private browser: Browser | null = null
 
-  /**
-   * Initialize browser instance (reuse across scrapes)
-   */
-  async initialize() {
+  async initialize(): Promise<void> {
     if (!this.browser) {
-      this.browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
+      this.browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
     }
   }
 
-  /**
-   * Scrape price from a product URL
-   */
   async scrapePrice(productUrl: string, selectors: string[]): Promise<number | null> {
-    // Check cache first (24 hour TTL)
-    const cacheKey = `price:${productUrl}`;
-    const cached = await redis.get(cacheKey);
-    if (cached) {
-      console.log(`💰 Cache hit for ${productUrl}`);
-      return parseFloat(cached);
-    }
+    const cacheKey = `price:${productUrl}`
+    const cached = await cacheGet(cacheKey)
+    if (cached) return parseFloat(cached)
 
-    await this.initialize();
-    if (!this.browser) return null;
-    const page = await this.browser.newPage();
+    await this.initialize()
+    if (!this.browser) return null
+    const page = await this.browser.newPage()
 
     try {
-      console.log(`🔍 Scraping ${productUrl}...`);
-      await page.goto(productUrl, { 
-        waitUntil: 'networkidle2',
-        timeout: 30000 
-      });
+      await page.goto(productUrl, { waitUntil: 'networkidle2', timeout: 30000 })
 
-      // Try multiple selectors
-      let priceText: string | null = null;
+      let priceText: string | null = null
       for (const selector of selectors) {
         try {
-          priceText = await page.$eval(selector, (el: Element) => el.textContent);
-          if (priceText) break;
-        } catch (e) {
-          continue;
+          priceText = await page.$eval(selector, (el: Element) => el.textContent)
+          if (priceText) break
+        } catch {
+          continue
         }
       }
 
-      if (!priceText) {
-        console.warn(`⚠️ No price found for ${productUrl}`);
-        return null;
-      }
+      if (!priceText) return null
 
-      // Extract numeric value
-      const numericPrice = parseFloat(priceText.replace(/[^0-9.]/g, ''));
-      
-      if (isNaN(numericPrice)) return null;
+      const numericPrice = parseFloat(priceText.replace(/[^0-9.]/g, ''))
+      if (isNaN(numericPrice)) return null
 
-      // Cache for 24 hours
-      await redis.setex(cacheKey, 86400, numericPrice.toString());
-
-      console.log(`✅ Scraped price: $${numericPrice}`);
-      return numericPrice;
-
-    } catch (error) {
-      console.error(`❌ Scraping error for ${productUrl}:`, error);
-      return null;
+      await cacheSet(cacheKey, numericPrice.toString(), 86400)
+      return numericPrice
+    } catch {
+      return null
     } finally {
-      await page.close();
+      await page.close()
     }
   }
 
-  /**
-   * Scrape and save price to database
-   */
-  async scrapeAndSave(
-    productId: string,
-    productUrl: string,
-    selectors: string[]
-  ): Promise<void> {
-    const price = await this.scrapePrice(productUrl, selectors);
-    
-    if (price) {
-      // Save to price_history table
-      await pool.query(
-        `INSERT INTO price_history (product_id, price, currency, source, recorded_at)
-         VALUES ($1, $2, $3, $4, NOW())`,
-        [productId, price, 'USD', 'scraped']
-      );
+  async scrapeAndSave(productId: string, productUrl: string, selectors: string[]): Promise<void> {
+    const price = await this.scrapePrice(productUrl, selectors)
+    if (!price) return
 
-      // Update product base_price
-      await pool.query(
-        'UPDATE products SET base_price = $1 WHERE product_id = $2',
-        [price, productId]
-      );
-
-      console.log(`💾 Saved price $${price} for product ${productId}`);
-    }
+    await pool.query(
+      `INSERT INTO price_history (product_id, price, currency, source, recorded_at) VALUES ($1, $2, $3, $4, NOW())`,
+      [productId, price, 'INR', 'scraped']
+    )
+    await pool.query('UPDATE products SET base_price = $1 WHERE product_id = $2', [price, productId])
   }
 
-  /**
-   * Batch scrape multiple products
-   */
-  async scrapeBatch(products: Array<{
-    productId: string;
-    url: string;
-    selectors: string[];
-  }>) {
-    console.log(`📦 Starting batch scrape for ${products.length} products...`);
-    
+  async scrapeBatch(products: Array<{ productId: string; url: string; selectors: string[] }>): Promise<void> {
     for (const product of products) {
-      await this.scrapeAndSave(product.productId, product.url, product.selectors);
-      // Rate limiting - wait 2 seconds between requests
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await this.scrapeAndSave(product.productId, product.url, product.selectors)
+      await new Promise(r => setTimeout(r, 2000))
     }
-
-    console.log('✅ Batch scrape complete');
   }
 
-  /**
-   * Close browser when done
-   */
-  async close() {
+  async close(): Promise<void> {
     if (this.browser) {
-      await this.browser.close();
-      this.browser = null;
+      await this.browser.close()
+      this.browser = null
     }
   }
 }
 
-// Export singleton instance
-export const priceScraper = new PriceScraper();
+export const priceScraper = new PriceScraper()

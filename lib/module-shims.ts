@@ -18,14 +18,6 @@ declare module 'puppeteer' {
   export default puppeteer
 }
 
-declare module 'ioredis' {
-  export default class Redis {
-    constructor(url?: string)
-    get(key: string): Promise<string | null>
-    setex(key: string, seconds: number, value: string): Promise<string>
-  }
-}
-
 declare module 'pg' {
   export class Pool {
     constructor(config?: { connectionString?: string })

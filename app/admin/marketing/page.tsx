@@ -6,7 +6,7 @@ import { useGlobal } from '@/context/GlobalContext'
 import { ROUTES } from '@/lib/constants'
 
 const MARKETING_TOOLS = [
-  { icon: Mail, title: 'Email Campaigns', desc: 'Send deal alerts via Plunk', status: 'Coming Soon' },
+  { icon: Mail, title: 'Email Campaigns', desc: 'Send deal alerts via Resend', status: 'Coming Soon' },
   { icon: Share2, title: 'Social Sharing', desc: 'Auto-generate social posts for top deals', status: 'Coming Soon' },
   { icon: BarChart2, title: 'Analytics', desc: 'Click tracking and conversion reports', status: 'Coming Soon' },
   { icon: Zap, title: 'Flash Sale Manager', desc: 'Schedule and publish flash deals', status: 'Coming Soon' },

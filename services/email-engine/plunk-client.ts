@@ -1,99 +1,56 @@
-import axios from 'axios';
+// © 2026 NEXQON HOLDINGS — CloudBasket plunk-client.ts
+// services/email-engine/plunk-client.ts — Email engine via Resend (replaces Plunk).
+import { Resend } from 'resend'
 
-const PLUNK_API_KEY = process.env.PLUNK_API_KEY;
-const PLUNK_API_URL = 'https://api.useplunk.com/v1';
+const FROM = 'CloudBasket <noreply@cloudbasket.in>'
 
 interface EmailParams {
-  to: string;
-  subject: string;
-  body: string;
-  from?: string;
+  to: string
+  subject: string
+  html: string
+  from?: string
 }
 
 export class EmailEngine {
-  /**
-   * Send single email
-   */
-  async sendEmail(params: EmailParams): Promise<boolean> {
-    try {
-      const response = await axios.post(
-        `${PLUNK_API_URL}/send`,
-        {
-          to: params.to,
-          subject: params.subject,
-          body: params.body,
-          from: params.from || 'noreply@skybluecloud.tech'
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${PLUNK_API_KEY}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-
-      return response.data.success;
-    } catch (error) {
-      console.error('Email send error:', error);
-      return false;
-    }
+  private resend(): Resend {
+    return new Resend(process.env.RESEND_API_KEY)
   }
 
-  /**
-   * Send welcome email to new subscriber
-   */
-  async sendWelcomeEmail(email: string, name: string) {
-    const template = `
-      <h1>Welcome to Skyblue Cloud Tech! 🚀</h1>
-      <p>Hi ${name},</p>
-      <p>Thanks for subscribing! You'll now receive:</p>
-      <ul>
-        <li>Weekly SaaS deals & discounts</li>
-        <li>Cloud tool comparisons</li>
-        <li>Exclusive partner offers</li>
-      </ul>
-      <p><a href="https://skybluecloud.tech">Browse Tools</a></p>
-    `;
+  async sendEmail(params: EmailParams): Promise<boolean> {
+    if (!process.env.RESEND_API_KEY) return false
+    try {
+      const { error } = await this.resend().emails.send({
+        from: params.from || FROM,
+        to: [params.to],
+        subject: params.subject,
+        html: params.html,
+      })
+      return !error
+    } catch { return false }
+  }
 
+  async sendWelcomeEmail(email: string, name: string): Promise<boolean> {
     return this.sendEmail({
       to: email,
-      subject: 'Welcome to Skyblue Cloud Tech',
-      body: template
-    });
+      subject: 'Welcome to CloudBasket',
+      html: `<h1>Welcome to CloudBasket!</h1><p>Hi ${name},</p><p>Thanks for subscribing! You'll now receive weekly deals, price drops, and exclusive offers.</p><a href="https://cloudbasket.in">Browse Deals</a>`,
+    })
   }
 
-  /**
-   * Send deal notification
-   */
-  async sendDealAlert(email: string, dealTitle: string, discountValue: number) {
-    const template = `
-      <h2>🔥 New Deal Alert!</h2>
-      <p><strong>${dealTitle}</strong></p>
-      <p>Save ${discountValue}% - Limited time only!</p>
-      <p><a href="https://skybluecloud.tech/deals">View Deal</a></p>
-    `;
-
+  async sendDealAlert(email: string, dealTitle: string, discountValue: number): Promise<boolean> {
     return this.sendEmail({
       to: email,
       subject: `Deal Alert: ${dealTitle}`,
-      body: template
-    });
+      html: `<h2>New Deal Alert!</h2><p><strong>${dealTitle}</strong></p><p>Save ${discountValue}% — Limited time only!</p><a href="https://cloudbasket.in/deals">View Deal</a>`,
+    })
   }
 
-  /**
-   * Send newsletter (batch)
-   */
-  async sendNewsletter(subscribers: string[], subject: string, body: string) {
-    const promises = subscribers.map(email => 
-      this.sendEmail({ to: email, subject, body })
-    );
-
-    const results = await Promise.allSettled(promises);
-    const successCount = results.filter(r => r.status === 'fulfilled').length;
-
-    console.log(`📧 Newsletter sent to ${successCount}/${subscribers.length} subscribers`);
-    return successCount;
+  async sendNewsletter(subscribers: string[], subject: string, html: string): Promise<number> {
+    const results = await Promise.allSettled(
+      subscribers.map(email => this.sendEmail({ to: email, subject, html }))
+    )
+    return results.filter(r => r.status === 'fulfilled' && r.value).length
   }
 }
 
-export const emailEngine = new EmailEngine();
+export const emailEngine = new EmailEngine()

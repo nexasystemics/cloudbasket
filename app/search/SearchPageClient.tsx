@@ -8,7 +8,7 @@ import { Search, ExternalLink, SlidersHorizontal, X, TrendingUp, SearchX, Chevro
 import TrackBehavior from '@/components/TrackBehavior'
 import { ProductCard } from '@/components/products/ProductCard'
 import { trackSearch } from '@/lib/analytics'
-import { getAvailableFilterOptions, SearchFilters, SearchResult } from '@/lib/search'
+import { getAvailableFilterOptions, searchProducts, SearchFilters, SearchResult } from '@/lib/search'
 import { getCategoryDefinition } from '@/lib/cloudbasket-data'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
@@ -156,7 +156,7 @@ function SearchPageContent() {
   }
 
   const results = useMemo<SearchResult[]>(() => {
-    return []
+    return searchProducts(deferredQuery, deferredFilters)
   }, [deferredQuery, deferredFilters])
 
   const activeFilterCount = useMemo(() => {
@@ -363,21 +363,19 @@ function SearchPageContent() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {results.map((product) => (
-                <ProductCard 
-                  key={(product as any).unifiedId ?? (product as any).id} 
+                <ProductCard
+                  key={product.id}
                   product={{
-                    id: (product as any).unifiedId ?? (product as any).id,
-                    name: (product as any).title ?? (product as any).name ?? '',
+                    id: product.id,
+                    name: product.name,
                     image: product.image,
                     brand: product.brand,
-                    price: (product as any).displayPrice ?? (product as any).price,
-                    originalPrice: (product as any).displayOriginalPrice ?? (product as any).originalPrice,
-                    discount: (product as any).displayDiscount ?? (product as any).discount,
-                    rating: (product as any).rating ?? 4.0,
-                    reviewCount: (product as any).reviewCount ?? 0,
-                    source: ((product as any).displayPlatform === 'Flipkart' ? 'Flipkart' : ((product as any).displayPlatform === 'CJ Global' ? 'CJ' : 'Amazon')) as any,
-                    affiliatePlatform: (product as any).displayPlatform as any,
-                  }} 
+                    price: product.price,
+                    originalPrice: product.originalPrice,
+                    discount: product.discount,
+                    rating: 4.0,
+                    category: product.category,
+                  }}
                 />
               ))}
             </div>

@@ -32,7 +32,7 @@ export const env = {
   ADSENSE_SLOT_2:                  process.env.ADSENSE_SLOT_2                   || '',
   ADSENSE_SLOT_3:                  process.env.ADSENSE_SLOT_3                   || '',
   GEMINI_API_KEY:                  process.env.GEMINI_API_KEY                   || '',
-  PLUNK_API_KEY:                   process.env.PLUNK_API_KEY                    || '',
+  RESEND_API_KEY:                  process.env.RESEND_API_KEY                   || '',
   WHATSAPP_ACCESS_TOKEN:           process.env.WHATSAPP_ACCESS_TOKEN            || '',
   WHATSAPP_PHONE_NUMBER_ID:        process.env.WHATSAPP_PHONE_NUMBER_ID         || '',
   WHATSAPP_VERIFY_TOKEN:           process.env.WHATSAPP_VERIFY_TOKEN            || '',

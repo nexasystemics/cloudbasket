@@ -48,7 +48,7 @@ const sitemap = [
     links: [
       { label: 'Privacy Policy', href: ROUTES.PRIVACY },
       { label: 'Terms of Service', href: ROUTES.TERMS },
-      { label: 'Cookie Policy', href: '/cookies' },
+      { label: 'Cookie Policy', href: '/legal/cookies' },
       { label: 'Affiliate Disclosure', href: ROUTES.AFFILIATE },
       { label: 'Associate Program', href: '/associates' },
     ],
@@ -176,6 +176,13 @@ export default function Footer() {
               <div className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 text-[9px] font-black text-zinc-500 uppercase tracking-[0.15em]">
                 GDPR Verified
               </div>
+              <button
+                type="button"
+                onClick={() => document.dispatchEvent(new CustomEvent('cb:open-cookie-settings'))}
+                className="px-3 py-1 rounded-full border border-zinc-700 bg-zinc-900/50 text-[9px] font-black text-zinc-400 uppercase tracking-[0.15em] hover:border-[#039BE5] hover:text-[#039BE5] transition-colors"
+              >
+                Cookie Settings
+              </button>
             </div>
           </div>
         </div>

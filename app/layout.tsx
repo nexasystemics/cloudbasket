@@ -11,7 +11,8 @@ import LayoutTopEnhancements from '@/components/LayoutTopEnhancements'
 import FeedbackWidget from '@/components/FeedbackWidget'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import SchemaMarkup from '@/components/SchemaMarkup'
-import '@/lib/env'
+import { env } from '@/lib/env'
+import GTMScript from '@/components/GTMScript'
 import CBThemeProvider from '@/components/ThemeProvider'
 import { GlobalProvider } from '@/context/GlobalContext'
 import { LocaleProvider } from '@/context/LocaleContext'
@@ -97,12 +98,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="dns-prefetch" href="//rukminim2.flixcart.com" />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         {supabaseOrigin ? <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" /> : null}
+        {env.NEXT_PUBLIC_COOKIEYES_ID && (
+          <Script
+            id="cookieyes"
+            src={`https://cdn-cookieyes.com/client_data/${env.NEXT_PUBLIC_COOKIEYES_ID}/script.js`}
+            strategy="beforeInteractive"
+          />
+        )}
       </head>
       <body className="bg-[var(--cb-bg)] text-[var(--cb-text-primary)] font-sans antialiased transition-colors duration-300 dark:bg-zinc-950 dark:text-white">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-blue-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg">Skip to main content</a>
         <GlobalProvider>
           <LocaleProvider>
             <CBThemeProvider>
+              <GTMScript />
               <Analytics />
               <SchemaMarkup type="website" />
               <LayoutTopEnhancements />

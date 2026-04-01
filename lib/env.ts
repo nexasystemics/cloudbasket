@@ -16,6 +16,7 @@ export const env = {
   CRON_SECRET:                     process.env.CRON_SECRET                      || '',
   NEXT_PUBLIC_GA_ID:               process.env.NEXT_PUBLIC_GA_ID                || '',
   NEXT_PUBLIC_GTM_ID:              process.env.NEXT_PUBLIC_GTM_ID               || '',
+  NEXT_PUBLIC_COOKIEYES_ID:        process.env.NEXT_PUBLIC_COOKIEYES_ID         || '',
   NEXT_PUBLIC_CLARITY_ID:          process.env.NEXT_PUBLIC_CLARITY_ID           || '',
   NEXT_PUBLIC_FB_PIXEL_ID:         process.env.NEXT_PUBLIC_FB_PIXEL_ID          || '',
   AMAZON_ACCESS_KEY:               process.env.AMAZON_ACCESS_KEY                || '',

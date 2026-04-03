@@ -1,0 +1,22 @@
+CloudBasket Refund & Returns Policy Concerns
+Date: 02 April 2026
+
+1. The published refund policy now assumes an affiliate plus third-party marketplace POD model.
+   If CloudBasket later activates direct checkout, payment capture, direct fulfilment, or direct
+   order management, this policy will need immediate revision.
+
+2. Current repository files still indicate direct POD commerce capability:
+   - app/api/pod/checkout/create-order/route.ts
+   - app/api/pod/checkout/verify-payment/route.ts
+   - app/pod/page.tsx
+   These files do not align cleanly with the new policy position.
+
+3. Until the board decides on deletion or deactivation of POD checkout flows, there remains a
+   product-to-policy contradiction risk if those flows become reachable or are interpreted as live.
+
+4. If CloudBasket ever becomes merchant of record for any SKU, a separate direct-sale refund and
+   cancellation regime will be required, including timelines, damaged-item handling, and customer
+   support ownership.
+
+5. The current policy uses info@cloudbasket.co as the issue-reporting contact. If the board wants
+   a dedicated legal, grievance, or policy mailbox, the policy and PDF view should be updated.

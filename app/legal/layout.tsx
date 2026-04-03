@@ -14,6 +14,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/legal/privacy', label: 'Privacy Policy' },
   { href: '/legal/cookies', label: 'Cookie Policy' },
   { href: '/legal/affiliate-disclosure', label: 'Affiliate Disclosure' },
+  { href: '/legal/refund-policy', label: 'Refund & Returns' },
   { href: '/legal/disclaimer', label: 'Disclaimer' },
 ]
 

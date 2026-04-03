@@ -14,6 +14,8 @@ interface LegalCard {
   description: string
   pdfHref: string | null
   pdfName: string | null
+  pdfLabel?: string | null
+  pdfTarget?: '_blank' | null
 }
 
 const LEGAL_CARDS: LegalCard[] = [
@@ -50,12 +52,24 @@ const LEGAL_CARDS: LegalCard[] = [
     pdfName: null,
   },
   {
+    href: '/legal/refund-policy',
+    title: 'Refund & Returns Policy',
+    description:
+      'Explains that returns, cancellations, exchanges, and refunds for affiliate and third-party marketplace POD purchases are handled by the selling platform or merchant.',
+    pdfHref: '/legal/refund-policy/pdf',
+    pdfName: null,
+    pdfLabel: 'Open Refund Policy PDF view',
+    pdfTarget: '_blank',
+  },
+  {
     href: '/legal/disclaimer',
     title: 'Disclaimer',
     description:
       'Limitations on our warranties, price accuracy, product information, third-party content, and professional advice.',
-    pdfHref: null,
+    pdfHref: '/legal/disclaimer/pdf',
     pdfName: null,
+    pdfLabel: 'Open Disclaimer PDF view',
+    pdfTarget: '_blank',
   },
 ]
 
@@ -110,13 +124,15 @@ export default function LegalIndexPage() {
           >
             <div className="mb-3 flex items-start justify-between gap-2">
               <h2 className="text-base font-bold text-gray-900">{card.title}</h2>
-              {card.pdfHref && card.pdfName && (
+              {card.pdfHref && (
                 <a
                   href={card.pdfHref}
-                  download={card.pdfName}
+                  download={card.pdfName ?? undefined}
+                  target={card.pdfTarget ?? undefined}
+                  rel={card.pdfTarget === '_blank' ? 'noopener noreferrer' : undefined}
                   className="shrink-0 rounded-full bg-gray-100 p-1.5 text-gray-500 transition-colors hover:bg-[#039BE5] hover:text-white"
-                  title={`Download ${card.title} PDF`}
-                  aria-label={`Download ${card.title} as PDF`}
+                  title={card.pdfLabel ?? `Download ${card.title} PDF`}
+                  aria-label={card.pdfLabel ?? `Download ${card.title} as PDF`}
                 >
                   <DownloadIcon />
                 </a>

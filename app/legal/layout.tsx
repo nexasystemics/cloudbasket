@@ -17,6 +17,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/legal/refund-policy', label: 'Refund & Returns' },
   { href: '/legal/disclaimer', label: 'Disclaimer' },
   { href: '/legal/dmca', label: 'DMCA & IP Policy' },
+  { href: '/legal/accessibility', label: 'Accessibility Statement' },
 ]
 
 export default function LegalLayout({ children }: { children: ReactNode }) {

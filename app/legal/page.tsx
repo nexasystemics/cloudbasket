@@ -5,7 +5,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Legal — CloudBasket',
   description:
-    'CloudBasket legal documents — Terms of Service, Privacy Policy, Cookie Policy, Affiliate Disclosure, Disclaimer, and DMCA policy.',
+    'CloudBasket legal documents — Terms of Service, Privacy Policy, Cookie Policy, Affiliate Disclosure, Disclaimer, DMCA policy, and Accessibility Statement.',
 }
 
 interface LegalCard {
@@ -79,6 +79,14 @@ const LEGAL_CARDS: LegalCard[] = [
     pdfHref: null,
     pdfName: null,
   },
+  {
+    href: '/legal/accessibility',
+    title: 'Accessibility Statement',
+    description:
+      'CloudBasket accessibility targets, known limitations, accessibility testing cadence, and feedback channels for users who encounter barriers.',
+    pdfHref: null,
+    pdfName: null,
+  },
 ]
 
 function DownloadIcon() {
@@ -111,7 +119,7 @@ export default function LegalIndexPage() {
 
       <h1 className="mb-2 text-3xl font-black tracking-tight text-gray-900">Legal</h1>
       <p className="mb-8 text-sm text-gray-500">
-        CloudBasket legal documents covering transparency, compliance, user rights, and platform obligations.
+        CloudBasket legal documents covering transparency, compliance, user rights, accessibility, and platform obligations.
       </p>
 
       <div className="grid gap-4 sm:grid-cols-2">

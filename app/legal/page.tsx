@@ -5,7 +5,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Legal — CloudBasket',
   description:
-    'CloudBasket legal documents — Terms of Service, Privacy Policy, Cookie Policy, Affiliate Disclosure, and Disclaimer.',
+    'CloudBasket legal documents — Terms of Service, Privacy Policy, Cookie Policy, Affiliate Disclosure, Disclaimer, and DMCA policy.',
 }
 
 interface LegalCard {
@@ -23,7 +23,7 @@ const LEGAL_CARDS: LegalCard[] = [
     href: '/legal/terms',
     title: 'Terms of Service',
     description:
-      'Rules governing your use of CloudBasket — affiliate disclosures, intellectual property, liability limits, and Indian law compliance (DPDP Act 2023, IT Rules 2026).',
+      'Rules governing your use of CloudBasket — affiliate disclosures, intellectual property, liability limits, and Indian law compliance.',
     pdfHref: '/legal/terms-of-service.pdf',
     pdfName: 'CloudBasket-Terms-of-Service-2026.pdf',
   },
@@ -31,7 +31,7 @@ const LEGAL_CARDS: LegalCard[] = [
     href: '/legal/privacy',
     title: 'Privacy Policy',
     description:
-      'How we collect, use, and protect your personal data under the Digital Personal Data Protection Act 2023 and applicable Indian privacy laws.',
+      'How CloudBasket collects, uses, and protects personal data under the Digital Personal Data Protection Act 2023 and applicable privacy law.',
     pdfHref: null,
     pdfName: null,
   },
@@ -47,7 +47,7 @@ const LEGAL_CARDS: LegalCard[] = [
     href: '/legal/affiliate-disclosure',
     title: 'Affiliate Disclosure',
     description:
-      'Full disclosure of our affiliate relationships with Amazon Associates India, Flipkart, CJ Affiliate, and other partner programs.',
+      'Full disclosure of CloudBasket commercial relationships with Amazon Associates, Flipkart, CJ Affiliate, and advertising partners.',
     pdfHref: null,
     pdfName: null,
   },
@@ -55,7 +55,7 @@ const LEGAL_CARDS: LegalCard[] = [
     href: '/legal/refund-policy',
     title: 'Refund & Returns Policy',
     description:
-      'Explains that returns, cancellations, exchanges, and refunds for affiliate and third-party marketplace POD purchases are handled by the selling platform or merchant.',
+      'Explains how returns, cancellations, exchanges, and refunds for affiliate or third-party marketplace purchases are handled by the selling platform or merchant.',
     pdfHref: '/legal/refund-policy/pdf',
     pdfName: null,
     pdfLabel: 'Open Refund Policy PDF view',
@@ -65,23 +65,25 @@ const LEGAL_CARDS: LegalCard[] = [
     href: '/legal/disclaimer',
     title: 'Disclaimer',
     description:
-      'Limitations on our warranties, price accuracy, product information, third-party content, and professional advice.',
+      'Limitations on warranties, price accuracy, product information, third-party content, and professional advice.',
     pdfHref: '/legal/disclaimer/pdf',
     pdfName: null,
     pdfLabel: 'Open Disclaimer PDF view',
     pdfTarget: '_blank',
   },
+  {
+    href: '/legal/dmca',
+    title: 'DMCA & IP Policy',
+    description:
+      'How CloudBasket handles copyright notices, trademark complaints, intermediary safe harbour, and intellectual property takedown requests.',
+    pdfHref: null,
+    pdfName: null,
+  },
 ]
 
 function DownloadIcon() {
   return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-    >
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
       <path
         d="M8 2v8M5 7l3 3 3-3M3 13h10"
         stroke="currentColor"
@@ -96,7 +98,6 @@ function DownloadIcon() {
 export default function LegalIndexPage() {
   return (
     <div>
-      {/* Breadcrumb */}
       <nav
         className="mb-6 flex items-center gap-2 text-xs text-gray-500"
         aria-label="Breadcrumb"
@@ -108,14 +109,11 @@ export default function LegalIndexPage() {
         <span className="font-medium text-gray-900">Legal</span>
       </nav>
 
-      <h1 className="mb-2 text-3xl font-black tracking-tight text-gray-900">
-        Legal
-      </h1>
+      <h1 className="mb-2 text-3xl font-black tracking-tight text-gray-900">Legal</h1>
       <p className="mb-8 text-sm text-gray-500">
-        CloudBasket legal documents — transparency, compliance, and your rights.
+        CloudBasket legal documents covering transparency, compliance, user rights, and platform obligations.
       </p>
 
-      {/* Card grid */}
       <div className="grid gap-4 sm:grid-cols-2">
         {LEGAL_CARDS.map((card) => (
           <div
@@ -124,7 +122,7 @@ export default function LegalIndexPage() {
           >
             <div className="mb-3 flex items-start justify-between gap-2">
               <h2 className="text-base font-bold text-gray-900">{card.title}</h2>
-              {card.pdfHref && (
+              {card.pdfHref ? (
                 <a
                   href={card.pdfHref}
                   download={card.pdfName ?? undefined}
@@ -136,7 +134,7 @@ export default function LegalIndexPage() {
                 >
                   <DownloadIcon />
                 </a>
-              )}
+              ) : null}
             </div>
             <p className="mb-4 flex-1 text-xs leading-relaxed text-gray-500">
               {card.description}
@@ -151,7 +149,6 @@ export default function LegalIndexPage() {
         ))}
       </div>
 
-      {/* Affiliate notice */}
       <div className="mt-8 rounded-lg border-l-4 border-[#E65100] bg-[#FFF3E0] px-4 py-3 text-xs leading-relaxed text-gray-700">
         <strong>Affiliate Disclosure:</strong> As an Amazon Associate, CloudBasket earns from
         qualifying purchases. All product links on this site are affiliate links.{' '}

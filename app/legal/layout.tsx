@@ -16,6 +16,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/legal/affiliate-disclosure', label: 'Affiliate Disclosure' },
   { href: '/legal/refund-policy', label: 'Refund & Returns' },
   { href: '/legal/disclaimer', label: 'Disclaimer' },
+  { href: '/legal/dmca', label: 'DMCA & IP Policy' },
 ]
 
 export default function LegalLayout({ children }: { children: ReactNode }) {
@@ -23,7 +24,6 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Site header */}
       <header className="border-b border-gray-200 bg-white print:hidden">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -45,14 +45,12 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
             <Link href="/" className="text-lg font-black tracking-tight text-[#039BE5]">
               CloudBasket
             </Link>
-            {/* spacer */}
             <div className="w-24" aria-hidden="true" />
           </div>
         </div>
       </header>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Mobile — horizontal tab nav */}
         <nav
           className="overflow-x-auto border-b border-gray-200 print:hidden lg:hidden"
           aria-label="Legal pages"
@@ -75,7 +73,6 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="flex gap-8 py-8">
-          {/* Desktop — sidebar nav */}
           <aside
             className="hidden w-56 shrink-0 print:hidden lg:block"
             aria-label="Legal navigation"
@@ -116,12 +113,10 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
             </div>
           </aside>
 
-          {/* Page content */}
           <main className="min-w-0 flex-1">{children}</main>
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="border-t border-gray-200 bg-gray-50 py-6 print:hidden">
         <div className="mx-auto max-w-7xl px-4 text-center text-xs text-gray-500 sm:px-6 lg:px-8">
           <p>© 2026 NEXQON HOLDINGS | CloudBasket | www.cloudbasket.in</p>

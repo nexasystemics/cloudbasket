@@ -146,3 +146,4 @@ export async function fetchOpenFoodFactsData(barcode: string): Promise<Partial<I
     return {}
   }
 }
+

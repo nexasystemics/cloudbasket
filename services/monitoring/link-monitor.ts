@@ -27,3 +27,4 @@ export class AffiliateLinkMonitor {
   }
 }
 export const linkMonitor = new AffiliateLinkMonitor()
+

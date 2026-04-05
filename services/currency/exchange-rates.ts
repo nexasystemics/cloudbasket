@@ -7,3 +7,4 @@ export async function getExchangeRates(): Promise<{ base: 'INR'; rates: Record<s
 }
 export async function convertPrice(amountINR: number, targetCurrency: string): Promise<number> { const { rates } = await getExchangeRates(); const rate = rates[targetCurrency]; return rate ? Math.round(amountINR * rate * 100) / 100 : amountINR }
 export function formatPrice(amount: number, currency: string, locale = 'en-IN'): string { try { return new Intl.NumberFormat(locale, { style: 'currency', currency, maximumFractionDigits: 0 }).format(amount) } catch { return `${currency} ${amount}` } }
+

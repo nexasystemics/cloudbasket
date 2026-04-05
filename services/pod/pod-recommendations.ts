@@ -20,3 +20,5 @@ export async function getAIRecommendations(designDescription: string, category: 
     return Array.isArray(parsed) ? parsed : fallback
   } catch { return fallback }
 }
+
+

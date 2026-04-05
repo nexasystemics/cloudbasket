@@ -11,3 +11,4 @@ export class ImagePipeline {
   }
 }
 export const imagePipeline = new ImagePipeline()
+

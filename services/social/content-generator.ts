@@ -19,3 +19,4 @@ export class SocialContentGenerator {
   generateWhatsAppStatus(title: string, discount: number, price: number): string { return `🔥 ${title.slice(0, 50)} - ${discount}% OFF! Now ₹${price.toLocaleString('en-IN')} | cloudbasket.in/deals`.slice(0, 140) }
 }
 export const socialGenerator = new SocialContentGenerator()
+

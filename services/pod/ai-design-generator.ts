@@ -57,3 +57,4 @@ export class AIDesignGenerator {
 }
 
 export const aiDesignGenerator = new AIDesignGenerator()
+

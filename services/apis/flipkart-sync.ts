@@ -44,3 +44,4 @@ export async function syncFlipkartDeals(): Promise<SyncResult> {
   }
   return result
 }
+

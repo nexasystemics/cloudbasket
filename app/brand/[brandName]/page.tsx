@@ -13,6 +13,7 @@ import { resolveImageSource, IMAGE_ASSETS } from '@/lib/image-assets'
 
 // A19: generateStaticParams — all unique brands
 export async function generateStaticParams() {
+  if (process.env.DEV_FAST_BUILD === "true") return []
   const brands = [...new Set(INDIA_CATALOG.map(p => p.brand))]
   return brands.map(brandName => ({ brandName: encodeURIComponent(brandName) }))
 }

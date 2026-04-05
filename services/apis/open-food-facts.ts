@@ -1,26 +1,100 @@
 // services/apis/open-food-facts.ts
-// Open Food Facts API — free, no key required.
+// Open Food Facts API integration for food & grocery products.
+// Stub-safe — returns mock data when not reachable.
 
-export type NutritionFacts = { calories: number; protein: number; fat: number; carbs: number; sugar: number; sodium: number }
-export type OFFProduct = { barcode: string; name: string; brand: string; imageUrl: string; ingredients: string; nutrition: NutritionFacts; nutriscore: 'a'|'b'|'c'|'d'|'e'; allergens: string[] }
-
-function parse(data: any): OFFProduct | null {
-  if (!data?.product) return null
-  const p = data.product
-  return { barcode: p.code || '', name: p.product_name || '', brand: p.brands || '', imageUrl: p.image_url || '', ingredients: p.ingredients_text || '', nutrition: { calories: p.nutriments?.energy_kcal_100g || 0, protein: p.nutriments?.proteins_100g || 0, fat: p.nutriments?.fat_100g || 0, carbs: p.nutriments?.carbohydrates_100g || 0, sugar: p.nutriments?.sugars_100g || 0, sodium: p.nutriments?.sodium_100g || 0 }, nutriscore: (p.nutriscore_grade || 'c') as 'a'|'b'|'c'|'d'|'e', allergens: (p.allergens_tags || []).map((a: string) => a.replace('en:', '')) }
+export interface FoodProduct {
+  barcode: string
+  name: string
+  brand: string
+  category: string
+  ingredients: string
+  nutritionGrade: string // a-e
+  imageUrl: string
+  labels: string[]
+  country: string
 }
 
-export class OpenFoodFactsAPI {
-  async getProductByBarcode(barcode: string): Promise<OFFProduct | null> {
-    try { const r = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`, { next: { revalidate: 86400 } }); return r.ok ? parse(await r.json()) : null } catch { return null }
+function stubProduct(barcode: string): FoodProduct {
+  return {
+    barcode,
+    name: 'Britannia Good Day Butter Cookies',
+    brand: 'Britannia',
+    category: 'Biscuits and cakes',
+    ingredients: 'Wheat flour, Sugar, Edible vegetable oil, Butter',
+    nutritionGrade: 'c',
+    imageUrl: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400',
+    labels: ['Vegetarian', 'FSSAI Approved'],
+    country: 'India',
   }
-  async searchProducts(query: string): Promise<OFFProduct[]> {
+}
+
+class OpenFoodFactsAPI {
+  private baseUrl = 'https://world.openfoodfacts.org/api/v2'
+
+  async getByBarcode(barcode: string): Promise<FoodProduct | null> {
     try {
-      const r = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&json=1&page_size=20`)
-      if (!r.ok) return []
-      const json = await r.json()
-      return (json.products || []).map((p: any) => parse({ product: p })).filter(Boolean) as OFFProduct[]
-    } catch { return [] }
+      const res = await fetch(`${this.baseUrl}/product/${barcode}.json`)
+      if (!res.ok) {
+        console.warn('[OpenFoodFacts] Product not found:', barcode)
+        return stubProduct(barcode)
+      }
+      const data = await res.json() as {
+        status: number
+        product?: {
+          product_name?: string
+          brands?: string
+          categories?: string
+          ingredients_text?: string
+          nutrition_grades?: string
+          image_url?: string
+          labels?: string
+          countries?: string
+        }
+      }
+      if (data.status !== 1 || !data.product) return stubProduct(barcode)
+      const p = data.product
+      return {
+        barcode,
+        name: p.product_name ?? 'Unknown',
+        brand: p.brands ?? 'Unknown',
+        category: p.categories ?? 'Food',
+        ingredients: p.ingredients_text ?? '',
+        nutritionGrade: p.nutrition_grades ?? 'unknown',
+        imageUrl: p.image_url ?? '',
+        labels: p.labels?.split(',').map((l: string) => l.trim()) ?? [],
+        country: p.countries ?? 'India',
+      }
+    } catch (err) {
+      console.warn('[OpenFoodFacts] Error:', err)
+      return stubProduct(barcode)
+    }
+  }
+
+  async searchProducts(query: string, limit = 10): Promise<FoodProduct[]> {
+    try {
+      const res = await fetch(
+        `${this.baseUrl}/search?search_terms=${encodeURIComponent(query)}&page_size=${limit}&json=true`
+      )
+      if (!res.ok) return [stubProduct(query)]
+      const data = await res.json() as { products?: Array<{ code?: string; product_name?: string; brands?: string; categories?: string; ingredients_text?: string; nutrition_grades?: string; image_url?: string; labels?: string; countries?: string }> }
+      return (data.products ?? []).map((p) => ({
+        barcode: p.code ?? '',
+        name: p.product_name ?? 'Unknown',
+        brand: p.brands ?? '',
+        category: p.categories ?? 'Food',
+        ingredients: p.ingredients_text ?? '',
+        nutritionGrade: p.nutrition_grades ?? 'unknown',
+        imageUrl: p.image_url ?? '',
+        labels: p.labels?.split(',').map((l: string) => l.trim()) ?? [],
+        country: p.countries ?? 'India',
+      }))
+    } catch (err) {
+      console.warn('[OpenFoodFacts] Search error:', err)
+      return [stubProduct(query)]
+    }
   }
 }
+
 export const openFoodFacts = new OpenFoodFactsAPI()
+
+

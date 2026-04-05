@@ -53,3 +53,4 @@ export class RedbubbleUploadManager {
 }
 
 export const redbubbleManager = new RedbubbleUploadManager()
+

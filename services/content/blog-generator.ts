@@ -1,44 +1,157 @@
 // services/content/blog-generator.ts
-// Automated blog content pipeline using Google Gemini API.
-// Returns placeholder content when GEMINI_API_KEY not configured.
+// Automated blog content pipeline powered by Gemini AI.
+// Stub-safe — returns empty drafts when GEMINI_API_KEY is not configured.
 
 import { env, isConfigured } from '@/lib/env'
 
-export type BlogPost = {
-  id: string; title: string; content: string; excerpt: string
-  category: string; status: 'draft' | 'pending_review' | 'published'
-  slug: string; wordCount: number; generatedAt: Date
+export interface BlogDraft {
+  id: string
+  title: string
+  slug: string
+  metaDescription: string
+  content: string
+  tags: string[]
+  category: string
+  status: 'draft' | 'scheduled' | 'published'
+  generatedAt: string
+  scheduledFor?: string
 }
 
-async function callGemini(prompt: string, maxTokens = 2000): Promise<string> {
-  if (!isConfigured('GEMINI_API_KEY')) return ''
-  try {
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${env.GEMINI_API_KEY}`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, maxOutputTokens: maxTokens } })
-    })
-    return (await r.json())?.candidates?.[0]?.content?.parts?.[0]?.text || ''
-  } catch { return '' }
+export interface BlogGeneratorInput {
+  topic: string
+  category: string
+  keywords?: string[]
+  targetLength?: 'short' | 'medium' | 'long'
 }
 
-function slugify(t: string) { return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') }
+const LENGTH_WORDS = {
+  short: 400,
+  medium: 800,
+  long: 1500,
+}
 
-export class BlogContentPipeline {
-  async generateBuyingGuide(category: string, productNames: string[]): Promise<BlogPost> {
-    const title = `Best ${category} in India 2026`
-    const fallback = `# ${title}\n\nA comprehensive buying guide for Indian shoppers.\n\n${productNames.slice(0, 5).map((n, i) => `## ${i + 1}. ${n}\nExcellent choice for Indian consumers.\n`).join('\n')}\n\n## Buying Tips\n- Compare prices on CloudBasket\n- Check warranty and service\n- Read verified reviews`
-    if (!isConfigured('GEMINI_API_KEY')) return { id: `blog-${Date.now()}`, title, content: fallback, excerpt: `Best ${category} for Indian shoppers.`, category, status: 'draft', slug: slugify(title), wordCount: fallback.split(' ').length, generatedAt: new Date() }
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .slice(0, 80)
+}
+
+function generateId(): string {
+  return `blog-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
+}
+
+class BlogGenerator {
+  private isReady(): boolean {
+    return isConfigured('GEMINI_API_KEY')
+  }
+
+  async generate(input: BlogGeneratorInput): Promise<BlogDraft | null> {
+    if (!this.isReady()) {
+      console.warn('[BlogGenerator] GEMINI_API_KEY not configured — returning stub draft')
+      return this.stubDraft(input)
+    }
+
+    const wordCount = LENGTH_WORDS[input.targetLength ?? 'medium']
+    const keywordHint =
+      input.keywords && input.keywords.length > 0
+        ? `Focus keywords: ${input.keywords.join(', ')}.`
+        : ''
+
+    const prompt = `
+You are a senior content writer for CloudBasket, India's smartest price comparison platform.
+Write a complete blog post for the following:
+
+Topic: ${input.topic}
+Category: ${input.category}
+${keywordHint}
+Target length: ~${wordCount} words
+
+Respond ONLY in this JSON format (no markdown, no extra text):
+{
+  "title": "SEO-optimised post title",
+  "metaDescription": "150-160 char meta description",
+  "content": "Full HTML blog content using <h2>, <p>, <ul>, <strong> tags",
+  "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"]
+}
+    `.trim()
+
     try {
-      const content = await callGemini(`Write 800-word buying guide: "Best ${category} in India 2026" for price comparison site. Include top 5 products: ${productNames.slice(0, 5).join(', ')}. H2/H3 headings, Indian market focus, prices in INR.`, 2000)
-      return { id: `blog-${Date.now()}`, title, content: content || fallback, excerpt: `Best ${category} for Indian shoppers 2026.`, category, status: 'pending_review', slug: slugify(title), wordCount: (content || fallback).split(' ').length, generatedAt: new Date() }
-    } catch { return { id: `blog-${Date.now()}`, title, content: fallback, excerpt: `Best ${category} for Indian shoppers.`, category, status: 'draft', slug: slugify(title), wordCount: fallback.split(' ').length, generatedAt: new Date() } }
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${env.GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.7, maxOutputTokens: 2048 },
+          }),
+        }
+      )
+
+      if (!response.ok) {
+        console.warn('[BlogGenerator] Gemini API error:', response.status)
+        return this.stubDraft(input)
+      }
+
+      const data = await response.json() as {
+        candidates?: Array<{
+          content?: { parts?: Array<{ text?: string }> }
+        }>
+      }
+
+      const raw = data.candidates?.[0]?.content?.parts?.[0]?.text ?? ''
+      const clean = raw.replace(/```json|```/g, '').trim()
+      const parsed = JSON.parse(clean) as {
+        title: string
+        metaDescription: string
+        content: string
+        tags: string[]
+      }
+
+      return {
+        id: generateId(),
+        title: parsed.title,
+        slug: generateSlug(parsed.title),
+        metaDescription: parsed.metaDescription,
+        content: parsed.content,
+        tags: parsed.tags ?? [],
+        category: input.category,
+        status: 'draft',
+        generatedAt: new Date().toISOString(),
+      }
+    } catch (err) {
+      console.warn('[BlogGenerator] Generation failed:', err)
+      return this.stubDraft(input)
+    }
   }
 
-  async generateDealAlert(deals: { title: string; price: number; discount: number }[]): Promise<BlogPost> {
-    const title = `Today's Best Deals — ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}`
-    const content = `# ${title}\n\n${deals.slice(0, 10).map(d => `## ${d.title}\n**${d.discount}% OFF** — Now ₹${d.price.toLocaleString('en-IN')}\n`).join('\n')}`
-    return { id: `deal-${Date.now()}`, title, content, excerpt: `Top ${deals.length} deals today.`, category: 'deal-alert', status: 'draft', slug: slugify(title), wordCount: content.split(' ').length, generatedAt: new Date() }
+  async generateBatch(inputs: BlogGeneratorInput[]): Promise<BlogDraft[]> {
+    const results: BlogDraft[] = []
+    for (const input of inputs) {
+      const draft = await this.generate(input)
+      if (draft) results.push(draft)
+    }
+    return results
+  }
+
+  private stubDraft(input: BlogGeneratorInput): BlogDraft {
+    const title = `Best ${input.topic} Deals in India 2026`
+    return {
+      id: generateId(),
+      title,
+      slug: generateSlug(title),
+      metaDescription: `Discover the best ${input.topic} deals and offers in India. Compare prices and save money with CloudBasket.`,
+      content: `<h2>Best ${input.topic} in India</h2><p>This is a stub post. Configure GEMINI_API_KEY to generate real content.</p>`,
+      tags: [input.topic, input.category, 'india', 'deals', 'cloudbasket'],
+      category: input.category,
+      status: 'draft',
+      generatedAt: new Date().toISOString(),
+    }
   }
 }
 
-export const blogPipeline = new BlogContentPipeline()
+export const blogGenerator = new BlogGenerator()
+
+

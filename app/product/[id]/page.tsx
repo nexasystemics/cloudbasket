@@ -163,6 +163,7 @@ function findDisplayProductById(id: string): DisplayProduct | null {
 
 // ── A19: generateStaticParams — pre-render all product pages ─────────────────
 export async function generateStaticParams() {
+  if (process.env.DEV_FAST_BUILD === "true") return []
   const catalogIds = CATALOG_PRODUCTS.map((p) => ({ id: p.id }))
   const indiaIds = INDIA_CATALOG.map((p) => ({ id: p.id }))
   return [...catalogIds, ...indiaIds]

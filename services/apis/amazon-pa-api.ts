@@ -162,3 +162,4 @@ export class AmazonPAAPI {
 }
 
 export const amazonAPI = new AmazonPAAPI()
+

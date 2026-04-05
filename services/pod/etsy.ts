@@ -43,3 +43,4 @@ export class EtsyAPI {
 }
 
 export const etsyAPI = new EtsyAPI()
+

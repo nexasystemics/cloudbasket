@@ -18,3 +18,4 @@ export class SEOContentUpdater {
   }
 }
 export const seoUpdater = new SEOContentUpdater()
+

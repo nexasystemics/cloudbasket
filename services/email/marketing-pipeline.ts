@@ -51,3 +51,5 @@ export class EmailMarketingPipeline {
 }
 
 export const emailPipeline = new EmailMarketingPipeline()
+
+

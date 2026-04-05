@@ -16,3 +16,4 @@ export class SponsoredListingsService {
   recordClick(campaignId: string, productId: string): void { fetch('/api/sponsored/click', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ campaignId, productId }) }).catch(() => { /* no-op */ }) }
 }
 export const sponsoredListings = new SponsoredListingsService()
+

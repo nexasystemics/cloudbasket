@@ -16,3 +16,4 @@ export class SitemapManager {
   }
 }
 export const sitemapManager = new SitemapManager()
+

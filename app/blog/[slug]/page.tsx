@@ -110,3 +110,4 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return <BlogArticlePageClient post={post} relatedPosts={relatedPosts} />
 }
+

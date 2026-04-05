@@ -14,3 +14,4 @@ export function validateProductSchema(schema: Record<string, unknown>): SchemaVa
 export function autoFixProductSchema(productId: string, name: string, price: number, brand: string, image: string): Record<string, unknown> {
   return { '@context': 'https://schema.org', '@type': 'Product', name, image, brand: { '@type': 'Brand', name: brand }, offers: { '@type': 'Offer', price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.in/product/${productId}` } }
 }
+

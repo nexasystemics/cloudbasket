@@ -140,3 +140,4 @@ export class CJAffiliateAPI {
 }
 
 export const cjAPI = new CJAffiliateAPI()
+

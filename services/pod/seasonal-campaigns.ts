@@ -45,3 +45,5 @@ export async function generateSeasonalDesignPrompt(season: Season): Promise<stri
 }
 
 export const seasonalCampaigns = { CAMPAIGN_CALENDAR, getCurrentSeasonCampaigns, generateSeasonalDesignPrompt }
+
+

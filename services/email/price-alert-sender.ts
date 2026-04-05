@@ -56,3 +56,5 @@ export class PriceAlertEmailSender {
 }
 
 export const priceAlertSender = new PriceAlertEmailSender()
+
+

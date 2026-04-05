@@ -70,3 +70,4 @@ export class PriceTracker {
 }
 
 export const priceTracker = new PriceTracker()
+

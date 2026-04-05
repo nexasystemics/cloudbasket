@@ -39,3 +39,5 @@ export async function redeemGiftCard(code: string, amount: number): Promise<{ su
     return { success: true, remainingBalance: newBalance }
   } catch { return { success: false, remainingBalance: 0, error: 'Redemption failed' } }
 }
+
+

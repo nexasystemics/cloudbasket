@@ -15,3 +15,4 @@ export class ContentFreshnessMonitor {
   }
 }
 export const freshnessMonitor = new ContentFreshnessMonitor()
+

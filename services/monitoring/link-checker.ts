@@ -5,3 +5,4 @@ export class BrokenLinkChecker {
   async checkExternalLink(url: string): Promise<{ ok: boolean; status: number }> { try { const r = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: AbortSignal.timeout(10000) }); return { ok: r.ok, status: r.status } } catch { return { ok: false, status: 0 } } }
 }
 export const linkChecker = new BrokenLinkChecker()
+

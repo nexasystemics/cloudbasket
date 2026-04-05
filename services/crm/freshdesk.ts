@@ -21,3 +21,5 @@ export class FreshdeskAPI {
   }
 }
 export const freshdeskAPI = new FreshdeskAPI()
+
+

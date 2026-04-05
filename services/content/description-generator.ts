@@ -133,3 +133,4 @@ export class ProductDescriptionGenerator {
 }
 
 export const descriptionGenerator = new ProductDescriptionGenerator()
+

@@ -1,0 +1,31 @@
+CloudBasket — Codex Governance Rules
+
+🔴 NEVER DO (Without Asking)
+
+Never commit or push to git — wait for my instruction
+Never delete any file or folder — confirm first
+Never touch .env or .env.local — off limits
+Never install new packages — tell me first, wait for approval
+Never use npm or yarn — pnpm only
+
+
+🟡 ALWAYS DO
+
+Full files only — no partial code, no "replace this line"
+TypeScript strict — never use any type
+@/ imports only — never use ../../ relative paths
+pnpm build after every 2-3 files — fix errors before next file
+Stub-safe code — wrap all API calls in try/catch, check isConfigured() before calling any external service
+
+
+🟢 FORMAT EVERY RESPONSE AS
+FILE: F:\cloudbasket\path\to\file.ts
+PURPOSE: one line
+RISK: Low / Medium / High
+---
+[full file code here]
+---
+NEXT: what comes after this
+
+⚡ SHORTCUT COMMANDS
+CommandMeaningRUNExecute the codeNEXTMove to next taskBUILDRun pnpm buildPUSHNow you can commit + pushSKIPSkip current task, move on

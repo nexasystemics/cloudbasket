@@ -20,3 +20,4 @@ export class CompetitivePriceIntelligence {
   findBestPrice(prices: MarketPrice[]): MarketPrice | null { return prices.filter(p => p.inStock).sort((a, b) => a.price - b.price)[0] ?? null }
 }
 export const competitiveIntel = new CompetitivePriceIntelligence()
+

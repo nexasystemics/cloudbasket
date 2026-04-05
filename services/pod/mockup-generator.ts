@@ -34,3 +34,4 @@ export class MockupGenerationPipeline {
 }
 
 export const mockupPipeline = new MockupGenerationPipeline()
+

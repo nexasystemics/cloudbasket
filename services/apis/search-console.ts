@@ -10,3 +10,4 @@ export class SearchConsoleAPI {
   }
 }
 export const searchConsole = new SearchConsoleAPI()
+

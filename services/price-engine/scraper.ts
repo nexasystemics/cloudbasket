@@ -85,3 +85,5 @@ export class PriceScraper {
 }
 
 export const priceScraper = new PriceScraper()
+
+

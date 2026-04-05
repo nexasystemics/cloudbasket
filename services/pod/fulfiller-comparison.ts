@@ -24,3 +24,4 @@ export function recommendFulfiller(productType: string): 'printify'|'printful' {
 export function getComparison(productType: string): FulfillerComparison[] {
   return COMPARISON_DATA[productType] || []
 }
+

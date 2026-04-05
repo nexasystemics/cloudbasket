@@ -1,0 +1,172 @@
+# CLOUDBASKET HANDOFF PASSPORT v4 — April 6, 2026
+# Rule 1: Minimum tokens, maximum output. Prioritize working code over explanation.
+═══════════════════════════════════════════════════════════
+
+PROJECT
+  Name     : CloudBasket — India's Smartest Price Comparison Platform
+  Company  : NEXQON HOLDINGS | Domain: cloudbasket.in
+  Repo     : https://github.com/nexasystemics/cloudbasket.git
+  Local    : F:\cloudbasket (Windows, PowerShell)
+  Stack    : Next.js 16.1.6 · TypeScript strict · Tailwind v4 · pnpm ONLY
+
+GOVERNANCE (NON-NEGOTIABLE)
+  · @/ imports only · no any type · isConfigured() before every external call
+  · Only keys from lib/env.ts · try/catch + console.warn every function
+  · Full files only — no snippets · never git commit/push without asking
+  · Never touch .env · never install packages without asking
+
+BUILD
+  Fast : $env:DEV_FAST_BUILD="true"; pnpm build  (~1 min, ~183 pages)
+  Full : pnpm build (~8 min, 1319+ pages)
+  Check: pnpm tsc --noEmit
+  Rule : Build every 15 files. Fix ALL errors before next batch.
+
+LAST COMMIT : ab40262 — feat: D42-D51 services and admin pages
+LAST BUILD  : ✅ Clean (April 6, 2026)
+
+═══════════════════════════════════════════════════════════
+PROGRESS
+═══════════════════════════════════════════════════════════
+SET A (A01–A20) ✅  India Catalog — 1000 products
+SET B (P08–P20) ✅  Platform features
+SET C (C01–C40) ✅  UI/UX Supreme
+SET D (D01–D51) ✅  Services & Admin — ALL COMPLETE & COMMITTED
+
+═══════════════════════════════════════════════════════════
+REMAINING CODE TASKS
+═══════════════════════════════════════════════════════════
+
+── SET D REMAINING (D52–D70) ──────────────────────────────
+D52  order-manager.ts          → services/orders/
+D53  payment-gateway.ts        → services/payments/
+D54  razorpay-webhook.ts       → services/payments/
+D55  wallet-system.ts          → services/payments/
+D56  checkout-page.tsx         → app/checkout/
+D57  order-tracking.ts         → services/orders/
+D58  order-page.tsx            → app/account/orders/
+D59  invoice-generator.ts      → services/tax/
+D60  payout-engine.ts          → services/vendor/
+D61  vendor-dashboard.tsx      → app/vendor/dashboard/
+D62  product-importer.ts       → services/catalog/
+D63  bulk-editor.ts            → services/catalog/
+D64  catalog-page.tsx          → app/admin/catalog/
+D65  media-manager.ts          → services/media/
+D66  media-page.tsx            → app/admin/media/
+D67  cron-jobs.ts              → lib/cron/
+D68  api-rate-limiter.ts       → lib/middleware/
+D69  cache-manager.ts          → lib/cache/
+D70  performance-monitor.ts    → services/monitoring/
+
+── SET E (E01–E50) ─────────────────────────────────────────
+E01  mobile-api.ts             → app/api/mobile/
+E02  app-config.ts             → services/config/
+E03  push-notification.ts      → services/notifications/
+E04  deep-link-handler.ts      → services/mobile/
+E05  app-review-prompt.ts      → services/mobile/
+E06  social-share.ts           → services/community/
+E07  user-profile.tsx          → app/account/profile/
+E08  address-book.ts           → services/user/
+E09  address-page.tsx          → app/account/addresses/
+E10  notification-prefs.tsx    → app/account/notifications/
+E11  privacy-settings.tsx      → app/account/privacy/
+E12  data-export.ts            → services/user/
+E13  account-deletion.ts       → services/user/
+E14  seller-onboarding.tsx     → app/seller/onboarding/
+E15  seller-products.tsx       → app/seller/products/
+E16  seller-orders.tsx         → app/seller/orders/
+E17  seller-payouts.tsx        → app/seller/payouts/
+E18  seller-settings.tsx       → app/seller/settings/
+E19  affiliate-dashboard.tsx   → app/affiliate/dashboard/
+E20  affiliate-links.ts        → services/affiliate/
+E21  affiliate-payouts.ts      → services/affiliate/
+E22  affiliate-page.tsx        → app/affiliate/
+E23  product-qa.ts             → services/community/
+E24  product-qa.tsx            → app/product/[id]/qa/
+E25  size-guide.ts             → services/catalog/
+E26  virtual-tryon.ts          → services/ai/
+E27  ar-viewer.tsx             → components/ar/
+E28  price-history.tsx         → components/price/
+E29  deal-alert-widget.tsx     → components/deals/
+E30  comparison-widget.tsx     → components/comparison/
+E31  review-widget.tsx         → components/reviews/
+E32  trust-badges.tsx          → components/ui/
+E33  recently-viewed.tsx       → components/user/
+E34  recommendation-widget.tsx → components/ai/
+E35  search-page.tsx           → app/search/
+E36  category-page.tsx         → app/category/[slug]/
+E37  brand-portal.tsx          → app/brand/[brandName]/portal/
+E38  deals-page.tsx            → app/deals/
+E39  compare-page.tsx          → app/compare/
+E40  wishlist-page.tsx         → app/account/wishlist/
+E41  loyalty-page.tsx          → app/account/loyalty/
+E42  subscription-page.tsx     → app/account/subscription/
+E43  referral-page.tsx         → app/account/referral/
+E44  cashback-page.tsx         → app/account/cashback/
+E45  helpdesk-page.tsx         → app/help/
+E46  live-chat.tsx             → components/support/
+E47  onboarding-flow.tsx       → app/onboarding/
+E48  homepage-sections.tsx     → components/home/
+E49  footer-mega.tsx           → components/layout/
+E50  cookie-banner.tsx         → components/legal/
+
+── SET F (F01–F50+) ────────────────────────────────────────
+F01–F20  API Routes            → app/api/* (products, orders, auth, search, webhooks)
+F21–F35  Middleware & Security → middleware.ts, auth guards, CORS, CSP headers
+F36–F45  Testing               → __tests__/* unit + integration tests
+F46–F50  DevOps                → Dockerfile, CI/CD, env validation, deploy scripts
+
+═══════════════════════════════════════════════════════════
+NON-CODE ACTIONS
+═══════════════════════════════════════════════════════════
+  · Register cloudbasket.in domain (if not done)
+  · Supabase project setup — tables, RLS policies, views, indexes
+  · Vercel project linked to repo — env vars configured
+  · Razorpay account KYC + webhook URL registration
+  · Amazon PA-API approval (affiliate)
+  · Flipkart affiliate account approval
+  · Google Search Console verification
+  · CookieYes account + script ID live
+  · GSTIN registration for NEXQON HOLDINGS
+  · WhatsApp Business API approval (Meta)
+  · MSG91 account + OTP template approval
+  · Resend domain verification (cloudbasket.in)
+  · Gemini API key quota increase request
+  · PlayStore developer account (for app launch)
+  · SSL certificate (auto via Vercel)
+  · CDN setup for media (Supabase Storage / Cloudflare)
+
+═══════════════════════════════════════════════════════════
+OTHER MAJOR ACTIONS
+═══════════════════════════════════════════════════════════
+  · Supabase schema migration — run all table creation SQLs
+  · Seed database — HSN codes, category-GST mapping, shipping zones
+  · Performance audit — Lighthouse score target 90+
+  · SEO audit — meta, OG tags, schema.org markup check
+  · Security audit — OWASP top 10 review before launch
+  · Load testing — k6 or Artillery before go-live
+  · Git branch strategy — main/dev/feature branches
+  · Error monitoring setup — Sentry or similar
+  · Uptime monitoring — setup alerts
+  · Backup policy — Supabase point-in-time recovery
+
+═══════════════════════════════════════════════════════════
+COMPLIANCE CHECKLIST (files — details TBD)
+═══════════════════════════════════════════════════════════
+  · privacy-policy.md
+  · terms-of-service.md
+  · refund-policy.md
+  · shipping-policy.md
+  · cookie-policy.md
+  · affiliate-disclosure.md
+  · dmca-policy.md
+  · accessibility-statement.md
+  · grievance-officer.md
+  · gst-compliance-checklist.md
+  · data-retention-policy.md
+  · rbi-payment-compliance.md
+
+═══════════════════════════════════════════════════════════
+NEXT IMMEDIATE ACTION
+═══════════════════════════════════════════════════════════
+  Generate D52–D56 (order-manager, payment-gateway, razorpay-webhook,
+  wallet-system, checkout-page) → move → build → commit.

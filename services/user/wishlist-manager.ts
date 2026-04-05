@@ -54,7 +54,7 @@ export interface SharedWishlist {
   ownerName: string
   wishlistName: string
   items: Pick<
-    WishlistItem,
+    WishlistItemWithAffiliate,
     'productId' | 'productName' | 'imageUrl' | 'currentPrice' | 'platform' | 'affiliateUrl'
   >[]
   itemCount: number

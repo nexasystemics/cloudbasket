@@ -1,12 +1,5 @@
 import type { Metadata } from 'next'
-import { Syne } from 'next/font/google'
 import CategoriesHubClient from '@/components/CategoriesHubClient'
-
-const syne = Syne({
-  subsets: ['latin'],
-  weight: ['400', '700', '800'],
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'All Categories | CloudBasket',
@@ -16,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function CategoriesPage() {
   return (
-    <div className={syne.className}>
+    <div className="font-sans">
       <CategoriesHubClient />
     </div>
   )

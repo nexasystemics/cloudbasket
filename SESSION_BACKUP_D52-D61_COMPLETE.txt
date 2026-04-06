@@ -77,20 +77,28 @@ SUPABASE PATTERN APPLIED TO ALL:
   ✅ All DB operations wrapped in error handling
 
 CURRENT BUILD STATUS:
-  ❌ BUILD FAILS on missing Redux dependencies
-  - Error: Can't resolve '@reduxjs/toolkit' (recharts dependency)
-  - Also missing: redux, react-redux
-  - Solution: pnpm add @reduxjs/toolkit redux react-redux (requires confirmation)
+  ❌ BUILD FAILS on recharts Turbopack transpilation
+  - Dependencies installed:
+    ✓ @react-email/render 2.0.5
+    ✓ @reduxjs/toolkit 1.9.x
+    ✓ redux, react-redux
+    ✓ clsx 2.1.1, classnames 2.5.1
+    ✓ decimal.js-light 2.5.1
+    ✓ victory-vendor 37.3.6
+  - Error: recharts library has compatibility issues with Turbopack
+  - Causes: transpilation errors on recharts generated code
+
+COMMITS MADE:
+  1. Commit 1ffcc9e - D52-D61 clean build (10 files created)
+  2. Commit 50e0314 - chore: Add missing dependencies (dependencies + notes)
 
 PENDING NEXT STEPS:
-  1. Install Redux dependencies
-  2. Re-run pnpm build (should pass)
-  3. Continue with D62-D66 files
-  4. Then E01-E50 (mobile API routes)
-
-COMMIT MESSAGE:
-  feat: D52-D61 clean build - getSupabase pattern applied
-  Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+  1. Fix recharts/Turbopack compatibility:
+     - Option A: Remove recharts from package.json, use Chart.js instead
+     - Option B: Dynamic import recharts with ssr: false
+     - Option C: Switch to swc transpiler (modify next.config.ts)
+  2. Once build passes, continue D62-D66 files
+  3. Then E01-E50 (mobile API routes)
 
 STACK STATUS:
   - Next.js 16.1.6 (Turbopack)

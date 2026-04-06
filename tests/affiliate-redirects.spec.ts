@@ -15,9 +15,7 @@ const BASE = 'http://localhost:3000'
 
 test.describe('Income Shield Node (/go/[id]) - Critical Redirect Tests', () => {
   test('amazon redirect injects affiliate tag', async ({ request }) => {
-    const response = await request.get(`${BASE}/go/amazon-B08N6LNQK5`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/amazon-B08N6LNQK5`)
     
     expect(response.status()).toBe(302)
     const location = response.headers()['location'] || ''
@@ -26,9 +24,7 @@ test.describe('Income Shield Node (/go/[id]) - Critical Redirect Tests', () => {
   })
 
   test('flipkart redirect uses affiliate ID', async ({ request }) => {
-    const response = await request.get(`${BASE}/go/flipkart-MOBTEST123`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/flipkart-MOBTEST123`)
     
     expect(response.status()).toBe(302)
     const location = response.headers()['location'] || ''
@@ -37,9 +33,7 @@ test.describe('Income Shield Node (/go/[id]) - Critical Redirect Tests', () => {
   })
 
   test('CJ redirect includes publisher ID', async ({ request }) => {
-    const response = await request.get(`${BASE}/go/cj-PRODUCT123`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/cj-PRODUCT123`)
     
     expect(response.status()).toBe(302)
     const location = response.headers()['location'] || ''
@@ -48,9 +42,7 @@ test.describe('Income Shield Node (/go/[id]) - Critical Redirect Tests', () => {
   })
 
   test('invalid ID returns 302 to /not-found', async ({ request }) => {
-    const response = await request.get(`${BASE}/go/`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/`)
     
     expect(response.status()).toBe(302)
     const location = response.headers()['location'] || ''
@@ -58,9 +50,7 @@ test.describe('Income Shield Node (/go/[id]) - Critical Redirect Tests', () => {
   })
 
   test('VCommission redirect includes tracking ID', async ({ request }) => {
-    const response = await request.get(`${BASE}/go/vcm-TRACK123`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/vcm-TRACK123`)
     
     expect(response.status()).toBe(302)
     const location = response.headers()['location'] || ''
@@ -68,9 +58,7 @@ test.describe('Income Shield Node (/go/[id]) - Critical Redirect Tests', () => {
   })
 
   test('POD redirects to /pod page', async ({ request }) => {
-    const response = await request.get(`${BASE}/go/pod-design123`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/pod-design123`)
     
     expect(response.status()).toBe(302)
     const location = response.headers()['location'] || ''
@@ -79,9 +67,7 @@ test.describe('Income Shield Node (/go/[id]) - Critical Redirect Tests', () => {
 
   test('URL encoding is handled correctly', async ({ request }) => {
     const encoded = encodeURIComponent('amazon-B08N6LNQK5')
-    const response = await request.get(`${BASE}/go/${encoded}`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/${encoded}`)
     
     expect(response.status()).toBe(302)
     const location = response.headers()['location'] || ''
@@ -89,9 +75,7 @@ test.describe('Income Shield Node (/go/[id]) - Critical Redirect Tests', () => {
   })
 
   test('fallback search for unknown prefix', async ({ request }) => {
-    const response = await request.get(`${BASE}/go/smartphone`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/smartphone`)
     
     expect(response.status()).toBe(302)
     const location = response.headers()['location'] || ''
@@ -194,9 +178,7 @@ test.describe('Compliance: No Payment Routes Accessible', () => {
 test.describe('XSS & Security Validation', () => {
   test('redirect URLs cannot contain javascript:', async ({ request }) => {
     const malicious = encodeURIComponent('javascript:alert(1)')
-    const response = await request.get(`${BASE}/go/${malicious}`, {
-      followLocation: false
-    })
+    const response = await request.get(`${BASE}/go/${malicious}`)
     
     // Should either 404 or redirect safely
     const location = response.headers()['location'] || ''

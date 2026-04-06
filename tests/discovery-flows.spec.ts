@@ -65,8 +65,9 @@ test.describe('Deal Discovery Flow', () => {
       const firstCard = dealCards.first()
       const discount = firstCard.locator('[data-testid="discount"], .discount, .savings')
       
+      const cardText = await firstCard.textContent()
       const hasSavings = await discount.count() > 0 || 
-                         (await firstCard.textContent()).includes('%')
+                         (cardText?.includes('%') ?? false)
       
       expect(hasSavings).toBeTruthy()
     }
@@ -92,7 +93,8 @@ test.describe('Category Browsing', () => {
     await page.goto(`${BASE}/category/laptops`)
     
     const breadcrumb = page.locator('[aria-label="breadcrumb"], nav, .breadcrumb')
-    const hasHome = (await breadcrumb.textContent()).includes('Home') ||
+    const breadcrumbText = await breadcrumb.textContent()
+    const hasHome = (breadcrumbText?.includes('Home') ?? false) ||
                     (await breadcrumb.locator('a').count()) > 0
     
     expect(hasHome).toBeTruthy()
@@ -110,7 +112,8 @@ test.describe('Product Comparison Flow', () => {
     await page.goto(`${BASE}/compare`)
     
     // Page may have comparison table or product cards
-    const hasContent = (await page.textContent('body')).length > 100
+    const bodyText = await page.textContent('body')
+    const hasContent = (bodyText?.length ?? 0) > 100
     expect(hasContent).toBeTruthy()
   })
 
@@ -118,7 +121,7 @@ test.describe('Product Comparison Flow', () => {
     await page.goto(`${BASE}/compare`)
     
     const pageText = await page.textContent('body')
-    const hasPrices = pageText.includes('₹') || pageText.includes('Price')
+    const hasPrices = (pageText?.includes('₹') ?? false) || (pageText?.includes('Price') ?? false)
     expect(hasPrices).toBeTruthy()
   })
 })
@@ -135,8 +138,9 @@ test.describe('Price Tracking & Alerts', () => {
     await page.goto(`${BASE}/product/mob-001`)
     
     const priceHistory = page.locator('[data-testid="price-history"], .chart, canvas, svg')
+    const bodyText = await page.textContent('body')
     const hasHistory = await priceHistory.count() > 0 ||
-                       (await page.textContent('body')).includes('Price')
+                       (bodyText?.includes('Price') ?? false)
     
     expect(hasHistory).toBeTruthy()
   })

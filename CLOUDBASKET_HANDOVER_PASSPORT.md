@@ -188,25 +188,79 @@ Commands:
 - Affiliate tags injected (Amazon, Flipkart, CJ, VCommission)
 
 ═══════════════════════════════════════════════════════════
-## 9. PRIOR SESSION NOTES — WHAT WAS REMOVED
+## 9. PRIOR SESSION NOTES — WHAT WAS REMOVED & HOW TO RESTORE
 ═══════════════════════════════════════════════════════════
-Total: 105+ files (~12,000 LOC) removed in prior sessions
 
-Removed:
+**REMOVAL HISTORY:**
+Total: 105+ files (~12,000 LOC) removed in PRIOR sessions (not this session)
+
+**WHY REMOVED:**
+GEMINI.md v3.0.0 Zero-Checkout Mandate Enforcement
+- CloudBasket is a PURE DISCOVERY ENGINE only
+- NO local checkout, payment processing, or order fulfillment
+- ALL purchase-intent routes through /go/[id] Income Shield Node (HTTP 302)
+- NO financial data storage
+- Compliance: Non-negotiable governance requirement
+
+**WHAT WAS REMOVED:**
+
+### Sweep 1: Payment & Order Systems (Commit d1f9056)
 - ❌ Checkout flow (/app/checkout/*)
-- ❌ Payment processing (all payment APIs)
-- ❌ Order fulfillment (orders, shipments)
-- ❌ Admin dashboards (/admin/*)
-- ❌ User dashboards (/dashboard/*)
-- ❌ Vendor portals (/vendor/*)
-- ❌ Wallet systems (financial accounts)
-- ❌ Email fulfillment services
-- ❌ Gift card systems
-- ❌ POD pricing engines
-- ❌ Duplicate services in src/services/
+- ❌ Payment processing (Razorpay, Stripe, PayU integrations)
+- ❌ Order management APIs (/api/orders/*)
+- ❌ Order fulfillment services (order-manager, shipments)
+- ❌ Wallet system (financial accounts)
+- ❌ Related components (CheckoutForm, PaymentMethod, etc.)
+Total: ~34 files, ~5,900 LOC
 
-Why: GEMINI.md v3.0.0 zero-checkout mandate enforcement
-See: REMOVED-ITEMS-SUMMARY.md for detailed breakdown
+### Sweep 2: Admin & Vendor Systems (Commit 4b885a0)
+- ❌ Admin dashboards (60+ /admin/* pages)
+- ❌ User account dashboards (13 /dashboard/* pages)
+- ❌ Vendor portals (9 /vendor/* pages)
+- ❌ Email fulfillment services
+- ❌ Gift card system
+- ❌ POD pricing engine
+- ❌ Duplicate services in src/services/
+Total: ~67 files, ~5,800 LOC
+
+**HOW TO CHECK GIT HISTORY:**
+
+View the removal commits:
+```powershell
+# Payment & Order Removal
+git show d1f9056
+
+# Admin & Vendor Removal
+git show 4b885a0
+
+# Detailed list of removed items
+git log --oneline --all | Select-String "remove|delete|enforce"
+```
+
+**IF YOU NEED TO RESTORE ITEMS:**
+
+1. Check which commit removed them:
+   - d1f9056 (d1f9056) — Payment/order/wallet systems
+   - 4b885a0 (4b885a0) — Admin/vendor/fulfillment systems
+
+2. View the commit diff:
+   ```powershell
+   git show [commit-sha] --stat
+   git show [commit-sha] -- [specific-path]
+   ```
+
+3. Restore specific file from before removal:
+   ```powershell
+   git checkout [commit-sha]^ -- [file-path]
+   ```
+
+4. **IMPORTANT:** Restoring these items violates GEMINI.md v3.0.0 governance.
+   Do NOT restore without explicit written approval from project owner.
+
+**DOCUMENTATION:**
+- See: REMOVED-ITEMS-SUMMARY.md (detailed breakdown)
+- See: SESSION_BACKUP_2026_04_07_COMPLETE.txt (full context)
+- See: cc-output/REMOVED-ITEMS-AUDIT.md (comprehensive audit)
 
 ═══════════════════════════════════════════════════════════
 ## 10. DEPLOYMENT READINESS

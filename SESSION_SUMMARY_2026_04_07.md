@@ -123,6 +123,98 @@
 
 ═══════════════════════════════════════════════════════════════════════════════
 
+## 📊 REMOVAL HISTORY — What Was Removed & Why
+
+**This Session (Apr 7):** ZERO ITEMS REMOVED ✅
+All work focused on testing infrastructure, validation, and documentation.
+
+**Prior Sessions:** 105+ FILES REMOVED (~12,000 LOC)
+
+### Reason for Removals
+GEMINI.md v3.0.0 Zero-Checkout Mandate Enforcement
+- CloudBasket is ONLY a discovery engine
+- NO local checkout or payment processing allowed
+- NO admin dashboards or user accounts
+- NO vendor/seller systems
+- ALL purchase routes through /go/[id] affiliate node
+- Governance: Non-negotiable, enforced compliance requirement
+
+### Sweep 1: Payment & Order Systems (Commit d1f9056)
+**When:** Prior session | **Files:** 34 | **LOC:** ~5,900
+
+| Item | Files | Why Removed |
+|------|-------|-------------|
+| Checkout flow | 10 | Local checkout violates zero-checkout mandate |
+| Payment processing | 10 | Razorpay/Stripe/PayU integrations not allowed |
+| Order management | 6 | Order tracking violates discovery-only model |
+| Wallet system | 5 | Financial data storage not permitted |
+| Related components | 3 | CheckoutForm, PaymentMethod, OrderSummary |
+
+**Git Commit:** `d1f9056` — refactor: remove payment/order/vendor services
+
+### Sweep 2: Admin & Vendor Systems (Commit 4b885a0)
+**When:** Prior session | **Files:** 67 | **LOC:** ~5,800
+
+| Item | Files | Why Removed |
+|------|-------|-------------|
+| Admin dashboards | 30+ | Admin functionality violates discovery-only mandate |
+| User dashboards | 13 | User accounts not needed for discovery |
+| Vendor portals | 9 | Vendor/seller management not part of discovery |
+| Email/fulfillment | 5 | Order fulfillment not in scope |
+| Gift cards | 4 | Financial system not allowed |
+| POD pricing | 4 | Fulfillment-related, use simple GST instead |
+| Duplicate services | 30+ | Consolidated to eliminate duplication |
+
+**Git Commit:** `4b885a0` — refactor: remove admin dashboards, checkout, and POD fulfillment
+
+### Complete Removal List
+
+**Removed Paths:**
+- ❌ /app/checkout/* — Entire checkout flow
+- ❌ /api/checkout/* — Payment processing endpoints
+- ❌ /api/orders/* — Order management APIs
+- ❌ /admin/* — All admin dashboards (60+ pages)
+- ❌ /dashboard/* — User account dashboards (13 pages)
+- ❌ /vendor/* — Vendor portals (9 pages)
+- ❌ services/order-manager/ — Order fulfillment
+- ❌ services/payment-processor/ — Payment gateways
+- ❌ services/wallet/ — Financial accounts
+- ❌ services/email-engine/ — Email fulfillment
+- ❌ services/gift-cards/ — Gift card system
+- ❌ services/pricing-engine/ — POD pricing
+- ❌ services/fulfillment/ — Shipment management
+- ❌ src/services/* — Duplicate service copies
+
+### How to Check & Restore
+
+**View Removal Details:**
+```bash
+# See what was removed in Sweep 1
+git show d1f9056 --stat
+
+# See what was removed in Sweep 2
+git show 4b885a0 --stat
+
+# View specific file before removal
+git show [commit]^ -- [file-path]
+```
+
+**Restore if Needed:**
+```bash
+# Restore specific file from before removal
+git checkout [commit]^ -- [file-path]
+
+# Note: Restoring violates GEMINI.md governance
+# Requires explicit approval from project owner
+```
+
+**Reference Documents:**
+- REMOVED-ITEMS-SUMMARY.md — Detailed item breakdown
+- cc-output/REMOVED-ITEMS-AUDIT.md — Comprehensive audit
+- CLOUDBASKET_HANDOVER_PASSPORT.md — Section 9: Removal history
+
+═══════════════════════════════════════════════════════════════════════════════
+
 ## 📋 GIT LOG (Latest 7 commits)
 
 ```

@@ -61,7 +61,67 @@ pnpm test:debug        # Debug mode with inspector
 
 ---
 
-## Remaining Issues (Non-Blocking)
+## Zero-Checkout Enforcement History
+
+**Status:** ✅ ENFORCED — Pure Discovery Engine
+
+### What Was Removed (105+ files, ~12,000 LOC)
+
+**Why:** GEMINI.md v3.0.0 Zero-Checkout Mandate (Non-Negotiable Governance)
+
+| Category | Count | LOC | Removed In | Git Commit |
+|----------|-------|-----|-----------|-----------|
+| Checkout system | 10 | 1,200 | Sweep 1 | d1f9056 |
+| Order management | 6 | 800 | Sweep 1 | d1f9056 |
+| Payment processing | 10 | 1,500 | Sweep 1 | d1f9056 |
+| Wallet system | 5 | 600 | Sweep 1 | d1f9056 |
+| Admin dashboards | 30+ | 2,400 | Sweep 2 | 4b885a0 |
+| User dashboards | 13 | 1,000 | Sweep 2 | 4b885a0 |
+| Vendor portals | 9 | 900 | Sweep 2 | 4b885a0 |
+| Email/fulfillment | 5 | 600 | Sweep 2 | 4b885a0 |
+| Gift cards | 4 | 400 | Sweep 2 | 4b885a0 |
+| POD pricing | 4 | 400 | Sweep 2 | 4b885a0 |
+| Duplicate services | 30+ | 1,500 | Sweep 2 | 4b885a0 |
+| **TOTAL** | **105+** | **~12,000** | Both | See commits |
+
+### Key Removal Commits
+
+**Commit d1f9056** (Payment & Order Systems)
+- Removed payment gateway integrations (Razorpay, Stripe, PayU)
+- Removed order management and tracking
+- Removed wallet and financial accounts
+- Removed vendor payout systems
+
+**Commit 4b885a0** (Admin & Vendor Systems)
+- Removed all /admin/* dashboards
+- Removed all /dashboard/* user accounts
+- Removed all /vendor/* seller portals
+- Removed POD fulfillment services
+- Removed email fulfillment systems
+- Removed duplicate services
+
+### If Items Need to be Restored
+
+**Check git history:**
+```bash
+git show d1f9056 --stat    # Payment/order removal
+git show 4b885a0 --stat    # Admin/vendor removal
+```
+
+**Restore specific file:**
+```bash
+git checkout [commit-sha]^ -- [file-path]
+```
+
+**⚠️ WARNING:** Restoring these items violates GEMINI.md v3.0.0 governance.
+Requires explicit written approval from project owner.
+
+**More Information:**
+- See: REMOVED-ITEMS-SUMMARY.md (detailed item list)
+- See: CLOUDBASKET_HANDOVER_PASSPORT.md (section 9)
+- See: cc-output/REMOVED-ITEMS-AUDIT.md (comprehensive audit)
+
+---
 
 | Item | Priority | Effort | Notes |
 |------|----------|--------|-------|

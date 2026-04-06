@@ -12,9 +12,23 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   // --- Build Supabase client with cookie forwarding ---
   let response = NextResponse.next({ request })
 
+  // Check if Supabase env vars are available
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  // If Supabase credentials are missing, allow public routes but redirect auth routes
+  if (!supabaseUrl || !supabaseAnonKey) {
+    if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard')) {
+      const loginUrl = new URL('/login', request.url)
+      loginUrl.searchParams.set('reason', 'no-auth-config')
+      return NextResponse.redirect(loginUrl)
+    }
+    return response
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {

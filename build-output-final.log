@@ -1,0 +1,1452 @@
+
+> cloudbasket@2.0.0 build F:\cloudbasket
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Experiments (use with caution):
+  ┬╖ optimizePackageImports
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 51 errors:
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/scale/getNiceTickValues.js:6:1
+Module not found: Can't resolve 'decimal.js-light'
+  4 |  * @date 2015-09-17
+  5 |  */
+> 6 | import Decimal from 'decimal.js-light';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { getDigitCount, rangeStep } from './util/arithmetic';
+  8 | /**
+  9 |  * Calculate a interval of a minimum value and a maximum value
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/scale/getNiceTickValues.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/scale/getNiceTickValues.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/scale/util/arithmetic.js:6:1
+Module not found: Can't resolve 'decimal.js-light'
+  4 |  * @date 2015-09-17
+  5 |  */
+> 6 | import Decimal from 'decimal.js-light';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 |
+  8 | /**
+  9 |  * Get the digit count of a number.
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/scale/util/arithmetic.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/scale/getNiceTickValues.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/scale/util/arithmetic.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/scale/getNiceTickValues.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/CartesianAxis.js:15:1
+Module not found: Can't resolve 'es-toolkit/compat/get'
+  13 | import * as React from 'react';
+  14 | import { useState, useRef, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
+> 15 | import get from 'es-toolkit/compat/get';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  16 | import { clsx } from 'clsx';
+  17 | import { Layer } from '../container/Layer';
+  18 | import { Text, isValidTextAnchor } from '../component/Text';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/CartesianAxis.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/CartesianGrid.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/CartesianAxis.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/CartesianGrid.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js:7:1
+Module not found: Can't resolve 'es-toolkit/compat/get'
+   5 | function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+   6 | import sortBy from 'es-toolkit/compat/sortBy';
+>  7 | import get from 'es-toolkit/compat/get';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   8 | import { stack as shapeStack, stackOffsetExpand, stackOffsetNone, stackOffsetSilhouette, stackOffsetWiggle, stackOrderNone } from 'victory-vendor/d3-shape';
+   9 | import { findEntryInArray, isNan, isNotNil, isNullish, isNumber, isNumOrStr, mathSign } from './DataUtils';
+  10 | import { getSliced } from './getSliced';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/DataUtils.js:1:1
+Module not found: Can't resolve 'es-toolkit/compat/get'
+> 1 | import get from 'es-toolkit/compat/get';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { round } from './round';
+  3 | export var mathSign = value => {
+  4 |   if (value === 0) {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/DataUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/DataUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ReactUtils.js:1:1
+Module not found: Can't resolve 'es-toolkit/compat/get'
+> 1 | import get from 'es-toolkit/compat/get';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { Children } from 'react';
+  3 | import { isFragment } from 'react-is';
+  4 | import { isNullish } from './DataUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ReactUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ReactUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ActiveShapeUtils.js:11:1
+Module not found: Can't resolve 'es-toolkit/compat/isPlainObject'
+   9 | import * as React from 'react';
+  10 | import { cloneElement, isValidElement } from 'react';
+> 11 | import isPlainObject from 'es-toolkit/compat/isPlainObject';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 | import { Rectangle } from '../shape/Rectangle';
+  13 | import { Trapezoid } from '../shape/Trapezoid';
+  14 | import { Sector } from '../shape/Sector';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ActiveShapeUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/BarUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ActiveShapeUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/BarUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js:7:1
+Module not found: Can't resolve 'es-toolkit/compat/range'
+   5 | function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+   6 | import { createSelector } from 'reselect';
+>  7 | import range from 'es-toolkit/compat/range';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   8 | import { selectChartLayout } from '../../context/chartLayoutContext';
+   9 | import { getDomainOfStackGroups, getStackedData, getValueByDataKey, isCategoricalAxis } from '../../util/ChartUtils';
+  10 | import { selectChartDataWithIndexes, selectChartDataWithIndexesIfNotInPanoramaPosition4, selectChartDataSliceIfNotInPanorama } from './dataSelectors';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/DefaultTooltipContent.js:12:1
+Module not found: Can't resolve 'es-toolkit/compat/sortBy'
+  10 |
+  11 | import * as React from 'react';
+> 12 | import sortBy from 'es-toolkit/compat/sortBy';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  13 | import { clsx } from 'clsx';
+  14 | import { isNullish, isNumOrStr } from '../util/DataUtils';
+  15 | function defaultFormatter(value) {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/DefaultTooltipContent.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/DefaultTooltipContent.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/legendSelectors.js:2:1
+Module not found: Can't resolve 'es-toolkit/compat/sortBy'
+  1 | import { createSelector } from 'reselect';
+> 2 | import sortBy from 'es-toolkit/compat/sortBy';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | export var selectLegendSettings = state => state.legend.settings;
+  4 | export var selectLegendSize = state => state.legend.size;
+  5 | var selectAllLegendPayload2DArray = state => state.legend.payload;
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/legendSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/legendSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectors.js:2:1
+Module not found: Can't resolve 'es-toolkit/compat/sortBy'
+  1 | import { createSelector } from 'reselect';
+> 2 | import sortBy from 'es-toolkit/compat/sortBy';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | import { useAppSelector } from '../hooks';
+  4 | import { calculateCartesianTooltipPos, calculatePolarTooltipPos } from '../../util/ChartUtils';
+  5 | import { selectChartDataWithIndexes } from './dataSelectors';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js:6:1
+Module not found: Can't resolve 'es-toolkit/compat/sortBy'
+  4 | function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+  5 | function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+> 6 | import sortBy from 'es-toolkit/compat/sortBy';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import get from 'es-toolkit/compat/get';
+  8 | import { stack as shapeStack, stackOffsetExpand, stackOffsetNone, stackOffsetSilhouette, stackOffsetWiggle, stackOrderNone } from 'victory-vendor/d3-shape';
+  9 | import { findEntryInArray, isNan, isNotNil, isNullish, isNumber, isNumOrStr, mathSign } from './DataUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/ResponsiveContainer.js:10:1
+Module not found: Can't resolve 'es-toolkit/compat/throttle'
+   8 | import * as React from 'react';
+   9 | import { createContext, forwardRef, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+> 10 | import throttle from 'es-toolkit/compat/throttle';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | import { isNumber, noop } from '../util/DataUtils';
+  12 | import { warn } from '../util/LogUtils';
+  13 | import { calculateChartDimensions, defaultResponsiveContainerProps, getDefaultWidthAndHeight, getInnerDivStyle } from './responsiveContainerUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/ResponsiveContainer.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/ResponsiveContainer.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/payload/getUniqPayload.js:1:1
+Module not found: Can't resolve 'es-toolkit/compat/uniqBy'
+> 1 | import uniqBy from 'es-toolkit/compat/uniqBy';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | /**
+  4 |  * This is configuration option that decides how to filter for unique values only:
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/payload/getUniqPayload.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Legend.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/payload/getUniqPayload.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Legend.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/Events.js:1:1
+Module not found: Can't resolve 'eventemitter3'
+> 1 | import EventEmitter from 'eventemitter3';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | var eventCenter = new EventEmitter();
+  3 | export { eventCenter };
+  4 | export var TOOLTIP_SYNC_EVENT = 'recharts.syncEvent.tooltip';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/Events.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/synchronisation/useChartSynchronisation.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/Events.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/synchronisation/useChartSynchronisation.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/cartesianAxisSlice.js:7:1
+Module not found: Can't resolve 'immer'
+   5 | function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+   6 | import { createSlice, prepareAutoBatched } from '@reduxjs/toolkit';
+>  7 | import { castDraft } from 'immer';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   8 |
+   9 | /**
+  10 |  * @inline
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/cartesianAxisSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/cartesianAxisSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/chartDataSlice.js:2:1
+Module not found: Can't resolve 'immer'
+  1 | import { createSlice } from '@reduxjs/toolkit';
+> 2 | import { castDraft } from 'immer';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |
+  4 | /**
+  5 |  * This is the data that's coming through main chart `data` prop
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/chartDataSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/synchronisation/useChartSynchronisation.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/chartDataSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/synchronisation/useChartSynchronisation.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/eventSettingsSlice.js:2:1
+Module not found: Can't resolve 'immer'
+  1 | import { createSlice } from '@reduxjs/toolkit';
+> 2 | import { castDraft } from 'immer';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | export var initialEventSettingsState = {
+  4 |   throttleDelay: 'raf',
+  5 |   throttledEvents: ['mousemove', 'touchmove', 'pointermove', 'scroll', 'wheel']
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/eventSettingsSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/eventSettingsSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/graphicalItemsSlice.js:2:1
+Module not found: Can't resolve 'immer'
+  1 | import { createSlice, current, prepareAutoBatched } from '@reduxjs/toolkit';
+> 2 | import { castDraft } from 'immer';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |
+  4 | /**
+  5 |  * Unique ID of the graphical item.
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/graphicalItemsSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/SetGraphicalItem.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/graphicalItemsSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/SetGraphicalItem.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/legendSlice.js:2:1
+Module not found: Can't resolve 'immer'
+  1 | import { createSlice, current, prepareAutoBatched } from '@reduxjs/toolkit';
+> 2 | import { castDraft } from 'immer';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |
+  4 | /**
+  5 |  * The properties inside this state update independently of each other and quite often.
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/legendSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Legend.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/legendSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Legend.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/polarAxisSlice.js:2:1
+Module not found: Can't resolve 'immer'
+  1 | import { createSlice } from '@reduxjs/toolkit';
+> 2 | import { castDraft } from 'immer';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | var initialState = {
+  4 |   radiusAxis: {},
+  5 |   angleAxis: {}
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/polarAxisSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/store.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/RechartsStoreProvider.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/polarAxisSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/store.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/RechartsStoreProvider.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/referenceElementsSlice.js:2:1
+Module not found: Can't resolve 'immer'
+  1 | import { createSlice, current } from '@reduxjs/toolkit';
+> 2 | import { castDraft } from 'immer';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | var initialState = {
+  4 |   dots: [],
+  5 |   areas: [],
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/referenceElementsSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/store.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/RechartsStoreProvider.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/referenceElementsSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/store.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/RechartsStoreProvider.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/renderedTicksSlice.js:11:1
+Module not found: Can't resolve 'immer'
+   9 |  */
+  10 | import { createSlice } from '@reduxjs/toolkit';
+> 11 | import { castDraft } from 'immer';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 | var initialState = {
+  13 |   xAxis: {},
+  14 |   yAxis: {}
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/renderedTicksSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/CartesianAxis.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/YAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/renderedTicksSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/CartesianAxis.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/YAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/tooltipSlice.js:2:1
+Module not found: Can't resolve 'immer'
+  1 | import { createSlice, current, prepareAutoBatched } from '@reduxjs/toolkit';
+> 2 | import { castDraft } from 'immer';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |
+  4 | /**
+  5 |  * One Tooltip can display multiple TooltipPayloadEntries at a time.
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/tooltipSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/tooltipSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/zIndexSlice.js:11:1
+Module not found: Can't resolve 'immer'
+   9 |  */
+  10 | import { createSlice, prepareAutoBatched } from '@reduxjs/toolkit';
+> 11 | import { castDraft } from 'immer';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 | import { DefaultZIndexes } from '../zIndex/DefaultZIndexes';
+  13 | var seed = {};
+  14 | var initialState = {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/zIndexSlice.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/zIndex/ZIndexLayer.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/zIndexSlice.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/zIndex/ZIndexLayer.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js:6:1
+Module not found: Can't resolve 'reselect'
+  4 | function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+  5 | function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+> 6 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import range from 'es-toolkit/compat/range';
+  8 | import { selectChartLayout } from '../../context/chartLayoutContext';
+  9 | import { getDomainOfStackGroups, getStackedData, getValueByDataKey, isCategoricalAxis } from '../../util/ChartUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/barSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { selectAxisWithScale, selectCartesianAxisSize, selectStackGroups, selectTicksOfGraphicalItem, selectUnfilteredCartesianItems } from './axisSelectors';
+  3 | import { isNullish } from '../../util/DataUtils';
+  4 | import { getBandSizeOfAxis } from '../../util/ChartUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/barSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/barSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/barStackSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { selectUnfilteredCartesianItems } from './axisSelectors';
+  3 | import { selectBarRectangles } from './barSelectors';
+  4 | var pickStackId = (state, stackId) => stackId;
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/barStackSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/BarStack.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/barStackSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/BarStack.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/brushSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { selectChartOffsetInternal } from './selectChartOffsetInternal';
+  3 | import { selectMargin } from './containerSelectors';
+  4 | import { isNumber } from '../../util/DataUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/brushSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/context/chartLayoutContext.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/brushSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/context/chartLayoutContext.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/dataSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | /**
+  3 |  * This selector always returns the data with the indexes set by a Brush.
+  4 |  * Trouble is, that might or might not be what you want.
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/dataSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/lineSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/dataSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/lineSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/legendSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import sortBy from 'es-toolkit/compat/sortBy';
+  3 | export var selectLegendSettings = state => state.legend.settings;
+  4 | export var selectLegendSize = state => state.legend.size;
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/legendSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/legendSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/lineSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { computeLinePoints } from '../../cartesian/Line';
+  3 | import { selectChartDataWithIndexesIfNotInPanoramaPosition4 } from './dataSelectors';
+  4 | import { selectChartLayout } from '../../context/chartLayoutContext';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/lineSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/lineSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/polarAxisSelectors.js:6:1
+Module not found: Can't resolve 'reselect'
+  4 | function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+  5 | function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+> 6 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { selectChartHeight, selectChartWidth } from './containerSelectors';
+  8 | import { selectChartOffsetInternal } from './selectChartOffsetInternal';
+  9 | import { getMaxRadius } from '../../util/PolarUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/polarAxisSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Label.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/YAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/polarAxisSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Label.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/YAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectActivePropsFromChartPointer.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { selectChartLayout } from '../../context/chartLayoutContext';
+  3 | import { selectTooltipAxisRangeWithReverse, selectTooltipAxisTicks } from './tooltipSelectors';
+  4 | import { selectChartOffsetInternal } from './selectChartOffsetInternal';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectActivePropsFromChartPointer.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/touchEventsMiddleware.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/RechartsWrapper.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CategoricalChart.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectActivePropsFromChartPointer.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/touchEventsMiddleware.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/RechartsWrapper.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CategoricalChart.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectAllAxes.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | export var selectAllXAxes = createSelector(state => state.cartesianAxis.xAxis, xAxisMap => {
+  3 |   return Object.values(xAxisMap);
+  4 | });
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectAllAxes.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectAllAxes.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffset.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { selectChartOffsetInternal } from './selectChartOffsetInternal';
+  3 | export var selectChartOffset = createSelector([selectChartOffsetInternal], offsetInternal => {
+  4 |   return {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffset.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/hooks.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffset.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/hooks.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js:6:1
+Module not found: Can't resolve 'reselect'
+  4 | function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+  5 | function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+> 6 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { selectLegendSettings, selectLegendSize } from './legendSelectors';
+  8 | import { appendOffsetOfLegend } from '../../util/ChartUtils';
+  9 | import { selectChartHeight, selectChartWidth, selectMargin } from './containerSelectors';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectChartOffsetInternal.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectPlotArea.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { selectChartOffset } from './selectChartOffset';
+  3 | import { selectChartHeight, selectChartWidth } from './containerSelectors';
+  4 | export var selectPlotArea = createSelector([selectChartOffset, selectChartWidth, selectChartHeight], (offset, chartWidth, chartHeight) => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectPlotArea.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/hooks.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectPlotArea.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/hooks.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import sortBy from 'es-toolkit/compat/sortBy';
+  3 | import { useAppSelector } from '../hooks';
+  4 | import { calculateCartesianTooltipPos, calculatePolarTooltipPos } from '../../util/ChartUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/selectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/tooltipSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { combineAllAppliedValues, combineAreasDomain, combineAxisDomain, combineAxisDomainWithNiceTicks, combineCategoricalDomain, combineDisplayedData, combineDomainOfAllAppliedNumericalValuesIncludingErrorValues, combineDomainOfStackGroups, combineDotsDomain, combineDuplicateDomain, combineGraphicalItemsData, combineGraphicalItemsSettings, combineLinesDomain, combineNiceTicks, combineNumericalDomain, combineStackGroups, filterGraphicalNotStackedItems, filterReferenceElements, getDomainDefinition, itemAxisPredicate, mergeDomains, selectAllErrorBarSettings, selectAxisRange, selectHasBar, selectReferenceAreas, selectReferenceDots, selectReferenceLines, selectTooltipAxis, selectTooltipAxisDataKey } from './axisSelectors';
+  3 | import { selectChartLayout } from '../../context/chartLayoutContext';
+  4 | import { isCategoricalAxis } from '../../util/ChartUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/tooltipSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/tooltipSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/touchSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { selectTooltipState } from './selectTooltipState';
+  3 | var selectAllTooltipPayloadConfiguration = createSelector([selectTooltipState], tooltipState => tooltipState.tooltipItemPayloads);
+  4 | export var selectTooltipCoordinate = createSelector([selectAllTooltipPayloadConfiguration, (_state, tooltipIndex) => tooltipIndex, (_state, _tooltipIndex, graphicalItemId) => graphicalItemId], (allTooltipConfigurations, tooltipIndex, graphicalItemId) => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/touchSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/touchEventsMiddleware.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/RechartsWrapper.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CategoricalChart.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/touchSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/touchEventsMiddleware.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/RechartsWrapper.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CategoricalChart.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/CartesianChart.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/chart/LineChart.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/zIndex/zIndexSelectors.js:1:1
+Module not found: Can't resolve 'reselect'
+> 1 | import { createSelector } from 'reselect';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { arrayContentsAreEqualCheck } from '../state/selectors/arrayEqualityCheck';
+  3 | import { DefaultZIndexes } from './DefaultZIndexes';
+  4 |
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/zIndex/zIndexSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/zIndex/ZIndexLayer.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/zIndex/zIndexSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/zIndex/ZIndexLayer.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/BarUtils.js:3:1
+Module not found: Can't resolve 'tiny-invariant'
+  1 | function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+  2 | import * as React from 'react';
+> 3 | import invariant from 'tiny-invariant';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 | import { Shape } from './ActiveShapeUtils';
+  5 | import { isNullish, isNumber } from './DataUtils';
+  6 | export function BarRectangle(props) {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/BarUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/BarUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/hooks.js:1:1
+Module not found: Can't resolve 'use-sync-external-store/shim/with-selector'
+> 1 | import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { useContext, useMemo } from 'react';
+  3 | import { RechartsReduxContext } from './RechartsReduxContext';
+  4 | var noopDispatch = a => a;
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/hooks.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/hooks.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/component/Tooltip.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/combiners/combineConfiguredScale.js:1:1
+Module not found: Can't resolve 'victory-vendor/d3-scale'
+> 1 | import * as d3Scales from 'victory-vendor/d3-scale';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { upperFirst } from '../../../util/DataUtils';
+  3 | function getD3ScaleFromType(realScaleType) {
+  4 |   var scales = d3Scales;
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/combiners/combineConfiguredScale.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/combiners/combineConfiguredScale.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/combiners/combineRealScaleType.js:1:1
+Module not found: Can't resolve 'victory-vendor/d3-scale'
+> 1 | import * as d3Scales from 'victory-vendor/d3-scale';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { upperFirst } from '../../../util/DataUtils';
+  3 | function getD3ScaleName(name) {
+  4 |   return "scale".concat(upperFirst(name));
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/combiners/combineRealScaleType.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/combiners/combineRealScaleType.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/state/selectors/axisSelectors.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/XAxis.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/shape/Curve.js:11:1
+Module not found: Can't resolve 'victory-vendor/d3-shape'
+   9 |  */
+  10 | import * as React from 'react';
+> 11 | import { area as shapeArea, curveBasis, curveBasisClosed, curveBasisOpen, curveBumpX, curveBumpY, curveLinear, curveLinearClosed, curveMonotoneX, curveMonotoneY, curveNatural, curveStep, curveStepAfter, curveStepBefore, line as shapeLine } from 'victory-vendor/d3-shape';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 | import { clsx } from 'clsx';
+  13 | import { adaptEventHandlers } from '../util/types';
+  14 | import { isNumber, upperFirst } from '../util/DataUtils';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/shape/Curve.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ActiveShapeUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component Browser]
+    ./app/admin/reports/page.tsx [Client Component Browser]
+    ./app/admin/reports/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/shape/Curve.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ActiveShapeUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Line.js [Client Component SSR]
+    ./app/admin/reports/page.tsx [Client Component SSR]
+    ./app/admin/reports/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/shape/Symbols.js:11:1
+Module not found: Can't resolve 'victory-vendor/d3-shape'
+   9 | function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+  10 | import * as React from 'react';
+> 11 | import { symbol as shapeSymbol, symbolCircle, symbolCross, symbolDiamond, symbolSquare, symbolStar, symbolTriangle, symbolWye } from 'victory-vendor/d3-shape';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 | import { clsx } from 'clsx';
+  13 | import { isNumber, upperFirst } from '../util/DataUtils';
+  14 | import { svgPropertiesAndEvents } from '../util/svgPropertiesAndEvents';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/shape/Symbols.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ActiveShapeUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/BarUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/shape/Symbols.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ActiveShapeUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/BarUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js:8:1
+Module not found: Can't resolve 'victory-vendor/d3-shape'
+   6 | import sortBy from 'es-toolkit/compat/sortBy';
+   7 | import get from 'es-toolkit/compat/get';
+>  8 | import { stack as shapeStack, stackOffsetExpand, stackOffsetNone, stackOffsetSilhouette, stackOffsetWiggle, stackOrderNone } from 'victory-vendor/d3-shape';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import { findEntryInArray, isNan, isNotNil, isNullish, isNumber, isNumOrStr, mathSign } from './DataUtils';
+  10 | import { getSliced } from './getSliced';
+  11 | import { isWellBehavedNumber } from './isWellBehavedNumber';
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js [Client Component Browser]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component Browser]
+    ./app/admin/security/page.tsx [Client Component Browser]
+    ./app/admin/security/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/util/ChartUtils.js [Client Component SSR]
+    ./node_modules/.pnpm/recharts@3.8.1_@types+react_fb4229d15ad04c88489f65a1398aaad2/node_modules/recharts/es6/cartesian/Bar.js [Client Component SSR]
+    ./app/admin/security/page.tsx [Client Component SSR]
+    ./app/admin/security/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./node_modules/.pnpm/resend@3.5.0_react-dom@19.2.3_react@19.2.3__react@19.2.3/node_modules/resend/dist/index.mjs:115:1
+Export renderAsync doesn't exist in target module
+  113 |
+  114 | // src/batch/batch.ts
+> 115 | import { renderAsync } from "@react-email/render";
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  116 | var Batch = class {
+  117 |   constructor(resend) {
+  118 |     this.resend = resend;
+
+The export renderAsync was not found in module [project]/node_modules/.pnpm/@react-email+render@2.0.5_r_167e0cf4d5d6366398c9db4af37286c6/node_modules/@react-email/render/dist/node/index.mjs [app-route] (ecmascript).
+Did you mean to import render?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  App Route:
+    ./node_modules/.pnpm/resend@3.5.0_react-dom@19.2.3_react@19.2.3__react@19.2.3/node_modules/resend/dist/index.mjs
+    ./app/api/contact/route.ts
+
+
+./node_modules/.pnpm/resend@3.5.0_react-dom@19.2.3_react@19.2.3__react@19.2.3/node_modules/resend/dist/index.mjs:263:1
+Export renderAsync doesn't exist in target module
+  261 |
+  262 | // src/emails/emails.ts
+> 263 | import { renderAsync as renderAsync2 } from "@react-email/render";
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  264 | var Emails = class {
+  265 |   constructor(resend) {
+  266 |     this.resend = resend;
+
+The export renderAsync was not found in module [project]/node_modules/.pnpm/@react-email+render@2.0.5_r_167e0cf4d5d6366398c9db4af37286c6/node_modules/@react-email/render/dist/node/index.mjs [app-route] (ecmascript).
+Did you mean to import render?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  App Route:
+    ./node_modules/.pnpm/resend@3.5.0_react-dom@19.2.3_react@19.2.3__react@19.2.3/node_modules/resend/dist/index.mjs
+    ./app/api/contact/route.ts
+
+
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    ... collapsed 48 duplicate lines matching above 1 lines 48 times...
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.

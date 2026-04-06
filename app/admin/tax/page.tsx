@@ -1,5 +1,0 @@
-import type { Metadata } from 'next'
-export const metadata: Metadata = { title: 'GST Compliance — Admin | CloudBasket' }
-export default function TaxPage() {
-  return (<main className="mx-auto max-w-7xl px-6 py-10"><h1 className="text-3xl font-black tracking-tighter mb-8">GST Compliance Dashboard</h1><div className="grid grid-cols-3 gap-4 mb-6">{['Total GST Collected','B2C Sales','B2B Sales'].map(l=><div key={l} className="cb-card p-5 text-center"><p className="text-3xl font-black text-skyline-primary">₹--</p><p className="text-xs text-[var(--cb-text-muted)] mt-1">{l}</p></div>)}</div><div className="cb-card p-6"><p className="text-sm text-[var(--cb-text-muted)]">Add SELLER_GSTIN and SELLER_STATE_CODE to .env.local. POD orders auto-calculate GST per product type via gst-engine.ts.</p></div></main>)
-}

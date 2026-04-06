@@ -1,13 +1,12 @@
 // components/pod/PriceTag.tsx
 // POD product price tag with GST inclusive note.
 
-import { podPricingEngine } from '@/services/pod/pricing-engine'
+interface PriceTagProps { basePrice: number; productType: string; showGST?: boolean; showComparison?: boolean; competitorPrice?: number; competitorName?: string }
 
-interface PriceTagProps { basePrice:number; productType:string; showGST?:boolean; showComparison?:boolean; competitorPrice?:number; competitorName?:string }
-
-export default function PriceTag({basePrice,productType,showGST=true,showComparison=false,competitorPrice,competitorName='Redbubble'}: PriceTagProps) {
-  const gstPrice = showGST ? podPricingEngine.addGST(basePrice,productType) : basePrice
-  const savings = competitorPrice ? competitorPrice-gstPrice : 0
+export default function PriceTag({ basePrice, productType, showGST = true, showComparison = false, competitorPrice, competitorName = 'Redbubble' }: PriceTagProps) {
+  const gstRate = 0.18
+  const gstPrice = showGST ? Math.round(basePrice * (1 + gstRate)) : basePrice
+  const savings = competitorPrice ? competitorPrice - gstPrice : 0
 
   return (
     <div>

@@ -1,0 +1,1926 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - text: "Flash Sale: Up to 70% off Mobiles"
+      - button "Dismiss promo ticker" [ref=e11]:
+        - img [ref=e12]
+    - generic [ref=e15]:
+      - link "CB" [ref=e16] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e18]: CB
+      - button "Toggle mobile menu" [ref=e19]:
+        - img [ref=e20]
+    - generic:
+      - generic:
+        - generic:
+          - paragraph: Menu
+          - button "Close menu":
+            - img
+        - generic:
+          - searchbox "Search mobile"
+        - generic:
+          - generic:
+            - link "Products":
+              - /url: /products
+            - generic:
+              - link "Automotive":
+                - /url: /category/automotive
+                - img
+                - generic: Automotive
+              - link "Beauty":
+                - /url: /category/beauty
+                - img
+                - generic: Beauty
+              - link "Books":
+                - /url: /category/books
+                - img
+                - generic: Books
+              - link "Courses":
+                - /url: /category/courses
+                - img
+                - generic: Courses
+              - link "Electronics":
+                - /url: /category/electronics
+                - img
+                - generic: Electronics
+              - link "Fashion":
+                - /url: /category/fashion
+                - img
+                - generic: Fashion
+              - link "Finance":
+                - /url: /category/finance
+                - img
+                - generic: Finance
+              - link "Gaming":
+                - /url: /category/gaming
+                - img
+                - generic: Gaming
+              - link "Grocery":
+                - /url: /category/grocery
+                - img
+                - generic: Grocery
+              - link "Health":
+                - /url: /category/health
+                - img
+                - generic: Health
+              - link "Home":
+                - /url: /category/home
+                - img
+                - generic: Home
+              - link "Investments":
+                - /url: /category/investments
+                - img
+                - generic: Investments
+              - link "Jewellery":
+                - /url: /category/jewellery
+                - img
+                - generic: Jewellery
+              - link "Laptops":
+                - /url: /category/laptops
+                - img
+                - generic: Laptops
+              - link "Mobiles":
+                - /url: /category/mobiles
+                - img
+                - generic: Mobiles
+              - link "POD":
+                - /url: /category/pod
+                - img
+                - generic: POD
+              - link "Sports":
+                - /url: /category/sports
+                - img
+                - generic: Sports
+              - link "Toys":
+                - /url: /category/toys
+                - img
+                - generic: Toys
+              - link "Travel":
+                - /url: /category/travel
+                - img
+                - generic: Travel
+              - link "Watches":
+                - /url: /category/watches
+                - img
+                - generic: Watches
+          - generic:
+            - link "Deals":
+              - /url: /deals
+            - generic:
+              - link "Flash Sales":
+                - /url: /deals/flash
+                - img
+                - generic: Flash Sales
+              - link "Top Offers":
+                - /url: /deals
+                - img
+                - generic: Top Offers
+              - link "CJ Network":
+                - /url: /cj
+                - img
+                - generic: CJ Network
+          - generic:
+            - link "Categories":
+              - /url: /categories
+          - generic:
+            - link "POD":
+              - /url: /pod
+            - generic:
+              - link "👕 T-Shirts":
+                - /url: /pod/tshirts
+                - img
+                - generic: 👕 T-Shirts
+              - link "☕ Mugs":
+                - /url: /pod/mugs
+                - img
+                - generic: ☕ Mugs
+              - link "📱 Phone Cases":
+                - /url: /pod/phone-cases
+                - img
+                - generic: 📱 Phone Cases
+              - link "💼 Laptop Bags":
+                - /url: /pod/laptop-bags
+                - img
+                - generic: 💼 Laptop Bags
+              - link "👜 Tote Bags":
+                - /url: /pod/tote-bags
+                - img
+                - generic: 👜 Tote Bags
+              - link "🧥 Hoodies":
+                - /url: /pod/hoodies
+                - img
+                - generic: 🧥 Hoodies
+          - generic:
+            - link "🧠 Deal Quiz":
+              - /url: /quiz
+          - generic:
+            - link "Compare":
+              - /url: /compare
+          - generic:
+            - link "Blog":
+              - /url: /blog
+        - generic:
+          - generic:
+            - img
+            - combobox "Select country mobile":
+              - option "India" [selected]
+              - option "United States"
+              - option "Europe"
+              - option "United Kingdom"
+          - generic:
+            - generic: 🌍
+            - combobox "Select locale mobile":
+              - option "🇮🇳 India (₹)" [selected]
+              - option "🇺🇸 US ($)"
+              - option "🇬🇧 UK (£)"
+          - button "Toggle theme":
+            - img
+        - link "Sign In":
+          - /url: /login
+  - main [ref=e21]:
+    - main [ref=e22]:
+      - generic [ref=e24]:
+        - heading "Advanced Search" [level=1] [ref=e25]
+        - generic [ref=e27]:
+          - img [ref=e28]
+          - textbox "What are you looking for today?" [ref=e31]: phone
+          - button [ref=e32]:
+            - img [ref=e33]
+        - generic [ref=e36]:
+          - paragraph [ref=e37]: "Popular:"
+          - button "iPhone 16" [ref=e38]
+          - button "Samsung Galaxy S25" [ref=e39]
+          - button "Nike shoes" [ref=e40]
+          - button "boAt earphones" [ref=e41]
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - heading "Results for \"phone\"" [level=2] [ref=e44]
+          - button "Filters" [ref=e45]:
+            - img [ref=e46]
+            - text: Filters
+        - generic [ref=e48]:
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - heading "Results for \"phone\"" [level=2] [ref=e51]
+              - paragraph [ref=e52]: 47 verified price points found
+            - generic [ref=e53]:
+              - img [ref=e54]
+              - combobox [ref=e55] [cursor=pointer]:
+                - option "Relevance" [selected]
+                - 'option "Price: Low to High"'
+                - 'option "Price: High to Low"'
+                - 'option "Discount: Highest First"'
+                - option "Newest"
+          - generic [ref=e56]:
+            - button "boAt Rockerz 450 Bluetooth Headphones Luscious Black 62% OFF Add to wishlist boAt Rockerz 450 Bluetooth Headphones Luscious Black boAt (0) ₹1,499.00 ₹3,990.00 Amazon Compare prices View Deal Specs" [ref=e57]:
+              - generic [ref=e58]:
+                - img "boAt Rockerz 450 Bluetooth Headphones Luscious Black" [ref=e59]
+                - generic [ref=e60]: 62% OFF
+                - button "Add to wishlist" [ref=e61]:
+                  - img [ref=e62]
+              - generic [ref=e64]:
+                - generic [ref=e65]:
+                  - heading "boAt Rockerz 450 Bluetooth Headphones Luscious Black" [level=3] [ref=e66]
+                  - paragraph [ref=e67]: boAt
+                - generic [ref=e68]:
+                  - generic [ref=e69]:
+                    - img [ref=e70]
+                    - img [ref=e72]
+                    - img [ref=e74]
+                    - img [ref=e76]
+                    - img [ref=e78]
+                  - generic [ref=e80]: (0)
+                - generic [ref=e81]:
+                  - generic [ref=e82]:
+                    - generic [ref=e83]: ₹1,499.00
+                    - generic [ref=e84]: ₹3,990.00
+                  - paragraph [ref=e85]: Amazon
+                  - link "Compare prices" [ref=e86] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-016
+                - generic [ref=e87]:
+                  - link "View Deal" [ref=e88] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-016
+                    - text: View Deal
+                    - img [ref=e89]
+                  - link "Specs" [ref=e94] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-016
+                    - text: Specs
+                    - img [ref=e95]
+            - button "boAt Rockerz 450 Bluetooth Headphones Hazel Beige 62% OFF Add to wishlist boAt Rockerz 450 Bluetooth Headphones Hazel Beige boAt (0) ₹1,499.00 ₹3,990.00 Amazon Compare prices View Deal Specs" [ref=e97]:
+              - generic [ref=e98]:
+                - img "boAt Rockerz 450 Bluetooth Headphones Hazel Beige" [ref=e99]
+                - generic [ref=e100]: 62% OFF
+                - button "Add to wishlist" [ref=e101]:
+                  - img [ref=e102]
+              - generic [ref=e104]:
+                - generic [ref=e105]:
+                  - heading "boAt Rockerz 450 Bluetooth Headphones Hazel Beige" [level=3] [ref=e106]
+                  - paragraph [ref=e107]: boAt
+                - generic [ref=e108]:
+                  - generic [ref=e109]:
+                    - img [ref=e110]
+                    - img [ref=e112]
+                    - img [ref=e114]
+                    - img [ref=e116]
+                    - img [ref=e118]
+                  - generic [ref=e120]: (0)
+                - generic [ref=e121]:
+                  - generic [ref=e122]:
+                    - generic [ref=e123]: ₹1,499.00
+                    - generic [ref=e124]: ₹3,990.00
+                  - paragraph [ref=e125]: Amazon
+                  - link "Compare prices" [ref=e126] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-017
+                - generic [ref=e127]:
+                  - link "View Deal" [ref=e128] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-017
+                    - text: View Deal
+                    - img [ref=e129]
+                  - link "Specs" [ref=e134] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-017
+                    - text: Specs
+                    - img [ref=e135]
+            - button "boAt Rockerz 550 ANC Bluetooth Headphones Black 49% OFF Add to wishlist boAt Rockerz 550 ANC Bluetooth Headphones Black boAt (0) ₹2,999.00 ₹5,990.00 Amazon Compare prices View Deal Specs" [ref=e137]:
+              - generic [ref=e138]:
+                - img "boAt Rockerz 550 ANC Bluetooth Headphones Black" [ref=e139]
+                - generic [ref=e140]: 49% OFF
+                - button "Add to wishlist" [ref=e141]:
+                  - img [ref=e142]
+              - generic [ref=e144]:
+                - generic [ref=e145]:
+                  - heading "boAt Rockerz 550 ANC Bluetooth Headphones Black" [level=3] [ref=e146]
+                  - paragraph [ref=e147]: boAt
+                - generic [ref=e148]:
+                  - generic [ref=e149]:
+                    - img [ref=e150]
+                    - img [ref=e152]
+                    - img [ref=e154]
+                    - img [ref=e156]
+                    - img [ref=e158]
+                  - generic [ref=e160]: (0)
+                - generic [ref=e161]:
+                  - generic [ref=e162]:
+                    - generic [ref=e163]: ₹2,999.00
+                    - generic [ref=e164]: ₹5,990.00
+                  - paragraph [ref=e165]: Amazon
+                  - link "Compare prices" [ref=e166] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-018
+                - generic [ref=e167]:
+                  - link "View Deal" [ref=e168] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-018
+                    - text: View Deal
+                    - img [ref=e169]
+                  - link "Specs" [ref=e174] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-018
+                    - text: Specs
+                    - img [ref=e175]
+            - button "boAt Rockerz 550 ANC Bluetooth Headphones Silver Frost 49% OFF Add to wishlist boAt Rockerz 550 ANC Bluetooth Headphones Silver Frost boAt (0) ₹2,999.00 ₹5,990.00 Amazon Compare prices View Deal Specs" [ref=e177]:
+              - generic [ref=e178]:
+                - img "boAt Rockerz 550 ANC Bluetooth Headphones Silver Frost" [ref=e179]
+                - generic [ref=e180]: 49% OFF
+                - button "Add to wishlist" [ref=e181]:
+                  - img [ref=e182]
+              - generic [ref=e184]:
+                - generic [ref=e185]:
+                  - heading "boAt Rockerz 550 ANC Bluetooth Headphones Silver Frost" [level=3] [ref=e186]
+                  - paragraph [ref=e187]: boAt
+                - generic [ref=e188]:
+                  - generic [ref=e189]:
+                    - img [ref=e190]
+                    - img [ref=e192]
+                    - img [ref=e194]
+                    - img [ref=e196]
+                    - img [ref=e198]
+                  - generic [ref=e200]: (0)
+                - generic [ref=e201]:
+                  - generic [ref=e202]:
+                    - generic [ref=e203]: ₹2,999.00
+                    - generic [ref=e204]: ₹5,990.00
+                  - paragraph [ref=e205]: Amazon
+                  - link "Compare prices" [ref=e206] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-019
+                - generic [ref=e207]:
+                  - link "View Deal" [ref=e208] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-019
+                    - text: View Deal
+                    - img [ref=e209]
+                  - link "Specs" [ref=e214] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-019
+                    - text: Specs
+                    - img [ref=e215]
+            - button "boAt Nirvana 751 ANC Headphones Space Black 49% OFF Add to wishlist boAt Nirvana 751 ANC Headphones Space Black boAt (0) ₹4,999.00 ₹9,990.00 Amazon Compare prices View Deal Specs" [ref=e217]:
+              - generic [ref=e218]:
+                - img "boAt Nirvana 751 ANC Headphones Space Black" [ref=e219]
+                - generic [ref=e220]: 49% OFF
+                - button "Add to wishlist" [ref=e221]:
+                  - img [ref=e222]
+              - generic [ref=e224]:
+                - generic [ref=e225]:
+                  - heading "boAt Nirvana 751 ANC Headphones Space Black" [level=3] [ref=e226]
+                  - paragraph [ref=e227]: boAt
+                - generic [ref=e228]:
+                  - generic [ref=e229]:
+                    - img [ref=e230]
+                    - img [ref=e232]
+                    - img [ref=e234]
+                    - img [ref=e236]
+                    - img [ref=e238]
+                  - generic [ref=e240]: (0)
+                - generic [ref=e241]:
+                  - generic [ref=e242]:
+                    - generic [ref=e243]: ₹4,999.00
+                    - generic [ref=e244]: ₹9,990.00
+                  - paragraph [ref=e245]: Amazon
+                  - link "Compare prices" [ref=e246] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-020
+                - generic [ref=e247]:
+                  - link "View Deal" [ref=e248] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-020
+                    - text: View Deal
+                    - img [ref=e249]
+                  - link "Specs" [ref=e254] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-020
+                    - text: Specs
+                    - img [ref=e255]
+            - button "boAt Nirvana 751 ANC Headphones Milky White 49% OFF Add to wishlist boAt Nirvana 751 ANC Headphones Milky White boAt (0) ₹4,999.00 ₹9,990.00 Amazon Compare prices View Deal Specs" [ref=e257]:
+              - generic [ref=e258]:
+                - img "boAt Nirvana 751 ANC Headphones Milky White" [ref=e259]
+                - generic [ref=e260]: 49% OFF
+                - button "Add to wishlist" [ref=e261]:
+                  - img [ref=e262]
+              - generic [ref=e264]:
+                - generic [ref=e265]:
+                  - heading "boAt Nirvana 751 ANC Headphones Milky White" [level=3] [ref=e266]
+                  - paragraph [ref=e267]: boAt
+                - generic [ref=e268]:
+                  - generic [ref=e269]:
+                    - img [ref=e270]
+                    - img [ref=e272]
+                    - img [ref=e274]
+                    - img [ref=e276]
+                    - img [ref=e278]
+                  - generic [ref=e280]: (0)
+                - generic [ref=e281]:
+                  - generic [ref=e282]:
+                    - generic [ref=e283]: ₹4,999.00
+                    - generic [ref=e284]: ₹9,990.00
+                  - paragraph [ref=e285]: Amazon
+                  - link "Compare prices" [ref=e286] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-021
+                - generic [ref=e287]:
+                  - link "View Deal" [ref=e288] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-021
+                    - text: View Deal
+                    - img [ref=e289]
+                  - link "Specs" [ref=e294] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-021
+                    - text: Specs
+                    - img [ref=e295]
+            - button "boAt Bassheads 100 Wired Earphones Black 60% OFF Add to wishlist boAt Bassheads 100 Wired Earphones Black boAt (0) ₹399.00 ₹999.00 Amazon Compare prices View Deal Specs" [ref=e297]:
+              - generic [ref=e298]:
+                - img "boAt Bassheads 100 Wired Earphones Black" [ref=e299]
+                - generic [ref=e300]: 60% OFF
+                - button "Add to wishlist" [ref=e301]:
+                  - img [ref=e302]
+              - generic [ref=e304]:
+                - generic [ref=e305]:
+                  - heading "boAt Bassheads 100 Wired Earphones Black" [level=3] [ref=e306]
+                  - paragraph [ref=e307]: boAt
+                - generic [ref=e308]:
+                  - generic [ref=e309]:
+                    - img [ref=e310]
+                    - img [ref=e312]
+                    - img [ref=e314]
+                    - img [ref=e316]
+                    - img [ref=e318]
+                  - generic [ref=e320]: (0)
+                - generic [ref=e321]:
+                  - generic [ref=e322]:
+                    - generic [ref=e323]: ₹399.00
+                    - generic [ref=e324]: ₹999.00
+                  - paragraph [ref=e325]: Amazon
+                  - link "Compare prices" [ref=e326] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-022
+                - generic [ref=e327]:
+                  - link "View Deal" [ref=e328] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-022
+                    - text: View Deal
+                    - img [ref=e329]
+                  - link "Specs" [ref=e334] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-022
+                    - text: Specs
+                    - img [ref=e335]
+            - button "boAt Bassheads 100 Wired Earphones Mint Green 60% OFF Add to wishlist boAt Bassheads 100 Wired Earphones Mint Green boAt (0) ₹399.00 ₹999.00 Amazon Compare prices View Deal Specs" [ref=e337]:
+              - generic [ref=e338]:
+                - img "boAt Bassheads 100 Wired Earphones Mint Green" [ref=e339]
+                - generic [ref=e340]: 60% OFF
+                - button "Add to wishlist" [ref=e341]:
+                  - img [ref=e342]
+              - generic [ref=e344]:
+                - generic [ref=e345]:
+                  - heading "boAt Bassheads 100 Wired Earphones Mint Green" [level=3] [ref=e346]
+                  - paragraph [ref=e347]: boAt
+                - generic [ref=e348]:
+                  - generic [ref=e349]:
+                    - img [ref=e350]
+                    - img [ref=e352]
+                    - img [ref=e354]
+                    - img [ref=e356]
+                    - img [ref=e358]
+                  - generic [ref=e360]: (0)
+                - generic [ref=e361]:
+                  - generic [ref=e362]:
+                    - generic [ref=e363]: ₹399.00
+                    - generic [ref=e364]: ₹999.00
+                  - paragraph [ref=e365]: Amazon
+                  - link "Compare prices" [ref=e366] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-023
+                - generic [ref=e367]:
+                  - link "View Deal" [ref=e368] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-023
+                    - text: View Deal
+                    - img [ref=e369]
+                  - link "Specs" [ref=e374] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-023
+                    - text: Specs
+                    - img [ref=e375]
+            - button "boAt Rockerz 255 Pro+ Neckband Earphones Active Black 59% OFF Add to wishlist boAt Rockerz 255 Pro+ Neckband Earphones Active Black boAt (0) ₹1,199.00 ₹2,990.00 Amazon Compare prices View Deal Specs" [ref=e377]:
+              - generic [ref=e378]:
+                - img "boAt Rockerz 255 Pro+ Neckband Earphones Active Black" [ref=e379]
+                - generic [ref=e380]: 59% OFF
+                - button "Add to wishlist" [ref=e381]:
+                  - img [ref=e382]
+              - generic [ref=e384]:
+                - generic [ref=e385]:
+                  - heading "boAt Rockerz 255 Pro+ Neckband Earphones Active Black" [level=3] [ref=e386]
+                  - paragraph [ref=e387]: boAt
+                - generic [ref=e388]:
+                  - generic [ref=e389]:
+                    - img [ref=e390]
+                    - img [ref=e392]
+                    - img [ref=e394]
+                    - img [ref=e396]
+                    - img [ref=e398]
+                  - generic [ref=e400]: (0)
+                - generic [ref=e401]:
+                  - generic [ref=e402]:
+                    - generic [ref=e403]: ₹1,199.00
+                    - generic [ref=e404]: ₹2,990.00
+                  - paragraph [ref=e405]: Amazon
+                  - link "Compare prices" [ref=e406] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-024
+                - generic [ref=e407]:
+                  - link "View Deal" [ref=e408] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-024
+                    - text: View Deal
+                    - img [ref=e409]
+                  - link "Specs" [ref=e414] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-024
+                    - text: Specs
+                    - img [ref=e415]
+            - button "boAt Rockerz 255 Pro+ Neckband Earphones Teal Green 59% OFF Add to wishlist boAt Rockerz 255 Pro+ Neckband Earphones Teal Green boAt (0) ₹1,199.00 ₹2,990.00 Amazon Compare prices View Deal Specs" [ref=e417]:
+              - generic [ref=e418]:
+                - img "boAt Rockerz 255 Pro+ Neckband Earphones Teal Green" [ref=e419]
+                - generic [ref=e420]: 59% OFF
+                - button "Add to wishlist" [ref=e421]:
+                  - img [ref=e422]
+              - generic [ref=e424]:
+                - generic [ref=e425]:
+                  - heading "boAt Rockerz 255 Pro+ Neckband Earphones Teal Green" [level=3] [ref=e426]
+                  - paragraph [ref=e427]: boAt
+                - generic [ref=e428]:
+                  - generic [ref=e429]:
+                    - img [ref=e430]
+                    - img [ref=e432]
+                    - img [ref=e434]
+                    - img [ref=e436]
+                    - img [ref=e438]
+                  - generic [ref=e440]: (0)
+                - generic [ref=e441]:
+                  - generic [ref=e442]:
+                    - generic [ref=e443]: ₹1,199.00
+                    - generic [ref=e444]: ₹2,990.00
+                  - paragraph [ref=e445]: Amazon
+                  - link "Compare prices" [ref=e446] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-025
+                - generic [ref=e447]:
+                  - link "View Deal" [ref=e448] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-025
+                    - text: View Deal
+                    - img [ref=e449]
+                  - link "Specs" [ref=e454] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-025
+                    - text: Specs
+                    - img [ref=e455]
+            - button "Noise Two Bluetooth Headphones Jet Black 62% OFF Add to wishlist Noise Two Bluetooth Headphones Jet Black Noise (0) ₹1,499.00 ₹3,999.00 Amazon Compare prices View Deal Specs" [ref=e457]:
+              - generic [ref=e458]:
+                - img "Noise Two Bluetooth Headphones Jet Black" [ref=e459]
+                - generic [ref=e460]: 62% OFF
+                - button "Add to wishlist" [ref=e461]:
+                  - img [ref=e462]
+              - generic [ref=e464]:
+                - generic [ref=e465]:
+                  - heading "Noise Two Bluetooth Headphones Jet Black" [level=3] [ref=e466]
+                  - paragraph [ref=e467]: Noise
+                - generic [ref=e468]:
+                  - generic [ref=e469]:
+                    - img [ref=e470]
+                    - img [ref=e472]
+                    - img [ref=e474]
+                    - img [ref=e476]
+                    - img [ref=e478]
+                  - generic [ref=e480]: (0)
+                - generic [ref=e481]:
+                  - generic [ref=e482]:
+                    - generic [ref=e483]: ₹1,499.00
+                    - generic [ref=e484]: ₹3,999.00
+                  - paragraph [ref=e485]: Amazon
+                  - link "Compare prices" [ref=e486] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-043
+                - generic [ref=e487]:
+                  - link "View Deal" [ref=e488] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-043
+                    - text: View Deal
+                    - img [ref=e489]
+                  - link "Specs" [ref=e494] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-043
+                    - text: Specs
+                    - img [ref=e495]
+            - button "Noise Two Bluetooth Headphones Milky White 62% OFF Add to wishlist Noise Two Bluetooth Headphones Milky White Noise (0) ₹1,499.00 ₹3,999.00 Amazon Compare prices View Deal Specs" [ref=e497]:
+              - generic [ref=e498]:
+                - img "Noise Two Bluetooth Headphones Milky White" [ref=e499]
+                - generic [ref=e500]: 62% OFF
+                - button "Add to wishlist" [ref=e501]:
+                  - img [ref=e502]
+              - generic [ref=e504]:
+                - generic [ref=e505]:
+                  - heading "Noise Two Bluetooth Headphones Milky White" [level=3] [ref=e506]
+                  - paragraph [ref=e507]: Noise
+                - generic [ref=e508]:
+                  - generic [ref=e509]:
+                    - img [ref=e510]
+                    - img [ref=e512]
+                    - img [ref=e514]
+                    - img [ref=e516]
+                    - img [ref=e518]
+                  - generic [ref=e520]: (0)
+                - generic [ref=e521]:
+                  - generic [ref=e522]:
+                    - generic [ref=e523]: ₹1,499.00
+                    - generic [ref=e524]: ₹3,999.00
+                  - paragraph [ref=e525]: Amazon
+                  - link "Compare prices" [ref=e526] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-044
+                - generic [ref=e527]:
+                  - link "View Deal" [ref=e528] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-044
+                    - text: View Deal
+                    - img [ref=e529]
+                  - link "Specs" [ref=e534] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-044
+                    - text: Specs
+                    - img [ref=e535]
+            - button "Noise Three ANC Bluetooth Headphones Space Black 50% OFF Add to wishlist Noise Three ANC Bluetooth Headphones Space Black Noise (0) ₹2,999.00 ₹5,999.00 Amazon Compare prices View Deal Specs" [ref=e537]:
+              - generic [ref=e538]:
+                - img "Noise Three ANC Bluetooth Headphones Space Black" [ref=e539]
+                - generic [ref=e540]: 50% OFF
+                - button "Add to wishlist" [ref=e541]:
+                  - img [ref=e542]
+              - generic [ref=e544]:
+                - generic [ref=e545]:
+                  - heading "Noise Three ANC Bluetooth Headphones Space Black" [level=3] [ref=e546]
+                  - paragraph [ref=e547]: Noise
+                - generic [ref=e548]:
+                  - generic [ref=e549]:
+                    - img [ref=e550]
+                    - img [ref=e552]
+                    - img [ref=e554]
+                    - img [ref=e556]
+                    - img [ref=e558]
+                  - generic [ref=e560]: (0)
+                - generic [ref=e561]:
+                  - generic [ref=e562]:
+                    - generic [ref=e563]: ₹2,999.00
+                    - generic [ref=e564]: ₹5,999.00
+                  - paragraph [ref=e565]: Amazon
+                  - link "Compare prices" [ref=e566] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-045
+                - generic [ref=e567]:
+                  - link "View Deal" [ref=e568] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-045
+                    - text: View Deal
+                    - img [ref=e569]
+                  - link "Specs" [ref=e574] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-045
+                    - text: Specs
+                    - img [ref=e575]
+            - button "Noise Three ANC Bluetooth Headphones Silver Grey 50% OFF Add to wishlist Noise Three ANC Bluetooth Headphones Silver Grey Noise (0) ₹2,999.00 ₹5,999.00 Amazon Compare prices View Deal Specs" [ref=e577]:
+              - generic [ref=e578]:
+                - img "Noise Three ANC Bluetooth Headphones Silver Grey" [ref=e579]
+                - generic [ref=e580]: 50% OFF
+                - button "Add to wishlist" [ref=e581]:
+                  - img [ref=e582]
+              - generic [ref=e584]:
+                - generic [ref=e585]:
+                  - heading "Noise Three ANC Bluetooth Headphones Silver Grey" [level=3] [ref=e586]
+                  - paragraph [ref=e587]: Noise
+                - generic [ref=e588]:
+                  - generic [ref=e589]:
+                    - img [ref=e590]
+                    - img [ref=e592]
+                    - img [ref=e594]
+                    - img [ref=e596]
+                    - img [ref=e598]
+                  - generic [ref=e600]: (0)
+                - generic [ref=e601]:
+                  - generic [ref=e602]:
+                    - generic [ref=e603]: ₹2,999.00
+                    - generic [ref=e604]: ₹5,999.00
+                  - paragraph [ref=e605]: Amazon
+                  - link "Compare prices" [ref=e606] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-046
+                - generic [ref=e607]:
+                  - link "View Deal" [ref=e608] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-046
+                    - text: View Deal
+                    - img [ref=e609]
+                  - link "Specs" [ref=e614] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-046
+                    - text: Specs
+                    - img [ref=e615]
+            - button "Noise NoiseFit Vibe Headphones Charcoal Black 50% OFF Add to wishlist Noise NoiseFit Vibe Headphones Charcoal Black Noise (0) ₹4,999.00 ₹9,999.00 Amazon Compare prices View Deal Specs" [ref=e617]:
+              - generic [ref=e618]:
+                - img "Noise NoiseFit Vibe Headphones Charcoal Black" [ref=e619]
+                - generic [ref=e620]: 50% OFF
+                - button "Add to wishlist" [ref=e621]:
+                  - img [ref=e622]
+              - generic [ref=e624]:
+                - generic [ref=e625]:
+                  - heading "Noise NoiseFit Vibe Headphones Charcoal Black" [level=3] [ref=e626]
+                  - paragraph [ref=e627]: Noise
+                - generic [ref=e628]:
+                  - generic [ref=e629]:
+                    - img [ref=e630]
+                    - img [ref=e632]
+                    - img [ref=e634]
+                    - img [ref=e636]
+                    - img [ref=e638]
+                  - generic [ref=e640]: (0)
+                - generic [ref=e641]:
+                  - generic [ref=e642]:
+                    - generic [ref=e643]: ₹4,999.00
+                    - generic [ref=e644]: ₹9,999.00
+                  - paragraph [ref=e645]: Amazon
+                  - link "Compare prices" [ref=e646] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-047
+                - generic [ref=e647]:
+                  - link "View Deal" [ref=e648] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-047
+                    - text: View Deal
+                    - img [ref=e649]
+                  - link "Specs" [ref=e654] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-047
+                    - text: Specs
+                    - img [ref=e655]
+            - button "Noise NoiseFit Vibe Headphones Ivory White 50% OFF Add to wishlist Noise NoiseFit Vibe Headphones Ivory White Noise (0) ₹4,999.00 ₹9,999.00 Amazon Compare prices View Deal Specs" [ref=e657]:
+              - generic [ref=e658]:
+                - img "Noise NoiseFit Vibe Headphones Ivory White" [ref=e659]
+                - generic [ref=e660]: 50% OFF
+                - button "Add to wishlist" [ref=e661]:
+                  - img [ref=e662]
+              - generic [ref=e664]:
+                - generic [ref=e665]:
+                  - heading "Noise NoiseFit Vibe Headphones Ivory White" [level=3] [ref=e666]
+                  - paragraph [ref=e667]: Noise
+                - generic [ref=e668]:
+                  - generic [ref=e669]:
+                    - img [ref=e670]
+                    - img [ref=e672]
+                    - img [ref=e674]
+                    - img [ref=e676]
+                    - img [ref=e678]
+                  - generic [ref=e680]: (0)
+                - generic [ref=e681]:
+                  - generic [ref=e682]:
+                    - generic [ref=e683]: ₹4,999.00
+                    - generic [ref=e684]: ₹9,999.00
+                  - paragraph [ref=e685]: Amazon
+                  - link "Compare prices" [ref=e686] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-048
+                - generic [ref=e687]:
+                  - link "View Deal" [ref=e688] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-048
+                    - text: View Deal
+                    - img [ref=e689]
+                  - link "Specs" [ref=e694] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-048
+                    - text: Specs
+                    - img [ref=e695]
+            - button "Noise Flair Neckband Earphones Jet Black 60% OFF Add to wishlist Noise Flair Neckband Earphones Jet Black Noise (0) ₹999.00 ₹2,499.00 Amazon Compare prices View Deal Specs" [ref=e697]:
+              - generic [ref=e698]:
+                - img "Noise Flair Neckband Earphones Jet Black" [ref=e699]
+                - generic [ref=e700]: 60% OFF
+                - button "Add to wishlist" [ref=e701]:
+                  - img [ref=e702]
+              - generic [ref=e704]:
+                - generic [ref=e705]:
+                  - heading "Noise Flair Neckband Earphones Jet Black" [level=3] [ref=e706]
+                  - paragraph [ref=e707]: Noise
+                - generic [ref=e708]:
+                  - generic [ref=e709]:
+                    - img [ref=e710]
+                    - img [ref=e712]
+                    - img [ref=e714]
+                    - img [ref=e716]
+                    - img [ref=e718]
+                  - generic [ref=e720]: (0)
+                - generic [ref=e721]:
+                  - generic [ref=e722]:
+                    - generic [ref=e723]: ₹999.00
+                    - generic [ref=e724]: ₹2,499.00
+                  - paragraph [ref=e725]: Amazon
+                  - link "Compare prices" [ref=e726] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-049
+                - generic [ref=e727]:
+                  - link "View Deal" [ref=e728] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-049
+                    - text: View Deal
+                    - img [ref=e729]
+                  - link "Specs" [ref=e734] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-049
+                    - text: Specs
+                    - img [ref=e735]
+            - button "Noise Flair Neckband Earphones Teal Green 60% OFF Add to wishlist Noise Flair Neckband Earphones Teal Green Noise (0) ₹999.00 ₹2,499.00 Amazon Compare prices View Deal Specs" [ref=e737]:
+              - generic [ref=e738]:
+                - img "Noise Flair Neckband Earphones Teal Green" [ref=e739]
+                - generic [ref=e740]: 60% OFF
+                - button "Add to wishlist" [ref=e741]:
+                  - img [ref=e742]
+              - generic [ref=e744]:
+                - generic [ref=e745]:
+                  - heading "Noise Flair Neckband Earphones Teal Green" [level=3] [ref=e746]
+                  - paragraph [ref=e747]: Noise
+                - generic [ref=e748]:
+                  - generic [ref=e749]:
+                    - img [ref=e750]
+                    - img [ref=e752]
+                    - img [ref=e754]
+                    - img [ref=e756]
+                    - img [ref=e758]
+                  - generic [ref=e760]: (0)
+                - generic [ref=e761]:
+                  - generic [ref=e762]:
+                    - generic [ref=e763]: ₹999.00
+                    - generic [ref=e764]: ₹2,499.00
+                  - paragraph [ref=e765]: Amazon
+                  - link "Compare prices" [ref=e766] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-050
+                - generic [ref=e767]:
+                  - link "View Deal" [ref=e768] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-050
+                    - text: View Deal
+                    - img [ref=e769]
+                  - link "Specs" [ref=e774] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-050
+                    - text: Specs
+                    - img [ref=e775]
+            - button "realme C67 5G 6GB+128GB Starry Black 20% OFF Add to wishlist realme C67 5G 6GB+128GB Starry Black realme (0) ₹11,999.00 ₹14,999.00 Amazon Compare prices View Deal Specs" [ref=e777]:
+              - generic [ref=e778]:
+                - img "realme C67 5G 6GB+128GB Starry Black" [ref=e779]
+                - generic [ref=e780]: 20% OFF
+                - button "Add to wishlist" [ref=e781]:
+                  - img [ref=e782]
+              - generic [ref=e784]:
+                - generic [ref=e785]:
+                  - heading "realme C67 5G 6GB+128GB Starry Black" [level=3] [ref=e786]
+                  - paragraph [ref=e787]: realme
+                - generic [ref=e788]:
+                  - generic [ref=e789]:
+                    - img [ref=e790]
+                    - img [ref=e792]
+                    - img [ref=e794]
+                    - img [ref=e796]
+                    - img [ref=e798]
+                  - generic [ref=e800]: (0)
+                - generic [ref=e801]:
+                  - generic [ref=e802]:
+                    - generic [ref=e803]: ₹11,999.00
+                    - generic [ref=e804]: ₹14,999.00
+                  - paragraph [ref=e805]: Amazon
+                  - link "Compare prices" [ref=e806] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-001
+                - generic [ref=e807]:
+                  - link "View Deal" [ref=e808] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-001
+                    - text: View Deal
+                    - img [ref=e809]
+                  - link "Specs" [ref=e814] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-001
+                    - text: Specs
+                    - img [ref=e815]
+            - button "realme C67 5G 6GB+128GB Sunny Oasis 20% OFF Add to wishlist realme C67 5G 6GB+128GB Sunny Oasis realme (0) ₹11,999.00 ₹14,999.00 Amazon Compare prices View Deal Specs" [ref=e817]:
+              - generic [ref=e818]:
+                - img "realme C67 5G 6GB+128GB Sunny Oasis" [ref=e819]
+                - generic [ref=e820]: 20% OFF
+                - button "Add to wishlist" [ref=e821]:
+                  - img [ref=e822]
+              - generic [ref=e824]:
+                - generic [ref=e825]:
+                  - heading "realme C67 5G 6GB+128GB Sunny Oasis" [level=3] [ref=e826]
+                  - paragraph [ref=e827]: realme
+                - generic [ref=e828]:
+                  - generic [ref=e829]:
+                    - img [ref=e830]
+                    - img [ref=e832]
+                    - img [ref=e834]
+                    - img [ref=e836]
+                    - img [ref=e838]
+                  - generic [ref=e840]: (0)
+                - generic [ref=e841]:
+                  - generic [ref=e842]:
+                    - generic [ref=e843]: ₹11,999.00
+                    - generic [ref=e844]: ₹14,999.00
+                  - paragraph [ref=e845]: Amazon
+                  - link "Compare prices" [ref=e846] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-002
+                - generic [ref=e847]:
+                  - link "View Deal" [ref=e848] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-002
+                    - text: View Deal
+                    - img [ref=e849]
+                  - link "Specs" [ref=e854] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-002
+                    - text: Specs
+                    - img [ref=e855]
+            - button "realme C67 5G 8GB+256GB Sky Blue 17% OFF Add to wishlist realme C67 5G 8GB+256GB Sky Blue realme (0) ₹13,999.00 ₹16,999.00 Amazon Compare prices View Deal Specs" [ref=e857]:
+              - generic [ref=e858]:
+                - img "realme C67 5G 8GB+256GB Sky Blue" [ref=e859]
+                - generic [ref=e860]: 17% OFF
+                - button "Add to wishlist" [ref=e861]:
+                  - img [ref=e862]
+              - generic [ref=e864]:
+                - generic [ref=e865]:
+                  - heading "realme C67 5G 8GB+256GB Sky Blue" [level=3] [ref=e866]
+                  - paragraph [ref=e867]: realme
+                - generic [ref=e868]:
+                  - generic [ref=e869]:
+                    - img [ref=e870]
+                    - img [ref=e872]
+                    - img [ref=e874]
+                    - img [ref=e876]
+                    - img [ref=e878]
+                  - generic [ref=e880]: (0)
+                - generic [ref=e881]:
+                  - generic [ref=e882]:
+                    - generic [ref=e883]: ₹13,999.00
+                    - generic [ref=e884]: ₹16,999.00
+                  - paragraph [ref=e885]: Amazon
+                  - link "Compare prices" [ref=e886] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-003
+                - generic [ref=e887]:
+                  - link "View Deal" [ref=e888] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-003
+                    - text: View Deal
+                    - img [ref=e889]
+                  - link "Specs" [ref=e894] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-003
+                    - text: Specs
+                    - img [ref=e895]
+            - button "realme C67 5G 8GB+256GB Underwater Black 17% OFF Add to wishlist realme C67 5G 8GB+256GB Underwater Black realme (0) ₹13,999.00 ₹16,999.00 Amazon Compare prices View Deal Specs" [ref=e897]:
+              - generic [ref=e898]:
+                - img "realme C67 5G 8GB+256GB Underwater Black" [ref=e899]
+                - generic [ref=e900]: 17% OFF
+                - button "Add to wishlist" [ref=e901]:
+                  - img [ref=e902]
+              - generic [ref=e904]:
+                - generic [ref=e905]:
+                  - heading "realme C67 5G 8GB+256GB Underwater Black" [level=3] [ref=e906]
+                  - paragraph [ref=e907]: realme
+                - generic [ref=e908]:
+                  - generic [ref=e909]:
+                    - img [ref=e910]
+                    - img [ref=e912]
+                    - img [ref=e914]
+                    - img [ref=e916]
+                    - img [ref=e918]
+                  - generic [ref=e920]: (0)
+                - generic [ref=e921]:
+                  - generic [ref=e922]:
+                    - generic [ref=e923]: ₹13,999.00
+                    - generic [ref=e924]: ₹16,999.00
+                  - paragraph [ref=e925]: Amazon
+                  - link "Compare prices" [ref=e926] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-004
+                - generic [ref=e927]:
+                  - link "View Deal" [ref=e928] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-004
+                    - text: View Deal
+                    - img [ref=e929]
+                  - link "Specs" [ref=e934] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-004
+                    - text: Specs
+                    - img [ref=e935]
+            - button "realme C67 5G 8GB+256GB Dark Purple 17% OFF Add to wishlist realme C67 5G 8GB+256GB Dark Purple realme (0) ₹13,999.00 ₹16,999.00 Amazon Compare prices View Deal Specs" [ref=e937]:
+              - generic [ref=e938]:
+                - img "realme C67 5G 8GB+256GB Dark Purple" [ref=e939]
+                - generic [ref=e940]: 17% OFF
+                - button "Add to wishlist" [ref=e941]:
+                  - img [ref=e942]
+              - generic [ref=e944]:
+                - generic [ref=e945]:
+                  - heading "realme C67 5G 8GB+256GB Dark Purple" [level=3] [ref=e946]
+                  - paragraph [ref=e947]: realme
+                - generic [ref=e948]:
+                  - generic [ref=e949]:
+                    - img [ref=e950]
+                    - img [ref=e952]
+                    - img [ref=e954]
+                    - img [ref=e956]
+                    - img [ref=e958]
+                  - generic [ref=e960]: (0)
+                - generic [ref=e961]:
+                  - generic [ref=e962]:
+                    - generic [ref=e963]: ₹13,999.00
+                    - generic [ref=e964]: ₹16,999.00
+                  - paragraph [ref=e965]: Amazon
+                  - link "Compare prices" [ref=e966] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-005
+                - generic [ref=e967]:
+                  - link "View Deal" [ref=e968] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-005
+                    - text: View Deal
+                    - img [ref=e969]
+                  - link "Specs" [ref=e974] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-005
+                    - text: Specs
+                    - img [ref=e975]
+            - button "realme Narzo 70 Pro 5G 8GB+128GB Glass Green Add to wishlist realme Narzo 70 Pro 5G 8GB+128GB Glass Green realme (0) ₹16,999.00 ₹19,999.00 Amazon Compare prices View Deal Specs" [ref=e977]:
+              - generic [ref=e978]:
+                - img "realme Narzo 70 Pro 5G 8GB+128GB Glass Green" [ref=e979]
+                - button "Add to wishlist" [ref=e980]:
+                  - img [ref=e981]
+              - generic [ref=e983]:
+                - generic [ref=e984]:
+                  - heading "realme Narzo 70 Pro 5G 8GB+128GB Glass Green" [level=3] [ref=e985]
+                  - paragraph [ref=e986]: realme
+                - generic [ref=e987]:
+                  - generic [ref=e988]:
+                    - img [ref=e989]
+                    - img [ref=e991]
+                    - img [ref=e993]
+                    - img [ref=e995]
+                    - img [ref=e997]
+                  - generic [ref=e999]: (0)
+                - generic [ref=e1000]:
+                  - generic [ref=e1001]:
+                    - generic [ref=e1002]: ₹16,999.00
+                    - generic [ref=e1003]: ₹19,999.00
+                  - paragraph [ref=e1004]: Amazon
+                  - link "Compare prices" [ref=e1005] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-006
+                - generic [ref=e1006]:
+                  - link "View Deal" [ref=e1007] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-006
+                    - text: View Deal
+                    - img [ref=e1008]
+                  - link "Specs" [ref=e1013] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-006
+                    - text: Specs
+                    - img [ref=e1014]
+            - button "realme Narzo 70 Pro 5G 8GB+128GB Glass Gold Add to wishlist realme Narzo 70 Pro 5G 8GB+128GB Glass Gold realme (0) ₹16,999.00 ₹19,999.00 Amazon Compare prices View Deal Specs" [ref=e1016]:
+              - generic [ref=e1017]:
+                - img "realme Narzo 70 Pro 5G 8GB+128GB Glass Gold" [ref=e1018]
+                - button "Add to wishlist" [ref=e1019]:
+                  - img [ref=e1020]
+              - generic [ref=e1022]:
+                - generic [ref=e1023]:
+                  - heading "realme Narzo 70 Pro 5G 8GB+128GB Glass Gold" [level=3] [ref=e1024]
+                  - paragraph [ref=e1025]: realme
+                - generic [ref=e1026]:
+                  - generic [ref=e1027]:
+                    - img [ref=e1028]
+                    - img [ref=e1030]
+                    - img [ref=e1032]
+                    - img [ref=e1034]
+                    - img [ref=e1036]
+                  - generic [ref=e1038]: (0)
+                - generic [ref=e1039]:
+                  - generic [ref=e1040]:
+                    - generic [ref=e1041]: ₹16,999.00
+                    - generic [ref=e1042]: ₹19,999.00
+                  - paragraph [ref=e1043]: Amazon
+                  - link "Compare prices" [ref=e1044] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-007
+                - generic [ref=e1045]:
+                  - link "View Deal" [ref=e1046] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-007
+                    - text: View Deal
+                    - img [ref=e1047]
+                  - link "Specs" [ref=e1052] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-007
+                    - text: Specs
+                    - img [ref=e1053]
+            - button "realme Narzo 70 Pro 5G 8GB+128GB Glass Black Add to wishlist realme Narzo 70 Pro 5G 8GB+128GB Glass Black realme (0) ₹16,999.00 ₹19,999.00 Amazon Compare prices View Deal Specs" [ref=e1055]:
+              - generic [ref=e1056]:
+                - img "realme Narzo 70 Pro 5G 8GB+128GB Glass Black" [ref=e1057]
+                - button "Add to wishlist" [ref=e1058]:
+                  - img [ref=e1059]
+              - generic [ref=e1061]:
+                - generic [ref=e1062]:
+                  - heading "realme Narzo 70 Pro 5G 8GB+128GB Glass Black" [level=3] [ref=e1063]
+                  - paragraph [ref=e1064]: realme
+                - generic [ref=e1065]:
+                  - generic [ref=e1066]:
+                    - img [ref=e1067]
+                    - img [ref=e1069]
+                    - img [ref=e1071]
+                    - img [ref=e1073]
+                    - img [ref=e1075]
+                  - generic [ref=e1077]: (0)
+                - generic [ref=e1078]:
+                  - generic [ref=e1079]:
+                    - generic [ref=e1080]: ₹16,999.00
+                    - generic [ref=e1081]: ₹19,999.00
+                  - paragraph [ref=e1082]: Amazon
+                  - link "Compare prices" [ref=e1083] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-008
+                - generic [ref=e1084]:
+                  - link "View Deal" [ref=e1085] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-008
+                    - text: View Deal
+                    - img [ref=e1086]
+                  - link "Specs" [ref=e1091] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-008
+                    - text: Specs
+                    - img [ref=e1092]
+            - button "realme 12+ 5G 8GB+256GB Navigator Beige Add to wishlist realme 12+ 5G 8GB+256GB Navigator Beige realme (0) ₹21,999.00 ₹24,999.00 Amazon Compare prices View Deal Specs" [ref=e1094]:
+              - generic [ref=e1095]:
+                - img "realme 12+ 5G 8GB+256GB Navigator Beige" [ref=e1096]
+                - button "Add to wishlist" [ref=e1097]:
+                  - img [ref=e1098]
+              - generic [ref=e1100]:
+                - generic [ref=e1101]:
+                  - heading "realme 12+ 5G 8GB+256GB Navigator Beige" [level=3] [ref=e1102]
+                  - paragraph [ref=e1103]: realme
+                - generic [ref=e1104]:
+                  - generic [ref=e1105]:
+                    - img [ref=e1106]
+                    - img [ref=e1108]
+                    - img [ref=e1110]
+                    - img [ref=e1112]
+                    - img [ref=e1114]
+                  - generic [ref=e1116]: (0)
+                - generic [ref=e1117]:
+                  - generic [ref=e1118]:
+                    - generic [ref=e1119]: ₹21,999.00
+                    - generic [ref=e1120]: ₹24,999.00
+                  - paragraph [ref=e1121]: Amazon
+                  - link "Compare prices" [ref=e1122] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-009
+                - generic [ref=e1123]:
+                  - link "View Deal" [ref=e1124] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-009
+                    - text: View Deal
+                    - img [ref=e1125]
+                  - link "Specs" [ref=e1130] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-009
+                    - text: Specs
+                    - img [ref=e1131]
+            - button "realme 12+ 5G 8GB+256GB Pioneer Green Add to wishlist realme 12+ 5G 8GB+256GB Pioneer Green realme (0) ₹21,999.00 ₹24,999.00 Amazon Compare prices View Deal Specs" [ref=e1133]:
+              - generic [ref=e1134]:
+                - img "realme 12+ 5G 8GB+256GB Pioneer Green" [ref=e1135]
+                - button "Add to wishlist" [ref=e1136]:
+                  - img [ref=e1137]
+              - generic [ref=e1139]:
+                - generic [ref=e1140]:
+                  - heading "realme 12+ 5G 8GB+256GB Pioneer Green" [level=3] [ref=e1141]
+                  - paragraph [ref=e1142]: realme
+                - generic [ref=e1143]:
+                  - generic [ref=e1144]:
+                    - img [ref=e1145]
+                    - img [ref=e1147]
+                    - img [ref=e1149]
+                    - img [ref=e1151]
+                    - img [ref=e1153]
+                  - generic [ref=e1155]: (0)
+                - generic [ref=e1156]:
+                  - generic [ref=e1157]:
+                    - generic [ref=e1158]: ₹21,999.00
+                    - generic [ref=e1159]: ₹24,999.00
+                  - paragraph [ref=e1160]: Amazon
+                  - link "Compare prices" [ref=e1161] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-010
+                - generic [ref=e1162]:
+                  - link "View Deal" [ref=e1163] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-010
+                    - text: View Deal
+                    - img [ref=e1164]
+                  - link "Specs" [ref=e1169] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-010
+                    - text: Specs
+                    - img [ref=e1170]
+            - button "Samsung Galaxy A15 5G 8GB+128GB Blue Black 17% OFF Add to wishlist Samsung Galaxy A15 5G 8GB+128GB Blue Black Samsung (0) ₹13,999.00 ₹16,999.00 Amazon Compare prices View Deal Specs" [ref=e1172]:
+              - generic [ref=e1173]:
+                - img "Samsung Galaxy A15 5G 8GB+128GB Blue Black" [ref=e1174]
+                - generic [ref=e1175]: 17% OFF
+                - button "Add to wishlist" [ref=e1176]:
+                  - img [ref=e1177]
+              - generic [ref=e1179]:
+                - generic [ref=e1180]:
+                  - heading "Samsung Galaxy A15 5G 8GB+128GB Blue Black" [level=3] [ref=e1181]
+                  - paragraph [ref=e1182]: Samsung
+                - generic [ref=e1183]:
+                  - generic [ref=e1184]:
+                    - img [ref=e1185]
+                    - img [ref=e1187]
+                    - img [ref=e1189]
+                    - img [ref=e1191]
+                    - img [ref=e1193]
+                  - generic [ref=e1195]: (0)
+                - generic [ref=e1196]:
+                  - generic [ref=e1197]:
+                    - generic [ref=e1198]: ₹13,999.00
+                    - generic [ref=e1199]: ₹16,999.00
+                  - paragraph [ref=e1200]: Amazon
+                  - link "Compare prices" [ref=e1201] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-001
+                - generic [ref=e1202]:
+                  - link "View Deal" [ref=e1203] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-001
+                    - text: View Deal
+                    - img [ref=e1204]
+                  - link "Specs" [ref=e1209] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-001
+                    - text: Specs
+                    - img [ref=e1210]
+            - button "Samsung Galaxy A15 5G 8GB+128GB Light Blue 17% OFF Add to wishlist Samsung Galaxy A15 5G 8GB+128GB Light Blue Samsung (0) ₹13,999.00 ₹16,999.00 Amazon Compare prices View Deal Specs" [ref=e1212]:
+              - generic [ref=e1213]:
+                - img "Samsung Galaxy A15 5G 8GB+128GB Light Blue" [ref=e1214]
+                - generic [ref=e1215]: 17% OFF
+                - button "Add to wishlist" [ref=e1216]:
+                  - img [ref=e1217]
+              - generic [ref=e1219]:
+                - generic [ref=e1220]:
+                  - heading "Samsung Galaxy A15 5G 8GB+128GB Light Blue" [level=3] [ref=e1221]
+                  - paragraph [ref=e1222]: Samsung
+                - generic [ref=e1223]:
+                  - generic [ref=e1224]:
+                    - img [ref=e1225]
+                    - img [ref=e1227]
+                    - img [ref=e1229]
+                    - img [ref=e1231]
+                    - img [ref=e1233]
+                  - generic [ref=e1235]: (0)
+                - generic [ref=e1236]:
+                  - generic [ref=e1237]:
+                    - generic [ref=e1238]: ₹13,999.00
+                    - generic [ref=e1239]: ₹16,999.00
+                  - paragraph [ref=e1240]: Amazon
+                  - link "Compare prices" [ref=e1241] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-002
+                - generic [ref=e1242]:
+                  - link "View Deal" [ref=e1243] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-002
+                    - text: View Deal
+                    - img [ref=e1244]
+                  - link "Specs" [ref=e1249] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-002
+                    - text: Specs
+                    - img [ref=e1250]
+            - button "Samsung Galaxy A15 5G 8GB+128GB Peach 17% OFF Add to wishlist Samsung Galaxy A15 5G 8GB+128GB Peach Samsung (0) ₹13,999.00 ₹16,999.00 Amazon Compare prices View Deal Specs" [ref=e1252]:
+              - generic [ref=e1253]:
+                - img "Samsung Galaxy A15 5G 8GB+128GB Peach" [ref=e1254]
+                - generic [ref=e1255]: 17% OFF
+                - button "Add to wishlist" [ref=e1256]:
+                  - img [ref=e1257]
+              - generic [ref=e1259]:
+                - generic [ref=e1260]:
+                  - heading "Samsung Galaxy A15 5G 8GB+128GB Peach" [level=3] [ref=e1261]
+                  - paragraph [ref=e1262]: Samsung
+                - generic [ref=e1263]:
+                  - generic [ref=e1264]:
+                    - img [ref=e1265]
+                    - img [ref=e1267]
+                    - img [ref=e1269]
+                    - img [ref=e1271]
+                    - img [ref=e1273]
+                  - generic [ref=e1275]: (0)
+                - generic [ref=e1276]:
+                  - generic [ref=e1277]:
+                    - generic [ref=e1278]: ₹13,999.00
+                    - generic [ref=e1279]: ₹16,999.00
+                  - paragraph [ref=e1280]: Amazon
+                  - link "Compare prices" [ref=e1281] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-003
+                - generic [ref=e1282]:
+                  - link "View Deal" [ref=e1283] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-003
+                    - text: View Deal
+                    - img [ref=e1284]
+                  - link "Specs" [ref=e1289] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-003
+                    - text: Specs
+                    - img [ref=e1290]
+            - button "Samsung Galaxy A25 5G 8GB+128GB Iceblue 18% OFF Add to wishlist Samsung Galaxy A25 5G 8GB+128GB Iceblue Samsung (0) ₹17,999.00 ₹21,999.00 Amazon Compare prices View Deal Specs" [ref=e1292]:
+              - generic [ref=e1293]:
+                - img "Samsung Galaxy A25 5G 8GB+128GB Iceblue" [ref=e1294]
+                - generic [ref=e1295]: 18% OFF
+                - button "Add to wishlist" [ref=e1296]:
+                  - img [ref=e1297]
+              - generic [ref=e1299]:
+                - generic [ref=e1300]:
+                  - heading "Samsung Galaxy A25 5G 8GB+128GB Iceblue" [level=3] [ref=e1301]
+                  - paragraph [ref=e1302]: Samsung
+                - generic [ref=e1303]:
+                  - generic [ref=e1304]:
+                    - img [ref=e1305]
+                    - img [ref=e1307]
+                    - img [ref=e1309]
+                    - img [ref=e1311]
+                    - img [ref=e1313]
+                  - generic [ref=e1315]: (0)
+                - generic [ref=e1316]:
+                  - generic [ref=e1317]:
+                    - generic [ref=e1318]: ₹17,999.00
+                    - generic [ref=e1319]: ₹21,999.00
+                  - paragraph [ref=e1320]: Amazon
+                  - link "Compare prices" [ref=e1321] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-004
+                - generic [ref=e1322]:
+                  - link "View Deal" [ref=e1323] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-004
+                    - text: View Deal
+                    - img [ref=e1324]
+                  - link "Specs" [ref=e1329] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-004
+                    - text: Specs
+                    - img [ref=e1330]
+            - button "Samsung Galaxy A25 5G 8GB+128GB Yellow 18% OFF Add to wishlist Samsung Galaxy A25 5G 8GB+128GB Yellow Samsung (0) ₹17,999.00 ₹21,999.00 Amazon Compare prices View Deal Specs" [ref=e1332]:
+              - generic [ref=e1333]:
+                - img "Samsung Galaxy A25 5G 8GB+128GB Yellow" [ref=e1334]
+                - generic [ref=e1335]: 18% OFF
+                - button "Add to wishlist" [ref=e1336]:
+                  - img [ref=e1337]
+              - generic [ref=e1339]:
+                - generic [ref=e1340]:
+                  - heading "Samsung Galaxy A25 5G 8GB+128GB Yellow" [level=3] [ref=e1341]
+                  - paragraph [ref=e1342]: Samsung
+                - generic [ref=e1343]:
+                  - generic [ref=e1344]:
+                    - img [ref=e1345]
+                    - img [ref=e1347]
+                    - img [ref=e1349]
+                    - img [ref=e1351]
+                    - img [ref=e1353]
+                  - generic [ref=e1355]: (0)
+                - generic [ref=e1356]:
+                  - generic [ref=e1357]:
+                    - generic [ref=e1358]: ₹17,999.00
+                    - generic [ref=e1359]: ₹21,999.00
+                  - paragraph [ref=e1360]: Amazon
+                  - link "Compare prices" [ref=e1361] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-005
+                - generic [ref=e1362]:
+                  - link "View Deal" [ref=e1363] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-005
+                    - text: View Deal
+                    - img [ref=e1364]
+                  - link "Specs" [ref=e1369] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-005
+                    - text: Specs
+                    - img [ref=e1370]
+            - button "Samsung Galaxy A35 5G 8GB+256GB Awesome Iceblue 16% OFF Add to wishlist Samsung Galaxy A35 5G 8GB+256GB Awesome Iceblue Samsung (0) ₹24,999.00 ₹29,999.00 Amazon Compare prices View Deal Specs" [ref=e1372]:
+              - generic [ref=e1373]:
+                - img "Samsung Galaxy A35 5G 8GB+256GB Awesome Iceblue" [ref=e1374]
+                - generic [ref=e1375]: 16% OFF
+                - button "Add to wishlist" [ref=e1376]:
+                  - img [ref=e1377]
+              - generic [ref=e1379]:
+                - generic [ref=e1380]:
+                  - heading "Samsung Galaxy A35 5G 8GB+256GB Awesome Iceblue" [level=3] [ref=e1381]
+                  - paragraph [ref=e1382]: Samsung
+                - generic [ref=e1383]:
+                  - generic [ref=e1384]:
+                    - img [ref=e1385]
+                    - img [ref=e1387]
+                    - img [ref=e1389]
+                    - img [ref=e1391]
+                    - img [ref=e1393]
+                  - generic [ref=e1395]: (0)
+                - generic [ref=e1396]:
+                  - generic [ref=e1397]:
+                    - generic [ref=e1398]: ₹24,999.00
+                    - generic [ref=e1399]: ₹29,999.00
+                  - paragraph [ref=e1400]: Amazon
+                  - link "Compare prices" [ref=e1401] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-006
+                - generic [ref=e1402]:
+                  - link "View Deal" [ref=e1403] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-006
+                    - text: View Deal
+                    - img [ref=e1404]
+                  - link "Specs" [ref=e1409] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-006
+                    - text: Specs
+                    - img [ref=e1410]
+            - button "Samsung Galaxy A35 5G 8GB+256GB Awesome Navy 16% OFF Add to wishlist Samsung Galaxy A35 5G 8GB+256GB Awesome Navy Samsung (0) ₹24,999.00 ₹29,999.00 Amazon Compare prices View Deal Specs" [ref=e1412]:
+              - generic [ref=e1413]:
+                - img "Samsung Galaxy A35 5G 8GB+256GB Awesome Navy" [ref=e1414]
+                - generic [ref=e1415]: 16% OFF
+                - button "Add to wishlist" [ref=e1416]:
+                  - img [ref=e1417]
+              - generic [ref=e1419]:
+                - generic [ref=e1420]:
+                  - heading "Samsung Galaxy A35 5G 8GB+256GB Awesome Navy" [level=3] [ref=e1421]
+                  - paragraph [ref=e1422]: Samsung
+                - generic [ref=e1423]:
+                  - generic [ref=e1424]:
+                    - img [ref=e1425]
+                    - img [ref=e1427]
+                    - img [ref=e1429]
+                    - img [ref=e1431]
+                    - img [ref=e1433]
+                  - generic [ref=e1435]: (0)
+                - generic [ref=e1436]:
+                  - generic [ref=e1437]:
+                    - generic [ref=e1438]: ₹24,999.00
+                    - generic [ref=e1439]: ₹29,999.00
+                  - paragraph [ref=e1440]: Amazon
+                  - link "Compare prices" [ref=e1441] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-007
+                - generic [ref=e1442]:
+                  - link "View Deal" [ref=e1443] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-007
+                    - text: View Deal
+                    - img [ref=e1444]
+                  - link "Specs" [ref=e1449] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-007
+                    - text: Specs
+                    - img [ref=e1450]
+            - button "Samsung Galaxy A35 5G 8GB+256GB Awesome Lilac 16% OFF Add to wishlist Samsung Galaxy A35 5G 8GB+256GB Awesome Lilac Samsung (0) ₹24,999.00 ₹29,999.00 Amazon Compare prices View Deal Specs" [ref=e1452]:
+              - generic [ref=e1453]:
+                - img "Samsung Galaxy A35 5G 8GB+256GB Awesome Lilac" [ref=e1454]
+                - generic [ref=e1455]: 16% OFF
+                - button "Add to wishlist" [ref=e1456]:
+                  - img [ref=e1457]
+              - generic [ref=e1459]:
+                - generic [ref=e1460]:
+                  - heading "Samsung Galaxy A35 5G 8GB+256GB Awesome Lilac" [level=3] [ref=e1461]
+                  - paragraph [ref=e1462]: Samsung
+                - generic [ref=e1463]:
+                  - generic [ref=e1464]:
+                    - img [ref=e1465]
+                    - img [ref=e1467]
+                    - img [ref=e1469]
+                    - img [ref=e1471]
+                    - img [ref=e1473]
+                  - generic [ref=e1475]: (0)
+                - generic [ref=e1476]:
+                  - generic [ref=e1477]:
+                    - generic [ref=e1478]: ₹24,999.00
+                    - generic [ref=e1479]: ₹29,999.00
+                  - paragraph [ref=e1480]: Amazon
+                  - link "Compare prices" [ref=e1481] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-008
+                - generic [ref=e1482]:
+                  - link "View Deal" [ref=e1483] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-008
+                    - text: View Deal
+                    - img [ref=e1484]
+                  - link "Specs" [ref=e1489] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-008
+                    - text: Specs
+                    - img [ref=e1490]
+            - button "Samsung Galaxy A55 5G 8GB+256GB Awesome Iceblue Add to wishlist Samsung Galaxy A55 5G 8GB+256GB Awesome Iceblue Samsung (0) ₹29,999.00 ₹34,999.00 Amazon Compare prices View Deal Specs" [ref=e1492]:
+              - generic [ref=e1493]:
+                - img "Samsung Galaxy A55 5G 8GB+256GB Awesome Iceblue" [ref=e1494]
+                - button "Add to wishlist" [ref=e1495]:
+                  - img [ref=e1496]
+              - generic [ref=e1498]:
+                - generic [ref=e1499]:
+                  - heading "Samsung Galaxy A55 5G 8GB+256GB Awesome Iceblue" [level=3] [ref=e1500]
+                  - paragraph [ref=e1501]: Samsung
+                - generic [ref=e1502]:
+                  - generic [ref=e1503]:
+                    - img [ref=e1504]
+                    - img [ref=e1506]
+                    - img [ref=e1508]
+                    - img [ref=e1510]
+                    - img [ref=e1512]
+                  - generic [ref=e1514]: (0)
+                - generic [ref=e1515]:
+                  - generic [ref=e1516]:
+                    - generic [ref=e1517]: ₹29,999.00
+                    - generic [ref=e1518]: ₹34,999.00
+                  - paragraph [ref=e1519]: Amazon
+                  - link "Compare prices" [ref=e1520] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-009
+                - generic [ref=e1521]:
+                  - link "View Deal" [ref=e1522] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-009
+                    - text: View Deal
+                    - img [ref=e1523]
+                  - link "Specs" [ref=e1528] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-009
+                    - text: Specs
+                    - img [ref=e1529]
+            - button "Samsung Galaxy A55 5G 8GB+256GB Awesome Navy Add to wishlist Samsung Galaxy A55 5G 8GB+256GB Awesome Navy Samsung (0) ₹29,999.00 ₹34,999.00 Amazon Compare prices View Deal Specs" [ref=e1531]:
+              - generic [ref=e1532]:
+                - img "Samsung Galaxy A55 5G 8GB+256GB Awesome Navy" [ref=e1533]
+                - button "Add to wishlist" [ref=e1534]:
+                  - img [ref=e1535]
+              - generic [ref=e1537]:
+                - generic [ref=e1538]:
+                  - heading "Samsung Galaxy A55 5G 8GB+256GB Awesome Navy" [level=3] [ref=e1539]
+                  - paragraph [ref=e1540]: Samsung
+                - generic [ref=e1541]:
+                  - generic [ref=e1542]:
+                    - img [ref=e1543]
+                    - img [ref=e1545]
+                    - img [ref=e1547]
+                    - img [ref=e1549]
+                    - img [ref=e1551]
+                  - generic [ref=e1553]: (0)
+                - generic [ref=e1554]:
+                  - generic [ref=e1555]:
+                    - generic [ref=e1556]: ₹29,999.00
+                    - generic [ref=e1557]: ₹34,999.00
+                  - paragraph [ref=e1558]: Amazon
+                  - link "Compare prices" [ref=e1559] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-010
+                - generic [ref=e1560]:
+                  - link "View Deal" [ref=e1561] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-010
+                    - text: View Deal
+                    - img [ref=e1562]
+                  - link "Specs" [ref=e1567] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-010
+                    - text: Specs
+                    - img [ref=e1568]
+            - button "boAt Airdopes 311 Pro TWS Earbuds Silver Mist 58% OFF Add to wishlist boAt Airdopes 311 Pro TWS Earbuds Silver Mist boAt (0) ₹2,499.00 ₹5,990.00 Amazon Compare prices View Deal Specs" [ref=e1570]:
+              - generic [ref=e1571]:
+                - img "boAt Airdopes 311 Pro TWS Earbuds Silver Mist" [ref=e1572]
+                - generic [ref=e1573]: 58% OFF
+                - button "Add to wishlist" [ref=e1574]:
+                  - img [ref=e1575]
+              - generic [ref=e1577]:
+                - generic [ref=e1578]:
+                  - heading "boAt Airdopes 311 Pro TWS Earbuds Silver Mist" [level=3] [ref=e1579]
+                  - paragraph [ref=e1580]: boAt
+                - generic [ref=e1581]:
+                  - generic [ref=e1582]:
+                    - img [ref=e1583]
+                    - img [ref=e1585]
+                    - img [ref=e1587]
+                    - img [ref=e1589]
+                    - img [ref=e1591]
+                  - generic [ref=e1593]: (0)
+                - generic [ref=e1594]:
+                  - generic [ref=e1595]:
+                    - generic [ref=e1596]: ₹2,499.00
+                    - generic [ref=e1597]: ₹5,990.00
+                  - paragraph [ref=e1598]: Amazon
+                  - link "Compare prices" [ref=e1599] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-006
+                - generic [ref=e1600]:
+                  - link "View Deal" [ref=e1601] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-006
+                    - text: View Deal
+                    - img [ref=e1602]
+                  - link "Specs" [ref=e1607] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-006
+                    - text: Specs
+                    - img [ref=e1608]
+            - button "boAt Stone 1500 40W Bluetooth Speaker Black 49% OFF Add to wishlist boAt Stone 1500 40W Bluetooth Speaker Black boAt (0) ₹4,999.00 ₹9,990.00 Amazon Compare prices View Deal Specs" [ref=e1610]:
+              - generic [ref=e1611]:
+                - img "boAt Stone 1500 40W Bluetooth Speaker Black" [ref=e1612]
+                - generic [ref=e1613]: 49% OFF
+                - button "Add to wishlist" [ref=e1614]:
+                  - img [ref=e1615]
+              - generic [ref=e1617]:
+                - generic [ref=e1618]:
+                  - heading "boAt Stone 1500 40W Bluetooth Speaker Black" [level=3] [ref=e1619]
+                  - paragraph [ref=e1620]: boAt
+                - generic [ref=e1621]:
+                  - generic [ref=e1622]:
+                    - img [ref=e1623]
+                    - img [ref=e1625]
+                    - img [ref=e1627]
+                    - img [ref=e1629]
+                    - img [ref=e1631]
+                  - generic [ref=e1633]: (0)
+                - generic [ref=e1634]:
+                  - generic [ref=e1635]:
+                    - generic [ref=e1636]: ₹4,999.00
+                    - generic [ref=e1637]: ₹9,990.00
+                  - paragraph [ref=e1638]: Amazon
+                  - link "Compare prices" [ref=e1639] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-032
+                - generic [ref=e1640]:
+                  - link "View Deal" [ref=e1641] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-032
+                    - text: View Deal
+                    - img [ref=e1642]
+                  - link "Specs" [ref=e1647] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-032
+                    - text: Specs
+                    - img [ref=e1648]
+            - button "boAt WCDL 20W USB-C PD Charger White 53% OFF Add to wishlist boAt WCDL 20W USB-C PD Charger White boAt (0) ₹699.00 ₹1,499.00 Amazon Compare prices View Deal Specs" [ref=e1650]:
+              - generic [ref=e1651]:
+                - img "boAt WCDL 20W USB-C PD Charger White" [ref=e1652]
+                - generic [ref=e1653]: 53% OFF
+                - button "Add to wishlist" [ref=e1654]:
+                  - img [ref=e1655]
+              - generic [ref=e1657]:
+                - generic [ref=e1658]:
+                  - heading "boAt WCDL 20W USB-C PD Charger White" [level=3] [ref=e1659]
+                  - paragraph [ref=e1660]: boAt
+                - generic [ref=e1661]:
+                  - generic [ref=e1662]:
+                    - img [ref=e1663]
+                    - img [ref=e1665]
+                    - img [ref=e1667]
+                    - img [ref=e1669]
+                    - img [ref=e1671]
+                  - generic [ref=e1673]: (0)
+                - generic [ref=e1674]:
+                  - generic [ref=e1675]:
+                    - generic [ref=e1676]: ₹699.00
+                    - generic [ref=e1677]: ₹1,499.00
+                  - paragraph [ref=e1678]: Amazon
+                  - link "Compare prices" [ref=e1679] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-048
+                - generic [ref=e1680]:
+                  - link "View Deal" [ref=e1681] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-048
+                    - text: View Deal
+                    - img [ref=e1682]
+                  - link "Specs" [ref=e1687] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-048
+                    - text: Specs
+                    - img [ref=e1688]
+            - button "boAt WCDL 65W GaN Charger Dual Port Black 49% OFF Add to wishlist boAt WCDL 65W GaN Charger Dual Port Black boAt (0) ₹1,999.00 ₹3,990.00 Amazon Compare prices View Deal Specs" [ref=e1690]:
+              - generic [ref=e1691]:
+                - img "boAt WCDL 65W GaN Charger Dual Port Black" [ref=e1692]
+                - generic [ref=e1693]: 49% OFF
+                - button "Add to wishlist" [ref=e1694]:
+                  - img [ref=e1695]
+              - generic [ref=e1697]:
+                - generic [ref=e1698]:
+                  - heading "boAt WCDL 65W GaN Charger Dual Port Black" [level=3] [ref=e1699]
+                  - paragraph [ref=e1700]: boAt
+                - generic [ref=e1701]:
+                  - generic [ref=e1702]:
+                    - img [ref=e1703]
+                    - img [ref=e1705]
+                    - img [ref=e1707]
+                    - img [ref=e1709]
+                    - img [ref=e1711]
+                  - generic [ref=e1713]: (0)
+                - generic [ref=e1714]:
+                  - generic [ref=e1715]:
+                    - generic [ref=e1716]: ₹1,999.00
+                    - generic [ref=e1717]: ₹3,990.00
+                  - paragraph [ref=e1718]: Amazon
+                  - link "Compare prices" [ref=e1719] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-BOT-049
+                - generic [ref=e1720]:
+                  - link "View Deal" [ref=e1721] [cursor=pointer]:
+                    - /url: /go/IN-EL-BOT-049
+                    - text: View Deal
+                    - img [ref=e1722]
+                  - link "Specs" [ref=e1727] [cursor=pointer]:
+                    - /url: /products/IN-EL-BOT-049
+                    - text: Specs
+                    - img [ref=e1728]
+            - button "Noise NoiseFit Buds Connect TWS Earbuds Chrome Silver 50% OFF Add to wishlist Noise NoiseFit Buds Connect TWS Earbuds Chrome Silver Noise (0) ₹3,999.00 ₹7,999.00 Amazon Compare prices View Deal Specs" [ref=e1730]:
+              - generic [ref=e1731]:
+                - img "Noise NoiseFit Buds Connect TWS Earbuds Chrome Silver" [ref=e1732]
+                - generic [ref=e1733]: 50% OFF
+                - button "Add to wishlist" [ref=e1734]:
+                  - img [ref=e1735]
+              - generic [ref=e1737]:
+                - generic [ref=e1738]:
+                  - heading "Noise NoiseFit Buds Connect TWS Earbuds Chrome Silver" [level=3] [ref=e1739]
+                  - paragraph [ref=e1740]: Noise
+                - generic [ref=e1741]:
+                  - generic [ref=e1742]:
+                    - img [ref=e1743]
+                    - img [ref=e1745]
+                    - img [ref=e1747]
+                    - img [ref=e1749]
+                    - img [ref=e1751]
+                  - generic [ref=e1753]: (0)
+                - generic [ref=e1754]:
+                  - generic [ref=e1755]:
+                    - generic [ref=e1756]: ₹3,999.00
+                    - generic [ref=e1757]: ₹7,999.00
+                  - paragraph [ref=e1758]: Amazon
+                  - link "Compare prices" [ref=e1759] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-NOI-037
+                - generic [ref=e1760]:
+                  - link "View Deal" [ref=e1761] [cursor=pointer]:
+                    - /url: /go/IN-EL-NOI-037
+                    - text: View Deal
+                    - img [ref=e1762]
+                  - link "Specs" [ref=e1767] [cursor=pointer]:
+                    - /url: /products/IN-EL-NOI-037
+                    - text: Specs
+                    - img [ref=e1768]
+            - button "realme 45W Dart Charge Adapter White 33% OFF Add to wishlist realme 45W Dart Charge Adapter White realme (0) ₹999.00 ₹1,499.00 Amazon Compare prices View Deal Specs" [ref=e1770]:
+              - generic [ref=e1771]:
+                - img "realme 45W Dart Charge Adapter White" [ref=e1772]
+                - generic [ref=e1773]: 33% OFF
+                - button "Add to wishlist" [ref=e1774]:
+                  - img [ref=e1775]
+              - generic [ref=e1777]:
+                - generic [ref=e1778]:
+                  - heading "realme 45W Dart Charge Adapter White" [level=3] [ref=e1779]
+                  - paragraph [ref=e1780]: realme
+                - generic [ref=e1781]:
+                  - generic [ref=e1782]:
+                    - img [ref=e1783]
+                    - img [ref=e1785]
+                    - img [ref=e1787]
+                    - img [ref=e1789]
+                    - img [ref=e1791]
+                  - generic [ref=e1793]: (0)
+                - generic [ref=e1794]:
+                  - generic [ref=e1795]:
+                    - generic [ref=e1796]: ₹999.00
+                    - generic [ref=e1797]: ₹1,499.00
+                  - paragraph [ref=e1798]: Amazon
+                  - link "Compare prices" [ref=e1799] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-RLM-039
+                - generic [ref=e1800]:
+                  - link "View Deal" [ref=e1801] [cursor=pointer]:
+                    - /url: /go/IN-EL-RLM-039
+                    - text: View Deal
+                    - img [ref=e1802]
+                  - link "Specs" [ref=e1807] [cursor=pointer]:
+                    - /url: /products/IN-EL-RLM-039
+                    - text: Specs
+                    - img [ref=e1808]
+            - button "Samsung 32-inch QHD M7 Smart Monitor White 24% OFF Add to wishlist Samsung 32-inch QHD M7 Smart Monitor White Samsung (0) ₹24,999.00 ₹32,999.00 Amazon Compare prices View Deal Specs" [ref=e1810]:
+              - generic [ref=e1811]:
+                - img "Samsung 32-inch QHD M7 Smart Monitor White" [ref=e1812]
+                - generic [ref=e1813]: 24% OFF
+                - button "Add to wishlist" [ref=e1814]:
+                  - img [ref=e1815]
+              - generic [ref=e1817]:
+                - generic [ref=e1818]:
+                  - heading "Samsung 32-inch QHD M7 Smart Monitor White" [level=3] [ref=e1819]
+                  - paragraph [ref=e1820]: Samsung
+                - generic [ref=e1821]:
+                  - generic [ref=e1822]:
+                    - img [ref=e1823]
+                    - img [ref=e1825]
+                    - img [ref=e1827]
+                    - img [ref=e1829]
+                    - img [ref=e1831]
+                  - generic [ref=e1833]: (0)
+                - generic [ref=e1834]:
+                  - generic [ref=e1835]:
+                    - generic [ref=e1836]: ₹24,999.00
+                    - generic [ref=e1837]: ₹32,999.00
+                  - paragraph [ref=e1838]: Amazon
+                  - link "Compare prices" [ref=e1839] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-037
+                - generic [ref=e1840]:
+                  - link "View Deal" [ref=e1841] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-037
+                    - text: View Deal
+                    - img [ref=e1842]
+                  - link "Specs" [ref=e1847] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-037
+                    - text: Specs
+                    - img [ref=e1848]
+            - button "Samsung 25W Charger White 45% OFF Add to wishlist Samsung 25W Charger White Samsung (0) ₹1,099.00 ₹1,999.00 Amazon Compare prices View Deal Specs" [ref=e1850]:
+              - generic [ref=e1851]:
+                - img "Samsung 25W Charger White" [ref=e1852]
+                - generic [ref=e1853]: 45% OFF
+                - button "Add to wishlist" [ref=e1854]:
+                  - img [ref=e1855]
+              - generic [ref=e1857]:
+                - generic [ref=e1858]:
+                  - heading "Samsung 25W Charger White" [level=3] [ref=e1859]
+                  - paragraph [ref=e1860]: Samsung
+                - generic [ref=e1861]:
+                  - generic [ref=e1862]:
+                    - img [ref=e1863]
+                    - img [ref=e1865]
+                    - img [ref=e1867]
+                    - img [ref=e1869]
+                    - img [ref=e1871]
+                  - generic [ref=e1873]: (0)
+                - generic [ref=e1874]:
+                  - generic [ref=e1875]:
+                    - generic [ref=e1876]: ₹1,099.00
+                    - generic [ref=e1877]: ₹1,999.00
+                  - paragraph [ref=e1878]: Amazon
+                  - link "Compare prices" [ref=e1879] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-042
+                - generic [ref=e1880]:
+                  - link "View Deal" [ref=e1881] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-042
+                    - text: View Deal
+                    - img [ref=e1882]
+                  - link "Specs" [ref=e1887] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-042
+                    - text: Specs
+                    - img [ref=e1888]
+            - button "Samsung Wireless Charger Pad 15W White 33% OFF Add to wishlist Samsung Wireless Charger Pad 15W White Samsung (0) ₹1,999.00 ₹2,999.00 Amazon Compare prices View Deal Specs" [ref=e1890]:
+              - generic [ref=e1891]:
+                - img "Samsung Wireless Charger Pad 15W White" [ref=e1892]
+                - generic [ref=e1893]: 33% OFF
+                - button "Add to wishlist" [ref=e1894]:
+                  - img [ref=e1895]
+              - generic [ref=e1897]:
+                - generic [ref=e1898]:
+                  - heading "Samsung Wireless Charger Pad 15W White" [level=3] [ref=e1899]
+                  - paragraph [ref=e1900]: Samsung
+                - generic [ref=e1901]:
+                  - generic [ref=e1902]:
+                    - img [ref=e1903]
+                    - img [ref=e1905]
+                    - img [ref=e1907]
+                    - img [ref=e1909]
+                    - img [ref=e1911]
+                  - generic [ref=e1913]: (0)
+                - generic [ref=e1914]:
+                  - generic [ref=e1915]:
+                    - generic [ref=e1916]: ₹1,999.00
+                    - generic [ref=e1917]: ₹2,999.00
+                  - paragraph [ref=e1918]: Amazon
+                  - link "Compare prices" [ref=e1919] [cursor=pointer]:
+                    - /url: /compare?product=IN-EL-SAM-047
+                - generic [ref=e1920]:
+                  - link "View Deal" [ref=e1921] [cursor=pointer]:
+                    - /url: /go/IN-EL-SAM-047
+                    - text: View Deal
+                    - img [ref=e1922]
+                  - link "Specs" [ref=e1927] [cursor=pointer]:
+                    - /url: /products/IN-EL-SAM-047
+                    - text: Specs
+                    - img [ref=e1928]
+  - contentinfo [ref=e1930]:
+    - generic [ref=e1931]:
+      - generic [ref=e1932]:
+        - generic [ref=e1933]:
+          - link "CB CloudBasket" [ref=e1934] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e1936]: CB
+            - generic [ref=e1937]: CloudBasket
+          - paragraph [ref=e1938]: India's Smartest Price Aggregator — No checkout, no storage, just the best prices.
+          - generic [ref=e1940]:
+            - button "DPDPA 2023" [ref=e1941]
+            - button "GDPR" [ref=e1942]
+            - button "FTC" [ref=e1943]
+            - button "ONDC" [ref=e1944]
+            - button "Startup India" [ref=e1945]
+          - generic [ref=e1946]:
+            - link "Chat with CloudBasket on WhatsApp" [ref=e1947] [cursor=pointer]:
+              - /url: https://wa.me/
+              - img [ref=e1948]
+            - button "Back to top" [ref=e1950]:
+              - text: Back to top
+              - img [ref=e1951]
+        - generic [ref=e1953]:
+          - paragraph [ref=e1954]: Shop
+          - list [ref=e1955]:
+            - listitem [ref=e1956]:
+              - link "All Products" [ref=e1957] [cursor=pointer]:
+                - /url: /products
+            - listitem [ref=e1958]:
+              - link "Hot Deals" [ref=e1959] [cursor=pointer]:
+                - /url: /deals
+            - listitem [ref=e1960]:
+              - link "Flash Sales" [ref=e1961] [cursor=pointer]:
+                - /url: /deals/flash
+            - listitem [ref=e1962]:
+              - link "Categories" [ref=e1963] [cursor=pointer]:
+                - /url: /categories
+            - listitem [ref=e1964]:
+              - link "Compare" [ref=e1965] [cursor=pointer]:
+                - /url: /compare
+            - listitem [ref=e1966]:
+              - link "Price Tracker" [ref=e1967] [cursor=pointer]:
+                - /url: /search
+        - generic [ref=e1968]:
+          - paragraph [ref=e1969]: Custom POD
+          - list [ref=e1970]:
+            - listitem [ref=e1971]:
+              - link "Designer T-Shirts" [ref=e1972] [cursor=pointer]:
+                - /url: /pod/tshirts
+            - listitem [ref=e1973]:
+              - link "Custom Mugs" [ref=e1974] [cursor=pointer]:
+                - /url: /pod/mugs
+            - listitem [ref=e1975]:
+              - link "Phone Cases" [ref=e1976] [cursor=pointer]:
+                - /url: /pod/phone-cases
+            - listitem [ref=e1977]:
+              - link "POD Hub" [ref=e1978] [cursor=pointer]:
+                - /url: /pod
+            - listitem [ref=e1979]:
+              - link "Shopping Quiz" [ref=e1980] [cursor=pointer]:
+                - /url: /quiz
+        - generic [ref=e1981]:
+          - paragraph [ref=e1982]: Company
+          - list [ref=e1983]:
+            - listitem [ref=e1984]:
+              - link "About Us" [ref=e1985] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e1986]:
+              - link "CloudBasket Blog" [ref=e1987] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e1988]:
+              - link "Help Center (FAQ)" [ref=e1989] [cursor=pointer]:
+                - /url: /faq
+            - listitem [ref=e1990]:
+              - link "Careers" [ref=e1991] [cursor=pointer]:
+                - /url: /careers
+            - listitem [ref=e1992]:
+              - link "Contact Support" [ref=e1993] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=e1994]:
+              - link "Site Index" [ref=e1995] [cursor=pointer]:
+                - /url: /sitemap
+        - generic [ref=e1996]:
+          - paragraph [ref=e1997]: Trust & Legal
+          - list [ref=e1998]:
+            - listitem [ref=e1999]:
+              - link "Privacy Policy" [ref=e2000] [cursor=pointer]:
+                - /url: /legal/privacy
+            - listitem [ref=e2001]:
+              - link "Terms of Service" [ref=e2002] [cursor=pointer]:
+                - /url: /legal/terms
+            - listitem [ref=e2003]:
+              - link "Cookie Policy" [ref=e2004] [cursor=pointer]:
+                - /url: /legal/cookies
+            - listitem [ref=e2005]:
+              - link "Affiliate Disclosure" [ref=e2006] [cursor=pointer]:
+                - /url: /affiliate-disclosure
+            - listitem [ref=e2007]:
+              - link "Associate Program" [ref=e2008] [cursor=pointer]:
+                - /url: /associates
+      - generic [ref=e2010]:
+        - generic [ref=e2011]:
+          - paragraph [ref=e2012]: © 2026 CloudBasket. All rights reserved.
+          - paragraph [ref=e2013]: "Powered by NEXQON HOLDINGS · VERSION STATE {VS.IN+}"
+        - generic [ref=e2014]:
+          - generic [ref=e2015]: DPDPA 2023 Compliant
+          - generic [ref=e2016]: GDPR Verified
+          - button "Cookie Settings" [ref=e2017]
+  - button "Back to top":
+    - img
+  - button "Open feedback" [ref=e2018]: Feedback
+  - button "Open Next.js Dev Tools" [ref=e2025] [cursor=pointer]:
+    - img [ref=e2026]
+```

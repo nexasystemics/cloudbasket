@@ -1,0 +1,487 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - text: "Flash Sale: Up to 70% off Mobiles"
+      - button "Dismiss promo ticker" [ref=e11]:
+        - img [ref=e12]
+    - generic [ref=e15]:
+      - link "CB CloudBasket" [ref=e16] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e18]: CB
+        - generic [ref=e19]: CloudBasket
+      - navigation "Primary navigation" [ref=e20]:
+        - generic [ref=e21]:
+          - link "Products" [ref=e22] [cursor=pointer]:
+            - /url: /products
+            - text: Products
+            - img [ref=e23]
+          - generic:
+            - link "Automotive":
+              - /url: /category/automotive
+              - img
+              - generic: Automotive
+            - link "Beauty":
+              - /url: /category/beauty
+              - img
+              - generic: Beauty
+            - link "Books":
+              - /url: /category/books
+              - img
+              - generic: Books
+            - link "Courses":
+              - /url: /category/courses
+              - img
+              - generic: Courses
+            - link "Electronics":
+              - /url: /category/electronics
+              - img
+              - generic: Electronics
+            - link "Fashion":
+              - /url: /category/fashion
+              - img
+              - generic: Fashion
+            - link "Finance":
+              - /url: /category/finance
+              - img
+              - generic: Finance
+            - link "Gaming":
+              - /url: /category/gaming
+              - img
+              - generic: Gaming
+            - link "Grocery":
+              - /url: /category/grocery
+              - img
+              - generic: Grocery
+            - link "Health":
+              - /url: /category/health
+              - img
+              - generic: Health
+            - link "Home":
+              - /url: /category/home
+              - img
+              - generic: Home
+            - link "Investments":
+              - /url: /category/investments
+              - img
+              - generic: Investments
+            - link "Jewellery":
+              - /url: /category/jewellery
+              - img
+              - generic: Jewellery
+            - link "Laptops":
+              - /url: /category/laptops
+              - img
+              - generic: Laptops
+            - link "Mobiles":
+              - /url: /category/mobiles
+              - img
+              - generic: Mobiles
+            - link "POD":
+              - /url: /category/pod
+              - img
+              - generic: POD
+            - link "Sports":
+              - /url: /category/sports
+              - img
+              - generic: Sports
+            - link "Toys":
+              - /url: /category/toys
+              - img
+              - generic: Toys
+            - link "Travel":
+              - /url: /category/travel
+              - img
+              - generic: Travel
+            - link "Watches":
+              - /url: /category/watches
+              - img
+              - generic: Watches
+        - generic [ref=e25]:
+          - link "Deals" [ref=e26] [cursor=pointer]:
+            - /url: /deals
+            - text: Deals
+            - img [ref=e27]
+          - generic:
+            - link "Flash Sales":
+              - /url: /deals/flash
+              - img
+              - generic: Flash Sales
+            - link "Top Offers":
+              - /url: /deals
+              - img
+              - generic: Top Offers
+            - link "CJ Network":
+              - /url: /cj
+              - img
+              - generic: CJ Network
+        - link "Categories" [ref=e30] [cursor=pointer]:
+          - /url: /categories
+        - generic [ref=e31]:
+          - link "POD" [ref=e32] [cursor=pointer]:
+            - /url: /pod
+            - text: POD
+            - img [ref=e33]
+          - generic:
+            - link "👕 T-Shirts":
+              - /url: /pod/tshirts
+              - img
+              - generic: 👕 T-Shirts
+            - link "☕ Mugs":
+              - /url: /pod/mugs
+              - img
+              - generic: ☕ Mugs
+            - link "📱 Phone Cases":
+              - /url: /pod/phone-cases
+              - img
+              - generic: 📱 Phone Cases
+            - link "💼 Laptop Bags":
+              - /url: /pod/laptop-bags
+              - img
+              - generic: 💼 Laptop Bags
+            - link "👜 Tote Bags":
+              - /url: /pod/tote-bags
+              - img
+              - generic: 👜 Tote Bags
+            - link "🧥 Hoodies":
+              - /url: /pod/hoodies
+              - img
+              - generic: 🧥 Hoodies
+        - link "🧠 Deal Quiz" [ref=e36] [cursor=pointer]:
+          - /url: /quiz
+        - link "Compare" [ref=e38] [cursor=pointer]:
+          - /url: /compare
+        - link "Blog" [ref=e40] [cursor=pointer]:
+          - /url: /blog
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - button "Toggle search" [ref=e43]:
+            - img [ref=e44]
+          - searchbox "Search" [ref=e47]
+        - generic [ref=e48]:
+          - img [ref=e49]
+          - combobox "Select country" [ref=e52]:
+            - option "India" [selected]
+            - option "United States"
+            - option "Europe"
+            - option "United Kingdom"
+        - generic [ref=e53]:
+          - generic [ref=e54]: 🌐
+          - combobox "Select locale" [ref=e55]:
+            - option "🇮🇳 India (₹)" [selected]
+            - option "🇺🇸 US ($)"
+            - option "🇬🇧 UK (£)"
+        - button "Toggle theme" [ref=e56]:
+          - img [ref=e57]
+        - link "Sign In" [ref=e59] [cursor=pointer]:
+          - /url: /login
+  - main [ref=e60]:
+    - main [ref=e61]:
+      - generic [ref=e63]:
+        - heading "Advanced Search" [level=1] [ref=e64]
+        - generic [ref=e66]:
+          - img [ref=e67]
+          - textbox "What are you looking for today?" [ref=e70]: mobile
+          - button [ref=e71]:
+            - img [ref=e72]
+        - generic [ref=e75]:
+          - paragraph [ref=e76]: "Popular:"
+          - button "iPhone 16" [ref=e77]
+          - button "Samsung Galaxy S25" [ref=e78]
+          - button "Nike shoes" [ref=e79]
+          - button "boAt earphones" [ref=e80]
+      - generic [ref=e81]:
+        - complementary [ref=e82]:
+          - generic [ref=e83]:
+            - heading "Filters" [level=2] [ref=e84]
+            - generic [ref=e85]:
+              - generic [ref=e86]:
+                - button "Category" [ref=e87]:
+                  - paragraph [ref=e88]: Category
+                  - img [ref=e89]
+                - generic [ref=e91]:
+                  - generic [ref=e92] [cursor=pointer]:
+                    - checkbox "personal-care" [ref=e93]
+                    - generic [ref=e94]: personal-care
+                  - generic [ref=e95] [cursor=pointer]:
+                    - checkbox "food-grocery" [ref=e96]
+                    - generic [ref=e97]: food-grocery
+                  - generic [ref=e98] [cursor=pointer]:
+                    - checkbox "home-appliances" [ref=e99]
+                    - generic [ref=e100]: home-appliances
+                  - generic [ref=e101] [cursor=pointer]:
+                    - checkbox "Electronics" [ref=e102]
+                    - generic [ref=e103]: Electronics
+                  - generic [ref=e104] [cursor=pointer]:
+                    - checkbox "Fashion" [ref=e105]
+                    - generic [ref=e106]: Fashion
+              - generic [ref=e107]:
+                - button "Brand" [ref=e108]:
+                  - paragraph [ref=e109]: Brand
+                  - img [ref=e110]
+                - generic [ref=e112]:
+                  - generic [ref=e113] [cursor=pointer]:
+                    - checkbox "HUL" [ref=e114]
+                    - generic [ref=e115]: HUL
+                  - generic [ref=e116] [cursor=pointer]:
+                    - checkbox "Dabur" [ref=e117]
+                    - generic [ref=e118]: Dabur
+                  - generic [ref=e119] [cursor=pointer]:
+                    - checkbox "ITC" [ref=e120]
+                    - generic [ref=e121]: ITC
+                  - generic [ref=e122] [cursor=pointer]:
+                    - checkbox "Godrej CP" [ref=e123]
+                    - generic [ref=e124]: Godrej CP
+                  - generic [ref=e125] [cursor=pointer]:
+                    - checkbox "Godrej" [ref=e126]
+                    - generic [ref=e127]: Godrej
+                  - generic [ref=e128] [cursor=pointer]:
+                    - checkbox "Bajaj Electricals" [ref=e129]
+                    - generic [ref=e130]: Bajaj Electricals
+                  - generic [ref=e131] [cursor=pointer]:
+                    - checkbox "Havells" [ref=e132]
+                    - generic [ref=e133]: Havells
+                  - generic [ref=e134] [cursor=pointer]:
+                    - checkbox "Philips" [ref=e135]
+                    - generic [ref=e136]: Philips
+                  - generic [ref=e137] [cursor=pointer]:
+                    - checkbox "TTK Prestige" [ref=e138]
+                    - generic [ref=e139]: TTK Prestige
+                  - generic [ref=e140] [cursor=pointer]:
+                    - checkbox "boAt" [ref=e141]
+                    - generic [ref=e142]: boAt
+                  - generic [ref=e143] [cursor=pointer]:
+                    - checkbox "Noise" [ref=e144]
+                    - generic [ref=e145]: Noise
+                  - generic [ref=e146] [cursor=pointer]:
+                    - checkbox "realme" [ref=e147]
+                    - generic [ref=e148]: realme
+                  - generic [ref=e149] [cursor=pointer]:
+                    - checkbox "Samsung" [ref=e150]
+                    - generic [ref=e151]: Samsung
+                  - generic [ref=e152] [cursor=pointer]:
+                    - checkbox "Puma" [ref=e153]
+                    - generic [ref=e154]: Puma
+                  - generic [ref=e155] [cursor=pointer]:
+                    - checkbox "Biba" [ref=e156]
+                    - generic [ref=e157]: Biba
+                  - generic [ref=e158] [cursor=pointer]:
+                    - checkbox "Britannia" [ref=e159]
+                    - generic [ref=e160]: Britannia
+              - generic [ref=e161]:
+                - button "Platform" [ref=e162]:
+                  - paragraph [ref=e163]: Platform
+                  - img [ref=e164]
+                - generic [ref=e166]:
+                  - generic [ref=e167] [cursor=pointer]:
+                    - checkbox "Amazon" [ref=e168]
+                    - generic [ref=e169]: Amazon
+                  - generic [ref=e170] [cursor=pointer]:
+                    - checkbox "Flipkart" [ref=e171]
+                    - generic [ref=e172]: Flipkart
+                  - generic [ref=e173] [cursor=pointer]:
+                    - checkbox "Croma" [ref=e174]
+                    - generic [ref=e175]: Croma
+                  - generic [ref=e176] [cursor=pointer]:
+                    - checkbox "Myntra" [ref=e177]
+                    - generic [ref=e178]: Myntra
+                  - generic [ref=e179] [cursor=pointer]:
+                    - checkbox "BigBasket" [ref=e180]
+                    - generic [ref=e181]: BigBasket
+                  - generic [ref=e182] [cursor=pointer]:
+                    - checkbox "Nykaa" [ref=e183]
+                    - generic [ref=e184]: Nykaa
+                  - generic [ref=e185] [cursor=pointer]:
+                    - checkbox "Meesho" [ref=e186]
+                    - generic [ref=e187]: Meesho
+              - generic [ref=e188]:
+                - button "Price Range" [ref=e189]:
+                  - paragraph [ref=e190]: Price Range
+                  - img [ref=e191]
+                - generic [ref=e193]:
+                  - generic [ref=e194]:
+                    - slider [ref=e198]
+                    - slider [ref=e199]
+                  - generic [ref=e200]:
+                    - generic [ref=e201]: ₹0
+                    - generic [ref=e202]: ₹1,00,000
+              - generic [ref=e203]:
+                - button "Min. Discount" [ref=e204]:
+                  - paragraph [ref=e205]: Min. Discount
+                  - img [ref=e206]
+                - generic [ref=e208]:
+                  - slider [ref=e212]
+                  - generic [ref=e213]:
+                    - generic [ref=e214]: 0%
+                    - generic [ref=e215]: 0%+
+              - generic [ref=e217] [cursor=pointer]:
+                - checkbox "Only Show In Stock" [ref=e218]
+                - generic [ref=e219]: Only Show In Stock
+            - button "Clear All Filters" [ref=e220]
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - generic [ref=e223]:
+              - heading "Results for \"mobile\"" [level=2] [ref=e224]
+              - paragraph [ref=e225]: 1 verified price points found
+            - generic [ref=e226]:
+              - img [ref=e227]
+              - combobox [ref=e228] [cursor=pointer]:
+                - option "Relevance" [selected]
+                - 'option "Price: Low to High"'
+                - 'option "Price: High to Low"'
+                - 'option "Discount: Highest First"'
+                - option "Newest"
+          - button "Godrej 1.5 Ton 5 Star Inverter Cassette AC WiFi variant 19% OFF Add to wishlist Godrej 1.5 Ton 5 Star Inverter Cassette AC WiFi variant Godrej (0) ₹56,990.00 ₹69,990.00 Amazon Compare prices View Deal Specs" [ref=e230]:
+            - generic [ref=e231]:
+              - img "Godrej 1.5 Ton 5 Star Inverter Cassette AC WiFi variant" [ref=e232]
+              - generic [ref=e233]: 19% OFF
+              - button "Add to wishlist" [ref=e234]:
+                - img [ref=e235]
+            - generic [ref=e237]:
+              - generic [ref=e238]:
+                - heading "Godrej 1.5 Ton 5 Star Inverter Cassette AC WiFi variant" [level=3] [ref=e239]
+                - paragraph [ref=e240]: Godrej
+              - generic [ref=e241]:
+                - generic [ref=e242]:
+                  - img [ref=e243]
+                  - img [ref=e245]
+                  - img [ref=e247]
+                  - img [ref=e249]
+                  - img [ref=e251]
+                - generic [ref=e253]: (0)
+              - generic [ref=e254]:
+                - generic [ref=e255]:
+                  - generic [ref=e256]: ₹56,990.00
+                  - generic [ref=e257]: ₹69,990.00
+                - paragraph [ref=e258]: Amazon
+                - link "Compare prices" [ref=e259] [cursor=pointer]:
+                  - /url: /compare?product=IN-HA-GOD-058
+              - generic [ref=e260]:
+                - link "View Deal" [ref=e261] [cursor=pointer]:
+                  - /url: /go/IN-HA-GOD-058
+                  - text: View Deal
+                  - img [ref=e262]
+                - link "Specs" [ref=e267] [cursor=pointer]:
+                  - /url: /products/IN-HA-GOD-058
+                  - text: Specs
+                  - img [ref=e268]
+  - contentinfo [ref=e270]:
+    - generic [ref=e271]:
+      - generic [ref=e272]:
+        - generic [ref=e273]:
+          - link "CB CloudBasket" [ref=e274] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e276]: CB
+            - generic [ref=e277]: CloudBasket
+          - paragraph [ref=e278]: India's Smartest Price Aggregator — No checkout, no storage, just the best prices.
+          - generic [ref=e280]:
+            - button "DPDPA 2023" [ref=e281]
+            - button "GDPR" [ref=e282]
+            - button "FTC" [ref=e283]
+            - button "ONDC" [ref=e284]
+            - button "Startup India" [ref=e285]
+          - generic [ref=e286]:
+            - link "Chat with CloudBasket on WhatsApp" [ref=e287] [cursor=pointer]:
+              - /url: https://wa.me/
+              - img [ref=e288]
+            - button "Back to top" [ref=e290]:
+              - text: Back to top
+              - img [ref=e291]
+        - generic [ref=e293]:
+          - paragraph [ref=e294]: Shop
+          - list [ref=e295]:
+            - listitem [ref=e296]:
+              - link "All Products" [ref=e297] [cursor=pointer]:
+                - /url: /products
+            - listitem [ref=e298]:
+              - link "Hot Deals" [ref=e299] [cursor=pointer]:
+                - /url: /deals
+            - listitem [ref=e300]:
+              - link "Flash Sales" [ref=e301] [cursor=pointer]:
+                - /url: /deals/flash
+            - listitem [ref=e302]:
+              - link "Categories" [ref=e303] [cursor=pointer]:
+                - /url: /categories
+            - listitem [ref=e304]:
+              - link "Compare" [ref=e305] [cursor=pointer]:
+                - /url: /compare
+            - listitem [ref=e306]:
+              - link "Price Tracker" [ref=e307] [cursor=pointer]:
+                - /url: /search
+        - generic [ref=e308]:
+          - paragraph [ref=e309]: Custom POD
+          - list [ref=e310]:
+            - listitem [ref=e311]:
+              - link "Designer T-Shirts" [ref=e312] [cursor=pointer]:
+                - /url: /pod/tshirts
+            - listitem [ref=e313]:
+              - link "Custom Mugs" [ref=e314] [cursor=pointer]:
+                - /url: /pod/mugs
+            - listitem [ref=e315]:
+              - link "Phone Cases" [ref=e316] [cursor=pointer]:
+                - /url: /pod/phone-cases
+            - listitem [ref=e317]:
+              - link "POD Hub" [ref=e318] [cursor=pointer]:
+                - /url: /pod
+            - listitem [ref=e319]:
+              - link "Shopping Quiz" [ref=e320] [cursor=pointer]:
+                - /url: /quiz
+        - generic [ref=e321]:
+          - paragraph [ref=e322]: Company
+          - list [ref=e323]:
+            - listitem [ref=e324]:
+              - link "About Us" [ref=e325] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e326]:
+              - link "CloudBasket Blog" [ref=e327] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e328]:
+              - link "Help Center (FAQ)" [ref=e329] [cursor=pointer]:
+                - /url: /faq
+            - listitem [ref=e330]:
+              - link "Careers" [ref=e331] [cursor=pointer]:
+                - /url: /careers
+            - listitem [ref=e332]:
+              - link "Contact Support" [ref=e333] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=e334]:
+              - link "Site Index" [ref=e335] [cursor=pointer]:
+                - /url: /sitemap
+        - generic [ref=e336]:
+          - paragraph [ref=e337]: Trust & Legal
+          - list [ref=e338]:
+            - listitem [ref=e339]:
+              - link "Privacy Policy" [ref=e340] [cursor=pointer]:
+                - /url: /legal/privacy
+            - listitem [ref=e341]:
+              - link "Terms of Service" [ref=e342] [cursor=pointer]:
+                - /url: /legal/terms
+            - listitem [ref=e343]:
+              - link "Cookie Policy" [ref=e344] [cursor=pointer]:
+                - /url: /legal/cookies
+            - listitem [ref=e345]:
+              - link "Affiliate Disclosure" [ref=e346] [cursor=pointer]:
+                - /url: /affiliate-disclosure
+            - listitem [ref=e347]:
+              - link "Associate Program" [ref=e348] [cursor=pointer]:
+                - /url: /associates
+      - generic [ref=e350]:
+        - generic [ref=e351]:
+          - paragraph [ref=e352]: © 2026 CloudBasket. All rights reserved.
+          - paragraph [ref=e353]: "Powered by NEXQON HOLDINGS · VERSION STATE {VS.IN+}"
+        - generic [ref=e354]:
+          - generic [ref=e355]: DPDPA 2023 Compliant
+          - generic [ref=e356]: GDPR Verified
+          - button "Cookie Settings" [ref=e357]
+  - button "Back to top":
+    - img
+  - button "Open feedback" [ref=e358]: Feedback
+  - button "Open Next.js Dev Tools" [ref=e365] [cursor=pointer]:
+    - img [ref=e366]
+```

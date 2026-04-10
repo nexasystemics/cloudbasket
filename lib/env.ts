@@ -25,6 +25,7 @@ export const env = {
   AMAZON_REGION:                   process.env.AMAZON_REGION                    || 'us-east-1',
   FLIPKART_AFFILIATE_ID:           process.env.FLIPKART_AFFILIATE_ID            || '',
   FLIPKART_AFFILIATE_TOKEN:        process.env.FLIPKART_AFFILIATE_TOKEN         || '',
+  FLIPKART_AFFID:                  process.env.FLIPKART_AFFID                   || '',
   CJ_API_KEY:                      process.env.CJ_API_KEY                       || '',
   CJ_PID:                          process.env.CJ_PID                           || '',
   CJ_WEBSITE_ID:                   process.env.CJ_WEBSITE_ID                    || '',

@@ -22,30 +22,16 @@ async function logClick(data: {
   platform:    string
   target_id:   string
   destination: string
-  raw_id:      string
-  ip:          string | null
-  user_agent:  string | null
-  referer:     string | null
-  utm_source:  string | null
-  utm_medium:  string | null
-  utm_campaign:string | null
 }) {
   try {
     const supabase = getSupabase()
     if (!supabase) return // Supabase keys not set yet — skip silently
 
     const { error } = await supabase.from('attributed_clicks').insert({
-      platform:     data.platform,
-      target_id:    data.target_id,
-      destination:  data.destination,
-      raw_id:       data.raw_id,
-      ip_address:   data.ip,
-      user_agent:   data.user_agent,
-      referer:      data.referer,
-      utm_source:   data.utm_source,
-      utm_medium:   data.utm_medium,
-      utm_campaign: data.utm_campaign,
-      clicked_at:   new Date().toISOString(),
+      product_id: data.target_id,
+      platform:   data.platform,
+      page_url:   data.destination,
+      clicked_at: new Date().toISOString(),
     })
 
     if (error) {
@@ -81,28 +67,8 @@ export async function GET(
   const prefix   = prefixRaw.toLowerCase()
   const targetId = targetParts.join('-').trim()
 
-  // ── Extract request metadata for attribution ──────────────────────
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    ?? request.headers.get('x-real-ip')
-    ?? null
-
-  const userAgent = request.headers.get('user-agent') ?? null
-  const referer   = request.headers.get('referer')    ?? null
-
-  const searchParams = request.nextUrl.searchParams
-  const utm_source   = searchParams.get('utm_source')
-  const utm_medium   = searchParams.get('utm_medium')
-  const utm_campaign = searchParams.get('utm_campaign')
-
   // Shared log base — avoids repeating in every branch
   const logBase = {
-    raw_id:      normalizedId,
-    ip,
-    user_agent:  userAgent,
-    referer,
-    utm_source,
-    utm_medium,
-    utm_campaign,
   }
 
   // ── Amazon ────────────────────────────────────────────────────────

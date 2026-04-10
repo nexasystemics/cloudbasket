@@ -9,7 +9,7 @@ import Link from 'next/link'
 import {
   ArrowRight, ExternalLink, Star, Shield, Truck, RefreshCw, TrendingDown, ChevronRight,
 } from 'lucide-react'
-import { CATALOG } from '@/lib/intelligence/catalog'
+import { CATALOG, type Product as IntelligenceProduct } from '@/lib/intelligence/catalog'
 import { PRODUCTS as MOCK_PRODUCTS } from '@/lib/mock-data'
 import {
   CATALOG_PRODUCTS, getCategoryDefinition, getSavePercent, getProductById,
@@ -35,6 +35,8 @@ import { PincodeChecker } from '@/components/products/PincodeChecker'
 import { ProductCard } from '@/components/products/ProductCard'
 import { getProductImage } from '@/lib/utils/product-image'
 import AffiliateDisclosureBanner from '@/components/AffiliateDisclosureBanner'
+
+export const revalidate = 3600 // ISR: revalidate product pages at most once per hour
 
 type DisplayProduct = {
   id: string
@@ -100,19 +102,39 @@ function getCategoryDetails(product: DisplayProduct, cbProduct?: CloudbasketCata
   return { label: product.mainCategory, slug: product.mainCategory.toLowerCase().replace(/\s+/g, '-') }
 }
 
-function toDisplayFromCatalog(p: any): DisplayProduct {
+// Union of the two catalog shapes fed into this function.
+// CloudbasketCatalogProduct uses `title` + `mrp` + `platform`.
+// IntelligenceProduct uses `name` + `originalPrice` + `affiliatePlatform`.
+type CatalogInput = CloudbasketCatalogProduct | IntelligenceProduct
+
+function isCloudbasketProduct(p: CatalogInput): p is CloudbasketCatalogProduct {
+  return 'title' in p && 'mrp' in p
+}
+
+function toDisplayFromCatalog(p: CatalogInput): DisplayProduct {
+  const isCB = isCloudbasketProduct(p)
+  const name = isCB ? p.title : p.name
+  const originalPrice = isCB ? p.mrp : p.originalPrice
+  const reviewCount = isCB ? p.reviewCount : p.reviews
+  const affiliatePlatform: DisplayProduct['affiliatePlatform'] = isCB
+    ? p.platform === 'Flipkart'         ? 'flipkart'
+    : p.platform === 'CJ Global'        ? 'cj'
+    : p.platform === 'Print on Demand'  ? 'pod'
+    : 'amazon'
+    : p.affiliatePlatform
+  const safeOriginal = originalPrice ?? p.price
   return {
     id: p.id,
-    name: p.name || p.title,
+    name,
     image: p.image || '',
     brand: p.brand || '',
     price: p.price,
-    originalPrice: p.originalPrice || p.mrp || p.price,
-    discount: Math.max(1, Math.round((((p.originalPrice ?? p.mrp ?? p.price) - p.price) / (p.originalPrice ?? p.mrp ?? p.price)) * 100)),
+    originalPrice: safeOriginal,
+    discount: Math.max(1, Math.round(((safeOriginal - p.price) / safeOriginal) * 100)),
     rating: p.rating,
-    reviewCount: Number(p.reviews ?? p.reviewCount ?? 0),
-    mainCategory: String(p.category ?? p.mainCategory ?? ''),
-    affiliatePlatform: p.affiliatePlatform || (p.platform === 'Flipkart' ? 'flipkart' : 'amazon'),
+    reviewCount: Number(reviewCount ?? 0),
+    mainCategory: String(p.category),
+    affiliatePlatform,
     badge: p.badge,
     description: p.description || '',
   }
@@ -240,11 +262,36 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     }))
   }
 
-  const priceComparison: readonly PriceEntry[] = [
-    { platform: 'Amazon', platformSlug: 'amazon', price: product.price, delivery: 'Free Delivery', eta: '2-4 days', best: false },
-    { platform: 'Flipkart', platformSlug: 'flipkart', price: Math.round(product.price * 1.03), delivery: 'Rs40 delivery', eta: '3-5 days', best: false },
-    { platform: 'CJ Global', platformSlug: 'cj', price: Math.round(product.price * 0.97), delivery: 'Free Delivery', eta: '5-7 days', best: true },
-  ]
+  // Build price comparison from real tracker history — no fake multipliers.
+  // Groups initialHistory by platform and takes the most recent price per platform.
+  // Amazon is always included using the catalog price as the baseline.
+  // Flipkart and CJ only appear if the tracker has recorded real prices for them.
+  const TRACKED_SLUGS = new Set<string>(['amazon', 'flipkart', 'cj'])
+  const PLATFORM_META: Record<string, { platform: PriceEntry['platform']; platformSlug: PriceEntry['platformSlug']; delivery: string; eta: string }> = {
+    amazon:   { platform: 'Amazon',    platformSlug: 'amazon',   delivery: 'Free Delivery', eta: '2-4 days' },
+    flipkart: { platform: 'Flipkart',  platformSlug: 'flipkart', delivery: '₹40 delivery',  eta: '3-5 days' },
+    cj:       { platform: 'CJ Global', platformSlug: 'cj',       delivery: 'Free Delivery', eta: '5-7 days' },
+  }
+
+  const latestByPlatform = new Map<string, number>()
+  for (const point of initialHistory) {
+    const slug = point.platform.toLowerCase()
+    if (TRACKED_SLUGS.has(slug) && !latestByPlatform.has(slug)) {
+      latestByPlatform.set(slug, point.price)
+    }
+  }
+  // Always anchor Amazon to the catalog price if tracker has no record yet
+  if (!latestByPlatform.has('amazon')) latestByPlatform.set('amazon', product.price)
+
+  const compEntries = Array.from(latestByPlatform.entries())
+    .filter(([slug]) => slug in PLATFORM_META)
+  const minTrackedPrice = compEntries.reduce((min, [, price]) => Math.min(min, price), Infinity)
+
+  const priceComparison: readonly PriceEntry[] = compEntries.map(([slug, price]) => ({
+    ...PLATFORM_META[slug],
+    price,
+    best: price === minTrackedPrice && compEntries.length > 1,
+  }))
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',

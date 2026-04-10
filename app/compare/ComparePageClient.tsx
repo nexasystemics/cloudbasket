@@ -266,18 +266,17 @@ export default function ComparePageClient() {
               {filteredProducts.slice(0, 20).map((product) => {
                 const isSelected = selectedProducts.includes(String(product.id))
                 return (
-                  <div
+                  <button
                     key={product.id}
-                    role="button"
-                    tabIndex={isSelected ? -1 : 0}
-                    className={`cb-card p-3 ${isSelected ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-[#039BE5]/50'}`}
+                    type="button"
+                    disabled={isSelected}
+                    className={`cb-card p-3 ${isSelected ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-sky-600/50'} focus-visible:ring-2 focus-visible:ring-sky-600 focus-visible:ring-offset-2`}
                     onClick={() => { if (!isSelected) { addProduct(String(product.id)); setShowSearch(false) } }}
-                    onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && !isSelected) { addProduct(String(product.id)); setShowSearch(false) } }}
                   >
                     <p className="line-clamp-1 text-xs font-bold">{product.name}</p>
                     <p className="text-muted text-xs">{product.brand}</p>
                     <p className="price-current text-xs">Rs{product.price.toLocaleString('en-IN')}</p>
-                  </div>
+                  </button>
                 )
               })}
             </div>

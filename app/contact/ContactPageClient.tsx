@@ -159,35 +159,35 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <aside className="flex flex-col gap-4 md:col-span-1">
             <article className="cb-card p-6">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-                <Mail size={18} className="text-[#039BE5]" />
+              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky-600/10 dark:bg-sky-500/10">
+                <Mail size={18} className="text-sky-600 dark:text-sky-400" />
               </div>
               <p className="text-sm font-black">Email Us</p>
-              <p className="mt-1 text-sm text-[#039BE5]">{CONTACT_INFO.email}</p>
+              <p className="mt-1 text-sm text-sky-600 dark:text-sky-400">{CONTACT_INFO.email}</p>
             </article>
 
             <article className="cb-card p-6">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-                <Phone size={18} className="text-[#039BE5]" />
+              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky-600/10 dark:bg-sky-500/10">
+                <Phone size={18} className="text-sky-600 dark:text-sky-400" />
               </div>
               <p className="text-sm font-black">WhatsApp</p>
               <p className="mt-1 text-sm">{CONTACT_INFO.whatsapp}</p>
             </article>
 
             <article className="cb-card p-6">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
-                <MapPin size={18} className="text-[#039BE5]" />
+              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky-600/10 dark:bg-sky-500/10">
+                <MapPin size={18} className="text-sky-600 dark:text-sky-400" />
               </div>
               <p className="text-sm font-black">Office</p>
-              <p className="mt-1 text-sm text-[var(--cb-text-muted)]">NEXQON Holdings</p>
-              <p className="text-sm text-[var(--cb-text-muted)]">Koramangala, Bengaluru</p>
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">NEXQON Holdings</p>
+              <p className="text-sm text-neutral-500 dark:text-neutral-400">Koramangala, Bengaluru</p>
             </article>
 
-            <article className="cb-card border-[#039BE5]/20 bg-[#039BE5]/5 p-4">
+            <article className="cb-card border-sky-600/20 dark:border-sky-500/20 bg-sky-600/5 dark:bg-sky-500/5 p-4">
               <p className="inline-flex items-center gap-2 text-sm font-bold">
-                <Clock size={14} className="text-[#039BE5]" /> Average response time: 4 hours
+                <Clock size={14} className="text-sky-600 dark:text-sky-400" /> Average response time: 4 hours
               </p>
-              <p className="mt-1 text-xs text-[var(--cb-text-muted)]">{CONTACT_INFO.responseTime}</p>
+              <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">{CONTACT_INFO.responseTime}</p>
             </article>
           </aside>
 

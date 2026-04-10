@@ -20,7 +20,7 @@ export default function NotFound() {
   return (
     <main className="min-h-screen bg-[var(--cb-bg)] px-6 text-center">
       <div className="flex min-h-screen flex-col items-center justify-center">
-        <p className="bg-gradient-to-r from-[#039BE5] to-[#4FC3F7] bg-clip-text text-[120px] font-black leading-none text-transparent">
+        <p className="bg-gradient-to-r from-sky-600 to-sky-300 dark:from-sky-400 dark:to-sky-500 bg-clip-text text-[120px] font-black leading-none text-transparent">
           404
         </p>
         <h1 className="mt-4 text-3xl font-black tracking-tighter">Page Not Found</h1>

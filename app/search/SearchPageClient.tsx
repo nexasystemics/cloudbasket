@@ -493,9 +493,9 @@ function FilterSections({
               defaultValue={[0, 100000]}
               value={priceRange}
               onChange={handlePriceChange}
-              trackStyle={[{ backgroundColor: '#039BE5' }]}
-              handleStyle={[{ borderColor: '#039BE5', boxShadow: 'none' }, { borderColor: '#039BE5', boxShadow: 'none' }]}
-              railStyle={{ backgroundColor: '#E2E8F0' }}
+              trackStyle={[{ backgroundColor: '#03C4F0' }]}
+              handleStyle={[{ borderColor: '#03C4F0', boxShadow: 'none' }, { borderColor: '#03C4F0', boxShadow: 'none' }]}
+              railStyle={{ backgroundColor: '#F5F5F5' }}
             />
             <div className="flex justify-between text-xs font-bold text-zinc-500 mt-2">
               <span>₹{priceRange[0].toLocaleString('en-IN')}</span>

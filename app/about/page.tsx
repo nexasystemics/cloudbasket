@@ -121,12 +121,12 @@ export default function AboutPage() {
                 <article key={item.title} className="text-center">
                   <div
                     className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl"
-                    style={{ backgroundColor: `${item.color}1A` }}
+                    style={{ backgroundColor: item.color + '1A' }}
                   >
                     <Icon size={22} style={{ color: item.color }} />
                   </div>
                   <h3 className="mt-3 text-sm font-black">{item.title}</h3>
-                  <p className="mt-1 text-xs leading-relaxed text-[var(--cb-text-muted)]">{item.desc}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">{item.desc}</p>
                 </article>
               )
             })}
@@ -136,7 +136,7 @@ export default function AboutPage() {
 
       <section className="mt-10 bg-[var(--cb-surface-2)] py-16">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <Shield size={32} className="mx-auto mb-4 text-[#039BE5]" />
+          <Shield size={32} className="mx-auto mb-4 text-sky-600 dark:text-sky-400" />
           <p className="text-lg font-black">Powered by NEXQON HOLDINGS</p>
           <p className="mt-2 text-sm text-[var(--cb-text-muted)]">
             © 2026 NEXQON Holdings · cloudbasket vs.cb.1.0 · v2.0.0

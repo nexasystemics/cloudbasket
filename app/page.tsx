@@ -70,10 +70,10 @@ const DEAL_OF_DAY = {
 function DealOfTheDay() {
   return (
     <section className="py-12">
-      <div className="mx-auto max-w-7xl bg-gradient-to-r from-[#039BE5]/5 via-transparent to-[#F97316]/5 px-6">
+      <div className="mx-auto max-w-7xl bg-gradient-to-r from-sky-600/5 via-transparent to-orange-500/5 px-6">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F97316]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500">
               <Zap size={20} className="text-white" />
             </div>
             <div className="min-h-[52px]">
@@ -97,7 +97,7 @@ function DealOfTheDay() {
                 alt={DEAL_OF_DAY.name}
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <span className="cb-badge absolute left-4 top-4 border-[#F97316] bg-[#F97316] text-lg font-black text-white">
+              <span className="cb-badge absolute left-4 top-4 border-orange-500 bg-orange-500 text-lg font-black text-white">
                 -{DEAL_OF_DAY.discount}% OFF
               </span>
             </div>

@@ -122,7 +122,7 @@ export default function QuizClient() {
               {Array.from({ length: 4 }).map((_, index) => (
                 <div
                   key={index}
-                  className={`h-2 flex-1 rounded-full ${index <= step ? 'bg-[#039BE5]' : 'bg-[var(--cb-surface-2)]'}`}
+                  className={`h-2 flex-1 rounded-full ${index <= step ? 'bg-sky-600 dark:bg-sky-500' : 'bg-neutral-200 dark:bg-neutral-700'}`}
                 />
               ))}
             </div>
@@ -133,14 +133,15 @@ export default function QuizClient() {
 
               <div className="grid grid-cols-2 gap-4">
                 {currentQuestion.options.map((option) => (
-                  <div
+                  <button
                     key={option.label}
-                    className="cb-card cursor-pointer p-5 text-center hover:border-[#039BE5]/50"
+                    type="button"
+                    className="cb-card p-5 text-center hover:border-sky-600/50 focus-visible:ring-2 focus-visible:ring-sky-600 focus-visible:ring-offset-2"
                     onClick={() => handleOptionClick(option.label)}
                   >
                     <p className="mb-2 text-2xl">{option.emoji}</p>
                     <p className="text-sm font-bold">{option.label}</p>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>

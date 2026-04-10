@@ -59,15 +59,15 @@ export default function RegisterPageClient() {
           <div className="mb-8 flex items-center gap-2">
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-black ${
-                step >= 1 ? 'bg-[#10B981] text-white' : 'bg-[var(--cb-surface-2)]'
+                step >= 1 ? 'bg-emerald-600 dark:bg-emerald-500 text-white' : 'bg-neutral-200 dark:bg-neutral-700'
               }`}
             >
               1
             </div>
-            <div className="h-px flex-1 bg-[var(--cb-border)]" />
+            <div className="h-px flex-1 bg-neutral-300 dark:bg-neutral-600" />
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-black ${
-                step === 2 ? 'bg-[#039BE5] text-white' : 'bg-[var(--cb-surface-2)]'
+                step === 2 ? 'bg-sky-600 dark:bg-sky-500 text-white' : 'bg-neutral-200 dark:bg-neutral-700'
               }`}
             >
               2

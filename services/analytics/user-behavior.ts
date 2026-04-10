@@ -2,22 +2,46 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 const isConfigured = (key: string): boolean => Boolean(process.env[key]);
 
+type EventType = "view" | "click" | "search" | "compare" | "go" | "funnel";
+type EntityType = "product" | "category" | "brand" | "deal" | "funnel";
+type JsonPrimitive = string | number | boolean | null;
+type JsonValue = JsonPrimitive | JsonObject | JsonValue[];
+
+export interface JsonObject {
+  [key: string]: JsonValue | undefined;
+}
+
 export interface UserEvent {
   user_id?: string;
   anonymous_id: string;
-  event_type: 'view' | 'click' | 'search' | 'compare' | 'go';
-  entity_type: 'product' | 'category' | 'brand' | 'deal';
+  event_type: EventType;
+  entity_type: EntityType;
   entity_id: string;
-  metadata?: Record<string, any>;
+  metadata?: JsonObject;
   ip_address?: string;
   user_agent?: string;
 }
 
-function getClient(): SupabaseClient {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-    process.env.SUPABASE_SERVICE_ROLE_KEY as string
-  );
+interface BehavioralLogEntityRow {
+  entity_id: string;
+}
+
+export interface FunnelStepMetadata extends JsonObject {
+  anonymous_id?: string;
+}
+
+let supabaseClient: SupabaseClient | null | undefined;
+
+function getClient(): SupabaseClient | null {
+  if (supabaseClient !== undefined) {
+    return supabaseClient;
+  }
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  supabaseClient = url && key ? createClient(url, key) : null;
+  return supabaseClient;
 }
 
 /**
@@ -29,6 +53,7 @@ export async function trackEvent(event: UserEvent): Promise<boolean> {
     if (!isConfigured("NEXT_PUBLIC_SUPABASE_URL")) return false;
 
     const supabase = getClient();
+    if (!supabase) return false;
 
     const { error } = await supabase.from("behavioral_logs").insert([
       {
@@ -60,6 +85,7 @@ export async function getPersonalizedRecommendations(
     if (!isConfigured("NEXT_PUBLIC_SUPABASE_URL")) return [];
 
     const supabase = getClient();
+    if (!supabase) return [];
     const queryField = isAnonymous ? "anonymous_id" : "user_id";
 
     const { data, error } = await supabase
@@ -72,10 +98,10 @@ export async function getPersonalizedRecommendations(
 
     if (error) throw error;
 
-    const counts = (data ?? []).reduce((acc, curr) => {
+    const counts = (data ?? []).reduce<Record<string, number>>((acc, curr: BehavioralLogEntityRow) => {
       acc[curr.entity_id] = (acc[curr.entity_id] || 0) + 1;
       return acc;
-    }, {} as Record<string, number>);
+    }, {});
 
     return Object.entries(counts)
       .sort((a, b) => b[1] - a[1])
@@ -95,6 +121,7 @@ export async function getTrendingCategories(windowHours: number = 24): Promise<s
     if (!isConfigured("NEXT_PUBLIC_SUPABASE_URL")) return [];
 
     const supabase = getClient();
+    if (!supabase) return [];
     const since = new Date(Date.now() - windowHours * 60 * 60 * 1000).toISOString();
 
     const { data, error } = await supabase
@@ -106,10 +133,10 @@ export async function getTrendingCategories(windowHours: number = 24): Promise<s
 
     if (error) throw error;
 
-    const counts = (data ?? []).reduce((acc, curr) => {
+    const counts = (data ?? []).reduce<Record<string, number>>((acc, curr: BehavioralLogEntityRow) => {
       acc[curr.entity_id] = (acc[curr.entity_id] || 0) + 1;
       return acc;
-    }, {} as Record<string, number>);
+    }, {});
 
     return Object.entries(counts)
       .sort((a, b) => b[1] - a[1])
@@ -141,6 +168,26 @@ export async function logAffiliateRedirect(
   });
 }
 
+export async function trackFunnelStep(
+  step: string,
+  userId: string,
+  metadata: FunnelStepMetadata = {}
+): Promise<boolean> {
+  const anonymousId =
+    typeof metadata.anonymous_id === "string" && metadata.anonymous_id.length > 0
+      ? metadata.anonymous_id
+      : "system";
+
+  return trackEvent({
+    user_id: userId,
+    anonymous_id: anonymousId,
+    event_type: "funnel",
+    entity_type: "funnel",
+    entity_id: step,
+    metadata,
+  });
+}
+
 /**
  * Generates an engagement score for a specific product.
  */
@@ -149,6 +196,7 @@ export async function getProductEngagementScore(productId: string): Promise<numb
     if (!isConfigured("NEXT_PUBLIC_SUPABASE_URL")) return 0;
 
     const supabase = getClient();
+    if (!supabase) return 0;
     const { count, error } = await supabase
       .from("behavioral_logs")
       .select("*", { count: "exact", head: true })

@@ -83,6 +83,8 @@ export const env = {
   GITHUB_CLIENT_ID:                process.env.GITHUB_CLIENT_ID                 || '',
   GITHUB_CLIENT_SECRET:            process.env.GITHUB_CLIENT_SECRET             || '',
   MICROSOFT_CLIENT_ID:             process.env.MICROSOFT_CLIENT_ID              || '',
+  UPSTASH_REDIS_REST_URL:          process.env.UPSTASH_REDIS_REST_URL           || '',
+  UPSTASH_REDIS_REST_TOKEN:        process.env.UPSTASH_REDIS_REST_TOKEN         || '',
 } as const
 
 export type Env = typeof env

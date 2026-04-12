@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { rateLimit } from '@/lib/redis'
 
 export const runtime = 'nodejs'
 
@@ -73,7 +74,18 @@ function escapeHtml(value: string): string {
     .replace(/'/g, '&#39;')
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? request.headers.get('x-real-ip')
+    ?? 'unknown'
+  const rl = await rateLimit(ip, 10, 60)
+  if (!rl.success) {
+    return NextResponse.json(
+      { success: false, error: 'Too many requests. Please try again shortly.' },
+      { status: 429 },
+    )
+  }
+
   let payload: unknown
 
   try {

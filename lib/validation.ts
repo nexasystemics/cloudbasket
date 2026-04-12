@@ -265,6 +265,28 @@ export const cjTrackSchema = z.object({
 export type CjTrackBody = z.infer<typeof cjTrackSchema>
 
 // ---------------------------------------------------------------------------
+// Product search (unified — amazon / flipkart / all)
+// ---------------------------------------------------------------------------
+
+export const productSearchQuerySchema = z.object({
+  q:        z.string().trim().min(1, 'q is required').max(200, 'q too long'),
+  category: z.string().trim().max(100).optional(),
+  platform: z.enum(['amazon', 'flipkart', 'all']).optional().default('all'),
+})
+export type ProductSearchQuery = z.infer<typeof productSearchQuerySchema>
+
+// ---------------------------------------------------------------------------
+// Affiliate redirect
+// ---------------------------------------------------------------------------
+
+export const affiliateRedirectSchema = z.object({
+  url:       z.string({ error: 'url is required' }).trim().url('url must be a valid URL').max(2048, 'url too long'),
+  productId: productIdSchema.optional(),
+  platform:  z.string().max(64).optional(),
+})
+export type AffiliateRedirectQuery = z.infer<typeof affiliateRedirectSchema>
+
+// ---------------------------------------------------------------------------
 // Utility: format Zod errors into a flat messages string
 // ---------------------------------------------------------------------------
 

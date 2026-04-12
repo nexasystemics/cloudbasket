@@ -1,0 +1,15 @@
+CODEX SESSION — 12-Apr-2026
+============================
+COMPLETED:
+- packageManager: pnpm@10.33.0 added to package.json (commit dac20e1)
+- 5 unit test files written (commit 450e54f)
+- rateLimit() added to 16 routes
+- lib/validation.ts: productSearchQuerySchema + affiliateRedirectSchema added
+- app/api/search/route.ts — NEW route created
+- app/api/affiliate/redirect/route.ts — NEW route created
+
+STILL PENDING (next session):
+- rateLimit() on 30 remaining routes (list in RACI tracker)
+- JSDoc on services/email-engine/email-marketing.ts
+- JSDoc on lib/validation.ts
+- JSDoc on supabase/migrations/016_email_subscribers.sql

@@ -1,0 +1,21 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket
+// FILE: cc-output/response-supabase-env-and-schema.txt
+// PURPOSE: Supabase env vars + full SQL for missing tables
+// DATE: 2026-04-12
+
+=== SUPABASE ENV VARS (4 total) ===
+
+KEY                          | WHERE USED              | REQUIRED?
+-----------------------------|-------------------------|----------
+NEXT_PUBLIC_SUPABASE_URL     | Browser + Server        | YES (hard fail)
+NEXT_PUBLIC_SUPABASE_ANON_KEY| Browser + Server        | YES (hard fail)
+SUPABASE_SERVICE_ROLE_KEY    | Server/API routes only  | YES (all write ops)
+SUPABASE_STORAGE_BUCKET      | Storage uploads         | Soft (defaults to 'product-images')
+
+Note: NEXT_PUBLIC_ vars go in Vercel > Environment Variables for all environments.
+SUPABASE_SERVICE_ROLE_KEY is server-only — never expose to browser.
+
+=== FULL SQL — RUN IN SUPABASE DASHBOARD > SQL EDITOR ===
+(All use CREATE TABLE IF NOT EXISTS — safe to run against existing DB)
+
+See sql block below.

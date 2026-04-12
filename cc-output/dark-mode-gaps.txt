@@ -1,0 +1,60 @@
+Dark mode gaps audit — components (top 10 by color-usage, estimated missing dark: variants)
+
+1) components/CategoryPageClient.tsx — est. color tokens: 83, dark: 7 → MISSING ~76
+   Examples:
+   - getSourceBadgeClass: "bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20" (no dark:)
+   - button brand pills: "bg-[#039BE5] text-white border-[#039BE5]" (mobile)
+   - product badges: "rounded-md bg-green-500 px-2 py-1 text-[10px] font-black text-white" (no dark:)
+
+2) components/Header.tsx — est. 36, dark: 0 → MISSING ~36
+   Examples:
+   - logo box: "w-8 h-8 bg-[#039BE5] rounded-lg"
+   - promo button: "bg-white/10 hover:bg-white/20 focus:ring-blue-600" (no dark: variant)
+   - nav link active: "font-bold text-skyline-primary" (no dark: counterpart)
+
+3) components/products/ProductCard.tsx — est. 28, dark: 8 → MISSING ~20
+   Examples:
+   - article wrapper: includes 'bg-white' but has dark:bg-zinc-900; many badge backgrounds like "bg-red-500" and "bg-orange-500" lack dark: variants
+   - call-to-action: 'bg-skyline-primary' (no dark:)
+
+4) components/PromotionSidebar.tsx — est. 30, dark: 0 → MISSING ~30
+   Examples:
+   - panels: "bg-white rounded-2xl" (no dark:), flash deal chips: "text-[#E65100] bg-[#E65100]/5"
+   - hero card: "bg-gradient-to-br from-[#039BE5] to-[#015C94]" (no dark handling)
+
+5) components/ProductCard.tsx (legacy) — est. 20, dark: 7 → MISSING ~13
+   Examples:
+   - wrapper: "bg-white" (dark:bg-zinc-900 exists) but accent buttons use inline style colors without dark variants
+
+6) components/ProductFilter.tsx — est. 19, dark: 0 → MISSING ~19
+   Examples:
+   - category/pill selected: "bg-skyline-primary text-white" (no dark:)
+   - input styled with "bg-[var(--cb-surface-3)]" (may rely on CSS var; many uses lack explicit dark:)
+
+7) components/FeedbackWidget.tsx — est. 22, dark: 7 → MISSING ~15
+   Examples:
+   - fixed tab: "bg-[#039BE5] text-white" (no dark: variant)
+   - modal content uses bg-white dark:bg-zinc-900 (mixed coverage)
+
+8) components/PriceComparisonTable.tsx — est. 20, dark: 7 → MISSING ~13
+   Examples:
+   - platform badge colors: "bg-orange-500", "bg-blue-600" used in avatar boxes without dark: counterparts
+   - table uses bg-white dark:bg-zinc-900 (partial)
+
+9) components/ChatBot.tsx — est. 18, dark: 0 → MISSING ~18
+   Examples:
+   - chat button: "bg-[#039BE5] hover:bg-[#0288D1] text-white" (no dark:)
+   - chat window: "bg-white rounded-lg" (no dark: variant in same class)
+
+10) components/PriceAlertModal.tsx — est. 16, dark: 0 → MISSING ~16
+   Examples:
+   - bell icon area: "bg-[#039BE5]" and card: "cb-card mb-6 mt-6 flex items-center justify-between border-[#039BE5]/20 bg-[#039BE5]/5" (no dark:)
+
+Notes & caveats:
+- Counts are estimated by token matches (bg-, text-, border-) minus dark: occurrences; approximate but reliable to prioritize work.
+- Some components use CSS variables (var(--cb-...)) which may already handle dark mode. These were noted but not counted as explicit dark:. 
+- This scan did NOT modify any files (per request).
+
+Next recommended steps (P5): create a prioritized fix list (start with CategoryPageClient and Header), replace inline hex/bg usages with token classes or add dark: variants, and prefer CSS variables for themeable colors.
+
+Saved: F:\cloudbasket\cc-output\dark-mode-gaps.txt

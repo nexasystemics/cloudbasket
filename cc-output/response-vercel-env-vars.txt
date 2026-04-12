@@ -1,0 +1,7 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket
+// FILE: cc-output/response-vercel-env-vars.txt
+// PURPOSE: All env vars from lib/env.ts — Vercel-ready .env.production
+// DATE: 2026-04-13
+// ACTUAL COUNT: 77 vars (user referenced 69 — env.ts has 77 keys)
+// PUBLIC = NEXT_PUBLIC_ prefix, safe in browser bundle
+// SECRET = server-only, never expose to client

@@ -1,0 +1,64 @@
+================================================================================
+  CLOUDBASKET — SESSION RESPONSE
+  Topic: product-page-3fixes
+  Date: 2026-04-10
+  Engineer: E1 Chief Engineer (Claude Sonnet 4.6)
+================================================================================
+
+FILE MODIFIED
+  app/product/[id]/page.tsx
+
+FIXES APPLIED
+─────────────────────────────────────────────────────────────────────────────
+
+FIX 1 — ISR revalidation
+  Added: export const revalidate = 3600
+  Location: after final import, before type declarations
+  Effect: pages regenerate at most once per hour on-demand rather than being
+          permanently locked to build-time data. Price drops, metadata changes,
+          and catalog updates propagate within 60 minutes without a redeploy.
+
+FIX 2 — toDisplayFromCatalog: any → proper union type
+  Import added: type Product as IntelligenceProduct from @/lib/intelligence/catalog
+  New type: CatalogInput = CloudbasketCatalogProduct | IntelligenceProduct
+  New guard: isCloudbasketProduct(p): p is CloudbasketCatalogProduct
+             — discriminates on 'title' in p && 'mrp' in p
+  Property access in function body replaced with narrowed branches:
+    name          → isCB ? p.title         : p.name
+    originalPrice → isCB ? p.mrp           : p.originalPrice
+    reviewCount   → isCB ? p.reviewCount   : p.reviews
+    affiliatePlatform → isCB
+      ? p.platform === 'Flipkart' → 'flipkart'
+        p.platform === 'CJ Global' → 'cj'
+        p.platform === 'Print on Demand' → 'pod'
+        default → 'amazon'
+      : p.affiliatePlatform (already the correct union)
+  Also expanded platform mapping: now correctly maps CJ Global → cj and
+  Print on Demand → pod, which the old any version missed (defaulted to amazon).
+
+FIX 3 — Price comparison: fake multipliers → tracker-derived real prices
+  REMOVED:
+    { platform: 'Flipkart', price: Math.round(product.price * 1.03) }  ← fake
+    { platform: 'CJ Global', price: Math.round(product.price * 0.97) } ← fake, always won
+  REPLACED WITH:
+    Reads initialHistory (PriceHistoryPoint[] from priceTracker.getPriceHistory)
+    Groups by platform slug, takes most recent price per platform.
+    Amazon always present — anchored to product.price if tracker has no record.
+    Flipkart / CJ only appear when tracker has real recorded prices.
+    best: true only when price === actual minimum AND more than 1 platform shown.
+  RESULT:
+    - Single-entry table shows just Amazon when no cross-platform data exists
+    - Multi-entry table shows real prices and correctly awards the winner
+    - "Price Winner" badge never appears in a single-entry table (compEntries.length > 1 guard)
+
+TYPE CHECK
+  pnpm tsc --noEmit → EXIT:0 (zero errors, zero warnings)
+
+RISK LEVEL: LOW
+  - ISR: no behavior change until next revalidation window
+  - Type fix: pure refactor, no runtime behavior change
+  - Price comparison: degrades gracefully to Amazon-only until tracker populates
+
+ROLLBACK PLAN
+  git checkout app/product/[id]/page.tsx
+================================================================================

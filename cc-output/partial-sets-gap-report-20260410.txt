@@ -1,0 +1,369 @@
+================================================================================
+  CLOUDBASKET — PARTIAL SETS GAP REPORT
+  Generated: 2026-04-10
+  Engineer: E1 Chief Engineer (Claude Sonnet 4.6)
+  Scope: services/email/, services/push, services/redis, services/analytics, services/amazon/, services/apis/
+================================================================================
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. services/email/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES PRESENT
+  ✓ services/email/marketing-pipeline.ts
+  ✓ services/email/price-alert-sender.ts
+
+FUNCTIONS
+
+  marketing-pipeline.ts — EmailMarketingPipeline class
+    ✓ sendWelcomeEmail(email, name?)          — IMPLEMENTED (real Resend call)
+    ✓ sendPriceDropAlert(email, product, ...) — IMPLEMENTED (real Resend call, discount calc)
+    ✓ sendWeeklyDigest(email, deals[])        — IMPLEMENTED (real Resend call, top-3 deals)
+    export emailPipeline singleton
+
+  price-alert-sender.ts — PriceAlertEmailSender class
+    ✓ validateEmail(email)                    — IMPLEMENTED (disposable domain blocklist)
+    ✓ generateUnsubscribeToken(email)         — IMPLEMENTED (HMAC-SHA256)
+    ✓ sendPriceDropAlert(email, product, ...) — IMPLEMENTED (real Resend, unsubscribe footer)
+    ✓ sendBulkAlerts(alerts[])               — IMPLEMENTED (50-per-batch, rate-limited)
+    export priceAlertSender singleton
+
+STATUS: DONE ✅
+
+NOTES
+  - Both files use Resend directly; no newsletter/list management (Resend Audiences not wired).
+  - No retry logic on 429 / transient failure — fire-and-forget only.
+  - No open/click tracking callbacks wired.
+
+GAPS TO PRODUCTION
+  LOW  — Add Resend Audience contact upsert on signup so list is managed server-side.
+  LOW  — Add exponential-backoff retry wrapper for transient Resend errors.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. services/email-engine/  (legacy engine folder)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES PRESENT
+  ✓ services/email-engine/plunk-client.ts
+  ✓ services/email-engine/email-marketing.ts
+
+FUNCTIONS
+
+  plunk-client.ts — EmailEngine class
+    ✓ sendEmail(params)                      — IMPLEMENTED (bare Resend call)
+    ✓ sendWelcomeEmail(email, name)          — IMPLEMENTED
+    ✓ sendDealAlert(email, title, discount%) — IMPLEMENTED
+    ✓ sendNewsletter(subscribers[], ...)     — IMPLEMENTED (Promise.allSettled fan-out)
+    export emailEngine singleton
+
+  email-marketing.ts — EmailMarketingPipeline class (DUPLICATE of services/email/ scope)
+    ✓ sendDealAlert(DealAlertEmail)          — IMPLEMENTED (branded HTML template, Resend)
+    ✗ sendNewsletter(campaign)              — STUB (returns draft status; body says "wire pending")
+    ✗ subscribeContact(contact)            — STUB (returns true; body says "wire pending")
+    export emailMarketing singleton
+
+STATUS: PARTIAL ⚠️
+
+GAPS TO DONE
+  HIGH — email-marketing.ts::sendNewsletter: replace stub with Resend batch send loop,
+         matching the fan-out pattern already in plunk-client.ts::sendNewsletter.
+
+  HIGH — email-marketing.ts::subscribeContact: wire Resend Audiences POST
+         (POST /audiences/:id/contacts) to actually register the contact.
+
+  MED  — Consolidation: services/email/ and services/email-engine/ duplicate the same
+         purpose. Before new work, decide on one canonical email service and remove the
+         other. Recommend keeping services/email/ (newer, cleaner) and deleting
+         services/email-engine/ after migrating callers.
+
+CODE TO WRITE (email-marketing.ts::sendNewsletter stub → real)
+  Replace the try block body with:
+    const { data, error } = await fetch('https://api.resend.com/emails/batch', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(campaign.recipients.map(to => ({
+        from: 'CloudBasket <alerts@cloudbasket.in>', to, subject: campaign.subject,
+        html: campaign.htmlContent
+      })))
+    })
+  Update status to 'sent' on ok response.
+
+CODE TO WRITE (email-marketing.ts::subscribeContact stub → real)
+  Wire Resend Audiences API:
+    POST https://api.resend.com/audiences/:audienceId/contacts
+    body: { email: contact.email, first_name: contact.name, unsubscribed: false }
+  RESEND_AUDIENCE_ID must be added to lib/env.ts and .env.local.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. services/push  (Web Push Notifications)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES PRESENT
+  ✓ services/notifications/push-service.ts   (primary — full class approach)
+  ✓ services/notifications/push-server.ts    (secondary — minified one-liner format)
+
+NO lib/push.ts — does not exist.
+
+FUNCTIONS
+
+  push-service.ts — exported functions
+    ✓ subscribeUser(userId, subscription)    — IMPLEMENTED (Supabase upsert on endpoint)
+    ✓ unsubscribeUser(endpoint)             — IMPLEMENTED (Supabase delete on 410/404)
+    ✓ getUserSubscriptions(userId)          — IMPLEMENTED (Supabase select)
+    ✓ sendPushNotification(userId, payload) — IMPLEMENTED (VAPID send, auto-cleanup)
+    ✓ broadcastNotification(payload, batch) — IMPLEMENTED (paginated batch broadcast)
+    ✓ generateVapidKeys()                   — IMPLEMENTED (webpush.generateVAPIDKeys)
+    ISSUE: uses `any` type on getClient() return — violates TypeScript strict rule.
+
+  push-server.ts — PushNotificationServer class
+    ✓ sendToSubscription(endpoint, ...)     — IMPLEMENTED (dynamic import webpush)
+    ✓ broadcastDealAlert(deal)              — IMPLEMENTED (fetches from push_subscriptions)
+    ISSUE: entire file is minified single-line code — violates code style standards.
+    ISSUE: uses column names p256dh_key / auth_key; push-service.ts uses subscription_json.
+           Schema mismatch between the two files — one will fail at runtime.
+
+STATUS: PARTIAL ⚠️
+
+GAPS TO DONE
+  HIGH — Resolve column name mismatch: push-server.ts reads p256dh_key/auth_key but
+         push-service.ts writes subscription_json. Align to push-service.ts (subscription_json)
+         or migrate the DB schema to flat columns. Choose one.
+
+  HIGH — Fix `any` type on getClient() in push-service.ts — type as SupabaseClient.
+
+  MED  — Expand push-server.ts from minified single-line to proper multi-line code
+         (violates repo style; hard to review and maintain).
+
+  LOW  — No lib/push.ts re-export shim needed if callers import directly from
+         services/notifications/push-service.ts.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. services/redis  /  lib/redis.ts
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES PRESENT
+  ✗ lib/redis.ts                — DOES NOT EXIST
+  ✗ services/redis/             — DOES NOT EXIST
+
+CURRENT STATE
+  ioredis is declared in package.json dependencies.
+  No Redis client is instantiated anywhere in the codebase.
+  Services that should use Redis (rate limiting, price cache, session cache) use in-memory
+  Map() objects instead (e.g. AmazonPAAPI.cache, CJAffiliateAPI.cache, FlipkartAffiliateAPI.cache).
+  proxy.ts rate limiting uses in-memory counters (resets on server restart).
+
+STATUS: MISSING ❌
+
+GAPS TO DONE
+  HIGH — Create lib/redis.ts:
+    - Singleton ioredis client (lazy-connect, isConfigured('REDIS_URL') guard)
+    - getRedis(): Redis | null — returns null when not configured (stub-safe)
+    - Exported helpers: get(key), set(key, value, ttlSeconds), del(key), exists(key)
+    - Used by services as a drop-in replacement for their local Map() caches
+
+  HIGH — Replace in-process Map() caches in amazon-pa-api.ts, cj-api.ts,
+         flipkart-affiliate.ts with Redis-backed cache calls via lib/redis.ts.
+         This ensures cache survives serverless function cold starts.
+
+  MED  — Wire proxy.ts / middleware rate limiter to Redis so limits are shared
+         across all instances (currently per-process only).
+
+  TEMPLATE for lib/redis.ts:
+    import Redis from 'ioredis'
+    import { isConfigured } from '@/lib/env'
+    let client: Redis | null = null
+    export function getRedis(): Redis | null {
+      if (!isConfigured('REDIS_URL')) return null
+      if (!client) client = new Redis(process.env.REDIS_URL!, { lazyConnect: true, enableReadyCheck: false })
+      return client
+    }
+    export async function cacheGet(key: string): Promise<string | null> {
+      return (await getRedis()?.get(key)) ?? null
+    }
+    export async function cacheSet(key: string, value: string, ttl = 3600): Promise<void> {
+      await getRedis()?.set(key, value, 'EX', ttl)
+    }
+    export async function cacheDel(key: string): Promise<void> {
+      await getRedis()?.del(key)
+    }
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. services/analytics  /  lib/analytics.ts
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES PRESENT
+  ✓ lib/analytics.ts
+  ✓ services/analytics/user-behavior.ts
+
+FUNCTIONS
+
+  lib/analytics.ts — client-side GA4 wrapper (browser only)
+    ✓ trackPageView(url)                     — IMPLEMENTED (window.gtag)
+    ✓ trackEvent(category, action, label, value) — IMPLEMENTED (window.gtag)
+    ✓ trackAffiliateClick(productId, platform, price) — IMPLEMENTED
+    ✓ trackPriceAlertSet(productId, targetPrice)      — IMPLEMENTED
+    ✓ trackSearch(query, resultCount)        — IMPLEMENTED
+    ✓ trackProductView(productId, category, price)    — IMPLEMENTED (view_item ecommerce)
+    SCOPE: browser-only (window.gtag); will silently no-op server-side.
+
+  services/analytics/user-behavior.ts — server-side behavioral DB logger
+    ✓ trackEvent(UserEvent)                  — IMPLEMENTED (inserts to behavioral_logs)
+    ✓ getPersonalizedRecommendations(id)    — IMPLEMENTED (top-10 from behavioral_logs)
+    ✓ getTrendingCategories(windowHours)    — IMPLEMENTED (aggregated from behavioral_logs)
+    ✓ logAffiliateRedirect(productId, ...)  — IMPLEMENTED (wraps trackEvent)
+    ✓ getProductEngagementScore(productId)  — IMPLEMENTED (count query)
+    ISSUE: getClient() always constructs new SupabaseClient on every call — no singleton.
+    ISSUE: Uses Record<string, any> in UserEvent.metadata — violates strict any rule.
+
+STATUS: PARTIAL ⚠️
+
+GAPS TO DONE
+  HIGH — Fix Record<string, any> in UserEvent.metadata → Record<string, unknown>
+         (TypeScript strict violation).
+
+  HIGH — Memoize Supabase client in user-behavior.ts — getClient() creates a new
+         instance on every call. Move to module-level singleton like other services.
+
+  MED  — No funnel / session tracking exists. Missing:
+    • trackSessionStart / trackSessionEnd
+    • trackFunnelStep (search → product → go) for conversion analysis
+    • Revenue attribution join: behavioral_logs ↔ attributed_clicks
+
+  MED  — No A/B test event bridge: services/optimization/ab-testing.ts exists but
+         does not call the new ab_test_events table (migration 013 just created).
+         Wire ab-testing.ts to insert into ab_test_events via Supabase.
+
+  LOW  — lib/analytics.ts has no server-side counterpart. When Next.js App Router
+         server components need to emit analytics (e.g. for SEO crawl events),
+         there is no path to do so without importing user-behavior.ts directly.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. services/apis/  (Amazon, CJ, Flipkart, Open Food Facts, Review, Search Console)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES PRESENT
+  ✓ services/apis/amazon-pa-api.ts
+  ✓ services/apis/cj-api.ts
+  ✓ services/apis/flipkart-affiliate.ts
+  ✓ services/apis/flipkart-sync.ts
+  ✓ services/apis/open-food-facts.ts
+  ✓ services/apis/review-aggregator.ts
+  ✓ services/apis/search-console.ts
+
+FUNCTIONS
+
+  amazon-pa-api.ts — AmazonPAAPI class  [STATUS: DONE ✅]
+    ✓ searchProducts(query, category, max) — IMPLEMENTED (AWS SigV4, rate limiter, cache)
+    ✓ getProduct(asin)                    — IMPLEMENTED (PAAPI GetItems)
+    ✓ getBestSellers(category)            — IMPLEMENTED (delegates to searchProducts)
+    Private: TokenBucket (1 req/s), in-memory Map cache (1h TTL)
+    export amazonAPI singleton
+    NOTE: cache is in-process Map — loses data on cold start. Candidate for Redis.
+    NOTE: signRequest imported from @/lib/aws-signature — that file must exist or build fails.
+
+  cj-api.ts — CJAffiliateAPI class  [STATUS: DONE ✅]
+    ✓ searchProducts(query, advertiserIds?) — IMPLEMENTED (CJ product-search API)
+    ✓ getAdvertiserProducts(advertiserId)  — IMPLEMENTED (paginated, up to 5 pages)
+    ✓ trackCommission(orderId, amount, ...) — IMPLEMENTED (pixel img tag, browser-only)
+    ✓ getDeepLink(baseUrl, advertiserId)   — IMPLEMENTED
+    Private: in-memory Map cache (1h TTL)
+    export cjAPI singleton
+    NOTE: cache is in-process Map — candidate for Redis.
+
+  flipkart-affiliate.ts — FlipkartAffiliateAPI class  [STATUS: DONE ✅]
+    ✓ searchProducts(query, category?)    — IMPLEMENTED (credential-guarded)
+    ✓ getDeals()                          — IMPLEMENTED (30min TTL cache)
+    ✓ getCategoryFeed(categoryUrl)        — IMPLEMENTED
+    ✓ trackClick(productId)               — IMPLEMENTED (returns URL with affid)
+    Private: in-memory Map cache
+    export flipkartAPI singleton
+
+  flipkart-sync.ts — syncFlipkartDeals()  [STATUS: DONE ✅]
+    ✓ syncFlipkartDeals()                 — IMPLEMENTED (upserts to flipkart_deals_cache table)
+    NOTE: flipkart_deals_cache table must exist in Supabase — no migration found for it.
+    This will silently fail (upsert error) if the table is missing.
+
+  open-food-facts.ts — OpenFoodFactsAPI class  [STATUS: DONE ✅]
+    ✓ getByBarcode(barcode)               — IMPLEMENTED (graceful stubProduct fallback)
+    ✓ searchProducts(query, limit)        — IMPLEMENTED (graceful stubProduct fallback)
+    export openFoodFacts singleton
+
+  review-aggregator.ts — ReviewAggregator class  [STATUS: STUB ❌]
+    ✗ getProductReviews(productId)        — STUB (localStorage only — server-incompatible)
+    ✗ submitReview(review)               — STUB (localStorage only — no DB persistence)
+    ✗ getAggregatedRating(productId)     — STUB (computed from localStorage data)
+    No real platform (Amazon, Flipkart) review fetching. No Supabase persistence.
+    export reviewAggregator singleton
+
+  search-console.ts — SearchConsoleAPI class  [STATUS: STUB ❌]
+    ✗ getTopQueries()                    — STUB (always returns []; body is empty)
+    No Google Service Account auth implemented. No actual API call.
+    export searchConsole singleton
+
+STATUS: MIXED — 5 DONE, 2 STUB ❌
+
+GAPS TO DONE
+
+  CRITICAL — review-aggregator.ts — full rewrite required:
+    1. Replace localStorage reads/writes with Supabase product_reviews table queries.
+       Table columns needed: id, product_id, source, rating, title, body, author,
+       date, verified, helpful_count.
+    2. Create supabase/migrations/016_product_reviews.sql for this table.
+    3. For Amazon reviews: PA API does not expose review text (ToS). Use
+       CustomerReviews.StarRating + Count (already fetched in amazon-pa-api.ts).
+       Aggregate those into getAggregatedRating from PAAPI, not localStorage.
+    4. submitReview: insert to product_reviews table via Supabase.
+
+  HIGH — search-console.ts — implement OAuth2 service account flow:
+    1. Parse GOOGLE_SERVICE_ACCOUNT_JSON from env.
+    2. Use google-auth-library (or raw JWT) to obtain access token.
+    3. Call Search Console Data API v1:
+       POST https://searchconsole.googleapis.com/v1/sites/{siteUrl}/searchAnalytics/query
+    4. Return typed SearchRow[] results.
+    Alternatively, mark this as "not in v1 scope" and leave as stub with clear comment.
+
+  MED — flipkart-sync.ts — create migration for flipkart_deals_cache table:
+    The syncFlipkartDeals() upsert targets flipkart_deals_cache but no migration exists.
+    Add supabase/migrations/016_deals_cache.sql (or combine with next migration).
+
+  LOW — amazon-pa-api.ts, cj-api.ts, flipkart-affiliate.ts — replace in-process Map
+        caches with Redis (see Section 4 above). Required for multi-instance / serverless.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SUMMARY TABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Service                          Status    Blocker(s)
+  ──────────────────────────────── ────────  ──────────────────────────────────────────
+  services/email/                  DONE ✅   Minor: retry logic, Resend Audiences
+  services/email-engine/           PARTIAL ⚠️ sendNewsletter stub, subscribeContact stub
+  services/notifications/ (push)   PARTIAL ⚠️ Column mismatch push-server vs push-service
+  lib/redis.ts                     MISSING ❌ No Redis client at all despite ioredis dep
+  lib/analytics.ts                 DONE ✅   Client-side GA4 only (by design)
+  services/analytics/user-behavior PARTIAL ⚠️ `any` type, no singleton, missing funnel
+  services/apis/amazon-pa-api      DONE ✅   Candidate for Redis cache
+  services/apis/cj-api             DONE ✅   Candidate for Redis cache
+  services/apis/flipkart-affiliate DONE ✅   Candidate for Redis cache
+  services/apis/flipkart-sync      DONE ✅   Missing DB migration for target table
+  services/apis/open-food-facts    DONE ✅   —
+  services/apis/review-aggregator  STUB ❌   Full rewrite needed (localStorage → DB)
+  services/apis/search-console     STUB ❌   Google auth not implemented
+
+  PRIORITY ORDER TO REACH PRODUCTION-READY:
+  1. lib/redis.ts                  — Create (unblocks cache hardening across 3 APIs)
+  2. review-aggregator.ts          — Full rewrite (localStorage is non-functional server-side)
+  3. push column mismatch          — Fix before first push broadcast in production
+  4. email-marketing.ts stubs      — Wire sendNewsletter + subscribeContact
+  5. user-behavior.ts cleanup      — Fix `any`, singleton, add funnel steps
+  6. search-console.ts             — Implement or explicitly defer to post-launch
+
+================================================================================
+  END OF REPORT
+================================================================================

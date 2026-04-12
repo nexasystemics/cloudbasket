@@ -1,0 +1,59 @@
+================================================================================
+  CLOUDBASKET — SESSION RESPONSE
+  Topic: build-output-analysis
+  Date: 2026-04-10
+  Engineer: E1 Chief Engineer (Claude Sonnet 4.6)
+================================================================================
+
+BUILD ROUTE TABLE — FINDINGS
+─────────────────────────────────────────────────────────────────────────────
+
+● /product/[id]   — SSG (generateStaticParams)   STATUS: CORRECT
+  Pre-renders 1,122 paths from CATALOG_PRODUCTS + INDIA_CATALOG.
+  Canonical product URL. generateMetadata + JSON-LD + full components.
+  DEV_FAST_BUILD=true env var skips static params for fast local rebuilds.
+
+ƒ /products/[id]  — Dynamic (server-rendered)    STATUS: PROBLEM — FIXED
+
+  Root cause: app/products/[id]/page.tsx had no generateStaticParams
+  and used redirect() (307 Temporary) — so every /products/:id hit:
+    1. Spun up a serverless function (latency + cost)
+    2. Issued a 307 (temporary) redirect — no SEO link equity transfer
+
+  Fix applied:
+    redirect('/product/' + id)
+    → permanentRedirect(`/product/${id}`)
+
+  Result:
+    - 308 Permanent Redirect — crawlers update their index, stop re-crawling /products/[id]
+    - Next.js will still serve this as ƒ (no generateStaticParams) but 308 is
+      cached by CDN (Cloudflare) after first request — zero function cost thereafter
+    - To eliminate the function entirely: add a Cloudflare Redirect Rule
+      /products/* → /product/:splat (301) at the edge, before Next.js sees the request
+
+REMAINING ISSUES — NOT FIXED (require explicit instruction)
+─────────────────────────────────────────────────────────────────────────────
+
+1. app/product/[id]/page.tsx:103
+   function toDisplayFromCatalog(p: any)
+   Violates TypeScript strict rule. Needs a union type:
+   type CatalogInput = typeof CATALOG_PRODUCTS[number] | typeof CATALOG[number] | typeof MOCK_PRODUCTS[number]
+
+2. app/product/[id]/page.tsx:245-247 — FAKE PRICE COMPARISON
+   { platform: 'Flipkart', price: Math.round(product.price * 1.03) }  ← fake
+   { platform: 'CJ Global', price: Math.round(product.price * 0.97) } ← fake
+   These are hardcoded offsets. The "Price Winner" badge will always award CJ.
+   Fix: pull real prices from priceTracker or remove the table until live data is wired.
+
+3. 1,122 SSG paths — build time impact
+   Every deploy pre-renders all 1,122 product pages. If the catalog grows this
+   will slow builds. Consider:
+   - ISR (revalidate: 3600) instead of full static for low-traffic products
+   - Segment generateStaticParams to emit only top-N by traffic/price-alert count
+
+FILE CHANGED
+  app/products/[id]/page.tsx — redirect → permanentRedirect
+
+RISK LEVEL: LOW
+  307 → 308 change only. No logic change. Rollback: revert the import + call.
+================================================================================

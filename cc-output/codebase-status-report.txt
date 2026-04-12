@@ -1,0 +1,687 @@
+================================================================================
+  CLOUDBASKET — COMPLETE CODEBASE STATUS REPORT
+  Generated: April 2026
+  Working Dir: F:\cloudbasket
+================================================================================
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. GIT LOG — LAST 50 COMMITS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+d58f590 docs: synchronize removal history and git commit references across all project status files
+bc3252f docs: final session summary for April 7, 2026
+3a07de8 docs: update status files with April 7 session results
+0026ecf docs: add summary of removed items during zero-checkout enforcement
+358b0c9 fix: resolve TypeScript strict mode errors in test files
+fd3a9d5 fix: install @playwright/test and configure for single browser testing
+fc4df9b fix: gracefully handle missing Supabase credentials in proxy
+526ea2f docs: update README with comprehensive project status
+5d31d6e feat: add discovery flow and SEO/accessibility tests
+ddff655 feat: add comprehensive Playwright test suite for compliance
+4b885a0 refactor: remove admin dashboards, checkout, and POD fulfillment (enforcement)
+d1f9056 refactor: remove payment/order/vendor services (zero-checkout mandate)
+5e7f27d docs: Update session backup with build status and next steps
+50e0314 chore: Add missing dependencies (@react-email/render, @reduxjs/toolkit, redux, react-redux, clsx, decimal.js-light, victory-vendor)
+1ffcc9e feat: D52-D61 clean build - getSupabase pattern applied
+c2fa3b2 Your commit message here
+ab40262 feat: D42-D51 services and admin pages
+c302281 Update
+b3868d0 Deploy legal grievance officer page
+74a9ef8 Deploy legal accessibility statement page
+460ddb8 Deploy legal DMCA policy page
+a565d36 Deploy legal affiliate disclosure page
+0bb9ce2 Deploy legal disclaimer page
+48dac1f Add legal pages and refund policy
+f9ebc2a feat: add CookieYes beforeInteractive script, wire GTMScript, add env var
+b193105 feat: cookie policy page, consent blocking, Reject All, footer settings link
+ab1294e fix: ioredis ghost dep, Plunk→Resend pipeline, wire searchProducts
+6fa27ad feat: privacy policy — full DPDP v2 content, breadcrumb, TOC, PDF, cookie banner wired, contact form linked
+e6c285c chore: remove Typesense — Supabase FTS sufficient for launch
+2ca4584 feat: apply E21-E50 — 23 files, zero tsc errors, seasonal campaigns, bundles, gift cards, B2B, mobile API, analytics
+f3f4431 feat: P0 complete — fonts, middleware, ghost deps, F01-F100, legal UI
+a5d5e5a feat: apply F22-F100 + legal UI + proxy middleware — 32 files, zero tsc errors, build PASS
+29ab2a3 feat: apply F01-F21 — 21 files, zero tsc errors, governance fixes
+0e04131 fix: broken product images — fallback to CDN for missing /assets/products/ paths
+60cf296 audit: session 1 complete — 38 issues logged, crawl tools v1+v2 built
+5c74077 audit: add full 1200+ page deep crawl tool
+79b5424 security: lock /admin and /dashboard behind auth + role guard
+60c7f98 feat: centralize category icons — Header, Grid, Hero unified
+0e4606b fix: replace broken unsplash image ids
+24cd555 feat: E01-E20 POD platform integrations and build fixes
+bddff77 fix: product image fallback handler — all 1000 products show real images
+cae5af6 fix: india-catalog index correct export names — 1000 products wired
+61ce08b fix: populate india-catalog index.ts — wire all 1000 products
+5587dcd fix: health type union — build passing
+d18cce2 fix: gamification points — browser client, build passing
+ecd7026 fix: correct supabase import in gamification/points — build passing
+ceb59e1 fix: add missing gamification/points and monitoring/health modules — build passing
+12743eb feat: F22-F100 Typesense search, onboarding, rewards, Telegram bot, PWA service worker, revenue dashboard, membership pricing, data export GDPR, barcode lookup, Chrome extension API, Zapier integration, biometric auth, schema markup, monitoring
+1bb3b12 feat: E21-E50 POD seasonal campaigns, B2B orders, gift cards, bundle creator, bulk titles, AI recommendations, artist affiliate, Redis cache, mobile API, QR code, competitor alerts, search analytics
+53a689d feat: E21-E50 POD seasonal campaigns, B2B orders, gift cards, bundle creator, bulk titles, AI recommendations, artist affiliate, Redis cache, mobile API, QR code, competitor alerts, search analytics
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. APP/ FILES — ROUTES & LINE COUNTS (120 files)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+app/about/loading.tsx                                   21 lines
+app/about/page.tsx                                     156 lines
+app/affiliate-disclosure/page.tsx                      111 lines
+app/affiliate/page.tsx                                 548 lines
+app/api/alerts/trigger/route.ts                         12 lines
+app/api/amazon/product/route.ts                         18 lines
+app/api/amazon/search/route.ts                          18 lines
+app/api/analytics/ads/route.ts                          23 lines
+app/api/associates/apply/route.ts                        8 lines
+app/api/auth/[provider]/callback/route.ts               12 lines
+app/api/auth/[provider]/route.ts                        19 lines
+app/api/auth/otp/send/route.ts                          23 lines
+app/api/auth/otp/verify/route.ts                        16 lines
+app/api/automation/webhook/route.ts                     14 lines
+app/api/barcode/lookup/route.ts                         11 lines
+app/api/catalog/prices/route.ts                          7 lines
+app/api/catalog/sync/route.ts                            7 lines
+app/api/cj/products/route.ts                             8 lines
+app/api/cj/track/route.ts                               14 lines
+app/api/contact/route.ts                               158 lines
+app/api/content/generate-description/route.ts           38 lines
+app/api/crm/contact/route.ts                            17 lines
+app/api/cron/daily-deals/route.ts                        8 lines
+app/api/cron/weekly-digest/route.ts                      8 lines
+app/api/currency/rates/route.ts                          2 lines
+app/api/deals/discover/route.ts                         12 lines
+app/api/documents/invoice/route.ts                      11 lines
+app/api/email/send-alert/route.ts                        6 lines
+app/api/extension/price-check/route.ts                  16 lines
+app/api/feed/google/route.ts                            55 lines
+app/api/feeds/google/route.ts                            6 lines
+app/api/flipkart/deals/route.ts                          6 lines
+app/api/flipkart/search/route.ts                         9 lines
+app/api/intelligence/competitive/route.ts                7 lines
+app/api/intelligence/deals/route.ts                      5 lines
+app/api/mobile/deals/route.ts                            8 lines
+app/api/mobile/products/route.ts                        22 lines
+app/api/newsletter/subscribe/route.ts                   32 lines
+app/api/newsletter/unsubscribe/route.ts                 22 lines
+app/api/og/route.tsx                                    80 lines
+app/api/pod/ai-generate/route.ts                        18 lines
+app/api/price-tracker/route.ts                          24 lines
+app/api/prices/route.ts                                 80 lines
+app/api/push/subscribe/route.ts                          7 lines
+app/api/push/vapid-key/route.ts                          2 lines
+app/api/revenue/click/route.ts                           9 lines
+app/api/reviews/route.ts                                12 lines
+app/api/search/index-products/route.ts                   5 lines
+app/api/seo/audit/route.ts                               2 lines
+app/api/sms/subscribe/route.ts                           3 lines
+app/api/social/generate/route.ts                        15 lines
+app/api/sponsored/click/route.ts                         7 lines
+app/api/sponsored/impression/route.ts                   10 lines
+app/api/stock/route.ts                                   4 lines
+app/api/support/ticket/route.ts                         11 lines
+app/api/telegram/webhook/route.ts                       47 lines
+app/api/ugc/route.ts                                     7 lines
+app/api/user/data-export/route.ts                       14 lines
+app/api/user/delete-account/route.ts                    15 lines
+app/api/vitals/route.ts                                  9 lines
+app/api/webhooks/printful/route.ts                      14 lines
+app/api/webhooks/printify/route.ts                      23 lines
+app/api/webhooks/shopify/route.ts                       16 lines
+app/api/whatsapp/subscribe/route.ts                     13 lines
+app/api/whatsapp/webhook/route.ts                       15 lines
+app/app/page.tsx                                       112 lines
+app/associates/AssociatesPageClient.tsx                176 lines
+app/associates/page.tsx                                 10 lines
+app/best-deals/page.tsx                                 79 lines
+app/blog/BlogListingClient.tsx                         193 lines
+app/blog/BlogListingPageClient.tsx                     147 lines
+app/blog/[slug]/BlogArticlePageClient.tsx              221 lines
+app/blog/[slug]/BlogPostClient.tsx                     264 lines
+app/blog/[slug]/page.tsx                               113 lines
+app/blog/loading.tsx                                    24 lines
+app/blog/page.tsx                                      158 lines
+app/brand/[brandName]/page.tsx                         125 lines
+app/brands/page.tsx                                     69 lines
+app/careers/page.tsx                                   164 lines
+app/categories/CategoriesHubClient.tsx                   0 lines
+app/categories/loading.tsx                              16 lines
+app/categories/page.tsx                                 19 lines
+app/category/[slug]/page.tsx                           106 lines
+app/cj/page.tsx                                        163 lines
+app/compare/ComparePageClient.tsx                       406 lines
+app/compare/page.tsx                                     9 lines
+app/contact/ContactPageClient.tsx                       302 lines
+app/contact/loading.tsx                                 26 lines
+app/contact/page.tsx                                    10 lines
+app/cookies/page.tsx                                    98 lines
+app/deals/[id]/page.tsx                                141 lines
+app/deals/flash/FlashSalePageClient.tsx                147 lines
+app/deals/flash/page.tsx                                11 lines
+app/deals/loading.tsx                                   18 lines
+app/deals/page.tsx                                     184 lines
+app/error.tsx                                           52 lines
+app/faq/FAQPageClient.tsx                              163 lines
+app/faq/loading.tsx                                     16 lines
+app/faq/page.tsx                                        59 lines
+app/feature-disabled/page.tsx                           98 lines  ← NEW
+app/globals.css                                        495 lines
+app/go/[id]/route.ts                                    57 lines
+app/layout.tsx                                         124 lines
+app/legal/accessibility/page.tsx                       423 lines
+app/legal/affiliate-disclosure/page.tsx                451 lines
+app/legal/cookies/page.tsx                             536 lines
+app/legal/disclaimer/data.ts                           218 lines
+app/legal/disclaimer/page.tsx                          226 lines
+app/legal/dmca/page.tsx                                439 lines
+app/legal/grievance-officer/page.tsx                   336 lines
+app/legal/layout.tsx                                   135 lines
+app/legal/page.tsx                                     175 lines
+app/legal/privacy/page.tsx                             791 lines
+app/legal/refund-policy/data.ts                        137 lines
+app/legal/refund-policy/page.tsx                       268 lines
+app/legal/terms/page.tsx                               856 lines
+app/loading.tsx                                         19 lines
+app/login/LoginClient.tsx                               92 lines
+app/login/page.tsx                                      11 lines
+app/manifest.ts                                         24 lines
+app/not-found.tsx                                       71 lines
+app/offline/page.tsx                                    19 lines
+app/page.tsx                                           215 lines
+app/partners/PartnersPageClient.tsx                    171 lines
+app/partners/page.tsx                                   10 lines
+app/pod/[category]/page.tsx                            238 lines
+app/pod/designs/page.tsx                                21 lines
+app/pod/loading.tsx                                     16 lines
+app/pod/mugs/page.tsx                                   18 lines
+app/pod/page.tsx                                       202 lines
+app/pod/phone-cases/page.tsx                            18 lines
+app/pod/tshirts/page.tsx                                18 lines
+app/pod/upload/page.tsx                                 98 lines
+app/pricing/page.tsx                                    24 lines
+app/product/[id]/ProductPageClientWidgets.tsx           84 lines
+app/product/[id]/page.tsx                              478 lines
+app/products/page.tsx                                   23 lines
+app/products/products-page-client.tsx                  297 lines
+app/quiz/QuizClient.tsx                                187 lines
+app/quiz/page.tsx                                       10 lines
+app/register/RegisterPageClient.tsx                    262 lines
+app/register/page.tsx                                   11 lines
+app/robots.ts                                           13 lines
+app/sale/page.tsx                                       42 lines
+app/search/SearchPageClient.tsx                        563 lines
+app/search/loading.tsx                                  14 lines
+app/search/page.tsx                                     17 lines
+app/sitemap-page/page.tsx                              137 lines
+app/sitemap.ts                                          63 lines
+app/support/ticket/page.tsx                              5 lines
+app/unsubscribed/page.tsx                               19 lines
+
+NOTES:
+  ⚠ app/product/[id]/page.tsx.bak — 670-line backup file in repo (should be deleted)
+  ⚠ app/categories/CategoriesHubClient.tsx — 0 lines (empty file)
+  ⚠ app/api/currency/rates/route.ts — 2 lines (stub only)
+  ⚠ app/api/push/vapid-key/route.ts — 2 lines (stub only)
+  ⚠ app/api/seo/audit/route.ts — 2 lines (stub only)
+  ⚠ app/api/sms/subscribe/route.ts — 3 lines (stub only)
+  ⚠ app/api/stock/route.ts — 4 lines (stub only)
+  ⚠ app/support/ticket/page.tsx — 5 lines (inline JSX only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. COMPONENTS/ — LINE COUNTS (85 files)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+components/ABTest.tsx                                   23 lines
+components/AdBanner.tsx                                 65 lines
+components/AffiliateDisclosureBanner.tsx                55 lines
+components/Analytics.tsx                                25 lines
+components/BackToTop.tsx                                55 lines
+components/CategoriesHubClient.tsx                     339 lines
+components/CategoryGrid.tsx                             91 lines
+components/CategoryPageClient.tsx                      332 lines
+components/ChatBot.tsx                                 120 lines
+components/ClarityScript.tsx                             5 lines
+components/CookieConsent.tsx                           327 lines
+components/DealOfTheDay.tsx                             88 lines
+components/DealsBar.tsx                                 70 lines
+components/ErrorBoundary.tsx                            55 lines
+components/FacebookPixel.tsx                             5 lines
+components/FeedbackWidget.tsx                          205 lines
+components/FestivalBanner.tsx                           60 lines
+components/Footer.tsx                                  193 lines
+components/FooterComplianceBadges.tsx                   80 lines
+components/GTMScript.tsx                                10 lines
+components/Header.tsx                                  483 lines
+components/HeroSection.tsx                             123 lines
+components/HeroVideo.tsx                                58 lines
+components/HomeBlogSection.tsx                          33 lines
+components/HomeDeferredSections.tsx                     39 lines
+components/IndiaTrustBar.tsx                            63 lines
+components/LayoutBottomEnhancements.tsx                 26 lines
+components/LayoutTopEnhancements.tsx                    12 lines
+components/LiveActivityFeed.tsx                         58 lines
+components/MegaMenu.tsx                                 58 lines
+components/Navigation.tsx                                2 lines  ← STUB
+components/NewsletterSection.tsx                        74 lines
+components/NotificationBell.tsx                         64 lines
+components/NutritionBadge.tsx                           10 lines
+components/PODCard.tsx                                  94 lines
+components/PODCollectionClient.tsx                     140 lines
+components/PWAInstallBanner.tsx                         74 lines
+components/PWAInstallPrompt.tsx                         72 lines
+components/Pagination.tsx                              123 lines
+components/PersonalisedRecommendations.tsx              60 lines
+components/PersonalizedGrid.tsx                        124 lines
+components/PlatformTrustBar.tsx                         28 lines
+components/PriceAlertBanner.tsx                         84 lines
+components/PriceAlertModal.tsx                         100 lines
+components/PriceComparisonTable.tsx                    112 lines
+components/PriceIntelligenceWidget.tsx                  15 lines
+components/ProductActions.tsx                           39 lines
+components/ProductCard.tsx                             202 lines
+components/ProductDetailActions.tsx                    145 lines
+components/ProductReviews.tsx                           43 lines
+components/ProductSpecSummary.tsx                       15 lines
+components/ProductSpecifications.tsx                    51 lines
+components/ProductTips.tsx                              40 lines
+components/ProductViewTracker.tsx                       20 lines
+components/PromotionSidebar.tsx                        132 lines
+components/PushSubscribeButton.tsx                      17 lines
+components/QRCode.tsx                                   33 lines
+components/RecentlySaved.tsx                            18 lines
+components/RecentlyViewed.tsx                          108 lines
+components/ReferralWidget.tsx                           86 lines
+components/SchemaMarkup.tsx                             99 lines
+components/SettingsBar.tsx                              60 lines
+components/ShareButton.tsx                             51 lines
+components/SocialCTA.tsx                                48 lines
+components/SocialProof.tsx                              72 lines
+components/StockIndicator.tsx                            6 lines
+components/TelegramCTA.tsx                              44 lines
+components/ThemeProvider.tsx                            21 lines
+components/ThemeToggle.tsx                              97 lines
+components/TopDealsToday.tsx                            64 lines
+components/TrackBehavior.tsx                            55 lines
+components/TrendingSearches.tsx                         42 lines
+components/TrustScoreWidget.tsx                         81 lines
+components/TrustSection.tsx                             95 lines
+components/TrustSignals.tsx                             28 lines
+components/VoiceSearchButton.tsx                        14 lines
+components/WhatsAppButton.tsx                           36 lines
+components/WhatsAppShare.tsx                            29 lines
+components/WishlistButton.tsx                           89 lines
+components/ads/AdManager.tsx                            20 lines
+components/ads/AdUnit.tsx                               82 lines
+components/ads/CJPixel.tsx                              31 lines
+components/brand/Logo.tsx                               66 lines
+components/onboarding/OnboardingModal.tsx               93 lines
+components/pod/MockupViewer.tsx                         47 lines
+components/pod/PriceTag.tsx                             21 lines
+components/pod/SizeChart.tsx                            32 lines
+components/pod/SizeGuide.tsx                            53 lines
+components/products/CODBadge.tsx                        15 lines
+components/products/DealShareCard.tsx                   90 lines
+components/products/EMIBadge.tsx                        15 lines
+components/products/PincodeChecker.tsx                  61 lines
+components/products/PriceHistoryChart.tsx              129 lines
+components/products/ProductCard.tsx                    282 lines
+components/products/ProductFilter.tsx                  199 lines
+components/products/ProductGrid.tsx                     37 lines
+components/products/PromotionSidebar.tsx               119 lines
+components/skeletons/BlogCardSkeleton.tsx               12 lines
+components/skeletons/DashboardSkeleton.tsx              19 lines
+components/skeletons/DealsBarSkeleton.tsx               12 lines
+components/skeletons/HeroSkeleton.tsx                   19 lines
+components/skeletons/ProductCardSkeleton.tsx            14 lines
+components/skeletons/ProductGridSkeleton.tsx             9 lines
+components/skeletons/index.ts                            5 lines
+
+NOTES:
+  ⚠ components/Navigation.tsx — 2 lines (stub)
+  ⚠ .gitkeep files in: components/layout/, components/marketing/, components/products/, components/ui/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4A. LIB/ — LINE COUNTS (105 files)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+lib/ab-testing.ts                                       54 lines
+lib/adsense/placement-engine.ts                         79 lines
+lib/adsense/revenue-tracker.ts                          45 lines
+lib/analytics.ts                                        46 lines
+lib/analytics/revenue-attribution.ts                    27 lines
+lib/analytics/search-intelligence.ts                    34 lines
+lib/api-helpers.ts                                      32 lines
+lib/auth.ts                                             63 lines
+lib/auth/biometric.ts                                   36 lines
+lib/auth/otp.ts                                         39 lines
+lib/auth/providers.ts                                   23 lines
+lib/automation/zapier.ts                                23 lines
+lib/aws-signature.ts                                    81 lines
+lib/blog-data.ts                                       132 lines
+lib/brand-data.ts                                       49 lines
+lib/cache/redis.ts                                      40 lines
+lib/category-icons.ts                                   82 lines
+lib/cloudbasket-data.ts                                705 lines
+lib/constants.ts                                        81 lines
+lib/content/schedule.ts                                142 lines
+lib/cro/tracker.ts                                      23 lines
+lib/currency-service.ts                                 56 lines
+lib/data-export/portability.ts                          43 lines
+lib/deals-data.ts                                      118 lines
+lib/deals-engine.ts                                     92 lines
+lib/design-system.ts                                   764 lines
+lib/design-system/index.ts                               1 line
+lib/design-system/tokens.ts                             65 lines
+lib/documents/pdf-generator.ts                          16 lines
+lib/email/sendPriceAlert.ts                             54 lines
+lib/email/templates/price-drop-alert.ts                 52 lines
+lib/email/templates/weekly-deals.ts                     58 lines
+lib/env.ts                                              98 lines
+lib/extensions/chrome-extension-api.ts                  16 lines
+lib/facebook/pixel-events.ts                             5 lines
+lib/feature-guard.ts                                    75 lines  ← NEW
+lib/features.ts                                        128 lines  ← NEW
+lib/gamification/leaderboard.ts                         29 lines
+lib/gamification/points.ts                              23 lines
+lib/gtm/data-layer.ts                                    9 lines
+lib/i18n/config.ts                                      16 lines
+lib/i18n/currency.ts                                    40 lines
+lib/i18n/translations/en-IN.ts                          31 lines
+lib/i18n/translations/hi-IN.ts                          29 lines
+lib/image-assets.ts                                     23 lines
+lib/image-utils.ts                                      92 lines
+lib/india-catalog-2/index.ts                            11 lines
+lib/india-catalog-2/tech-accessories.ts                 18 lines
+lib/india-catalog-2/types.ts                             2 lines
+lib/india-catalog/electronics/boat-noise.ts            129 lines
+lib/india-catalog/electronics/realme-samsung.ts        133 lines
+lib/india-catalog/fashion/puma-biba.ts                 133 lines
+lib/india-catalog/food-grocery/itc-britannia.ts        133 lines
+lib/india-catalog/home-appliances/bajaj-havells.ts    2237 lines
+lib/india-catalog/home-appliances/godrej.ts            114 lines
+lib/india-catalog/home-appliances/philips-prestige.ts 2242 lines
+lib/india-catalog/index.ts                              30 lines
+lib/india-catalog/personal-care/dabur.ts               114 lines
+lib/india-catalog/personal-care/hul.ts                 114 lines
+lib/india-catalog/personal-care/itc-godrej.ts          126 lines
+lib/india-catalog/types.ts                              29 lines
+lib/india-catalog/utils.ts                             122 lines
+lib/intelligence/calendar.ts                            90 lines
+lib/intelligence/catalog.ts                            121 lines
+lib/intelligence/location.ts                            87 lines
+lib/intelligence/personalisation.ts                     58 lines
+lib/intelligence/profile.ts                             97 lines
+lib/intelligence/scorer.ts                              97 lines
+lib/logging/logger.ts                                   21 lines
+lib/mock-data.ts                                       342 lines
+lib/module-shims.ts                                     26 lines
+lib/monitoring/competitor-alerts.ts                     31 lines
+lib/monitoring/health.ts                                22 lines
+lib/notifications-store.ts                              59 lines
+lib/notifications.ts                                    56 lines
+lib/performance/image-optimizer.ts                      15 lines
+lib/pod/size-charts.ts                                  36 lines
+lib/price-api/index.ts                                  52 lines
+lib/products-data.ts                                   955 lines
+lib/pwa/service-worker-utils.ts                         24 lines
+lib/realtime/notifications.ts                           31 lines
+lib/roles.ts                                            54 lines
+lib/search.ts                                           90 lines
+lib/seo/schema.ts                                       32 lines
+lib/share.ts                                            39 lines
+lib/subscriptions/membership.ts                         20 lines
+lib/supabase-server.ts                                  24 lines
+lib/supabase.ts                                         23 lines
+lib/supabase/client.ts                                  12 lines
+lib/supabase/server.ts                                  28 lines
+lib/tenant-config.ts                                    77 lines
+lib/themes.ts                                          136 lines
+lib/types.ts                                            81 lines
+lib/utils/product-image.ts                              33 lines
+lib/voice-search/optimisation.ts                         7 lines
+lib/web-vitals.ts                                       56 lines
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4B. SERVICES/ — LINE COUNTS (101 files)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+services/affiliate/cashback-tracker.ts                 241 lines
+services/affiliate/commission-calculator.ts            104 lines
+services/affiliate/influencer-portal.ts                121 lines
+services/affiliate/link-cloaker.ts                     195 lines
+services/affiliate/link-health-monitor.ts              122 lines
+services/ai/recommendation-engine.ts                   105 lines
+services/alerts/price-alert.ts                         229 lines
+services/analytics/user-behavior.ts                    164 lines
+services/apis/amazon-pa-api.ts                         165 lines
+services/apis/cj-api.ts                                143 lines
+services/apis/flipkart-affiliate.ts                    133 lines
+services/apis/flipkart-sync.ts                          47 lines
+services/apis/open-food-facts.ts                       100 lines
+services/apis/review-aggregator.ts                      21 lines
+services/apis/search-console.ts                         13 lines
+services/associates/program.ts                          19 lines
+services/catalog/sync-engine.ts                         32 lines
+services/community/ugc-system.ts                       147 lines
+services/comparison/comparison-engine.ts               281 lines
+services/content/blog-generator.ts                     157 lines
+services/content/comment-moderator.ts                  100 lines
+services/content/description-generator.ts              136 lines
+services/content/seo-updater.ts                         21 lines
+services/crm/customer-segmentation.ts                  281 lines
+services/crm/freshdesk.ts                               25 lines
+services/crm/hubspot.ts                                 29 lines
+services/crm/loyalty-program.ts                        324 lines
+services/crm/review-incentive.ts                       157 lines
+services/crm/survey-manager.ts                         225 lines
+services/crm/zoho.ts                                    19 lines
+services/currency/exchange-rates.ts                     10 lines
+services/deals/auto-discovery.ts                        32 lines
+services/deals/bundle-creator.ts                       379 lines
+services/deals/coupon-engine.ts                        272 lines
+services/deals/deal-discovery.ts                       170 lines
+services/deals/flash-sale-engine.ts                    162 lines
+services/email-engine/email-marketing.ts               152 lines
+services/email-engine/plunk-client.ts                   58 lines
+services/email/marketing-pipeline.ts                    55 lines
+services/email/price-alert-sender.ts                    60 lines
+services/growth/referral-system.ts                     255 lines
+services/images/image-pipeline.ts                       14 lines
+services/intelligence/competitive-intel.ts              23 lines
+services/inventory/inventory-sync.ts                   466 lines
+services/inventory/restock-alerts.ts                   130 lines
+services/inventory/stock-monitor.ts                    119 lines
+services/logistics/delivery-estimator.ts               176 lines
+services/marketing/newsletter-manager.ts               152 lines
+services/media/image-optimizer.ts                      245 lines
+services/messaging/whatsapp.ts                          27 lines
+services/monitoring/freshness-monitor.ts                18 lines
+services/monitoring/link-checker.ts                      8 lines
+services/monitoring/link-monitor.ts                     30 lines
+services/monitoring/stock-monitor.ts                    13 lines
+services/notifications/notification-engine.ts          130 lines
+services/notifications/push-server.ts                   22 lines
+services/notifications/push-service.ts                 252 lines
+services/optimization/ab-testing.ts                    237 lines
+services/pod/ai-design-generator.ts                     60 lines
+services/pod/amazon-merch.ts                            77 lines
+services/pod/artist-affiliate.ts                        37 lines
+services/pod/bulk-title-generator.ts                    52 lines
+services/pod/bulk-upload-engine.ts                      82 lines
+services/pod/bundle-creator.ts                          36 lines
+services/pod/cross-platform-sync.ts                     44 lines
+services/pod/design-library.ts                          47 lines
+services/pod/etsy.ts                                    46 lines
+services/pod/fulfiller-comparison.ts                    27 lines
+services/pod/mockup-generator.ts                        37 lines
+services/pod/pod-recommendations.ts                     24 lines
+services/pod/printful.ts                                72 lines
+services/pod/printify.ts                                98 lines
+services/pod/redbubble.ts                               56 lines
+services/pod/seasonal-campaigns.ts                      49 lines
+services/pod/shopify.ts                                 59 lines
+services/price-engine/competitor-tracker.ts            106 lines
+services/price-engine/geo-pricing.ts                   348 lines
+services/price-engine/history-cleaner.ts                95 lines
+services/price-engine/india-apis.ts                    149 lines
+services/price-engine/intelligence.ts                   46 lines
+services/price-engine/price-intelligence.ts            201 lines
+services/price-engine/scraper.ts                        89 lines
+services/price-engine/tracker.ts                        73 lines
+services/reviews/review-aggregator.ts                  230 lines
+services/search/smart-search.ts                        350 lines
+services/security/audit-logger.ts                       65 lines
+services/security/fraud-detector.ts                    257 lines
+services/seo/keyword-tracker.ts                         57 lines
+services/seo/meta-tag-generator.ts                     133 lines
+services/seo/schema-validator.ts                        17 lines
+services/seo/search-console.ts                         111 lines
+services/seo/seo-updater.ts                            115 lines
+services/seo/sitemap-generator.ts                      249 lines
+services/seo/sitemap-manager.ts                         19 lines
+services/social/content-generator.ts                    22 lines
+services/sponsored/listings.ts                          19 lines
+services/subscriptions/subscription-manager.ts         171 lines
+services/support/chat-support.ts                       430 lines
+services/user/wishlist-manager.ts                      271 lines
+services/webhooks/webhook-handler.ts                   330 lines
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. SUPABASE MIGRATIONS (17 files)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+001_price_history.sql
+002_push_subscriptions.sql
+003_whatsapp_subscribers.sql
+004_associates.sql
+005_pod_orders.sql
+006_price_alerts.sql
+007_attributed_clicks.sql
+008_sponsored_campaigns.sql
+009_pod_designs.sql
+010_printify_blueprints.sql
+011_otp_codes.sql
+012_notifications.sql
+014_gift_cards.sql            ← NOTE: 013 is missing
+015_search_analytics.sql
+20260301160842_schema_and_seed.sql
+20260301213842_schema_and_seed.sql
+20260320000000_price_history.sql  ← DUPLICATE of 001_price_history.sql topic
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. PACKAGE.JSON DEPENDENCIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCTION:
+  @google/generative-ai        ^0.21.0
+  @react-email/render          ^2.0.5
+  @reduxjs/toolkit             ^2.11.2
+  @supabase/ssr                ^0.8.0
+  @supabase/supabase-js        ^2.95.3
+  @vercel/og                   ^0.6.3
+  axios                        ^1.6.5
+  classnames                   ^2.5.1
+  clsx                         ^2.1.1
+  decimal.js-light             ^2.5.1
+  framer-motion                ^11.0.0
+  lucide-react                 ^0.567.0
+  next                         16.1.6
+  next-themes                  ^0.4.6
+  rc-slider                    ^11.1.9
+  react                        19.2.3
+  react-dom                    19.2.3
+  react-redux                  ^9.2.0
+  recharts                     ^3.8.1
+  redux                        ^5.0.1
+  resend                       ^3.2.0
+  victory-vendor               ^37.3.6
+  web-push                     ^3.6.7
+
+DEV:
+  @next/bundle-analyzer        ^16.1.6
+  @playwright/test             ^1.58.2
+  @tailwindcss/postcss         ^4
+  @types/d3-array              ^3.2.2
+  @types/d3-color              ^3.1.3
+  @types/d3-ease               ^3.0.2
+  @types/d3-interpolate        ^3.0.4
+  @types/d3-path               ^3.1.1
+  @types/d3-scale              ^4.0.9
+  @types/d3-shape              ^3.1.8
+  @types/d3-time               ^3.0.4
+  @types/d3-timer              ^3.0.2
+  @types/node                  ^20
+  @types/react                 ^19
+  @types/react-dom             ^19
+  @types/use-sync-external-store ^1.5.0
+  @types/web-push              ^3.6.4
+  eslint                       ^9
+  eslint-config-next           16.1.6
+  tailwindcss                  ^4
+  typescript                   ^5
+
+  NOTE: recharts requires redux/react-redux (already installed)
+  NOTE: ioredis NOT in package.json — referenced in code but removed as ghost dep
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. ENV VARIABLES — NO .env.example FILE FOUND
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  No .env.example or .env.local.example file exists in the repo.
+  All valid env keys are documented in lib/env.ts (98 lines, 50+ keys).
+  Full key list is in CLOUDBASKET_HANDOVER_PASSPORT.md Section 6.
+
+  ACTION NEEDED: Create .env.example with dummy values for onboarding.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8. BUILD OUTPUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FAST BUILD (DEV_FAST_BUILD=true): ✅ PASSING
+  Pages generated: 126 static pages
+  Build time: ~591ms (static generation)
+  Workers: 15
+
+  FULL BUILD (all 1,263 routes): Not run this session — last known passing.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9. TYPESCRIPT — pnpm tsc --noEmit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ ZERO ERRORS — clean strict TypeScript
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10. TODO / FIXME COMMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  4 instances found — all in ONE file:
+
+  services/price-engine/india-apis.ts:74
+    // TODO: Implement Amazon PA-API v5 signed request
+  services/price-engine/india-apis.ts:78
+    console.warn('[price-engine] Amazon PA-API: TODO — real implementation pending')
+  services/price-engine/india-apis.ts:104
+    // TODO: Implement Flipkart Affiliate API
+  services/price-engine/india-apis.ts:107
+    console.warn('[price-engine] Flipkart API: TODO — real implementation pending')
+
+  ACTION NEEDED: india-apis.ts has stub implementations for Amazon PA-API v5
+  and Flipkart Affiliate API. Real signed request logic needed before launch.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+11. FILES WITH YOUR_ / PENDING PLACEHOLDER VALUES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  No YOUR_ pattern found in .ts/.tsx source files. ✅
+
+  NOTE: app/legal/grievance-officer/page.tsx line 78 contains:
+    'The officer name is displayed as placeholder text until the final
+     grievance officer name is confirmed.'
+  → Real grievance officer name needs to be confirmed and filled in.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUMMARY SCORECARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TypeScript errors          : 0 ✅
+  Build (fast, 126 pages)    : PASSING ✅
+  TODO/FIXME count           : 4 (all in india-apis.ts) ⚠
+  Empty/stub files           : 8 ⚠
+  Missing .env.example       : ❌ (needs to be created)
+  Missing migration 013      : ⚠
+  Duplicate migration topic  : ⚠ (price_history)
+  Backup file in repo        : ⚠ (product/[id]/page.tsx.bak)
+  Feature flags system       : ✅ INSTALLED (lib/features.ts)
+  Disabled features count    : 13 (all off by default)
+  Total source files         : ~410+
+  Total LOC (approx)         : ~45,000+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Generated: Session April 2026
+  Output: cc-output/codebase-status-report.txt
+================================================================================

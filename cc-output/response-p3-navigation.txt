@@ -1,0 +1,9 @@
+P3 — Navigation.tsx update
+
+File: components/Navigation.tsx
+Change: Replaced legacy comment with single-line shim comment.
+Comment added: // Legacy shim, all nav handled by components/Header.tsx
+
+Queue: P4 → P5 → P6
+
+Notes: No other code changes. Navigation re-exports Header as before.

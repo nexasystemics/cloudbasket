@@ -1,0 +1,57 @@
+================================================================================
+  CLOUDBASKET — SESSION RESPONSE
+  Topic: redis-client
+  Date: 2026-04-10
+  Engineer: E1 Chief Engineer (Claude Sonnet 4.6)
+================================================================================
+
+FILE CREATED
+  lib/redis.ts
+
+PURPOSE
+  Upstash Redis REST client singleton with cache helpers and sliding-window rate limiting.
+  Fail-open on all paths — missing env vars or runtime errors never crash callers.
+
+DEPENDENCIES (already installed)
+  @upstash/redis    ^1.37.0  — REST client
+  @upstash/ratelimit ^2.0.8  — sliding-window algorithm on Upstash
+
+ENV VARS ADDED TO lib/env.ts
+  UPSTASH_REDIS_REST_URL
+  UPSTASH_REDIS_REST_TOKEN
+
+EXPORTS
+  redis             Redis | null           — singleton; null when not configured
+  getCache<T>(key)  Promise<T | null>      — JSON read; null on miss/error
+  setCache(k,v,ttl) Promise<void>          — JSON write; ex=3600s default; no-op on error
+  deleteCache(key)  Promise<void>          — del; no-op on error
+  rateLimit(ip, limit, windowSeconds)      — sliding window; RateLimitResult
+  RateLimitResult   interface              — { success, limit, remaining, reset }
+
+RATE LIMITER DESIGN
+  - Uses @upstash/ratelimit Ratelimit.slidingWindow
+  - Limiter instances cached in module-level Map keyed by "limit:window" — one per
+    distinct config, never recreated between calls
+  - prefix: 'cb:rl' isolates rate limit keys from cache keys in the same database
+  - Fails open (success: true) when Redis is unconfigured or throws
+
+FAIL-OPEN CONTRACT
+  When UPSTASH env vars are absent:
+    getCache  → null     (cache miss semantics — callers fall through to origin)
+    setCache  → no-op    (silent)
+    deleteCache → no-op  (silent)
+    rateLimit → { success: true, limit, remaining: limit, reset: 0 }
+  Same behaviour on any runtime error (network, auth, timeout).
+
+TYPE CHECK
+  pnpm tsc --noEmit → EXIT:0  (zero errors)
+
+RISK LEVEL: LOW
+  - No writes to DB, no auth state changes
+  - Purely additive — no existing callers yet
+  - All paths fail-open; removing this file has zero impact on app functionality
+
+ROLLBACK PLAN
+  Delete lib/redis.ts and revert the two lines added to lib/env.ts.
+  No other files were modified.
+================================================================================

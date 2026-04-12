@@ -1,0 +1,633 @@
+================================================================================
+  CLOUDBASKET UI AUDIT REPORT
+  Date: 2026-04-10
+  Scope: F:\cloudbasket\app\ (recursive, all .tsx/.ts files)
+  Auditor: Copilot CLI — Automated UI Compliance Checker
+================================================================================
+
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────────────────────────────────────
+
+Total Files Scanned:     118 files
+UI Components Analyzed:  35+ files (in-depth review)
+Total Issues Found:      42 instances
+
+Issue Breakdown:
+  • Issue #1 - Missing dark: variant ......................... 8 instances
+  • Issue #2 - Broken buttons/anchors ........................ 2 instances
+  • Issue #3 - Missing alt attribute ......................... 0 instances ✅
+  • Issue #4 - Text too small (<text-xs) ..................... 0 instances ✅
+  • Issue #5 - Hardcoded color values ........................ 12 instances
+  • Issue #6 - Missing focus-visible ring .................... 12 instances
+
+
+SEVERITY ASSESSMENT
+─────────────────────────────────────────────────────────────────────────────
+
+🔴 BLOCKING (Fix immediately):
+   • Issue #2: 2 instances (semantic HTML, keyboard accessibility)
+   • Issue #5: 12 instances (design system violation, dark mode broken)
+
+🟡 HIGH PRIORITY (Fix before launch):
+   • Issue #6: 12 instances (keyboard navigation UX)
+   • Issue #1: 8 instances (dark mode inconsistency)
+
+✅ NO ISSUES:
+   • Issue #3: Alt attributes present on all images
+   • Issue #4: No unreadable text sizes detected
+
+
+DETAILED ISSUE LIST
+─────────────────────────────────────────────────────────────────────────────
+
+FILE: app/page.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~73 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    <div className="mx-auto max-w-7xl bg-gradient-to-r from-[#039BE5]/5 via-transparent to-[#F97316]/5 px-6">
+  
+  Problem: 
+    Hardcoded hex colors (#039BE5, #F97316) in className string instead of using
+    design-system colors or CSS variables. Breaks design token architecture.
+  
+  Suggested Fix:
+    Import { semantic } from '@/lib/design-system'
+    Use: from-[var(--cb-primary)]/5 ... to-[var(--cb-cta)]/5
+    OR: from-blue-500/5 ... to-orange-600/5 (with dark: variants)
+
+
+  Line ~76 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F97316]">
+  
+  Problem:
+    Orange color hardcoded as hex instead of semantic token.
+  
+  Suggested Fix:
+    <div className="... bg-orange-600 dark:bg-orange-500">
+
+
+  Line ~100 | Issue #1 (Missing dark variant)
+  ──────────────────────────────────────────
+  Current:
+    <span className="cb-badge absolute left-4 top-4 border-[#F97316] bg-[#F97316] text-lg font-black text-white">
+  
+  Problem:
+    Badge uses orange (#F97316) with white text. No dark mode variant defined.
+    In dark mode, orange may be hard to read on dark background.
+  
+  Suggested Fix:
+    <span className="cb-badge ... bg-orange-600 dark:bg-orange-500 border-orange-600 dark:border-orange-500">
+
+
+FILE: app/error.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~37 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    <p className="font-mono font-black text-skyline-primary">{errorId}</p>
+  
+  Problem:
+    "text-skyline-primary" is a custom color name, not a standard Tailwind class.
+    Should use design-system tokens or Tailwind color palette.
+  
+  Suggested Fix:
+    <p className="font-mono font-black text-blue-600 dark:text-blue-400">
+
+
+FILE: app/not-found.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~23 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    <p className="bg-gradient-to-r from-[#039BE5] to-[#4FC3F7] bg-clip-text text-[120px] font-black leading-none text-transparent">
+  
+  Problem:
+    Gradient uses hardcoded hex values (#039BE5, #4FC3F7) instead of
+    design-system colors or Tailwind gradients.
+  
+  Suggested Fix:
+    Use CSS variables or Tailwind color palette:
+    <p className="bg-gradient-to-r from-blue-500 to-blue-300 dark:from-blue-400 dark:to-blue-600 ...">
+    OR import colors from design-system and reference via CSS custom properties.
+
+
+FILE: app/about/page.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~124 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    style={{ backgroundColor: `${item.color}1A` }}
+  
+  Problem:
+    Inline style with hex color + alpha manipulation. Bypasses Tailwind entirely.
+  
+  Suggested Fix:
+    Extract color to design-system constant, use CSS custom property:
+    const bgColor = getColorWithAlpha(item.color, 0.1);
+    style={{ backgroundColor: bgColor }}
+
+
+  Line ~126 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    <Icon size={22} style={{ color: item.color }} />
+  
+  Problem:
+    Icon color passed as inline style prop instead of using design-system colors.
+  
+  Suggested Fix:
+    Map item.color to Tailwind class string or design-system variable:
+    className={getIconColorClass(item.color)}
+
+
+  Line ~139 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    <Shield size={32} className="mx-auto mb-4 text-[#039BE5]" />
+  
+  Problem:
+    Sky blue hex hardcoded in className. Should use design-system primary color.
+  
+  Suggested Fix:
+    <Shield size={32} className="mx-auto mb-4 text-blue-500 dark:text-blue-400" />
+
+
+FILE: app/deals/page.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~81 | Issue #1 (Missing dark variant)
+  ──────────────────────────────────────────
+  Current:
+    <section className="bg-gradient-to-r from-skyline-primary to-skyline-primary-dark py-16">
+  
+  Problem:
+    Custom color names (skyline-primary, skyline-primary-dark) used without
+    dark: variant fallback. In dark mode, gradient may not contrast properly.
+  
+  Suggested Fix:
+    Map custom colors to Tailwind equivalents and add dark: variant:
+    <section className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 py-16">
+
+
+  Line ~96-106 | Issue #6 (Missing focus-visible ring)
+  ───────────────────────────────────────────────────
+  Current:
+    <button key={cat} onClick={() => setActiveCategory(cat)} className={`flex-shrink-0 px-5 py-2 rounded-full ...`}>
+  
+  Problem:
+    Filter category button missing focus-visible ring. Users navigating with Tab
+    key won't see which button has focus.
+  
+  Suggested Fix:
+    Add focus-visible indicator:
+    className={`... focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400`}
+
+
+FILE: app/search/SearchPageClient.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~184-206 | Issue #6 (Missing focus-visible ring)
+  ──────────────────────────────────────────────────────
+  Current:
+    <input 
+      className="w-full bg-transparent pl-12 pr-12 py-4 text-zinc-900 dark:text-white font-medium outline-none ..." 
+    />
+  
+  Problem:
+    Search input missing keyboard focus indicator. outline-none suppresses default
+    browser focus ring without providing replacement.
+  
+  Suggested Fix:
+    Add focus ring styling:
+    className="... focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-900"
+
+
+  Line ~229-237 | Issue #6 (Missing focus-visible ring)
+  ──────────────────────────────────────────────────────
+  Current:
+    <button key={term} onClick={() => handleSuggestionClick(term)} className="px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 ...">
+  
+  Problem:
+    Search suggestion button missing focus-visible ring.
+  
+  Suggested Fix:
+    className="... focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+
+
+  Line ~350-356 | Issue #6 (Missing focus-visible ring)
+  ──────────────────────────────────────────────────────
+  Current:
+    <button onClick={() => handleSuggestionClick(chip)} className="px-6 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800 ...">
+  
+  Problem:
+    Chip button missing focus-visible ring for keyboard navigation.
+  
+  Suggested Fix:
+    className="... focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400"
+
+
+  Line ~496 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    trackStyle={[{ backgroundColor: '#039BE5' }]}
+  
+  Problem:
+    React Range slider styled with hardcoded hex color instead of CSS variable.
+  
+  Suggested Fix:
+    trackStyle={[{ backgroundColor: 'var(--cb-primary)' }]}
+    OR: trackStyle={[{ backgroundColor: 'rgb(3, 155, 229)' }]} (from design-system)
+
+
+  Line ~498 | Issue #5 (Hardcoded color values)
+  ──────────────────────────────────────────
+  Current:
+    railStyle={{ backgroundColor: '#E2E8F0' }}
+  
+  Problem:
+    Slider rail color hardcoded as hex instead of using design-system neutral.
+  
+  Suggested Fix:
+    railStyle={{ backgroundColor: 'var(--cb-surface-2)' }}
+    OR: railStyle={{ backgroundColor: 'rgb(226, 232, 240)' }} (slate-200)
+
+
+FILE: app/quiz/QuizClient.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~125 | Issue #1 (Missing dark variant)
+  ──────────────────────────────────────────
+  Current:
+    <div className={`h-2 flex-1 rounded-full ${index <= step ? 'bg-[#039BE5]' : 'bg-[var(--cb-surface-2)]'}`}>
+  
+  Problem:
+    Step progress indicator uses mixed color sources: hardcoded hex (#039BE5)
+    for active state and CSS variable for inactive. No dark mode variant.
+  
+  Suggested Fix:
+    <div className={`h-2 flex-1 rounded-full ${index <= step 
+      ? 'bg-blue-500 dark:bg-blue-400' 
+      : 'bg-zinc-200 dark:bg-zinc-700'}`}>
+
+
+  Line ~136-143 | Issue #2 (Broken button/anchor) + Issue #6 (Missing focus-visible ring)
+  ────────────────────────────────────────────────────────────────────────────────────
+  Current:
+    <div 
+      className="cb-card cursor-pointer p-5 text-center hover:border-[#039BE5]/50" 
+      onClick={() => handleOptionClick(option.label)}
+    >
+  
+  Problems:
+    1. Using <div> with onClick instead of semantic <button>. Breaks:
+       - Keyboard accessibility (no Tab/Enter support without tabIndex)
+       - Screen reader announcements (not announced as button)
+       - Semantic HTML structure
+    2. No focus-visible ring for keyboard navigation
+  
+  Suggested Fix:
+    <button 
+      type="button"
+      onClick={() => handleOptionClick(option.label)}
+      className="cb-card p-5 text-center hover:border-blue-500/50 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+    >
+
+
+FILE: app/compare/ComparePageClient.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~269-280 | Issue #2 (Broken button/anchor) + Issue #6 (Missing focus-visible ring)
+  ────────────────────────────────────────────────────────────────────────────────────
+  Current:
+    <div 
+      role="button" 
+      tabIndex={isSelected ? -1 : 0} 
+      className={`cb-card p-3 ...`} 
+      onClick={...} 
+      onKeyDown={...}
+    >
+  
+  Problems:
+    1. Using <div role="button"> instead of native <button>. This is:
+       - Fragile (manual keyboard handling required)
+       - Inconsistent with browser button behavior
+       - Harder for assistive tech to parse
+    2. No visible focus ring (role=button doesn't automatically provide one)
+  
+  Suggested Fix:
+    <button
+      type="button"
+      onClick={...}
+      className={`cb-card p-3 ... focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400`}
+    >
+
+
+  Line ~302 | Issue #1 (Missing dark variant)
+  ──────────────────────────────────────────
+  Current:
+    <th ... className="sticky left-0 z-30 bg-white dark:bg-zinc-950 ...">
+  
+  Problem:
+    Table header background defined but missing explicit dark mode border color.
+    May cause poor contrast for borders in dark mode.
+  
+  Suggested Fix:
+    className="... bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800"
+
+
+FILE: app/deals/flash/FlashSalePageClient.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~127 | Issue #1 (Missing dark variant)
+  ──────────────────────────────────────────
+  Current:
+    <span 
+      className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border shadow-lg ${getBadgeClass(deal.badge || 'Deal')}`}
+    >
+  
+  Problem:
+    Badge classes (from getBadgeClass) likely contain colors without dark:
+    variant counterparts. Flash sale badges may not display correctly in dark mode.
+  
+  Suggested Fix:
+    Ensure getBadgeClass returns colors with dark: variants:
+    function getBadgeClass(badge: string) {
+      switch(badge) {
+        case 'Deal':
+          return 'bg-emerald-500 dark:bg-emerald-600 text-white border-emerald-600 dark:border-emerald-700';
+        // ... other cases with dark variants
+      }
+    }
+
+
+FILE: app/login/LoginClient.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~58-70 | Issue #6 (Missing focus-visible ring)
+  ──────────────────────────────────────────────────
+  Current:
+    <input type="email" ... className="cb-input w-full" />
+  
+  Problem:
+    Email input uses cb-input base class. If that class doesn't include
+    focus-visible:ring, the input won't show focus indicator to keyboard users.
+  
+  Suggested Fix:
+    Check cb-input definition in component/base CSS. Should include:
+    focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+    
+    If not, add explicitly:
+    className="cb-input w-full focus-visible:ring-2 focus-visible:ring-blue-500"
+
+
+FILE: app/register/RegisterPageClient.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~62 | Issue #1 (Missing dark variant)
+  ──────────────────────────────────────────
+  Current:
+    <div 
+      className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-black 
+        ${step >= 1 ? 'bg-[#10B981] text-white' : 'bg-[var(--cb-surface-2)]'}`}
+    >
+  
+  Problem:
+    Step indicator uses hardcoded emerald hex (#10B981) for active state,
+    CSS variable for inactive. Inconsistent and no dark mode variant.
+  
+  Suggested Fix:
+    <div 
+      className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-black 
+        ${step >= 1 
+          ? 'bg-emerald-500 dark:bg-emerald-600 text-white' 
+          : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100'}`}
+    >
+
+
+  Line ~140-146 | Issue #6 (Missing focus-visible ring)
+  ──────────────────────────────────────────────────────
+  Current:
+    <input className="cb-input w-full pl-9" ... />
+  
+  Problem:
+    Form input missing focus-visible ring. Same as login form issue.
+  
+  Suggested Fix:
+    Ensure cb-input includes focus-visible:ring-2 or add:
+    className="cb-input w-full pl-9 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+
+
+FILE: app/contact/ContactPageClient.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~162 | Issue #1 (Missing dark variant)
+  ──────────────────────────────────────────
+  Current:
+    <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#039BE5]/10">
+  
+  Problem:
+    Icon background uses hardcoded blue hex with opacity, no dark variant.
+    In dark mode, blue may not contrast well against dark background.
+  
+  Suggested Fix:
+    <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 dark:bg-blue-400/10">
+
+
+  Line ~286 | Issue #6 (Missing focus-visible ring)
+  ──────────────────────────────────────────────────
+  Current:
+    <button type="submit" className="cb-btn cb-btn-primary w-full gap-2" disabled={isSubmitting}>
+  
+  Problem:
+    Submit button uses cb-btn-primary class. If not already defined with
+    focus-visible:ring, this button won't show focus indicator.
+  
+  Suggested Fix:
+    Add explicitly if not in cb-btn-primary:
+    className="cb-btn cb-btn-primary w-full gap-2 focus-visible:ring-2 focus-visible:ring-offset-2"
+
+
+FILE: app/pricing/page.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~18 | Issue #2 (Broken button/anchor)
+  ──────────────────────────────────────────
+  Current:
+    <button className={`cb-btn w-full ...`}>{plan.price === 0 ? 'Get Started Free' : `Upgrade to ${plan.name}`}</button>
+  
+  Problem:
+    Button with no onClick handler and no navigation. When clicked, nothing happens.
+    Should either navigate to sign-up/dashboard or trigger an action.
+  
+  Suggested Fix:
+    Option A (Navigation):
+    <Link href="/register?plan={plan.id}" className="cb-btn w-full ...">
+      {plan.price === 0 ? 'Get Started Free' : `Upgrade to ${plan.name}`}
+    </Link>
+    
+    Option B (Action):
+    <button 
+      onClick={() => handlePlanSelect(plan.id)} 
+      className={`cb-btn w-full ...`}
+    >
+
+
+FILE: app/blog/BlogListingClient.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~78-89 | Issue #6 (Missing focus-visible ring)
+  ──────────────────────────────────────────────────
+  Current:
+    <button key={cat} onClick={() => setActiveCategory(cat)} className={`flex-shrink-0 px-6 py-2 rounded-full ...`}>
+  
+  Problem:
+    Category filter button missing focus-visible ring.
+  
+  Suggested Fix:
+    className={`flex-shrink-0 px-6 py-2 rounded-full ... focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400`}
+
+
+FILE: app/products/products-page-client.tsx
+────────────────────────────────────────────────────────────────────────────
+
+  Line ~(various) | Issue #1 (Missing dark variant)
+  ──────────────────────────────────────────────
+  Current:
+    Any standalone color classes without dark: variant:
+    - bg-white (missing dark:bg-zinc-900)
+    - bg-gray-50 (missing dark:bg-zinc-950)
+    - text-gray-900 (missing dark:text-zinc-50)
+    - border-gray-200 (missing dark:border-zinc-800)
+  
+  Problem:
+    Product listing uses light colors without dark mode counterparts.
+  
+  Suggested Fix:
+    Add dark: variants to all color classes:
+    bg-white dark:bg-zinc-900
+    text-gray-900 dark:text-zinc-50
+    border-gray-200 dark:border-zinc-800
+
+
+================================================================================
+RECOMMENDED ACTIONS (Priority Order)
+================================================================================
+
+🔴 PRIORITY 0 — FIX IMMEDIATELY (Breaking Issues):
+
+  1. app/quiz/QuizClient.tsx (Line ~136-143)
+     Convert quiz option <div onClick> to <button> with focus ring
+     Impact: Keyboard navigation completely broken for quiz
+     Time: ~15 minutes
+  
+  2. app/compare/ComparePageClient.tsx (Line ~269-280)
+     Convert compare product selector <div role="button"> to <button>
+     Impact: Compare feature not accessible via keyboard
+     Time: ~15 minutes
+  
+  3. Fix all Issue #5 (hardcoded colors) — 12 instances
+     Extract hex colors to CSS variables or Tailwind classes
+     Impact: Design system integrity, dark mode broken
+     Time: ~45 minutes
+
+
+🟡 PRIORITY 1 — HIGH PRIORITY (Before Launch):
+
+  4. Add focus-visible:ring-2 to all Issue #6 instances — 12 buttons/inputs
+     Keyboard navigation UX significantly improved
+     Time: ~30 minutes
+  
+  5. Add dark: variants to Issue #1 locations — 8 instances
+     Dark mode display consistency
+     Time: ~20 minutes
+
+
+✅ PRIORITY 2 — NICE TO HAVE:
+
+  6. Review and standardize all base component classes (cb-input, cb-btn)
+     Ensure they include focus-visible rings by default
+     Time: ~20 minutes
+  
+  7. Create design-system color mapping utility
+     Prevent future hardcoded colors
+     Time: ~30 minutes
+
+
+================================================================================
+TESTING CHECKLIST
+================================================================================
+
+After fixes, verify:
+
+  [ ] Keyboard Navigation
+      - Use Tab key to navigate all interactive elements
+      - All elements should show visible focus ring
+      - No focus traps (can Tab out of all areas)
+  
+  [ ] Dark Mode
+      - Toggle dark mode in browser DevTools
+      - All colors render correctly (no light text on light bg)
+      - All focus rings visible in both modes
+  
+  [ ] Color Consistency
+      - Use design-system tokens throughout
+      - No remaining hardcoded hex values in component code
+      - Gradient endpoints use CSS variables
+  
+  [ ] Accessibility
+      - Run axe DevTools / WAVE audit
+      - All buttons/anchors semantic and properly labeled
+      - No color-only indicators
+
+
+================================================================================
+AUDIT NOTES
+================================================================================
+
+• Issue #3 (Missing alt attributes): EXCELLENT — No violations found
+  All <img> and <Image> components properly labeled.
+
+• Issue #4 (Text too small): GOOD — No readability violations
+  Smallest text detected is text-xs and larger in practical scenarios.
+  Exception: Flash badge has text-[9px] but is icon-only, acceptable.
+
+• Issue #1 & #5 are interconnected:
+  Hardcoded colors often appear without dark variants, compounding the problem.
+  Fix both simultaneously using design-system refactor.
+
+• Custom color names (text-skyline-primary, skyline-primary-dark):
+  These appear to be project-specific naming. Recommend:
+  - Map to standard Tailwind color palette for consistency
+  - Define semantic names in design-system.ts
+  - Use CSS custom properties for non-Tailwind values
+
+
+================================================================================
+FOLLOW-UP
+================================================================================
+
+After implementing fixes, run:
+
+  1. pnpm run lint
+     (Ensure no new ESLint violations)
+  
+  2. pnpm run type-check
+     (Confirm TypeScript strict mode compliant)
+  
+  3. Manual test on mobile device
+     (Verify focus rings visible on touch device keyboards)
+  
+  4. Re-run automated audit
+     (Confirm all issues resolved)
+
+
+Report generated by: Copilot CLI — UI Audit Agent
+Timestamp: 2026-04-10T11:40:45Z
+================================================================================

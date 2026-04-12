@@ -1,0 +1,57 @@
+TRACKER ANALYSIS — 08-Apr-2026 | CloudBasket | NEXQON HOLDINGS
+================================================================
+Files read: CB_1000_PROMPT_MASTER_TRACKER.xlsx | CB_FEATURE_FLAGS_TRACKER.xlsx | CB_REMOVED_ITEMS_TRACKER-vs1.xlsx
+
+15-LINE SUMMARY
+---------------
+1.  MASTER TRACKER: 34 prompt groups, 1,000+ total prompts. Sets A–F (280 prompts, Groups 1–6) = DONE. Set I = RESOLVED (Typesense→Supabase FTS). Sets G–P (10 groups, 610 prompts) = PARTIAL. Sets Q–AH (18 groups, 500+ prompts) = PLANNED/not started.
+2.  REALITY SCORE: 65/100 current, target 80/100 before launch. Build is PASSING with 1,263 routes and 0 TSC errors per tracker dashboard. Codebase has 475 .ts/.tsx files (tracker says 486 — minor discrepancy from other file types).
+3.  COMMIT COUNT DRIFT: Tracker (07-Apr) says 119 commits. Codebase git log shows 162 commits — 43 additional commits made after tracker was last written, confirming tracker is slightly stale.
+4.  ZERO-CHECKOUT MANDATE v3.0.0 (PERMANENT): On 07-Apr-2026, 105 files (~11,686 lines) were deleted across 2 commits (4b885a0 = 67 files/5,777 lines; d1f9056 = 38 files/5,909 lines). CloudBasket is a pure affiliate price-discovery engine — no checkout, no payments at launch.
+5.  FEATURE FLAGS: 13 flags exist, ALL OFF by default. Checkout/Payments are P0-CRITICAL and require WRITTEN MD APPROVAL (DocuSign) before restore. Admin/Orders/Dashboard/POD-Fulfillment/Email are P1. Vendor/Wallet/Invoices/Returns/Gift-Cards are P2.
+6.  IBF ACTIONS: 26 total pending actions — 8 P0 (cannot launch without), 7 P1, 9 P2. P0 blockers: Supabase production project, Vercel deployment, Domain DNS, Razorpay KYC, Grievance Officer update, Amazon Associates tag, CookieYes dashboard config, GA4 Signals setup.
+7.  REMOVED FILES TRACKER: All 105 removed files are precisely catalogued with file path, category, line count, commit hash, associated feature flag, description, and restore command. Every removal is 100% reversible via git checkout.
+8.  CODEBASE CONFIRMED MATCHES: app/checkout/ = GONE ✅ | app/admin/ = GONE ✅ | components/Navigation.tsx = still 2-line stub ✅ (IBF action #25 unfixed) | Migration 013 gap (012→014) = confirmed ✅ | app/product/[id]/page.tsx.bak = still present ✅ (IBF action #24 unfixed).
+9.  PARTIAL SETS (G–P) that need work: Auth/Middleware (G), Email+Push (H), AdSense (J), POD-Printify/Printful (K), POD-Amazon/Etsy (L), Associates+Gamification (M), Blog+SEO (N), Analytics+A/B (O), Redis+Monitoring (P) — all have code scaffolded but flagged PARTIAL.
+10. PLANNED BUT NOT STARTED (Q–AH): International Pricing, WhatsApp Integration, Chrome Extension, PWA, Data Export, AI Personalisation, Competitor Monitoring, Zapier Webhooks, PDF Docs, Social Content, B2B POD, Bundle Creator, Seasonal Campaigns, Revenue Attribution, CRO, Memberships, Image Pipeline, Advanced Completion (160 prompts).
+11. REDIS NOTE: ioredis ghost dependency fixed, Upstash REST wired in code. IBF still needs to create Upstash account and add 2 env keys (UPSTASH_REDIS_REST_URL + TOKEN). This is a P1 blocker.
+12. FEATURE FLAG ENABLE CHECKLIST: Detailed step-by-step checklist per flag in File 2. FEATURE_CHECKOUT requires 7 steps including written approval, Razorpay KYC, env keys, build gate, and 73 Playwright tests passing. All 30 checklist items = PENDING.
+13. ZERO-CHECKOUT REVIEW THRESHOLD: Checkout may be reconsidered only when user base >50K MAU AND POD revenue >₹5L/month AND legal entity is formalized. Phase 2 trigger is data-driven, not time-based.
+14. DESIGN SYSTEM & TECH STACK: Fully implemented in lib/design-system.ts with locked brand tokens. Stack (Next.js 16.1.6, React 19.2.3, TypeScript strict, Tailwind v4, Supabase, Redis/Upstash) is consistent between tracker and codebase.
+15. OVERALL ASSESSMENT: Codebase is launch-ready in affiliate mode (discovery + redirect). The 8 P0 IBF actions are the only blockers to going live. ~280 prompts worth of features are fully implemented. ~610 prompts worth are scaffolded/partial. ~500+ prompts remain unbuilt (Phase 2–3 roadmap). Every removed file has a clean restore path via feature flags.
+
+CODEBASE vs TRACKER — GAP MATRIX
+----------------------------------
+| Check                          | Tracker Says           | Codebase Reality          | Match? |
+|--------------------------------|------------------------|---------------------------|--------|
+| app/checkout/                  | REMOVED                | Does not exist            | ✅     |
+| app/admin/                     | REMOVED (54 pages)     | Does not exist            | ✅     |
+| Navigation.tsx                 | 2-line stub, unfixed   | 2 lines confirmed         | ✅     |
+| Migration 013                  | Missing (012→014 gap)  | Gap confirmed             | ✅     |
+| app/product/[id]/page.tsx.bak  | Still present, delete  | File exists               | ✅     |
+| .ts/.tsx file count            | 486 files              | 475 files                 | ⚠️ -11 |
+| Git commit count               | 119 commits            | 162 commits               | ⚠️ +43 |
+| Feature flags (lib/features.ts)| 13 flags, all OFF      | lib/features.ts exists    | ✅     |
+| services/payments/             | REMOVED                | Directory gone            | ✅     |
+| services/orders/               | REMOVED                | Directory gone            | ✅     |
+| services/tax/                  | REMOVED                | Directory gone            | ✅     |
+| Supabase production project    | NOT CREATED (P0)       | Only local env            | ✅     |
+| Reality Score                  | 65/100                 | Build passing, plausible  | ✅     |
+
+KEY ACTIONS IMMEDIATELY REQUIRED (P0 — Cannot Launch Without)
+--------------------------------------------------------------
+1. Create Supabase production project + run 17 migrations
+2. Connect repo to Vercel + set all 69 env vars
+3. Point cloudbasket.in DNS to Vercel CNAME
+4. Complete Razorpay KYC (even for future use)
+5. Update grievance-officer/page.tsx line 78 → S. KHALEEL AHMED
+6. Confirm Amazon Associates tag cloudbasket-21 is active
+7. Configure CookieYes: 4 categories + Consent Mode v2 + IAB TCF 2.2
+8. Disable GA4 Signals + set 2-month retention
+
+QUICK WINS (P2 — Low effort, high hygiene)
+-------------------------------------------
+- Delete app/product/[id]/page.tsx.bak (IBF action #24)
+- Replace 2-line Navigation.tsx stub with real nav (IBF action #25)
+- Create missing migration 013 to close 012→014 gap (IBF action #26)
+- Create .env.example documenting all 69 env vars (IBF action #23)

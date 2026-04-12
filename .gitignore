@@ -9,7 +9,6 @@ build/
 .DS_Store
 Thumbs.db
 /public/uploads/
-cc-output/
 logs/
 .vercel
 .aider*

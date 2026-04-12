@@ -1,0 +1,451 @@
+
+================================================================================
+  CLOUDBASKET — EXCEL MASTER TRACKER BUILDER HANDSHAKE PASSPORT
+  Issued By: Claude (E0 — CPO) | NEXQON HOLDINGS | 07-Apr-2026
+  Hand this document to any Claude session to build the Excel tracker files
+================================================================================
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION A: PROJECT IDENTITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Project         : CloudBasket v2.0.0 — Pure Price Discovery Engine
+Tagline         : Zero-Checkout Affiliate Aggregator — India's Smartest Price Engine
+Owner           : Khaleel Ahamed Shaik (IBF) | NEXQON HOLDINGS | Kadapa AP 516002
+Domain          : cloudbasket.in / cloudbasket.co
+Repo            : https://github.com/nexasystemics/cloudbasket.git
+Code Path       : F:\cloudbasket (Windows, PowerShell)
+Docs Path       : E:\cloudbasket-docs\
+Stack           : Next.js 16.1.6 | TypeScript strict | Tailwind v4 | Supabase | pnpm
+Brand Colors    : Navy #1F4E79 | Amber #F59E0B | Sky #039BE5
+CPO             : Claude (E0) — coordinates all 7 engineers
+Grievance Off.  : S. KHALEEL AHMED | grievance@cloudbasket.co
+Current Commit  : d58f590 (07-Apr-2026)
+Build Status    : ✅ PASSING | 1,263 routes full | 126 pages fast build
+TSC Status      : ✅ ZERO ERRORS
+Tests           : 73 Playwright tests (3 spec files, Chromium)
+Total Files     : 486 (app:162, components:108, lib:96, services:100, supabase:20)
+Total Commits   : 119 (Feb 28 → Apr 7, 2026)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION B: YOUR TASK — BUILD THESE EXCEL FILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Build 3 Excel files using openpyxl in Python. Save to /mnt/user-data/outputs/
+
+FILE 1: CB_1000_PROMPT_MASTER_TRACKER.xlsx
+  Purpose : One row per prompt — all 1,000 prompts across Sets A→AH
+  Tabs    : One tab per Set Group (see Section D for full group list)
+            + 1 Dashboard tab + 1 IBF Actions tab + 1 Feature Flags tab
+
+FILE 2: CB_FEATURE_FLAGS_TRACKER.xlsx
+  Purpose : All 13 disabled features — status, how to enable, files to restore
+  Tabs    : Feature Flags | Removed Files Log | Enable Checklist
+
+FILE 3: CB_REMOVED_ITEMS_TRACKER.xlsx
+  Purpose : All 105 files removed in zero-checkout enforcement
+  Tabs    : Removed Files | Zero-Checkout Mandate | Restore Guide
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION C: EXCEL COLUMN STRUCTURE (FILE 1 — MASTER TRACKER)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Use these exact columns in this order for every prompt row:
+
+GROUP 1 — IDENTITY (cols A–F)
+  A: Prompt ID          e.g. A01, D14, E22, Q05
+  B: Serial #           1–1000 (running total across all sets)
+  C: Set                A, B, C … AH
+  D: Group #            1–34
+  E: Group Title        e.g. "POD Platform Integrations"
+  F: # in Group         1–N (position within its set)
+
+GROUP 2 — PROMPT DEFINITION (cols G–P)
+  G: Prompt Title       Short descriptive name
+  H: Description Line 1 First line — what it does (max 120 chars)
+  I: Description Line 2 Second line — why it matters (max 120 chars)
+  J: Topic              1–2 word category e.g. "Database", "UI", "Revenue"
+  K: Usage              How it's used in the system
+  L: Purpose            Business/user value
+  M: Prompt Level       Supreme | Standard | Stub | Undefined
+  N: Supreme Defined?   Yes | No
+  O: Who Generated      E0 | E1 | E2 | IBF | Claude Code | Gemini
+  P: Session Date       e.g. 2026-03-21
+
+GROUP 3 — STATUS (cols Q–S)
+  Q: Overall Status     ✅ DONE | ⚠️ PARTIAL | ⏳ PENDING | ❌ OPEN | ❌ REMOVED | ⛔ DISABLED
+  R: Priority           P0 | P1 | P2 | P3
+  S: Reality %          0–100
+
+GROUP 4 — CODE (cols T–Z)
+  T: Code Status        ✅ APPLIED | ⚠️ STUB | ❌ REMOVED | ⛔ DISABLED | ⏳ PENDING
+  U: Code File Name     e.g. app/legal/cookies/page.tsx
+  V: File Type          .tsx | .ts | .sql | .md | .json | .css
+  W: File Path          Relative path e.g. app/legal/cookies/
+  X: File Size          TBD (IBF to fill from local scan)
+  Y: Code Quality       Supreme | Standard | Stub | Empty
+  Z: File Exists?       Yes | No | Removed | TBD
+
+GROUP 5 — GIT + BUILD (cols AA–AD)
+  AA: Git Status        Committed | Pending | Removed | None
+  AB: Commit Hash       e.g. b193105 | Removed:4b885a0 | TBD
+  AC: pnpm Build        ✅ PASS | ❌ FAIL | TBD | N/A
+  AD: TSC Status        0 errors | TBD | N/A
+
+GROUP 6 — ROUTES + UI (cols AE–AG)
+  AE: Page URL          e.g. /legal/cookies | /api/contact | N/A
+  AF: Page Weightage    1–10 (10 = most critical to business)
+  AG: Page Importance   P0 | P1 | P2 | P3 | N/A
+
+GROUP 7 — EXTERNAL DEPENDENCIES (cols AH–AN)
+  AH: External Needed?  Yes | No
+  AI: Integration Name  e.g. Supabase | Resend | CookieYes | N/A
+  AJ: API Required?     Yes | No
+  AK: API Status        ✅ Active | ⏳ Pending | ❌ Missing | N/A
+  AL: Free or Paid      Free | Paid | Freemium | N/A
+  AM: Account Status    ✅ Created | ⏳ Pending | ❌ Not Created | N/A
+  AN: IBF Action?       Yes | No
+
+GROUP 8 — IBF SPECIFIC (cols AO–AQ)
+  AO: IBF Action Detail What IBF must do (or "None")
+  AP: External Approval? Yes | No
+  AQ: Approval From     e.g. Amazon | Google | N/A
+
+GROUP 9 — FEATURE FLAGS (cols AR–AT)
+  AR: Feature Flagged?  Yes | No
+  AS: Flag Name         e.g. FEATURE_ADMIN | N/A
+  AT: Flag Status       OFF (default) | ON | N/A
+
+GROUP 10 — NOTES (col AU)
+  AU: Notes / Next Action
+
+TOTAL: 47 columns (A–AU)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION D: ALL 34 SET GROUPS — FULL DATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Format: Set | Group# | Title | Prompts | Overall Status | Serial Range
+
+A  | 1  | Project Scaffold + India Catalog        | 20  | ✅ DONE    | 1–20
+B  | 2  | Platform Features (P08–P20)             | 20  | ✅ DONE    | 21–40
+C  | 3  | UI/UX Supreme 40 Prompts                | 40  | ✅ DONE    | 41–80
+D  | 4  | APIs + Automation 50 Prompts            | 50  | ✅ DONE    | 81–130
+   |    | NOTE: D01–D51 complete. D52–D61 in git  |     |            |
+   |    | but disabled via feature flags           |     |            |
+E  | 5  | POD Platform Integrations               | 50  | ✅ DONE    | 131–180
+F  | 6  | Final 100 Advanced Features             | 100 | ✅ DONE    | 181–280
+   |    | NOTE: F01-F21 + F22-F100 applied        |     |            |
+G  | 7  | Authentication + Middleware             | 40  | ⚠️ PARTIAL | 281–320
+H  | 8  | Email + Push Notifications              | 50  | ⚠️ PARTIAL | 321–370
+I  | 9  | Search + Voice                          | 50  | ✅ RESOLVED| 371–420
+   |    | NOTE: Typesense removed — Supabase FTS  |     |            |
+J  | 10 | AdSense + Sponsored Listings            | 50  | ⚠️ PARTIAL | 421–470
+K  | 11 | POD — Printify + Printful               | 40  | ⚠️ PARTIAL | 471–510
+L  | 12 | POD — Amazon Merch + Redbubble/Etsy     | 40  | ⚠️ PARTIAL | 511–550
+M  | 13 | Associates + Gamification               | 80  | ⚠️ PARTIAL | 551–630
+N  | 14 | Blog + SEO Automation                   | 80  | ⚠️ PARTIAL | 631–710
+O  | 15 | Analytics + A/B Testing                 | 80  | ⚠️ PARTIAL | 711–790
+P  | 16 | Redis Cache + Monitoring                | 100 | ⚠️ PARTIAL | 791–890
+   |    | NOTE: ioredis fixed→Upstash REST wired  |     |            |
+   |    | Upstash account still needed by IBF     |     |            |
+Q  | 17 | International Pricing + Multi-Currency  | 20  | ❌ PLANNED | 891–910
+R  | 18 | WhatsApp Integration                    | 20  | ❌ PLANNED | 911–930
+S  | 19 | Chrome Extension                        | 20  | ❌ PLANNED | 931–950
+T  | 20 | PWA Full Implementation                 | 20  | ❌ PLANNED | 951–970
+U  | 21 | Data Export + Portability               | 20  | ❌ PLANNED | 971–990
+V  | 22 | Intelligence Personalisation Engine     | 20  | ❌ PLANNED | 991–1010
+W  | 23 | Competitor Monitoring                   | 20  | ❌ PLANNED | 1011–1030
+X  | 24 | Zapier + Automation Webhook             | 20  | ❌ PLANNED | 1031–1050
+Y  | 25 | PDF Document Generation                 | 20  | ❌ PLANNED | 1051–1070
+Z  | 26 | Social Content Generator                | 20  | ❌ PLANNED | 1071–1090
+AA | 27 | B2B POD Orders                          | 20  | ❌ PLANNED | 1091–1110
+AB | 28 | POD Bundle Creator                      | 20  | ❌ PLANNED | 1111–1130
+AC | 29 | Seasonal Campaigns                      | 20  | ❌ PLANNED | 1131–1150
+AD | 30 | Revenue Attribution Analytics           | 20  | ❌ PLANNED | 1151–1170
+AE | 31 | CRO Tracker + A/B Testing               | 20  | ❌ PLANNED | 1171–1190
+AF | 32 | Membership + Subscriptions              | 20  | ❌ PLANNED | 1191–1210
+AG | 33 | Image Optimization Pipeline             | 20  | ❌ PLANNED | 1211–1230
+AH | 34 | Advanced Platform Completion            | 160 | ❌ PLANNED | 1231–1390
+
+TOTAL: 1,000 prompts (some sets extend beyond 1000 in AH)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION E: CRITICAL STATUS FACTS (apply to relevant rows)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ZERO-CHECKOUT MANDATE (enforced 07-Apr-2026):
+  105 files removed across 2 commits:
+  - Commit 4b885a0: 67 files | 5,777 lines — Admin dashboards + POD fulfillment
+  - Commit d1f9056: 38 files | 5,909 lines — Payments + Orders + Vendor
+  Status for removed rows: ❌ REMOVED | Flag: FEATURE_ADMIN / FEATURE_CHECKOUT etc.
+  Restore: git checkout <commit>^ -- <file> (see Section F)
+
+LEGAL PAGES — ALL 8 LIVE:
+  /legal/terms              ✅ 856 lines | commit: e1b7eea
+  /legal/privacy            ✅ 791 lines | commit: 6fa27ad
+  /legal/cookies            ✅ 536 lines | commit: b193105
+  /legal/affiliate-disclosure ✅ 451 lines | commit: a565d36
+  /legal/disclaimer         ✅ 226 lines | commit: 0bb9ce2
+  /legal/dmca               ✅ 439 lines | commit: 460ddb8
+  /legal/accessibility      ✅ 423 lines | commit: 74a9ef8
+  /legal/grievance-officer  ✅ 336 lines | commit: b3868d0
+  NOTE: Grievance officer name = S. KHALEEL AHMED (IBF to update line 78)
+
+FEATURE FLAGS — ALL 13 OFF BY DEFAULT:
+  FEATURE_ORDERS=true        → restore services/orders/
+  FEATURE_WALLET=true        → restore services/payments/wallet-system.ts
+  FEATURE_INVOICES=true      → restore services/tax/invoice-generator.ts
+  FEATURE_PAYOUTS=true       → restore services/vendor/payout-engine.ts
+  FEATURE_PAYMENTS=true      → restore services/payments/ (needs Razorpay KYC)
+  FEATURE_ADMIN=true         → restore app/admin/ (54 pages)
+  FEATURE_DASHBOARD=true     → restore app/dashboard/
+  FEATURE_VENDOR=true        → restore app/vendor/ + services/vendor/
+  FEATURE_GIFT_CARDS=true    → restore services/pod/gift-cards.ts
+  FEATURE_POD_FULFILLMENT=true → restore services/pod/order-manager.ts etc.
+  FEATURE_EMAIL_FULFILLMENT=true → order confirmation emails
+  FEATURE_CHECKOUT=true      → restore app/checkout/ (⚠️ needs MD written approval)
+  FEATURE_RETURNS=true       → restore services/orders/return-manager.ts
+
+KEY COMMITS (for tracker):
+  54ed213  2026-02-28  Initial project start
+  538ba3e  2026-03-19  India Catalog 1000 products
+  0f3765b  2026-03-21  C21-C40 complete
+  b3659be  2026-03-21  D06-D50 complete
+  f3f4431  2026-03-31  P0 fixes — fonts, middleware, F01-F100
+  2ca4584  2026-03-31  E21-E50 applied
+  e6c285c  2026-04-01  Typesense removed
+  6fa27ad  2026-04-01  Privacy Policy v2.0
+  ab1294e  2026-04-01  ioredis fix + Resend wired
+  b193105  2026-04-01  Cookie Policy page
+  f9ebc2a  2026-04-01  CookieYes + GTM wired
+  48dac1f  2026-04-03  Refund + legal pages
+  0bb9ce2  2026-04-04  Disclaimer page
+  a565d36  2026-04-04  Affiliate Disclosure page
+  460ddb8  2026-04-04  DMCA page
+  74a9ef8  2026-04-04  Accessibility page
+  b3868d0  2026-04-04  Grievance Officer page
+  1ffcc9e  2026-04-06  D52-D61 applied
+  d1f9056  2026-04-07  ZERO-CHECKOUT: payments/orders removed
+  4b885a0  2026-04-07  ZERO-CHECKOUT: admin/checkout/POD removed
+  ddff655  2026-04-07  Playwright test suite (73 tests)
+  d58f590  2026-04-07  Final docs sync (LATEST)
+
+DEPENDENCIES INSTALLED (package.json):
+  resend, @google/generative-ai, framer-motion, recharts, web-push
+  @reduxjs/toolkit, redux, react-redux, clsx, decimal.js-light
+  victory-vendor, @react-email/render, @playwright/test
+  NOTE: ioredis NOT in package.json (removed as ghost dep)
+
+ENV VARIABLES — 69 KEYS IN lib/env.ts:
+  Supabase (4): URL, ANON_KEY, SERVICE_ROLE_KEY, STORAGE_BUCKET
+  Site (3): SITE_URL, INTERNAL_API_KEY, CRON_SECRET
+  Analytics (5): GA_ID, GTM_ID, COOKIEYES_ID, CLARITY_ID, FB_PIXEL_ID
+  Amazon (4): ACCESS_KEY, SECRET_KEY, ASSOCIATE_TAG[cloudbasket-21], REGION
+  Flipkart (2): AFFILIATE_ID, AFFILIATE_TOKEN
+  CJ (3): API_KEY, PID, WEBSITE_ID
+  AdSense (4): ADSENSE_CLIENT, SLOT_1, SLOT_2, SLOT_3
+  AI/ML (5): GEMINI_API_KEY, OPENAI_API_KEY, STABILITY_API_KEY, REMOVE_BG, REPLICATE
+  Email (1): RESEND_API_KEY ✅ ADDED
+  WhatsApp (3): ACCESS_TOKEN, PHONE_NUMBER_ID, VERIFY_TOKEN
+  Payments (3): RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, PUBLIC_RAZORPAY_KEY_ID
+  SMS (2): MSG91_AUTH_KEY, MSG91_OTP_TEMPLATE_ID
+  Push (3): VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_EMAIL[admin@cloudbasket.in]
+  Google (5+): YOUTUBE_API_KEY, SERVICE_ACCOUNT_JSON, SEARCH_CONSOLE_URL, CLIENT_ID, CLIENT_SECRET
+  Tax (2): SELLER_GSTIN, SELLER_STATE_CODE[29]
+  Printify (3): API_KEY, SHOP_ID, WEBHOOK_SECRET
+  Printful (3): API_KEY, STORE_ID, WEBHOOK_SECRET
+  Etsy (3): API_KEY, SHARED_SECRET, REDIRECT_URI
+  Shopify (4): STORE_DOMAIN, STOREFRONT_TOKEN, ADMIN_TOKEN, WEBHOOK_SECRET
+  CRM HubSpot (2): API_KEY, APP_ID
+  CRM Zoho (3): ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET
+  Support Freshdesk (3): API_KEY, DOMAIN, WEBHOOK_SECRET
+  Auth OAuth (3): GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, MICROSOFT_CLIENT_ID
+  App (1): PLAY_STORE_URL
+
+API KEYS ADDED SO FAR (IBF):
+  ✅ RESEND_API_KEY — added to .env.local
+  ✅ NEXT_PUBLIC_GTM_ID — added to .env.local (GTM-d595e979d3fe661...)
+  ✅ NEXT_PUBLIC_COOKIEYES_ID — added to .env.local
+
+KNOWN STUBS / ISSUES:
+  ⚠ app/categories/CategoriesHubClient.tsx — 0 lines (empty)
+  ⚠ components/Navigation.tsx — 2 lines (stub)
+  ⚠ app/api/currency/rates/route.ts — 2 lines (stub)
+  ⚠ app/api/push/vapid-key/route.ts — 2 lines (stub)
+  ⚠ app/api/seo/audit/route.ts — 2 lines (stub)
+  ⚠ Migration 013 missing (gap: 012→014)
+  ⚠ Duplicate migration topic: price_history appears twice
+  ⚠ app/product/[id]/page.tsx.bak — backup file should be deleted
+  ⚠ TODO in services/price-engine/india-apis.ts:74,78,104,107
+  ⚠ No .env.example file exists (needs to be created)
+  ⚠ Grievance officer name placeholder at line 78 → S. KHALEEL AHMED
+
+PLAYWRIGHT TESTS (73 tests, 4 files):
+  tests/affiliate-redirects.spec.ts — 28 tests — affiliate + compliance
+  tests/discovery-flows.spec.ts — 27 tests — search + category + mobile
+  tests/seo-accessibility.spec.ts — 18 tests — SEO + WCAG 2.2 AA
+  audit/cloudbasket-audit.spec.ts — crawl tool (not in pnpm test run)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION F: REMOVED FILES — ZERO-CHECKOUT (105 files, ~11,686 lines)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+COMMIT 4b885a0 — REMOVED (67 files):
+  app/admin/ (54 pages): affiliate-keys, affiliates, analytics, associates,
+  catalog, catalog/sync, content/blog, content, content/reviews, cro/ab-tests,
+  cro, emails, gap-analysis, growth, health, lister, marketing/influencer,
+  marketing, messaging/whatsapp, moderation, monitoring/freshness, monitoring,
+  page(main), performance, pod/ai-studio, pod/amazon-merch, pod/analytics,
+  pod/b2b, pod/bulk-titles, pod/campaigns, pod/e-set-dashboard, pod/etsy-connect,
+  pod/library, pod/listings, pod/orders, pod/pricing, pod/quality, pod/redbubble,
+  pod/seo, pod/sync, pod/upload, price-intelligence, referrals, revenue,
+  security, seo, seo/search-console, settings, social, sponsored, support,
+  system/health, tax, users
+  app/api/pod/gift-cards/create/route.ts
+  app/api/pod/gift-cards/redeem/route.ts
+  app/api/pod/sync/route.ts
+  app/checkout/page.tsx (457 lines)
+  app/dashboard/page.tsx (30 lines)
+  app/dashboard/rewards/page.tsx (36 lines)
+  app/dashboard/settings/page.tsx (39 lines)
+  app/vendor/dashboard/page.tsx (311 lines)
+  services/pod/b2b-orders.ts (43 lines)
+  services/pod/gift-cards.ts (43 lines)
+  services/pod/order-manager.ts (38 lines)
+  services/pod/pricing-engine.ts (38 lines)
+
+COMMIT d1f9056 — REMOVED (38 files):
+  app/account/orders/page.tsx (307 lines)
+  app/admin/reports/page.tsx (300 lines)
+  app/admin/vendors/page.tsx (160 lines)
+  app/api/pod/checkout/create-order/route.ts (19 lines)
+  app/api/pod/checkout/verify-payment/route.ts (15 lines)
+  services/orders/order-manager.ts (337 lines)
+  services/orders/order-tracking-utils.ts (49 lines)
+  services/orders/order-tracking.ts (204 lines)
+  services/orders/return-manager.ts (417 lines)
+  services/payments/payment-gateway.ts (216 lines)
+  services/payments/razorpay-webhook.ts (208 lines)
+  services/payments/razorpay.ts (24 lines)
+  services/payments/wallet-system.ts (294 lines)
+  services/tax/gst-engine.ts (13 lines)
+  services/tax/invoice-generator.ts (268 lines)
+  services/tax/tax-calculator.ts (321 lines)
+  services/vendor/payout-engine.ts (315 lines)
+  services/vendor/seller-analytics.ts (345 lines)
+  services/vendor/vendor-portal.ts (155 lines)
+  src/app/(dashboard)/* — 7 pages (catalog, invoices, media, orders, orders/[id], payouts, wallet)
+  src/services/* — 9 files (bulk-editor, invoices, media-manager, orders x2, payments, payouts, product-importer)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION G: COLOR CODING RULES FOR EXCEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Header rows     : Navy #1F4E79 bg | White text | Arial bold 11pt
+✅ DONE rows   : #E8F5E9 (light green) bg
+⚠️ PARTIAL rows : #FFF9C4 (light yellow) bg
+⏳ PENDING rows : #FFF3E0 (light amber) bg
+❌ OPEN rows    : #FDECEA (light red) bg
+❌ REMOVED rows : #EEEEEE (light grey) bg — strikethrough text
+⛔ DISABLED rows: #F3E5F5 (light purple) bg
+P0 priority     : #FFCDD2 (red tint) in priority column
+IBF Action=Yes  : #FFF8E1 (amber tint) in IBF column
+External=Yes    : #E3F2FD (blue tint) in external column
+Alt rows        : #F9F9F9 (very light grey)
+Tab colors      : Sets A-F = Navy | G-P = Sky | Q-AH = Amber
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION H: SAMPLE ROW DATA (use as reference for all rows)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Example — A01:
+  Prompt ID: A01 | Serial: 1 | Set: A | Group: 1 | Group Title: Project Scaffold
+  # in Group: 1 | Title: Next.js 16 Project Init
+  Desc1: Initialises Next.js 16 with TypeScript strict, pnpm, Tailwind v4 config
+  Desc2: Creates package.json, tsconfig.json, next.config.ts — foundation for all 1000 prompts
+  Topic: Foundation | Usage: Project init | Purpose: Base scaffold
+  Level: Supreme | Supreme Defined: Yes | Who: E1 | Date: 2026-02-28
+  Status: ✅ DONE | Priority: P0 | Reality: 100%
+  Code Status: ✅ APPLIED | File: package.json + tsconfig.json | Type: .json
+  Path: F:\cloudbasket\ | Size: TBD | Quality: Supreme | Exists: Yes
+  Git: Committed | Commit: 54ed213 | Build: ✅ PASS | TSC: 0 errors
+  URL: N/A | Weight: 10 | Importance: P0
+  External: No | Integration: N/A | API: No | API Status: N/A | Free/Paid: N/A
+  Account: N/A | IBF Action: No | IBF Detail: None | Approval: No | From: N/A
+  Feature Flagged: No | Flag: N/A | Flag Status: N/A
+  Notes: Complete — all 1000 prompts depend on this foundation
+
+Example — REMOVED (admin/checkout):
+  Prompt ID: D42 | Status: ❌ REMOVED | Priority: P1 | Reality: 0%
+  Code Status: ❌ REMOVED | Commit: 4b885a0 (removed)
+  Feature Flagged: Yes | Flag: FEATURE_ADMIN | Flag Status: OFF
+  Notes: Removed 07-Apr zero-checkout mandate. Restore: git checkout 4b885a0^ -- app/admin/
+
+Example — DISABLED (Checkout):
+  Prompt ID: D50 | Status: ⛔ DISABLED | Priority: P0
+  Feature Flagged: Yes | Flag: FEATURE_CHECKOUT | Flag Status: OFF
+  IBF Action: Yes | IBF Detail: Set FEATURE_CHECKOUT=true + written MD approval required
+  Notes: Violates Zero-Checkout mandate v3.0.0 — needs written IBF approval to restore
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION I: IBF ACTIONS OUTSTANDING (for IBF Actions tab)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+P0 — Cannot launch without:
+  1. Supabase production project — create + run 17 migrations
+  2. Vercel — connect repo + set all 69 env vars
+  3. Domain DNS — point cloudbasket.in to Vercel CNAME
+  4. Razorpay KYC — complete business verification
+  5. Update grievance-officer/page.tsx line 78 → S. KHALEEL AHMED
+  6. Confirm Amazon tag cloudbasket-21 active
+  7. CookieYes dashboard — configure 4 categories + Consent Mode v2
+  8. GA4 — disable Signals + set 2-month retention
+
+P1 — Pre-launch:
+  9.  Upstash Redis — UPSTASH_REDIS_REST_URL + TOKEN → .env.local
+  10. Amazon PA-API — ACCESS_KEY + SECRET_KEY → .env.local
+  11. Printify account + API key → .env.local
+  12. Printful account + API key → .env.local
+  13. VAPID keys — npx web-push generate-vapid-keys → .env.local
+  14. GA4 measurement ID G-XXXXXXXXXX → .env.local
+  15. Resend domain verify — DNS TXT records for cloudbasket.in
+  16. Google Search Console — verify domain + submit sitemap
+
+P2 — Post-launch 30 days:
+  17. Google AdSense — apply after site is live
+  18. Flipkart Affiliate real ID → .env.local
+  19. CJ Publisher ID → .env.local
+  20. Facebook Pixel ID → .env.local
+  21. Google Merchant Center — submit product feed
+  22. UptimeRobot — setup monitor
+  23. Create .env.example file (currently missing)
+  24. Delete app/product/[id]/page.tsx.bak from repo
+  25. Fix empty components/Navigation.tsx (2-line stub)
+  26. Fill missing migration 013
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION J: EXCEL BUILDER INSTRUCTIONS (Python/openpyxl)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Use openpyxl (pip install openpyxl --break-system-packages)
+2. One tab per Set (A through AH) + Dashboard + IBF Actions + Feature Flags
+3. Write a full 2-line Description for EVERY undefined prompt (Q→AH sets)
+   — Line 1: What the feature does technically
+   — Line 2: Why it matters to CloudBasket business/users
+4. For Sets A–P (defined prompts) use the data in Sections D–F above
+5. For Sets Q–AH (undefined) generate Supreme-level descriptions
+6. Apply color coding from Section G
+7. Freeze top 2 rows on every sheet
+8. Set column widths: ID=8, Serial=7, Set=5, Title=35, Desc=50 each, others=15
+9. Add Excel filters on row 2 (header row)
+10. Dashboard tab: summary counts by Set — DONE/PARTIAL/PENDING/REMOVED/DISABLED
+11. Feature Flags tab: all 13 flags with env var, files to restore, git commands
+12. Save to /mnt/user-data/outputs/CB_1000_PROMPT_MASTER_TRACKER.xlsx
+
+IMPORTANT RULES:
+- Status "❌ REMOVED" for any file in Section F
+- Status "⛔ DISABLED" for any feature behind a flag (Section E)
+- Status "✅ DONE" for Sets A–F and all legal pages
+- Status "⚠️ PARTIAL" for G–P (code exists, keys/config missing)
+- Status "❌ PLANNED" for Q–AH
+- ALL 69 env keys from Section E → map to relevant prompts in AK/AL/AM columns
+- Supreme descriptions for all undefined Q→AH prompts (20 per set × 16 sets = 320 rows)
+
+================================================================================
+END OF HANDSHAKE PASSPORT
+Issued: 07-Apr-2026 | CPO: Claude (E0) | NEXQON HOLDINGS | CloudBasket
+Next action: Give this document to a new Claude session and say:
+"Read this passport and build the 3 Excel files described in Section B"
+================================================================================

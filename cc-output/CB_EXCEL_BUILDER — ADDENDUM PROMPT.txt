@@ -1,0 +1,158 @@
+================================================================================
+  CB_EXCEL_BUILDER — ADDENDUM PROMPT (read after HANDSHAKE PASSPORT)
+  CPO: Claude (E0) | NEXQON HOLDINGS | 07-Apr-2026
+================================================================================
+
+ADDITIONAL CONTEXT MISSED IN PASSPORT — INCLUDE IN ALL EXCEL FILES:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. 7-ENGINEER TEAM — INCLUDE IN DASHBOARD TAB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IBF   = Managing Director / Owner — NEXQON HOLDINGS — final authority
+E0    = Claude Chat — Chief Project Officer (CPO) — coordinates all
+E1    = Claude Code CLI — Chief Engineer — all code, commits, builds
+E2    = Claude Chat + Perplexity — Document Engineer = DEPT 1
+E3    = Claude Chat + IBF — Non-Code Actions (accounts, keys, configs)
+E4    = Claude Code/Chat — Audit Engineer — post-session quality checks
+E5    = Playwright + Claude — QA Engineer — pre-deploy gate
+E6    = Vercel + Supabase + Claude — DevOps Engineer — infra + deploy
+E7    = Claude Chat + Gemini — Content Engineer — post-launch only
+
+Command flow:
+IBF → E0 (CPO) → E1–E7 → E4 audits → E0 updates trackers → IBF signs off
+E2 drafts doc → IBF reviews → handoff brief → E1 builds → E4 audits
+
+NOTE: Dept 1 = E2. Total team = IBF + E0 + E1–E7 = 9 members.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. EXCEL FILES ALREADY BUILT — DO NOT DUPLICATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+These files ALREADY EXIST — do not rebuild them:
+  CB_MASTER_TRACKER_v12.xlsx          — session status, KPIs, next actions
+  CB_SIMPLE_TRACKER_v4.xlsx           — quick reference by set
+  CB_7ENGINEER_TEAM_PLAN.xlsx         — team structure, work distribution
+  CB_NONCODE_ACTIONS_TRACKER_v2.xlsx  — 26 IBF actions + 69 env vars
+  CLOUDBASKET-MASTER-COORDINATION-PLAN-v2.xlsx — 23 docs Dept1+Dept2
+  CB_LaunchTracker_v5.xlsx            — 30-item launch gate checklist
+  CB_MD_DIRECTIVE_v1.docx             — MD directive document
+
+YOUR JOB is ONLY to build:
+  CB_1000_PROMPT_MASTER_TRACKER.xlsx  — 1000 prompts, one tab per set
+  CB_FEATURE_FLAGS_TRACKER.xlsx       — 13 flags + removed files
+  CB_REMOVED_ITEMS_TRACKER.xlsx       — 105 files from zero-checkout
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. KEY DECISIONS MADE THIS SESSION — REFLECT IN TRACKER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Typesense REMOVED permanently (commit e6c285c). Note in tracker:
+  "Removed at launch. Reason: Supabase FTS sufficient for affiliate-scale.
+  Revisit Phase 2 when product volume exceeds 10K+ or instant search UX needed."
+
+- CookieYes FREE PLAN selected (not 14-day trial). Free tier covers:
+  consent banner, DPDP compliance, Google Consent Mode v2, 1 domain.
+
+- Redis/Upstash: KEEP. ioredis ghost dep fixed. Upstash REST wired.
+  IBF still needs to create Upstash account and add 2 keys to .env.local.
+
+- D06-D50: Mark as ✅ VERIFIED PRESENT (all 51 files confirmed 07-Apr).
+  Previous tracker showed PARTIAL — that was wrong. Update to DONE.
+
+- Domain: Both cloudbasket.in AND cloudbasket.co in play.
+  Primary target: cloudbasket.in. Handover passport says .in.
+
+- Reality Score journey: Started at 58/100 → rose to 65/100 this session.
+  Target before launch: 80/100.
+
+- Zero-Checkout Mandate: PERMANENT. Not a temporary decision.
+  Checkout = ⛔ needs WRITTEN MD APPROVAL to ever restore.
+
+- Grievance Officer confirmed: S. KHALEEL AHMED
+  Update app/legal/grievance-officer/page.tsx line 78.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. DEPT 1 HANDOFFS COMPLETED — REFLECT STATUS IN TRACKER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CB-HANDOFF-PP-001 (Privacy Policy):
+  All 8 tasks DONE. Commit 6fa27ad. /legal/privacy live.
+  Tasks: page, cookie banner wire, DPDP notice, contact form link,
+  footer link, breadcrumb, TOC 17 anchors, PDF download button.
+
+CB-HANDOFF-COOKIE-001 (Cookie Policy):
+  Code tasks DONE. Commit b193105.
+  IBF dashboard tasks STILL PENDING:
+  - CookieYes 4 categories configure
+  - Google Consent Mode v2 enable
+  - IAB TCF 2.2 enable
+  - AdSense non-personalised ads configure
+  - GA4 Signals disable
+  - GA4 post-consent fire via GTM
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. DESCRIPTION GENERATION RULES FOR E→AH (820 undefined prompts)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+For every prompt in Sets E through AH that has no existing description,
+YOU must write two lines. Rules:
+
+Line 1 (Technical): What the feature does — specific, code-level, max 120 chars
+Line 2 (Business):  Why it matters — revenue, user, legal, or ops impact, max 120 chars
+
+Quality standard = SUPREME level. Examples:
+
+E21 — Automated POD Seasonal Campaign Manager:
+  L1: "Auto-generates POD product listings and creatives for Diwali, Christmas,
+      Holi, IPL using campaign calendar and DALL-E design prompts."
+  L2: "Captures seasonal revenue spikes — Indian festivals drive 3-5x normal
+      POD sales volume with targeted campaign timing."
+
+G01 — Google OAuth Integration:
+  L1: "Implements Google OAuth 2.0 via next-auth — email login, session
+      management, and Supabase user record creation on first sign-in."
+  L2: "Removes friction from user registration — one-click Google login
+      increases conversion vs email/password by 40% in India."
+
+Apply same quality for all 820 undefined prompts set by set.
+Sets E-P: use known file names from codebase-status-report.txt as reference.
+Sets Q-AH: generate from group title + logical feature breakdown.
+
+For each Set, generate exactly the number of prompts shown in passport Section D.
+Number them sequentially within the set (e.g. Q01-Q20, R01-R20, etc.)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. MASTER COORDINATION PLAN — 25 DOCUMENTS (for reference)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+25 documents tracked between Dept 1 (E2) and Dept 2 (E1):
+  P0 Legal (done): TOS, Privacy Policy, Cookie Policy — all live
+  P0 Legal (pending E2): Affiliate Disclosure, Amazon Compliance
+  P1 Legal (pending E2): Disclaimer
+  P2 Legal (not started): Refund Policy, DMCA/IP Policy
+  P1 SOPs (done): Content Addition, Affiliate Link Management
+  P2 SOPs (not started): Image Sourcing, Taxonomy, Onboarding, Incident Response
+  P1 Testing (done): UAT Test Plan (66 cases), Affiliate Link Test Checklist
+  P1 Brand (done): Brand Guidelines
+  P2 Compliance (not started): Flipkart, CJ, DPDP/IT Act, AdSense
+  P3 Legal: Accessibility Statement (live but checklist pending)
+  P2 Security: Credentials Register (IBF eyes only — never in code)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. FINAL CHECKLIST BEFORE BUILDING EXCEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Before writing a single line of code, confirm you have read and understood:
+[ ] Passport Section A–J (project identity, columns, sets, colors)
+[ ] This addendum Sections 1–6
+[ ] You know which 3 files to build (Section B of passport)
+[ ] You know NOT to rebuild the 7 files already done
+[ ] You will write 2-line Supreme descriptions for ALL E→AH prompts
+[ ] You will mark removed files as ❌ REMOVED with correct commit hash
+[ ] You will mark disabled features as ⛔ DISABLED with flag name
+[ ] You will freeze rows, add filters, apply color coding
+[ ] Output goes to /mnt/user-data/outputs/
+
+BUILD ORDER:
+  Step 1: CB_FEATURE_FLAGS_TRACKER.xlsx (small — 13 rows)
+  Step 2: CB_REMOVED_ITEMS_TRACKER.xlsx (105 rows)
+  Step 3: CB_1000_PROMPT_MASTER_TRACKER.xlsx (1000 rows — the big one)
+  Step 4: present_files tool with all 3 files
+
+================================================================================
+END OF ADDENDUM
+================================================================================

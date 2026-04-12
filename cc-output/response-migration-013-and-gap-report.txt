@@ -1,0 +1,44 @@
+================================================================================
+  CLOUDBASKET — SESSION RESPONSE
+  Topic: migration-013-and-gap-report
+  Date: 2026-04-10
+  Engineer: E1 Chief Engineer (Claude Sonnet 4.6)
+================================================================================
+
+TASK 1 — COMPLETED: supabase/migrations/013_ab_tests.sql
+
+  Created: supabase/migrations/013_ab_tests.sql
+  Tables created:
+    - ab_tests (id UUID PK, experiment_id TEXT, variant_name TEXT, user_id TEXT,
+                assigned_at TIMESTAMPTZ, converted BOOLEAN, converted_at TIMESTAMPTZ)
+    - ab_test_events (event_id UUID PK, experiment_id TEXT, variant TEXT,
+                      event_type TEXT, metadata JSONB, created_at TIMESTAMPTZ)
+  Indexes:
+    - idx_ab_tests_user ON ab_tests(user_id, experiment_id)
+    - idx_ab_tests_experiment ON ab_tests(experiment_id, variant_name, assigned_at DESC)
+    - idx_ab_events_experiment ON ab_test_events(experiment_id, event_type, created_at DESC)
+    - idx_ab_events_created ON ab_test_events(created_at DESC)
+  RLS:
+    - ab_tests: "Users read own assignments" (SELECT), "Service role write" (ALL)
+    - ab_test_events: "Insert only" (INSERT), "Service role read" (SELECT)
+  Style: matches migrations 012, 011, 007 exactly (IF NOT EXISTS, DESC indexes, policy naming)
+
+TASK 2 — COMPLETED: partial-sets-gap-report-20260410.txt
+
+  Saved: cc-output/partial-sets-gap-report-20260410.txt
+
+  FINDINGS SUMMARY:
+    DONE:     services/email/, lib/analytics.ts, services/apis/{amazon,cj,flipkart,open-food-facts}
+    PARTIAL:  services/email-engine/ (2 stubs), services/notifications/push (column mismatch),
+              services/analytics/user-behavior.ts (any type, no singleton)
+    MISSING:  lib/redis.ts (ioredis installed but never wired)
+    STUB:     services/apis/review-aggregator.ts (localStorage only), services/apis/search-console.ts
+
+  TOP PRIORITIES:
+    1. lib/redis.ts — create singleton (unblocks 3 API caches + rate limiter)
+    2. review-aggregator.ts — full rewrite to Supabase DB
+    3. push column mismatch — fix before first live broadcast
+    4. email-marketing.ts — wire sendNewsletter + subscribeContact stubs
+    5. user-behavior.ts — fix `any` + memoize client
+
+================================================================================

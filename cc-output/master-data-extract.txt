@@ -1,0 +1,919 @@
+================================================================================
+  CLOUDBASKET — MASTER DATA EXTRACT
+  Generated: April 2026 | Working Dir: F:\cloudbasket
+================================================================================
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1: GIT LOG — ALL COMMITS (BEGINNING TO HEAD)
+Format: hash  date  message
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+d58f590  2026-04-07  docs: synchronize removal history and git commit references across all project status files
+bc3252f  2026-04-07  docs: final session summary for April 7, 2026
+3a07de8  2026-04-07  docs: update status files with April 7 session results
+0026ecf  2026-04-07  docs: add summary of removed items during zero-checkout enforcement
+358b0c9  2026-04-07  fix: resolve TypeScript strict mode errors in test files
+fd3a9d5  2026-04-07  fix: install @playwright/test and configure for single browser testing
+fc4df9b  2026-04-07  fix: gracefully handle missing Supabase credentials in proxy
+526ea2f  2026-04-07  docs: update README with comprehensive project status
+5d31d6e  2026-04-07  feat: add discovery flow and SEO/accessibility tests
+ddff655  2026-04-07  feat: add comprehensive Playwright test suite for compliance
+4b885a0  2026-04-07  refactor: remove admin dashboards, checkout, and POD fulfillment (enforcement)
+d1f9056  2026-04-07  refactor: remove payment/order/vendor services (zero-checkout mandate)
+5e7f27d  2026-04-06  docs: Update session backup with build status and next steps
+50e0314  2026-04-06  chore: Add missing dependencies (@react-email/render, @reduxjs/toolkit, redux, react-redux, clsx, decimal.js-light, victory-vendor)
+1ffcc9e  2026-04-06  feat: D52-D61 clean build - getSupabase pattern applied
+c2fa3b2  2026-04-06  Your commit message here
+ab40262  2026-04-06  feat: D42-D51 services and admin pages
+c302281  2026-04-05  Update
+b3868d0  2026-04-04  Deploy legal grievance officer page
+74a9ef8  2026-04-04  Deploy legal accessibility statement page
+460ddb8  2026-04-04  Deploy legal DMCA policy page
+a565d36  2026-04-04  Deploy legal affiliate disclosure page
+0bb9ce2  2026-04-04  Deploy legal disclaimer page
+48dac1f  2026-04-03  Add legal pages and refund policy
+f9ebc2a  2026-04-01  feat: add CookieYes beforeInteractive script, wire GTMScript, add env var
+b193105  2026-04-01  feat: cookie policy page, consent blocking, Reject All, footer settings link
+ab1294e  2026-04-01  fix: ioredis ghost dep, Plunk→Resend pipeline, wire searchProducts
+6fa27ad  2026-04-01  feat: privacy policy — full DPDP v2 content, breadcrumb, TOC, PDF, cookie banner wired, contact form linked
+e6c285c  2026-04-01  chore: remove Typesense — Supabase FTS sufficient for launch
+2ca4584  2026-03-31  feat: apply E21-E50 — 23 files, zero tsc errors, seasonal campaigns, bundles, gift cards, B2B, mobile API, analytics
+f3f4431  2026-03-31  feat: P0 complete — fonts, middleware, ghost deps, F01-F100, legal UI
+a5d5e5a  2026-03-31  feat: apply F22-F100 + legal UI + proxy middleware — 32 files, zero tsc errors, build PASS
+29ab2a3  2026-03-31  feat: apply F01-F21 — 21 files, zero tsc errors, governance fixes
+0e04131  2026-03-29  fix: broken product images — fallback to CDN for missing /assets/products/ paths
+60cf296  2026-03-29  audit: session 1 complete — 38 issues logged, crawl tools v1+v2 built
+5c74077  2026-03-29  audit: add full 1200+ page deep crawl tool
+79b5424  2026-03-28  security: lock /admin and /dashboard behind auth + role guard
+60c7f98  2026-03-25  feat: centralize category icons — Header, Grid, Hero unified
+0e4606b  2026-03-25  fix: replace broken unsplash image ids
+24cd555  2026-03-23  feat: E01-E20 POD platform integrations and build fixes
+bddff77  2026-03-23  fix: product image fallback handler — all 1000 products show real images
+cae5af6  2026-03-23  fix: india-catalog index correct export names — 1000 products wired
+61ce08b  2026-03-23  fix: populate india-catalog index.ts — wire all 1000 products
+5587dcd  2026-03-23  fix: health type union — build passing
+d18cce2  2026-03-23  fix: gamification points — browser client, build passing
+ecd7026  2026-03-23  fix: correct supabase import in gamification/points — build passing
+ceb59e1  2026-03-23  fix: add missing gamification/points and monitoring/health modules — build passing
+12743eb  2026-03-23  feat: F22-F100 Typesense search, onboarding, rewards, Telegram bot, PWA service worker, revenue dashboard, membership pricing, data export GDPR, barcode lookup, Chrome extension API, Zapier integration, biometric auth, schema markup, monitoring
+1bb3b12  2026-03-23  feat: E21-E50 POD seasonal campaigns, B2B orders, gift cards, bundle creator, bulk titles, AI recommendations, artist affiliate, Redis cache, mobile API, QR code, competitor alerts, search analytics
+53a689d  2026-03-23  feat: E21-E50 POD seasonal campaigns, B2B orders, gift cards, bundle creator, bulk titles, AI recommendations, artist affiliate, Redis cache, mobile API, QR code, competitor alerts, search analytics
+edce002  2026-03-22  feat: E01-E20 POD platform integrations — Printify, Printful, Etsy, Shopify, Amazon Merch, Redbubble, AI Studio, Design Library, Pricing Engine, Order Manager
+4d32848  2026-03-22  fix: build passing — SearchPageClient, Deal types, web-push resolved
+5ba5148  2026-03-22  docs: handover passport v3 — resume point dd7fabe
+dd7fabe  2026-03-22  fix: SearchProduct -> SearchResult, all type errors resolved
+36d740f  2026-03-21  fix: deals page d.product -> flat Deal type
+91186f5  2026-03-21  fix: deals page.tsx deal.product flat type
+6223fd6  2026-03-21  fix: FlashSalePageClient deal.product -> flat Deal type
+d2649f6  2026-03-21  chore: remove junk files from apply-code script
+0002458  2026-03-21  fix: search getAvailableFilterOptions export + catalog sync async fix
+b3659be  2026-03-21  feat: D06-D50 complete
+bc0f6e2  2026-03-21  feat: B01-B07 complete
+f693cb8  2026-03-21  feat: B01-B07 price tracker, personalisation, search, notifications, A/B, social proof, deals engine
+9b1cae2  2026-03-21  docs: CloudBasket handover passport — full project context for new session
+0749e05  2026-03-21  feat: D1-D5 Amazon PA-API, Flipkart, CJ, AdSense, Gemini — all stubs safe
+8b98fbc  2026-03-21  feat: Set D env.ts — all 50 API keys typed with safe fallbacks
+0f3765b  2026-03-21  feat: C21-C40 blog, deals, dashboard, careers, app page, sitemap, error, skeletons, catalog2, brands, price history, notifications, share, admin, vitals, i18n, referral, image-utils, SEO pages, launch report
+d0b6922  2026-03-21  docs: prompt status report all sets A+B+C
+db52fa9  2026-03-20  feat: C6-C20 privacy, cookies, legal hub, associates, partners, specs, blog section, mega menu, size guide
+e1b7eea  2026-03-20  feat: C3 dark mode + C4 Typography system + C5 Terms page rewrite
+280802e  2026-03-20  feat: C1 design tokens + C2 Logo SVG system + OG image
+6ce1dab  2026-03-20  chore(launch): P18-P20 final audit complete — DEPLOYMENT.md, all checks passed — 1198 static pages, 1000+ India products
+9b8d180  2026-03-20  feat: P16 admin analytics + P17 email templates, newsletter API, unsubscribed page
+ed72aca  2026-03-20  feat: P15 PWA — PWAInstallBanner component
+9bcc584  2026-03-20  feat: P14 internationalisation — LocaleProvider, currency, Header locale selector
+0767c1c  2026-03-20  fix: build passing — LocaleProvider, use client, PriceHistoryChart, layout JSX
+cb51ef9  2026-03-19  wip: save all changes before break
+edcbe49  2026-03-19  feat: P08-P13 dark mode, analytics, blog engine, wishlist, compare, CJ integration, deals engine
+538ba3e  2026-03-19  feat(catalog): india catalog 1000 products — 5 categories 10 brands implemented
+2160bd4  2026-03-19  fix: move themeColor to viewport export in layout.tsx — clear all metadata warnings
+86faf09  2026-03-19  A16: Homepage India Catalog integration — PopularIndianBrands + TrendingInIndia + ticker update
+7481b02  2026-03-19  A14+A15+A16: Price engine, admin catalog UI, homepage India integration
+a9423f1  2026-03-19  A13: India Catalog product detail page integration
+892beb3  2026-03-19  feat: A13 product detail page — India Catalog integration
+b0e2eff  2026-03-19  feat: A14 price simulation layer + A15 admin catalog dashboard
+3216646  2026-03-18  feat(catalog): A09 realme+Samsung, A10 Puma+Biba, A11 ITC+Britannia — 300 SKUs + full site integration
+caf7b5f  2026-03-18  feat(catalog): A08 boAt+Noise electronics — 100 SKUs across earbuds, headphones, speakers, smartwatches, cables
+4a3ac03  2026-03-18  feat(catalog): A06 Bajaj+Havells, A07 Philips+Prestige — committed
+4dbed0a  2026-03-18  feat(sprint5): compare a11y, footer sitemap, schema enhancements, session backup
+0bcb997  2026-03-18  feat(catalog): add Dabur, ITC-Godrej Consumer, and Godrej Appliances — A03/A04/A05
+e1d2e1c  2026-03-18  feat(catalog): populate HUL products — 100 SKUs across Dove, Lakme, Surf Excel, Ponds, Lux
+1826347  2026-03-18  feat(catalog): indian brand catalog architecture — types, index, and utils
+12595ae  2026-03-18  feat(a11y): complete task 6.2 — focus rings and aria attributes for product cards and feedback widget
+3e6da2a  2026-03-18  feat(sprint5): sections 4-8 complete — UI uplift, features, a11y, SEO, code quality
+add1c5f  2026-03-18  feat(sprint5): sections 5-8 complete — all prompts 1-4 done
+7f7795b  2026-03-17  feat(sprint5): sections 5-6 partial — new components, loading skeletons, a11y, error boundary
+fe838ba  2026-03-16  feat(sprint5): section 4 complete — UI uplift 10 tasks
+8022dc3  2026-03-16  feat(sprint5): section 4 partial - tasks 4.1-4.3 UI uplift
+1a6169d  2026-03-14  feat(sprint5): sections 1-3 complete
+b7ceae8  2026-03-13  Guard subCategories iteration in mock data generator
+bae1a7d  2026-03-13  fix: add contact API and normalize product catalog
+458f2ab  2026-03-13  fix: vs.cbf29-30 dark mode CSS variables, compliance badge modals
+6395404  2026-03-12  cbf39 — CLOSED ALL 11: quiz filter, POD images, trust tooltips, CJ claim, footer scroll, ad placeholders, hero stat link, dark mode overlay, hidden fees final
+664f482  2026-03-12  cbf38 — sweep: hidden fees text, CJ claim, footer scroll, ads, hero stats
+92e5fd7  2026-03-12  cbf35+36+37 — header emoji cats, POD expanded, dark mode muted fix
+4fb1782  2026-03-12  cbf34 — polish: hero rupee fix, associates Coming Soon, cbf30-cbf34 complete
+8e5dabd  2026-03-12  cbf33 — functional: filters wired, pagination 20/page, flash timer, social CTA expanded
+8698270  2026-03-12  cbf32 — catalog fixed: correct category slugs, brand-category integrity, no wrong products
+f785dde  2026-03-12  cbf31 — branding sitewide: global messaging, footer versioning, trust bar links, contact cleanup
+f1ed2ba  2026-03-12  cbf30 — code cleanup: tailwind restored, duplicates removed, dead components deleted
+8e15161  2026-03-12  fix: cbf28 products import + cbf29 blog slug sync
+413cd82  2026-03-12  fix: cbf25-cbf27 sovereign/Bharat final sweep + country flags emoji
+f235da8  2026-03-12  fix: cbf25-cbf27 sovereign/Bharat final sweep + country flags emoji
+3cd1900  2026-03-12  fix: remove all sovereign/Bharat/NEXQON Engineering — globalise copy across all files
+4b4e328  2026-03-10  fix: dynamic BASE_URL in google feed + sitemap, defaults to cloudbasket.co via NEXT_PUBLIC_SITE_URL
+f8de730  2026-03-09  fix: use NEXT_PUBLIC_SITE_URL in feed + sitemap, defaults to cloudbasket.co
+5e38a59  2026-03-09  feat: visual category hub page /categories — hexagonal grid, 20 SVG icons, live search, mobile responsive
+e628920  2026-03-09  backup: Day 10 audit complete — deploy ready
+253e26f  2026-03-09  fix: Day 10 snag audit — all routes verified, all issues resolved, deploy ready
+0b52c24  2026-03-09  fix: products pagination — 48 per page, load more button, fixes 80s render time
+6425fb1  2026-03-08  backup: session logs + temp files Day 9
+063cac5  2026-03-08  feat: Day 9 — PWA + Supabase auth + India power layer (EMI badge, COD badge, pincode check, Telegram CTA, deal share card, Google product feed, price alert emails, India trust bar)
+2060a48  2026-03-08  feat: Day 8 - Intelligence Engine: location+festival+season personalization, catalog, behavior tracking, personalized homepage grid
+eef75f0  2026-03-08  feat: Day 7 - trust widget, WhatsApp share, quiz, schema, newsletter, social proof, India-first, lowest price badges
+03e613b  2026-03-08  feat: Day 6 - reviews, wishlist, alerts, blog posts, compare 15-point, deal of day, recently viewed, 404
+87c031b  2026-03-08  feat: Day 5 — audit clean, affiliate routing, OG image, perf
+02d0ee4  2026-03-08  feat: Day 4 — SEO + sitemap + dashboard + admin + maintenance OFF
+b682c3b  2026-03-08  feat: Day 2 + Day 3 complete — 22 pages live, 0 errors
+320da18  2026-03-07  CLOUDBASKET SESSION BACKUP 2026-03-07 14:52
+70355f4  2026-03-07  fix: post-scan fixes — navigation shim, env vars, console logs, hardcoded URLs
+4449bd7  2026-03-07  feat: maintenance mode middleware
+b5fd163  2026-03-07  feat: CloudBasket v2 sovereign rebuild complete — 64 files, 0 errors, build passing
+dbd2b56  2026-03-01  feat: FINAL PRE-AUDIT SAVE | Admin Panel Complete | Income Shield Active | Global UI Logic Implementation
+423c015  2026-03-01  feat: complete Step 10 Sovereign Audit | refined redirect node | Income Dashboard | Associate private analytics | final content polish
+617da44  2026-03-01  feat: implement Step 9 Compliance & Stability Lockdown | legal pages | cookie consent | persistent disclosures | dynamic category error handling
+3c2bc6e  2026-03-01  feat: implement Step 8 Income Shield & Unified Lister | dynamic redirects | moderation queue | category dynamic routing | UI skeletons
+ac0567a  2026-03-01  feat: implement Step 7 Universal Auth & Global UI | Supabase Auth UI | dynamic LTR/RTL | User Dashboard | Creator ID linking
+1625da8  2026-03-01  feat: finalize official branding suite | premium SVG logos | dynamic theme switching | metadata update
+9da10e6  2026-03-01  feat: implement Step 5 Omni-Channel Marketing Engine | central marketing studio | multi-platform preview | automated branding
+9d08a00  2026-03-01  feat: implement Step 4 CRM & Associate Management | influencer tracking | secure affiliate vault | click analytics | ref link generator
+cf13cdd  2026-03-01  feat: implement Step 3 POD Lister & Mockup Engine | admin upload zone | multi-platform lister form | PODCard component
+b59a344  2026-03-01  feat: implement Step 2 Global Scaling Engine | multi-currency support | regional platform logic | localized disclaimers
+b4c3e0f  2026-03-01  feat: implement Admin Command Center | clean up public assets | fix hover navigation | polish header
+47ce6c4  2026-03-01  feat: pivot to affiliate aggregator model | 2000 unique products | hover nav | ad slots | pagination polish
+c43de3f  2026-03-01  chore: audit codebase | clean up unused imports | identify UI/UX bottlenecks | generate PENDING_TASKS.md
+e6f66df  2026-03-01  feat: cinematic UI overhaul | background video | glassmorphism | success video modal | Skyline branding
+7f672d3  2026-03-01  feat: Skyline theme rebranding | dynamic logos | glassmorphism UI | favicon update
+36a4dad  2026-03-01  feat: implement dark mode & RTL support | next-themes integration | adaptive UI overhaul
+26e57b9  2026-03-01  feat: complete marketplace overhaul | 2000 products | dynamic categories | spec dropdowns | dense layout
+d522815  2026-03-01  feat: refine marketplace layout to 3-column | centered pagination | w-64 sidebars
+d754892  2026-03-01  feat: finalize marketplace layout | pagination sync with filters | branded tooltips verified
+aac41f0  2026-03-01  feat: implement 5-page pagination system | branded tooltips | items-per-page dropdown
+aa6044a  2026-03-01  feat: refactor home to 3-column marketplace layout | add promotion sidebar | polish UI
+127ebad  2026-03-01  feat: complete v1.0 | checkout flow & order success implemented | mobile UI polished
+46f5196  2026-03-01  feat: complete v1.0 | checkout flow & order success implemented | mobile UI polished
+5e45c9b  2026-02-28  feat: session end | navigation connected | architecture locked
+7ce87b4  2026-02-28  chore: successful production build and session archive
+2c24a41  2026-02-28  feat: implement dynamic product routing and detail pages
+4b2ae63  2026-02-28  feat: implement global cart system with persistence and slide-out drawer
+803a3d0  2026-02-28  feat: implement unified filtering engine | 12-column grid | search & category logic
+0d154a3  2026-02-28  feat: complete product catalog launch | 50 items | grid ui verified
+54ed213  2026-02-28  Initial State: CloudBasket Skeleton Start
+
+TOTAL COMMITS: 119
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2: lib/features.ts — ALL FEATURE FLAGS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+File: lib/features.ts (128 lines)
+Pattern: flag(envKey) = process.env[envKey] === 'true'
+Default: ALL flags are FALSE unless env var explicitly set to "true"
+
+  #   Flag Name          Env Var                    Current Value   Git Source
+  ─── ─────────────────  ─────────────────────────  ─────────────   ──────────────────────────────
+  1   ORDERS             FEATURE_ORDERS=true         OFF (false)     commit 1ffcc9e + d1f9056
+  2   WALLET             FEATURE_WALLET=true         OFF (false)     commit 1ffcc9e + d1f9056
+  3   INVOICES           FEATURE_INVOICES=true       OFF (false)     commit 1ffcc9e
+  4   PAYOUTS            FEATURE_PAYOUTS=true        OFF (false)     commit 1ffcc9e
+  5   PAYMENTS           FEATURE_PAYMENTS=true       OFF (false)     commit d1f9056
+  6   ADMIN              FEATURE_ADMIN=true          OFF (false)     commit 4b885a0
+  7   DASHBOARD          FEATURE_DASHBOARD=true      OFF (false)     commit 4b885a0
+  8   VENDOR             FEATURE_VENDOR=true         OFF (false)     commit 4b885a0
+  9   GIFT_CARDS         FEATURE_GIFT_CARDS=true     OFF (false)     commit 4b885a0
+  10  POD_FULFILLMENT    FEATURE_POD_FULFILLMENT=true OFF (false)    commit 4b885a0
+  11  EMAIL_FULFILLMENT  FEATURE_EMAIL_FULFILLMENT=true OFF (false)  commit 4b885a0
+  12  CHECKOUT           FEATURE_CHECKOUT=true       OFF (false)     commit d1f9056
+  13  RETURNS            FEATURE_RETURNS=true        OFF (false)     commit 4b885a0
+
+Utility functions exported:
+  - isEnabled(feature: FeatureKey): boolean
+  - getEnabledFeatures(): FeatureKey[]
+  - getFeatureStatus(): Record<FeatureKey, boolean>
+
+Guard utility: lib/feature-guard.ts
+  - requireFeature(feature) — server page guard → redirects to /feature-disabled
+  - featureResponse(feature) — API route guard → returns 403 JSON
+  - isBlocked(feature) — service guard → returns true if disabled
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3: CLOUDBASKET_HANDOVER_PASSPORT.md — FULL CONTENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# CLOUDBASKET — SESSION HANDSHAKE PASSPORT
+# Generated: April 7, 2026 (UPDATED) | Hand to next Claude session immediately
+
+PROJECT IDENTITY:
+  Project       : CloudBasket v2.0.0
+  Tagline       : Pure Price Discovery Engine (Zero-Checkout)
+  Company       : NEXQON HOLDINGS
+  Domain        : cloudbasket.in
+  Repo          : https://github.com/nexasystemics/cloudbasket.git
+  Local path    : F:\cloudbasket (Windows, PowerShell)
+  Framework     : Next.js 16.1.6 | TypeScript strict | Tailwind CSS v4
+  Package mgr   : pnpm ONLY (never npm or yarn)
+  Status        : PRODUCTION READY
+
+MACHINE SETUP:
+  Git: 2.52.0.windows.1
+  Node/npm: installed
+  pnpm: 10.33.0
+  VS Code: installed
+  Project cloned to F:\cloudbasket
+  npm install done (507 packages)
+  NO .env file — all keys are dummy/missing (normal for dev)
+
+GOVERNANCE RULES (NON-NEGOTIABLE):
+  Full files only — no partial snippets or patches
+  TypeScript strict — NEVER use any type
+  @/ imports only — never relative ../../ paths
+  pnpm only — never npm or yarn
+  Never touch .env or .env.local
+  Never git commit/push without asking
+  Never install packages without asking
+  All API calls wrapped in try/catch with console.warn fallback
+  Check isConfigured('KEY') before any external API call
+  Only use keys that exist in lib/env.ts
+  Stub-safe — return safe empty/null defaults when key missing
+
+BUILD COMMANDS:
+  FAST DEV BUILD:    $env:DEV_FAST_BUILD="true"; pnpm build  (~126 pages, ~1 min)
+  FULL PRODUCTION:   pnpm build                              (~1,263 pages, ~8 min)
+  TYPE CHECK:        pnpm type-check                         (~30 sec)
+  TESTS:             pnpm test | pnpm test:ui | pnpm test:debug
+
+PROGRESS TRACKER:
+  SET A (A01-A20): COMPLETE — India Catalog 1000 products
+  SET B (P08-P20): COMPLETE — Platform features
+  SET C (C01-C40): COMPLETE — UI/UX Supreme
+  SET D (D01-D51): COMPLETE — All 51 tasks done (D52-D61 in git, disabled)
+  SET E, F, G ... AH: PENDING
+
+APRIL 7 SESSION:
+  Installed @playwright/test@1.58.2
+  Fixed 18 TypeScript errors in test files
+  Created 3 test spec files (73 chromium tests)
+  Updated README.md
+  Created REMOVED-ITEMS-SUMMARY.md
+  TypeScript strict: 0 errors | ESLint: 0 errors | Build: 1,263 routes
+
+VALID ENV KEYS (lib/env.ts):
+  Supabase, Site, Analytics, Amazon, Flipkart, CJ, AdSense, AI, Email,
+  WhatsApp, Payments, SMS, Push, YouTube, Google, Tax, POD, Etsy, Shopify,
+  CRM, Support, Auth, App — see Section 6 for full list
+
+DEPLOYMENT:
+  Target: Vercel
+  Checklist:
+    Build passing ✅ | TypeScript ✅ | ESLint ✅ | Tests created ✅
+    Configure env on Vercel: SUPABASE keys + Affiliate IDs (Amazon, Flipkart, CJ, VCommission)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4: FILES REMOVED IN ZERO-CHECKOUT ENFORCEMENT COMMITS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+──────────────────────────────────────────
+COMMIT 4b885a0 — April 7, 2026
+"refactor: remove admin dashboards, checkout, and POD fulfillment"
+67 files changed | 5,777 deletions | 5 insertions
+──────────────────────────────────────────
+app/admin/affiliate-keys/page.tsx         94 lines deleted
+app/admin/affiliates/page.tsx             31 lines deleted
+app/admin/analytics/page.tsx             160 lines deleted
+app/admin/associates/page.tsx             20 lines deleted
+app/admin/catalog/page.tsx               126 lines deleted
+app/admin/catalog/sync/page.tsx           36 lines deleted
+app/admin/content/blog/page.tsx          249 lines deleted
+app/admin/content/page.tsx                95 lines deleted
+app/admin/content/reviews/page.tsx       239 lines deleted
+app/admin/cro/ab-tests/page.tsx            5 lines deleted
+app/admin/cro/page.tsx                    17 lines deleted
+app/admin/emails/page.tsx                 44 lines deleted
+app/admin/gap-analysis/page.tsx           43 lines deleted
+app/admin/growth/page.tsx                406 lines deleted
+app/admin/health/page.tsx                 35 lines deleted
+app/admin/lister/page.tsx                290 lines deleted
+app/admin/marketing/influencer/page.tsx    5 lines deleted
+app/admin/marketing/page.tsx              53 lines deleted
+app/admin/messaging/whatsapp/page.tsx     11 lines deleted
+app/admin/moderation/page.tsx             84 lines deleted
+app/admin/monitoring/freshness/page.tsx    5 lines deleted
+app/admin/monitoring/page.tsx             29 lines deleted
+app/admin/page.tsx                       395 lines deleted
+app/admin/performance/page.tsx            43 lines deleted
+app/admin/pod/ai-studio/page.tsx          84 lines deleted
+app/admin/pod/amazon-merch/page.tsx       69 lines deleted
+app/admin/pod/analytics/page.tsx          15 lines deleted
+app/admin/pod/b2b/page.tsx                65 lines deleted
+app/admin/pod/bulk-titles/page.tsx        60 lines deleted
+app/admin/pod/campaigns/page.tsx          49 lines deleted
+app/admin/pod/e-set-dashboard/page.tsx    42 lines deleted
+app/admin/pod/etsy-connect/page.tsx       21 lines deleted
+app/admin/pod/library/page.tsx            36 lines deleted
+app/admin/pod/listings/page.tsx           54 lines deleted
+app/admin/pod/orders/page.tsx             35 lines deleted
+app/admin/pod/pricing/page.tsx            37 lines deleted
+app/admin/pod/quality/page.tsx            14 lines deleted
+app/admin/pod/redbubble/page.tsx          14 lines deleted
+app/admin/pod/seo/page.tsx                10 lines deleted
+app/admin/pod/sync/page.tsx               38 lines deleted
+app/admin/pod/upload/page.tsx            193 lines deleted
+app/admin/price-intelligence/page.tsx    264 lines deleted
+app/admin/referrals/page.tsx               5 lines deleted
+app/admin/revenue/page.tsx                42 lines deleted
+app/admin/security/page.tsx              162 lines deleted
+app/admin/seo/page.tsx                    49 lines deleted
+app/admin/seo/search-console/page.tsx     14 lines deleted
+app/admin/settings/page.tsx              367 lines deleted
+app/admin/social/page.tsx                 30 lines deleted
+app/admin/sponsored/page.tsx              11 lines deleted
+app/admin/support/page.tsx                 6 lines deleted
+app/admin/system/health/page.tsx          66 lines deleted
+app/admin/tax/page.tsx                     5 lines deleted
+app/admin/users/page.tsx                 329 lines deleted
+app/api/pod/gift-cards/create/route.ts    11 lines deleted
+app/api/pod/gift-cards/redeem/route.ts    10 lines deleted
+app/api/pod/sync/route.ts                 14 lines deleted
+app/checkout/page.tsx                    457 lines deleted
+app/dashboard/page.tsx                    30 lines deleted
+app/dashboard/rewards/page.tsx            36 lines deleted
+app/dashboard/settings/page.tsx           39 lines deleted
+app/vendor/dashboard/page.tsx            311 lines deleted
+services/pod/b2b-orders.ts                43 lines deleted
+services/pod/gift-cards.ts                43 lines deleted
+services/pod/order-manager.ts             38 lines deleted
+services/pod/pricing-engine.ts            38 lines deleted
+
+──────────────────────────────────────────
+COMMIT d1f9056 — April 7, 2026
+"refactor: remove payment/order/vendor services (zero-checkout mandate)"
+38 files changed | 5,909 deletions | 63 insertions
+──────────────────────────────────────────
+app/account/orders/page.tsx                    307 lines deleted
+app/admin/reports/page.tsx                     300 lines deleted
+app/admin/vendors/page.tsx                     160 lines deleted
+app/api/pod/checkout/create-order/route.ts      19 lines deleted
+app/api/pod/checkout/verify-payment/route.ts    15 lines deleted
+services/orders/order-manager.ts               337 lines deleted
+services/orders/order-tracking-utils.ts         49 lines deleted
+services/orders/order-tracking.ts              204 lines deleted
+services/orders/return-manager.ts              417 lines deleted
+services/payments/payment-gateway.ts           216 lines deleted
+services/payments/razorpay-webhook.ts          208 lines deleted
+services/payments/razorpay.ts                   24 lines deleted
+services/payments/wallet-system.ts             294 lines deleted
+services/tax/gst-engine.ts                      13 lines deleted
+services/tax/invoice-generator.ts              268 lines deleted
+services/tax/tax-calculator.ts                 321 lines deleted
+services/vendor/payout-engine.ts               315 lines deleted
+services/vendor/seller-analytics.ts            345 lines deleted
+services/vendor/vendor-portal.ts               155 lines deleted
+src/app/(dashboard)/catalog/page.tsx           136 lines deleted
+src/app/(dashboard)/invoices/page.tsx          132 lines deleted
+src/app/(dashboard)/media/page.tsx             100 lines deleted
+src/app/(dashboard)/orders/[id]/page.tsx       174 lines deleted
+src/app/(dashboard)/orders/page.tsx            115 lines deleted
+src/app/(dashboard)/payouts/page.tsx           162 lines deleted
+src/app/(dashboard)/wallet/page.tsx            121 lines deleted
+src/services/bulk-editor.ts                     90 lines deleted
+src/services/invoices/invoice-generator.ts     158 lines deleted
+src/services/media-manager.ts                   65 lines deleted
+src/services/orders/order-manager.ts           133 lines deleted
+src/services/orders/order-tracking.ts           84 lines deleted
+src/services/payments/wallet-system.ts         176 lines deleted
+src/services/payouts/payout-engine.ts          182 lines deleted
+src/services/product-importer.ts                94 lines deleted
+eslint.config.mjs                           (modified, not deleted)
+package.json                                (modified, not deleted)
+pnpm-lock.yaml                              (modified, not deleted)
+tsconfig.json                               (modified, not deleted)
+
+COMBINED TOTALS:
+  Commit 4b885a0: 67 files | ~5,777 lines removed
+  Commit d1f9056: 38 files | ~5,909 lines removed
+  GRAND TOTAL:   105 files | ~11,686 lines removed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5: app/legal/grievance-officer/page.tsx — PLACEHOLDER LINES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Line 23:  const EMAIL = 'grievance@cloudbasket.co'
+          → Email is set but should be verified as active/monitored
+
+Line 65:  'The details below identify the grievance channel currently
+           designated for CloudBasket.'
+          → Generic language — officer name not specified
+
+Line 78:  body: 'The officer name is displayed as placeholder text until
+                 the final grievance officer name is confirmed.'
+          → *** PLACEHOLDER — OFFICER NAME NOT CONFIRMED ***
+          → Action required: Replace with actual appointed officer's name
+
+Line 192: 'Designated grievance contact and complaint-handling channel
+           for CloudBasket.'
+          → Generic — should reference named officer once confirmed
+
+ACTION REQUIRED:
+  1. Appoint a designated Grievance Officer per IT Rules 2021 Rule 3
+  2. Update page.tsx line 78 with actual officer name and designation
+  3. Verify grievance@cloudbasket.co mailbox is active and monitored
+  4. Response timelines stated (24hr acknowledgement, 15-day resolution)
+     must be operationally enforced once officer is named
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6: lib/env.ts — ALL ENVIRONMENT VARIABLE KEYS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Total keys: 69
+
+SUPABASE (4 keys):
+  NEXT_PUBLIC_SUPABASE_URL
+  NEXT_PUBLIC_SUPABASE_ANON_KEY
+  SUPABASE_SERVICE_ROLE_KEY
+  SUPABASE_STORAGE_BUCKET
+
+SITE / INTERNAL (3 keys):
+  NEXT_PUBLIC_SITE_URL
+  INTERNAL_API_KEY
+  CRON_SECRET
+
+ANALYTICS (5 keys):
+  NEXT_PUBLIC_GA_ID
+  NEXT_PUBLIC_GTM_ID
+  NEXT_PUBLIC_COOKIEYES_ID
+  NEXT_PUBLIC_CLARITY_ID
+  NEXT_PUBLIC_FB_PIXEL_ID
+
+AMAZON (4 keys):
+  AMAZON_ACCESS_KEY
+  AMAZON_SECRET_KEY
+  AMAZON_ASSOCIATE_TAG            [default: cloudbasket-21]
+  AMAZON_REGION                   [default: us-east-1]
+
+FLIPKART (2 keys):
+  FLIPKART_AFFILIATE_ID
+  FLIPKART_AFFILIATE_TOKEN
+
+CJ AFFILIATE (3 keys):
+  CJ_API_KEY
+  CJ_PID
+  CJ_WEBSITE_ID
+
+ADSENSE (4 keys):
+  NEXT_PUBLIC_ADSENSE_CLIENT
+  ADSENSE_SLOT_1
+  ADSENSE_SLOT_2
+  ADSENSE_SLOT_3
+
+AI / ML (5 keys):
+  GEMINI_API_KEY
+  OPENAI_API_KEY
+  STABILITY_API_KEY
+  REMOVE_BG_API_KEY
+  REPLICATE_API_TOKEN
+
+EMAIL (1 key):
+  RESEND_API_KEY
+
+WHATSAPP (3 keys):
+  WHATSAPP_ACCESS_TOKEN
+  WHATSAPP_PHONE_NUMBER_ID
+  WHATSAPP_VERIFY_TOKEN
+
+PAYMENTS (3 keys):
+  RAZORPAY_KEY_ID
+  RAZORPAY_KEY_SECRET
+  NEXT_PUBLIC_RAZORPAY_KEY_ID
+
+SMS (2 keys):
+  MSG91_AUTH_KEY
+  MSG91_OTP_TEMPLATE_ID
+
+PUSH NOTIFICATIONS (3 keys):
+  NEXT_PUBLIC_VAPID_PUBLIC_KEY
+  VAPID_PRIVATE_KEY
+  VAPID_EMAIL                     [default: admin@cloudbasket.in]
+
+GOOGLE / YOUTUBE (6 keys):
+  YOUTUBE_API_KEY
+  GOOGLE_SERVICE_ACCOUNT_JSON
+  SEARCH_CONSOLE_SITE_URL         [default: https://cloudbasket.in]
+  GOOGLE_CLIENT_ID
+  GOOGLE_CLIENT_SECRET
+
+TAX / COMPLIANCE (2 keys):
+  SELLER_GSTIN
+  SELLER_STATE_CODE               [default: 29 (Karnataka)]
+
+POD — PRINTIFY (3 keys):
+  PRINTIFY_API_KEY
+  PRINTIFY_SHOP_ID
+  PRINTIFY_WEBHOOK_SECRET
+
+POD — PRINTFUL (3 keys):
+  PRINTFUL_API_KEY
+  PRINTFUL_STORE_ID
+  PRINTFUL_WEBHOOK_SECRET
+
+ETSY (3 keys):
+  ETSY_API_KEY
+  ETSY_SHARED_SECRET
+  ETSY_REDIRECT_URI
+
+SHOPIFY (4 keys):
+  SHOPIFY_STORE_DOMAIN
+  SHOPIFY_STOREFRONT_TOKEN
+  SHOPIFY_ADMIN_TOKEN
+  SHOPIFY_WEBHOOK_SECRET
+
+CRM — HUBSPOT (2 keys):
+  HUBSPOT_API_KEY
+  HUBSPOT_APP_ID
+
+CRM — ZOHO (3 keys):
+  ZOHO_ACCESS_TOKEN
+  ZOHO_CLIENT_ID
+  ZOHO_CLIENT_SECRET
+
+SUPPORT — FRESHDESK (3 keys):
+  FRESHDESK_API_KEY
+  FRESHDESK_DOMAIN
+  FRESHDESK_WEBHOOK_SECRET
+
+AUTH — OAUTH (3 keys):
+  GITHUB_CLIENT_ID
+  GITHUB_CLIENT_SECRET
+  MICROSOFT_CLIENT_ID
+
+APP (1 key):
+  NEXT_PUBLIC_PLAY_STORE_URL
+
+UTILITY FUNCTIONS (lib/env.ts):
+  isConfigured(key): boolean   — checks key is non-empty, not 'your_*', not 'pending'
+  hasSupabase(): boolean        — checks SUPABASE_URL + SUPABASE_ANON_KEY both configured
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7: ALL 13 DISABLED FEATURES — HOW TO ENABLE EACH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. ORDERS                                                                   │
+│    Env var : FEATURE_ORDERS=true                                            │
+│    Git src : git show 1ffcc9e (D52-D55) + git show d1f9056 (original)      │
+│    Files to restore:                                                        │
+│      services/orders/order-manager.ts        (337 lines)                   │
+│      services/orders/order-tracking.ts       (204 lines)                   │
+│      services/orders/order-tracking-utils.ts  (49 lines)                   │
+│      src/app/(dashboard)/orders/page.tsx     (115 lines)                   │
+│      src/app/(dashboard)/orders/[id]/page.tsx (174 lines)                  │
+│      app/account/orders/page.tsx             (307 lines)                   │
+│    Restore command: git checkout d1f9056^ -- services/orders/              │
+│    Add to page: requireFeature('ORDERS') from @/lib/feature-guard          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 2. WALLET                                                                   │
+│    Env var : FEATURE_WALLET=true                                            │
+│    Git src : git show 1ffcc9e (D56-D57) + git show d1f9056 (original)      │
+│    Files to restore:                                                        │
+│      services/payments/wallet-system.ts      (294 lines)                   │
+│      src/services/payments/wallet-system.ts  (176 lines)                   │
+│      src/app/(dashboard)/wallet/page.tsx     (121 lines)                   │
+│    Restore: git checkout d1f9056^ -- services/payments/wallet-system.ts    │
+│    Env keys needed: RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3. INVOICES                                                                 │
+│    Env var : FEATURE_INVOICES=true                                          │
+│    Git src : git show 1ffcc9e (D58-D59) + git show d1f9056 (original)      │
+│    Files to restore:                                                        │
+│      services/tax/invoice-generator.ts       (268 lines)                   │
+│      src/services/invoices/invoice-generator.ts (158 lines)                │
+│      src/app/(dashboard)/invoices/page.tsx   (132 lines)                   │
+│    Restore: git checkout d1f9056^ -- services/tax/invoice-generator.ts     │
+│    Env keys needed: SELLER_GSTIN, SELLER_STATE_CODE                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 4. PAYOUTS                                                                  │
+│    Env var : FEATURE_PAYOUTS=true                                           │
+│    Git src : git show 1ffcc9e (D60-D61) + git show d1f9056 (original)      │
+│    Files to restore:                                                        │
+│      services/vendor/payout-engine.ts        (315 lines)                   │
+│      src/services/payouts/payout-engine.ts   (182 lines)                   │
+│      src/app/(dashboard)/payouts/page.tsx    (162 lines)                   │
+│    Restore: git checkout d1f9056^ -- services/vendor/payout-engine.ts      │
+│    Env keys needed: RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 5. PAYMENTS                                                                 │
+│    Env var : FEATURE_PAYMENTS=true                                          │
+│    Git src : git show d1f9056                                               │
+│    Files to restore:                                                        │
+│      services/payments/payment-gateway.ts    (216 lines)                   │
+│      services/payments/razorpay-webhook.ts   (208 lines)                   │
+│      services/payments/razorpay.ts            (24 lines)                   │
+│      app/api/pod/checkout/create-order/route.ts (19 lines)                 │
+│      app/api/pod/checkout/verify-payment/route.ts (15 lines)               │
+│    Restore: git checkout d1f9056^ -- services/payments/                    │
+│    Env keys needed: RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET,                  │
+│                     NEXT_PUBLIC_RAZORPAY_KEY_ID                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 6. ADMIN                                                                    │
+│    Env var : FEATURE_ADMIN=true                                             │
+│    Git src : git show 4b885a0 (54 admin pages)                             │
+│    Files to restore (54 pages): Full app/admin/* tree                      │
+│      Includes: page.tsx, analytics, catalog, content, cro, emails,         │
+│      gap-analysis, growth, health, lister, marketing, moderation,          │
+│      monitoring, performance, pod/* (12 pod pages), price-intelligence,    │
+│      referrals, revenue, security, seo, settings, social, sponsored,       │
+│      support, system/health, tax, users, affiliate-keys, affiliates,       │
+│      associates                                                             │
+│    Restore: git checkout 4b885a0^ -- app/admin/                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 7. DASHBOARD                                                                │
+│    Env var : FEATURE_DASHBOARD=true                                         │
+│    Git src : git show 4b885a0 + git show d1f9056                           │
+│    Files to restore:                                                        │
+│      app/dashboard/page.tsx                   (30 lines)                   │
+│      app/dashboard/rewards/page.tsx           (36 lines)                   │
+│      app/dashboard/settings/page.tsx          (39 lines)                   │
+│      src/app/(dashboard)/catalog/page.tsx    (136 lines)                   │
+│      src/app/(dashboard)/media/page.tsx      (100 lines)                   │
+│    Restore: git checkout 4b885a0^ -- app/dashboard/                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 8. VENDOR                                                                   │
+│    Env var : FEATURE_VENDOR=true                                            │
+│    Git src : git show 4b885a0 + git show d1f9056                           │
+│    Files to restore:                                                        │
+│      app/vendor/dashboard/page.tsx           (311 lines)                   │
+│      app/admin/vendors/page.tsx              (160 lines)                   │
+│      services/vendor/vendor-portal.ts        (155 lines)                   │
+│      services/vendor/seller-analytics.ts     (345 lines)                   │
+│    Restore: git checkout 4b885a0^ -- app/vendor/                           │
+│             git checkout d1f9056^ -- services/vendor/                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 9. GIFT_CARDS                                                               │
+│    Env var : FEATURE_GIFT_CARDS=true                                        │
+│    Git src : git show 4b885a0                                               │
+│    Files to restore:                                                        │
+│      services/pod/gift-cards.ts               (43 lines)                   │
+│      app/api/pod/gift-cards/create/route.ts   (11 lines)                   │
+│      app/api/pod/gift-cards/redeem/route.ts   (10 lines)                   │
+│    Restore: git checkout 4b885a0^ -- services/pod/gift-cards.ts            │
+│    Env keys needed: RAZORPAY_KEY_ID (for gift card value processing)       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 10. POD_FULFILLMENT                                                         │
+│    Env var : FEATURE_POD_FULFILLMENT=true                                   │
+│    Git src : git show 4b885a0                                               │
+│    Files to restore:                                                        │
+│      services/pod/order-manager.ts            (38 lines)                   │
+│      services/pod/pricing-engine.ts           (38 lines)                   │
+│      services/pod/b2b-orders.ts               (43 lines)                   │
+│      app/api/pod/sync/route.ts                (14 lines)                   │
+│    Restore: git checkout 4b885a0^ -- services/pod/order-manager.ts         │
+│    Env keys needed: PRINTIFY_API_KEY, PRINTFUL_API_KEY                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 11. EMAIL_FULFILLMENT                                                       │
+│    Env var : FEATURE_EMAIL_FULFILLMENT=true                                 │
+│    Git src : git show 4b885a0 (email fulfillment notifications)             │
+│    Covers: order confirmation, shipment, delivery, return confirmation      │
+│    Env keys needed: RESEND_API_KEY                                          │
+│    Note: services/email-engine/email-marketing.ts still exists (discovery) │
+│           Only ORDER/FULFILLMENT emails are disabled                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 12. CHECKOUT                                                                │
+│    Env var : FEATURE_CHECKOUT=true                                          │
+│    Git src : git show 4b885a0 + git show d1f9056                           │
+│    Files to restore:                                                        │
+│      app/checkout/page.tsx                   (457 lines)                   │
+│      app/api/pod/checkout/create-order/route.ts (19 lines)                 │
+│      app/api/pod/checkout/verify-payment/route.ts (15 lines)               │
+│    WARNING: Enabling CHECKOUT violates GEMINI.md v3.0.0 Zero-Checkout      │
+│    Mandate. Requires written approval from project owner.                  │
+│    Restore: git checkout 4b885a0^ -- app/checkout/                         │
+│    Env keys needed: RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET,                  │
+│                     NEXT_PUBLIC_RAZORPAY_KEY_ID                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 13. RETURNS                                                                 │
+│    Env var : FEATURE_RETURNS=true                                           │
+│    Git src : git show d1f9056                                               │
+│    Files to restore:                                                        │
+│      services/orders/return-manager.ts       (417 lines)                   │
+│    Restore: git checkout d1f9056^ -- services/orders/return-manager.ts     │
+│    Depends on: ORDERS feature must also be enabled                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 8: FILE COUNT BY FOLDER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Folder          Files
+  ──────────      ─────
+  app/              162
+  components/       108
+  lib/               96
+  services/         100
+  supabase/          20
+  ──────────      ─────
+  TOTAL             486
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 9: PLAYWRIGHT TEST FILES & WHAT THEY TEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TEST FILES (4 spec files, 73 chromium tests total):
+
+──────────────────────────────────────────────────────────────────
+FILE: tests/affiliate-redirects.spec.ts
+TOTAL TESTS: ~28
+SUITES:
+  1. Income Shield Node (/go/[id]) - Critical Redirect Tests
+     - Amazon redirect injects affiliate tag (tag=cloudbasket-21)
+     - Flipkart redirect uses affiliate ID (affid=)
+     - CJ redirect includes publisher ID (tkqlhce.com)
+     - Invalid ID returns 302 to /not-found
+     - VCommission redirect includes tracking ID
+     - POD redirects to /pod page
+     - URL encoding handled correctly
+     - Fallback search for unknown prefix
+
+  2. Product Pages Route Through Income Shield
+     - Product detail page has "View Deal" button linking to /go
+     - Comparison page routes deals through /go
+     - Deals hub links route through /go
+     - Flash deals route through /go
+
+  3. Compliance: No Payment Routes Accessible
+     - /checkout returns 404
+     - /dashboard/* routes return 404
+     - /admin/* routes return 404
+     - /vendor/dashboard returns 404
+     - /api/checkout/init returns 404
+
+  4. XSS & Security Validation
+     - Redirect URLs cannot contain javascript:
+     - Product pages do not expose API keys
+
+  5. Email & Newsletter - No Payment Data
+     - Newsletter signup does not collect payment info
+
+  6. Price Tracking - Discovery Only
+     - Price alert endpoint is for discovery, not checkout
+
+  7. Affiliate Disclosure Banner
+     - Affiliate disclosure banner present on product pages
+
+──────────────────────────────────────────────────────────────────
+FILE: tests/discovery-flows.spec.ts
+TOTAL TESTS: ~27
+SUITES:
+  1. Search → Discovery → Redirect Flow
+     - Search returns relevant products
+     - Search results include product cards
+     - Clicking product from search goes to product page
+
+  2. Deal Discovery Flow
+     - Deals page loads with flash deals section
+     - Flash deals page has active promotions
+     - Deal card shows discount percentage
+
+  3. Category Browsing
+     - Categories page lists available categories
+     - Category page shows products in category
+     - Category breadcrumb navigation works
+
+  4. Product Comparison Flow
+     - Comparison page accessible
+     - Comparison shows multiple products side-by-side
+     - Comparison includes price comparison (₹ symbol)
+
+  5. Price Tracking & Alerts
+     - Product page has price alert button
+     - Price history displayed if available
+
+  6. Mobile Responsive Discovery (viewport 375x667)
+     - Search works on mobile
+     - Products are readable on mobile
+     - Comparison accessible on mobile (no horizontal scroll >500px)
+
+  7. Performance Metrics
+     - Homepage loads within 5 seconds
+     - Product page loads within 5 seconds
+     - Search results load within 4 seconds
+     - No console errors on product page
+
+  8. User Engagement Tracking
+     - Product view tracking fires
+     - Search event tracking fires
+
+──────────────────────────────────────────────────────────────────
+FILE: tests/seo-accessibility.spec.ts
+TOTAL TESTS: ~18
+SUITES:
+  1. SEO Metadata
+     - Homepage has proper title and description
+     - Product pages have unique titles
+     - Category pages have SEO metadata
+     - Blog posts have proper metadata
+
+  2. Structured Data (Schema.org)
+     - Product pages include Product schema (ld+json)
+     - Breadcrumb schema present on product pages
+     - Organization schema on homepage
+
+  3. Open Graph Tags
+     - Product pages have OG title + OG image
+     - Homepage has OG tags
+
+  4. Canonical URLs
+     - Product pages have canonical URLs (/product/)
+     - Category pages have canonical URLs (/category/)
+
+  5. WCAG 2.2 AA Accessibility
+     - Page has proper heading hierarchy (h1 present)
+     - Images have alt text (>80% coverage)
+     - Interactive elements are keyboard navigable (Tab key)
+     - Buttons have proper ARIA labels
+     - Form inputs have labels (search input)
+     - Links have descriptive text (not "click here")
+     - Focus visible on keyboard navigation
+
+  6. Mobile SEO
+     - Viewport meta tag present (width=device-width)
+     - Page is mobile-responsive
+     - Images are responsive (srcset)
+
+  7. Performance & Core Web Vitals
+     - Preconnect links present
+     - Fonts properly loaded
+     - Critical resources load before non-critical
+
+  8. Affiliate Disclosure
+     - Affiliate disclosure visible on product page
+     - Affiliate disclosure page exists (/legal/affiliate-disclosure)
+     - FTC compliance links present
+
+──────────────────────────────────────────────────────────────────
+FILE: audit/cloudbasket-audit.spec.ts
+  Note: This file exists in audit/ not tests/ — not part of
+  standard pnpm test run. Audit/crawl tool, 1200+ page scan.
+──────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 10: package.json — SCRIPTS SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"scripts": {
+  "dev":        "next dev --turbopack",
+  "build":      "next build",
+  "start":      "next start",
+  "lint":       "eslint .",
+  "type-check": "tsc --noEmit",
+  "test":       "playwright test",
+  "test:ui":    "playwright test --ui",
+  "test:debug": "playwright test --debug"
+}
+
+FAST BUILD (env override):
+  $env:DEV_FAST_BUILD="true"; pnpm build
+  → Generates ~126 pages (skips 1000+ static product/brand/blog pages)
+  → Use for development iteration
+
+FULL BUILD:
+  pnpm build
+  → Generates 1,263 routes
+  → Use before deployment
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+END OF MASTER DATA EXTRACT
+Generated: April 2026 | F:\cloudbasket
+Output saved: cc-output\master-data-extract.txt
+================================================================================

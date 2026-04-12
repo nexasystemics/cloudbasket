@@ -38,7 +38,7 @@ export default function PODCollectionClient({ title, description, products }: PO
 
         <Link
           href="/pod"
-          className="mt-3 inline-flex items-center gap-2 text-sm text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)]"
+          className="mt-3 inline-flex items-center gap-2 text-sm text-[var(--cb-text-muted)] hover:text-[var(--cb-text-primary)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
         >
           Back to POD
         </Link>
@@ -89,7 +89,7 @@ export default function PODCollectionClient({ title, description, products }: PO
                                 [product.id]: color.value,
                               }))
                             }
-                            className={`h-8 w-8 rounded-full border border-zinc-200 ${isSelected ? 'ring-2 ring-skyline-primary ring-offset-2' : ''}`}
+                            className={`h-8 w-8 rounded-full border border-zinc-200 ${isSelected ? 'ring-2 ring-skyline-primary ring-offset-2' : ''} transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600`}
                             style={{ backgroundColor: color.value }}
                             aria-label={`${product.title} in ${color.name}`}
                           />
@@ -114,7 +114,7 @@ export default function PODCollectionClient({ title, description, products }: PO
                     href={product.affiliateUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="cb-btn-primary w-full justify-center text-xs"
+                    className="cb-btn-primary w-full justify-center text-xs transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
                   >
                     View Design
                   </a>
@@ -129,7 +129,7 @@ export default function PODCollectionClient({ title, description, products }: PO
             <p className="text-sm font-semibold text-[var(--cb-text-primary)]">
               Need a bulk order or custom design? Contact us.
             </p>
-            <Link href="/contact" className="cb-btn-primary text-sm">
+            <Link href="/contact" className="cb-btn-primary text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
               Contact Us
             </Link>
           </div>

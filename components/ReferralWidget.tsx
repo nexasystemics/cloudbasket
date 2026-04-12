@@ -38,12 +38,12 @@ export default function ReferralWidget() {
         <p className="text-[var(--cb-text-muted)] mt-2 mb-6">Share CloudBasket with friends and earn shopping credits when they join.</p>
         <div className="flex items-center gap-2 max-w-sm mx-auto mb-4">
           <input className="cb-input flex-1 font-mono text-sm" value={refUrl} readOnly aria-label="Referral URL" />
-          <button type="button" onClick={handleCopy} className="cb-btn cb-btn-primary gap-2" aria-label="Copy referral link">
+          <button type="button" onClick={handleCopy} className="cb-btn cb-btn-primary gap-2 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600" aria-label="Copy referral link">
             {copied ? <Check size={16} /> : <Copy size={16} />}
             {copied ? 'Copied!' : 'Copy'}
           </button>
         </div>
-        <button type="button" onClick={() => shareToWhatsApp(`Join CloudBasket — India's smartest price comparison platform! Use my referral link:`, refUrl)} className="cb-btn cb-btn-ghost gap-2">
+        <button type="button" onClick={() => shareToWhatsApp(`Join CloudBasket — India's smartest price comparison platform! Use my referral link:`, refUrl)} className="cb-btn cb-btn-ghost gap-2 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
           <MessageCircle size={16} className="text-green-500" /> Share on WhatsApp
         </button>
         <p className="text-xs text-[var(--cb-text-muted)] mt-4">Your code: <strong className="font-mono">{refCode}</strong></p>
@@ -73,7 +73,7 @@ export default function ReferralWidget() {
         <div className="space-y-2">
           {FAQS.map((faq, i) => (
             <div key={i} className="border-b border-[var(--cb-border)] last:border-0">
-              <button type="button" className="flex w-full items-center justify-between py-3 text-left" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+              <button type="button" className="flex w-full items-center justify-between py-3 text-left transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600" onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}>
                 <span className="text-sm font-bold">{faq.q}</span>
                 <ChevronDown size={16} className={`transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
               </button>

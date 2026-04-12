@@ -1,0 +1,77 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket
+// FILE: cc-output/response-hardening-session.txt
+// PURPOSE: Session summary — TSC fixes, API hardening, audits
+// DATE: 2026-04-13
+
+=== TSC FIXES ===
+app/careers/CareersPageClient.tsx line 18  — India\'s → "India's" (double quote)
+app/legal/privacy/PrivacyPolicyClient.tsx line 21 — Children\'s → "Children's"
+TSC after fix: exit 0
+
+=== API ROUTE HARDENING (Section 1) ===
+New files created:
+  app/api/search/route.ts              — GET, productSearchQuerySchema, rateLimit(30/min)
+  app/api/affiliate/redirect/route.ts  — GET, affiliateRedirectSchema, domain allowlist, rateLimit(60/min)
+
+lib/validation.ts additions:
+  productSearchQuerySchema (q, category, platform: amazon|flipkart|all)
+  affiliateRedirectSchema (url, productId?, platform?)
+
+Routes hardened (Zod + rateLimit added):
+  flipkart/deals          — rateLimit(30/min)
+  intelligence/competitive — rateLimit(20/min) + inline Zod (name, brand)
+  intelligence/deals      — rateLimit(30/min)
+  mobile/deals            — rateLimit(60/min) + inline Zod (type enum, limit 1-50)
+  mobile/products         — rateLimit(60/min) + inline Zod (q, category, page, limit, sort)
+  prices                  — rateLimit(30/min) [had manual validation]
+  stock                   — rateLimit(60/min) + productIdSchema
+  cj/products             — Zod [had rateLimit, added amazonSearchQuerySchema]
+  contact                 — rateLimit(10/min) [had custom validatePayload]
+  extension/price-check   — rateLimit(20/min) + inline Zod (productName, currentPrice?, site?)
+  newsletter/unsubscribe  — rateLimit(10/min) + emailSchema
+  seo/audit               — INTERNAL_API_KEY guard
+  vitals                  — rateLimit(120/min, silently drops — fire-and-forget)
+  user/data-export        — rateLimit(5/min)
+  user/delete-account     — rateLimit(5/min)
+
+Routes already hardened (confirmed, no changes needed):
+  alerts/trigger, amazon/product, amazon/search, associates/apply,
+  auth/otp/send, auth/otp/verify, automation/webhook, barcode/lookup,
+  catalog/prices, catalog/sync, cj/track, content/generate-description,
+  cron/*, currency/rates, deals/discover, email/send-alert,
+  feed/google, feeds/google, flipkart/search, newsletter/subscribe,
+  pod/ai-generate, price-tracker, push/subscribe, push/vapid-key,
+  revenue/click, social/generate, webhooks/* (HMAC/secret verified)
+
+TSC after all changes: exit 0
+
+=== RLS AUDIT (Section 2) ===
+Tables audited: 24 across 17 migration files
+Tables with RLS gaps:
+  short_links — NO RLS, NO policies (HIGH)
+  price_history in 20260320 migration — missing RLS statement (LOW, mitigated by 001)
+Remediation SQL: cc-output/rls-gaps.sql
+
+=== REDIS AUDIT (Section 3) ===
+Finding: lib/redis.ts getCache/setCache called 0 times in production
+         All caching is in-memory Map (lost on Vercel cold start)
+         36 routes use rateLimit — Upstash IS configured and working
+Heavy routes missing Redis cache: /api/prices, /api/currency/rates,
+  /api/flipkart/deals, /api/amazon/search, /api/flipkart/search, /api/cj/products,
+  /api/intelligence/competitive, /api/amazon/product
+Recommendations: cc-output/redis-strategy.txt
+
+=== CRON AUDIT (Section 4) ===
+Findings:
+  - vercel.json has no crons block — routes NEVER auto-trigger
+  - Both routes are stubs (return static data, no real work)
+  - CRON_SECRET check is fail-open (bypassed when env var unset)
+  - Authorization header mismatch (Vercel sends Bearer, routes read x-cron-secret)
+  - weekly-digest and daily-deals are identical code
+Full remediation plan: cc-output/cron-audit.txt
+
+=== COMMITS ===
+ef56ab6 — fix: TSC errors + harden all unvalidated API routes with Zod + rateLimit
+d561791 — audit: RLS gap report
+d50b494 — audit: Redis/cache strategy
+58912c9 — audit: Cron job audit

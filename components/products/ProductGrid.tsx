@@ -16,7 +16,7 @@ export default function ProductGrid({ products, onReset }: ProductGridProps) {
         <PackageSearch size={48} className="text-[var(--cb-text-muted)]" />
         <h3 className="font-display text-xl font-black text-[var(--cb-text-primary)]">No products found</h3>
         <p className="text-sm text-[var(--cb-text-muted)]">Try adjusting your filters</p>
-        <button type="button" onClick={onReset} className="cb-btn-primary">
+        <button type="button" onClick={onReset} className="cb-btn-primary transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
           Reset Filters
         </button>
       </div>

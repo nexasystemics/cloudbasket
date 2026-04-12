@@ -1,11 +1,23 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { CATALOG } from '@/lib/intelligence/catalog'
+import { rateLimit } from '@/lib/redis'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 86400
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.co'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? request.headers.get('x-real-ip')
+    ?? 'unknown'
+  const rl = await rateLimit(ip, 60, 60)
+  if (!rl.success) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again shortly.' },
+      { status: 429 },
+    )
+  }
+
   const items = CATALOG.slice(0, 500)
     .map(
       (product) => `

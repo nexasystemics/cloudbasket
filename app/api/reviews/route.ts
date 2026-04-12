@@ -1,7 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { reviewPostSchema, zodError } from '@/lib/validation'
+import { rateLimit } from '@/lib/redis'
 
 export async function GET(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? request.headers.get('x-real-ip')
+    ?? 'unknown'
+  const rl = await rateLimit(ip, 60, 60)
+  if (!rl.success) {
+    return NextResponse.json({ error: 'Too many requests. Please try again shortly.' }, { status: 429 })
+  }
+
   const productId = request.nextUrl.searchParams.get('productId')
   if (!productId) {
     return NextResponse.json({ error: 'Missing productId query parameter' }, { status: 400 })
@@ -10,6 +19,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? request.headers.get('x-real-ip')
+    ?? 'unknown'
+  const rl = await rateLimit(ip, 10, 60)
+  if (!rl.success) {
+    return NextResponse.json({ error: 'Too many requests. Please try again shortly.' }, { status: 429 })
+  }
+
   let body: unknown
   try {
     body = await request.json()

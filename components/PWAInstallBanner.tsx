@@ -56,14 +56,14 @@ export default function PWAInstallBanner() {
           <button
             type="button"
             onClick={handleInstall}
-            className="cb-btn cb-btn-primary text-xs px-3 py-1.5"
+            className="cb-btn cb-btn-primary text-xs px-3 py-1.5 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
           >
             Install
           </button>
           <button
             type="button"
             onClick={handleDismiss}
-            className="cb-btn cb-btn-ghost p-1.5"
+            className="cb-btn cb-btn-ghost p-1.5 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
             aria-label="Dismiss"
           >
             <X size={14} />

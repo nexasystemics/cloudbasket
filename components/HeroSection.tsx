@@ -97,7 +97,7 @@ export default function HeroSection({ totalCount }: Props) {
               placeholder={prefersReducedMotion ? 'Search for the best deals in India...' : PLACEHOLDERS[placeholderIndex]}
               className="w-full bg-transparent py-4 pl-14 pr-32 font-medium text-zinc-900 outline-none placeholder:text-zinc-400 dark:text-white"
             />
-            <button type="submit" className="cb-btn-primary absolute right-2 h-12 rounded-full px-6 font-bold shadow-lg shadow-skyline-primary/20">
+            <button type="submit" className="cb-btn-primary absolute right-2 h-12 rounded-full px-6 font-bold shadow-lg shadow-skyline-primary/20 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
               Search Deals
             </button>
           </div>
@@ -110,7 +110,7 @@ export default function HeroSection({ totalCount }: Props) {
         </div>
 
         <div className="mt-16 flex min-h-[48px] flex-wrap items-center justify-center gap-4">
-          <Link href={ROUTES.PRODUCTS} className="cb-btn-primary px-8 py-4 rounded-2xl flex items-center gap-2 text-base">
+          <Link href={ROUTES.PRODUCTS} className="cb-btn-primary px-8 py-4 rounded-2xl flex items-center gap-2 text-base transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
             Browse All Deals <ArrowRight size={18} />
           </Link>
           <Link href={ROUTES.COMPARE} className="px-8 py-4 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white font-bold hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">

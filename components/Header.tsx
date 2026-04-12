@@ -235,7 +235,7 @@ export default function Header(): JSX.Element {
             <button
               type="button"
               onClick={handlePromoDismiss}
-              className="ms-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 dark:bg-zinc-800 hover:bg-white/20 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+              className="ms-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 dark:bg-zinc-800 hover:bg-white/20 dark:hover:bg-zinc-700 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
               aria-label="Dismiss promo ticker"
             >
               <X size={12} />
@@ -245,7 +245,7 @@ export default function Header(): JSX.Element {
       ) : null}
 
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4 px-3 lg:h-16 lg:px-6">
-        <Link href="/" className="flex items-center gap-2 flex-shrink-0 min-w-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0 min-w-0 rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
           <div className="w-8 h-8 bg-[#039BE5] dark:bg-[#039BE5]/80 rounded-lg flex items-center justify-center flex-shrink-0">
             <span className="text-white font-black text-xs">CB</span>
           </div>
@@ -285,7 +285,7 @@ export default function Header(): JSX.Element {
                         <Link
                           key={entry.href}
                           href={entry.href}
-                          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)] hover:text-[var(--cb-text-primary)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+                          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)] hover:text-[var(--cb-text-primary)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
                         >
                           <ItemIcon size={14} className="flex-shrink-0" />
                           <span>{entry.label}</span>
@@ -304,7 +304,7 @@ export default function Header(): JSX.Element {
             <button
               type="button"
               onClick={() => setSearchOpen((current) => !current)}
-              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
               aria-label="Toggle search"
             >
               <Search size={15} className="text-[var(--cb-text-secondary)]" />
@@ -360,7 +360,7 @@ export default function Header(): JSX.Element {
 
           <ThemeToggle />
 
-          <Link href={authRoute} className="cb-btn-primary inline-flex h-9 items-center gap-1 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+          <Link href={authRoute} className="cb-btn-primary inline-flex h-9 items-center gap-1 px-3 text-xs transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
             {user?.role === 'Admin' ? <Shield size={13} /> : null}
             {authLabel}
           </Link>
@@ -368,7 +368,7 @@ export default function Header(): JSX.Element {
 
         <button
           type="button"
-          className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg lg:hidden"
+          className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg lg:hidden transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
           onClick={() => setMobileOpen((current) => !current)}
           aria-expanded={mobileOpen}
           aria-label="Toggle mobile menu"
@@ -388,7 +388,7 @@ export default function Header(): JSX.Element {
             <button
               type="button"
               onClick={() => setMobileOpen(false)}
-              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+              className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
               aria-label="Close menu"
             >
               <X size={16} />
@@ -411,7 +411,7 @@ export default function Header(): JSX.Element {
               <div key={item.id} className="rounded-xl border border-[var(--cb-border)] p-2">
                 <Link
                   href={item.href}
-                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-[var(--cb-text-primary)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-[var(--cb-text-primary)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
                 >
                   {item.label}
                 </Link>
@@ -423,7 +423,7 @@ export default function Header(): JSX.Element {
                         <Link
                           key={`${item.id}-${entry.href}`}
                           href={entry.href}
-                          className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+                          className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-[var(--cb-text-secondary)] hover:bg-[var(--cb-surface-2)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
                         >
                           <EntryIcon size={12} className="flex-shrink-0" />
                           <span>{entry.label}</span>
@@ -472,7 +472,7 @@ export default function Header(): JSX.Element {
             <ThemeToggle />
           </div>
 
-          <Link href={authRoute} className="cb-btn-primary mt-4 flex w-full items-center justify-center gap-2 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+          <Link href={authRoute} className="cb-btn-primary mt-4 flex w-full items-center justify-center gap-2 py-3 text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
             {user?.role === 'Admin' ? <Shield size={15} /> : null}
             {authLabel}
           </Link>

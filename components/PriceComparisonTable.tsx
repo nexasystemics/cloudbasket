@@ -96,7 +96,7 @@ export default async function PriceComparisonTable({ productId }: PriceCompariso
                   <Link
                     href={`/go/${item.platform.toLowerCase()}-${productId}`}
                     onClick={() => trackAffiliateClick(productId, item.platform, item.price)}
-                    className="cb-btn-primary px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest"
+                    className="cb-btn-primary px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
                   >
                     View Deal
                   </Link>

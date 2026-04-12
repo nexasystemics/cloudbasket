@@ -1,0 +1,86 @@
+// CloudBasket — Claude Code Session Summary
+// Date: 2026-04-13
+// Session: API Hardening, Redis Strategy, Cron Audit, RLS Gaps
+// ============================================================
+
+=== COMPLETED THIS SESSION ===
+
+1. TSC FIXES
+   - app/careers/CareersPageClient.tsx line 18  — India\'s → "India's"
+   - app/legal/privacy/PrivacyPolicyClient.tsx line 21 — Children\'s → "Children's"
+   - TSC exit 0 after both fixes
+
+2. API ROUTE HARDENING (Zod + rateLimit on all unvalidated routes)
+   New routes created:
+     app/api/search/route.ts              — GET, productSearchQuerySchema, rateLimit(30/min)
+     app/api/affiliate/redirect/route.ts  — GET, affiliateRedirectSchema, domain allowlist, rateLimit(60/min)
+   lib/validation.ts additions:
+     productSearchQuerySchema, affiliateRedirectSchema
+   16 routes hardened (Zod and/or rateLimit added)
+   TSC exit 0 after all route changes
+
+3. AUDITS COMPLETED
+   cc-output/rls-gaps.sql        — RLS gap report + remediation SQL (short_links HIGH, price_history LOW)
+   cc-output/redis-strategy.txt  — Redis/cache strategy audit (getCache/setCache called 0 times in prod)
+   cc-output/cron-audit.txt      — Cron audit (no crons block in vercel.json, CRON_SECRET fail-open, both routes are stubs)
+
+4. CACHE MIGRATION (Task 6 — partial)
+   services/currency/exchange-rates.ts — DONE
+     Replaced module-level in-memory var with getCache/setCache from @/lib/redis
+     Cache key: cb:cache:currency:INR, TTL: 3600s
+     Eliminated any type, split ExchangeRatePayload vs ExchangeRatesData (timestamp: string)
+
+=== 3 REMAINING TASKS ===
+
+TASK 6 (in_progress) — Replace in-memory caches with Upstash getCache/setCache
+  DONE: services/currency/exchange-rates.ts
+  REMAINING:
+    [ ] app/api/prices/route.ts
+          key: cb:cache:prices:${[...productIds].sort().join(',')}
+          TTL: 900s (15 min)
+          only cache when productIds.length <= 10
+          import { getCache, setCache } from '@/lib/redis'
+    [ ] app/api/flipkart/deals/route.ts
+          key: cb:cache:flipkart:deals
+          TTL: 600s (10 min)
+          type: Awaited<ReturnType<typeof flipkartAPI.getDeals>>
+          import { getCache, setCache } from '@/lib/redis'
+    [ ] pnpm tsc --noEmit after each
+    [ ] git commit after all 3 done
+
+TASK 7 (pending) — Fix vercel.json crons block + CRON_SECRET Authorization: Bearer
+  Files to change:
+    vercel.json — add crons block:
+      { "path": "/api/cron/daily-deals",  "schedule": "0 7 * * *" }   (daily 12:30 IST)
+      { "path": "/api/cron/weekly-digest", "schedule": "0 8 * * 1" }  (Monday 13:30 IST)
+    app/api/cron/daily-deals/route.ts:
+      - Change: const secret = r.headers.get('x-cron-secret')
+      - To:     const authHeader = r.headers.get('authorization')
+                const secret = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null
+      - Change: if (env.CRON_SECRET && secret !== env.CRON_SECRET)  [fail-open]
+      - To:     if (!secret || secret !== env.CRON_SECRET)          [always enforce]
+      - Wrap getDailyDeals() in try/catch
+    app/api/cron/weekly-digest/route.ts:
+      - Same auth header + try/catch fixes
+    [ ] pnpm tsc --noEmit
+    [ ] git commit
+
+TASK 8 (pending) — Create supabase/migrations/017_rls_short_links.sql
+  Content from cc-output/rls-gaps.sql GAP 1:
+    ALTER TABLE short_links ENABLE ROW LEVEL SECURITY;
+    CREATE POLICY "Public read short_links"
+      ON short_links FOR SELECT USING (true);
+    CREATE POLICY "Service role write short_links"
+      ON short_links FOR ALL USING (true) WITH CHECK (true);
+  [ ] Write file (do NOT run it)
+  [ ] git commit
+
+=== KEY CONTEXT FOR NEXT SESSION ===
+
+- Zod version: 4.3.6 (transitive dep) — use { error: '...' } syntax NOT required_error
+- lib/redis.ts getCache/setCache: production-ready, fail-open when Upstash unconfigured
+- Cache key convention: cb:cache:<service>:<identifier>
+- vercel.json crons block is MISSING — neither cron runs automatically today
+- short_links table has NO RLS — public write access is currently open
+- TSC baseline was exit 0 after Section 1 (hardening) commit ef56ab6
+- pnpm only; no commits without ask (user granted explicit per-section permission this session)

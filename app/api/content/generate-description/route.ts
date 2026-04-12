@@ -2,8 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import { descriptionGenerator } from '@/services/content/description-generator'
 import { INDIA_CATALOG } from '@/lib/india-catalog'
 import { env } from '@/lib/env'
+import { rateLimit } from '@/lib/redis'
 
 export async function POST(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? request.headers.get('x-real-ip')
+    ?? 'unknown'
+  const rl = await rateLimit(ip, 10, 60)
+  if (!rl.success) {
+    return NextResponse.json({ error: 'Too many requests. Please try again shortly.' }, { status: 429 })
+  }
+
   const apiKey = request.headers.get('x-internal-api-key')
   if (env.INTERNAL_API_KEY && apiKey !== env.INTERNAL_API_KEY) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

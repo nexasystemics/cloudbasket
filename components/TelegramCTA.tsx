@@ -7,7 +7,7 @@ export function TelegramCTA({ variant = 'banner' }: { variant?: 'banner' | 'inli
         href="https://t.me/cloudbasketdeals"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-2 text-sm text-[#039BE5] hover:underline font-semibold"
+        className="flex items-center gap-2 text-sm text-[#039BE5] hover:underline font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
       >
         <span>✈️</span> Join Telegram for instant deal alerts
       </Link>
@@ -28,7 +28,7 @@ export function TelegramCTA({ variant = 'banner' }: { variant?: 'banner' | 'inli
           href="https://t.me/cloudbasketdeals"
           target="_blank"
           rel="noopener noreferrer"
-          className="cb-btn cb-btn-primary flex items-center gap-2 whitespace-nowrap"
+          className="cb-btn cb-btn-primary flex items-center gap-2 whitespace-nowrap transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
         >
           Join Channel →
         </Link>

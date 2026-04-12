@@ -36,7 +36,10 @@ export default function NewsletterSection() {
             {CATEGORIES.map((cat) => (
               <div
                 key={cat}
-                className={`cb-badge cursor-pointer ${category === cat ? 'cb-badge-blue' : 'hover:cb-badge-blue'}`}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setCategory(cat) }}
+                className={`cb-badge cursor-pointer ${category === cat ? 'cb-badge-blue' : 'hover:cb-badge-blue'} transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600`}
                 onClick={() => setCategory(cat)}
               >
                 {cat}
@@ -52,7 +55,7 @@ export default function NewsletterSection() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-            <button type="button" className="cb-btn cb-btn-primary flex-shrink-0 gap-2" onClick={handleSubmit}>
+            <button type="button" className="cb-btn cb-btn-primary flex-shrink-0 gap-2 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600" onClick={handleSubmit}>
               {isLoading ? '...' : 'Subscribe Free'}
             </button>
           </div>

@@ -100,7 +100,7 @@ export default function ProductDetailActions({
           href={dealPath}
           target="_blank"
           rel="noopener noreferrer"
-          className="cb-btn-primary flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-[11px] font-black uppercase tracking-[0.2em]"
+          className="cb-btn-primary flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-[11px] font-black uppercase tracking-[0.2em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
         >
           View Deal
           <ExternalLink size={14} />
@@ -108,7 +108,7 @@ export default function ProductDetailActions({
         <PriceAlertTriggerButton
           productName={productName}
           currentPrice={currentPrice}
-          className="cb-btn-ghost flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-[11px] font-black uppercase tracking-[0.2em]"
+          className="cb-btn-ghost flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-[11px] font-black uppercase tracking-[0.2em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
         >
           <Bell size={14} />
           Set Price Alert
@@ -133,7 +133,7 @@ export default function ProductDetailActions({
             href={dealPath}
             target="_blank"
             rel="noopener noreferrer"
-            className="cb-btn-primary flex flex-1 items-center justify-center gap-2 rounded-xl px-6 py-3 text-[10px] font-black uppercase tracking-[0.2em]"
+            className="cb-btn-primary flex flex-1 items-center justify-center gap-2 rounded-xl px-6 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
           >
             View Deal
             <ExternalLink size={14} />

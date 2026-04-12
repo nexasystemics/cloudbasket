@@ -45,3 +45,34 @@ PH2-3) components/PromotionSidebar.tsx — Added focus-visible and transitions t
 
 PH2-4) components/products/ProductCard.tsx & components/ProductCard.tsx — Added focus-visible to article/card containers
 
+
+PH2-5) components/PriceComparisonTable.tsx — Added focus-visible/transition to View Deal links
+
+PH2-6) components/CookieConsent.tsx — Added transition-colors, duration-150 and focus-visible:ring to all primary and ghost buttons in banner and modal
+
+PH2-7) components/HeroSection.tsx — Added transition and focus-visible to primary search and hero CTAs
+
+PH2-8) components/ProductDetailActions.tsx — Added transition and focus-visible to primary and ghost CTAs and sticky bar buttons
+
+PH2-9) components/Header.tsx — Added transition-colors, duration-150 and focus-visible:ring to promo dismiss, brand link, nav items, search toggle, auth links, mobile menu buttons, and mobile nav links
+
+PH2-10) components/NewsletterSection.tsx — Added transition-colors, duration-150 and focus-visible:ring to category badges and subscribe button; made badges keyboard-accessible
+
+PH2-11) components/ProductTips.tsx — Added transition-colors, duration-150 and focus-visible:ring to Add Tip, Submit and helpful buttons
+
+PH2-12) components/products/ProductGrid.tsx — Added transition-colors and focus-visible:ring to Reset Filters button
+
+PH2-13) components/ShareButton.tsx — Added transition-colors duration-150 and focus-visible:ring to all share buttons (icon & full variants)
+
+PH2-14) components/SocialCTA.tsx — Added transition-colors and focus-visible:ring to inline link and CTA buttons
+
+PH2-15) components/TelegramCTA.tsx — Added transition-colors and focus-visible:ring to inline & banner CTAs
+
+PH2-16) components/WhatsAppShare.tsx — Added transition-colors and focus-visible:ring to WhatsApp share link
+
+PH2-17) components/ReferralWidget.tsx — Added transition-colors and focus-visible:ring to copy & share buttons; FAQ buttons made keyboard-friendly with aria-expanded
+
+PH2-18) components/PWAInstallBanner.tsx — Added transition-colors and focus-visible:ring to Install and Dismiss buttons
+
+PH2-19) components/PODCollectionClient.tsx — Added transition-colors and focus-visible:ring to color swatches, View Design CTA, Back link, and Contact link
+

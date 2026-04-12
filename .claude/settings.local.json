@@ -48,7 +48,8 @@
       "Bash(echo \"careers_errors:$?\")",
       "Bash(echo \"TSC:$?\")",
       "Bash(cat vercel.json)",
-      "Bash(ls app/api/cron/)"
+      "Bash(ls app/api/cron/)",
+      "Bash(echo \"TSC_FINAL:$?\")"
     ]
   }
 }

@@ -195,21 +195,21 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={acceptAll}
-                className="cb-btn cb-btn-primary px-4 py-2 text-xs"
+                className="cb-btn cb-btn-primary px-4 py-2 text-xs transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
               >
                 Accept All
               </button>
               <button
                 type="button"
                 onClick={rejectAll}
-                className="cb-btn cb-btn-ghost px-4 py-2 text-xs"
+                className="cb-btn cb-btn-ghost px-4 py-2 text-xs transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
               >
                 Reject All
               </button>
               <button
                 type="button"
                 onClick={() => setShowModal(true)}
-                className="cb-btn cb-btn-ghost px-4 py-2 text-xs"
+                className="cb-btn cb-btn-ghost px-4 py-2 text-xs transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
               >
                 Manage Preferences
               </button>
@@ -309,13 +309,13 @@ export default function CookieConsent() {
             </div>
 
             <div className="mt-6 flex gap-3">
-              <button type="button" onClick={savePreferences} className="cb-btn cb-btn-primary flex-1">
+              <button type="button" onClick={savePreferences} className="cb-btn cb-btn-primary flex-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
                 Save Preferences
               </button>
-              <button type="button" onClick={rejectAll} className="cb-btn cb-btn-ghost flex-1">
+              <button type="button" onClick={rejectAll} className="cb-btn cb-btn-ghost flex-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
                 Reject All
               </button>
-              <button type="button" onClick={acceptAll} className="cb-btn cb-btn-ghost flex-1">
+              <button type="button" onClick={acceptAll} className="cb-btn cb-btn-ghost flex-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
                 Accept All
               </button>
             </div>

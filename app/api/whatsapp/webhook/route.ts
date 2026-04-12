@@ -1,11 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { env } from '@/lib/env'
+import { rateLimit } from '@/lib/redis'
+
 export async function GET(r: NextRequest) {
+  const ip = r.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? r.headers.get('x-real-ip')
+    ?? 'unknown'
+  const rl = await rateLimit(ip, 60, 60)
+  if (!rl.success) return NextResponse.json({ error: 'Too many requests. Please try again shortly.' }, { status: 429 })
+
   const mode = r.nextUrl.searchParams.get('hub.mode'); const token = r.nextUrl.searchParams.get('hub.verify_token'); const challenge = r.nextUrl.searchParams.get('hub.challenge')
   if (mode === 'subscribe' && token === env.WHATSAPP_VERIFY_TOKEN) return new NextResponse(challenge, { status: 200 })
   return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 }
 export async function POST(r: NextRequest) {
+  const ip = r.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? r.headers.get('x-real-ip')
+    ?? 'unknown'
+  const rl = await rateLimit(ip, 60, 60)
+  if (!rl.success) return NextResponse.json({ error: 'Too many requests. Please try again shortly.' }, { status: 429 })
+
   try {
     const body = await r.json(); const message = body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]
     if (message?.text?.body?.toUpperCase().trim() === 'STOP' && process.env.NEXT_PUBLIC_SUPABASE_URL) {

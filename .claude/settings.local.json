@@ -29,7 +29,20 @@
       "Bash(rm:*)",
       "Bash(xargs -I{} sh -c 'echo \"{} $\\(wc -l < \"{}\"\\)\"')",
       "Bash(python3 -c \"import sys,json; p=json.load\\(sys.stdin\\); [print\\(f'{k}: {v}'\\) for k,v in {**p.get\\('dependencies',{}\\), **{'[DEV] '+k: v for k,v in p.get\\('devDependencies',{}\\).items\\(\\)}}.items\\(\\)]\")",
-      "Bash(DEV_FAST_BUILD=true pnpm build)"
+      "Bash(DEV_FAST_BUILD=true pnpm build)",
+      "Bash(python3 -c ':*)",
+      "Bash(py --version)",
+      "Bash(py3 --version)",
+      "Bash(python:*)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(pnpm run:*)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(grep -rL \"generateMetadata\" app/**/page.tsx app/page.tsx)",
+      "Bash(grep -oE \"[a-z_]+$\")",
+      "Bash(npx tsc:*)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(echo \"exit:$?\")",
+      "Read(//tmp/**)"
     ]
   }
 }

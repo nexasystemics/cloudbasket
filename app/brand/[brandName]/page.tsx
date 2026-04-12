@@ -75,9 +75,30 @@ export default async function BrandPage({ params }: { params: Promise<{ brandNam
     ],
   }
 
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `Best ${brandName} Products in India`,
+    description: `Compare prices for ${products.length} ${brandName} products on CloudBasket.`,
+    url: `https://cloudbasket.in/brand/${encoded}`,
+    numberOfItems: products.length,
+    itemListElement: products.slice(0, 50).map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        name: product.name,
+        image: product.image,
+        brand: { '@type': 'Brand', name: product.brand },
+        offers: { '@type': 'Offer', price: product.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.in/product/${product.id}` },
+      },
+    })),
+  }
+
   return (
     <main className="bg-[var(--cb-bg)] min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
 
       {/* Breadcrumb */}
       <section className="mx-auto max-w-7xl px-6 py-6">

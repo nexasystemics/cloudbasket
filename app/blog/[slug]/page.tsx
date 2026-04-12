@@ -134,6 +134,34 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     category: entry.category,
   }))
 
-  return <BlogArticlePageClient post={post} relatedPosts={relatedPosts} />
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://cloudbasket.in/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://cloudbasket.in/blog/${post.slug}` },
+    ],
+  }
+
+  const blogPostingJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image,
+    datePublished: post.date,
+    author: { '@type': 'Person', name: post.author },
+    publisher: { '@type': 'Organization', name: 'CloudBasket', logo: { '@type': 'ImageObject', url: 'https://cloudbasket.in/og-image.svg' } },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://cloudbasket.in/blog/${post.slug}` },
+  }
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }} />
+      <BlogArticlePageClient post={post} relatedPosts={relatedPosts} />
+    </>
+  )
 }
 

@@ -191,8 +191,40 @@ export default async function PODCategoryPage({
     notFound()
   }
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
+      { '@type': 'ListItem', position: 2, name: 'POD', item: 'https://cloudbasket.in/pod' },
+      { '@type': 'ListItem', position: 3, name: meta.name, item: `https://cloudbasket.in/pod/${category}` },
+    ],
+  }
+
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${meta.name} Designs | CloudBasket Originals`,
+    description: meta.desc,
+    url: `https://cloudbasket.in/pod/${category}`,
+    numberOfItems: meta.products.length,
+    itemListElement: meta.products.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        name: product.name,
+        image: product.image,
+        brand: { '@type': 'Brand', name: 'CloudBasket Originals' },
+        offers: { '@type': 'Offer', price: product.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.in/go/pod-${product.id}` },
+      },
+    })),
+  }
+
   return (
     <main className="bg-[var(--cb-bg)]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
       <section className="bg-[var(--cb-surface-2)] py-12">
         <div className="mx-auto max-w-7xl px-6">
           <p className="text-xs text-[var(--cb-text-muted)]">Home / POD / {meta.name}</p>

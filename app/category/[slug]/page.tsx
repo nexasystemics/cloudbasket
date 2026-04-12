@@ -46,6 +46,16 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const Icon = getCategoryIcon(category.slug)
   const gradient = getCategoryGradient(category.slug)
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
+      { '@type': 'ListItem', position: 2, name: 'Categories', item: 'https://cloudbasket.in/categories' },
+      { '@type': 'ListItem', position: 3, name: category.label, item: `https://cloudbasket.in/category/${slug}` },
+    ],
+  }
+
   // A18: Combined ItemList JSON-LD
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -69,6 +79,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
   return (
     <main className="bg-[var(--cb-bg)]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <TrackBehavior category={category.slug} />
 

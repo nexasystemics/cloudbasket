@@ -5,6 +5,28 @@ import { Shield, ExternalLink, Info, CheckCircle, AlertCircle, DollarSign } from
 export const metadata: Metadata = {
   title: 'Affiliate Disclosure — CloudBasket',
   description: 'Full transparency about how CloudBasket earns affiliate revenue. FTC and ASCI compliant.',
+  openGraph: {
+    title: 'Affiliate Disclosure — CloudBasket',
+    description: 'Full transparency about how CloudBasket earns affiliate revenue. FTC and ASCI compliant.',
+    url: 'https://cloudbasket.in/affiliate-disclosure',
+    siteName: 'CloudBasket',
+    images: [
+      {
+        url: 'https://cloudbasket.in/og-image.svg',
+        width: 1200,
+        height: 630,
+        alt: 'CloudBasket Affiliate Disclosure',
+      },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Affiliate Disclosure — CloudBasket',
+    description: 'Full transparency about how CloudBasket earns affiliate revenue. FTC and ASCI compliant.',
+    images: ['https://cloudbasket.in/og-image.svg'],
+  },
 }
 
 const PARTNER_NETWORKS = [

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { ShoppingBag, Star, Printer } from 'lucide-react'
 import { getProductImage } from '@/lib/utils/product-image'
 
@@ -143,6 +144,41 @@ const POD_META: Record<string, PODCategory> = {
   },
 }
 
+export async function generateStaticParams() {
+  return Object.keys(POD_META).map((category) => ({ category }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>
+}): Promise<Metadata> {
+  const { category } = await params
+  const meta = POD_META[category]
+
+  if (!meta) return { title: 'Category Not Found | CloudBasket POD' }
+
+  const title = `${meta.name} | Print on Demand | CloudBasket`
+  const description = `${meta.desc} Explore our collection of ${meta.count} unique designs. Discover custom ${meta.name.toLowerCase()} at best prices.`
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://cloudbasket.in/pod/${category}`,
+      images: [{ url: meta.image }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [meta.image],
+    },
+  }
+}
+
 export default async function PODCategoryPage({
   params,
 }: {
@@ -231,8 +267,3 @@ export default async function PODCategoryPage({
     </main>
   )
 }
-
-
-
-
-

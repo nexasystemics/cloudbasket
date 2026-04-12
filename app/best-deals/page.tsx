@@ -10,7 +10,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Best Deals Today in India 2026',
     description: 'Verified price drops on 1,000+ products. Updated hourly.',
-    images: [{ url: '/brand/og-image.svg' }],
+    url: 'https://cloudbasket.in/best-deals',
+    siteName: 'CloudBasket',
+    images: [{ url: 'https://cloudbasket.in/og-image.svg' }],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Best Deals Today in India 2026',
+    description: 'Verified price drops on 1,000+ products. Updated hourly.',
+    images: ['https://cloudbasket.in/og-image.svg'],
   },
 }
 

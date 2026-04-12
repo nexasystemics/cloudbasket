@@ -18,7 +18,7 @@ const SECTIONS = [
   { id: 's7', title: 'Section 7 — Affiliate Links — Third-Party Redirection Notice' },
   { id: 's8', title: 'Section 8 — Data Retention' },
   { id: 's9', title: 'Section 9 — Data Security' },
-  { id: 's10', title: 'Section 10 — Children\'s Privacy' },
+  { id: 's10', title: "Section 10 — Children's Privacy" },
   { id: 's11', title: 'Section 11 — Your Rights as a Data Principal' },
   { id: 's12', title: 'Section 12 — International Data Transfers' },
   { id: 's13', title: 'Section 13 — Third-Party Links' },

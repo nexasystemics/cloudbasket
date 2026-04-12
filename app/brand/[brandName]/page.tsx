@@ -32,8 +32,28 @@ export async function generateMetadata({ params }: { params: Promise<{ brandName
   return {
     title, description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: 'CloudBasket', locale: 'en_IN', type: 'website' },
-    twitter: { card: 'summary_large_image', title, description },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'CloudBasket',
+      images: [
+        {
+          url: 'https://cloudbasket.in/og-image.svg',
+          width: 1200,
+          height: 630,
+          alt: `${brandName} on CloudBasket`,
+        },
+      ],
+      locale: 'en_IN',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['https://cloudbasket.in/og-image.svg'],
+    },
   }
 }
 

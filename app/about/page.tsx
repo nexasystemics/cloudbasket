@@ -7,6 +7,28 @@ export const metadata: Metadata = {
   title: "About CloudBasket — The World's Smartest Price Aggregator",
   description:
     'Learn how CloudBasket compares prices across leading stores, tracks daily deal changes, and helps shoppers discover smarter savings without checkout friction.',
+  openGraph: {
+    title: "About CloudBasket — The World's Smartest Price Aggregator",
+    description: 'Learn how CloudBasket compares prices across leading stores, tracks daily deal changes, and helps shoppers discover smarter savings without checkout friction.',
+    url: 'https://cloudbasket.in/about',
+    siteName: 'CloudBasket',
+    images: [
+      {
+        url: 'https://cloudbasket.in/og-image.svg',
+        width: 1200,
+        height: 630,
+        alt: 'About CloudBasket',
+      },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "About CloudBasket — The World's Smartest Price Aggregator",
+    description: 'Learn how CloudBasket compares prices across leading stores, tracks daily deal changes, and helps shoppers discover smarter savings without checkout friction.',
+    images: ['https://cloudbasket.in/og-image.svg'],
+  },
 }
 const STATS: ReadonlyArray<{ value: string; label: string }> = [
   { value: '2,000+', label: 'Products Tracked' },

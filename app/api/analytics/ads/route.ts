@@ -1,7 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { rateLimit } from '@/lib/redis'
 import { adsAnalyticsSchema, zodError } from '@/lib/validation'
 
+function getRequestIp(request: NextRequest): string {
+  return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? request.headers.get('x-real-ip')
+    ?? 'unknown'
+}
+
 export async function POST(request: NextRequest) {
+  const ip = getRequestIp(request)
+  const limit = await rateLimit(ip, 30, 60)
+  if (!limit.success) {
+    return NextResponse.json({ ok: false, error: 'Too many requests. Please try again shortly.' }, { status: 429 })
+  }
+
   let body: unknown
   try {
     body = await request.json()

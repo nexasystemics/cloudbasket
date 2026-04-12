@@ -87,9 +87,35 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: 'Post Not Found' }
   }
 
+  const title = `${post.title} | CloudBasket Intelligence`
+
   return {
-    title: `${post.title} | CloudBasket Intelligence`,
+    title,
     description: post.excerpt,
+    openGraph: {
+      title,
+      description: post.excerpt,
+      url: `https://cloudbasket.in/blog/${post.slug}`,
+      siteName: 'CloudBasket',
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 800,
+          alt: post.title,
+        },
+      ],
+      locale: 'en_IN',
+      type: 'article',
+      publishedTime: post.date,
+      authors: [post.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: post.excerpt,
+      images: [post.image],
+    },
   }
 }
 

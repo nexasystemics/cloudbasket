@@ -15,7 +15,7 @@ const JOBS = [
   { title: 'Senior Full-Stack Engineer', dept: 'Engineering', location: 'Remote India', type: 'Full-time', icon: Code, color: '#039BE5', desc: 'Build global-grade Next.js + Supabase applications at scale. Own features end-to-end.' },
   { title: 'SEO & Content Marketing Manager', dept: 'Marketing', location: 'Remote India', type: 'Full-time', icon: Search, color: '#10B981', desc: 'Drive organic traffic to 1,200+ pages. Own our content strategy and SEO roadmap.' },
   { title: 'Affiliate Partnerships Manager', dept: 'Business Development', location: 'Remote India', type: 'Full-time', icon: Users, color: '#8B5CF6', desc: 'Grow the CloudBasket Associates network. Manage affiliate relationships with major brands.' },
-  { title: 'UI/UX Designer', dept: 'Design', location: 'Remote India', type: 'Full-time', icon: PenTool, color: '#EF4444', desc: 'Design world-class interfaces for India\'s smartest price comparison platform.' },
+  { title: 'UI/UX Designer', dept: 'Design', location: 'Remote India', type: 'Full-time', icon: PenTool, color: '#EF4444', desc: "Design world-class interfaces for India's smartest price comparison platform." },
   { title: 'Data Analyst', dept: 'Analytics', location: 'Remote India', type: 'Full-time', icon: TrendingUp, color: '#F97316', desc: 'Turn price data and user behaviour into actionable insights. Own our analytics dashboard.' },
 ]
 

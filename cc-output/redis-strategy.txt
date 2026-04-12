@@ -1,0 +1,140 @@
+// CloudBasket — Redis / Cache Strategy Audit
+// Generated: 2026-04-13
+// Scope: lib/redis.ts + all files importing from it + all in-memory caches
+// ============================================================
+
+=== CURRENT STATE ===
+
+1. lib/redis.ts (Upstash Redis REST)
+   - Client: @upstash/redis + @upstash/ratelimit
+   - Used FOR:     rateLimit() — 36 routes import it, ONLY for rate limiting
+   - NOT used for: getCache(), setCache(), deleteCache() — exported but called ZERO times
+   - These three helpers are dead code in production
+
+2. In-Memory Caches (process-local Map<string, {data, expiry}>)
+   ALL of the following use in-process Maps — NOT Upstash:
+
+   FILE                                  CACHE VAR      DEFAULT TTL    NOTES
+   ────────────────────────────────────────────────────────────────────────
+   services/apis/amazon-pa-api.ts        this.cache     1h (3600000ms) shared across calls in same process
+   services/apis/cj-api.ts               this.cache     1h (3600000ms) same
+   services/apis/flipkart-affiliate.ts   this.cache     2h (7200000ms) deals use 30m (1800000ms)
+   services/price-engine/india-apis.ts   priceCache     1h (3600000ms) module-level Map + Next.js revalidate:3600
+   services/currency/exchange-rates.ts   cache          1h (3600000ms) module-level var
+
+=== CRITICAL PROBLEM ===
+
+Vercel Serverless functions are stateless. Each cold start gets a FRESH process.
+The in-memory Map caches are LOST on every cold start and are NOT shared between
+concurrent instances. Under real load:
+  - Amazon PA-API: up to 10+ concurrent cold calls per minute
+  - Flipkart API: same pattern
+  - Exchange rates: re-fetched on every cold start
+
+Net effect: external API rate limits are hit faster than expected, and Vercel
+function compute cost is higher than necessary.
+
+=== TTL REVIEW — CURRENT vs RECOMMENDED ===
+
+CACHE TARGET              CURRENT TTL   RECOMMENDED TTL   REASON
+─────────────────────────────────────────────────────────────────────
+Amazon product search     1h (in-mem)   15 min (Redis)    Products change price frequently
+Amazon product detail     1h (in-mem)   30 min (Redis)    ASIN data stable, price volatile
+CJ product search         1h (in-mem)   20 min (Redis)    Affiliate inventory changes
+Flipkart product search   2h (in-mem)   20 min (Redis)    Same
+Flipkart deals            30m (in-mem)  10 min (Redis)    Deal status can expire quickly
+Live price fetch          1h (in-mem)   15 min (Redis)    Price accuracy matters
+Currency rates            1h (in-mem)   1h  (Redis)       Fine — rates change slowly
+Competitive intel         none          30 min (Redis)    Expensive aggregation, low churn
+SEO audit                 none          6h  (Redis)       Slow operation, internal tool
+
+=== MISSING CACHE LAYERS — HEAVY ROUTES ===
+
+Route                           Problem                          Fix
+──────────────────────────────────────────────────────────────────────────────────────
+GET /api/amazon/search          Hits PA-API on every cold start  Wrap in getCache/setCache from lib/redis.ts
+GET /api/amazon/product         Same                             Same
+GET /api/flipkart/search        Hits Flipkart API cold start     Same
+GET /api/flipkart/deals         Same, getDeals() re-fetches      Same (key: fk:deals)
+GET /api/cj/products            Same                             Same
+GET /api/prices                 Parallel PA-API + FK calls       Same (key: prices:[productIds hash])
+GET /api/currency/rates         Module-level, lost on cold start Same (key: currency:INR, TTL 3600)
+GET /api/intelligence/competitive Calls multiple price sources   Same (key: comp:[name]:[brand], TTL 1800)
+
+=== RECOMMENDED IMPLEMENTATION PATTERN ===
+
+The pattern to apply to each heavy route (example: /api/currency/rates):
+
+  import { getCache, setCache } from '@/lib/redis'
+
+  export async function GET(request: NextRequest) {
+    // 1. rateLimit (already in place)
+    // 2. Zod validation (already in place)
+
+    const cacheKey = 'currency:INR'
+    const cached = await getCache<ExchangeRates>(cacheKey)
+    if (cached) return NextResponse.json(cached)
+
+    const data = await getExchangeRates()
+    await setCache(cacheKey, data, 3600)   // 3rd arg = TTL in seconds
+    return NextResponse.json(data)
+  }
+
+For routes with dynamic keys (search queries):
+    const cacheKey = `amazon:search:${q}:${category}`
+    // Trim to avoid cache pollution on long queries — only cache short queries
+    if (q.length <= 50) {
+      const cached = await getCache<AmazonProduct[]>(cacheKey)
+      if (cached) return NextResponse.json({ products: cached, count: cached.length, cached: true })
+    }
+    const products = await amazonAPI.searchProducts(q, category)
+    if (q.length <= 50) await setCache(cacheKey, products, 900) // 15 min
+    return NextResponse.json({ products, count: products.length })
+
+=== CACHE KEY CONVENTIONS (recommended) ===
+
+Prefix convention:
+  cb:search:amazon:{q}:{cat}      15 min
+  cb:search:flipkart:{q}:{cat}    20 min
+  cb:search:cj:{q}                20 min
+  cb:deals:flipkart               10 min
+  cb:product:amazon:{asin}        30 min
+  cb:prices:{productIds_md5}      15 min
+  cb:currency:INR                  1 hour
+  cb:comp:{name}:{brand}          30 min
+
+All keys use lowercase, colon-separated hierarchy.
+Upstash prefix in lib/redis.ts is already 'cb:rl' for rate limiters.
+Use 'cb:cache' prefix for application cache to avoid collision.
+
+=== ACTION ITEMS (priority order) ===
+
+P1 — Immediate (data accuracy + cost):
+  [ ] Add getCache/setCache to /api/currency/rates (cache miss hurts UX)
+  [ ] Add getCache/setCache to /api/prices (parallel API calls are expensive)
+  [ ] Add getCache/setCache to /api/flipkart/deals (called on every homepage load)
+
+P2 — Near term:
+  [ ] Add getCache/setCache to /api/amazon/search
+  [ ] Add getCache/setCache to /api/flipkart/search
+  [ ] Add getCache/setCache to /api/cj/products
+  [ ] Add getCache/setCache to /api/amazon/product (per-ASIN)
+
+P3 — Cleanup:
+  [ ] Add getCache/setCache to /api/intelligence/competitive
+  [ ] Migrate in-memory Map caches in amazon-pa-api.ts + flipkart-affiliate.ts +
+      cj-api.ts to use lib/redis.ts setCache/getCache (with UPSTASH_REDIS configured)
+      to share cache across serverless instances
+
+=== lib/redis.ts setCache NOTE ===
+
+Current setCache() signature: setCache(key, value, ttlSeconds = 3600)
+It wraps JSON.stringify — getCache() uses Redis GET with automatic JSON.parse.
+No code changes needed to lib/redis.ts itself.
+
+=== FINAL VERDICT ===
+
+Upstash is configured and working for rate limiting (36 routes).
+Zero routes use it for application caching.
+In-memory caches work in local dev but silently fail in production serverless.
+The getCache/setCache helpers are production-ready — they just need to be called.

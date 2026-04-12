@@ -1,14 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server'
-export async function POST(r: NextRequest) {
+import { whatsappSubscribeSchema, zodError } from '@/lib/validation'
+
+export async function POST(request: NextRequest) {
+  let body: unknown
   try {
-    const { phoneNumber, consent, preferences } = await r.json()
-    if (!consent) return NextResponse.json({ error: 'Consent required' }, { status: 400 })
-    const cleaned = phoneNumber?.replace(/\s+/g, '')
-    if (!cleaned?.match(/^(\+91|91)?[6-9]\d{9}$/)) return NextResponse.json({ error: 'Invalid Indian phone' }, { status: 400 })
-    const normalised = `+91${cleaned.replace(/^(\+91|91)/, '')}`
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      try { const { createClient } = await import('@supabase/supabase-js'); const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY); await sb.from('whatsapp_subscribers').upsert({ phone_number: normalised, subscribed_at: new Date().toISOString(), unsubscribed_at: null, preferences }) } catch { /* no-op */ }
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+  }
+
+  const parsed = whatsappSubscribeSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: zodError(parsed.error) }, { status: 400 })
+  }
+  const { phoneNumber, preferences } = parsed.data
+  const normalised = `+91${phoneNumber.replace(/^(\+91|91)/, '')}`
+
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    try {
+      const { createClient } = await import('@supabase/supabase-js')
+      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
+      const { error } = await sb.from('whatsapp_subscribers').upsert({
+        phone_number: normalised,
+        subscribed_at: new Date().toISOString(),
+        unsubscribed_at: null,
+        preferences,
+      }, { onConflict: 'phone_number' })
+      if (error) {
+        console.error('[whatsapp/subscribe] DB error:', error.message)
+        return NextResponse.json({ error: 'Failed to subscribe' }, { status: 500 })
+      }
+    } catch (err) {
+      console.error('[whatsapp/subscribe] Unexpected error:', err)
+      return NextResponse.json({ error: 'Failed to subscribe' }, { status: 500 })
     }
-    return NextResponse.json({ ok: true, phoneNumber: normalised })
-  } catch { return NextResponse.json({ error: 'Failed' }, { status: 500 }) }
+  }
+
+  return NextResponse.json({ ok: true, phoneNumber: normalised })
 }

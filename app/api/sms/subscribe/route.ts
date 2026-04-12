@@ -1,4 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-export async function POST(r: NextRequest) {
-  try { const { mobile, consent } = await r.json(); if (!consent || !mobile?.match(/^[6-9]\d{9}$/)) return NextResponse.json({ error: 'Invalid' }, { status: 400 }); return NextResponse.json({ ok: true, mobile: `+91${mobile}` }) } catch { return NextResponse.json({ error: 'Failed' }, { status: 500 }) }
+import { smsSubscribeSchema, zodError } from '@/lib/validation'
+
+export async function POST(request: NextRequest) {
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+  }
+
+  const parsed = smsSubscribeSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: zodError(parsed.error) }, { status: 400 })
+  }
+
+  return NextResponse.json({ ok: true, mobile: `+91${parsed.data.mobile}` })
 }

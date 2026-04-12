@@ -7,8 +7,28 @@
  * DEPENDENCIES: lib/features.ts (for feature name display)
  */
 
-import { type FeatureKey, getFeatureStatus } from '@/lib/features';
-import Link from 'next/link';
+import type { Metadata } from 'next'
+import { type FeatureKey, getFeatureStatus } from '@/lib/features'
+import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Feature Unavailable | CloudBasket',
+  description: 'This feature is currently disabled on CloudBasket. Return to the homepage to browse deals, compare prices, and discover savings.',
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: 'Feature Unavailable | CloudBasket',
+    description: 'This feature is currently disabled. Browse deals and price comparisons at CloudBasket.',
+    url: 'https://cloudbasket.in/feature-disabled',
+    siteName: 'CloudBasket',
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Feature Unavailable | CloudBasket',
+    description: 'This feature is currently disabled on CloudBasket.',
+  },
+}
 
 interface PageProps {
   searchParams: Promise<{ feature?: string }>;

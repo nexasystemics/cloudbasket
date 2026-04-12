@@ -18,12 +18,12 @@ type Props = {
 
 function getSourceBadgeClass(platform: string): string {
   const n = platform.toLowerCase()
-  if (n.includes('amazon')) return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
-  if (n.includes('flipkart')) return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
-  if (n.includes('myntra')) return 'bg-[#E73967]/10 text-[#E73967] border-[#E73967]/20'
+  if (n.includes('amazon')) return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20 dark:bg-[#FF9900]/20 dark:text-[#FF9900] dark:border-[#FF9900]/40'
+  if (n.includes('flipkart')) return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20 dark:bg-[#2874F0]/20 dark:text-[#2874F0] dark:border-[#2874F0]/40'
+  if (n.includes('myntra')) return 'bg-[#E73967]/10 text-[#E73967] border-[#E73967]/20 dark:bg-[#E73967]/20 dark:text-[#E73967] dark:border-[#E73967]/40'
   if (n.includes('croma')) return 'bg-[#000000]/10 text-[#000000] dark:bg-white/10 dark:text-white border-[#000000]/20'
-  if (n.includes('bigbasket')) return 'bg-[#689F38]/10 text-[#689F38] border-[#689F38]/20'
-  if (n.includes('reliance')) return 'bg-[#E42529]/10 text-[#E42529] border-[#E42529]/20'
+  if (n.includes('bigbasket')) return 'bg-[#689F38]/10 text-[#689F38] border-[#689F38]/20 dark:bg-[#689F38]/20 dark:text-[#689F38] dark:border-[#689F38]/40'
+  if (n.includes('reliance')) return 'bg-[#E42529]/10 text-[#E42529] border-[#E42529]/20 dark:bg-[#E42529]/20 dark:text-[#E42529] dark:border-[#E42529]/40'
   return 'cb-badge-green'
 }
 
@@ -211,7 +211,7 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
               <div className="flex flex-wrap gap-2">
                 {availableBrands.map(brand => (
                   <button key={brand} onClick={() => toggleBrand(brand)}
-                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-colors ${selectedBrands.has(brand) ? 'bg-[#039BE5] text-white border-[#039BE5]' : 'border-zinc-200 text-zinc-500'}`}>
+                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-colors ${selectedBrands.has(brand) ? 'bg-[#039BE5] text-white border-[#039BE5] dark:bg-[#039BE5]/80 dark:border-[#039BE5]/60 dark:text-white' : 'border-zinc-200 text-zinc-500'}`}>
                     {brand}
                   </button>
                 ))}
@@ -274,10 +274,10 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
                     />
                     <div className="absolute left-2 top-2 flex flex-col gap-1">
                       {effectiveDiscount > 5 && (
-                        <span className="rounded-md bg-green-500 px-2 py-1 text-[10px] font-black text-white shadow-sm">{effectiveDiscount}% OFF</span>
+                        <span className="rounded-md bg-green-500 px-2 py-1 text-[10px] font-black text-white shadow-sm dark:bg-green-600">{effectiveDiscount}% OFF</span>
                       )}
                       {product.badge && product.badge !== 'Sponsored' && (
-                        <span className="rounded-md bg-orange-500 px-2 py-1 text-[10px] font-black text-white shadow-sm">
+                        <span className="rounded-md bg-orange-500 px-2 py-1 text-[10px] font-black text-white shadow-sm dark:bg-orange-600">
                           <Zap size={10} className="inline mr-1" />{product.badge}
                         </span>
                       )}

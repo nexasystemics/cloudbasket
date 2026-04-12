@@ -1,0 +1,8 @@
+Dark mode fixes log
+
+1) components/CategoryPageClient.tsx — Added dark: variants to badge/platform helpers and key UI tokens
+   - getSourceBadgeClass: added dark:bg, dark:text, dark:border for Amazon, Flipkart, Myntra, BigBasket, Reliance
+   - Brand pill selected state: added dark:bg and dark:border for mobile pills
+   - Product badges: added dark:bg variants for discount and badge spans
+
+pnpm tsc --noEmit will be run and results appended per file.

@@ -1,0 +1,2767 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - img [ref=e8]
+        - text: 50+ stores compared in real-time
+      - button "Dismiss promo ticker" [ref=e10]:
+        - img [ref=e11]
+    - generic [ref=e14]:
+      - link "CB CloudBasket" [ref=e15] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e17]: CB
+        - generic [ref=e18]: CloudBasket
+      - navigation "Primary navigation" [ref=e19]:
+        - generic [ref=e20]:
+          - link "Products" [ref=e21] [cursor=pointer]:
+            - /url: /products
+            - text: Products
+            - img [ref=e22]
+          - generic:
+            - link "Automotive":
+              - /url: /category/automotive
+              - img
+              - generic: Automotive
+            - link "Beauty":
+              - /url: /category/beauty
+              - img
+              - generic: Beauty
+            - link "Books":
+              - /url: /category/books
+              - img
+              - generic: Books
+            - link "Courses":
+              - /url: /category/courses
+              - img
+              - generic: Courses
+            - link "Electronics":
+              - /url: /category/electronics
+              - img
+              - generic: Electronics
+            - link "Fashion":
+              - /url: /category/fashion
+              - img
+              - generic: Fashion
+            - link "Finance":
+              - /url: /category/finance
+              - img
+              - generic: Finance
+            - link "Gaming":
+              - /url: /category/gaming
+              - img
+              - generic: Gaming
+            - link "Grocery":
+              - /url: /category/grocery
+              - img
+              - generic: Grocery
+            - link "Health":
+              - /url: /category/health
+              - img
+              - generic: Health
+            - link "Home":
+              - /url: /category/home
+              - img
+              - generic: Home
+            - link "Investments":
+              - /url: /category/investments
+              - img
+              - generic: Investments
+            - link "Jewellery":
+              - /url: /category/jewellery
+              - img
+              - generic: Jewellery
+            - link "Laptops":
+              - /url: /category/laptops
+              - img
+              - generic: Laptops
+            - link "Mobiles":
+              - /url: /category/mobiles
+              - img
+              - generic: Mobiles
+            - link "POD":
+              - /url: /category/pod
+              - img
+              - generic: POD
+            - link "Sports":
+              - /url: /category/sports
+              - img
+              - generic: Sports
+            - link "Toys":
+              - /url: /category/toys
+              - img
+              - generic: Toys
+            - link "Travel":
+              - /url: /category/travel
+              - img
+              - generic: Travel
+            - link "Watches":
+              - /url: /category/watches
+              - img
+              - generic: Watches
+        - generic [ref=e24]:
+          - link "Deals" [ref=e25] [cursor=pointer]:
+            - /url: /deals
+            - text: Deals
+            - img [ref=e26]
+          - generic:
+            - link "Flash Sales":
+              - /url: /deals/flash
+              - img
+              - generic: Flash Sales
+            - link "Top Offers":
+              - /url: /deals
+              - img
+              - generic: Top Offers
+            - link "CJ Network":
+              - /url: /cj
+              - img
+              - generic: CJ Network
+        - link "Categories" [ref=e29] [cursor=pointer]:
+          - /url: /categories
+        - generic [ref=e30]:
+          - link "POD" [ref=e31] [cursor=pointer]:
+            - /url: /pod
+            - text: POD
+            - img [ref=e32]
+          - generic:
+            - link "👕 T-Shirts":
+              - /url: /pod/tshirts
+              - img
+              - generic: 👕 T-Shirts
+            - link "☕ Mugs":
+              - /url: /pod/mugs
+              - img
+              - generic: ☕ Mugs
+            - link "📱 Phone Cases":
+              - /url: /pod/phone-cases
+              - img
+              - generic: 📱 Phone Cases
+            - link "💼 Laptop Bags":
+              - /url: /pod/laptop-bags
+              - img
+              - generic: 💼 Laptop Bags
+            - link "👜 Tote Bags":
+              - /url: /pod/tote-bags
+              - img
+              - generic: 👜 Tote Bags
+            - link "🧥 Hoodies":
+              - /url: /pod/hoodies
+              - img
+              - generic: 🧥 Hoodies
+        - link "🧠 Deal Quiz" [ref=e35] [cursor=pointer]:
+          - /url: /quiz
+        - link "Compare" [ref=e37] [cursor=pointer]:
+          - /url: /compare
+        - link "Blog" [ref=e39] [cursor=pointer]:
+          - /url: /blog
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - button "Toggle search" [ref=e42]:
+            - img [ref=e43]
+          - searchbox "Search" [ref=e46]
+        - generic [ref=e47]:
+          - img [ref=e48]
+          - combobox "Select country" [ref=e51]:
+            - option "India" [selected]
+            - option "United States"
+            - option "Europe"
+            - option "United Kingdom"
+        - generic [ref=e52]:
+          - generic [ref=e53]: 🌐
+          - combobox "Select locale" [ref=e54]:
+            - option "🇮🇳 India (₹)" [selected]
+            - option "🇺🇸 US ($)"
+            - option "🇬🇧 UK (£)"
+        - button "Toggle theme" [ref=e55]:
+          - img [ref=e56]
+        - link "Sign In" [ref=e58] [cursor=pointer]:
+          - /url: /login
+  - main [ref=e59]:
+    - main [ref=e60]:
+      - generic [ref=e62]:
+        - generic [ref=e64]:
+          - img [ref=e65]
+          - text: Live India deal radar
+        - generic [ref=e67]:
+          - heading "Compare. Discover. Save." [level=1] [ref=e68]
+          - paragraph [ref=e69]: 2,000+ curated products tracked daily
+          - paragraph [ref=e70]: Everything in one basket. Compare prices across 50+ stores in India. Zero checkout, just pure savings.
+        - generic [ref=e72]:
+          - img [ref=e73]
+          - textbox "Search for boAt earphones..." [ref=e76]
+          - button "Search Deals" [ref=e77]
+        - generic [ref=e78]:
+          - generic [ref=e79]: ₹2Cr+ saved by users
+          - generic [ref=e80]: 50K+ deals tracked
+          - generic [ref=e81]: 4.8★ user rating
+        - generic [ref=e82]:
+          - link "Browse All Deals" [ref=e83] [cursor=pointer]:
+            - /url: /products
+            - text: Browse All Deals
+            - img [ref=e84]
+          - link "Compare Products" [ref=e86] [cursor=pointer]:
+            - /url: /compare
+      - generic [ref=e88]:
+        - generic [ref=e89]: We compare prices from
+        - generic [ref=e90]: Amazon
+        - generic [ref=e91]: Flipkart
+        - generic [ref=e92]: Croma
+        - generic [ref=e93]: Reliance Digital
+        - generic [ref=e94]: Nykaa
+        - generic [ref=e95]: Myntra
+      - generic [ref=e97]:
+        - generic [ref=e98]:
+          - img [ref=e99]
+          - text: "Trending now:"
+        - button "iPhone 16" [ref=e102]
+        - button "boAt earphones" [ref=e103]
+        - button "Nike Air Max" [ref=e104]
+        - button "PS5" [ref=e105]
+        - button "Levi's 511" [ref=e106]
+        - button "Atomic Habits" [ref=e107]
+        - button "Air Fryer" [ref=e108]
+        - button "Yoga Mat" [ref=e109]
+        - button "Titan Watch" [ref=e110]
+        - button "Noise SmartWatch" [ref=e111]
+      - generic [ref=e113]:
+        - link "Flash Deals" [ref=e114] [cursor=pointer]:
+          - /url: /deals/flash
+          - img [ref=e116]
+          - generic [ref=e118]: Flash Deals
+        - generic [ref=e119]:
+          - link "boAt Airdopes 141 TWS Earbuds Active Black boAt Airdopes 141 TWS Earbuds Active Black 71% OFF Amazon" [ref=e120] [cursor=pointer]:
+            - /url: /products/IN-EL-BOT-001
+            - img "boAt Airdopes 141 TWS Earbuds Active Black" [ref=e122]
+            - generic [ref=e123]:
+              - generic [ref=e124]: boAt Airdopes 141 TWS Earbuds Active Black
+              - generic [ref=e125]:
+                - generic [ref=e126]: 71% OFF
+                - generic [ref=e127]: Amazon
+          - link "boAt Airdopes 141 TWS Earbuds Cyan Cider boAt Airdopes 141 TWS Earbuds Cyan Cider 71% OFF Amazon" [ref=e128] [cursor=pointer]:
+            - /url: /products/IN-EL-BOT-002
+            - img "boAt Airdopes 141 TWS Earbuds Cyan Cider" [ref=e130]
+            - generic [ref=e131]:
+              - generic [ref=e132]: boAt Airdopes 141 TWS Earbuds Cyan Cider
+              - generic [ref=e133]:
+                - generic [ref=e134]: 71% OFF
+                - generic [ref=e135]: Amazon
+          - link "boAt Wave Lite Smartwatch Active Black boAt Wave Lite Smartwatch Active Black 69% OFF Amazon" [ref=e136] [cursor=pointer]:
+            - /url: /products/IN-EL-BOT-036
+            - img "boAt Wave Lite Smartwatch Active Black" [ref=e138]
+            - generic [ref=e139]:
+              - generic [ref=e140]: boAt Wave Lite Smartwatch Active Black
+              - generic [ref=e141]:
+                - generic [ref=e142]: 69% OFF
+                - generic [ref=e143]: Amazon
+          - link "boAt Wave Lite Smartwatch Deep Blue boAt Wave Lite Smartwatch Deep Blue 69% OFF Amazon" [ref=e144] [cursor=pointer]:
+            - /url: /products/IN-EL-BOT-037
+            - img "boAt Wave Lite Smartwatch Deep Blue" [ref=e146]
+            - generic [ref=e147]:
+              - generic [ref=e148]: boAt Wave Lite Smartwatch Deep Blue
+              - generic [ref=e149]:
+                - generic [ref=e150]: 69% OFF
+                - generic [ref=e151]: Amazon
+          - link "boAt Airdopes Atom 81 TWS Earbuds Electric Blue boAt Airdopes Atom 81 TWS Earbuds Electric Blue 66% OFF Amazon" [ref=e152] [cursor=pointer]:
+            - /url: /products/IN-EL-BOT-008
+            - img "boAt Airdopes Atom 81 TWS Earbuds Electric Blue" [ref=e154]
+            - generic [ref=e155]:
+              - generic [ref=e156]: boAt Airdopes Atom 81 TWS Earbuds Electric Blue
+              - generic [ref=e157]:
+                - generic [ref=e158]: 66% OFF
+                - generic [ref=e159]: Amazon
+          - link "boAt Airdopes Atom 81 TWS Earbuds Pebble Black boAt Airdopes Atom 81 TWS Earbuds Pebble Black 66% OFF Amazon" [ref=e160] [cursor=pointer]:
+            - /url: /products/IN-EL-BOT-009
+            - img "boAt Airdopes Atom 81 TWS Earbuds Pebble Black" [ref=e162]
+            - generic [ref=e163]:
+              - generic [ref=e164]: boAt Airdopes Atom 81 TWS Earbuds Pebble Black
+              - generic [ref=e165]:
+                - generic [ref=e166]: 66% OFF
+                - generic [ref=e167]: Amazon
+      - generic [ref=e168]:
+        - generic [ref=e169]:
+          - heading "Top Deals Today" [level=2] [ref=e170]
+          - link "View all deals" [ref=e171] [cursor=pointer]:
+            - /url: /deals
+        - generic [ref=e172]:
+          - generic [ref=e173]:
+            - img "boAt Airdopes 141 TWS Earbuds Active Black" [ref=e175]
+            - heading "boAt Airdopes 141 TWS Earbuds Active Black" [level=3] [ref=e176]
+            - generic [ref=e177]:
+              - paragraph [ref=e178]: ₹4,490
+              - paragraph [ref=e179]: ₹1,299
+            - generic [ref=e180]: 71% Off
+            - paragraph [ref=e181]: Amazon
+            - link "Grab Deal" [ref=e182] [cursor=pointer]:
+              - /url: /go/amazon-IN-EL-BOT-001
+          - generic [ref=e183]:
+            - img "boAt Airdopes 141 TWS Earbuds Cyan Cider" [ref=e185]
+            - heading "boAt Airdopes 141 TWS Earbuds Cyan Cider" [level=3] [ref=e186]
+            - generic [ref=e187]:
+              - paragraph [ref=e188]: ₹4,490
+              - paragraph [ref=e189]: ₹1,299
+            - generic [ref=e190]: 71% Off
+            - paragraph [ref=e191]: Amazon
+            - link "Grab Deal" [ref=e192] [cursor=pointer]:
+              - /url: /go/amazon-IN-EL-BOT-002
+          - generic [ref=e193]:
+            - img "boAt Wave Lite Smartwatch Active Black" [ref=e195]
+            - heading "boAt Wave Lite Smartwatch Active Black" [level=3] [ref=e196]
+            - generic [ref=e197]:
+              - paragraph [ref=e198]: ₹5,990
+              - paragraph [ref=e199]: ₹1,799
+            - generic [ref=e200]: 69% Off
+            - paragraph [ref=e201]: Amazon
+            - link "Grab Deal" [ref=e202] [cursor=pointer]:
+              - /url: /go/amazon-IN-EL-BOT-036
+          - generic [ref=e203]:
+            - img "boAt Wave Lite Smartwatch Deep Blue" [ref=e205]
+            - heading "boAt Wave Lite Smartwatch Deep Blue" [level=3] [ref=e206]
+            - generic [ref=e207]:
+              - paragraph [ref=e208]: ₹5,990
+              - paragraph [ref=e209]: ₹1,799
+            - generic [ref=e210]: 69% Off
+            - paragraph [ref=e211]: Amazon
+            - link "Grab Deal" [ref=e212] [cursor=pointer]:
+              - /url: /go/amazon-IN-EL-BOT-037
+          - generic [ref=e213]:
+            - img "boAt Airdopes Atom 81 TWS Earbuds Electric Blue" [ref=e215]
+            - heading "boAt Airdopes Atom 81 TWS Earbuds Electric Blue" [level=3] [ref=e216]
+            - generic [ref=e217]:
+              - paragraph [ref=e218]: ₹2,990
+              - paragraph [ref=e219]: ₹999
+            - generic [ref=e220]: 66% Off
+            - paragraph [ref=e221]: Amazon
+            - link "Grab Deal" [ref=e222] [cursor=pointer]:
+              - /url: /go/amazon-IN-EL-BOT-008
+          - generic [ref=e223]:
+            - img "boAt Airdopes Atom 81 TWS Earbuds Pebble Black" [ref=e225]
+            - heading "boAt Airdopes Atom 81 TWS Earbuds Pebble Black" [level=3] [ref=e226]
+            - generic [ref=e227]:
+              - paragraph [ref=e228]: ₹2,990
+              - paragraph [ref=e229]: ₹999
+            - generic [ref=e230]: 66% Off
+            - paragraph [ref=e231]: Amazon
+            - link "Grab Deal" [ref=e232] [cursor=pointer]:
+              - /url: /go/amazon-IN-EL-BOT-009
+      - generic [ref=e234]:
+        - heading "Popular Right Now" [level=2] [ref=e235]
+        - generic [ref=e236]:
+          - button "No Image Add to wishlist Dove Intense Repair Shampoo 180ml HUL (15.4K) ₹189.00 ₹210.00 Amazon Compare prices View Deal Specs" [ref=e237]:
+            - generic [ref=e238]:
+              - generic [ref=e239]: No Image
+              - button "Add to wishlist" [ref=e240]:
+                - img [ref=e241]
+            - generic [ref=e243]:
+              - generic [ref=e244]:
+                - heading "Dove Intense Repair Shampoo 180ml" [level=3] [ref=e245]
+                - paragraph [ref=e246]: HUL
+              - generic [ref=e247]:
+                - generic [ref=e248]:
+                  - img [ref=e249]
+                  - img [ref=e251]
+                  - img [ref=e253]
+                  - img [ref=e255]
+                  - img [ref=e257]
+                - generic [ref=e259]: (15.4K)
+              - generic [ref=e260]:
+                - generic [ref=e261]:
+                  - generic [ref=e262]: ₹189.00
+                  - generic [ref=e263]: ₹210.00
+                - paragraph [ref=e264]: Amazon
+                - link "Compare prices" [ref=e265] [cursor=pointer]:
+                  - /url: /compare?product=IN-PC-HUL-001
+              - generic [ref=e266]:
+                - link "View Deal" [ref=e267] [cursor=pointer]:
+                  - /url: /go/IN-PC-HUL-001
+                  - text: View Deal
+                  - img [ref=e268]
+                - link "Specs" [ref=e273] [cursor=pointer]:
+                  - /url: /products/IN-PC-HUL-001
+                  - text: Specs
+                  - img [ref=e274]
+          - button "No Image Add to wishlist Dove Intense Repair Shampoo 340ml HUL (22.1K) ₹345.00 ₹399.00 Amazon Compare prices View Deal Specs" [ref=e276]:
+            - generic [ref=e277]:
+              - generic [ref=e278]: No Image
+              - button "Add to wishlist" [ref=e279]:
+                - img [ref=e280]
+            - generic [ref=e282]:
+              - generic [ref=e283]:
+                - heading "Dove Intense Repair Shampoo 340ml" [level=3] [ref=e284]
+                - paragraph [ref=e285]: HUL
+              - generic [ref=e286]:
+                - generic [ref=e287]:
+                  - img [ref=e288]
+                  - img [ref=e290]
+                  - img [ref=e292]
+                  - img [ref=e294]
+                  - img [ref=e296]
+                - generic [ref=e298]: (22.1K)
+              - generic [ref=e299]:
+                - generic [ref=e300]:
+                  - generic [ref=e301]: ₹345.00
+                  - generic [ref=e302]: ₹399.00
+                - paragraph [ref=e303]: Amazon
+                - link "Compare prices" [ref=e304] [cursor=pointer]:
+                  - /url: /compare?product=IN-PC-HUL-002
+              - generic [ref=e305]:
+                - link "View Deal" [ref=e306] [cursor=pointer]:
+                  - /url: /go/IN-PC-HUL-002
+                  - text: View Deal
+                  - img [ref=e307]
+                - link "Specs" [ref=e312] [cursor=pointer]:
+                  - /url: /products/IN-PC-HUL-002
+                  - text: Specs
+                  - img [ref=e313]
+          - button "No Image Add to wishlist Dove Intense Repair Shampoo 650ml HUL (31K) ₹599.00 ₹699.00 Amazon Compare prices View Deal Specs" [ref=e315]:
+            - generic [ref=e316]:
+              - generic [ref=e317]: No Image
+              - button "Add to wishlist" [ref=e318]:
+                - img [ref=e319]
+            - generic [ref=e321]:
+              - generic [ref=e322]:
+                - heading "Dove Intense Repair Shampoo 650ml" [level=3] [ref=e323]
+                - paragraph [ref=e324]: HUL
+              - generic [ref=e325]:
+                - generic [ref=e326]:
+                  - img [ref=e327]
+                  - img [ref=e329]
+                  - img [ref=e331]
+                  - img [ref=e333]
+                  - img [ref=e335]
+                - generic [ref=e337]: (31K)
+              - generic [ref=e338]:
+                - generic [ref=e339]:
+                  - generic [ref=e340]: ₹599.00
+                  - generic [ref=e341]: ₹699.00
+                - paragraph [ref=e342]: Amazon
+                - link "Compare prices" [ref=e343] [cursor=pointer]:
+                  - /url: /compare?product=IN-PC-HUL-003
+              - generic [ref=e344]:
+                - link "View Deal" [ref=e345] [cursor=pointer]:
+                  - /url: /go/IN-PC-HUL-003
+                  - text: View Deal
+                  - img [ref=e346]
+                - link "Specs" [ref=e351] [cursor=pointer]:
+                  - /url: /products/IN-PC-HUL-003
+                  - text: Specs
+                  - img [ref=e352]
+          - button "No Image Add to wishlist Dove Intense Repair Shampoo 1L HUL (12K) ₹850.00 ₹999.00 Amazon Compare prices View Deal Specs" [ref=e354]:
+            - generic [ref=e355]:
+              - generic [ref=e356]: No Image
+              - button "Add to wishlist" [ref=e357]:
+                - img [ref=e358]
+            - generic [ref=e360]:
+              - generic [ref=e361]:
+                - heading "Dove Intense Repair Shampoo 1L" [level=3] [ref=e362]
+                - paragraph [ref=e363]: HUL
+              - generic [ref=e364]:
+                - generic [ref=e365]:
+                  - img [ref=e366]
+                  - img [ref=e368]
+                  - img [ref=e370]
+                  - img [ref=e372]
+                  - img [ref=e374]
+                - generic [ref=e376]: (12K)
+              - generic [ref=e377]:
+                - generic [ref=e378]:
+                  - generic [ref=e379]: ₹850.00
+                  - generic [ref=e380]: ₹999.00
+                - paragraph [ref=e381]: Amazon
+                - link "Compare prices" [ref=e382] [cursor=pointer]:
+                  - /url: /compare?product=IN-PC-HUL-004
+              - generic [ref=e383]:
+                - link "View Deal" [ref=e384] [cursor=pointer]:
+                  - /url: /go/IN-PC-HUL-004
+                  - text: View Deal
+                  - img [ref=e385]
+                - link "Specs" [ref=e390] [cursor=pointer]:
+                  - /url: /products/IN-PC-HUL-004
+                  - text: Specs
+                  - img [ref=e391]
+          - button "No Image Add to wishlist Dove Intense Repair Conditioner 180ml HUL (8.9K) ₹220.00 ₹250.00 Amazon Compare prices View Deal Specs" [ref=e393]:
+            - generic [ref=e394]:
+              - generic [ref=e395]: No Image
+              - button "Add to wishlist" [ref=e396]:
+                - img [ref=e397]
+            - generic [ref=e399]:
+              - generic [ref=e400]:
+                - heading "Dove Intense Repair Conditioner 180ml" [level=3] [ref=e401]
+                - paragraph [ref=e402]: HUL
+              - generic [ref=e403]:
+                - generic [ref=e404]:
+                  - img [ref=e405]
+                  - img [ref=e407]
+                  - img [ref=e409]
+                  - img [ref=e411]
+                  - img [ref=e413]
+                - generic [ref=e415]: (8.9K)
+              - generic [ref=e416]:
+                - generic [ref=e417]:
+                  - generic [ref=e418]: ₹220.00
+                  - generic [ref=e419]: ₹250.00
+                - paragraph [ref=e420]: Amazon
+                - link "Compare prices" [ref=e421] [cursor=pointer]:
+                  - /url: /compare?product=IN-PC-HUL-005
+              - generic [ref=e422]:
+                - link "View Deal" [ref=e423] [cursor=pointer]:
+                  - /url: /go/IN-PC-HUL-005
+                  - text: View Deal
+                  - img [ref=e424]
+                - link "Specs" [ref=e429] [cursor=pointer]:
+                  - /url: /products/IN-PC-HUL-005
+                  - text: Specs
+                  - img [ref=e430]
+          - button "No Image Add to wishlist Dove Intense Repair Conditioner 335ml HUL (15K) ₹395.00 ₹449.00 Amazon Compare prices View Deal Specs" [ref=e432]:
+            - generic [ref=e433]:
+              - generic [ref=e434]: No Image
+              - button "Add to wishlist" [ref=e435]:
+                - img [ref=e436]
+            - generic [ref=e438]:
+              - generic [ref=e439]:
+                - heading "Dove Intense Repair Conditioner 335ml" [level=3] [ref=e440]
+                - paragraph [ref=e441]: HUL
+              - generic [ref=e442]:
+                - generic [ref=e443]:
+                  - img [ref=e444]
+                  - img [ref=e446]
+                  - img [ref=e448]
+                  - img [ref=e450]
+                  - img [ref=e452]
+                - generic [ref=e454]: (15K)
+              - generic [ref=e455]:
+                - generic [ref=e456]:
+                  - generic [ref=e457]: ₹395.00
+                  - generic [ref=e458]: ₹449.00
+                - paragraph [ref=e459]: Amazon
+                - link "Compare prices" [ref=e460] [cursor=pointer]:
+                  - /url: /compare?product=IN-PC-HUL-006
+              - generic [ref=e461]:
+                - link "View Deal" [ref=e462] [cursor=pointer]:
+                  - /url: /go/IN-PC-HUL-006
+                  - text: View Deal
+                  - img [ref=e463]
+                - link "Specs" [ref=e468] [cursor=pointer]:
+                  - /url: /products/IN-PC-HUL-006
+                  - text: Specs
+                  - img [ref=e469]
+          - button "No Image Add to wishlist Dove Intense Repair Conditioner 650ml HUL (5.6K) ₹650.00 ₹750.00 Amazon Compare prices View Deal Specs" [ref=e471]:
+            - generic [ref=e472]:
+              - generic [ref=e473]: No Image
+              - button "Add to wishlist" [ref=e474]:
+                - img [ref=e475]
+            - generic [ref=e477]:
+              - generic [ref=e478]:
+                - heading "Dove Intense Repair Conditioner 650ml" [level=3] [ref=e479]
+                - paragraph [ref=e480]: HUL
+              - generic [ref=e481]:
+                - generic [ref=e482]:
+                  - img [ref=e483]
+                  - img [ref=e485]
+                  - img [ref=e487]
+                  - img [ref=e489]
+                  - img [ref=e491]
+                - generic [ref=e493]: (5.6K)
+              - generic [ref=e494]:
+                - generic [ref=e495]:
+                  - generic [ref=e496]: ₹650.00
+                  - generic [ref=e497]: ₹750.00
+                - paragraph [ref=e498]: Amazon
+                - link "Compare prices" [ref=e499] [cursor=pointer]:
+                  - /url: /compare?product=IN-PC-HUL-007
+              - generic [ref=e500]:
+                - link "View Deal" [ref=e501] [cursor=pointer]:
+                  - /url: /go/IN-PC-HUL-007
+                  - text: View Deal
+                  - img [ref=e502]
+                - link "Specs" [ref=e507] [cursor=pointer]:
+                  - /url: /products/IN-PC-HUL-007
+                  - text: Specs
+                  - img [ref=e508]
+          - button "No Image Add to wishlist Dove Deeply Nourishing Body Wash 190ml HUL (18K) ₹175.00 ₹199.00 Amazon Compare prices View Deal Specs" [ref=e510]:
+            - generic [ref=e511]:
+              - generic [ref=e512]: No Image
+              - button "Add to wishlist" [ref=e513]:
+                - img [ref=e514]
+            - generic [ref=e516]:
+              - generic [ref=e517]:
+                - heading "Dove Deeply Nourishing Body Wash 190ml" [level=3] [ref=e518]
+                - paragraph [ref=e519]: HUL
+              - generic [ref=e520]:
+                - generic [ref=e521]:
+                  - img [ref=e522]
+                  - img [ref=e524]
+                  - img [ref=e526]
+                  - img [ref=e528]
+                  - img [ref=e530]
+                - generic [ref=e532]: (18K)
+              - generic [ref=e533]:
+                - generic [ref=e534]:
+                  - generic [ref=e535]: ₹175.00
+                  - generic [ref=e536]: ₹199.00
+                - paragraph [ref=e537]: Amazon
+                - link "Compare prices" [ref=e538] [cursor=pointer]:
+                  - /url: /compare?product=IN-PC-HUL-009
+              - generic [ref=e539]:
+                - link "View Deal" [ref=e540] [cursor=pointer]:
+                  - /url: /go/IN-PC-HUL-009
+                  - text: View Deal
+                  - img [ref=e541]
+                - link "Specs" [ref=e546] [cursor=pointer]:
+                  - /url: /products/IN-PC-HUL-009
+                  - text: Specs
+                  - img [ref=e547]
+      - generic [ref=e550]:
+        - generic [ref=e551]:
+          - generic [ref=e552]:
+            - heading "Explore Categories" [level=2] [ref=e553]
+            - paragraph [ref=e554]: Find deals across every curated segment
+          - link "View All" [ref=e555] [cursor=pointer]:
+            - /url: /products
+            - text: View All
+            - img [ref=e556]
+        - generic [ref=e558]:
+          - link "Automotive Automotive 6 products" [ref=e559] [cursor=pointer]:
+            - /url: /category/automotive
+            - generic [ref=e560]:
+              - img "Automotive" [ref=e561]
+              - img [ref=e565]
+            - generic [ref=e569]:
+              - paragraph [ref=e570]: Automotive
+              - generic [ref=e572]: 6 products
+          - link "Beauty Beauty 265 products" [ref=e573] [cursor=pointer]:
+            - /url: /category/beauty
+            - generic [ref=e574]:
+              - img "Beauty" [ref=e575]
+              - img [ref=e579]
+            - generic [ref=e582]:
+              - paragraph [ref=e583]: Beauty
+              - generic [ref=e585]: 265 products
+          - link "Books Books 5 products" [ref=e586] [cursor=pointer]:
+            - /url: /category/books
+            - generic [ref=e587]:
+              - img "Books" [ref=e588]
+              - img [ref=e592]
+            - generic [ref=e594]:
+              - paragraph [ref=e595]: Books
+              - generic [ref=e597]: 5 products
+          - link "Courses Courses Coming soon" [ref=e598]:
+            - /url: "#"
+            - generic [ref=e599]:
+              - img "Courses" [ref=e600]
+              - img [ref=e604]
+            - generic [ref=e607]:
+              - paragraph [ref=e608]: Courses
+              - generic [ref=e609]: Coming soon
+          - link "Electronics Electronics 206 products" [ref=e610] [cursor=pointer]:
+            - /url: /category/electronics
+            - generic [ref=e611]:
+              - img "Electronics" [ref=e612]
+              - img [ref=e616]
+            - generic [ref=e619]:
+              - paragraph [ref=e620]: Electronics
+              - generic [ref=e622]: 206 products
+          - link "Fashion Fashion 105 products" [ref=e623] [cursor=pointer]:
+            - /url: /category/fashion
+            - generic [ref=e624]:
+              - img "Fashion" [ref=e625]
+              - img [ref=e629]
+            - generic [ref=e631]:
+              - paragraph [ref=e632]: Fashion
+              - generic [ref=e634]: 105 products
+          - link "Finance Finance 7 products" [ref=e635] [cursor=pointer]:
+            - /url: /category/finance
+            - generic [ref=e636]:
+              - img "Finance" [ref=e637]
+              - img [ref=e641]
+            - generic [ref=e644]:
+              - paragraph [ref=e645]: Finance
+              - generic [ref=e647]: 7 products
+          - link "Gaming Gaming 5 products" [ref=e648] [cursor=pointer]:
+            - /url: /category/gaming
+            - generic [ref=e649]:
+              - img "Gaming" [ref=e650]
+              - img [ref=e654]
+            - generic [ref=e656]:
+              - paragraph [ref=e657]: Gaming
+              - generic [ref=e659]: 5 products
+          - link "Grocery Grocery 149 products" [ref=e660] [cursor=pointer]:
+            - /url: /category/grocery
+            - generic [ref=e661]:
+              - img "Grocery" [ref=e662]
+              - img [ref=e666]
+            - generic [ref=e672]:
+              - paragraph [ref=e673]: Grocery
+              - generic [ref=e675]: 149 products
+          - link "Health Health 7 products" [ref=e676] [cursor=pointer]:
+            - /url: /category/health
+            - generic [ref=e677]:
+              - img "Health" [ref=e678]
+              - img [ref=e682]
+            - generic [ref=e684]:
+              - paragraph [ref=e685]: Health
+              - generic [ref=e687]: 7 products
+          - link "Home Home 307 products" [ref=e688] [cursor=pointer]:
+            - /url: /category/home
+            - generic [ref=e689]:
+              - img "Home" [ref=e690]
+              - img [ref=e694]
+            - generic [ref=e697]:
+              - paragraph [ref=e698]: Home
+              - generic [ref=e700]: 307 products
+          - link "Investments Investments Coming soon" [ref=e701]:
+            - /url: "#"
+            - generic [ref=e702]:
+              - img "Investments" [ref=e703]
+              - img [ref=e707]
+            - generic [ref=e708]:
+              - paragraph [ref=e709]: Investments
+              - generic [ref=e710]: Coming soon
+          - link "Jewellery Jewellery Coming soon" [ref=e711]:
+            - /url: "#"
+            - generic [ref=e712]:
+              - img "Jewellery" [ref=e713]
+              - img [ref=e717]
+            - generic [ref=e720]:
+              - paragraph [ref=e721]: Jewellery
+              - generic [ref=e722]: Coming soon
+          - link "Laptops Laptops 9 products" [ref=e723] [cursor=pointer]:
+            - /url: /category/laptops
+            - generic [ref=e724]:
+              - img "Laptops" [ref=e725]
+              - img [ref=e729]
+            - generic [ref=e731]:
+              - paragraph [ref=e732]: Laptops
+              - generic [ref=e734]: 9 products
+          - link "Mobiles Mobiles 10 products" [ref=e735] [cursor=pointer]:
+            - /url: /category/mobiles
+            - generic [ref=e736]:
+              - img "Mobiles" [ref=e737]
+              - img [ref=e741]
+            - generic [ref=e743]:
+              - paragraph [ref=e744]: Mobiles
+              - generic [ref=e746]: 10 products
+          - link "POD POD 12 products" [ref=e747] [cursor=pointer]:
+            - /url: /pod
+            - generic [ref=e748]:
+              - img "POD" [ref=e749]
+              - img [ref=e753]
+            - generic [ref=e757]:
+              - paragraph [ref=e758]: POD
+              - generic [ref=e760]: 12 products
+          - link "Sports Sports 24 products" [ref=e761] [cursor=pointer]:
+            - /url: /category/sports
+            - generic [ref=e762]:
+              - img "Sports" [ref=e763]
+              - img [ref=e767]
+            - generic [ref=e773]:
+              - paragraph [ref=e774]: Sports
+              - generic [ref=e776]: 24 products
+          - link "Toys Toys 3 products" [ref=e777] [cursor=pointer]:
+            - /url: /category/toys
+            - generic [ref=e778]:
+              - img "Toys" [ref=e779]
+              - img [ref=e783]
+            - generic [ref=e785]:
+              - paragraph [ref=e786]: Toys
+              - generic [ref=e788]: 3 products
+          - link "Travel Travel Coming soon" [ref=e789]:
+            - /url: "#"
+            - generic [ref=e790]:
+              - img "Travel" [ref=e791]
+              - img [ref=e795]
+            - generic [ref=e797]:
+              - paragraph [ref=e798]: Travel
+              - generic [ref=e799]: Coming soon
+          - link "Watches Watches 2 products" [ref=e800] [cursor=pointer]:
+            - /url: /category/watches
+            - generic [ref=e801]:
+              - img "Watches" [ref=e802]
+              - img [ref=e806]
+            - generic [ref=e811]:
+              - paragraph [ref=e812]: Watches
+              - generic [ref=e814]: 2 products
+      - generic [ref=e816]:
+        - generic [ref=e817]:
+          - generic [ref=e818]:
+            - img [ref=e820]
+            - generic [ref=e822]:
+              - heading "Deal of the Day" [level=2] [ref=e823]
+              - paragraph [ref=e824]: Refreshes midnight IST
+          - generic [ref=e825]:
+            - img [ref=e826]
+            - text: Ends at 23:59
+        - generic [ref=e830]:
+          - generic [ref=e831]:
+            - img "Samsung Galaxy S25 Ultra 256GB" [ref=e832]
+            - generic [ref=e833]: "-33% OFF"
+          - generic [ref=e834]:
+            - generic [ref=e835]: Amazon
+            - paragraph [ref=e836]: Samsung
+            - heading "Samsung Galaxy S25 Ultra 256GB" [level=3] [ref=e837]
+            - generic [ref=e838]:
+              - paragraph [ref=e839]:
+                - generic [ref=e840]: ✓
+                - text: 200MP ProVisual Camera System
+              - paragraph [ref=e841]:
+                - generic [ref=e842]: ✓
+                - text: Snapdragon 8 Elite Processor
+              - paragraph [ref=e843]:
+                - generic [ref=e844]: ✓
+                - text: 5000mAh Battery · 45W Charging
+              - paragraph [ref=e845]:
+                - generic [ref=e846]: ✓
+                - text: 6.9" QHD+ Dynamic AMOLED Display
+              - paragraph [ref=e847]:
+                - generic [ref=e848]: ✓
+                - text: Titanium Frame · S Pen Included
+            - generic [ref=e849]:
+              - paragraph [ref=e850]: Rs89,999
+              - paragraph [ref=e851]: Rs1,34,999
+              - generic [ref=e852]: Save Rs45,000
+            - link "Grab This Deal" [ref=e853] [cursor=pointer]:
+              - /url: /go/amazon-dotd-1
+              - img [ref=e854]
+              - text: Grab This Deal
+            - paragraph [ref=e856]:
+              - img [ref=e857]
+              - text: Price verified on CloudBasket
+      - generic [ref=e860]:
+        - generic [ref=e861]:
+          - generic [ref=e862]:
+            - heading "Today's Best Deals" [level=2] [ref=e863]
+            - paragraph [ref=e864]: Limited-time flash picks with verified redirects.
+          - link "View All Deals" [ref=e865] [cursor=pointer]:
+            - /url: /deals
+            - text: View All Deals
+            - img [ref=e866]
+        - generic [ref=e868]:
+          - article [ref=e869]:
+            - img "iPhone 15 Pro — Flash Price" [ref=e871]
+            - generic [ref=e872]:
+              - generic [ref=e873]: Flash
+              - heading "iPhone 15 Pro — Flash Price" [level=3] [ref=e874]
+              - paragraph [ref=e875]: "-25%"
+              - link "Grab Deal" [ref=e876] [cursor=pointer]:
+                - /url: /go/amazon-1
+                - text: Grab Deal
+                - img [ref=e877]
+          - article [ref=e881]:
+            - img "Samsung Galaxy S25 — Flash Blast" [ref=e883]
+            - generic [ref=e884]:
+              - generic [ref=e885]: Flash
+              - heading "Samsung Galaxy S25 — Flash Blast" [level=3] [ref=e886]
+              - paragraph [ref=e887]: "-30%"
+              - link "Grab Deal" [ref=e888] [cursor=pointer]:
+                - /url: /go/amazon-2
+                - text: Grab Deal
+                - img [ref=e889]
+          - article [ref=e893]:
+            - img "Sony WH-1000XM6 — Flash Price" [ref=e895]
+            - generic [ref=e896]:
+              - generic [ref=e897]: Flash
+              - heading "Sony WH-1000XM6 — Flash Price" [level=3] [ref=e898]
+              - paragraph [ref=e899]: "-20%"
+              - link "Grab Deal" [ref=e900] [cursor=pointer]:
+                - /url: /go/amazon-3
+                - text: Grab Deal
+                - img [ref=e901]
+          - article [ref=e905]:
+            - img "LG OLED C5 — Flash Countdown" [ref=e907]
+            - generic [ref=e908]:
+              - generic [ref=e909]: Flash
+              - heading "LG OLED C5 — Flash Countdown" [level=3] [ref=e910]
+              - paragraph [ref=e911]: "-35%"
+              - link "Grab Deal" [ref=e912] [cursor=pointer]:
+                - /url: /go/amazon-4
+                - text: Grab Deal
+                - img [ref=e913]
+      - generic [ref=e918]:
+        - generic [ref=e919]:
+          - generic [ref=e920]:
+            - generic [ref=e921]: ✈️
+            - generic [ref=e922]:
+              - paragraph [ref=e923]: Get Deals on Telegram
+              - paragraph [ref=e924]: 47,000+ members · Price drops posted instantly · Free forever
+          - link "Join Channel →" [ref=e925] [cursor=pointer]:
+            - /url: https://t.me/cloudbasketdeals
+        - generic [ref=e926]:
+          - generic [ref=e927]: 📱 Mobile alerts
+          - generic [ref=e928]: ⚡ Instant flash deals
+          - generic [ref=e929]: 🔕 Mute anytime
+          - generic [ref=e930]: 🌍 Global deals
+      - generic [ref=e932]:
+        - heading "Get India's Best Deals in Your Inbox" [level=2] [ref=e933]
+        - paragraph [ref=e934]: We track prices across Amazon, Flipkart, Croma and more and alert you the moment prices drop.
+        - generic [ref=e935]:
+          - textbox "Email for price alerts" [ref=e936]:
+            - /placeholder: Enter your email address
+          - button "Subscribe" [ref=e937]
+        - paragraph [ref=e938]: No spam. Unsubscribe any time.
+      - generic [ref=e940]:
+        - generic [ref=e941]:
+          - heading "Trusted by Smart Indian Shoppers" [level=2] [ref=e942]
+          - paragraph [ref=e943]: Real-time stats updated every hour
+        - generic [ref=e944]:
+          - generic [ref=e945]:
+            - paragraph [ref=e946]: 📊
+            - paragraph [ref=e947]: 48,293+
+            - paragraph [ref=e948]: Deals Tracked Today
+          - generic [ref=e949]:
+            - paragraph [ref=e950]: 🛍️
+            - paragraph [ref=e951]: 2,000+
+            - paragraph [ref=e952]: Products Compared
+          - generic [ref=e953]:
+            - paragraph [ref=e954]: 😊
+            - paragraph [ref=e955]: 1,247+
+            - paragraph [ref=e956]: Happy Users
+          - generic [ref=e957]:
+            - paragraph [ref=e958]: 🏬
+            - paragraph [ref=e959]: 50+
+            - paragraph [ref=e960]: Stores Monitored
+        - generic [ref=e961]:
+          - paragraph [ref=e962]: ✓ DPDPA 2023 Compliant
+          - paragraph [ref=e963]: ✓ FTC Affiliate Disclosure
+          - paragraph [ref=e964]: ✓ Zero Checkout Risk
+          - paragraph [ref=e965]: ✓ Powered by NEXQON
+      - generic [ref=e967]:
+        - generic [ref=e969]:
+          - generic [ref=e970]:
+            - img [ref=e971]
+            - generic [ref=e974]:
+              - paragraph [ref=e975]: ☀️ Summer Picks
+              - paragraph [ref=e976]: Curated from 8,000+ products · 3 active festivals detected
+          - generic [ref=e977]:
+            - generic [ref=e978]:
+              - img [ref=e979]
+              - text: Metro Picks
+            - generic [ref=e982]:
+              - img [ref=e983]
+              - text: April
+        - generic [ref=e986]: ✓ In your budget
+        - generic [ref=e987]:
+          - heading "☀️ Summer Picks" [level=2] [ref=e988]
+          - generic [ref=e989]: 48 unique picks
+        - generic [ref=e990]:
+          - button "HP Pavilion Plus 14 18% OFF Add to wishlist HP Pavilion Plus 14 HP (2.2K) ₹73,910.00 ₹90,150.00 Amazon Compare prices View Deal Specs" [ref=e991]:
+            - generic [ref=e992]:
+              - img "HP Pavilion Plus 14" [ref=e993]
+              - generic [ref=e994]: 18% OFF
+              - button "Add to wishlist" [ref=e995]:
+                - img [ref=e996]
+            - generic [ref=e998]:
+              - generic [ref=e999]:
+                - heading "HP Pavilion Plus 14" [level=3] [ref=e1000]
+                - paragraph [ref=e1001]: HP
+              - generic [ref=e1002]:
+                - generic [ref=e1003]:
+                  - img [ref=e1004]
+                  - img [ref=e1006]
+                  - img [ref=e1008]
+                  - img [ref=e1010]
+                  - img [ref=e1012]
+                - generic [ref=e1014]: (2.2K)
+              - generic [ref=e1015]:
+                - generic [ref=e1016]:
+                  - generic [ref=e1017]: ₹73,910.00
+                  - generic [ref=e1018]: ₹90,150.00
+                - paragraph [ref=e1019]: Amazon
+                - link "Compare prices" [ref=e1020] [cursor=pointer]:
+                  - /url: /compare?product=cb-00010
+              - generic [ref=e1021]:
+                - link "View Deal" [ref=e1022] [cursor=pointer]:
+                  - /url: /go/cb-00010
+                  - text: View Deal
+                  - img [ref=e1023]
+                - link "Specs" [ref=e1028] [cursor=pointer]:
+                  - /url: /products/cb-00010
+                  - text: Specs
+                  - img [ref=e1029]
+          - button "Acer Swift Go 14 19% OFF Add to wishlist Acer Swift Go 14 Acer (1.8K) ₹67,190.00 ₹83,290.00 Flipkart Compare prices View Deal Specs" [ref=e1031]:
+            - generic [ref=e1032]:
+              - img "Acer Swift Go 14" [ref=e1033]
+              - generic [ref=e1034]: 19% OFF
+              - button "Add to wishlist" [ref=e1035]:
+                - img [ref=e1036]
+            - generic [ref=e1038]:
+              - generic [ref=e1039]:
+                - heading "Acer Swift Go 14" [level=3] [ref=e1040]
+                - paragraph [ref=e1041]: Acer
+              - generic [ref=e1042]:
+                - generic [ref=e1043]:
+                  - img [ref=e1044]
+                  - img [ref=e1046]
+                  - img [ref=e1048]
+                  - img [ref=e1050]
+                  - img [ref=e1052]
+                - generic [ref=e1054]: (1.8K)
+              - generic [ref=e1055]:
+                - generic [ref=e1056]:
+                  - generic [ref=e1057]: ₹67,190.00
+                  - generic [ref=e1058]: ₹83,290.00
+                - paragraph [ref=e1059]: Flipkart
+                - link "Compare prices" [ref=e1060] [cursor=pointer]:
+                  - /url: /compare?product=cb-00014
+              - generic [ref=e1061]:
+                - link "View Deal" [ref=e1062] [cursor=pointer]:
+                  - /url: /go/cb-00014
+                  - text: View Deal
+                  - img [ref=e1063]
+                - link "Specs" [ref=e1068] [cursor=pointer]:
+                  - /url: /products/cb-00014
+                  - text: Specs
+                  - img [ref=e1069]
+          - button "Nike Air Zoom Pegasus 35% OFF Add to wishlist Nike Air Zoom Pegasus Nike (15.2K) ₹7,675.00 ₹11,755.00 Amazon Compare prices View Deal Specs" [ref=e1071]:
+            - generic [ref=e1072]:
+              - img "Nike Air Zoom Pegasus" [ref=e1073]
+              - generic [ref=e1074]: 35% OFF
+              - button "Add to wishlist" [ref=e1075]:
+                - img [ref=e1076]
+            - generic [ref=e1078]:
+              - generic [ref=e1079]:
+                - heading "Nike Air Zoom Pegasus" [level=3] [ref=e1080]
+                - paragraph [ref=e1081]: Nike
+              - generic [ref=e1082]:
+                - generic [ref=e1083]:
+                  - img [ref=e1084]
+                  - img [ref=e1086]
+                  - img [ref=e1088]
+                  - img [ref=e1090]
+                  - img [ref=e1092]
+                - generic [ref=e1094]: (15.2K)
+              - generic [ref=e1095]:
+                - generic [ref=e1096]:
+                  - generic [ref=e1097]: ₹7,675.00
+                  - generic [ref=e1098]: ₹11,755.00
+                - paragraph [ref=e1099]: Amazon
+                - link "Compare prices" [ref=e1100] [cursor=pointer]:
+                  - /url: /compare?product=cb-00021
+              - generic [ref=e1101]:
+                - link "View Deal" [ref=e1102] [cursor=pointer]:
+                  - /url: /go/cb-00021
+                  - text: View Deal
+                  - img [ref=e1103]
+                - link "Specs" [ref=e1108] [cursor=pointer]:
+                  - /url: /products/cb-00021
+                  - text: Specs
+                  - img [ref=e1109]
+          - button "Yonex Arcsaber 11 Badminton 35% OFF Add to wishlist Yonex Arcsaber 11 Badminton Yonex (3.1K) ₹7,679.00 ₹11,759.00 Amazon Compare prices View Deal Specs" [ref=e1111]:
+            - generic [ref=e1112]:
+              - img "Yonex Arcsaber 11 Badminton" [ref=e1113]
+              - generic [ref=e1114]: 35% OFF
+              - button "Add to wishlist" [ref=e1115]:
+                - img [ref=e1116]
+            - generic [ref=e1118]:
+              - generic [ref=e1119]:
+                - heading "Yonex Arcsaber 11 Badminton" [level=3] [ref=e1120]
+                - paragraph [ref=e1121]: Yonex
+              - generic [ref=e1122]:
+                - generic [ref=e1123]:
+                  - img [ref=e1124]
+                  - img [ref=e1126]
+                  - img [ref=e1128]
+                  - img [ref=e1130]
+                  - img [ref=e1132]
+                - generic [ref=e1134]: (3.1K)
+              - generic [ref=e1135]:
+                - generic [ref=e1136]:
+                  - generic [ref=e1137]: ₹7,679.00
+                  - generic [ref=e1138]: ₹11,759.00
+                - paragraph [ref=e1139]: Amazon
+                - link "Compare prices" [ref=e1140] [cursor=pointer]:
+                  - /url: /compare?product=cb-00024
+              - generic [ref=e1141]:
+                - link "View Deal" [ref=e1142] [cursor=pointer]:
+                  - /url: /go/cb-00024
+                  - text: View Deal
+                  - img [ref=e1143]
+                - link "Specs" [ref=e1148] [cursor=pointer]:
+                  - /url: /products/cb-00024
+                  - text: Specs
+                  - img [ref=e1149]
+          - button "Garmin Forerunner 165 19% OFF Add to wishlist Garmin Forerunner 165 Garmin (617) ₹26,870.00 ₹33,310.00 Amazon Compare prices View Deal Specs" [ref=e1151]:
+            - generic [ref=e1152]:
+              - img "Garmin Forerunner 165" [ref=e1153]
+              - generic [ref=e1154]: 19% OFF
+              - button "Add to wishlist" [ref=e1155]:
+                - img [ref=e1156]
+            - generic [ref=e1158]:
+              - generic [ref=e1159]:
+                - heading "Garmin Forerunner 165" [level=3] [ref=e1160]
+                - paragraph [ref=e1161]: Garmin
+              - generic [ref=e1162]:
+                - generic [ref=e1163]:
+                  - img [ref=e1164]
+                  - img [ref=e1166]
+                  - img [ref=e1168]
+                  - img [ref=e1170]
+                  - img [ref=e1172]
+                - generic [ref=e1174]: (617)
+              - generic [ref=e1175]:
+                - generic [ref=e1176]:
+                  - generic [ref=e1177]: ₹26,870.00
+                  - generic [ref=e1178]: ₹33,310.00
+                - paragraph [ref=e1179]: Amazon
+                - link "Compare prices" [ref=e1180] [cursor=pointer]:
+                  - /url: /compare?product=cb-00025
+              - generic [ref=e1181]:
+                - link "View Deal" [ref=e1182] [cursor=pointer]:
+                  - /url: /go/cb-00025
+                  - text: View Deal
+                  - img [ref=e1183]
+                - link "Specs" [ref=e1188] [cursor=pointer]:
+                  - /url: /products/cb-00025
+                  - text: Specs
+                  - img [ref=e1189]
+          - button "IFB Front Load Washer 8kg 21% OFF Add to wishlist IFB Front Load Washer 8kg IFB (1.3K) ₹28,790.00 ₹36,250.00 Flipkart Compare prices View Deal Specs" [ref=e1191]:
+            - generic [ref=e1192]:
+              - img "IFB Front Load Washer 8kg" [ref=e1193]
+              - generic [ref=e1194]: 21% OFF
+              - button "Add to wishlist" [ref=e1195]:
+                - img [ref=e1196]
+            - generic [ref=e1198]:
+              - generic [ref=e1199]:
+                - heading "IFB Front Load Washer 8kg" [level=3] [ref=e1200]
+                - paragraph [ref=e1201]: IFB
+              - generic [ref=e1202]:
+                - generic [ref=e1203]:
+                  - img [ref=e1204]
+                  - img [ref=e1206]
+                  - img [ref=e1208]
+                  - img [ref=e1210]
+                  - img [ref=e1212]
+                - generic [ref=e1214]: (1.3K)
+              - generic [ref=e1215]:
+                - generic [ref=e1216]:
+                  - generic [ref=e1217]: ₹28,790.00
+                  - generic [ref=e1218]: ₹36,250.00
+                - paragraph [ref=e1219]: Flipkart
+                - link "Compare prices" [ref=e1220] [cursor=pointer]:
+                  - /url: /compare?product=cb-00034
+              - generic [ref=e1221]:
+                - link "View Deal" [ref=e1222] [cursor=pointer]:
+                  - /url: /go/cb-00034
+                  - text: View Deal
+                  - img [ref=e1223]
+                - link "Specs" [ref=e1228] [cursor=pointer]:
+                  - /url: /products/cb-00034
+                  - text: Specs
+                  - img [ref=e1229]
+          - button "Xbox Series S 512GB 18% OFF Add to wishlist Xbox Series S 512GB Xbox (2.2K) ₹28,790.00 ₹35,270.00 Amazon Compare prices View Deal Specs" [ref=e1231]:
+            - generic [ref=e1232]:
+              - img "Xbox Series S 512GB" [ref=e1233]
+              - generic [ref=e1234]: 18% OFF
+              - button "Add to wishlist" [ref=e1235]:
+                - img [ref=e1236]
+            - generic [ref=e1238]:
+              - generic [ref=e1239]:
+                - heading "Xbox Series S 512GB" [level=3] [ref=e1240]
+                - paragraph [ref=e1241]: Xbox
+              - generic [ref=e1242]:
+                - generic [ref=e1243]:
+                  - img [ref=e1244]
+                  - img [ref=e1246]
+                  - img [ref=e1248]
+                  - img [ref=e1250]
+                  - img [ref=e1252]
+                - generic [ref=e1254]: (2.2K)
+              - generic [ref=e1255]:
+                - generic [ref=e1256]:
+                  - generic [ref=e1257]: ₹28,790.00
+                  - generic [ref=e1258]: ₹35,270.00
+                - paragraph [ref=e1259]: Amazon
+                - link "Compare prices" [ref=e1260] [cursor=pointer]:
+                  - /url: /compare?product=cb-00039
+              - generic [ref=e1261]:
+                - link "View Deal" [ref=e1262] [cursor=pointer]:
+                  - /url: /go/cb-00039
+                  - text: View Deal
+                  - img [ref=e1263]
+                - link "Specs" [ref=e1268] [cursor=pointer]:
+                  - /url: /products/cb-00039
+                  - text: Specs
+                  - img [ref=e1269]
+          - button "Samsung Galaxy S25 Ultra Add to wishlist Samsung Galaxy S25 Ultra Samsung (8.4K) ₹1,24,799.00 ₹1,46,999.00 Amazon Compare prices View Deal Specs" [ref=e1271]:
+            - generic [ref=e1272]:
+              - img "Samsung Galaxy S25 Ultra" [ref=e1273]
+              - button "Add to wishlist" [ref=e1274]:
+                - img [ref=e1275]
+            - generic [ref=e1277]:
+              - generic [ref=e1278]:
+                - heading "Samsung Galaxy S25 Ultra" [level=3] [ref=e1279]
+                - paragraph [ref=e1280]: Samsung
+              - generic [ref=e1281]:
+                - generic [ref=e1282]:
+                  - img [ref=e1283]
+                  - img [ref=e1285]
+                  - img [ref=e1287]
+                  - img [ref=e1289]
+                  - img [ref=e1291]
+                - generic [ref=e1293]: (8.4K)
+              - generic [ref=e1294]:
+                - generic [ref=e1295]:
+                  - generic [ref=e1296]: ₹1,24,799.00
+                  - generic [ref=e1297]: ₹1,46,999.00
+                - paragraph [ref=e1298]: Amazon
+                - link "Compare prices" [ref=e1299] [cursor=pointer]:
+                  - /url: /compare?product=cb-00001
+              - generic [ref=e1300]:
+                - link "View Deal" [ref=e1301] [cursor=pointer]:
+                  - /url: /go/cb-00001
+                  - text: View Deal
+                  - img [ref=e1302]
+                - link "Specs" [ref=e1307] [cursor=pointer]:
+                  - /url: /products/cb-00001
+                  - text: Specs
+                  - img [ref=e1308]
+          - button "OnePlus 12R 5G 17% OFF Add to wishlist OnePlus 12R 5G OnePlus (9.3K) ₹37,439.00 ₹45,079.00 Amazon Compare prices View Deal Specs" [ref=e1310]:
+            - generic [ref=e1311]:
+              - img "OnePlus 12R 5G" [ref=e1312]
+              - generic [ref=e1313]: 17% OFF
+              - button "Add to wishlist" [ref=e1314]:
+                - img [ref=e1315]
+            - generic [ref=e1317]:
+              - generic [ref=e1318]:
+                - heading "OnePlus 12R 5G" [level=3] [ref=e1319]
+                - paragraph [ref=e1320]: OnePlus
+              - generic [ref=e1321]:
+                - generic [ref=e1322]:
+                  - img [ref=e1323]
+                  - img [ref=e1325]
+                  - img [ref=e1327]
+                  - img [ref=e1329]
+                  - img [ref=e1331]
+                - generic [ref=e1333]: (9.3K)
+              - generic [ref=e1334]:
+                - generic [ref=e1335]:
+                  - generic [ref=e1336]: ₹37,439.00
+                  - generic [ref=e1337]: ₹45,079.00
+                - paragraph [ref=e1338]: Amazon
+                - link "Compare prices" [ref=e1339] [cursor=pointer]:
+                  - /url: /compare?product=cb-00003
+              - generic [ref=e1340]:
+                - link "View Deal" [ref=e1341] [cursor=pointer]:
+                  - /url: /go/cb-00003
+                  - text: View Deal
+                  - img [ref=e1342]
+                - link "Specs" [ref=e1347] [cursor=pointer]:
+                  - /url: /products/cb-00003
+                  - text: Specs
+                  - img [ref=e1348]
+          - button "Dell Inspiron 14 19% OFF Add to wishlist Dell Inspiron 14 Dell (3.6K) ₹56,630.00 ₹69,570.00 Flipkart Compare prices View Deal Specs" [ref=e1350]:
+            - generic [ref=e1351]:
+              - img "Dell Inspiron 14" [ref=e1352]
+              - generic [ref=e1353]: 19% OFF
+              - button "Add to wishlist" [ref=e1354]:
+                - img [ref=e1355]
+            - generic [ref=e1357]:
+              - generic [ref=e1358]:
+                - heading "Dell Inspiron 14" [level=3] [ref=e1359]
+                - paragraph [ref=e1360]: Dell
+              - generic [ref=e1361]:
+                - generic [ref=e1362]:
+                  - img [ref=e1363]
+                  - img [ref=e1365]
+                  - img [ref=e1367]
+                  - img [ref=e1369]
+                  - img [ref=e1371]
+                - generic [ref=e1373]: (3.6K)
+              - generic [ref=e1374]:
+                - generic [ref=e1375]:
+                  - generic [ref=e1376]: ₹56,630.00
+                  - generic [ref=e1377]: ₹69,570.00
+                - paragraph [ref=e1378]: Flipkart
+                - link "Compare prices" [ref=e1379] [cursor=pointer]:
+                  - /url: /compare?product=cb-00011
+              - generic [ref=e1380]:
+                - link "View Deal" [ref=e1381] [cursor=pointer]:
+                  - /url: /go/cb-00011
+                  - text: View Deal
+                  - img [ref=e1382]
+                - link "Specs" [ref=e1387] [cursor=pointer]:
+                  - /url: /products/cb-00011
+                  - text: Specs
+                  - img [ref=e1388]
+          - button "L'Oreal Hyaluron Shampoo 22% OFF Add to wishlist L'Oreal Hyaluron Shampoo L'Oreal (12.7K) ₹383.00 ₹489.00 Amazon Compare prices View Deal Specs" [ref=e1390]:
+            - generic [ref=e1391]:
+              - img "L'Oreal Hyaluron Shampoo" [ref=e1392]
+              - generic [ref=e1393]: 22% OFF
+              - button "Add to wishlist" [ref=e1394]:
+                - img [ref=e1395]
+            - generic [ref=e1397]:
+              - generic [ref=e1398]:
+                - heading "L'Oreal Hyaluron Shampoo" [level=3] [ref=e1399]
+                - paragraph [ref=e1400]: L'Oreal
+              - generic [ref=e1401]:
+                - generic [ref=e1402]:
+                  - img [ref=e1403]
+                  - img [ref=e1405]
+                  - img [ref=e1407]
+                  - img [ref=e1409]
+                  - img [ref=e1411]
+                - generic [ref=e1413]: (12.7K)
+              - generic [ref=e1414]:
+                - generic [ref=e1415]:
+                  - generic [ref=e1416]: ₹383.00
+                  - generic [ref=e1417]: ₹489.00
+                - paragraph [ref=e1418]: Amazon
+                - link "Compare prices" [ref=e1419] [cursor=pointer]:
+                  - /url: /compare?product=cb-00015
+              - generic [ref=e1420]:
+                - link "View Deal" [ref=e1421] [cursor=pointer]:
+                  - /url: /go/cb-00015
+                  - text: View Deal
+                  - img [ref=e1422]
+                - link "Specs" [ref=e1427] [cursor=pointer]:
+                  - /url: /products/cb-00015
+                  - text: Specs
+                  - img [ref=e1428]
+          - button "Maybelline Fit Me Foundation 23% OFF Add to wishlist Maybelline Fit Me Foundation Maybelline (18.3K) ₹527.00 ₹685.00 Flipkart Compare prices View Deal Specs" [ref=e1430]:
+            - generic [ref=e1431]:
+              - img "Maybelline Fit Me Foundation" [ref=e1432]
+              - generic [ref=e1433]: 23% OFF
+              - button "Add to wishlist" [ref=e1434]:
+                - img [ref=e1435]
+            - generic [ref=e1437]:
+              - generic [ref=e1438]:
+                - heading "Maybelline Fit Me Foundation" [level=3] [ref=e1439]
+                - paragraph [ref=e1440]: Maybelline
+              - generic [ref=e1441]:
+                - generic [ref=e1442]:
+                  - img [ref=e1443]
+                  - img [ref=e1445]
+                  - img [ref=e1447]
+                  - img [ref=e1449]
+                  - img [ref=e1451]
+                - generic [ref=e1453]: (18.3K)
+              - generic [ref=e1454]:
+                - generic [ref=e1455]:
+                  - generic [ref=e1456]: ₹527.00
+                  - generic [ref=e1457]: ₹685.00
+                - paragraph [ref=e1458]: Flipkart
+                - link "Compare prices" [ref=e1459] [cursor=pointer]:
+                  - /url: /compare?product=cb-00016
+              - generic [ref=e1460]:
+                - link "View Deal" [ref=e1461] [cursor=pointer]:
+                  - /url: /go/cb-00016
+                  - text: View Deal
+                  - img [ref=e1462]
+                - link "Specs" [ref=e1467] [cursor=pointer]:
+                  - /url: /products/cb-00016
+                  - text: Specs
+                  - img [ref=e1468]
+          - button "Lakme 9to5 Vitamin C Cream 19% OFF Add to wishlist Lakme 9to5 Vitamin C Cream Lakme (5.2K) ₹316.00 ₹391.00 Amazon Compare prices View Deal Specs" [ref=e1470]:
+            - generic [ref=e1471]:
+              - img "Lakme 9to5 Vitamin C Cream" [ref=e1472]
+              - generic [ref=e1473]: 19% OFF
+              - button "Add to wishlist" [ref=e1474]:
+                - img [ref=e1475]
+            - generic [ref=e1477]:
+              - generic [ref=e1478]:
+                - heading "Lakme 9to5 Vitamin C Cream" [level=3] [ref=e1479]
+                - paragraph [ref=e1480]: Lakme
+              - generic [ref=e1481]:
+                - generic [ref=e1482]:
+                  - img [ref=e1483]
+                  - img [ref=e1485]
+                  - img [ref=e1487]
+                  - img [ref=e1489]
+                  - img [ref=e1491]
+                - generic [ref=e1493]: (5.2K)
+              - generic [ref=e1494]:
+                - generic [ref=e1495]:
+                  - generic [ref=e1496]: ₹316.00
+                  - generic [ref=e1497]: ₹391.00
+                - paragraph [ref=e1498]: Amazon
+                - link "Compare prices" [ref=e1499] [cursor=pointer]:
+                  - /url: /compare?product=cb-00017
+              - generic [ref=e1500]:
+                - link "View Deal" [ref=e1501] [cursor=pointer]:
+                  - /url: /go/cb-00017
+                  - text: View Deal
+                  - img [ref=e1502]
+                - link "Specs" [ref=e1507] [cursor=pointer]:
+                  - /url: /products/cb-00017
+                  - text: Specs
+                  - img [ref=e1508]
+          - button "Adidas Training Yoga Mat 20% OFF Add to wishlist Adidas Training Yoga Mat Adidas (1.5K) ₹1,247.00 ₹1,567.00 Flipkart Compare prices View Deal Specs" [ref=e1510]:
+            - generic [ref=e1511]:
+              - img "Adidas Training Yoga Mat" [ref=e1512]
+              - generic [ref=e1513]: 20% OFF
+              - button "Add to wishlist" [ref=e1514]:
+                - img [ref=e1515]
+            - generic [ref=e1517]:
+              - generic [ref=e1518]:
+                - heading "Adidas Training Yoga Mat" [level=3] [ref=e1519]
+                - paragraph [ref=e1520]: Adidas
+              - generic [ref=e1521]:
+                - generic [ref=e1522]:
+                  - img [ref=e1523]
+                  - img [ref=e1525]
+                  - img [ref=e1527]
+                  - img [ref=e1529]
+                  - img [ref=e1531]
+                - generic [ref=e1533]: (1.5K)
+              - generic [ref=e1534]:
+                - generic [ref=e1535]:
+                  - generic [ref=e1536]: ₹1,247.00
+                  - generic [ref=e1537]: ₹1,567.00
+                - paragraph [ref=e1538]: Flipkart
+                - link "Compare prices" [ref=e1539] [cursor=pointer]:
+                  - /url: /compare?product=cb-00022
+              - generic [ref=e1540]:
+                - link "View Deal" [ref=e1541] [cursor=pointer]:
+                  - /url: /go/cb-00022
+                  - text: View Deal
+                  - img [ref=e1542]
+                - link "Specs" [ref=e1547] [cursor=pointer]:
+                  - /url: /products/cb-00022
+                  - text: Specs
+                  - img [ref=e1548]
+          - button "Decathlon Domyos Kettlebell 18% OFF Add to wishlist Decathlon Domyos Kettlebell Decathlon (847) ₹1,919.00 ₹2,351.00 Flipkart Compare prices View Deal Specs" [ref=e1550]:
+            - generic [ref=e1551]:
+              - img "Decathlon Domyos Kettlebell" [ref=e1552]
+              - generic [ref=e1553]: 18% OFF
+              - button "Add to wishlist" [ref=e1554]:
+                - img [ref=e1555]
+            - generic [ref=e1557]:
+              - generic [ref=e1558]:
+                - heading "Decathlon Domyos Kettlebell" [level=3] [ref=e1559]
+                - paragraph [ref=e1560]: Decathlon
+              - generic [ref=e1561]:
+                - generic [ref=e1562]:
+                  - img [ref=e1563]
+                  - img [ref=e1565]
+                  - img [ref=e1567]
+                  - img [ref=e1569]
+                  - img [ref=e1571]
+                - generic [ref=e1573]: (847)
+              - generic [ref=e1574]:
+                - generic [ref=e1575]:
+                  - generic [ref=e1576]: ₹1,919.00
+                  - generic [ref=e1577]: ₹2,351.00
+                - paragraph [ref=e1578]: Flipkart
+                - link "Compare prices" [ref=e1579] [cursor=pointer]:
+                  - /url: /compare?product=cb-00023
+              - generic [ref=e1580]:
+                - link "View Deal" [ref=e1581] [cursor=pointer]:
+                  - /url: /go/cb-00023
+                  - text: View Deal
+                  - img [ref=e1582]
+                - link "Specs" [ref=e1587] [cursor=pointer]:
+                  - /url: /products/cb-00023
+                  - text: Specs
+                  - img [ref=e1588]
+          - button "Levi's 511 Slim Fit Jeans 28% OFF Add to wishlist Levi's 511 Slim Fit Jeans Levi's (14.3K) ₹2,111.00 ₹2,939.00 Flipkart Compare prices View Deal Specs" [ref=e1590]:
+            - generic [ref=e1591]:
+              - img "Levi's 511 Slim Fit Jeans" [ref=e1592]
+              - generic [ref=e1593]: 28% OFF
+              - button "Add to wishlist" [ref=e1594]:
+                - img [ref=e1595]
+            - generic [ref=e1597]:
+              - generic [ref=e1598]:
+                - heading "Levi's 511 Slim Fit Jeans" [level=3] [ref=e1599]
+                - paragraph [ref=e1600]: Levi's
+              - generic [ref=e1601]:
+                - generic [ref=e1602]:
+                  - img [ref=e1603]
+                  - img [ref=e1605]
+                  - img [ref=e1607]
+                  - img [ref=e1609]
+                  - img [ref=e1611]
+                - generic [ref=e1613]: (14.3K)
+              - generic [ref=e1614]:
+                - generic [ref=e1615]:
+                  - generic [ref=e1616]: ₹2,111.00
+                  - generic [ref=e1617]: ₹2,939.00
+                - paragraph [ref=e1618]: Flipkart
+                - link "Compare prices" [ref=e1619] [cursor=pointer]:
+                  - /url: /compare?product=cb-00026
+              - generic [ref=e1620]:
+                - link "View Deal" [ref=e1621] [cursor=pointer]:
+                  - /url: /go/cb-00026
+                  - text: View Deal
+                  - img [ref=e1622]
+                - link "Specs" [ref=e1627] [cursor=pointer]:
+                  - /url: /products/cb-00026
+                  - text: Specs
+                  - img [ref=e1628]
+          - button "Biba Printed Kurta Set 26% OFF Add to wishlist Biba Printed Kurta Set Biba (1.9K) ₹1,823.00 ₹2,449.00 Flipkart Compare prices View Deal Specs" [ref=e1630]:
+            - generic [ref=e1631]:
+              - img "Biba Printed Kurta Set" [ref=e1632]
+              - generic [ref=e1633]: 26% OFF
+              - button "Add to wishlist" [ref=e1634]:
+                - img [ref=e1635]
+            - generic [ref=e1637]:
+              - generic [ref=e1638]:
+                - heading "Biba Printed Kurta Set" [level=3] [ref=e1639]
+                - paragraph [ref=e1640]: Biba
+              - generic [ref=e1641]:
+                - generic [ref=e1642]:
+                  - img [ref=e1643]
+                  - img [ref=e1645]
+                  - img [ref=e1647]
+                  - img [ref=e1649]
+                  - img [ref=e1651]
+                - generic [ref=e1653]: (1.9K)
+              - generic [ref=e1654]:
+                - generic [ref=e1655]:
+                  - generic [ref=e1656]: ₹1,823.00
+                  - generic [ref=e1657]: ₹2,449.00
+                - paragraph [ref=e1658]: Flipkart
+                - link "Compare prices" [ref=e1659] [cursor=pointer]:
+                  - /url: /compare?product=cb-00027
+              - generic [ref=e1660]:
+                - link "View Deal" [ref=e1661] [cursor=pointer]:
+                  - /url: /go/cb-00027
+                  - text: View Deal
+                  - img [ref=e1662]
+                - link "Specs" [ref=e1667] [cursor=pointer]:
+                  - /url: /products/cb-00027
+                  - text: Specs
+                  - img [ref=e1668]
+          - button "Nike Dri-FIT Training Tee 25% OFF Add to wishlist Nike Dri-FIT Training Tee Nike (2.5K) ₹1,247.00 ₹1,665.00 Amazon Compare prices View Deal Specs" [ref=e1670]:
+            - generic [ref=e1671]:
+              - img "Nike Dri-FIT Training Tee" [ref=e1672]
+              - generic [ref=e1673]: 25% OFF
+              - button "Add to wishlist" [ref=e1674]:
+                - img [ref=e1675]
+            - generic [ref=e1677]:
+              - generic [ref=e1678]:
+                - heading "Nike Dri-FIT Training Tee" [level=3] [ref=e1679]
+                - paragraph [ref=e1680]: Nike
+              - generic [ref=e1681]:
+                - generic [ref=e1682]:
+                  - img [ref=e1683]
+                  - img [ref=e1685]
+                  - img [ref=e1687]
+                  - img [ref=e1689]
+                  - img [ref=e1691]
+                - generic [ref=e1693]: (2.5K)
+              - generic [ref=e1694]:
+                - generic [ref=e1695]:
+                  - generic [ref=e1696]: ₹1,247.00
+                  - generic [ref=e1697]: ₹1,665.00
+                - paragraph [ref=e1698]: Amazon
+                - link "Compare prices" [ref=e1699] [cursor=pointer]:
+                  - /url: /compare?product=cb-00028
+              - generic [ref=e1700]:
+                - link "View Deal" [ref=e1701] [cursor=pointer]:
+                  - /url: /go/cb-00028
+                  - text: View Deal
+                  - img [ref=e1702]
+                - link "Specs" [ref=e1707] [cursor=pointer]:
+                  - /url: /products/cb-00028
+                  - text: Specs
+                  - img [ref=e1708]
+          - button "Zara Crossbody Bag 22% OFF Add to wishlist Zara Crossbody Bag Zara (827) ₹2,678.00 ₹3,420.00 CJ Compare prices View Deal Specs" [ref=e1710]:
+            - generic [ref=e1711]:
+              - img "Zara Crossbody Bag" [ref=e1712]
+              - generic [ref=e1713]: 22% OFF
+              - button "Add to wishlist" [ref=e1714]:
+                - img [ref=e1715]
+            - generic [ref=e1717]:
+              - generic [ref=e1718]:
+                - heading "Zara Crossbody Bag" [level=3] [ref=e1719]
+                - paragraph [ref=e1720]: Zara
+              - generic [ref=e1721]:
+                - generic [ref=e1722]:
+                  - img [ref=e1723]
+                  - img [ref=e1725]
+                  - img [ref=e1727]
+                  - img [ref=e1729]
+                  - img [ref=e1731]
+                - generic [ref=e1733]: (827)
+              - generic [ref=e1734]:
+                - generic [ref=e1735]:
+                  - generic [ref=e1736]: ₹2,678.00
+                  - generic [ref=e1737]: ₹3,420.00
+                - paragraph [ref=e1738]: CJ
+                - link "Compare prices" [ref=e1739] [cursor=pointer]:
+                  - /url: /compare?product=cb-00029
+              - generic [ref=e1740]:
+                - link "View Deal" [ref=e1741] [cursor=pointer]:
+                  - /url: /go/cb-00029
+                  - text: View Deal
+                  - img [ref=e1742]
+                - link "Specs" [ref=e1747] [cursor=pointer]:
+                  - /url: /products/cb-00029
+                  - text: Specs
+                  - img [ref=e1748]
+          - button "Allen Solly Slim Fit Shirt 49% OFF Add to wishlist Allen Solly Slim Fit Shirt Allen Solly (8.9K) ₹1,247.00 ₹2,449.00 Amazon Compare prices View Deal Specs" [ref=e1750]:
+            - generic [ref=e1751]:
+              - img "Allen Solly Slim Fit Shirt" [ref=e1752]
+              - generic [ref=e1753]: 49% OFF
+              - button "Add to wishlist" [ref=e1754]:
+                - img [ref=e1755]
+            - generic [ref=e1757]:
+              - generic [ref=e1758]:
+                - heading "Allen Solly Slim Fit Shirt" [level=3] [ref=e1759]
+                - paragraph [ref=e1760]: Allen Solly
+              - generic [ref=e1761]:
+                - generic [ref=e1762]:
+                  - img [ref=e1763]
+                  - img [ref=e1765]
+                  - img [ref=e1767]
+                  - img [ref=e1769]
+                  - img [ref=e1771]
+                - generic [ref=e1773]: (8.9K)
+              - generic [ref=e1774]:
+                - generic [ref=e1775]:
+                  - generic [ref=e1776]: ₹1,247.00
+                  - generic [ref=e1777]: ₹2,449.00
+                - paragraph [ref=e1778]: Amazon
+                - link "Compare prices" [ref=e1779] [cursor=pointer]:
+                  - /url: /compare?product=cb-00030
+              - generic [ref=e1780]:
+                - link "View Deal" [ref=e1781] [cursor=pointer]:
+                  - /url: /go/cb-00030
+                  - text: View Deal
+                  - img [ref=e1782]
+                - link "Specs" [ref=e1787] [cursor=pointer]:
+                  - /url: /products/cb-00030
+                  - text: Specs
+                  - img [ref=e1788]
+          - button "Philips Air Fryer 4.2L 20% OFF Add to wishlist Philips Air Fryer 4.2L Philips (8.8K) ₹6,239.00 ₹7,839.00 Amazon Compare prices View Deal Specs" [ref=e1790]:
+            - generic [ref=e1791]:
+              - img "Philips Air Fryer 4.2L" [ref=e1792]
+              - generic [ref=e1793]: 20% OFF
+              - button "Add to wishlist" [ref=e1794]:
+                - img [ref=e1795]
+            - generic [ref=e1797]:
+              - generic [ref=e1798]:
+                - heading "Philips Air Fryer 4.2L" [level=3] [ref=e1799]
+                - paragraph [ref=e1800]: Philips
+              - generic [ref=e1801]:
+                - generic [ref=e1802]:
+                  - img [ref=e1803]
+                  - img [ref=e1805]
+                  - img [ref=e1807]
+                  - img [ref=e1809]
+                  - img [ref=e1811]
+                - generic [ref=e1813]: (8.8K)
+              - generic [ref=e1814]:
+                - generic [ref=e1815]:
+                  - generic [ref=e1816]: ₹6,239.00
+                  - generic [ref=e1817]: ₹7,839.00
+                - paragraph [ref=e1818]: Amazon
+                - link "Compare prices" [ref=e1819] [cursor=pointer]:
+                  - /url: /compare?product=cb-00031
+              - generic [ref=e1820]:
+                - link "View Deal" [ref=e1821] [cursor=pointer]:
+                  - /url: /go/cb-00031
+                  - text: View Deal
+                  - img [ref=e1822]
+                - link "Specs" [ref=e1827] [cursor=pointer]:
+                  - /url: /products/cb-00031
+                  - text: Specs
+                  - img [ref=e1828]
+          - button "Atomic Habits 22% OFF Add to wishlist Atomic Habits Penguin (1.5L) ₹383.00 ₹489.00 Amazon Compare prices View Deal Specs" [ref=e1830]:
+            - generic [ref=e1831]:
+              - img "Atomic Habits" [ref=e1832]
+              - generic [ref=e1833]: 22% OFF
+              - button "Add to wishlist" [ref=e1834]:
+                - img [ref=e1835]
+            - generic [ref=e1837]:
+              - generic [ref=e1838]:
+                - heading "Atomic Habits" [level=3] [ref=e1839]
+                - paragraph [ref=e1840]: Penguin
+              - generic [ref=e1841]:
+                - generic [ref=e1842]:
+                  - img [ref=e1843]
+                  - img [ref=e1845]
+                  - img [ref=e1847]
+                  - img [ref=e1849]
+                  - img [ref=e1851]
+                - generic [ref=e1853]: (1.5L)
+              - generic [ref=e1854]:
+                - generic [ref=e1855]:
+                  - generic [ref=e1856]: ₹383.00
+                  - generic [ref=e1857]: ₹489.00
+                - paragraph [ref=e1858]: Amazon
+                - link "Compare prices" [ref=e1859] [cursor=pointer]:
+                  - /url: /compare?product=cb-00035
+              - generic [ref=e1860]:
+                - link "View Deal" [ref=e1861] [cursor=pointer]:
+                  - /url: /go/cb-00035
+                  - text: View Deal
+                  - img [ref=e1862]
+                - link "Specs" [ref=e1867] [cursor=pointer]:
+                  - /url: /products/cb-00035
+                  - text: Specs
+                  - img [ref=e1868]
+          - button "The Psychology of Money 27% OFF Add to wishlist The Psychology of Money Harper Collins (19.8K) ₹287.00 ₹391.00 Amazon Compare prices View Deal Specs" [ref=e1870]:
+            - generic [ref=e1871]:
+              - img "The Psychology of Money" [ref=e1872]
+              - generic [ref=e1873]: 27% OFF
+              - button "Add to wishlist" [ref=e1874]:
+                - img [ref=e1875]
+            - generic [ref=e1877]:
+              - generic [ref=e1878]:
+                - heading "The Psychology of Money" [level=3] [ref=e1879]
+                - paragraph [ref=e1880]: Harper Collins
+              - generic [ref=e1881]:
+                - generic [ref=e1882]:
+                  - img [ref=e1883]
+                  - img [ref=e1885]
+                  - img [ref=e1887]
+                  - img [ref=e1889]
+                  - img [ref=e1891]
+                - generic [ref=e1893]: (19.8K)
+              - generic [ref=e1894]:
+                - generic [ref=e1895]:
+                  - generic [ref=e1896]: ₹287.00
+                  - generic [ref=e1897]: ₹391.00
+                - paragraph [ref=e1898]: Amazon
+                - link "Compare prices" [ref=e1899] [cursor=pointer]:
+                  - /url: /compare?product=cb-00036
+              - generic [ref=e1900]:
+                - link "View Deal" [ref=e1901] [cursor=pointer]:
+                  - /url: /go/cb-00036
+                  - text: View Deal
+                  - img [ref=e1902]
+                - link "Specs" [ref=e1907] [cursor=pointer]:
+                  - /url: /products/cb-00036
+                  - text: Specs
+                  - img [ref=e1908]
+          - button "NCERT Class 12 Complete Set 35% OFF Add to wishlist NCERT Class 12 Complete Set NCERT (56K) ₹2,879.00 ₹4,410.00 Amazon Compare prices View Deal Specs" [ref=e1910]:
+            - generic [ref=e1911]:
+              - img "NCERT Class 12 Complete Set" [ref=e1912]
+              - generic [ref=e1913]: 35% OFF
+              - button "Add to wishlist" [ref=e1914]:
+                - img [ref=e1915]
+            - generic [ref=e1917]:
+              - generic [ref=e1918]:
+                - heading "NCERT Class 12 Complete Set" [level=3] [ref=e1919]
+                - paragraph [ref=e1920]: NCERT
+              - generic [ref=e1921]:
+                - generic [ref=e1922]:
+                  - img [ref=e1923]
+                  - img [ref=e1925]
+                  - img [ref=e1927]
+                  - img [ref=e1929]
+                  - img [ref=e1931]
+                - generic [ref=e1933]: (56K)
+              - generic [ref=e1934]:
+                - generic [ref=e1935]:
+                  - generic [ref=e1936]: ₹2,879.00
+                  - generic [ref=e1937]: ₹4,410.00
+                - paragraph [ref=e1938]: Amazon
+                - link "Compare prices" [ref=e1939] [cursor=pointer]:
+                  - /url: /compare?product=cb-00037
+              - generic [ref=e1940]:
+                - link "View Deal" [ref=e1941] [cursor=pointer]:
+                  - /url: /go/cb-00037
+                  - text: View Deal
+                  - img [ref=e1942]
+                - link "Specs" [ref=e1947] [cursor=pointer]:
+                  - /url: /products/cb-00037
+                  - text: Specs
+                  - img [ref=e1948]
+          - button "Razer BlackShark V2 X Headset 20% OFF Add to wishlist Razer BlackShark V2 X Headset Razer (5.9K) ₹3,359.00 ₹4,213.00 Amazon Compare prices View Deal Specs" [ref=e1950]:
+            - generic [ref=e1951]:
+              - img "Razer BlackShark V2 X Headset" [ref=e1952]
+              - generic [ref=e1953]: 20% OFF
+              - button "Add to wishlist" [ref=e1954]:
+                - img [ref=e1955]
+            - generic [ref=e1957]:
+              - generic [ref=e1958]:
+                - heading "Razer BlackShark V2 X Headset" [level=3] [ref=e1959]
+                - paragraph [ref=e1960]: Razer
+              - generic [ref=e1961]:
+                - generic [ref=e1962]:
+                  - img [ref=e1963]
+                  - img [ref=e1965]
+                  - img [ref=e1967]
+                  - img [ref=e1969]
+                  - img [ref=e1971]
+                - generic [ref=e1973]: (5.9K)
+              - generic [ref=e1974]:
+                - generic [ref=e1975]:
+                  - generic [ref=e1976]: ₹3,359.00
+                  - generic [ref=e1977]: ₹4,213.00
+                - paragraph [ref=e1978]: Amazon
+                - link "Compare prices" [ref=e1979] [cursor=pointer]:
+                  - /url: /compare?product=cb-00040
+              - generic [ref=e1980]:
+                - link "View Deal" [ref=e1981] [cursor=pointer]:
+                  - /url: /go/cb-00040
+                  - text: View Deal
+                  - img [ref=e1982]
+                - link "Specs" [ref=e1987] [cursor=pointer]:
+                  - /url: /products/cb-00040
+                  - text: Specs
+                  - img [ref=e1988]
+          - button "Abbott Ensure Diabetes Care 18% OFF Add to wishlist Abbott Ensure Diabetes Care Abbott (5.2K) ₹719.00 ₹881.00 Amazon Compare prices View Deal Specs" [ref=e1990]:
+            - generic [ref=e1991]:
+              - img "Abbott Ensure Diabetes Care" [ref=e1992]
+              - generic [ref=e1993]: 18% OFF
+              - button "Add to wishlist" [ref=e1994]:
+                - img [ref=e1995]
+            - generic [ref=e1997]:
+              - generic [ref=e1998]:
+                - heading "Abbott Ensure Diabetes Care" [level=3] [ref=e1999]
+                - paragraph [ref=e2000]: Abbott
+              - generic [ref=e2001]:
+                - generic [ref=e2002]:
+                  - img [ref=e2003]
+                  - img [ref=e2005]
+                  - img [ref=e2007]
+                  - img [ref=e2009]
+                  - img [ref=e2011]
+                - generic [ref=e2013]: (5.2K)
+              - generic [ref=e2014]:
+                - generic [ref=e2015]:
+                  - generic [ref=e2016]: ₹719.00
+                  - generic [ref=e2017]: ₹881.00
+                - paragraph [ref=e2018]: Amazon
+                - link "Compare prices" [ref=e2019] [cursor=pointer]:
+                  - /url: /compare?product=cb-00041
+              - generic [ref=e2020]:
+                - link "View Deal" [ref=e2021] [cursor=pointer]:
+                  - /url: /go/cb-00041
+                  - text: View Deal
+                  - img [ref=e2022]
+                - link "Specs" [ref=e2027] [cursor=pointer]:
+                  - /url: /products/cb-00041
+                  - text: Specs
+                  - img [ref=e2028]
+          - button "Omron HEM 7120 BP Monitor 23% OFF Add to wishlist Omron HEM 7120 BP Monitor Omron (34.5K) ₹2,399.00 ₹3,135.00 Amazon Compare prices View Deal Specs" [ref=e2030]:
+            - generic [ref=e2031]:
+              - img "Omron HEM 7120 BP Monitor" [ref=e2032]
+              - generic [ref=e2033]: 23% OFF
+              - button "Add to wishlist" [ref=e2034]:
+                - img [ref=e2035]
+            - generic [ref=e2037]:
+              - generic [ref=e2038]:
+                - heading "Omron HEM 7120 BP Monitor" [level=3] [ref=e2039]
+                - paragraph [ref=e2040]: Omron
+              - generic [ref=e2041]:
+                - generic [ref=e2042]:
+                  - img [ref=e2043]
+                  - img [ref=e2045]
+                  - img [ref=e2047]
+                  - img [ref=e2049]
+                  - img [ref=e2051]
+                - generic [ref=e2053]: (34.5K)
+              - generic [ref=e2054]:
+                - generic [ref=e2055]:
+                  - generic [ref=e2056]: ₹2,399.00
+                  - generic [ref=e2057]: ₹3,135.00
+                - paragraph [ref=e2058]: Amazon
+                - link "Compare prices" [ref=e2059] [cursor=pointer]:
+                  - /url: /compare?product=cb-00042
+              - generic [ref=e2060]:
+                - link "View Deal" [ref=e2061] [cursor=pointer]:
+                  - /url: /go/cb-00042
+                  - text: View Deal
+                  - img [ref=e2062]
+                - link "Specs" [ref=e2067] [cursor=pointer]:
+                  - /url: /products/cb-00042
+                  - text: Specs
+                  - img [ref=e2068]
+          - button "Dabur Chyawanprash 1kg 19% OFF Add to wishlist Dabur Chyawanprash 1kg Dabur (10.4K) ₹316.00 ₹391.00 Flipkart Compare prices View Deal Specs" [ref=e2070]:
+            - generic [ref=e2071]:
+              - img "Dabur Chyawanprash 1kg" [ref=e2072]
+              - generic [ref=e2073]: 19% OFF
+              - button "Add to wishlist" [ref=e2074]:
+                - img [ref=e2075]
+            - generic [ref=e2077]:
+              - generic [ref=e2078]:
+                - heading "Dabur Chyawanprash 1kg" [level=3] [ref=e2079]
+                - paragraph [ref=e2080]: Dabur
+              - generic [ref=e2081]:
+                - generic [ref=e2082]:
+                  - img [ref=e2083]
+                  - img [ref=e2085]
+                  - img [ref=e2087]
+                  - img [ref=e2089]
+                  - img [ref=e2091]
+                - generic [ref=e2093]: (10.4K)
+              - generic [ref=e2094]:
+                - generic [ref=e2095]:
+                  - generic [ref=e2096]: ₹316.00
+                  - generic [ref=e2097]: ₹391.00
+                - paragraph [ref=e2098]: Flipkart
+                - link "Compare prices" [ref=e2099] [cursor=pointer]:
+                  - /url: /compare?product=cb-00043
+              - generic [ref=e2100]:
+                - link "View Deal" [ref=e2101] [cursor=pointer]:
+                  - /url: /go/cb-00043
+                  - text: View Deal
+                  - img [ref=e2102]
+                - link "Specs" [ref=e2107] [cursor=pointer]:
+                  - /url: /products/cb-00043
+                  - text: Specs
+                  - img [ref=e2108]
+          - button "American Tourister Trolley 51% OFF Add to wishlist American Tourister Trolley American Tourister (23.4K) ₹3,359.00 ₹6,859.00 Amazon Compare prices View Deal Specs" [ref=e2110]:
+            - generic [ref=e2111]:
+              - img "American Tourister Trolley" [ref=e2112]
+              - generic [ref=e2113]: 51% OFF
+              - button "Add to wishlist" [ref=e2114]:
+                - img [ref=e2115]
+            - generic [ref=e2117]:
+              - generic [ref=e2118]:
+                - heading "American Tourister Trolley" [level=3] [ref=e2119]
+                - paragraph [ref=e2120]: American Tourister
+              - generic [ref=e2121]:
+                - generic [ref=e2122]:
+                  - img [ref=e2123]
+                  - img [ref=e2125]
+                  - img [ref=e2127]
+                  - img [ref=e2129]
+                  - img [ref=e2131]
+                - generic [ref=e2133]: (23.4K)
+              - generic [ref=e2134]:
+                - generic [ref=e2135]:
+                  - generic [ref=e2136]: ₹3,359.00
+                  - generic [ref=e2137]: ₹6,859.00
+                - paragraph [ref=e2138]: Amazon
+                - link "Compare prices" [ref=e2139] [cursor=pointer]:
+                  - /url: /compare?product=cb-00044
+              - generic [ref=e2140]:
+                - link "View Deal" [ref=e2141] [cursor=pointer]:
+                  - /url: /go/cb-00044
+                  - text: View Deal
+                  - img [ref=e2142]
+                - link "Specs" [ref=e2147] [cursor=pointer]:
+                  - /url: /products/cb-00044
+                  - text: Specs
+                  - img [ref=e2148]
+          - button "LEGO Classic Creative Bricks 23% OFF Add to wishlist LEGO Classic Creative Bricks LEGO (2.9K) ₹1,439.00 ₹1,861.00 Amazon Compare prices View Deal Specs" [ref=e2150]:
+            - generic [ref=e2151]:
+              - img "LEGO Classic Creative Bricks" [ref=e2152]
+              - generic [ref=e2153]: 23% OFF
+              - button "Add to wishlist" [ref=e2154]:
+                - img [ref=e2155]
+            - generic [ref=e2157]:
+              - generic [ref=e2158]:
+                - heading "LEGO Classic Creative Bricks" [level=3] [ref=e2159]
+                - paragraph [ref=e2160]: LEGO
+              - generic [ref=e2161]:
+                - generic [ref=e2162]:
+                  - img [ref=e2163]
+                  - img [ref=e2165]
+                  - img [ref=e2167]
+                  - img [ref=e2169]
+                  - img [ref=e2171]
+                - generic [ref=e2173]: (2.9K)
+              - generic [ref=e2174]:
+                - generic [ref=e2175]:
+                  - generic [ref=e2176]: ₹1,439.00
+                  - generic [ref=e2177]: ₹1,861.00
+                - paragraph [ref=e2178]: Amazon
+                - link "Compare prices" [ref=e2179] [cursor=pointer]:
+                  - /url: /compare?product=cb-00045
+              - generic [ref=e2180]:
+                - link "View Deal" [ref=e2181] [cursor=pointer]:
+                  - /url: /go/cb-00045
+                  - text: View Deal
+                  - img [ref=e2182]
+                - link "Specs" [ref=e2187] [cursor=pointer]:
+                  - /url: /products/cb-00045
+                  - text: Specs
+                  - img [ref=e2188]
+          - button "Hasbro Monopoly Classic 20% OFF Add to wishlist Hasbro Monopoly Classic Hasbro (3.3K) ₹863.00 ₹1,077.00 Amazon Compare prices View Deal Specs" [ref=e2190]:
+            - generic [ref=e2191]:
+              - img "Hasbro Monopoly Classic" [ref=e2192]
+              - generic [ref=e2193]: 20% OFF
+              - button "Add to wishlist" [ref=e2194]:
+                - img [ref=e2195]
+            - generic [ref=e2197]:
+              - generic [ref=e2198]:
+                - heading "Hasbro Monopoly Classic" [level=3] [ref=e2199]
+                - paragraph [ref=e2200]: Hasbro
+              - generic [ref=e2201]:
+                - generic [ref=e2202]:
+                  - img [ref=e2203]
+                  - img [ref=e2205]
+                  - img [ref=e2207]
+                  - img [ref=e2209]
+                  - img [ref=e2211]
+                - generic [ref=e2213]: (3.3K)
+              - generic [ref=e2214]:
+                - generic [ref=e2215]:
+                  - generic [ref=e2216]: ₹863.00
+                  - generic [ref=e2217]: ₹1,077.00
+                - paragraph [ref=e2218]: Amazon
+                - link "Compare prices" [ref=e2219] [cursor=pointer]:
+                  - /url: /compare?product=cb-00046
+              - generic [ref=e2220]:
+                - link "View Deal" [ref=e2221] [cursor=pointer]:
+                  - /url: /go/cb-00046
+                  - text: View Deal
+                  - img [ref=e2222]
+                - link "Specs" [ref=e2227] [cursor=pointer]:
+                  - /url: /products/cb-00046
+                  - text: Specs
+                  - img [ref=e2228]
+          - button "CloudBasket Graphic Tee 25% OFF Add to wishlist CloudBasket Graphic Tee CloudBasket Design Studio (187) ₹479.00 ₹636.00 CJ Compare prices View Deal Specs" [ref=e2230]:
+            - generic [ref=e2231]:
+              - img "CloudBasket Graphic Tee" [ref=e2232]
+              - generic [ref=e2233]: 25% OFF
+              - button "Add to wishlist" [ref=e2234]:
+                - img [ref=e2235]
+            - generic [ref=e2237]:
+              - generic [ref=e2238]:
+                - heading "CloudBasket Graphic Tee" [level=3] [ref=e2239]
+                - paragraph [ref=e2240]: CloudBasket Design Studio
+              - generic [ref=e2241]:
+                - generic [ref=e2242]:
+                  - img [ref=e2243]
+                  - img [ref=e2245]
+                  - img [ref=e2247]
+                  - img [ref=e2249]
+                  - img [ref=e2251]
+                - generic [ref=e2253]: (187)
+              - generic [ref=e2254]:
+                - generic [ref=e2255]:
+                  - generic [ref=e2256]: ₹479.00
+                  - generic [ref=e2257]: ₹636.00
+                - paragraph [ref=e2258]: CJ
+                - link "Compare prices" [ref=e2259] [cursor=pointer]:
+                  - /url: /compare?product=cb-00047
+              - generic [ref=e2260]:
+                - link "View Deal" [ref=e2261] [cursor=pointer]:
+                  - /url: /go/cb-00047
+                  - text: View Deal
+                  - img [ref=e2262]
+                - link "Specs" [ref=e2267] [cursor=pointer]:
+                  - /url: /products/cb-00047
+                  - text: Specs
+                  - img [ref=e2268]
+          - button "CloudBasket Desk Mug 23% OFF Add to wishlist CloudBasket Desk Mug CloudBasket Design Studio (99) ₹287.00 ₹371.00 CJ Compare prices View Deal Specs" [ref=e2270]:
+            - generic [ref=e2271]:
+              - img "CloudBasket Desk Mug" [ref=e2272]
+              - generic [ref=e2273]: 23% OFF
+              - button "Add to wishlist" [ref=e2274]:
+                - img [ref=e2275]
+            - generic [ref=e2277]:
+              - generic [ref=e2278]:
+                - heading "CloudBasket Desk Mug" [level=3] [ref=e2279]
+                - paragraph [ref=e2280]: CloudBasket Design Studio
+              - generic [ref=e2281]:
+                - generic [ref=e2282]:
+                  - img [ref=e2283]
+                  - img [ref=e2285]
+                  - img [ref=e2287]
+                  - img [ref=e2289]
+                  - img [ref=e2291]
+                - generic [ref=e2293]: (99)
+              - generic [ref=e2294]:
+                - generic [ref=e2295]:
+                  - generic [ref=e2296]: ₹287.00
+                  - generic [ref=e2297]: ₹371.00
+                - paragraph [ref=e2298]: CJ
+                - link "Compare prices" [ref=e2299] [cursor=pointer]:
+                  - /url: /compare?product=cb-00048
+              - generic [ref=e2300]:
+                - link "View Deal" [ref=e2301] [cursor=pointer]:
+                  - /url: /go/cb-00048
+                  - text: View Deal
+                  - img [ref=e2302]
+                - link "Specs" [ref=e2307] [cursor=pointer]:
+                  - /url: /products/cb-00048
+                  - text: Specs
+                  - img [ref=e2308]
+          - button "CloudBasket Phone Case 24% OFF Add to wishlist CloudBasket Phone Case CloudBasket Design Studio (71) ₹335.00 ₹440.00 CJ Compare prices View Deal Specs" [ref=e2310]:
+            - generic [ref=e2311]:
+              - img "CloudBasket Phone Case" [ref=e2312]
+              - generic [ref=e2313]: 24% OFF
+              - button "Add to wishlist" [ref=e2314]:
+                - img [ref=e2315]
+            - generic [ref=e2317]:
+              - generic [ref=e2318]:
+                - heading "CloudBasket Phone Case" [level=3] [ref=e2319]
+                - paragraph [ref=e2320]: CloudBasket Design Studio
+              - generic [ref=e2321]:
+                - generic [ref=e2322]:
+                  - img [ref=e2323]
+                  - img [ref=e2325]
+                  - img [ref=e2327]
+                  - img [ref=e2329]
+                  - img [ref=e2331]
+                - generic [ref=e2333]: (71)
+              - generic [ref=e2334]:
+                - generic [ref=e2335]:
+                  - generic [ref=e2336]: ₹335.00
+                  - generic [ref=e2337]: ₹440.00
+                - paragraph [ref=e2338]: CJ
+                - link "Compare prices" [ref=e2339] [cursor=pointer]:
+                  - /url: /compare?product=cb-00049
+              - generic [ref=e2340]:
+                - link "View Deal" [ref=e2341] [cursor=pointer]:
+                  - /url: /go/cb-00049
+                  - text: View Deal
+                  - img [ref=e2342]
+                - link "Specs" [ref=e2347] [cursor=pointer]:
+                  - /url: /products/cb-00049
+                  - text: Specs
+                  - img [ref=e2348]
+          - button "HP Pavilion Plus 14 — Max Edition 18% OFF Add to wishlist HP Pavilion Plus 14 — Max Edition HP (2.2K) ₹75,450.00 ₹91,990.00 Amazon Compare prices View Deal Specs" [ref=e2350]:
+            - generic [ref=e2351]:
+              - img "HP Pavilion Plus 14 — Max Edition" [ref=e2352]
+              - generic [ref=e2353]: 18% OFF
+              - button "Add to wishlist" [ref=e2354]:
+                - img [ref=e2355]
+            - generic [ref=e2357]:
+              - generic [ref=e2358]:
+                - heading "HP Pavilion Plus 14 — Max Edition" [level=3] [ref=e2359]
+                - paragraph [ref=e2360]: HP
+              - generic [ref=e2361]:
+                - generic [ref=e2362]:
+                  - img [ref=e2363]
+                  - img [ref=e2365]
+                  - img [ref=e2367]
+                  - img [ref=e2369]
+                  - img [ref=e2371]
+                - generic [ref=e2373]: (2.2K)
+              - generic [ref=e2374]:
+                - generic [ref=e2375]:
+                  - generic [ref=e2376]: ₹75,450.00
+                  - generic [ref=e2377]: ₹91,990.00
+                - paragraph [ref=e2378]: Amazon
+                - link "Compare prices" [ref=e2379] [cursor=pointer]:
+                  - /url: /compare?product=cb-00059
+              - generic [ref=e2380]:
+                - link "View Deal" [ref=e2381] [cursor=pointer]:
+                  - /url: /go/cb-00059
+                  - text: View Deal
+                  - img [ref=e2382]
+                - link "Specs" [ref=e2387] [cursor=pointer]:
+                  - /url: /products/cb-00059
+                  - text: Specs
+                  - img [ref=e2388]
+          - button "Acer Swift Go 14 — Max Edition 19% OFF Add to wishlist Acer Swift Go 14 — Max Edition Acer (1.9K) ₹68,590.00 ₹84,990.00 Flipkart Compare prices View Deal Specs" [ref=e2390]:
+            - generic [ref=e2391]:
+              - img "Acer Swift Go 14 — Max Edition" [ref=e2392]
+              - generic [ref=e2393]: 19% OFF
+              - button "Add to wishlist" [ref=e2394]:
+                - img [ref=e2395]
+            - generic [ref=e2397]:
+              - generic [ref=e2398]:
+                - heading "Acer Swift Go 14 — Max Edition" [level=3] [ref=e2399]
+                - paragraph [ref=e2400]: Acer
+              - generic [ref=e2401]:
+                - generic [ref=e2402]:
+                  - img [ref=e2403]
+                  - img [ref=e2405]
+                  - img [ref=e2407]
+                  - img [ref=e2409]
+                  - img [ref=e2411]
+                - generic [ref=e2413]: (1.9K)
+              - generic [ref=e2414]:
+                - generic [ref=e2415]:
+                  - generic [ref=e2416]: ₹68,590.00
+                  - generic [ref=e2417]: ₹84,990.00
+                - paragraph [ref=e2418]: Flipkart
+                - link "Compare prices" [ref=e2419] [cursor=pointer]:
+                  - /url: /compare?product=cb-00063
+              - generic [ref=e2420]:
+                - link "View Deal" [ref=e2421] [cursor=pointer]:
+                  - /url: /go/cb-00063
+                  - text: View Deal
+                  - img [ref=e2422]
+                - link "Specs" [ref=e2427] [cursor=pointer]:
+                  - /url: /products/cb-00063
+                  - text: Specs
+                  - img [ref=e2428]
+          - button "Nike Air Zoom Pegasus — Max Edition 35% OFF Add to wishlist Nike Air Zoom Pegasus — Max Edition Nike (15.2K) ₹7,835.00 ₹11,995.00 Amazon Compare prices View Deal Specs" [ref=e2430]:
+            - generic [ref=e2431]:
+              - img "Nike Air Zoom Pegasus — Max Edition" [ref=e2432]
+              - generic [ref=e2433]: 35% OFF
+              - button "Add to wishlist" [ref=e2434]:
+                - img [ref=e2435]
+            - generic [ref=e2437]:
+              - generic [ref=e2438]:
+                - heading "Nike Air Zoom Pegasus — Max Edition" [level=3] [ref=e2439]
+                - paragraph [ref=e2440]: Nike
+              - generic [ref=e2441]:
+                - generic [ref=e2442]:
+                  - img [ref=e2443]
+                  - img [ref=e2445]
+                  - img [ref=e2447]
+                  - img [ref=e2449]
+                  - img [ref=e2451]
+                - generic [ref=e2453]: (15.2K)
+              - generic [ref=e2454]:
+                - generic [ref=e2455]:
+                  - generic [ref=e2456]: ₹7,835.00
+                  - generic [ref=e2457]: ₹11,995.00
+                - paragraph [ref=e2458]: Amazon
+                - link "Compare prices" [ref=e2459] [cursor=pointer]:
+                  - /url: /compare?product=cb-00070
+              - generic [ref=e2460]:
+                - link "View Deal" [ref=e2461] [cursor=pointer]:
+                  - /url: /go/cb-00070
+                  - text: View Deal
+                  - img [ref=e2462]
+                - link "Specs" [ref=e2467] [cursor=pointer]:
+                  - /url: /products/cb-00070
+                  - text: Specs
+                  - img [ref=e2468]
+          - button "Yonex Arcsaber 11 Badminton — Max Edition 35% OFF Add to wishlist Yonex Arcsaber 11 Badminton — Max Edition Yonex (3.1K) ₹7,839.00 ₹11,999.00 Amazon Compare prices View Deal Specs" [ref=e2470]:
+            - generic [ref=e2471]:
+              - img "Yonex Arcsaber 11 Badminton — Max Edition" [ref=e2472]
+              - generic [ref=e2473]: 35% OFF
+              - button "Add to wishlist" [ref=e2474]:
+                - img [ref=e2475]
+            - generic [ref=e2477]:
+              - generic [ref=e2478]:
+                - heading "Yonex Arcsaber 11 Badminton — Max Edition" [level=3] [ref=e2479]
+                - paragraph [ref=e2480]: Yonex
+              - generic [ref=e2481]:
+                - generic [ref=e2482]:
+                  - img [ref=e2483]
+                  - img [ref=e2485]
+                  - img [ref=e2487]
+                  - img [ref=e2489]
+                  - img [ref=e2491]
+                - generic [ref=e2493]: (3.1K)
+              - generic [ref=e2494]:
+                - generic [ref=e2495]:
+                  - generic [ref=e2496]: ₹7,839.00
+                  - generic [ref=e2497]: ₹11,999.00
+                - paragraph [ref=e2498]: Amazon
+                - link "Compare prices" [ref=e2499] [cursor=pointer]:
+                  - /url: /compare?product=cb-00073
+              - generic [ref=e2500]:
+                - link "View Deal" [ref=e2501] [cursor=pointer]:
+                  - /url: /go/cb-00073
+                  - text: View Deal
+                  - img [ref=e2502]
+                - link "Specs" [ref=e2507] [cursor=pointer]:
+                  - /url: /products/cb-00073
+                  - text: Specs
+                  - img [ref=e2508]
+          - button "Garmin Forerunner 165 — Max Edition 19% OFF Add to wishlist Garmin Forerunner 165 — Max Edition Garmin (624) ₹27,430.00 ₹33,990.00 Amazon Compare prices View Deal Specs" [ref=e2510]:
+            - generic [ref=e2511]:
+              - img "Garmin Forerunner 165 — Max Edition" [ref=e2512]
+              - generic [ref=e2513]: 19% OFF
+              - button "Add to wishlist" [ref=e2514]:
+                - img [ref=e2515]
+            - generic [ref=e2517]:
+              - generic [ref=e2518]:
+                - heading "Garmin Forerunner 165 — Max Edition" [level=3] [ref=e2519]
+                - paragraph [ref=e2520]: Garmin
+              - generic [ref=e2521]:
+                - generic [ref=e2522]:
+                  - img [ref=e2523]
+                  - img [ref=e2525]
+                  - img [ref=e2527]
+                  - img [ref=e2529]
+                  - img [ref=e2531]
+                - generic [ref=e2533]: (624)
+              - generic [ref=e2534]:
+                - generic [ref=e2535]:
+                  - generic [ref=e2536]: ₹27,430.00
+                  - generic [ref=e2537]: ₹33,990.00
+                - paragraph [ref=e2538]: Amazon
+                - link "Compare prices" [ref=e2539] [cursor=pointer]:
+                  - /url: /compare?product=cb-00074
+              - generic [ref=e2540]:
+                - link "View Deal" [ref=e2541] [cursor=pointer]:
+                  - /url: /go/cb-00074
+                  - text: View Deal
+                  - img [ref=e2542]
+                - link "Specs" [ref=e2547] [cursor=pointer]:
+                  - /url: /products/cb-00074
+                  - text: Specs
+                  - img [ref=e2548]
+          - button "IFB Front Load Washer 8kg — Max Edition 21% OFF Add to wishlist IFB Front Load Washer 8kg — Max Edition IFB (1.3K) ₹29,390.00 ₹36,990.00 Flipkart Compare prices View Deal Specs" [ref=e2550]:
+            - generic [ref=e2551]:
+              - img "IFB Front Load Washer 8kg — Max Edition" [ref=e2552]
+              - generic [ref=e2553]: 21% OFF
+              - button "Add to wishlist" [ref=e2554]:
+                - img [ref=e2555]
+            - generic [ref=e2557]:
+              - generic [ref=e2558]:
+                - heading "IFB Front Load Washer 8kg — Max Edition" [level=3] [ref=e2559]
+                - paragraph [ref=e2560]: IFB
+              - generic [ref=e2561]:
+                - generic [ref=e2562]:
+                  - img [ref=e2563]
+                  - img [ref=e2565]
+                  - img [ref=e2567]
+                  - img [ref=e2569]
+                  - img [ref=e2571]
+                - generic [ref=e2573]: (1.3K)
+              - generic [ref=e2574]:
+                - generic [ref=e2575]:
+                  - generic [ref=e2576]: ₹29,390.00
+                  - generic [ref=e2577]: ₹36,990.00
+                - paragraph [ref=e2578]: Flipkart
+                - link "Compare prices" [ref=e2579] [cursor=pointer]:
+                  - /url: /compare?product=cb-00083
+              - generic [ref=e2580]:
+                - link "View Deal" [ref=e2581] [cursor=pointer]:
+                  - /url: /go/cb-00083
+                  - text: View Deal
+                  - img [ref=e2582]
+                - link "Specs" [ref=e2587] [cursor=pointer]:
+                  - /url: /products/cb-00083
+                  - text: Specs
+                  - img [ref=e2588]
+          - button "Xbox Series S 512GB — Max Edition 18% OFF Add to wishlist Xbox Series S 512GB — Max Edition Xbox (2.2K) ₹29,390.00 ₹35,990.00 Amazon Compare prices View Deal Specs" [ref=e2590]:
+            - generic [ref=e2591]:
+              - img "Xbox Series S 512GB — Max Edition" [ref=e2592]
+              - generic [ref=e2593]: 18% OFF
+              - button "Add to wishlist" [ref=e2594]:
+                - img [ref=e2595]
+            - generic [ref=e2597]:
+              - generic [ref=e2598]:
+                - heading "Xbox Series S 512GB — Max Edition" [level=3] [ref=e2599]
+                - paragraph [ref=e2600]: Xbox
+              - generic [ref=e2601]:
+                - generic [ref=e2602]:
+                  - img [ref=e2603]
+                  - img [ref=e2605]
+                  - img [ref=e2607]
+                  - img [ref=e2609]
+                  - img [ref=e2611]
+                - generic [ref=e2613]: (2.2K)
+              - generic [ref=e2614]:
+                - generic [ref=e2615]:
+                  - generic [ref=e2616]: ₹29,390.00
+                  - generic [ref=e2617]: ₹35,990.00
+                - paragraph [ref=e2618]: Amazon
+                - link "Compare prices" [ref=e2619] [cursor=pointer]:
+                  - /url: /compare?product=cb-00088
+              - generic [ref=e2620]:
+                - link "View Deal" [ref=e2621] [cursor=pointer]:
+                  - /url: /go/cb-00088
+                  - text: View Deal
+                  - img [ref=e2622]
+                - link "Specs" [ref=e2627] [cursor=pointer]:
+                  - /url: /products/cb-00088
+                  - text: Specs
+                  - img [ref=e2628]
+          - button "HP Pavilion Plus 14 — Lite Edition 18% OFF Add to wishlist HP Pavilion Plus 14 — Lite Edition HP (2.2K) ₹76,990.00 ₹93,830.00 Amazon Compare prices View Deal Specs" [ref=e2630]:
+            - generic [ref=e2631]:
+              - img "HP Pavilion Plus 14 — Lite Edition" [ref=e2632]
+              - generic [ref=e2633]: 18% OFF
+              - button "Add to wishlist" [ref=e2634]:
+                - img [ref=e2635]
+            - generic [ref=e2637]:
+              - generic [ref=e2638]:
+                - heading "HP Pavilion Plus 14 — Lite Edition" [level=3] [ref=e2639]
+                - paragraph [ref=e2640]: HP
+              - generic [ref=e2641]:
+                - generic [ref=e2642]:
+                  - img [ref=e2643]
+                  - img [ref=e2645]
+                  - img [ref=e2647]
+                  - img [ref=e2649]
+                  - img [ref=e2651]
+                - generic [ref=e2653]: (2.2K)
+              - generic [ref=e2654]:
+                - generic [ref=e2655]:
+                  - generic [ref=e2656]: ₹76,990.00
+                  - generic [ref=e2657]: ₹93,830.00
+                - paragraph [ref=e2658]: Amazon
+                - link "Compare prices" [ref=e2659] [cursor=pointer]:
+                  - /url: /compare?product=cb-00108
+              - generic [ref=e2660]:
+                - link "View Deal" [ref=e2661] [cursor=pointer]:
+                  - /url: /go/cb-00108
+                  - text: View Deal
+                  - img [ref=e2662]
+                - link "Specs" [ref=e2667] [cursor=pointer]:
+                  - /url: /products/cb-00108
+                  - text: Specs
+                  - img [ref=e2668]
+          - button "Acer Swift Go 14 — Lite Edition 19% OFF Add to wishlist Acer Swift Go 14 — Lite Edition Acer (1.9K) ₹69,990.00 ₹86,690.00 Flipkart Compare prices View Deal Specs" [ref=e2670]:
+            - generic [ref=e2671]:
+              - img "Acer Swift Go 14 — Lite Edition" [ref=e2672]
+              - generic [ref=e2673]: 19% OFF
+              - button "Add to wishlist" [ref=e2674]:
+                - img [ref=e2675]
+            - generic [ref=e2677]:
+              - generic [ref=e2678]:
+                - heading "Acer Swift Go 14 — Lite Edition" [level=3] [ref=e2679]
+                - paragraph [ref=e2680]: Acer
+              - generic [ref=e2681]:
+                - generic [ref=e2682]:
+                  - img [ref=e2683]
+                  - img [ref=e2685]
+                  - img [ref=e2687]
+                  - img [ref=e2689]
+                  - img [ref=e2691]
+                - generic [ref=e2693]: (1.9K)
+              - generic [ref=e2694]:
+                - generic [ref=e2695]:
+                  - generic [ref=e2696]: ₹69,990.00
+                  - generic [ref=e2697]: ₹86,690.00
+                - paragraph [ref=e2698]: Flipkart
+                - link "Compare prices" [ref=e2699] [cursor=pointer]:
+                  - /url: /compare?product=cb-00112
+              - generic [ref=e2700]:
+                - link "View Deal" [ref=e2701] [cursor=pointer]:
+                  - /url: /go/cb-00112
+                  - text: View Deal
+                  - img [ref=e2702]
+                - link "Specs" [ref=e2707] [cursor=pointer]:
+                  - /url: /products/cb-00112
+                  - text: Specs
+                  - img [ref=e2708]
+          - button "Nike Air Zoom Pegasus — Lite Edition 35% OFF Add to wishlist Nike Air Zoom Pegasus — Lite Edition Nike (15.2K) ₹7,995.00 ₹12,235.00 Amazon Compare prices View Deal Specs" [ref=e2710]:
+            - generic [ref=e2711]:
+              - img "Nike Air Zoom Pegasus — Lite Edition" [ref=e2712]
+              - generic [ref=e2713]: 35% OFF
+              - button "Add to wishlist" [ref=e2714]:
+                - img [ref=e2715]
+            - generic [ref=e2717]:
+              - generic [ref=e2718]:
+                - heading "Nike Air Zoom Pegasus — Lite Edition" [level=3] [ref=e2719]
+                - paragraph [ref=e2720]: Nike
+              - generic [ref=e2721]:
+                - generic [ref=e2722]:
+                  - img [ref=e2723]
+                  - img [ref=e2725]
+                  - img [ref=e2727]
+                  - img [ref=e2729]
+                  - img [ref=e2731]
+                - generic [ref=e2733]: (15.2K)
+              - generic [ref=e2734]:
+                - generic [ref=e2735]:
+                  - generic [ref=e2736]: ₹7,995.00
+                  - generic [ref=e2737]: ₹12,235.00
+                - paragraph [ref=e2738]: Amazon
+                - link "Compare prices" [ref=e2739] [cursor=pointer]:
+                  - /url: /compare?product=cb-00119
+              - generic [ref=e2740]:
+                - link "View Deal" [ref=e2741] [cursor=pointer]:
+                  - /url: /go/cb-00119
+                  - text: View Deal
+                  - img [ref=e2742]
+                - link "Specs" [ref=e2747] [cursor=pointer]:
+                  - /url: /products/cb-00119
+                  - text: Specs
+                  - img [ref=e2748]
+          - button "Yonex Arcsaber 11 Badminton — Lite Edition 35% OFF Add to wishlist Yonex Arcsaber 11 Badminton — Lite Edition Yonex (3.1K) ₹7,999.00 ₹12,239.00 Amazon Compare prices View Deal Specs" [ref=e2750]:
+            - generic [ref=e2751]:
+              - img "Yonex Arcsaber 11 Badminton — Lite Edition" [ref=e2752]
+              - generic [ref=e2753]: 35% OFF
+              - button "Add to wishlist" [ref=e2754]:
+                - img [ref=e2755]
+            - generic [ref=e2757]:
+              - generic [ref=e2758]:
+                - heading "Yonex Arcsaber 11 Badminton — Lite Edition" [level=3] [ref=e2759]
+                - paragraph [ref=e2760]: Yonex
+              - generic [ref=e2761]:
+                - generic [ref=e2762]:
+                  - img [ref=e2763]
+                  - img [ref=e2765]
+                  - img [ref=e2767]
+                  - img [ref=e2769]
+                  - img [ref=e2771]
+                - generic [ref=e2773]: (3.1K)
+              - generic [ref=e2774]:
+                - generic [ref=e2775]:
+                  - generic [ref=e2776]: ₹7,999.00
+                  - generic [ref=e2777]: ₹12,239.00
+                - paragraph [ref=e2778]: Amazon
+                - link "Compare prices" [ref=e2779] [cursor=pointer]:
+                  - /url: /compare?product=cb-00122
+              - generic [ref=e2780]:
+                - link "View Deal" [ref=e2781] [cursor=pointer]:
+                  - /url: /go/cb-00122
+                  - text: View Deal
+                  - img [ref=e2782]
+                - link "Specs" [ref=e2787] [cursor=pointer]:
+                  - /url: /products/cb-00122
+                  - text: Specs
+                  - img [ref=e2788]
+          - button "Garmin Forerunner 165 — Lite Edition 19% OFF Add to wishlist Garmin Forerunner 165 — Lite Edition Garmin (631) ₹27,990.00 ₹34,670.00 Amazon Compare prices View Deal Specs" [ref=e2790]:
+            - generic [ref=e2791]:
+              - img "Garmin Forerunner 165 — Lite Edition" [ref=e2792]
+              - generic [ref=e2793]: 19% OFF
+              - button "Add to wishlist" [ref=e2794]:
+                - img [ref=e2795]
+            - generic [ref=e2797]:
+              - generic [ref=e2798]:
+                - heading "Garmin Forerunner 165 — Lite Edition" [level=3] [ref=e2799]
+                - paragraph [ref=e2800]: Garmin
+              - generic [ref=e2801]:
+                - generic [ref=e2802]:
+                  - img [ref=e2803]
+                  - img [ref=e2805]
+                  - img [ref=e2807]
+                  - img [ref=e2809]
+                  - img [ref=e2811]
+                - generic [ref=e2813]: (631)
+              - generic [ref=e2814]:
+                - generic [ref=e2815]:
+                  - generic [ref=e2816]: ₹27,990.00
+                  - generic [ref=e2817]: ₹34,670.00
+                - paragraph [ref=e2818]: Amazon
+                - link "Compare prices" [ref=e2819] [cursor=pointer]:
+                  - /url: /compare?product=cb-00123
+              - generic [ref=e2820]:
+                - link "View Deal" [ref=e2821] [cursor=pointer]:
+                  - /url: /go/cb-00123
+                  - text: View Deal
+                  - img [ref=e2822]
+                - link "Specs" [ref=e2827] [cursor=pointer]:
+                  - /url: /products/cb-00123
+                  - text: Specs
+                  - img [ref=e2828]
+          - button "IFB Front Load Washer 8kg — Lite Edition 21% OFF Add to wishlist IFB Front Load Washer 8kg — Lite Edition IFB (1.3K) ₹29,990.00 ₹37,730.00 Flipkart Compare prices View Deal Specs" [ref=e2830]:
+            - generic [ref=e2831]:
+              - img "IFB Front Load Washer 8kg — Lite Edition" [ref=e2832]
+              - generic [ref=e2833]: 21% OFF
+              - button "Add to wishlist" [ref=e2834]:
+                - img [ref=e2835]
+            - generic [ref=e2837]:
+              - generic [ref=e2838]:
+                - heading "IFB Front Load Washer 8kg — Lite Edition" [level=3] [ref=e2839]
+                - paragraph [ref=e2840]: IFB
+              - generic [ref=e2841]:
+                - generic [ref=e2842]:
+                  - img [ref=e2843]
+                  - img [ref=e2845]
+                  - img [ref=e2847]
+                  - img [ref=e2849]
+                  - img [ref=e2851]
+                - generic [ref=e2853]: (1.3K)
+              - generic [ref=e2854]:
+                - generic [ref=e2855]:
+                  - generic [ref=e2856]: ₹29,990.00
+                  - generic [ref=e2857]: ₹37,730.00
+                - paragraph [ref=e2858]: Flipkart
+                - link "Compare prices" [ref=e2859] [cursor=pointer]:
+                  - /url: /compare?product=cb-00132
+              - generic [ref=e2860]:
+                - link "View Deal" [ref=e2861] [cursor=pointer]:
+                  - /url: /go/cb-00132
+                  - text: View Deal
+                  - img [ref=e2862]
+                - link "Specs" [ref=e2867] [cursor=pointer]:
+                  - /url: /products/cb-00132
+                  - text: Specs
+                  - img [ref=e2868]
+          - button "Xbox Series S 512GB — Lite Edition 18% OFF Add to wishlist Xbox Series S 512GB — Lite Edition Xbox (2.2K) ₹29,990.00 ₹36,710.00 Amazon Compare prices View Deal Specs" [ref=e2870]:
+            - generic [ref=e2871]:
+              - img "Xbox Series S 512GB — Lite Edition" [ref=e2872]
+              - generic [ref=e2873]: 18% OFF
+              - button "Add to wishlist" [ref=e2874]:
+                - img [ref=e2875]
+            - generic [ref=e2877]:
+              - generic [ref=e2878]:
+                - heading "Xbox Series S 512GB — Lite Edition" [level=3] [ref=e2879]
+                - paragraph [ref=e2880]: Xbox
+              - generic [ref=e2881]:
+                - generic [ref=e2882]:
+                  - img [ref=e2883]
+                  - img [ref=e2885]
+                  - img [ref=e2887]
+                  - img [ref=e2889]
+                  - img [ref=e2891]
+                - generic [ref=e2893]: (2.2K)
+              - generic [ref=e2894]:
+                - generic [ref=e2895]:
+                  - generic [ref=e2896]: ₹29,990.00
+                  - generic [ref=e2897]: ₹36,710.00
+                - paragraph [ref=e2898]: Amazon
+                - link "Compare prices" [ref=e2899] [cursor=pointer]:
+                  - /url: /compare?product=cb-00137
+              - generic [ref=e2900]:
+                - link "View Deal" [ref=e2901] [cursor=pointer]:
+                  - /url: /go/cb-00137
+                  - text: View Deal
+                  - img [ref=e2902]
+                - link "Specs" [ref=e2907] [cursor=pointer]:
+                  - /url: /products/cb-00137
+                  - text: Specs
+                  - img [ref=e2908]
+        - generic [ref=e2910]:
+          - paragraph [ref=e2911]: 🧠 Intelligence Engine Debug
+          - paragraph [ref=e2912]: "[0.02] HP Pavilion Plus 14 — In your budget"
+          - paragraph [ref=e2913]: "[0.02] Acer Swift Go 14 — In your budget"
+          - paragraph [ref=e2914]: "[0.02] Nike Air Zoom Pegasus — In your budget"
+      - generic [ref=e2915]:
+        - generic [ref=e2916]: Weekly Deals Digest
+        - heading "Never Miss a Deal Again" [level=2] [ref=e2917]
+        - paragraph [ref=e2918]: Get India's best deals delivered every Monday morning. Curated from 50+ stores. Zero spam. Unsubscribe anytime.
+        - generic [ref=e2919]:
+          - generic [ref=e2920] [cursor=pointer]: All Deals
+          - generic [ref=e2921] [cursor=pointer]: Mobiles
+          - generic [ref=e2922] [cursor=pointer]: Laptops
+          - generic [ref=e2923] [cursor=pointer]: Fashion
+          - generic [ref=e2924] [cursor=pointer]: Home
+          - generic [ref=e2925] [cursor=pointer]: POD Drops
+        - generic [ref=e2926]:
+          - textbox "your@email.com" [ref=e2927]
+          - button "Subscribe Free" [ref=e2928] [cursor=pointer]
+        - paragraph [ref=e2929]: Join 1,247+ smart Indian shoppers. DPDPA 2023 compliant. Unsubscribe anytime.
+  - contentinfo [ref=e2930]:
+    - generic [ref=e2931]:
+      - generic [ref=e2932]:
+        - generic [ref=e2933]:
+          - link "CB CloudBasket" [ref=e2934] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e2936]: CB
+            - generic [ref=e2937]: CloudBasket
+          - paragraph [ref=e2938]: India's Smartest Price Aggregator — No checkout, no storage, just the best prices.
+          - generic [ref=e2940]:
+            - button "DPDPA 2023" [ref=e2941]
+            - button "GDPR" [ref=e2942]
+            - button "FTC" [ref=e2943]
+            - button "ONDC" [ref=e2944]
+            - button "Startup India" [ref=e2945]
+          - generic [ref=e2946]:
+            - link "Chat with CloudBasket on WhatsApp" [ref=e2947] [cursor=pointer]:
+              - /url: https://wa.me/
+              - img [ref=e2948]
+            - button "Back to top" [ref=e2950]:
+              - text: Back to top
+              - img [ref=e2951]
+        - generic [ref=e2953]:
+          - paragraph [ref=e2954]: Shop
+          - list [ref=e2955]:
+            - listitem [ref=e2956]:
+              - link "All Products" [ref=e2957] [cursor=pointer]:
+                - /url: /products
+            - listitem [ref=e2958]:
+              - link "Hot Deals" [ref=e2959] [cursor=pointer]:
+                - /url: /deals
+            - listitem [ref=e2960]:
+              - link "Flash Sales" [ref=e2961] [cursor=pointer]:
+                - /url: /deals/flash
+            - listitem [ref=e2962]:
+              - link "Categories" [ref=e2963] [cursor=pointer]:
+                - /url: /categories
+            - listitem [ref=e2964]:
+              - link "Compare" [ref=e2965] [cursor=pointer]:
+                - /url: /compare
+            - listitem [ref=e2966]:
+              - link "Price Tracker" [ref=e2967] [cursor=pointer]:
+                - /url: /search
+        - generic [ref=e2968]:
+          - paragraph [ref=e2969]: Custom POD
+          - list [ref=e2970]:
+            - listitem [ref=e2971]:
+              - link "Designer T-Shirts" [ref=e2972] [cursor=pointer]:
+                - /url: /pod/tshirts
+            - listitem [ref=e2973]:
+              - link "Custom Mugs" [ref=e2974] [cursor=pointer]:
+                - /url: /pod/mugs
+            - listitem [ref=e2975]:
+              - link "Phone Cases" [ref=e2976] [cursor=pointer]:
+                - /url: /pod/phone-cases
+            - listitem [ref=e2977]:
+              - link "POD Hub" [ref=e2978] [cursor=pointer]:
+                - /url: /pod
+            - listitem [ref=e2979]:
+              - link "Shopping Quiz" [ref=e2980] [cursor=pointer]:
+                - /url: /quiz
+        - generic [ref=e2981]:
+          - paragraph [ref=e2982]: Company
+          - list [ref=e2983]:
+            - listitem [ref=e2984]:
+              - link "About Us" [ref=e2985] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e2986]:
+              - link "CloudBasket Blog" [ref=e2987] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e2988]:
+              - link "Help Center (FAQ)" [ref=e2989] [cursor=pointer]:
+                - /url: /faq
+            - listitem [ref=e2990]:
+              - link "Careers" [ref=e2991] [cursor=pointer]:
+                - /url: /careers
+            - listitem [ref=e2992]:
+              - link "Contact Support" [ref=e2993] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=e2994]:
+              - link "Site Index" [ref=e2995] [cursor=pointer]:
+                - /url: /sitemap
+        - generic [ref=e2996]:
+          - paragraph [ref=e2997]: Trust & Legal
+          - list [ref=e2998]:
+            - listitem [ref=e2999]:
+              - link "Privacy Policy" [ref=e3000] [cursor=pointer]:
+                - /url: /legal/privacy
+            - listitem [ref=e3001]:
+              - link "Terms of Service" [ref=e3002] [cursor=pointer]:
+                - /url: /legal/terms
+            - listitem [ref=e3003]:
+              - link "Cookie Policy" [ref=e3004] [cursor=pointer]:
+                - /url: /legal/cookies
+            - listitem [ref=e3005]:
+              - link "Affiliate Disclosure" [ref=e3006] [cursor=pointer]:
+                - /url: /affiliate-disclosure
+            - listitem [ref=e3007]:
+              - link "Associate Program" [ref=e3008] [cursor=pointer]:
+                - /url: /associates
+      - generic [ref=e3010]:
+        - generic [ref=e3011]:
+          - paragraph [ref=e3012]: © 2026 CloudBasket. All rights reserved.
+          - paragraph [ref=e3013]: "Powered by NEXQON HOLDINGS · VERSION STATE {VS.IN+}"
+        - generic [ref=e3014]:
+          - generic [ref=e3015]: DPDPA 2023 Compliant
+          - generic [ref=e3016]: GDPR Verified
+          - button "Cookie Settings" [ref=e3017]
+  - button "Back to top":
+    - img
+  - button "Open feedback" [ref=e3018]: Feedback
+  - button "Open Next.js Dev Tools" [ref=e3024] [cursor=pointer]:
+    - generic [ref=e3027]:
+      - text: Compiling
+      - generic [ref=e3028]:
+        - generic [ref=e3029]: .
+        - generic [ref=e3030]: .
+        - generic [ref=e3031]: .
+  - alert [ref=e3032]
+  - generic [ref=e3034]:
+    - paragraph [ref=e3035]: Verified Commerce Platform
+    - generic [ref=e3036]:
+      - link "🌐 Global Price Discovery Compare prices worldwide" [ref=e3037] [cursor=pointer]:
+        - /url: /about
+        - generic [ref=e3038]: 🌐
+        - paragraph [ref=e3039]: Global Price Discovery
+        - paragraph [ref=e3040]: Compare prices worldwide
+      - link "🔐 DPDPA and GDPR Safe Privacy-first data handling" [ref=e3041] [cursor=pointer]:
+        - /url: /legal/privacy
+        - generic [ref=e3042]: 🔐
+        - paragraph [ref=e3043]: DPDPA and GDPR Safe
+        - paragraph [ref=e3044]: Privacy-first data handling
+      - link "⚡ Real-time Prices Fresh deal tracking" [ref=e3045] [cursor=pointer]:
+        - /url: /products
+        - generic [ref=e3046]: ⚡
+        - paragraph [ref=e3047]: Real-time Prices
+        - paragraph [ref=e3048]: Fresh deal tracking
+      - link "🧭 Zero Checkout Direct to merchant stores" [ref=e3049] [cursor=pointer]:
+        - /url: /about
+        - generic [ref=e3050]: 🧭
+        - paragraph [ref=e3051]: Zero Checkout
+        - paragraph [ref=e3052]: Direct to merchant stores
+      - link "🏷️ Best Price Guarantee Find the strongest live offer" [ref=e3053] [cursor=pointer]:
+        - /url: /deals
+        - generic [ref=e3054]: 🏷️
+        - paragraph [ref=e3055]: Best Price Guarantee
+        - paragraph [ref=e3056]: Find the strongest live offer
+  - dialog "Cookie consent" [ref=e3057]:
+    - generic [ref=e3058]:
+      - img [ref=e3059]
+      - generic [ref=e3061]:
+        - paragraph [ref=e3062]: We use cookies
+        - paragraph [ref=e3063]:
+          - text: We use cookies to improve your experience, serve relevant ads, and analyse traffic. Essential cookies are always active.
+          - link "Learn more" [ref=e3064] [cursor=pointer]:
+            - /url: /legal/cookies
+        - paragraph [ref=e3065]:
+          - text: Under India's
+          - strong [ref=e3066]: DPDP Act 2023
+          - text: ", you have the right to manage, withdraw, or modify your consent at any time."
+        - generic [ref=e3067]:
+          - button "Accept All" [ref=e3068] [cursor=pointer]
+          - button "Reject All" [ref=e3069] [cursor=pointer]
+          - button "Manage Preferences" [ref=e3070] [cursor=pointer]
+      - button "Dismiss cookie banner" [ref=e3071]:
+        - img [ref=e3072]
+```

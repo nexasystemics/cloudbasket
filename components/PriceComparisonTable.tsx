@@ -67,10 +67,10 @@ export default async function PriceComparisonTable({ productId }: PriceCompariso
           </thead>
           <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
             {comparison.map((item, index) => (
-              <tr key={index} className={item.price === lowestPrice ? 'bg-skyline-primary/5' : ''}>
+              <tr key={index} className={item.price === lowestPrice ? 'bg-skyline-primary/5 dark:bg-skyline-primary/10' : ''}>
                 <td className="px-6 py-5 whitespace-nowrap">
                   <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-[10px] text-white ${item.platform === 'Amazon' ? 'bg-orange-500' : item.platform === 'Flipkart' ? 'bg-blue-600' : 'bg-green-500'}`}>
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-[10px] text-white ${item.platform === 'Amazon' ? 'bg-orange-500 dark:bg-orange-600' : item.platform === 'Flipkart' ? 'bg-blue-600 dark:bg-blue-700' : 'bg-green-500 dark:bg-green-600'}`}>
                       {item.platform.charAt(0)}
                     </div>
                     <span className="text-sm font-black text-zinc-900 dark:text-white uppercase tracking-tight">{item.platform}</span>

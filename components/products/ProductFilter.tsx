@@ -108,7 +108,7 @@ export default function ProductFilter({
             value={search}
             onChange={handleSearchChange}
             placeholder="Search products..."
-            className="w-full rounded-button border cb-border bg-[var(--cb-surface-3)] py-2.5 pe-9 ps-9 text-sm text-[var(--cb-text-primary)] outline-none transition-colors focus:border-skyline-primary"
+            className="w-full rounded-button border cb-border bg-[var(--cb-surface-3)] dark:bg-zinc-800 dark:text-white py-2.5 pe-9 ps-9 text-sm text-[var(--cb-text-primary)] outline-none transition-colors focus:border-skyline-primary"
           />
           {search.length > 0 && (
             <button
@@ -135,7 +135,7 @@ export default function ProductFilter({
               onClick={() => handleCategoryClick(category)}
               className={`rounded-pill px-3 py-1.5 text-[11px] font-black uppercase tracking-wide transition-colors ${
                 selectedMain === category
-                  ? 'bg-skyline-primary text-white'
+                  ? 'bg-skyline-primary text-white dark:bg-skyline-primary/90 dark:text-white'
                   : 'cb-btn-ghost text-[var(--cb-text-muted)]'
               }`}
             >

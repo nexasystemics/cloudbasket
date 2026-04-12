@@ -24,7 +24,7 @@ export default function PromotionSidebar({ selectedCategory }: PromotionSidebarP
             <div className="bg-[#E65100]/10 p-2 rounded-lg">
               <Zap size={18} className="text-[#E65100]" />
             </div>
-            <h3 className="text-sm font-black uppercase tracking-widest text-gray-900">Flash Deals</h3>
+            <h3 className="text-sm font-black uppercase tracking-widest text-gray-900 dark:text-white">Flash Deals</h3>
           </div>
           <div className="flex items-center gap-1 text-[10px] font-black text-[#E65100] bg-[#E65100]/5 px-2 py-1 rounded-md animate-pulse">
             <Clock size={10} />
@@ -34,7 +34,7 @@ export default function PromotionSidebar({ selectedCategory }: PromotionSidebarP
 
         <div className="space-y-4">
           {flashDeals.map((product) => (
-            <div key={product.id} className="group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden relative">
+            <div key={product.id} className="group bg-white dark:bg-zinc-900 rounded-2xl p-4 border border-gray-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-skyline-primary">
               <div className="absolute top-2 right-2 z-10">
                 <span className="bg-[#E65100] text-white text-[9px] font-black px-2 py-1 rounded-full shadow-lg">
                   -40%
@@ -72,7 +72,7 @@ export default function PromotionSidebar({ selectedCategory }: PromotionSidebarP
             <h3 className="text-sm font-black uppercase tracking-widest text-gray-900">Special Offers</h3>
           </div>
 
-          <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-[#039BE5] to-[#015C94] p-8 text-white group cursor-pointer shadow-xl shadow-sky-900/10">
+          <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-[#039BE5] to-[#015C94] p-8 text-white group cursor-pointer shadow-xl shadow-sky-900/10 dark:from-[#039BE5]/90 dark:to-[#015C94]/90">
             <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_white_0%,_transparent_70%)] group-hover:scale-150 transition-transform duration-1000" />
             
             <div className="relative h-full flex flex-col">
@@ -87,7 +87,7 @@ export default function PromotionSidebar({ selectedCategory }: PromotionSidebarP
               </p>
               
               <div className="mt-auto">
-                <button className="bg-white text-[#039BE5] w-full py-3 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 group-hover:bg-sky-50 transition-colors">
+                <button className="bg-white text-[#039BE5] w-full py-3 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 group-hover:bg-sky-50 dark:bg-zinc-900 dark:text-white dark:group-hover:bg-zinc-800 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-skyline-primary">
                   Explore Now
                   <ExternalLink size={12} />
                 </button>

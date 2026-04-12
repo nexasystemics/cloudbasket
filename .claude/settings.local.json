@@ -42,7 +42,13 @@
       "Bash(npx tsc:*)",
       "Bash(node_modules/.bin/tsc --noEmit)",
       "Bash(echo \"exit:$?\")",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(tee /tmp/tsc2.txt)",
+      "Bash(echo \"TSC_EXIT:$?\")",
+      "Bash(echo \"careers_errors:$?\")",
+      "Bash(echo \"TSC:$?\")",
+      "Bash(cat vercel.json)",
+      "Bash(ls app/api/cron/)"
     ]
   }
 }

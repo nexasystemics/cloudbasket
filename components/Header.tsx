@@ -235,7 +235,7 @@ export default function Header(): JSX.Element {
             <button
               type="button"
               onClick={handlePromoDismiss}
-              className="ms-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+              className="ms-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 dark:bg-zinc-800 hover:bg-white/20 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
               aria-label="Dismiss promo ticker"
             >
               <X size={12} />
@@ -246,7 +246,7 @@ export default function Header(): JSX.Element {
 
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4 px-3 lg:h-16 lg:px-6">
         <Link href="/" className="flex items-center gap-2 flex-shrink-0 min-w-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
-          <div className="w-8 h-8 bg-[#039BE5] rounded-lg flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 bg-[#039BE5] dark:bg-[#039BE5]/80 rounded-lg flex items-center justify-center flex-shrink-0">
             <span className="text-white font-black text-xs">CB</span>
           </div>
           <span className="font-black text-lg tracking-tight whitespace-nowrap hidden sm:block">
@@ -267,7 +267,7 @@ export default function Header(): JSX.Element {
               >
                 <Link
                   href={item.href}
-                  className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 ${
+                  className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 ${
                     isItemActive(item.href)
                       ? 'font-bold text-skyline-primary'
                       : 'font-medium text-[var(--cb-text-secondary)] hover:text-[var(--cb-text-primary)]'

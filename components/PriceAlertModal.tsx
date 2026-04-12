@@ -36,13 +36,13 @@ export default function PriceAlertModal({ productName, currentPrice, onClose }: 
 
         {!submitted ? (
           <>
-            <Bell size={32} className="mb-4 text-[#039BE5]" />
+            <Bell size={32} className="mb-4 text-[#039BE5] dark:text-[#039BE5]/80" />
             <h2 className="text-xl font-black">Set Price Alert</h2>
             <p className="text-muted mt-1 text-sm">
               Get notified when {productName} drops to your target price
             </p>
 
-            <div className="cb-card mb-6 mt-6 flex items-center justify-between border-[#039BE5]/20 bg-[#039BE5]/5 p-4">
+            <div className="cb-card mb-6 mt-6 flex items-center justify-between border-[#039BE5]/20 bg-[#039BE5]/5 dark:bg-[#039BE5]/10 dark:border-[#039BE5]/30 p-4">
               <p className="text-muted text-sm">Current Price</p>
               <p className="price-current">Rs{currentPrice.toLocaleString('en-IN')}</p>
             </div>

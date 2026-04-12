@@ -2,6 +2,8 @@
 // Email marketing pipeline for CloudBasket — newsletters, campaigns, alerts.
 // Stub-safe — logs warnings when Resend/Plunk API key not configured.
 
+import { createClient } from '@supabase/supabase-js'
+import { Resend } from 'resend'
 import { isConfigured, env } from '@/lib/env'
 
 export interface EmailContact {
@@ -68,12 +70,24 @@ function buildDealAlertHtml(data: DealAlertEmail): string {
 }
 
 class EmailMarketingPipeline {
+  private resend(): Resend {
+    return new Resend(env.RESEND_API_KEY)
+  }
+
+  private getSupabaseAdmin() {
+    if (!isConfigured('NEXT_PUBLIC_SUPABASE_URL') || !isConfigured('SUPABASE_SERVICE_ROLE_KEY')) {
+      return null
+    }
+
+    return createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY)
+  }
+
   private isResendReady(): boolean {
     return isConfigured('RESEND_API_KEY')
   }
 
   private isPlunkReady(): boolean {
-    return isConfigured('RESEND_API_KEY')
+    return false
   }
 
   private isReady(): boolean {
@@ -89,20 +103,13 @@ class EmailMarketingPipeline {
 
     try {
       if (this.isResendReady()) {
-        const res = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${env.RESEND_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+        const { error } = await this.resend().emails.send({
             from: 'CloudBasket <alerts@cloudbasket.in>',
-            to: data.to,
+            to: [data.to],
             subject: `🔥 ${data.discountPercent}% OFF — ${data.productName}`,
             html: buildDealAlertHtml(data),
-          }),
         })
-        return res.ok
+        return !error
       }
       return false
     } catch (err) {
@@ -124,8 +131,36 @@ class EmailMarketingPipeline {
     }
 
     try {
-      console.warn('[EmailMarketing] Newsletter send wire pending')
-      return { ...newCampaign, status: 'sent', sentAt: new Date().toISOString() }
+      if (!this.isResendReady()) {
+        return newCampaign
+      }
+
+      const recipients = [...new Set(campaign.recipients.map((email) => email.trim().toLowerCase()).filter(Boolean))]
+      const results = await Promise.allSettled(
+        recipients.map((email) =>
+          this.resend().emails.send({
+            from: 'CloudBasket <alerts@cloudbasket.in>',
+            to: [email],
+            subject: campaign.subject,
+            html: campaign.htmlContent,
+          }),
+        ),
+      )
+
+      const failed = results.filter(
+        (result) => result.status === 'rejected' || (result.status === 'fulfilled' && result.value.error),
+      )
+
+      if (failed.length > 0) {
+        console.warn('[EmailMarketing] Newsletter partial failure:', `${failed.length}/${recipients.length}`)
+      }
+
+      return {
+        ...newCampaign,
+        recipients,
+        status: failed.length === recipients.length ? 'draft' : 'sent',
+        sentAt: failed.length === recipients.length ? undefined : new Date().toISOString(),
+      }
     } catch (err) {
       console.warn('[EmailMarketing] Newsletter error:', err)
       return newCampaign
@@ -133,12 +168,27 @@ class EmailMarketingPipeline {
   }
 
   async subscribeContact(contact: EmailContact): Promise<boolean> {
-    if (!this.isReady()) {
+    const supabase = this.getSupabaseAdmin()
+    if (!supabase) {
       console.warn('[EmailMarketing] Stub subscribe:', contact.email)
       return true
     }
+
     try {
-      console.warn('[EmailMarketing] Subscribe wire pending:', contact.email)
+      const email = contact.email.trim().toLowerCase()
+      const { error } = await supabase.from('email_subscribers').upsert({
+        email,
+        name: contact.name?.trim() || null,
+        tags: contact.tags ?? [],
+        subscribed_at: contact.subscribedAt ?? new Date().toISOString(),
+        unsubscribed_at: null,
+      }, { onConflict: 'email' })
+
+      if (error) {
+        console.warn('[EmailMarketing] Subscribe error:', error.message)
+        return false
+      }
+
       return true
     } catch (err) {
       console.warn('[EmailMarketing] Subscribe error:', err)

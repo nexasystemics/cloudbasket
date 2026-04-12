@@ -153,7 +153,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
           handleCardClick()
         }
       }}
-      className={`group relative flex overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 dark:border-zinc-800 dark:bg-zinc-900 ${
+      className={`group relative flex overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl focus:outline-none focus-visible:outline-none focus:ring-2 focus-visible:ring-2 focus:ring-offset-2 focus-visible:ring-offset-2 focus:ring-blue-600 focus-visible:ring-blue-600 dark:border-zinc-800 dark:bg-zinc-900 ${
         isList ? 'min-h-[220px] flex-row' : 'h-full min-h-[440px] flex-col'
       }`}
       onClick={handleCardClick}
@@ -175,13 +175,13 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
         )}
 
         {discountPercent > 15 ? (
-          <span className="absolute left-3 top-3 rounded-full bg-red-500 px-3 py-1 text-[10px] font-black text-white shadow-sm">
+          <span className="absolute left-3 top-3 rounded-full bg-red-500 px-3 py-1 text-[10px] font-black text-white shadow-sm dark:bg-red-600">
             {discountPercent}% OFF
           </span>
         ) : null}
 
         {product.isTrending ? (
-          <span className="absolute left-3 top-12 rounded-full bg-orange-500 px-3 py-1 text-[10px] font-black text-white shadow-sm">
+          <span className="absolute left-3 top-12 rounded-full bg-orange-500 px-3 py-1 text-[10px] font-black text-white shadow-sm dark:bg-orange-600">
             Trending
           </span>
         ) : null}
@@ -258,7 +258,7 @@ export function ProductCard({ product, variant = 'grid', personalScore }: Produc
               event.stopPropagation()
               handleViewDealClick()
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-skyline-primary py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-skyline-primary/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-skyline-primary dark:bg-skyline-primary/90 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-skyline-primary/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
           >
             View Deal
             <ExternalLink size={14} />

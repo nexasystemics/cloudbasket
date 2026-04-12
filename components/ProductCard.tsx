@@ -87,7 +87,7 @@ export default function ProductCard({
   }, [id])
 
   return (
-    <div className="group relative flex h-full min-h-[440px] flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+    <div className="group relative flex h-full min-h-[440px] flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600 dark:border-zinc-800 dark:bg-zinc-900">
       <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-zinc-800">
         <Link href={`/products/${id}`} className="block w-full h-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
           <Image
@@ -149,10 +149,7 @@ export default function ProductCard({
 
         <div className="mt-auto pt-2">
           <div className="flex items-baseline gap-2">
-            <span 
-              className="text-lg font-black" 
-              style={{ color: theme?.primaryColor || '#039BE5' }}
-            >
+            <span className="text-lg font-black text-[#039BE5] dark:text-[#039BE5]/80">
               {discountedPrice}
             </span>
             <span className="text-xs text-zinc-400 line-through font-bold">
@@ -179,8 +176,7 @@ export default function ProductCard({
               const priceValue = Number(discountedPrice.toString().replace(/[₹,\s]/g, '')) || 0
               trackAffiliateClick(id, platform, priceValue)
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-orange-500/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
-            style={{ backgroundColor: theme?.accentColor || '#E65100' }}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#E65100] dark:bg-[#E65100]/90 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-orange-500/20 transition-all hover:opacity-90 active:scale-95 motion-reduce:transition-none md:w-auto md:self-start focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
           >
             View Deal
             <ExternalLink size={14} />

@@ -1,0 +1,64 @@
+// © 2026 NEXQON HOLDINGS — CloudBasket
+// FILE: cc-output/response-api-implementation.txt
+// PURPOSE: Implementation log — email stubs, Zod + rateLimit on API routes
+// DATE: 2026-04-13
+
+=== STEP 1: services/email-engine/email-marketing.ts ===
+STATUS: Already fully implemented (no stubs remaining)
+- sendNewsletter(): uses Resend, deduplicates recipients, returns EmailCampaign with status 'sent'/'draft'
+- subscribeContact(): upserts to email_subscribers via Supabase service role
+COLUMN VERIFICATION (migration 016_email_subscribers.sql):
+  email           TEXT NOT NULL UNIQUE  ✓
+  name            TEXT                  ✓
+  tags            JSONB DEFAULT '[]'    ✓
+  subscribed_at   TIMESTAMPTZ           ✓
+  unsubscribed_at TIMESTAMPTZ           ✓
+
+=== STEP 2: lib/validation.ts ===
+ADDED:
+- productSearchQuerySchema (q, category, platform: amazon|flipkart|all)
+- ProductSearchQuery type
+- affiliateRedirectSchema (url, productId?, platform?)
+- AffiliateRedirectQuery type
+TSC: PASS
+
+=== STEP 3: app/api/currency/rates/route.ts ===
+STATUS: Already updated (found in git modified — rateLimit already wired)
+- rateLimit(ip, 60, 60) — 60 req/min
+- currencyRatesQuerySchema validates base param
+TSC: PASS
+
+=== STEP 4: app/api/search/route.ts (NEW FILE) ===
+PATH: app/api/search/route.ts
+NOTE: app/api/search/index-products/route.ts is a separate stub — this is the unified GET search endpoint
+- GET /api/search?q=&category=&platform=amazon|flipkart|all
+- rateLimit(ip, 30, 60) — 30 req/min
+- productSearchQuerySchema validates all params
+- Dispatches to amazonAPI.searchProducts() or flipkartAPI.searchProducts()
+- platform=all merges both
+TSC: PASS
+
+=== STEP 5: app/api/affiliate/redirect/route.ts (NEW FILE) ===
+PATH: app/api/affiliate/redirect/route.ts
+- GET /api/affiliate/redirect?url=&productId=&platform=
+- rateLimit(ip, 60, 60) — 60 req/min
+- affiliateRedirectSchema validates all params
+- Domain allowlist: amazon.in, amazon.com, amzn.to, flipkart.com, fkrt.it, cj.com, dpbolvw.net, anrdoezrs.net, jdoqocy.com, myntra.com, meesho.com, ajio.com
+- Fire-and-forget click logging to attributed_clicks (never blocks redirect)
+- Returns 302 redirect to validated affiliate URL
+TSC: PASS
+
+=== STEP 6: lib/validation.ts — pre-existing TSC errors ===
+STATUS: 0 errors in this file before and after changes
+TSC: PASS
+
+=== STEP 7: app/api/associates/apply/route.ts — pre-existing TSC errors ===
+STATUS: 0 errors — already uses associatesApplySchema + zodError correctly
+TSC: PASS
+
+=== FINAL TSC ===
+Files touched: lib/validation.ts, app/api/currency/rates/route.ts,
+               app/api/search/route.ts, app/api/affiliate/redirect/route.ts
+Errors in those files: 0
+Unrelated pre-existing errors: app/careers/CareersPageClient.tsx,
+                               app/legal/privacy/PrivacyPolicyClient.tsx (UI pages, out of scope)

@@ -102,7 +102,7 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
               <p className="text-sm font-black uppercase tracking-tight">Filters</p>
             </div>
             {hasActiveFilters && (
-              <button onClick={clearAll} className="text-[10px] font-black text-red-500 uppercase tracking-widest hover:text-red-700 flex items-center gap-1">
+              <button onClick={clearAll} className="text-[10px] font-black text-red-500 uppercase tracking-widest hover:text-red-700 flex items-center gap-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500">
                 <X size={10} /> Clear
               </button>
             )}
@@ -113,14 +113,14 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
             <p className="mb-3 text-[11px] font-black uppercase tracking-[0.2em] text-[var(--cb-text-muted)]">Price Range</p>
             <div className="grid grid-cols-2 gap-2">
               <input
-                className="cb-input py-2 text-xs"
+                className="cb-input py-2 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
                 placeholder="Min ₹"
                 type="number"
                 value={minPrice}
                 onChange={e => setMinPrice(e.target.value)}
               />
               <input
-                className="cb-input py-2 text-xs"
+                className="cb-input py-2 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
                 placeholder="Max ₹"
                 type="number"
                 value={maxPrice}
@@ -171,7 +171,7 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
           </div>
 
           {hasActiveFilters && (
-            <button onClick={clearAll} className="cb-btn cb-btn-ghost mt-2 w-full py-3 text-[10px] font-black uppercase tracking-widest">
+            <button onClick={clearAll} className="cb-btn cb-btn-ghost mt-2 w-full py-3 text-[10px] font-black uppercase tracking-widest transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
               Reset All
             </button>
           )}
@@ -187,7 +187,7 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
           </p>
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="lg:hidden cb-btn cb-btn-ghost flex items-center gap-2 py-2 px-4 text-xs font-bold"
+            className="lg:hidden cb-btn cb-btn-ghost flex items-center gap-2 py-2 px-4 text-xs font-bold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
           >
             <SlidersHorizontal size={14} /> {showFilters ? 'Hide' : 'Filter'}
           </button>
@@ -236,17 +236,17 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
         {hasActiveFilters && (
           <div className="mb-4 flex flex-wrap gap-2">
             {[...selectedBrands].map(b => (
-              <button key={b} onClick={() => toggleBrand(b)} className="flex items-center gap-1 px-3 py-1 bg-[#039BE5]/10 text-[#039BE5] rounded-full text-[10px] font-black uppercase tracking-widest border border-[#039BE5]/20 hover:bg-[#039BE5]/20">
+              <button key={b} onClick={() => toggleBrand(b)} className="flex items-center gap-1 px-3 py-1 bg-[#039BE5]/10 text-[#039BE5] rounded-full text-[10px] font-black uppercase tracking-widest border border-[#039BE5]/20 hover:bg-[#039BE5]/20 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-skyline-primary">
                 {b} <X size={10} />
               </button>
             ))}
             {[...selectedPlatforms].map(p => (
-              <button key={p} onClick={() => togglePlatform(p)} className="flex items-center gap-1 px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-orange-200 hover:bg-orange-100">
+              <button key={p} onClick={() => togglePlatform(p)} className="flex items-center gap-1 px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-orange-200 hover:bg-orange-100 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-500">
                 {p} <X size={10} />
               </button>
             ))}
             {(minPrice || maxPrice) && (
-              <button onClick={() => { setMinPrice(''); setMaxPrice('') }} className="flex items-center gap-1 px-3 py-1 bg-green-50 text-green-700 rounded-full text-[10px] font-black uppercase tracking-widest border border-green-200">
+              <button onClick={() => { setMinPrice(''); setMaxPrice('') }} className="flex items-center gap-1 px-3 py-1 bg-green-50 text-green-700 rounded-full text-[10px] font-black uppercase tracking-widest border border-green-200 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-600">
                 ₹{minPrice || '0'} – ₹{maxPrice || '∞'} <X size={10} />
               </button>
             )}
@@ -283,7 +283,7 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
                       )}
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                      <Link href={`/products/${product.id}`} className="rounded-full bg-white px-6 py-2.5 text-[10px] font-black uppercase tracking-widest text-zinc-950 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                      <Link href={`/products/${product.id}`} className="rounded-full bg-white px-6 py-2.5 text-[10px] font-black uppercase tracking-widest text-zinc-950 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600 dark:bg-zinc-900 dark:text-white">
                         Quick View
                       </Link>
                     </div>
@@ -305,7 +305,7 @@ export default function CategoryPageClient({ products, categoryLabel, categorySl
                     </div>
                     <div className="mt-auto pt-4">
                       <Link href={`/go/${product.id}`} target="_blank" rel="noopener noreferrer"
-                        className="cb-btn cb-btn-primary w-full py-2.5 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2">
+                        className="cb-btn cb-btn-primary w-full py-2.5 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">
                         Get Deal <ExternalLink size={12} />
                       </Link>
                     </div>

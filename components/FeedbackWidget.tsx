@@ -109,7 +109,7 @@ export default function FeedbackWidget() {
         type="button"
         onClick={openModal}
         aria-label="Open feedback"
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#039BE5] text-white px-2 py-4 rounded-l-xl shadow-xl hover:bg-[#0288cc] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#039BE5] dark:bg-[#039BE5]/80 text-white px-2 py-4 rounded-l-xl shadow-xl hover:bg-[#0288cc] dark:hover:bg-[#0288cc]/80 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
         style={{ writingMode: 'vertical-rl' }}
       >
         <span className="text-[11px] font-black uppercase tracking-widest">Feedback</span>
@@ -191,7 +191,7 @@ export default function FeedbackWidget() {
                   type="button"
                   onClick={handleSubmit}
                   disabled={!rating}
-                  className="w-full h-12 rounded-xl bg-[#039BE5] text-white text-[11px] font-black uppercase tracking-widest disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0288cc] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+                  className="w-full h-12 rounded-xl bg-[#039BE5] dark:bg-[#039BE5]/80 text-white text-[11px] font-black uppercase tracking-widest disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0288cc] dark:hover:bg-[#0288cc]/80 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
                 >
                   Submit Feedback
                 </button>

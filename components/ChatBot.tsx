@@ -43,7 +43,7 @@ export default function ChatBot() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-24 right-6 z-50 bg-[#039BE5] hover:bg-[#0288D1] text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110"
+        className="fixed bottom-24 right-6 z-50 bg-[#039BE5] dark:bg-[#039BE5]/80 hover:bg-[#0288D1] dark:hover:bg-[#0288D1]/80 text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110"
         aria-label="Open AI Assistant"
       >
         {isOpen ? <X size={24} /> : <Bot size={24} />}
@@ -51,7 +51,7 @@ export default function ChatBot() {
       
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-40 right-6 z-50 w-96 bg-white rounded-lg shadow-2xl flex flex-col" style={{ height: '500px' }}>
+        <div className="fixed bottom-40 right-6 z-50 w-96 bg-white dark:bg-zinc-900 rounded-lg shadow-2xl flex flex-col" style={{ height: '500px' }}>
           {/* Header */}
           <div className="bg-[#039BE5] text-white p-4 rounded-t-lg">
             <div className="flex items-center space-x-2">
@@ -70,7 +70,7 @@ export default function ChatBot() {
                 <div className={`max-w-[80%] rounded-lg p-3 ${
                   msg.role === 'user' 
                     ? 'bg-[#039BE5] text-white'
-                    : 'bg-gray-100 text-gray-800'
+                    : 'bg-gray-100 text-gray-800 dark:bg-zinc-800 dark:text-white'
                 }`}>
                   {msg.text}
                 </div>
@@ -85,7 +85,7 @@ export default function ChatBot() {
                   <button
                     key={idx}
                     onClick={() => handleQuickReply(reply)}
-                    className="w-full text-left text-sm border border-[#039BE5]/30 hover:bg-sky-50 rounded-lg p-2 transition-colors"
+                    className="w-full text-left text-sm border border-[#039BE5]/30 dark:border-[#039BE5]/20 hover:bg-sky-50 dark:hover:bg-zinc-800 rounded-lg p-2 transition-colors"
                   >
                     {reply}
                   </button>
@@ -103,11 +103,11 @@ export default function ChatBot() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Type your message..."
-                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#039BE5]"
+                className="flex-1 border border-gray-300 dark:border-zinc-700 rounded-lg px-4 py-2 dark:bg-zinc-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#039BE5]"
               />
               <button
                 onClick={handleSend}
-                className="bg-[#039BE5] hover:bg-[#0288D1] text-white rounded-lg px-4 py-2 transition-colors"
+                className="bg-[#039BE5] dark:bg-[#039BE5]/80 hover:bg-[#0288D1] dark:hover:bg-[#0288D1]/80 text-white rounded-lg px-4 py-2 transition-colors"
               >
                 <Send size={20} />
               </button>

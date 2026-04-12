@@ -6,3 +6,42 @@ Dark mode fixes log
    - Product badges: added dark:bg variants for discount and badge spans
 
 pnpm tsc --noEmit will be run and results appended per file.
+
+2) components/Header.tsx — Added dark: variants to logo and promo dismiss button
+
+
+3) components/products/ProductCard.tsx — Added dark:bg for discount, trending badges; added dark:bg for CTA View Deal
+
+
+4) components/ProductCard.tsx (legacy) — Replaced inline theme color style with tailwind classes; added dark: variants for price/accent
+
+
+5) components/PromotionSidebar.tsx — Added dark:bg for cards, dark text for headings, dark gradient tweaks
+
+
+6) components/products/ProductFilter.tsx — Added dark variants to selected category pill and search input
+
+
+7) components/FeedbackWidget.tsx — Added dark variants to fixed feedback tab and submit button
+
+
+8) components/PriceComparisonTable.tsx — Added dark variants to lowest-row highlight and platform badges
+
+
+9) components/ChatBot.tsx — Added dark variants for chat button, window, message bubbles, inputs, and quick-reply buttons
+
+
+10) components/PriceAlertModal.tsx — Added dark variants to bell icon and highlight card
+
+
+PH2-1) components/Header.tsx — Added focus-visible and duration to nav links
+
+
+PH2-2) components/CategoryPageClient.tsx — Added focus-visible/transition to inputs, pills, buttons, quick view link, and CTA
+
+
+PH2-3) components/PromotionSidebar.tsx — Added focus-visible and transitions to flash deal cards and CTA
+
+
+PH2-4) components/products/ProductCard.tsx & components/ProductCard.tsx — Added focus-visible to article/card containers
+

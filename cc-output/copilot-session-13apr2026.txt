@@ -1,0 +1,46 @@
+Copilot session backup — 13-Apr-2026
+
+Summary: Full list of files modified during the session and brief notes.
+
+Files modified (components/):
+- components/Navigation.tsx — Legacy shim comment added.
+- components/CategoryPageClient.tsx — Dark-mode variants for badges, brand pills; focus-visible and transition on inputs, pills, CTAs.
+- components/Header.tsx — Dark variants earlier; added transition-colors duration-150 and focus-visible:ring to promo dismiss, brand, nav links, search toggle, mobile menu, auth links.
+- components/products/ProductCard.tsx — Dark:bg variants for badges/CTA; focus-visible on card.
+- components/ProductCard.tsx (legacy) — Replaced inline theme colors with Tailwind classes; dark variants and focus-visible.
+- components/PromotionSidebar.tsx — Dark variants and focus-visible/transition on cards and CTA.
+- components/products/ProductFilter.tsx — Dark variants on pills and inputs.
+- components/FeedbackWidget.tsx — Dark variants on fixed tab and submit button; focus-visible added.
+- components/PriceComparisonTable.tsx — Dark variants for row highlights and badges; focus-visible on links.
+- components/ChatBot.tsx — Dark variants for chat button, window, message bubbles, inputs; focus-visible and transitions for quick replies.
+- components/PriceAlertModal.tsx — Dark variants and focus-visible for modal actions.
+- components/CookieConsent.tsx — Added transition-colors, duration-150 and focus-visible:ring to banner and modal buttons.
+- components/HeroSection.tsx — Added transition & focus-visible to primary search CTA and hero CTAs.
+- components/ProductDetailActions.tsx — Added transition & focus-visible to View Deal and Price Alert buttons and sticky bar.
+- components/NewsletterSection.tsx — Category badges keyboard-accessible; transition & focus-visible on badges and subscribe button.
+- components/ProductTips.tsx — Added transition & focus-visible to Add Tip, Submit, and helpful buttons.
+- components/products/ProductGrid.tsx — Added transition & focus-visible to Reset Filters button.
+- components/ShareButton.tsx — Added transition & focus-visible to share icon and full buttons (WhatsApp, Twitter, Copy).
+- components/SocialCTA.tsx — Added transition & focus-visible to inline link and CTAs.
+- components/TelegramCTA.tsx — Added transition & focus-visible to inline & banner CTAs.
+- components/WhatsAppShare.tsx — Added transition & focus-visible to WhatsApp share link.
+- components/ReferralWidget.tsx — Added transition & focus-visible to Copy/Share buttons; improved FAQ toggles (aria-expanded).
+- components/PWAInstallBanner.tsx — Added transition & focus-visible to Install and Dismiss buttons.
+- components/PODCollectionClient.tsx — Added transition & focus-visible to color swatches, View Design CTA, Back link, Contact link.
+
+Files created/updated (cc-output):
+- cc-output/dark-mode-gaps.txt — audit of missing dark: variants (created earlier).
+- cc-output/dark-mode-fixes.txt — running log of fixes; appended after each file change.
+- cc-output/response-greeting.txt, cc-output/response-p3-navigation.txt, cc-output/response-standby.txt — session artifacts.
+- cc-output/copilot-session-13apr2026.txt — THIS BACKUP (created now).
+
+Notes:
+- All edits confined to components/ and cc-output/ as requested.
+- pnpm exec tsc --noEmit was run after each file edit; all runs passed with exit code 0.
+- No files in services/, app/api/, lib/, supabase/ were modified.
+- No cart, checkout, payment language was introduced.
+- No git pushes performed; commits are local only as requested.
+
+Commit trailers included per policy.
+
+End of backup.

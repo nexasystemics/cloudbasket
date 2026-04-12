@@ -1,0 +1,153 @@
+// CloudBasket — Cron Job Audit
+// Generated: 2026-04-13
+// Sources: vercel.json, app/api/cron/
+// ============================================================
+
+=== VERCEL.JSON STATUS ===
+
+vercel.json exists but contains NO crons block.
+No cron jobs are scheduled via Vercel's native cron configuration.
+
+This means the two cron route files exist but ARE NEVER AUTOMATICALLY TRIGGERED
+by Vercel. They can only be called manually or by an external scheduler
+(e.g. GitHub Actions, Supabase pg_cron, external cURL, Zapier, etc.).
+
+=== CRON ROUTES FOUND ===
+
+2 routes in app/api/cron/:
+  1. app/api/cron/daily-deals/route.ts  → GET /api/cron/daily-deals
+  2. app/api/cron/weekly-digest/route.ts → GET /api/cron/weekly-digest
+
+=== ROUTE ANALYSIS ===
+
+────────────────────────────────────────────────────────────────────────
+ROUTE: GET /api/cron/daily-deals
+FILE:  app/api/cron/daily-deals/route.ts
+────────────────────────────────────────────────────────────────────────
+Auth:       x-cron-secret header checked against env.CRON_SECRET ✓
+            (Fail-open: if CRON_SECRET is empty, all requests pass — potential risk)
+Logic:      Calls getDailyDeals(5) — reads from static in-memory deal data
+            Logs deal count to console.info
+Response:   { ok: true, dealsCount: N, triggeredAt: ISO timestamp }
+Error handling: NONE — no try/catch around getDailyDeals()
+Side effects: None — does NOT write to Supabase, email subscribers, or Redis
+Intended:   Should fetch new deals, update deal cache, email subscribers
+Actual:     Only reads 5 static deals and returns them — no actual cron work done
+
+STATUS: STUB — no real cron work performed
+
+────────────────────────────────────────────────────────────────────────
+ROUTE: GET /api/cron/weekly-digest
+FILE:  app/api/cron/weekly-digest/route.ts
+────────────────────────────────────────────────────────────────────────
+Auth:       x-cron-secret header checked ✓ (same fail-open issue)
+Logic:      Calls getDailyDeals(5) — identical to daily-deals route
+Response:   { ok: true, dealsCount: N, triggeredAt: ISO timestamp }
+Error handling: NONE — no try/catch
+Side effects: None — does NOT send emails, update DB, or notify subscribers
+Intended:   Should query newsletter_subscribers, send weekly deal digest via Resend
+Actual:     Only reads 5 static deals and returns them — no emails sent
+
+STATUS: STUB — no real cron work performed
+
+=== ISSUES SUMMARY ===
+
+Issue 1 — CRITICAL: Crons not scheduled in vercel.json
+  Neither route is in the Vercel crons block.
+  They will never run automatically.
+  Fix: Add crons block to vercel.json (see fix below).
+
+Issue 2 — HIGH: CRON_SECRET fail-open
+  if (env.CRON_SECRET && secret !== env.CRON_SECRET)
+  If CRON_SECRET is not set, the condition is false and ALL requests pass.
+  An unauthenticated user can trigger either cron from a browser.
+  Fix: Change to explicit check — if secret !== env.CRON_SECRET (always enforce).
+
+Issue 3 — HIGH: No error handling in either route
+  getDailyDeals() could throw if deals-engine fails.
+  Fix: Wrap logic in try/catch, return { ok: false, error } on failure.
+
+Issue 4 — MEDIUM: Cron logic is not implemented (stubs)
+  Both routes read static data — neither does what it's named for.
+  daily-deals should: call dealDiscovery.discoverFromFlipkart() + publishDeals()
+  weekly-digest should: query newsletter_subscribers, send email via emailMarketing.sendNewsletter()
+
+Issue 5 — LOW: weekly-digest and daily-deals share identical logic
+  Copy-paste duplication — differ only in route name.
+
+=== FIX 1 — Add crons to vercel.json ===
+
+Add this block to vercel.json (inside the root JSON object):
+
+  "crons": [
+    {
+      "path": "/api/cron/daily-deals",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/weekly-digest",
+      "schedule": "0 8 * * 1"
+    }
+  ]
+
+Schedules use UTC. Adjust for IST (UTC+5:30):
+  daily-deals  → 0 7 * * *    runs daily at 12:30 IST
+  weekly-digest → 0 8 * * 1   runs Monday at 13:30 IST
+
+IMPORTANT: Vercel cron jobs are authenticated via the Vercel platform —
+  the Authorization: Bearer {CRON_SECRET} header is NOT sent by Vercel natively.
+  You must either:
+    a) Use the Vercel Cron Secret (CRON_SECRET env var set in Vercel dashboard)
+       and verify it in the route — Vercel injects it as Authorization: Bearer
+    b) OR remove the x-cron-secret check and rely on Vercel's built-in auth
+
+  Vercel sends: Authorization: Bearer <CRON_SECRET from dashboard>
+  Current code reads: x-cron-secret header
+  These do NOT match — fix the header check too.
+
+=== FIX 2 — Harden secret check (apply to both routes) ===
+
+BEFORE:
+  const secret = r.headers.get('x-cron-secret')
+  if (env.CRON_SECRET && secret !== env.CRON_SECRET) return ...
+
+AFTER (aligns with Vercel's Authorization header pattern):
+  const authHeader = r.headers.get('authorization')
+  const secret = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null
+  if (!secret || secret !== env.CRON_SECRET) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+=== FIX 3 — Add error handling (apply to both routes) ===
+
+Wrap the cron logic in try/catch:
+  try {
+    const deals = getDailyDeals(5)
+    console.info('[DailyDeals Cron] triggered, deals:', deals.length)
+    return NextResponse.json({ ok: true, dealsCount: deals.length, triggeredAt: new Date().toISOString() })
+  } catch (err) {
+    console.error('[DailyDeals Cron] failed:', err)
+    return NextResponse.json({ ok: false, error: 'Cron failed' }, { status: 500 })
+  }
+
+=== WHAT CRONS SHOULD ACTUALLY DO ===
+
+daily-deals (triggered: daily at 07:00 UTC):
+  1. Call dealDiscovery.discoverFromFlipkart()
+  2. Call dealDiscovery.curateDeals(discovered)
+  3. Call dealDiscovery.publishDeals(curated)
+  4. Optionally: deleteCache('cb:deals:flipkart') to bust Redis cache
+  5. Log to Supabase (optional audit log)
+
+weekly-digest (triggered: every Monday at 08:00 UTC):
+  1. Query newsletter_subscribers where unsubscribed_at IS NULL
+  2. Paginate in batches of 200
+  3. Build digest HTML with top 10 deals
+  4. Call emailMarketing.sendNewsletter({ subject, htmlContent, recipients })
+  5. Log send stats
+
+=== FILE LOCATIONS FOR FIXES ===
+
+  vercel.json                               → add crons block
+  app/api/cron/daily-deals/route.ts        → fix auth + error handling + real logic
+  app/api/cron/weekly-digest/route.ts      → fix auth + error handling + real logic
+  services/email-engine/email-marketing.ts → sendNewsletter() already implemented ✓
+  services/deals/auto-discovery.ts         → discoverFromFlipkart() already implemented ✓

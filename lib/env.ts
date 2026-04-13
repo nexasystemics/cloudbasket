@@ -63,6 +63,7 @@ export const env = {
   WHATSAPP_ACCESS_TOKEN:           process.env.WHATSAPP_ACCESS_TOKEN            || '',
   WHATSAPP_PHONE_NUMBER_ID:        process.env.WHATSAPP_PHONE_NUMBER_ID         || '',
   WHATSAPP_VERIFY_TOKEN:           process.env.WHATSAPP_VERIFY_TOKEN            || '',
+  TELEGRAM_BOT_SECRET:             process.env.TELEGRAM_BOT_SECRET              || '',
   /**
    * Razorpay payment gateway keys for payment initialization and client-side checkout token exposure.
    * Connects to Razorpay payment services.

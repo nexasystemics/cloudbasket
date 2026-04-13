@@ -11,7 +11,7 @@ export async function POST(r: NextRequest) {
   if (!rl.success) return NextResponse.json({ error: 'Too many requests. Please try again shortly.' }, { status: 429 })
 
   const apiKey = r.headers.get('x-internal-api-key')
-  if (env.INTERNAL_API_KEY && apiKey !== env.INTERNAL_API_KEY) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!apiKey || apiKey !== env.INTERNAL_API_KEY) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   try {
     const deals = getDailyDeals(5); if (!deals.length) return NextResponse.json({ posts: [] })
     const top = deals[0]

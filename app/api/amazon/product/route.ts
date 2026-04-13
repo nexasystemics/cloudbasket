@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   }
 
   const apiKey = request.headers.get('x-internal-api-key')
-  if (env.INTERNAL_API_KEY && apiKey !== env.INTERNAL_API_KEY) {
+  if (!apiKey || apiKey !== env.INTERNAL_API_KEY) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
   const asin = request.nextUrl.searchParams.get('asin')

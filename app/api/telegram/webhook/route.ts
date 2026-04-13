@@ -2,6 +2,7 @@
 // F87: Telegram Bot Integration
 import { NextRequest, NextResponse } from 'next/server'
 import { getDailyDeals } from '@/lib/deals-engine'
+import { env } from '@/lib/env'
 import { rateLimit } from '@/lib/redis'
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || ''
@@ -13,15 +14,21 @@ async function sendTelegramMessage(chatId: number | string, text: string): Promi
   } catch { /* no-op */ }
 }
 
-export async function POST(request: NextRequest) {
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    ?? request.headers.get('x-real-ip')
+export async function POST(r: NextRequest) {
+  const ip = r.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? r.headers.get('x-real-ip')
     ?? 'unknown'
   const rl = await rateLimit(ip, 30, 60)
   if (!rl.success) return NextResponse.json({ ok: false, error: 'Too many requests. Please try again shortly.' }, { status: 429 })
 
+  // Verify X-Telegram-Bot-Api-Secret-Token set via Telegram setWebhook secret_token param
+  const secretToken = r.headers.get('x-telegram-bot-api-secret-token')
+  if (!secretToken || secretToken !== env.TELEGRAM_BOT_SECRET) {
+    return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
-    const body = await request.json()
+    const body = await r.json()
     const message = body?.message
     if (!message) return NextResponse.json({ ok: true })
     const chatId = message.chat.id

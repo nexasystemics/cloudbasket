@@ -17,7 +17,7 @@ export async function POST(r: NextRequest) {
   }
 
   const apiKey = r.headers.get('x-internal-api-key')
-  if (env.INTERNAL_API_KEY && apiKey !== env.INTERNAL_API_KEY) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!apiKey || apiKey !== env.INTERNAL_API_KEY) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   try {
     const fk = await dealDiscovery.discoverFromFlipkart()
     const curated = await dealDiscovery.curateDeals(fk)

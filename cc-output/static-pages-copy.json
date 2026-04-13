@@ -1,0 +1,31 @@
+{
+  "about": {
+    "mission": "Our mission is to empower every Indian consumer with real-time price transparency and smart discovery. We aim to eliminate the noise of e-commerce by providing a pure comparison engine that helps you find the best price across all major retailers, ensuring every discovery leads to maximum value and bachat.",
+    "story": "Founded in a small Bengaluru apartment during the 2024 festive sale season, CloudBasket was born from a simple frustration: why was it so hard to find the absolute best price across India's fragmented online stores? We realized that Indian shoppers didn't need another marketplace; they needed a trusted discovery guide. Today, we track millions of products across the country, helping millions of users navigate the complex world of Indian e-commerce with ease, transparency, and a focus on pure savings.",
+    "team_tagline": "Built by Indian Savers for the Smartest Indian Shoppers."
+  },
+  "press": {
+    "press_headline": "CloudBasket in the News: Redefining Indian Discovery",
+    "press_subline": "See how we are helping India save and making price comparison simpler for everyone.",
+    "media_quotes": [
+      {
+        "publication": "The Tech Chronicle India",
+        "quote": "CloudBasket is the much-needed transparency layer for India's booming e-commerce sector."
+      },
+      {
+        "publication": "Bharat Business Daily",
+        "quote": "The ultimate tool for savvy Indian shoppers looking for the best price without the marketing noise."
+      },
+      {
+        "publication": "Startup India Insights",
+        "quote": "A game-changer for festive season savings across all major Indian online platforms."
+      }
+    ],
+    "contact_email": "press@cloudbasket.in"
+  },
+  "404": {
+    "headline": "Oops! This Page is Out of Stock.",
+    "subline": "We couldn't find the deal you were looking for, but the best prices are just a click away.",
+    "cta_text": "Back to Deals"
+  }
+}

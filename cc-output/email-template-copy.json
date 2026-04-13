@@ -1,0 +1,26 @@
+[
+  {
+    "template": "price-alert",
+    "subject": "Price Drop Alert: Your Item is Now Cheaper!",
+    "preheader": "We found a lower price for your tracked item. Compare deals now and save in INR.",
+    "headline": "Your Tracked Item Just Hit a New Low!",
+    "body": "Great news! The price of the product you've been tracking has just dropped on a major Indian platform. Now is the perfect time to compare prices across all top retailers and discover the best deals available. Don't miss out on these real-time savings—check the latest rates on CloudBasket and grab the best price today.",
+    "cta_button_text": "Compare Prices Now"
+  },
+  {
+    "template": "newsletter-welcome",
+    "subject": "Welcome to CloudBasket: India's Smart Discovery Hub",
+    "preheader": "Start saving today by discovering the best prices across all major Indian retailers.",
+    "headline": "Welcome to the Future of Smart Shopping!",
+    "body": "We are thrilled to have you join CloudBasket, India's premier destination for price discovery and smart savings. Our mission is to help you navigate the vast Indian e-commerce landscape by providing real-time price comparisons across 50+ retailers like Amazon and Flipkart. Every week, you will receive curated alerts on the best deals, festive discounts, and price drops across categories like Mobiles, Fashion, and Electronics. Start your discovery journey now!",
+    "cta_button_text": "Discover Top Deals"
+  },
+  {
+    "template": "weekly-digest",
+    "subject": "Your Weekly Digest: India's Hottest Price Drops",
+    "preheader": "This week's top deals across Electronics, Fashion, and more. Compare and save now.",
+    "headline": "The Week's Best Price Discoveries!",
+    "body": "Another week of incredible savings is here! From massive price drops on the latest 5G smartphones to exclusive festive deals in Home & Kitchen, we've rounded up the best prices across India's top platforms. Compare deals in real-time and ensure you never overpay for your essentials. Our discovery engine has identified the smartest value across all major categories—check out this week's highlights and save big.",
+    "cta_button_text": "View Weekly Deals"
+  }
+]

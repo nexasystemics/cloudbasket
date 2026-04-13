@@ -1,0 +1,28 @@
+// CloudBasket — Task 4 Completion
+// Date: 2026-04-13
+// ============================================================
+
+TASK 4 — Migration 018 RLS price_history
+STATUS: COMPLETE — TSC exit 0 — commit 352e11c
+
+File created:
+  supabase/migrations/018_rls_price_history.sql
+
+Content:
+  - ALTER TABLE price_history ENABLE ROW LEVEL SECURITY  (idempotent no-op)
+  - DO $$ BEGIN guard: CREATE POLICY "Public read price history"
+      FOR SELECT USING (true)  — only if policy does not already exist
+  - DO $$ BEGIN guard: CREATE POLICY "Service role insert"
+      FOR INSERT WITH CHECK (true)  — only if policy does not already exist
+
+Why idempotent vs plain CREATE POLICY (like 017):
+  017 short_links had NO prior RLS at all — safe to CREATE POLICY directly.
+  018 price_history may already have policies from 001_price_history.sql
+  in production. Plain CREATE POLICY would fail with "policy already exists".
+  DO $$ IF NOT EXISTS guards make this safe to run on any environment.
+
+IBF action: run in Supabase Dashboard SQL Editor against production.
+
+Migration inventory (complete):
+  017_rls_short_links.sql    — commit 3a4df95
+  018_rls_price_history.sql  — commit 352e11c

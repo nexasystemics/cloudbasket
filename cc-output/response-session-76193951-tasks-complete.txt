@@ -1,0 +1,62 @@
+// CloudBasket — Session 76193951 Task Completion
+// Date: 2026-04-13
+// ============================================================
+
+=== TASK 1 — Redis cache migration ===
+STATUS: COMPLETE — TSC exit 0 — commit 8013c5f
+
+Files changed:
+  app/api/prices/route.ts
+    - Added getCache/setCache import from @/lib/redis
+    - Cache key: cb:cache:prices:<sorted-productIds>
+    - TTL: 300s
+    - Only cached when productIds.length <= 10 (key size safety)
+    - Cache checked before fetch; stored after results assembled
+
+  app/api/flipkart/deals/route.ts
+    - Added getCache/setCache import from @/lib/redis
+    - Cache key: cb:cache:flipkart:deals (module-level const)
+    - TTL: 600s
+    - Cache checked at top of handler; stored after getDeals() returns
+    - Type: Awaited<ReturnType<typeof flipkartAPI.getDeals>>
+
+=== TASK 2 — vercel.json crons block + CRON_SECRET hardening ===
+STATUS: COMPLETE — TSC exit 0 — commit 821a681
+
+Files changed:
+  vercel.json
+    crons added:
+      /api/cron/daily-deals   → "0 0 * * *"   (daily 00:00 UTC / 05:30 IST)
+      /api/cron/weekly-digest → "0 6 * * 1"   (Monday 06:00 UTC / 11:30 IST)
+
+  app/api/cron/daily-deals/route.ts
+    - x-cron-secret header → Authorization: Bearer <secret>
+    - Fail-open removed: always enforces CRON_SECRET (if !secret || secret !== env.CRON_SECRET)
+    - getDailyDeals() wrapped in try/catch; returns { ok: false, error } on failure
+    - console.info updated to [DailyDeals Cron]
+
+  app/api/cron/weekly-digest/route.ts
+    - Same auth + try/catch fixes as daily-deals
+    - console.info updated to [WeeklyDigest Cron]
+
+=== TASK 3 — Migration 017 RLS short_links ===
+STATUS: COMPLETE — TSC exit 0 — commit 3a4df95
+
+File created:
+  supabase/migrations/017_rls_short_links.sql
+    - ALTER TABLE short_links ENABLE ROW LEVEL SECURITY
+    - CREATE POLICY "Public read short_links" FOR SELECT USING (true)
+    - CREATE POLICY "Service role write short_links" FOR ALL USING (true) WITH CHECK (true)
+    - IBF action: run in Supabase Dashboard SQL Editor against production
+
+=== COMMIT LOG ===
+  8013c5f — fix: replace in-memory cache with Upstash in prices + flipkart/deals routes
+  821a681 — fix: add vercel.json crons block + harden CRON_SECRET to Bearer auth
+  3a4df95 — feat: add migration 017 RLS policies for short_links table
+
+=== REMAINING IBF ACTIONS (unchanged from prior session) ===
+  P0: Supabase prod project, Vercel deploy, DNS, Razorpay KYC, grievance officer,
+      Amazon Associates tag, CookieYes config, GA4 Signals
+  P1: Upstash account + UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN env vars
+  P2: Delete app/product/[id]/page.tsx.bak, replace Navigation.tsx stub,
+      create migration 013 gap, create .env.example

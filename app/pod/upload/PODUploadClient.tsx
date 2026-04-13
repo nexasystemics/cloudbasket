@@ -43,13 +43,15 @@ export default function PODUploadClient() {
       <p className="text-[var(--cb-text-muted)] mb-8">Upload up to 100 images simultaneously for POD product creation</p>
 
       {/* Upload Zone */}
-      <div onDrop={handleDrop} onDragOver={e=>{e.preventDefault();setIsDragging(true)}} onDragLeave={()=>setIsDragging(false)}
+      <div role="button" tabIndex={0} onDrop={handleDrop} onDragOver={e=>{e.preventDefault();setIsDragging(true)}} onDragLeave={()=>setIsDragging(false)}
         onClick={()=>inputRef.current?.click()}
-        className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-colors mb-8 ${isDragging?'border-skyline-primary bg-blue-500/5':'border-[var(--cb-border)] hover:border-skyline-primary'}`}>
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inputRef.current?.click() } }}
+        aria-describedby="pod-upload-instructions"
+        className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-colors mb-8 focus:outline-none focus-visible:ring-2 focus-visible:ring-skyline-primary focus-visible:ring-offset-2 ${isDragging?'border-skyline-primary bg-blue-500/5':'border-[var(--cb-border)] hover:border-skyline-primary'}`}>
         <Upload size={40} className="mx-auto text-[var(--cb-text-muted)] mb-4" />
         <p className="font-black text-lg">Drop images here or click to browse</p>
-        <p className="text-sm text-[var(--cb-text-muted)] mt-2">PNG, JPG, WEBP • Max 25MB each • Min 3000×3000px for print quality</p>
-        <input ref={inputRef} type="file" multiple accept="image/*" className="hidden" onChange={e=>handleFiles(Array.from(e.target.files||[]))} />
+        <p id="pod-upload-instructions" className="text-sm text-[var(--cb-text-muted)] mt-2">PNG, JPG, WEBP • Max 25MB each • Min 3000×3000px for print quality</p>
+        <input id="pod-upload-input" ref={inputRef} type="file" multiple accept="image/*" aria-label="Upload images" className="hidden" onChange={e=>handleFiles(Array.from(e.target.files||[]))} />
       </div>
 
       {files.length > 0 && (

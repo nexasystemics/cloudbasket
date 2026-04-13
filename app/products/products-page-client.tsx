@@ -89,8 +89,9 @@ function normalizeCategory(categoryParam: string | null): CategoryFilter {
 }
 
 function getPlatformBadgeClass(platform: Product['platform']): string {
-  if (platform === 'Amazon') return 'bg-[#FF9900]/10 text-[#FF9900] border border-[#FF9900]/20'
-  if (platform === 'Flipkart') return 'bg-[#2874F0]/10 text-[#2874F0] border border-[#2874F0]/20'
+  // Use higher contrast badges: solid background with white text for major platforms
+  if (platform === 'Amazon') return 'bg-[#FF9900] text-white border border-[#FF9900]/90'
+  if (platform === 'Flipkart') return 'bg-[#2874F0] text-white border border-[#2874F0]/90'
   return 'bg-green-500/10 text-green-400 border border-green-500/20'
 }
 

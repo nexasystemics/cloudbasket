@@ -1,5 +1,4 @@
 // © 2026 NEXQON HOLDINGS — CloudBasket app/legal/layout.tsx
-'use client'
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

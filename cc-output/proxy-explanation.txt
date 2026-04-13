@@ -1,0 +1,44 @@
+Proxy.ts — Plain English explanation for IBF
+
+What this file does
+- Acts like a polite doorman for the website. Every time someone or something tries to open a page or call an internal service, this file checks the request first and decides what to do.
+- It handles simple browser checks, stops unwanted bots, slows down excessive callers, protects private areas for staff, keeps scheduled jobs safe, and makes sure the site only talks to allowed websites.
+
+Why it exists
+- To keep CloudBasket reliable and safe. Instead of letting every request go straight into the app, this file filters requests so visitors and important systems get the right experience while malicious actors, scrapers, or broken scripts are kept out.
+
+What would break if it were removed
+- Public pages would still load, but many safety and business protections would disappear.
+  - Admin and dashboard areas could become reachable without proper checks, risking data exposure or misuse.
+  - Scrapers and bots might hit affiliate links and API endpoints, which could skew metrics, cause extra costs, or trigger partner abuse.
+  - The site could accept too many requests at once (no rate limiting), causing slowdowns or outages.
+  - Cron (scheduled) endpoints could be called by anyone — scheduled tasks could be abused.
+  - Cross-site requests from unauthorized websites could be accepted, creating privacy or security issues.
+
+What each major section protects against (plain-English)
+- CORS preflight: Ensures the site only accepts requests from allowed websites or localhost during development. Prevents other websites from quietly using CloudBasket services.
+
+- Bot blocking for affiliate/redirect routes: Stops automated scrapers and simple bot tools from hitting partner or redirect links so partners aren’t spammed and analytics stay accurate.
+
+- Zero-checkout redirect: Enforces the business rule that there is no checkout inside CloudBasket — attempts to reach checkout pages are redirected to a feature-disabled page.
+
+- Cron secret guard: Protects scheduled job URLs so only the service with the secret key can trigger them, preventing others from running or abusing scheduled tasks.
+
+- Rate limiting: Slows down clients that make too many calls in a short time. This keeps the site responsive for everyone and avoids accidental or malicious overload.
+
+- Supabase session and auth guard: Verifies who is signed in (when available) so pages like profile, wishlist, admin, and dashboard are only shown to the right people. If the authentication system isn’t set up, it sends users to login for protected areas.
+
+- Maintenance mode: Lets the site be put into an "offline" experience for regular users while still allowing admins to access tools — useful during updates or incidents.
+
+- Public route handling: For regular pages and assets, it applies the safe headers and allows normal browsing.
+
+Why this matters for the business
+- Keeps partner relationships stable by protecting affiliate/redirect paths.
+- Prevents unexpected bills, outages, or bad analytics caused by scraping or overload.
+- Preserves legal and privacy boundaries by enforcing where requests may come from.
+- Ensures staff-only areas remain staff-only.
+
+If changes are needed
+- Treat the file as a policy gate: any change affects security, operations, or business rules. Test in staging and communicate changes to the team and partners before deploying.
+
+End of explanation.

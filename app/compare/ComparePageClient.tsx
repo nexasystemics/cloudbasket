@@ -89,8 +89,9 @@ function getProductSpecs(product: CompareProduct): ProductSpecs {
 
 function getPlatformClass(platform: string): string {
   const normalized = platform.toLowerCase()
-  if (normalized.includes('amazon')) return 'bg-[#FF9900]/10 text-[#FF9900] border-[#FF9900]/20'
-  if (normalized.includes('flipkart')) return 'bg-[#2874F0]/10 text-[#2874F0] border-[#2874F0]/20'
+  // High contrast badges for accessibility: solid background and white text for brand badges
+  if (normalized.includes('amazon')) return 'bg-[#FF9900] text-white border border-[#FF9900]/90'
+  if (normalized.includes('flipkart')) return 'bg-[#2874F0] text-white border border-[#2874F0]/90'
   return 'cb-badge-green'
 }
 

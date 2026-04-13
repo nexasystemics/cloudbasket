@@ -9,7 +9,7 @@ import {
   fetchFlipkartPrices,
   type LivePriceResult,
 } from '@/services/price-engine/india-apis'
-import { rateLimit } from '@/lib/redis'
+import { rateLimit, getCache, setCache } from '@/lib/redis'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -42,6 +42,22 @@ export async function GET(request: NextRequest) {
 
     if (productIds.length > 50) {
       return NextResponse.json({ error: 'Max 50 product IDs per request' }, { status: 400 })
+    }
+
+    // Redis cache — only for small requests (≤10 IDs) to keep key size bounded
+    const cacheKey = productIds.length <= 10
+      ? `cb:cache:prices:${[...productIds].sort().join(',')}`
+      : null
+
+    if (cacheKey) {
+      const cached = await getCache<LivePriceResult[]>(cacheKey)
+      if (cached) {
+        return NextResponse.json(cached, {
+          headers: {
+            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=600',
+          },
+        })
+      }
     }
 
     // Route by product ID prefix
@@ -80,6 +96,8 @@ export async function GET(request: NextRequest) {
         }))
       )
     }
+
+    if (cacheKey) await setCache(cacheKey, results, 300)
 
     return NextResponse.json(results, {
       headers: {

@@ -1,0 +1,137 @@
+{
+  "product_page": {
+    "usage_notes": "Inject into app/products/[id]/page.tsx within a <script type='application/ld+json'> tag.",
+    "json_ld": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "{{PRODUCT_NAME}}",
+      "image": "{{PRODUCT_IMAGE_URL}}",
+      "description": "{{PRODUCT_DESCRIPTION}}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{BRAND_NAME}}"
+      },
+      "sku": "{{PRODUCT_ID}}",
+      "offers": {
+        "@type": "AggregateOffer",
+        "offerCount": "{{OFFER_COUNT}}",
+        "lowPrice": "{{LOW_PRICE}}",
+        "highPrice": "{{HIGH_PRICE}}",
+        "priceCurrency": "INR",
+        "offers": [
+          {
+            "@type": "Offer",
+            "url": "https://cloudbasket.in/go/{{AFFILIATE_ID}}",
+            "price": "{{STORE_PRICE}}",
+            "priceCurrency": "INR",
+            "seller": {
+              "@type": "Organization",
+              "name": "{{RETAILER_NAME}}"
+            },
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock"
+          }
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "{{RATING_VALUE}}",
+        "reviewCount": "{{REVIEW_COUNT}}"
+      },
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "Price Discovery Status",
+          "value": "Verified deals across India"
+        }
+      ]
+    }
+  },
+  "category_page": {
+    "usage_notes": "Inject into app/category/[slug]/page.tsx for category-level SEO.",
+    "json_ld": {
+      "@context": "https://schema.org/",
+      "@type": "CollectionPage",
+      "name": "{{CATEGORY_NAME}} Price Comparison India | CloudBasket",
+      "description": "Discover the best {{CATEGORY_NAME}} prices in India. Compare deals from top retailers and track real-time savings.",
+      "url": "https://cloudbasket.in/category/{{CATEGORY_SLUG}}",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": "{{ITEM_LIST_ELEMENTS_ARRAY}}"
+      }
+    }
+  },
+  "blog_post": {
+    "usage_notes": "Inject into app/blog/[slug]/page.tsx to enhance article visibility.",
+    "json_ld": {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{BLOG_TITLE}}",
+      "image": "{{BLOG_IMAGE_URL}}",
+      "author": {
+        "@type": "Organization",
+        "name": "CloudBasket Engineering"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "CloudBasket",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cloudbasket.in/brand/logo.png"
+        }
+      },
+      "datePublished": "{{PUBLISHED_DATE}}",
+      "description": "{{BLOG_META_DESCRIPTION}}",
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://cloudbasket.in/blog/{{BLOG_SLUG}}"
+      }
+    }
+  },
+  "homepage": {
+    "usage_notes": "Inject into app/page.tsx to enable sitelinks searchbox in Google search results.",
+    "json_ld": {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://cloudbasket.in/",
+      "name": "CloudBasket India",
+      "description": "India's premier price discovery and comparison engine.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://cloudbasket.in/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  },
+  "breadcrumb": {
+    "usage_notes": "Inject into all pages with hierarchical navigation (e.g., Home > Category > Product).",
+    "json_ld": {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://cloudbasket.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "{{CATEGORY_NAME}}",
+          "item": "https://cloudbasket.in/category/{{CATEGORY_SLUG}}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{PRODUCT_NAME}}",
+          "item": "https://cloudbasket.in/products/{{PRODUCT_ID}}"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,105 @@
+components/Header.tsx — Developer handoff
+
+File path and purpose
+- Path: components/Header.tsx
+- Purpose: Renders the site header (desktop + mobile). Includes branding, primary navigation, promo ticker, search, country/locale selectors, theme toggle, and sign-in/admin button. Provides accessible interactions and keeps header state synced with navigation.
+
+Exports
+- default export: Header(): React component (client component)
+
+Top-level constants (what they are and why)
+- PROMO_TICKER_ITEMS: list of short promo messages shown in the ticker.
+- COUNTRY_OPTIONS: country select options for header country selector.
+- LOCALE_OPTIONS: locale/currency/label options used for locale selector.
+- DEAL_DROPDOWN / POD_DROPDOWN: dropdown item arrays used by navigation for specific sections.
+- PROMO_DISMISS_KEY: localStorage key to persist promo dismissal across sessions.
+- Navigation-related types: DropdownItem, NavigationItem — define shape of nav items.
+
+Context and routing hooks
+- usePathname(): next/navigation — used to compute active nav state and to close menus on route changes.
+- useRouter(): next/navigation — used for pushing the search route after submit.
+- useGlobal(): app-specific context that exposes { country, setCountry, user } — used for country selector and auth state.
+- useLocale(): app-specific context exposing { locale, setLocale } — used for locale selector.
+
+React hooks used (why and how)
+- useState (multiple): holds local UI state (mounted, promoDismissed, promoIndex, mobileOpen, searchOpen, searchQuery, activeDropdown, scrolled). All states are typed and control specific UI pieces.
+  - mounted (boolean): tracks client mount; avoids mismatch between server and client values (e.g., country fallback).
+  - promoDismissed (boolean): whether the promo ticker was dismissed by the user.
+  - promoIndex (number): index of current promo item in ticker rotation.
+  - mobileOpen (boolean): controls mobile menu overlay visibility.
+  - searchOpen (boolean): toggles inline search input visibility on desktop.
+  - searchQuery (string): controlled search input value.
+  - activeDropdown (nav id | null): which top nav dropdown is currently open.
+  - scrolled (boolean): whether the page has been scrolled enough to apply the scrolled header style.
+
+- useEffect (several): manages lifecycle behaviors:
+  - Mount effect: sets mounted true and reads PROMO_DISMISS_KEY from localStorage; safe-guards with try/catch.
+  - Promo rotation effect: if promo not dismissed, runs setInterval to rotate PROMO_TICKER_ITEMS every 3s and clears on unmount.
+  - Scroll listener effect: toggles scrolled when window.scrollY > 8 and registers passive scroll listener.
+  - Pathname effect: closes mobile/search/dropdown when route changes.
+  - Focus effect: when searchOpen becomes true, focus input via searchInputRef.
+
+Refs
+- searchInputRef: Ref to the search input element so the component can focus it when opened.
+- dropdownTimeoutRef: number | null — stores timeout id used to delay closing dropdowns on mouse leave.
+
+Derived values and small helpers
+- navItems: computed list of NavigationItem — includes products, deals, categories, POD, quiz, compare, blog. For products dropdown, uses CATEGORY_DEFINITIONS and getCategoryIcon(category.slug) to build dropdown entries.
+- authRoute / authLabel: derived from user.role — switch label and link between Admin and Sign In.
+- selectedCountry: returns country from context if mounted else default 'IN'. This avoids server/client mismatch.
+- isItemActive(href): returns true if pathname equals or starts with href — used to style active nav link.
+
+Callback functions (what each does and why)
+- clearDropdownTimer(): clears the dropdown close timer if set — ensures dropdowns don't close while user re-enters.
+- handleDropdownEnter(itemId): called on mouse enter for a nav item — clears timer and sets activeDropdown to the given id to open the dropdown.
+- handleDropdownLeave(): sets a short timeout (150ms) to close the dropdown — provides forgiving hover UX; uses dropdownTimeoutRef so re-entering cancels close.
+- handleSearchSubmit(event): prevents default form submit, trims searchQuery, navigates to /search?q=... when non-empty, and closes the search input. Encoded via encodeURIComponent.
+- handlePromoDismiss(): sets promoDismissed, writes PROMO_DISMISS_KEY to localStorage in try/catch. Keeps user preference persistent.
+- handleCountryChange(event): sets country in global context to the selected CountryCode. Centralized for app-wide locale/currency behavior.
+- Inline onClick toggles: setMobileOpen, toggle searchOpen — control mobile/menu/search visibility.
+
+DOM and rendering notes (structure and behavior)
+- Promo ticker: renders only if promoDismissed is false. The ticker cycles messages using promoIndex; dismiss button triggers handlePromoDismiss.
+- Logo and branding: left area with small square icon and text; links to home '/'.
+- Desktop navigation (<nav> lg:flex): hidden on small screens. Each nav item is a Link; those with dropdowns render a dropdown container whose open state is controlled by activeDropdown. Mouse enter/leave handlers open/close dropdowns.
+- Search: desktop has a toggle button that expands an input; input is controlled via searchQuery and ref for focus. Mobile shows a search input inside the mobile overlay.
+- Country & Locale selectors: regular <select> elements bound to context/state. Changing country or locale calls setCountry/setLocale.
+- ThemeToggle: included as child component; no props here.
+- Auth button: adapts label/icon based on user role. Link target uses ROUTES.ADMIN or ROUTES.LOGIN.
+- Mobile menu: overlay panel toggled by mobileOpen; contains menu header, search, nav list with dropdown items shown inline, selectors, ThemeToggle, and auth button. Overlay uses a semi-opaque background and transitions.
+
+Accessibility considerations
+- Buttons use aria-labels (promo dismiss, toggle search, toggle mobile menu, close menu).
+- Mobile toggle uses aria-expanded bound to mobileOpen.
+- Focus-visible rings and keyboard focus styles are included via class names for accessibility.
+- Semantic elements: <header>, <nav>, <form>, <label> used correctly.
+
+Styling notes
+- Uses utility classes (Tailwind-style) and custom CSS class names like glass-panel, cb-input, cb-btn-primary, cb-dropdown, etc. Styling is split between visible elements and responsive behavior (lg:hidden / lg:flex).
+- The scrolled state toggles an additional class on the header to adjust appearance on scroll.
+
+Data dependencies
+- CATEGORY_DEFINITIONS (lib/cloudbasket-data) — used to build product dropdown entries.
+- getCategoryIcon (lib/category-icons) — returns icon component for category entries.
+- ROUTES (lib/constants) — route constants for product, deals, categories, pod, compare, blog.
+- useGlobal, useLocale contexts — expose values and setters used by selectors and auth.
+
+Edge cases and error handling
+- localStorage reads/writes are wrapped in try/catch to avoid exceptions in restricted contexts.
+- searchSubmit ignores blank queries.
+- When mounted flag is false (server rendering), selectedCountry falls back to 'IN' to avoid hydration mismatch.
+
+Testing checklist (recommended)
+- Verify promo ticker rotation and dismissal persists across reloads.
+- Verify desktop dropdown hover open/close; rapid re-entry should not cause flicker.
+- Verify search behavior: open, focus, type, submit navigates to /search and closes field.
+- Verify mobile menu open/close and keyboard accessibility.
+- Verify country/locale selectors correctly call setCountry/setLocale and reflect in UI.
+- Verify auth button routes correctly for Admin vs regular user.
+- Verify header scrolled class toggles at scrollY > 8.
+
+Potential improvements / notes
+- Consider extracting dropdown into a small sub-component to reduce Header size if additional features are added.
+- Promo items are internationalized visually via emoji and text; if localization required, move PROMO_TICKER_ITEMS into locale-aware source.
+
+End of handoff.

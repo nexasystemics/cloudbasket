@@ -1,0 +1,112 @@
+[
+  {
+    "filename": "mob-blog",
+    "meta_title": "Mobile Price Comparison India: Best Smartphone Deals 2026",
+    "meta_description": "Compare mobile prices in India across Amazon and Flipkart. Find the best smartphone deals and save on top brands with CloudBasket's real-time tracker.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/mobiles",
+      "https://cloudbasket.in/products",
+      "https://cloudbasket.in/deals"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "lap-blog",
+    "meta_title": "Laptop Price Comparison India: Best Laptop Deals for 2026",
+    "meta_description": "Discover the best laptop prices in India. Compare student and gaming laptop deals across major stores and track the best INR savings on CloudBasket.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/laptops",
+      "https://cloudbasket.in/compare",
+      "https://cloudbasket.in/search?q=laptops"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "ele-blog",
+    "meta_title": "Smart TV Price Comparison India: Best 4K LED TV Deals",
+    "meta_description": "Find the best smart TV prices in India. Compare 4K LED and OLED TV deals across verified Indian retailers and save big with CloudBasket's discovery tool.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/electronics",
+      "https://cloudbasket.in/products",
+      "https://cloudbasket.in/deals/flash"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "gro-blog",
+    "meta_title": "Home Appliance Price Comparison India: Best Kitchen Deals",
+    "meta_description": "Compare washing machine and fridge prices in India. Discover the best home appliance deals across top platforms and track seasonal savings on CloudBasket.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/appliances",
+      "https://cloudbasket.in/search?q=fridge",
+      "https://cloudbasket.in/search?q=washing+machine"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "fas-blog",
+    "meta_title": "Fashion Deals India: Compare Clothing & Footwear Prices",
+    "meta_description": "Discover the best fashion prices in India. Compare clothing and shoe deals across top Indian fashion retailers and find your style for less on CloudBasket.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/fashion",
+      "https://cloudbasket.in/category/footwear",
+      "https://cloudbasket.in/deals"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "hom-blog",
+    "meta_title": "Home Decor Price Comparison India: Best Furniture Deals",
+    "meta_description": "Find the best home decor and furniture prices in India. Compare deals on stylish interiors across verified stores and discover savings on CloudBasket.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/home-kitchen",
+      "https://cloudbasket.in/category/garden",
+      "https://cloudbasket.in/search?q=furniture"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "spo-blog",
+    "meta_title": "Sports Equipment Price Comparison India: Best Fitness Deals",
+    "meta_description": "Compare cricket gear and fitness equipment prices in India. Discover the best sports deals across major Indian stores and save more on CloudBasket.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/sports",
+      "https://cloudbasket.in/search?q=cricket",
+      "https://cloudbasket.in/search?q=gym"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "bea-blog",
+    "meta_title": "Beauty Products Price Comparison India: Best Makeup Deals",
+    "meta_description": "Discover the best beauty and skincare prices in India. Compare makeup deals across top Indian beauty platforms and find the best price on CloudBasket.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/beauty",
+      "https://cloudbasket.in/search?q=skincare",
+      "https://cloudbasket.in/search?q=makeup"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "aut-blog",
+    "meta_title": "Automotive Products Price Comparison India: Best Car Deals",
+    "meta_description": "Compare car accessories and engine oil prices in India. Discover the best automotive deals across major Indian retailers and save on CloudBasket.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/automotive",
+      "https://cloudbasket.in/search?q=car+accessories",
+      "https://cloudbasket.in/search?q=engine+oil"
+    ],
+    "schema_type": "Article"
+  },
+  {
+    "filename": "boo-blog",
+    "meta_title": "Book Price Comparison India: Best Deals on Bestsellers",
+    "meta_description": "Find the best book prices in India. Compare novels and competitive exam book deals across top Indian bookstores and discover savings on CloudBasket.",
+    "suggested_internal_links": [
+      "https://cloudbasket.in/category/books",
+      "https://cloudbasket.in/search?q=novels",
+      "https://cloudbasket.in/search?q=exam+books"
+    ],
+    "schema_type": "Article"
+  }
+]

@@ -94,6 +94,11 @@ class EmailMarketingPipeline {
     return this.isResendReady() || this.isPlunkReady()
   }
 
+  /**
+   * Sends a single deal alert email through the configured marketing provider.
+   * @param {DealAlertEmail} data Deal alert payload containing recipient, pricing, and product link details.
+   * @returns {Promise<boolean>} Resolves to `true` when the provider accepts the send request, otherwise `false`.
+   */
   async sendDealAlert(data: DealAlertEmail): Promise<boolean> {
     if (!this.isReady()) {
       console.warn('[EmailMarketing] No email provider configured — stub send')
@@ -118,6 +123,11 @@ class EmailMarketingPipeline {
     }
   }
 
+  /**
+   * Sends a newsletter campaign to the deduplicated recipient list and returns the resulting campaign record.
+   * @param {Omit<EmailCampaign, 'id' | 'status'>} campaign Campaign content and recipients before an id or delivery status is assigned.
+   * @returns {Promise<EmailCampaign>} Resolves to the campaign record with generated id, normalized recipients, and final delivery status.
+   */
   async sendNewsletter(campaign: Omit<EmailCampaign, 'id' | 'status'>): Promise<EmailCampaign> {
     const newCampaign: EmailCampaign = {
       ...campaign,
@@ -167,6 +177,11 @@ class EmailMarketingPipeline {
     }
   }
 
+  /**
+   * Subscribes or updates a marketing contact in the email subscribers table.
+   * @param {EmailContact} contact Contact details to persist for newsletter subscriptions.
+   * @returns {Promise<boolean>} Resolves to `true` when the subscriber is accepted or stubbed successfully, otherwise `false`.
+   */
   async subscribeContact(contact: EmailContact): Promise<boolean> {
     const supabase = this.getSupabaseAdmin()
     if (!supabase) {

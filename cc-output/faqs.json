@@ -1,0 +1,402 @@
+[
+  {
+    "category": "Electronics",
+    "faqs": [
+      {
+        "q": "How can I find the best price for a Sony Bravia TV in India?",
+        "q_hindi": "Bharat mein Sony Bravia TV ke liye sabse accha price kaise milega?",
+        "a": "On CloudBasket, you can compare prices for Sony Bravia models across major retailers like Amazon.in, Flipkart, and Reliance Digital to ensure you get the best deal available in INR."
+      },
+      {
+        "q": "Does comparing prices on CloudBasket include shipping costs for Indian pin codes?",
+        "q_hindi": "Kya CloudBasket par prices compare karne mein Indian pin codes ke liye shipping cost bhi shaamil hai?",
+        "a": "CloudBasket displays the base price from various platforms. We recommend checking the affiliate links for specific shipping charges to your location across India."
+      },
+      {
+        "q": "Are the electronics deals on CloudBasket applicable for bank offers like HDFC or ICICI?",
+        "q_hindi": "Kya CloudBasket par electronics deals HDFC ya ICICI jaise bank offers ke liye valid hain?",
+        "a": "CloudBasket helps you discover the lowest base prices. You can then use our affiliate links to see if additional bank discounts (like HDFC or ICICI) are available on the retailer's site."
+      }
+    ]
+  },
+  {
+    "category": "Mobiles",
+    "faqs": [
+      {
+        "q": "Can I compare exchange offer values for mobiles on CloudBasket?",
+        "q_hindi": "Kya main CloudBasket par mobiles ke liye exchange offer values compare kar sakta hoon?",
+        "a": "CloudBasket focuses on comparing the direct selling price. For exchange valuations, you can follow our affiliate links to Flipkart or Amazon to see their specific exchange programs."
+      },
+      {
+        "q": "What are the best 5G mobile phones under ₹20,000 in India currently?",
+        "q_hindi": "Bharat mein filhaal ₹20,000 se kam mein sabse acche 5G mobile phones kaun se hain?",
+        "a": "You can filter the Mobiles category on CloudBasket to discover the highest-rated 5G smartphones from brands like Realme, Redmi, and Samsung within your INR budget."
+      },
+      {
+        "q": "Are the mobile prices shown on CloudBasket inclusive of GST in India?",
+        "q_hindi": "Kya CloudBasket par dikhaye gaye mobile prices mein Bharat ka GST shaamil hai?",
+        "a": "Yes, the prices discovered via CloudBasket generally reflect the inclusive MRP or discounted price shown on Indian e-commerce platforms."
+      }
+    ]
+  },
+  {
+    "category": "Laptops",
+    "faqs": [
+      {
+        "q": "How do I find student discounts for laptops on CloudBasket?",
+        "q_hindi": "CloudBasket par laptops ke liye student discounts kaise dhoondhein?",
+        "a": "While CloudBasket compares standard market prices, you can use our affiliate links to check for 'Back to School' or student-specific offers on official brand stores and major retailers."
+      },
+      {
+        "q": "Which Indian retailer offers the best price for Apple MacBooks?",
+        "q_hindi": "Apple MacBooks ke liye kaun sa Indian retailer sabse accha price deta hai?",
+        "a": "Prices fluctuate daily. Use CloudBasket to compare live prices across Amazon, Reliance Digital, and Croma to find the current lowest price in INR."
+      },
+      {
+        "q": "Are gaming laptops under ₹60,000 reliable for long-term use in India?",
+        "q_hindi": "Kya Bharat mein ₹60,000 se kam ke gaming laptops long-term use ke liye sahi hain?",
+        "a": "You can discover several high-performance gaming laptops from Acer and ASUS on CloudBasket. Compare their specs and prices to find the best value for your budget."
+      }
+    ]
+  },
+  {
+    "category": "Appliances",
+    "faqs": [
+      {
+        "q": "How can I compare prices for 1.5 Ton 5-Star ACs in India?",
+        "q_hindi": "Bharat mein 1.5 Ton 5-Star ACs ke prices kaise compare karein?",
+        "a": "Search for '1.5 Ton 5-Star AC' on CloudBasket to see a side-by-side price comparison of brands like Voltas, LG, and Blue Star across multiple Indian stores."
+      },
+      {
+        "q": "Does CloudBasket track prices for local Indian appliance brands like Bajaj or Havells?",
+        "q_hindi": "Kya CloudBasket Bajaj ya Havells jaise local Indian appliance brands ke prices track karta hai?",
+        "a": "Yes, CloudBasket aggregates prices for all major Indian brands including Bajaj, Havells, and Crompton, ensuring you find the best domestic deals."
+      },
+      {
+        "q": "When is the best time to find deals on refrigerators in India?",
+        "q_hindi": "Bharat mein refrigerators par deals paane ka sabse accha samay kab hai?",
+        "a": "While prices vary, major festive sales like Diwali and summer clearance events usually offer the best prices. Use CloudBasket to track these fluctuations."
+      }
+    ]
+  },
+  {
+    "category": "Fashion",
+    "faqs": [
+      {
+        "q": "Where can I find the best deals on ethnic wear in India?",
+        "q_hindi": "Bharat mein ethnic wear par sabse acchi deals kahan milengi?",
+        "a": "CloudBasket allows you to discover and compare prices for ethnic brands like Manyavar, BIBA, and FabIndia across various fashion retailers."
+      },
+      {
+        "q": "Does CloudBasket compare prices for international fashion brands available in India?",
+        "q_hindi": "Kya CloudBasket Bharat mein available international fashion brands ke prices compare karta hai?",
+        "a": "Yes, you can compare prices for brands like Zara, H&M, and Levi's across different Indian online platforms through CloudBasket."
+      },
+      {
+        "q": "How do I know if a fashion item is eligible for return on the partner site?",
+        "q_hindi": "Mujhe kaise pata chalega ki koi fashion item partner site par return ke liye eligible hai?",
+        "a": "CloudBasket helps you discover the price. Once you click our affiliate link to the retailer (like Myntra or Ajio), you can check their specific return policy for that item."
+      }
+    ]
+  },
+  {
+    "category": "Footwear",
+    "faqs": [
+      {
+        "q": "How to get the best price for Nike or Adidas sneakers in India?",
+        "q_hindi": "Bharat mein Nike ya Adidas sneakers ke liye sabse accha price kaise payein?",
+        "a": "By using CloudBasket, you can compare prices for the latest sneakers across Amazon, Flipkart, and specialized footwear stores in India."
+      },
+      {
+        "q": "Are the footwear sizes shown on partner sites following Indian or UK standards?",
+        "q_hindi": "Kya partner sites par dikhaye gaye footwear sizes Indian ya UK standards ke hote hain?",
+        "a": "Most Indian retailers use UK/Indian sizing. When you use a CloudBasket affiliate link, we recommend double-checking the size chart on the retailer's page."
+      },
+      {
+        "q": "Can I find deals on formal leather shoes for men on CloudBasket?",
+        "q_hindi": "Kya mujhe CloudBasket par men's formal leather shoes par deals mil sakti hain?",
+        "a": "Yes, compare prices for formal brands like Ruosh, Bata, and Clarks on CloudBasket to find the best deals for your office attire."
+      }
+    ]
+  },
+  {
+    "category": "Beauty",
+    "faqs": [
+      {
+        "q": "How can I compare prices for luxury beauty brands in India?",
+        "q_hindi": "Bharat mein luxury beauty brands ke prices kaise compare karein?",
+        "a": "CloudBasket tracks beauty product prices across platforms like Nykaa, Purplle, and Amazon, helping you discover the best deals on luxury skincare and makeup."
+      },
+      {
+        "q": "Are the beauty products discovered on CloudBasket authentic?",
+        "q_hindi": "Kya CloudBasket par dhoondhe gaye beauty products asli hote hain?",
+        "a": "CloudBasket directs you to reputable Indian retailers. We recommend checking the seller ratings on the partner site after following our affiliate link."
+      },
+      {
+        "q": "Can I find deals on organic Indian skincare brands like Mamaearth?",
+        "q_hindi": "Kya mujhe Mamaearth jaise organic Indian skincare brands par deals mil sakti hain?",
+        "a": "Yes, CloudBasket aggregates prices for popular Indian organic brands, ensuring you get the best price for your natural beauty routine."
+      }
+    ]
+  },
+  {
+    "category": "Home & Kitchen",
+    "faqs": [
+      {
+        "q": "Where to find the best prices for Prestige or Hawkins pressure cookers?",
+        "q_hindi": "Prestige ya Hawkins pressure cookers ke liye sabse acche prices kahan milenge?",
+        "a": "Compare prices for top Indian kitchenware brands like Prestige and Hawkins across multiple retailers on CloudBasket to save on your kitchen essentials."
+      },
+      {
+        "q": "Can I compare prices for home decor items like lamps and rugs on CloudBasket?",
+        "q_hindi": "Kya main CloudBasket par lamps aur rugs jaise home decor items ke prices compare kar sakta hoon?",
+        "a": "Yes, CloudBasket helps you discover and compare prices for a wide range of home decor products from various Indian online furniture and decor stores."
+      },
+      {
+        "q": "Is there a way to find deals on water purifiers like Kent or Aquaguard?",
+        "q_hindi": "Kya Kent ya Aquaguard jaise water purifiers par deals paane ka koi tareeka hai?",
+        "a": "Search for your preferred water purifier model on CloudBasket to see a live price comparison across all major Indian electronics and home appliance stores."
+      }
+    ]
+  },
+  {
+    "category": "Books",
+    "faqs": [
+      {
+        "q": "How to find the lowest price for competitive exam books in India?",
+        "q_hindi": "Bharat mein competitive exam books ke liye sabse kam price kaise dhoondhein?",
+        "a": "CloudBasket allows you to compare prices for UPSC, JEE, and NEET prep books across various Indian booksellers and platforms."
+      },
+      {
+        "q": "Does CloudBasket include prices from local Indian bookstores?",
+        "q_hindi": "Kya CloudBasket mein local Indian bookstores ke prices shaamil hain?",
+        "a": "CloudBasket primarily aggregates prices from major online retailers in India. Use our platform to find the best online rates available in INR."
+      },
+      {
+        "q": "Can I find deals on regional language books (Hindi, Tamil, etc.) on CloudBasket?",
+        "q_hindi": "Kya mujhe CloudBasket par regional language books (Hindi, Tamil, etc.) par deals mil sakti hain?",
+        "a": "Yes, you can search for and compare prices for books in various Indian languages across our partner e-commerce sites."
+      }
+    ]
+  },
+  {
+    "category": "Toys",
+    "faqs": [
+      {
+        "q": "Where can I find the best deals on LEGO sets in India?",
+        "q_hindi": "Bharat mein LEGO sets par sabse acchi deals kahan milengi?",
+        "a": "Compare LEGO prices across Amazon.in, Hamleys India, and other toy retailers on CloudBasket to ensure you get the best deal for your collection."
+      },
+      {
+        "q": "Does CloudBasket track prices for educational toys for toddlers?",
+        "q_hindi": "Kya CloudBasket toddlers ke liye educational toys ke prices track karta hai?",
+        "a": "Yes, discover and compare prices for educational brands like Fisher-Price and local Indian toy makers on CloudBasket."
+      },
+      {
+        "q": "Are there any discounts on board games like Monopoly or Scrabble (India Edition)?",
+        "q_hindi": "Kya Monopoly ya Scrabble (India Edition) jaise board games par koi discounts hain?",
+        "a": "Search for your favorite board games on CloudBasket to find the current lowest prices across major Indian online toy stores."
+      }
+    ]
+  },
+  {
+    "category": "Sports",
+    "faqs": [
+      {
+        "q": "How to compare prices for English Willow cricket bats in India?",
+        "q_hindi": "Bharat mein English Willow cricket bats ke prices kaise compare karein?",
+        "a": "CloudBasket helps you compare prices for premium cricket gear from brands like SG, SS, and MRF across India's top sports retailers."
+      },
+      {
+        "q": "Can I find the best prices for yoga mats and accessories on CloudBasket?",
+        "q_hindi": "Kya main CloudBasket par yoga mats aur accessories ke liye sabse acche prices dhoondh sakta hoon?",
+        "a": "Yes, compare prices for fitness essentials and yoga gear from various brands on CloudBasket to stay fit within your budget."
+      },
+      {
+        "q": "Where to find deals on Decathlon products or similar sports brands?",
+        "q_hindi": "Decathlon products ya uske jaise sports brands par deals kahan milengi?",
+        "a": "While some brands sell exclusively, CloudBasket helps you discover similar high-quality sports gear and compare prices across multiple platforms in India."
+      }
+    ]
+  },
+  {
+    "category": "Automotive",
+    "faqs": [
+      {
+        "q": "How to find the best deals on car tires in India?",
+        "q_hindi": "Bharat mein car tires par sabse acchi deals kaise dhoondhein?",
+        "a": "Compare prices for tire brands like MRF, CEAT, and Apollo across major Indian automotive and general e-commerce sites on CloudBasket."
+      },
+      {
+        "q": "Can I compare prices for car GPS and dashcams on CloudBasket?",
+        "q_hindi": "Kya main CloudBasket par car GPS aur dashcams ke prices compare kar sakta hoon?",
+        "a": "Yes, CloudBasket aggregates prices for various car electronics and accessories, helping you upgrade your vehicle for less."
+      },
+      {
+        "q": "Where can I discover the best prices for bike helmets in India?",
+        "q_hindi": "Bharat mein bike helmets ke liye sabse acche prices kahan milenge?",
+        "a": "Search for ISI-certified helmets from brands like Vega, Steelbird, and Studds on CloudBasket to compare prices and ensure safety on a budget."
+      }
+    ]
+  },
+  {
+    "category": "Grocery",
+    "faqs": [
+      {
+        "q": "How to save on monthly grocery bills using CloudBasket?",
+        "q_hindi": "CloudBasket ka use karke monthly grocery bills par kaise bachat karein?",
+        "a": "Compare prices for staples like rice, oil, and pulses across top Indian delivery platforms to find where your monthly ration is available at the lowest INR."
+      },
+      {
+        "q": "Does CloudBasket show prices for organic food products in India?",
+        "q_hindi": "Kya CloudBasket Bharat mein organic food products ke prices dikhata hai?",
+        "a": "Yes, you can discover and compare prices for various organic brands available on major Indian grocery platforms through CloudBasket."
+      },
+      {
+        "q": "Can I find deals on bulk grocery purchases on CloudBasket?",
+        "q_hindi": "Kya mujhe CloudBasket par bulk grocery purchases par deals mil sakti hain?",
+        "a": "CloudBasket helps you find the lowest individual or pack prices. Follow our affiliate links to retailers like BigBasket or JioMart to check for their specific bulk discount offers."
+      }
+    ]
+  },
+  {
+    "category": "Health",
+    "faqs": [
+      {
+        "q": "Where to find the best prices for digital blood pressure monitors in India?",
+        "q_hindi": "Bharat mein digital blood pressure monitors ke liye sabse acche prices kahan milenge?",
+        "a": "Compare prices for health monitors from brands like Omron and Dr. Trust across multiple Indian healthcare and electronics stores on CloudBasket."
+      },
+      {
+        "q": "Can I compare prices for protein powders and gym supplements on CloudBasket?",
+        "q_hindi": "Kya main CloudBasket par protein powders aur gym supplements ke prices compare kar sakta hoon?",
+        "a": "Yes, discover the best deals on supplements from brands like MuscleBlaze and Optimum Nutrition by comparing prices across Indian retailers on CloudBasket."
+      },
+      {
+        "q": "How to get deals on Ayurvedic products like Chyawanprash in India?",
+        "q_hindi": "Bharat mein Chyawanprash jaise Ayurvedic products par deals kaise payein?",
+        "a": "Use CloudBasket to compare prices for Ayurvedic essentials from brands like Dabur, Baidyanath, and Patanjali across various online stores."
+      }
+    ]
+  },
+  {
+    "category": "Baby",
+    "faqs": [
+      {
+        "q": "How to find the best prices for diapers and baby wipes in India?",
+        "q_hindi": "Bharat mein diapers aur baby wipes ke liye sabse acche prices kaise dhoondhein?",
+        "a": "Compare prices for baby essentials from brands like Pampers, Huggies, and MamyPoko across top Indian baby care platforms on CloudBasket."
+      },
+      {
+        "q": "Can I compare prices for baby strollers and car seats on CloudBasket?",
+        "q_hindi": "Kya main CloudBasket par baby strollers aur car seats ke prices compare kar sakta hoon?",
+        "a": "Yes, CloudBasket helps you discover the best deals on baby gear from brands like LuvLap and R for Rabbit across multiple Indian retailers."
+      },
+      {
+        "q": "Where to find deals on baby skincare products like Sebamed or Himalaya?",
+        "q_hindi": "Sebamed ya Himalaya jaise baby skincare products par deals kahan milengi?",
+        "a": "Search for your preferred baby skincare items on CloudBasket to see a live price comparison and grab the best deals available in INR."
+      }
+    ]
+  },
+  {
+    "category": "Pets",
+    "faqs": [
+      {
+        "q": "Where can I find the best prices for Royal Canin or Pedigree pet food in India?",
+        "q_hindi": "Bharat mein Royal Canin ya Pedigree pet food ke liye sabse acche prices kahan milenge?",
+        "a": "Compare pet food prices across specialized pet stores and major retailers in India using CloudBasket to keep your pets healthy for less."
+      },
+      {
+        "q": "Can I find deals on pet grooming kits and accessories on CloudBasket?",
+        "q_hindi": "Kya mujhe CloudBasket par pet grooming kits aur accessories par deals mil sakti hain?",
+        "a": "Yes, discover and compare prices for grooming tools, leashes, and toys from various brands on CloudBasket."
+      },
+      {
+        "q": "Are there any discounts on aquarium supplies and fish food in India?",
+        "q_hindi": "Kya Bharat mein aquarium supplies aur fish food par koi discounts hain?",
+        "a": "Search for aquarium essentials on CloudBasket to find the current best prices across major Indian online pet supplies stores."
+      }
+    ]
+  },
+  {
+    "category": "Garden",
+    "faqs": [
+      {
+        "q": "How to find deals on indoor plants and planters in India?",
+        "q_hindi": "Bharat mein indoor plants aur planters par deals kaise dhoondhein?",
+        "a": "Compare prices for a variety of indoor plants and decorative planters across Indian nursery and home decor websites on CloudBasket."
+      },
+      {
+        "q": "Can I compare prices for organic fertilizers and seeds on CloudBasket?",
+        "q_hindi": "Kya main CloudBasket par organic fertilizers aur seeds ke prices compare kar sakta hoon?",
+        "a": "Yes, CloudBasket helps you discover the best prices for gardening essentials like fertilizers, seeds, and soil across multiple Indian platforms."
+      },
+      {
+        "q": "Where to find the best prices for garden tool sets in India?",
+        "q_hindi": "Bharat mein garden tool sets ke liye sabse acche prices kahan milenge?",
+        "a": "Search for gardening tools on CloudBasket to see a price comparison of various brands and find the best value for your green space."
+      }
+    ]
+  },
+  {
+    "category": "Tools",
+    "faqs": [
+      {
+        "q": "How to find the best prices for Bosch power tools in India?",
+        "q_hindi": "Bharat mein Bosch power tools ke liye sabse acche prices kaise dhoondhein?",
+        "a": "Compare prices for Bosch drills, saws, and other power tools across major Indian hardware and e-commerce platforms on CloudBasket."
+      },
+      {
+        "q": "Can I find deals on DIY tool kits for home repairs on CloudBasket?",
+        "q_hindi": "Kya mujhe CloudBasket par home repairs ke liye DIY tool kits par deals mil sakti hain?",
+        "a": "Yes, discover and compare prices for comprehensive tool kits from brands like Black+Decker and Taparia on CloudBasket."
+      },
+      {
+        "q": "Where to discover the best prices for ladders and step stools in India?",
+        "q_hindi": "Bharat mein ladders aur step stools ke liye sabse acche prices kahan milenge?",
+        "a": "Search for sturdy ladders and home maintenance tools on CloudBasket to compare prices across multiple Indian retailers."
+      }
+    ]
+  },
+  {
+    "category": "Office",
+    "faqs": [
+      {
+        "q": "How to find the best deals on ergonomic office chairs in India?",
+        "q_hindi": "Bharat mein ergonomic office chairs par sabse acchi deals kaise dhoondhein?",
+        "a": "Compare prices for office furniture from brands like Featherlite and Godrej Interio across various Indian online stores on CloudBasket."
+      },
+      {
+        "q": "Can I compare prices for office stationery like paper and printers on CloudBasket?",
+        "q_hindi": "Kya main CloudBasket par paper aur printers jaise office stationery ke prices compare kar sakta hoon?",
+        "a": "Yes, CloudBasket aggregates prices for all your office essentials, ensuring your business setup stays within your INR budget."
+      },
+      {
+        "q": "Where to find the best prices for office desks and storage cabinets in India?",
+        "q_hindi": "Bharat mein office desks aur storage cabinets ke liye sabse acche prices kahan milenge?",
+        "a": "Search for office furniture on CloudBasket to see a live price comparison across all major Indian online furniture retailers."
+      }
+    ]
+  },
+  {
+    "category": "Jewellery",
+    "faqs": [
+      {
+        "q": "How to find the best prices for fashion jewellery in India?",
+        "q_hindi": "Bharat mein fashion jewellery ke liye sabse acche prices kaise dhoondhein?",
+        "a": "Compare prices for trending fashion jewellery from various Indian brands and platforms on CloudBasket to add some sparkle for less."
+      },
+      {
+        "q": "Does CloudBasket track prices for silver and gold-plated jewellery?",
+        "q_hindi": "Kya CloudBasket silver aur gold-plated jewellery ke prices track karta hai?",
+        "a": "Yes, discover the best deals on silver and gold-plated accessories by comparing prices across multiple Indian online jewellery stores on CloudBasket."
+      },
+      {
+        "q": "Where can I find deals on traditional Indian jewellery sets?",
+        "q_hindi": "Traditional Indian jewellery sets par deals kahan milengi?",
+        "a": "Search for your favorite ethnic jewellery designs on CloudBasket to see a price comparison and find the best offers available in INR."
+      }
+    ]
+  }
+]

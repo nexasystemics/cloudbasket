@@ -1,0 +1,122 @@
+[
+  {
+    "category": "Electronics",
+    "whatsapp": "Best electronics deals chahiye? CloudBasket pe prices compare karo aur bachat karo! Check it out.",
+    "twitter": "Stop overpaying for gadgets! Compare prices across India's top retailers on CloudBasket and grab the best deals today. 📱💻 #CloudBasket #SmartShopping #IndiaDeals",
+    "instagram": "Upgrade your tech game without breaking the bank. Discover the best prices on top electronics now! #CloudBasket #TechDeals #ElectronicsIndia #PriceComparison #SmartSaver"
+  },
+  {
+    "category": "Mobiles",
+    "whatsapp": "Naya phone lena hai? Pehle CloudBasket pe price compare toh kar lo! Sabse sasta yahi milega.",
+    "twitter": "Looking for a new smartphone? Compare prices from all major Indian stores in one place. Your wallet will thank you! 🤳✨ #Mobiles #CloudBasket #BestPriceIndia",
+    "instagram": "Get the latest smartphones at the best possible prices. Compare, click, and save on your next mobile! #MobileDeals #CloudBasket #SmartphoneIndia #TechSaving #IndiaMobile"
+  },
+  {
+    "category": "Laptops",
+    "whatsapp": "Work ho ya gaming, best laptop prices ke liye CloudBasket check karo. Savings hi savings!",
+    "twitter": "Need a laptop upgrade for work or play? Find the lowest prices across India on CloudBasket. Don't miss out! 💻🚀 #LaptopDeals #CloudBasket #StudentDealsIndia",
+    "instagram": "The perfect laptop at the perfect price is just a search away. Compare top brands on CloudBasket now! #LaptopIndia #CloudBasket #WorkFromHome #GamingLaptop #TechSavings"
+  },
+  {
+    "category": "Appliances",
+    "whatsapp": "Fridge ya AC lena hai? CloudBasket pe prices compare karo aur heavy discount pao!",
+    "twitter": "Upgrade your home with the best appliance deals in India. Compare prices on CloudBasket and save big! 🏠❄️ #HomeAppliances #CloudBasket #IndiaSavings",
+    "instagram": "Make your home smarter with top-rated appliances at unbeatable prices. Start comparing on CloudBasket! #HomeAppliancesIndia #CloudBasket #SmartHome #KitchenUpgrade #DealFinder"
+  },
+  {
+    "category": "Fashion",
+    "whatsapp": "Latest fashion, lowest price! CloudBasket pe trending styles compare karo aur hero bano.",
+    "twitter": "Stay ahead of the trends without overspending. Compare fashion prices across India's favorite stores! 👗👕 #FashionDeals #CloudBasket #StyleOnABudget",
+    "instagram": "Your dream wardrobe is now affordable. Discover the best prices on the latest fashion trends today! #FashionIndia #CloudBasket #StyleInspiration #BudgetFashion #Trendsetter"
+  },
+  {
+    "category": "Footwear",
+    "whatsapp": "Sneakers ho ya heels, CloudBasket pe best footwear deals check karo. Paisa vasool!",
+    "twitter": "Step up your style game! Find the best prices on top footwear brands in India with CloudBasket. 👟👠 #FootwearDeals #CloudBasket #SneakerheadIndia",
+    "instagram": "Walk in style and save more. Compare footwear prices across all major Indian retailers on CloudBasket! #FootwearIndia #CloudBasket #ShoeLover #StyleDaily #Savings"
+  },
+  {
+    "category": "Beauty",
+    "whatsapp": "Skincare aur makeup pe best deals chahiye? CloudBasket pe prices compare karo, glow karo!",
+    "twitter": "Get that glow for less! Compare beauty and skincare prices across India's top platforms on CloudBasket. 💄✨ #BeautyDeals #CloudBasket #SkincareIndia",
+    "instagram": "Premium beauty doesn't have to be pricey. Find the best deals on your favorite brands on CloudBasket! #BeautyIndia #CloudBasket #SkincareRoutine #MakeupDeals #GlowUp"
+  },
+  {
+    "category": "Home & Kitchen",
+    "whatsapp": "Kitchen makeover on a budget? CloudBasket pe items compare karo aur best deals grab karo!",
+    "twitter": "Transform your living space without overspending. Compare home and kitchen prices on CloudBasket today! 🍳🏠 #HomeDecorIndia #CloudBasket #KitchenDeals",
+    "instagram": "Cook and live in style. Find the best prices on home and kitchen essentials with CloudBasket! #HomeAndKitchen #CloudBasket #InteriorIndia #SmartLiving #Kitchenware"
+  },
+  {
+    "category": "Books",
+    "whatsapp": "Book lovers, attention! Best book prices ke liye CloudBasket check karo. Happy reading!",
+    "twitter": "Feed your mind, not just your budget. Compare book prices across India and find your next read on CloudBasket! 📚📖 #BookDealsIndia #CloudBasket #Bibliophile",
+    "instagram": "Your next favorite book is waiting at the best price. Start comparing on CloudBasket now! #BooksIndia #CloudBasket #BookstagramIndia #ReadingList #BookLover"
+  },
+  {
+    "category": "Toys",
+    "whatsapp": "Bachon ke liye toys lena hai? Pehle CloudBasket pe prices compare kar lo, bachat hogi!",
+    "twitter": "Big smiles, small prices! Find the best toy deals across India on CloudBasket. Perfect for every occasion! 🧸🎮 #ToyDeals #CloudBasket #KidsIndia",
+    "instagram": "Bring home the joy without the heavy price tag. Compare top toy brands on CloudBasket today! #ToysIndia #CloudBasket #KidsGifts #PlayTime #SmartShopping"
+  },
+  {
+    "category": "Sports",
+    "whatsapp": "Cricket bat ho ya gym gear, CloudBasket pe sports items compare karo aur fit raho!",
+    "twitter": "Gear up for greatness! Compare prices on sports equipment across India and save with CloudBasket. 🏏⚽ #SportsDealsIndia #CloudBasket #FitnessGoals",
+    "instagram": "Achieve your fitness goals with the best gear at the best prices. Start comparing on CloudBasket! #SportsIndia #CloudBasket #FitnessIndia #AthleteLife #GymGear"
+  },
+  {
+    "category": "Automotive",
+    "whatsapp": "Car/Bike accessories pe best deals? CloudBasket pe prices compare karo aur ride safe!",
+    "twitter": "Keep your ride in top shape for less. Compare automotive accessory prices across India on CloudBasket! 🚗🏍️ #AutoDealsIndia #CloudBasket #CarCare",
+    "instagram": "Upgrade your ride with premium accessories at unbeatable prices. Compare now on CloudBasket! #AutomotiveIndia #CloudBasket #CarAccessories #BikeLife #RideInStyle"
+  },
+  {
+    "category": "Grocery",
+    "whatsapp": "Monthly ration pe savings? CloudBasket pe grocery prices compare karo aur paise bachao!",
+    "twitter": "Save big on your daily essentials! Compare grocery prices across top Indian delivery platforms on CloudBasket. 🛒🍎 #GroceryDeals #CloudBasket #SavingsIndia",
+    "instagram": "Smart shopping starts with the basics. Find the best prices on groceries with CloudBasket! #GroceryIndia #CloudBasket #DailyEssentials #SmartSaver #KitchenStock"
+  },
+  {
+    "category": "Health",
+    "whatsapp": "Vitamins ya health monitors? CloudBasket pe prices compare karo aur healthy raho!",
+    "twitter": "Prioritize your health without overspending. Compare prices on wellness products across India on CloudBasket. 💊🧘 #HealthDealsIndia #CloudBasket #Wellness",
+    "instagram": "Stay healthy and save more. Discover the best prices on health and wellness products on CloudBasket! #HealthIndia #CloudBasket #WellnessJourney #HealthyLiving #SelfCare"
+  },
+  {
+    "category": "Baby",
+    "whatsapp": "Baby care essentials pe best deals chahiye? CloudBasket pe prices compare karo, baby khush!",
+    "twitter": "Only the best for your little one! Compare baby care prices across India and save with CloudBasket. 👶🍼 #BabyDealsIndia #CloudBasket #ParentingTips",
+    "instagram": "Top-quality baby care at prices you'll love. Start comparing on CloudBasket today! #BabyCareIndia #CloudBasket #ParentingLife #BabyEssentials #SmartMom"
+  },
+  {
+    "category": "Pets",
+    "whatsapp": "Pet food ya toys? CloudBasket pe prices compare karo aur apne pet ko treat do!",
+    "twitter": "Pamper your pets for less! Compare pet supply prices across India's top stores on CloudBasket. 🐾🐶 #PetDealsIndia #CloudBasket #PetCare",
+    "instagram": "Happy pets, happy wallets. Find the best deals on pet supplies with CloudBasket! #PetIndia #CloudBasket #DogLoversIndia #CatLife #PetEssentials"
+  },
+  {
+    "category": "Garden",
+    "whatsapp": "Garden decor ya tools? CloudBasket pe prices compare karo aur ghar ko green banao!",
+    "twitter": "Grow your dream garden on a budget. Compare gardening tool and decor prices across India on CloudBasket! 🌱🌻 #GardenDeals #CloudBasket #UrbanGardening",
+    "instagram": "Create your green oasis with the best gardening deals. Compare prices on CloudBasket now! #GardeningIndia #CloudBasket #UrbanJungle #PlantParent #GreenHome"
+  },
+  {
+    "category": "Tools",
+    "whatsapp": "DIY project ya repair? Best tool prices ke liye CloudBasket check karo. Kaam aasan!",
+    "twitter": "Get the right tools for the job at the right price. Compare hardware and DIY tools on CloudBasket! 🛠️🔧 #DIYIndia #CloudBasket #HardwareDeals",
+    "instagram": "Fix it, build it, and save while doing it. Discover the best tool prices on CloudBasket today! #ToolsIndia #CloudBasket #DIYProject #HomeRepair #Handyman"
+  },
+  {
+    "category": "Office",
+    "whatsapp": "Stationery ya office chairs? CloudBasket pe prices compare karo aur workspace setup karo!",
+    "twitter": "Boost your productivity for less. Compare office supply and furniture prices across India on CloudBasket! ✍️🪑 #OfficeDeals #CloudBasket #WorkLife",
+    "instagram": "Design your perfect workspace with the best deals on office essentials. Compare on CloudBasket! #OfficeIndia #CloudBasket #WorkFromHome #StationeryLove #Workspace"
+  },
+  {
+    "category": "Jewellery",
+    "whatsapp": "Fashion jewellery pe best prices? CloudBasket pe compare karo aur chamko!",
+    "twitter": "Add some sparkle to your life without the heavy price tag. Compare fashion jewellery prices on CloudBasket! 💍✨ #JewelleryDeals #CloudBasket #StyleIndia",
+    "instagram": "Elegant designs at prices that shine. Find the best fashion jewellery deals on CloudBasket! #JewelleryIndia #CloudBasket #FashionJewellery #Accessorize #Bling"
+  }
+]

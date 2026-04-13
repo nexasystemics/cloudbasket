@@ -1,0 +1,193 @@
+// CloudBasket — Full API Route Inventory + Protection Audit
+// Generated: 2026-04-13
+// Session: 76193951
+// Source: app/api/** (62 files, 65 route handlers)
+// ============================================================
+//
+// COLUMNS
+//   rate_limited  — rateLimit() from @/lib/redis is called
+//   zod_validated — Zod schema (.safeParse) validates input
+//   auth_required — any key/session/secret/token check present
+//   cache         — Redis getCache/setCache OR Cache-Control response header
+//
+// AUTH FOOTNOTES
+//   (always-on)  — check enforced regardless of env var state
+//   (fail-open)  — if env var is unset, auth check is bypassed
+//   (session)    — checks authenticated user via getUser()
+//   (oauth-csrf) — validates OAuth state cookie vs query param
+//   (token)      — vendor verify-token check (WhatsApp / Zapier / webhook secret)
+//
+// CACHE FOOTNOTES
+//   (redis)      — explicit getCache/setCache in route
+//   (via-svc)    — caching is inside the called service, not the route
+//   (resp-hdr)   — Cache-Control header set on response; no Redis in route
+// ============================================================
+
+METHOD  | PATH                              | RATE_LIMITED | ZOD_VALIDATED | AUTH_REQUIRED       | CACHE
+--------|-----------------------------------|:------------:|:-------------:|:-------------------:|:-----------:
+GET     | /api/affiliate/redirect           | YES          | YES           | NO                  | NO
+POST    | /api/alerts/trigger               | YES          | NO            | NO                  | NO
+GET     | /api/amazon/product               | YES          | NO            | YES (fail-open)     | NO
+GET     | /api/amazon/search                | YES          | YES           | YES (fail-open)     | NO
+POST    | /api/analytics/ads                | YES          | YES           | NO                  | NO
+POST    | /api/associates/apply             | YES          | YES           | NO                  | NO
+GET     | /api/auth/[provider]              | YES          | NO            | NO                  | NO
+GET     | /api/auth/[provider]/callback     | YES          | NO            | YES (oauth-csrf)    | NO
+POST    | /api/auth/otp/send                | YES          | YES           | NO                  | NO
+POST    | /api/auth/otp/verify              | YES          | YES           | NO                  | NO
+POST    | /api/automation/webhook           | YES          | NO            | YES (fail-open)     | NO
+GET     | /api/barcode/lookup               | YES          | NO            | NO                  | NO
+GET     | /api/catalog/prices               | YES          | NO            | NO                  | NO
+POST    | /api/catalog/sync                 | YES          | NO            | YES (fail-open)     | NO
+GET     | /api/cj/products                  | YES          | YES           | NO                  | NO
+POST    | /api/cj/track                     | YES          | YES           | NO                  | NO
+POST    | /api/contact                      | YES          | NO *          | NO                  | NO
+POST    | /api/content/generate-description | YES          | NO            | YES (fail-open)     | NO
+POST    | /api/crm/contact                  | YES          | YES           | NO                  | NO
+GET     | /api/cron/daily-deals             | YES          | NO            | YES (always-on)     | NO
+GET     | /api/cron/weekly-digest           | YES          | NO            | YES (always-on)     | NO
+GET     | /api/currency/rates               | YES          | YES           | NO                  | YES (via-svc)
+POST    | /api/deals/discover               | YES          | NO            | YES (fail-open)     | NO
+POST    | /api/documents/invoice            | YES          | NO            | NO                  | NO
+POST    | /api/email/send-alert             | YES          | YES           | YES (fail-open)     | NO
+POST    | /api/extension/price-check        | YES          | YES           | NO                  | NO
+GET     | /api/feed/google                  | YES          | NO            | NO                  | YES (resp-hdr)
+GET     | /api/feeds/google                 | YES          | NO            | NO                  | NO
+GET     | /api/flipkart/deals               | YES          | NO            | NO                  | YES (redis)
+GET     | /api/flipkart/search              | YES          | YES           | NO                  | NO
+GET     | /api/intelligence/competitive     | YES          | YES           | NO                  | NO
+GET     | /api/intelligence/deals           | YES          | NO            | NO                  | NO
+GET     | /api/mobile/deals                 | YES          | YES           | NO                  | NO
+GET     | /api/mobile/products              | YES          | YES           | NO                  | NO
+POST    | /api/newsletter/subscribe         | YES          | YES           | NO                  | NO
+GET     | /api/newsletter/unsubscribe       | YES          | YES           | NO                  | NO
+POST    | /api/pod/ai-generate              | YES          | YES           | NO                  | NO
+GET     | /api/price-tracker                | YES          | NO            | NO                  | NO
+POST    | /api/price-tracker                | YES          | YES           | YES (fail-open)     | NO
+GET     | /api/prices                       | YES          | NO            | NO                  | YES (redis)
+POST    | /api/push/subscribe               | YES          | YES           | NO                  | NO
+GET     | /api/push/vapid-key               | YES          | NO            | NO                  | NO
+POST    | /api/revenue/click                | YES          | YES           | NO                  | NO
+GET     | /api/reviews                      | YES          | NO            | NO                  | NO
+POST    | /api/reviews                      | YES          | YES           | NO                  | NO
+GET     | /api/search                       | YES          | YES           | NO                  | NO
+POST    | /api/search/index-products        | YES          | NO            | NO                  | NO
+GET     | /api/seo/audit                    | YES          | NO            | YES (fail-open)     | NO
+POST    | /api/sms/subscribe                | YES          | YES           | NO                  | NO
+POST    | /api/social/generate              | YES          | NO            | YES (fail-open)     | NO
+POST    | /api/sponsored/click              | YES          | YES           | NO                  | NO
+POST    | /api/sponsored/impression         | YES          | YES           | NO                  | NO
+GET     | /api/stock                        | YES          | YES           | NO                  | NO
+POST    | /api/support/ticket               | YES          | YES           | NO                  | NO
+POST    | /api/telegram/webhook             | YES          | NO            | NO                  | NO
+POST    | /api/ugc                          | YES          | YES           | NO                  | NO
+GET     | /api/user/data-export             | YES          | NO            | YES (session)       | NO
+DELETE  | /api/user/delete-account          | YES          | NO            | YES (session)       | NO
+POST    | /api/vitals                       | YES          | NO            | NO                  | NO
+POST    | /api/webhooks/printful            | YES          | NO            | YES (always-on)     | NO
+POST    | /api/webhooks/printify            | YES          | NO            | YES (always-on)     | NO
+POST    | /api/webhooks/shopify             | YES          | NO            | YES (always-on)     | NO
+POST    | /api/whatsapp/subscribe           | YES          | YES           | NO                  | NO
+GET     | /api/whatsapp/webhook             | YES          | NO            | YES (token)         | NO
+POST    | /api/whatsapp/webhook             | YES          | NO            | NO                  | NO
+
+* /api/contact uses a detailed custom validatePayload() function (name, email, subject, message
+  all validated), but does NOT use Zod. Functionally equivalent, but inconsistent with codebase
+  convention. Should be migrated to a Zod schema.
+
+// ============================================================
+// TOTALS (65 handlers across 62 files)
+// ============================================================
+
+rate_limited:   65 / 65  (100%)
+zod_validated:  35 / 65   (54%)
+auth_required:  21 / 65   (32%)  — 11 always-on, 10 fail-open
+cache:           4 / 65    (6%)
+
+// ============================================================
+// UNPROTECTED ROUTES — 0 of 4 protections
+// ============================================================
+
+NONE. All 65 route handlers have at minimum rate limiting.
+
+// ============================================================
+// MINIMAL COVERAGE — rate-limit only, no Zod / auth / cache
+// (1 of 4 protections — highest risk of the protected set)
+// ============================================================
+
+POST    | /api/alerts/trigger               ← passes raw body to sendPriceAlertEmail() — no schema
+GET     | /api/barcode/lookup               ← manual if(!barcode) only
+GET     | /api/catalog/prices               ← manual if(!productId) only
+POST    | /api/contact                      ← custom validatePayload(), not Zod
+POST    | /api/documents/invoice            ← manual if(!data.orderId) only
+GET     | /api/feeds/google                 ← no params, no Cache-Control header
+GET     | /api/intelligence/deals           ← no input params at all
+GET     | /api/price-tracker                ← manual productId + days checks; no auth
+GET     | /api/push/vapid-key               ← returns public key only; low sensitivity
+GET     | /api/reviews                      ← manual if(!productId) only
+POST    | /api/search/index-products        ← stub (returns 501); no body validated
+POST    | /api/telegram/webhook             ← no Telegram secret/HMAC verification
+POST    | /api/vitals                       ← accepts any JSON shape; fire-and-forget
+POST    | /api/whatsapp/webhook             ← POST has no signature check (GET does)
+
+14 routes with rate-limit only.
+
+// ============================================================
+// FAIL-OPEN AUTH — auth exists but bypassed when env var unset
+// Pattern: if (env.INTERNAL_API_KEY && apiKey !== env.INTERNAL_API_KEY)
+// ============================================================
+
+GET     | /api/amazon/product               — x-internal-api-key
+GET     | /api/amazon/search                — x-internal-api-key
+POST    | /api/automation/webhook           — x-internal-api-key
+POST    | /api/catalog/sync                 — x-internal-api-key
+POST    | /api/content/generate-description — x-internal-api-key
+POST    | /api/deals/discover               — x-internal-api-key
+POST    | /api/email/send-alert             — x-internal-api-key
+POST    | /api/price-tracker                — x-api-key (same pattern, different header name)
+GET     | /api/seo/audit                    — x-internal-api-key
+POST    | /api/social/generate              — x-internal-api-key
+
+10 routes with fail-open auth. All become publicly accessible if INTERNAL_API_KEY is not set
+in the deployment environment. Recommend always-enforce pattern used in cron routes.
+
+// ============================================================
+// PRIORITY FINDINGS
+// ============================================================
+
+P1 — CRITICAL
+  POST /api/alerts/trigger
+    Passes request.json() directly to sendPriceAlertEmail(body) with no Zod schema.
+    Any caller can inject arbitrary fields. Recommend: add alertTriggerSchema (email,
+    productId, newPrice, oldPrice, platform).
+
+P1 — HIGH
+  POST /api/telegram/webhook
+    No Telegram webhook signature verification. Any public caller can POST to this
+    endpoint and trigger bot responses / deal queries. Recommend: verify
+    X-Telegram-Bot-Api-Secret-Token header (set in Telegram setWebhook call).
+
+P2 — HIGH
+  POST /api/whatsapp/webhook
+    GET handler verifies hub.verify_token. POST handler accepts any payload without
+    signature verification. WhatsApp sends X-Hub-Signature-256 on all POST events.
+    Recommend: verify HMAC-SHA256 of request body against WHATSAPP_APP_SECRET.
+
+P2 — MEDIUM
+  10 routes with fail-open INTERNAL_API_KEY auth
+    All 10 routes become unauthenticated in staging/local when INTERNAL_API_KEY is
+    absent. Recommend: change pattern to always-enforce (same as cron routes).
+
+P3 — LOW
+  GET /api/feeds/google
+    Duplicate of /api/feed/google but without Cache-Control header. The feed is
+    expensive to generate (iterates 1000 products). Adding Cache-Control: public,
+    max-age=86400 would reduce load.
+
+  POST /api/contact
+    Custom validatePayload() is thorough but inconsistent with codebase convention.
+    Should be migrated to contactSchema in lib/validation.ts.
+
+// ============================================================
+// END OF INVENTORY
+// ============================================================

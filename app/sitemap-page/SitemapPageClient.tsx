@@ -30,7 +30,7 @@ export default function SitemapPageClient() {
       <p className="text-[var(--cb-text-muted)] mb-8">Complete directory of all pages on CloudBasket</p>
       <div className="relative mb-8">
         <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
-        <input className="cb-input w-full pl-11" placeholder="Search pages..." value={query} onChange={(e) => setQuery(e.target.value)} />
+        <input className="cb-input w-full pl-11" placeholder="Search pages..." aria-label="Search pages" value={query} onChange={(e) => setQuery(e.target.value)} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map((section) => (

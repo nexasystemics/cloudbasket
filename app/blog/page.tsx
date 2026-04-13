@@ -46,7 +46,7 @@ export default function BlogPage() {
           </span>
           <h1 className="text-4xl font-black tracking-tighter md:text-5xl">Buying Guides, Deal Alerts & Brand Reviews</h1>
           <p className="mt-3 text-lg text-[var(--cb-text-muted)]">India's most trusted price comparison blog</p>
-          <input className="cb-input mx-auto mt-6 block w-full max-w-md" placeholder="Search articles..." />
+          <input className="cb-input mx-auto mt-6 block w-full max-w-md" placeholder="Search articles..." aria-label="Search articles" />
         </div>
       </section>
 

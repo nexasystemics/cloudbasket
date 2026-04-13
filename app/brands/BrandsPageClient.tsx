@@ -41,7 +41,7 @@ export default function BrandsPageClient() {
       <p className="text-[var(--cb-text-muted)] mb-8">{brands.length} brands available on CloudBasket</p>
       <div className="relative mb-8 max-w-md">
         <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
-        <input className="cb-input w-full pl-11" placeholder="Search brands..." value={query} onChange={(e) => setQuery(e.target.value)} />
+        <input className="cb-input w-full pl-11" placeholder="Search brands..." aria-label="Search brands" value={query} onChange={(e) => setQuery(e.target.value)} />
       </div>
       {Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)).map(([letter, letterBrands]) => (
         <div key={letter} className="mb-8">

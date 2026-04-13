@@ -200,6 +200,7 @@ function SearchPageContent() {
                 <button
                   type="button"
                   onClick={clearQuery}
+                  aria-label="Clear search"
                   className="absolute right-5 p-1 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-400"
                 >
                   <X size={20} />
@@ -265,7 +266,7 @@ function SearchPageContent() {
           <div className="fixed inset-0 z-50 bg-white dark:bg-zinc-950 lg:hidden">
             <div className="flex items-center justify-between p-6 border-b border-zinc-100 dark:border-zinc-800">
               <h2 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">Filters</h2>
-              <button onClick={() => setShowMobileFilters(false)} className="text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors">
+              <button onClick={() => setShowMobileFilters(false)} aria-label="Close filters" className="text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors">
                 <X size={24} />
               </button>
             </div>

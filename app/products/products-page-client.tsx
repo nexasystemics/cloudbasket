@@ -266,7 +266,7 @@ export default function ProductsPageClient() {
 
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-3 mt-10">
-            <button onClick={() => { startTransition(() => { setPage((p) => Math.max(1, p - 1)) }); scrollTop() }}
+            <button onClick={() => { startTransition(() => { setPage((p) => Math.max(1, p - 1)) }); scrollTop() }} aria-label="Previous page"
               disabled={page === 1}
               className="p-2 rounded-lg border border-[var(--cb-border)] disabled:opacity-30 hover:border-white transition">
               <ChevronLeft size={18} />
@@ -281,7 +281,7 @@ export default function ProductsPageClient() {
                 </button>
               )
             })}
-            <button onClick={() => { startTransition(() => { setPage((p) => Math.min(totalPages, p + 1)) }); scrollTop() }}
+            <button onClick={() => { startTransition(() => { setPage((p) => Math.min(totalPages, p + 1)) }); scrollTop() }} aria-label="Next page"
               disabled={page === totalPages}
               className="p-2 rounded-lg border border-[var(--cb-border)] disabled:opacity-30 hover:border-white transition">
               <ChevronRight size={18} />

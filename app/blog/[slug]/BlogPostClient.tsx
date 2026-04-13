@@ -179,12 +179,14 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
                 <div className="flex items-center gap-2">
                   <button 
                     onClick={shareOnWhatsApp}
+                    aria-label="Share on WhatsApp"
                     className="w-10 h-10 rounded-xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all active:scale-90"
                   >
                     <MessageCircle size={18} />
                   </button>
                   <button 
                     onClick={copyToClipboard}
+                    aria-label="Copy link"
                     className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all active:scale-90 ${
                       copyStatus ? 'bg-green-500 text-white' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 hover:bg-zinc-200'
                     }`}

@@ -141,6 +141,7 @@ export default function RegisterPageClient() {
                   <input
                     className="cb-input w-full pl-9"
                     placeholder="Full name"
+                    aria-label="Full name"
                     value={formData.name}
                     onChange={(event) => updateField('name', event.target.value)}
                   />
@@ -152,6 +153,7 @@ export default function RegisterPageClient() {
                     className="cb-input w-full pl-9"
                     type="email"
                     placeholder="you@email.com"
+                    aria-label="Email address"
                     value={formData.email}
                     onChange={(event) => updateField('email', event.target.value)}
                   />
@@ -161,6 +163,7 @@ export default function RegisterPageClient() {
                   className="cb-input mb-4 w-full"
                   type="tel"
                   placeholder="+91 98765 43210"
+                  aria-label="Phone number"
                   value={formData.phone}
                   onChange={(event) => updateField('phone', event.target.value)}
                 />
@@ -170,6 +173,7 @@ export default function RegisterPageClient() {
                   <input
                     className="cb-input w-full pl-9"
                     placeholder="Your city"
+                    aria-label="City"
                     value={formData.city}
                     onChange={(event) => updateField('city', event.target.value)}
                   />
@@ -181,12 +185,14 @@ export default function RegisterPageClient() {
                     className="cb-input w-full pl-9 pr-10"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Password"
+                    aria-label="Password"
                     value={formData.password}
                     onChange={(event) => updateField('password', event.target.value)}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((current) => !current)}
+                    aria-label="Toggle password visibility"
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]"
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -197,6 +203,7 @@ export default function RegisterPageClient() {
                   className="cb-input mb-4 w-full"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Confirm password"
+                  aria-label="Confirm password"
                   value={formData.confirmPassword}
                   onChange={(event) => updateField('confirmPassword', event.target.value)}
                 />
@@ -205,6 +212,7 @@ export default function RegisterPageClient() {
                   <input
                     className="cb-input mb-4 w-full"
                     placeholder="Referral code (optional)"
+                    aria-label="Referral code"
                     value={formData.referralCode}
                     onChange={(event) => updateField('referralCode', event.target.value)}
                   />

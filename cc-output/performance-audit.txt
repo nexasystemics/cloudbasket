@@ -1,0 +1,22 @@
+Performance Audit — CloudBasket (app/)
+
+Scanned: all files under app/ (pages and client components)
+
+Findings:
+
+1) <img> tags
+- No raw <img> tags found in app/ pages. Images are served via next/image where present. No loading="lazy" additions required.
+
+2) Missing next/image
+- No occurrences of raw <img>; next/image used consistently (examples: app/blog, app/products, app/deals).
+
+3) Large client components that could be server components (flagged)
+- app\legal\layout.tsx — file contains 'use client' but no client-only hooks (useState/useEffect/useRef/localStorage/window). Consider converting to a server component if no interactive behaviour is required.
+
+4) useEffect without dependency array
+- No useEffect calls without an explicit dependency array were found in app/ pages inspected.
+
+Notes & Recommendations:
+- No automatic code changes applied — there were no <img> tags to update. Manual review recommended for app\legal\layout.tsx to decide if server-side rendering is possible.
+
+End of report.

@@ -1,0 +1,62 @@
+{
+  "main_headline": "Discover the Best Prices Across All Indian Online Stores",
+  "main_subline": "CloudBasket tracks millions of products from Amazon, Flipkart, and more to help you compare prices and find the smartest deals in real-time.",
+  "value_props": [
+    {
+      "icon_label": "search",
+      "headline": "Real-Time Price Comparison",
+      "description": "Compare live prices across 50+ Indian retailers to maximize your monthly savings."
+    },
+    {
+      "icon_label": "bell",
+      "headline": "Instant Price Drop Alerts",
+      "description": "Never miss a deal with automated notifications when your favorite products hit the best price."
+    },
+    {
+      "icon_label": "shield",
+      "headline": "Verified Affiliate Discovery",
+      "description": "Safely explore curated product links from trusted Indian platforms through our secure Income Shield node."
+    },
+    {
+      "icon_label": "trending-up",
+      "headline": "Smart Deal Tracking",
+      "description": "Discover the best seasonal offers and festive discounts across all major Indian e-commerce categories."
+    }
+  ],
+  "how_it_works": [
+    {
+      "step": 1,
+      "title": "Search Your Product",
+      "description": "Enter the name of any gadget, fashion item, or grocery staple you want to discover at the best price."
+    },
+    {
+      "step": 2,
+      "title": "Compare All Deals",
+      "description": "Review a comprehensive list of live prices from top Indian retailers and find the smartest value available."
+    },
+    {
+      "step": 3,
+      "title": "Discover and Save",
+      "description": "Follow our verified affiliate links to your preferred store and complete your journey with maximum bachat."
+    }
+  ],
+  "trust_bar": [
+    {
+      "number": "50+",
+      "label": "Indian Retailers Tracked"
+    },
+    {
+      "number": "1M+",
+      "label": "Daily Price Updates"
+    },
+    {
+      "number": "10,000+",
+      "label": "Smart Shoppers Monthly"
+    },
+    {
+      "number": "₹0",
+      "label": "Zero Checkout Fees"
+    }
+  ],
+  "footer_tagline": "India's Ultimate Destination for Smart Price Discovery and Savings."
+}

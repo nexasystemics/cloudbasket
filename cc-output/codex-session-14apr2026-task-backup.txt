@@ -1,0 +1,111 @@
+CLOUDBASKET — CODEX SESSION BACKUP
+Date: 14-Apr-2026
+Agent: Codex
+Scope: Tasks 1-6 completed in this session
+
+SUMMARY
+- Task 1: Added JSDoc group comments to `lib/env.ts`.
+- Task 2: Added JSDoc comments to exported methods in `services/email-engine/email-marketing.ts`.
+- Task 3: Added `rateLimit()` to the 4 live API routes still missing it:
+  `app/api/search/index-products/route.ts`
+  `app/api/auth/[provider]/route.ts`
+  `app/api/auth/[provider]/callback/route.ts`
+  `app/api/seo/audit/route.ts`
+- Task 4: Added `error.tsx` boundaries to `app/product`, `app/category`, `app/brand`, `app/blog`, and `app/search`.
+- Task 5: Added missing `loading.tsx` files to `app/product`, `app/category`, and `app/brand`.
+- Task 6: Added 55 new Jest-style unit test files under `tests/unit/` for API routes that previously had no route test file.
+
+TYPECHECK STATUS
+- `pnpm tsc --noEmit` passed after each requested milestone.
+- Final session typecheck: exit 0.
+
+COMMITS CREATED
+- `1b507e4` — `docs: add JSDoc comments to lib/env.ts env var groups`
+- `9204102` — `docs: add JSDoc to email-marketing.ts exported functions`
+- `e37b4b6` — `fix: add rateLimit() to app/api/search/index-products/route.ts, app/api/auth/[provider]/route.ts, app/api/auth/[provider]/callback/route.ts`
+- `b3b9559` — `fix: add rateLimit() to app/api/seo/audit/route.ts`
+- `cab70ec` — `feat: add error.tsx boundaries to key route groups`
+- `d3bf50f` — `feat: add loading.tsx skeletons to key route groups`
+- `c6218d6` — `test: unit tests for api routes batch 1 (routes 1-10)`
+- `fe4cb1d` — `test: unit tests for api routes batch 2 (routes 11-20)`
+- `d67ec77` — `test: unit tests for api routes batch 3 (routes 21-30)`
+- `c9ef36a` — `test: unit tests for api routes batch 4 (routes 31-40)`
+- `f61448a` — `test: unit tests for api routes batch 5 (routes 41-50)`
+- `c638064` — `test: unit tests for api routes batch 6 (routes 51-55)`
+
+FILES CHANGED IN THIS SESSION
+- `lib/env.ts`
+- `services/email-engine/email-marketing.ts`
+- `app/api/auth/[provider]/route.ts`
+- `app/api/auth/[provider]/callback/route.ts`
+- `app/api/search/index-products/route.ts`
+- `app/api/seo/audit/route.ts`
+- `app/product/error.tsx`
+- `app/product/loading.tsx`
+- `app/category/error.tsx`
+- `app/category/loading.tsx`
+- `app/brand/error.tsx`
+- `app/brand/loading.tsx`
+- `app/blog/error.tsx`
+- `app/search/error.tsx`
+
+UNIT TEST FILES CREATED
+- `tests/unit/api-affiliate-redirect.test.js`
+- `tests/unit/api-alerts-trigger.test.js`
+- `tests/unit/api-amazon-product.test.js`
+- `tests/unit/api-analytics-ads.test.js`
+- `tests/unit/api-auth-[provider].test.js`
+- `tests/unit/api-auth-[provider]-callback.test.js`
+- `tests/unit/api-auth-otp-send.test.js`
+- `tests/unit/api-auth-otp-verify.test.js`
+- `tests/unit/api-automation-webhook.test.js`
+- `tests/unit/api-barcode-lookup.test.js`
+- `tests/unit/api-catalog-prices.test.js`
+- `tests/unit/api-catalog-sync.test.js`
+- `tests/unit/api-cj-products.test.js`
+- `tests/unit/api-cj-track.test.js`
+- `tests/unit/api-content-generate-description.test.js`
+- `tests/unit/api-crm-contact.test.js`
+- `tests/unit/api-cron-daily-deals.test.js`
+- `tests/unit/api-cron-weekly-digest.test.js`
+- `tests/unit/api-deals-discover.test.js`
+- `tests/unit/api-documents-invoice.test.js`
+- `tests/unit/api-email-send-alert.test.js`
+- `tests/unit/api-extension-price-check.test.js`
+- `tests/unit/api-feed-google.test.js`
+- `tests/unit/api-feeds-google.test.js`
+- `tests/unit/api-flipkart-deals.test.js`
+- `tests/unit/api-intelligence-competitive.test.js`
+- `tests/unit/api-intelligence-deals.test.js`
+- `tests/unit/api-mobile-deals.test.js`
+- `tests/unit/api-mobile-products.test.js`
+- `tests/unit/api-newsletter-unsubscribe.test.js`
+- `tests/unit/api-pod-ai-generate.test.js`
+- `tests/unit/api-prices.test.js`
+- `tests/unit/api-push-subscribe.test.js`
+- `tests/unit/api-push-vapid-key.test.js`
+- `tests/unit/api-revenue-click.test.js`
+- `tests/unit/api-reviews.test.js`
+- `tests/unit/api-search.test.js`
+- `tests/unit/api-search-index-products.test.js`
+- `tests/unit/api-seo-audit.test.js`
+- `tests/unit/api-sms-subscribe.test.js`
+- `tests/unit/api-social-generate.test.js`
+- `tests/unit/api-sponsored-click.test.js`
+- `tests/unit/api-sponsored-impression.test.js`
+- `tests/unit/api-stock.test.js`
+- `tests/unit/api-support-ticket.test.js`
+- `tests/unit/api-telegram-webhook.test.js`
+- `tests/unit/api-ugc.test.js`
+- `tests/unit/api-user-data-export.test.js`
+- `tests/unit/api-user-delete-account.test.js`
+- `tests/unit/api-vitals.test.js`
+- `tests/unit/api-webhooks-printful.test.js`
+- `tests/unit/api-webhooks-printify.test.js`
+- `tests/unit/api-webhooks-shopify.test.js`
+- `tests/unit/api-whatsapp-subscribe.test.js`
+- `tests/unit/api-whatsapp-webhook.test.js`
+
+NOTES
+- The requested Task 3 route list in `cc-output/codex-session-12apr2026.txt` did not match the live codebase. The live repo only had 4 remaining routes without `rateLimit()` after excluding protected files.
+- Existing route tests already present in `tests/unit/` were left untouched.

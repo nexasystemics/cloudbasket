@@ -1,0 +1,53 @@
+// CloudBasket — P1 Security Fixes
+// Date: 2026-04-13 | Commit: 697c5d0
+// ============================================================
+
+FIX 1 — POST /api/alerts/trigger
+  File: app/api/alerts/trigger/route.ts
+  Change: Added alertTriggerSchema (Zod) before sendPriceAlertEmail()
+  Schema fields validated:
+    productId (string, required) — user specified
+    userId (string, required) — user specified
+    targetPrice (number, positive) — user specified
+    to (string, email format) — required by sendPriceAlertEmail
+    productName (string, required) — required by sendPriceAlertEmail
+    currentPrice (number, positive) — required by sendPriceAlertEmail
+    originalPrice (number, positive) — required by sendPriceAlertEmail
+    productUrl (string, required) — required by sendPriceAlertEmail
+    productImage (string, optional) — optional in sendPriceAlertEmail
+  Returns 400 + zodError detail on validation failure
+  sendPriceAlertEmail() logic untouched; now called with parsed.data (typed)
+
+FIX 2 — POST /api/telegram/webhook
+  Files: app/api/telegram/webhook/route.ts + lib/env.ts
+  Change: Added X-Telegram-Bot-Api-Secret-Token header check
+  Pattern: always-enforce (same as cron routes — no fail-open)
+  New env key: TELEGRAM_BOT_SECRET added to lib/env.ts
+  IBF action: set TELEGRAM_BOT_SECRET in Vercel env vars AND in
+    Telegram setWebhook call as secret_token parameter
+
+FIX 3 — 10 fail-open INTERNAL_API_KEY routes
+  Pattern changed from:
+    if (env.INTERNAL_API_KEY && key !== env.INTERNAL_API_KEY)
+  to:
+    if (!key || key !== env.INTERNAL_API_KEY)
+  Effect: routes now return 401 if key is absent OR wrong,
+    regardless of whether INTERNAL_API_KEY env var is set
+  Files patched:
+    app/api/amazon/product/route.ts
+    app/api/amazon/search/route.ts
+    app/api/automation/webhook/route.ts
+    app/api/catalog/sync/route.ts
+    app/api/content/generate-description/route.ts
+    app/api/deals/discover/route.ts
+    app/api/email/send-alert/route.ts
+    app/api/price-tracker/route.ts
+    app/api/seo/audit/route.ts
+    app/api/social/generate/route.ts
+  IBF action: ensure INTERNAL_API_KEY is set in all environments
+    (local .env.local, Vercel staging, Vercel production)
+
+REMAINING P2/P3 (deferred to next session):
+  P2: POST /api/whatsapp/webhook — add X-Hub-Signature-256 HMAC check
+  P3: GET /api/feeds/google — add Cache-Control: public, max-age=86400
+  P3: POST /api/contact — migrate custom validatePayload() to Zod schema

@@ -55,22 +55,30 @@ export default function LoginClient() {
           </p>
         </div>
         <div className="space-y-4">
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="you@example.com"
-            className="cb-input w-full"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="Password"
-            className="cb-input w-full"
-            onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
-          />
-          {error ? <p className="text-sm text-[#EF4444] bg-[#EF4444]/10 rounded-lg px-3 py-2">{error}</p> : null}
+          <div>
+            <label htmlFor="login-email" className="sr-only">Email address</label>
+            <input
+              id="login-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              className="cb-input w-full"
+            />
+          </div>
+          <div>
+            <label htmlFor="login-password" className="sr-only">Password</label>
+            <input
+              id="login-password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Password"
+              className="cb-input w-full"
+              onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
+            />
+          </div>
+          {error ? <p id="login-error" role="alert" aria-live="assertive" className="text-sm text-[#EF4444] bg-[#EF4444]/10 rounded-lg px-3 py-2">{error}</p> : null}
           <button
             onClick={handleSubmit}
             disabled={loading || !email || !password}

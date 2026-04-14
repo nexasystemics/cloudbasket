@@ -287,6 +287,58 @@ export const affiliateRedirectSchema = z.object({
 export type AffiliateRedirectQuery = z.infer<typeof affiliateRedirectSchema>
 
 // ---------------------------------------------------------------------------
+// User identity
+// ---------------------------------------------------------------------------
+
+export const userIdSchema = z
+  .string({ error: 'userId is required' })
+  .trim()
+  .min(1, 'userId cannot be empty')
+  .max(128, 'userId too long')
+
+// ---------------------------------------------------------------------------
+// Contact form
+// ---------------------------------------------------------------------------
+
+export const contactSchema = z.object({
+  name:    z.string({ error: 'name is required' }).trim().min(2, 'Name must be at least 2 characters').max(80, 'Name must be 80 characters or fewer'),
+  email:   emailSchema,
+  subject: z.string({ error: 'subject is required' }).trim().min(3, 'Subject must be at least 3 characters').max(120, 'Subject must be 120 characters or fewer'),
+  message: z.string({ error: 'message is required' }).trim().min(10, 'Message must be at least 10 characters').max(5000, 'Message must be 5000 characters or fewer'),
+})
+export type ContactBody = z.infer<typeof contactSchema>
+
+// ---------------------------------------------------------------------------
+// Automation / Zapier webhook trigger
+// ---------------------------------------------------------------------------
+
+export const automationWebhookSchema = z.object({
+  webhookUrl: z.string({ error: 'webhookUrl is required' }).trim().url('webhookUrl must be a valid URL').max(2048, 'webhookUrl too long'),
+  event:      z.string({ error: 'event is required' }).trim().min(1, 'event is required').max(128, 'event too long'),
+  data:       z.record(z.string(), z.unknown()).optional(),
+})
+export type AutomationWebhookBody = z.infer<typeof automationWebhookSchema>
+
+// ---------------------------------------------------------------------------
+// Invoice document
+// ---------------------------------------------------------------------------
+
+export const invoiceSchema = z.object({
+  orderId:       z.string({ error: 'orderId is required' }).trim().min(1, 'orderId is required').max(128),
+  customerName:  z.string({ error: 'customerName is required' }).trim().min(1, 'customerName is required').max(120),
+  customerEmail: emailSchema,
+  items: z.array(z.object({
+    name:  z.string().trim().min(1, 'item name is required').max(200),
+    qty:   z.number({ error: 'item qty must be a number' }).int().positive('qty must be positive'),
+    price: z.number({ error: 'item price must be a number' }).positive('price must be positive'),
+  })).min(1, 'items cannot be empty'),
+  subtotal: z.number({ error: 'subtotal must be a number' }).nonnegative(),
+  gst:      z.number({ error: 'gst must be a number' }).nonnegative(),
+  total:    z.number({ error: 'total must be a number' }).nonnegative(),
+})
+export type InvoiceBody = z.infer<typeof invoiceSchema>
+
+// ---------------------------------------------------------------------------
 // Utility: format Zod errors into a flat messages string
 // ---------------------------------------------------------------------------
 

@@ -137,8 +137,10 @@ export default function RegisterPageClient() {
 
               <div>
                 <div className="relative mb-4">
+                  <label htmlFor="register-name" className="sr-only">Full name</label>
                   <User size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
                   <input
+                    id="register-name"
                     className="cb-input w-full pl-9"
                     placeholder="Full name"
                     aria-label="Full name"
@@ -148,8 +150,10 @@ export default function RegisterPageClient() {
                 </div>
 
                 <div className="relative mb-4">
+                  <label htmlFor="register-email" className="sr-only">Email address</label>
                   <Mail size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
                   <input
+                    id="register-email"
                     className="cb-input w-full pl-9"
                     type="email"
                     placeholder="you@email.com"
@@ -159,18 +163,24 @@ export default function RegisterPageClient() {
                   />
                 </div>
 
-                <input
-                  className="cb-input mb-4 w-full"
-                  type="tel"
-                  placeholder="+91 98765 43210"
-                  aria-label="Phone number"
-                  value={formData.phone}
-                  onChange={(event) => updateField('phone', event.target.value)}
-                />
+                <div className="mb-4">
+                  <label htmlFor="register-phone" className="sr-only">Phone number</label>
+                  <input
+                    id="register-phone"
+                    className="cb-input mb-4 w-full"
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    aria-label="Phone number"
+                    value={formData.phone}
+                    onChange={(event) => updateField('phone', event.target.value)}
+                  />
+                </div>
 
                 <div className="relative mb-4">
+                  <label htmlFor="register-city" className="sr-only">City</label>
                   <Building size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
                   <input
+                    id="register-city"
                     className="cb-input w-full pl-9"
                     placeholder="Your city"
                     aria-label="City"
@@ -180,8 +190,10 @@ export default function RegisterPageClient() {
                 </div>
 
                 <div className="relative mb-4">
+                  <label htmlFor="register-password" className="sr-only">Password</label>
                   <Lock size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cb-text-muted)]" />
                   <input
+                    id="register-password"
                     className="cb-input w-full pl-9 pr-10"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Password"
@@ -199,28 +211,36 @@ export default function RegisterPageClient() {
                   </button>
                 </div>
 
-                <input
-                  className="cb-input mb-4 w-full"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Confirm password"
-                  aria-label="Confirm password"
-                  value={formData.confirmPassword}
-                  onChange={(event) => updateField('confirmPassword', event.target.value)}
-                />
+                <div className="mb-4">
+                  <label htmlFor="register-confirm" className="sr-only">Confirm password</label>
+                  <input
+                    id="register-confirm"
+                    className="cb-input mb-4 w-full"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Confirm password"
+                    aria-label="Confirm password"
+                    value={formData.confirmPassword}
+                    onChange={(event) => updateField('confirmPassword', event.target.value)}
+                  />
+                </div>
 
                 {accountType === 'associate' || accountType === 'pod' ? (
-                  <input
-                    className="cb-input mb-4 w-full"
-                    placeholder="Referral code (optional)"
-                    aria-label="Referral code"
-                    value={formData.referralCode}
-                    onChange={(event) => updateField('referralCode', event.target.value)}
-                  />
+                  <div className="mb-4">
+                    <label htmlFor="register-referral" className="sr-only">Referral code (optional)</label>
+                    <input
+                      id="register-referral"
+                      className="cb-input mb-4 w-full"
+                      placeholder="Referral code (optional)"
+                      aria-label="Referral code"
+                      value={formData.referralCode}
+                      onChange={(event) => updateField('referralCode', event.target.value)}
+                    />
+                  </div>
                 ) : null}
 
-                <label className="mb-6 flex items-start gap-3">
-                  <input type="checkbox" className="mt-1 rounded" />
-                  <p className="text-xs text-[var(--cb-text-muted)]">
+                <div className="mb-6 flex items-start gap-3">
+                  <input id="register-terms" type="checkbox" className="mt-1 rounded" />
+                  <label htmlFor="register-terms" className="text-xs text-[var(--cb-text-muted)]">
                     I agree to the{' '}
                     <Link href="/legal/terms" className="text-[#039BE5]">
                       Terms of Service
@@ -229,8 +249,8 @@ export default function RegisterPageClient() {
                     <Link href="/legal/privacy" className="text-[#039BE5]">
                       Privacy Policy
                     </Link>
-                  </p>
-                </label>
+                  </label>
+                </div>
 
                 <button
                   type="button"

@@ -164,11 +164,13 @@ export default function BlogArticlePageClient({ post, relatedPosts }: BlogArticl
             <button
               type="button"
               onClick={handleCopyLink}
+              aria-label="Copy link"
               className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
             >
               <Copy size={16} />
               {copied ? 'Copied!' : 'Copy link'}
             </button>
+            <div aria-live="polite" className="sr-only">{copied ? 'Link copied to clipboard' : ''}</div>
           </div>
         </article>
 

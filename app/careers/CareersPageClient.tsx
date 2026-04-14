@@ -138,10 +138,10 @@ export default function CareersPageClient() {
                   </div>
                 ))}
                 <div>
-                  <label className="block text-xs font-black uppercase tracking-widest mb-1">Resume (PDF)</label>
-                  <div className="cb-input flex items-center gap-2 cursor-pointer">
+                  <label htmlFor="resume-upload" className="block text-xs font-black uppercase tracking-widest mb-1">Resume (PDF)</label>
+                  <div className="cb-input flex items-center gap-2">
                     <Upload size={16} className="text-[var(--cb-text-muted)]" />
-                    <input type="file" accept=".pdf" className="text-sm flex-1" />
+                    <input id="resume-upload" type="file" accept=".pdf" aria-label="Upload resume (PDF)" className="text-sm flex-1" />
                   </div>
                 </div>
                 <div>
@@ -149,10 +149,10 @@ export default function CareersPageClient() {
                   <textarea className="cb-input w-full h-20 resize-none" maxLength={300} value={form.note} onChange={(e) => setForm({ ...form, note: e.target.value })} placeholder="Why do you want to join CloudBasket?" />
                   <p className="text-xs text-[var(--cb-text-muted)] mt-1">{form.note.length}/300</p>
                 </div>
-                <label className="flex items-start gap-2 cursor-pointer">
-                  <input type="checkbox" checked={form.consent} onChange={(e) => setForm({ ...form, consent: e.target.checked })} className="mt-0.5" />
-                  <span className="text-sm">I consent to CloudBasket storing my application data for recruitment purposes.</span>
-                </label>
+                <div className="flex items-start gap-2">
+                  <input id="app-consent" type="checkbox" checked={form.consent} onChange={(e) => setForm({ ...form, consent: e.target.checked })} className="mt-0.5" />
+                  <label htmlFor="app-consent" className="text-sm">I consent to CloudBasket storing my application data for recruitment purposes.</label>
+                </div>
                 <button type="button" onClick={handleSubmit} disabled={!form.name || !form.email || !form.consent} className="cb-btn cb-btn-primary w-full">Submit Application</button>
               </div>
             )}

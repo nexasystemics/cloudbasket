@@ -13,3 +13,4 @@ logs/
 .vercel
 .aider*
 .claude/worktrees/
+.claude/worktrees/

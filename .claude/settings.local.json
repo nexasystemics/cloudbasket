@@ -50,7 +50,10 @@
       "Bash(cat vercel.json)",
       "Bash(ls app/api/cron/)",
       "Bash(echo \"TSC_FINAL:$?\")",
-      "Bash(pnpm exec:*)"
+      "Bash(pnpm exec:*)",
+      "Bash(node -e ' *)",
+      "Bash(xargs grep *)",
+      "Bash(npm i *)"
     ]
   }
 }

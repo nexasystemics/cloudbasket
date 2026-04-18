@@ -12,3 +12,4 @@ Thumbs.db
 logs/
 .vercel
 .aider*
+.claude/worktrees/

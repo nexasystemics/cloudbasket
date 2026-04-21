@@ -1,0 +1,83 @@
+RESPONSE: PRE-FINAL COMPREHENSIVE AUDIT PLAN
+Generated: 2026-04-21
+Session: cloudbasket
+
+=== PAGE COUNT SUMMARY ===
+
+FRONTEND PAGES (56 routes in audit plan):
+  Landing/Marketing:   6  (Home, About, Careers, Pricing, Partners, App)
+  Commerce:           11  (Products, Product Detail x2, Categories, Category, Brands, Brand, Compare, Search, Best Deals, Sale)
+  Deals:               3  (Deals Hub, Flash Deals, Deal Detail)
+  POD:                 7  (Hub, T-Shirts, Mugs, Phone Cases, Designs, Upload, Dynamic Category)
+  Affiliate:           5  (Hub, Disclosure, CJ, Associates, Partners)
+  Blog:                2  (List, Post)
+  Interactive:         1  (Quiz)
+  Auth:                2  (Login, Register)
+  Support:             3  (Contact, FAQ, Ticket)
+  Legal:              12  (Hub, Privacy, Terms, Cookies, Disclaimer x2, DMCA, A11y, Refund x2, Grievance, Affiliate)
+  Utility:             4  (Sitemap, Offline, Feature Disabled, Unsubscribed)
+  Special:             1  (/go/[id] affiliate redirect)
+
+TOTAL FRONTEND ROUTES: 56
+
+API ROUTES (not in audit CSV — separate API audit needed):
+  Auth, Amazon, Flipkart, CJ, Price Engine, Newsletter, Push, Support,
+  POD AI, Social, Revenue, Analytics, Webhooks, Cron, Currency, Feeds, etc.
+  TOTAL API ROUTES: 64
+
+=== AUDIT PLAN CSV ===
+
+FILE: F:\cloudbasket\cc-output\cloudbasket-audit-plan.csv
+ROWS: 56 pages + 1 header = 57 lines
+
+COLUMNS (22 total):
+  #, Page Name, Route, Section Group, Localhost URL, Production URL, Page Type,
+  Priority, Lighthouse, Gemini CLI, Claude AI, User Manual, Primary Auditor,
+  Performance Checks, SEO Checks, Accessibility Checks, Security Checks,
+  Content Checks, UX/UI Checks, Functional Checks, Audit Status, Notes
+
+=== PRIORITY BREAKDOWN ===
+  CRITICAL:  6  (Home, Products, Search, Login, Register, /go/[id])
+  HIGH:     29  (Most commerce, deals, POD, blog, support, legal)
+  MEDIUM:   15  (Secondary marketing, utility, lower-risk legal)
+  LOW:       6  (PDF pages, offline, feature-disabled, sitemap, legal hub)
+
+=== AUDITOR ASSIGNMENT SUMMARY ===
+  ALL (all 4 auditors):          Home, Products, Search, Contact
+  Claude AI + Lighthouse:        Compare, Deal Detail, POD Category
+  Claude AI + User:              Product Detail, Brand Detail, Support Ticket, Quiz, Login, Register
+  Claude AI + Gemini CLI:        Privacy Policy, Terms, Refund Policy
+  Claude AI only:                Legacy Product, Disclaimer PDF, Refund PDF, Legal Hub, Sitemap, Offline, Feature Disabled, Unsubscribed, /go/[id]
+  Lighthouse + Gemini CLI:       Best Deals, Deals Hub, Flash Deals
+  Lighthouse + User:             Categories, Category Detail, Brands, Brand Detail, POD T/Mugs/Cases
+  Gemini CLI + User:             About, Careers, Partners, App, POD Hub, POD Designs, Blog List, Blog Post, Affiliate Hub, Associates, FAQ
+
+=== AUDIT TOOL GUIDE ===
+  Lighthouse: Run via Chrome DevTools or CLI — covers Performance / CWV / Basic SEO / A11y scores
+  Gemini CLI:  Run 'gemini' CLI with page content — covers content quality / AI analysis / copy review
+  Claude AI:   Code review / security / logic / schema / compliance
+  User Manual: Browser test — UX / design / user flows / mobile / real interaction
+
+=== HOW TO OPEN CSV IN EXCEL ===
+  1. Open Excel
+  2. File → Open → Browse → cloudbasket-audit-plan.csv
+  3. Select "Delimited" → Next → Check "Comma" → Finish
+  4. Add filters: Data → Filter
+  5. Freeze Row 1: View → Freeze Panes → Freeze Top Row
+  6. Add Priority color coding: Home → Conditional Formatting
+  7. Save as .xlsx
+
+=== RECOMMENDED AUDIT ORDER ===
+  Phase 1 (Week 1): CRITICAL pages — Home, Products, Search, Login, Register, /go/[id]
+  Phase 2 (Week 2): HIGH commerce — Product Detail, Compare, Deals, POD Upload, CJ
+  Phase 3 (Week 3): HIGH support/legal — Contact, Privacy, Terms, Refund, Grievance Officer
+  Phase 4 (Week 4): MEDIUM + LOW — Blog, Affiliate, Marketing, Utility pages
+
+=== NEXT STEPS ===
+  1. Open CSV in Excel and save as .xlsx
+  2. Add color coding by Priority (Red=CRITICAL, Orange=HIGH, Yellow=MEDIUM, Green=LOW)
+  3. Add Auditor column as dropdown (Not Started / In Progress / Done / Blocked)
+  4. Begin Phase 1 audits — start with Home page
+  5. Run Lighthouse on Home: chrome://inspect or 'npx lighthouse https://cloudbasket.in --output html'
+  6. Run Claude AI review on /login security
+  7. Check /go/[id] open redirect vulnerability (CRITICAL security)

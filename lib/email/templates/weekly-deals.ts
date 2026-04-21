@@ -20,7 +20,7 @@ export function generateWeeklyDealsEmail(deals: Deal[], userName?: string): stri
             <td width="120" style="text-align:right;">
               <span style="background:#10B981;color:white;padding:4px 8px;border-radius:6px;font-size:11px;font-weight:700;">${deal.discountPercent}% OFF</span>
               <br/><br/>
-              <a href="https://cloudbasket.in/product/${deal.id}" style="background:#039BE5;color:white;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;">View Deal</a>
+              <a href="https://cloudbasket.co/product/${deal.id}" style="background:#039BE5;color:white;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;">View Deal</a>
             </td>
           </tr>
         </table>
@@ -44,12 +44,12 @@ export function generateWeeklyDealsEmail(deals: Deal[], userName?: string): stri
           <p style="color:#71717A;font-size:14px;">Here are this week's top deals — hand-picked for you.</p>
           <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">${dealsRows}</table>
           <div style="text-align:center;margin-top:24px;">
-            <a href="https://cloudbasket.in/deals" style="background:#039BE5;color:white;padding:14px 32px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;">View All Deals →</a>
+            <a href="https://cloudbasket.co/deals" style="background:#039BE5;color:white;padding:14px 32px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;">View All Deals →</a>
           </div>
         </td></tr>
         <tr><td style="padding:16px 24px;border-top:1px solid #f0f0f0;text-align:center;">
           <p style="margin:0;font-size:12px;color:#A1A1AA;">You received this because you subscribed to CloudBasket deal alerts.</p>
-          <p style="margin:8px 0 0;font-size:12px;"><a href="https://cloudbasket.in/api/newsletter/unsubscribe" style="color:#039BE5;">Unsubscribe</a></p>
+          <p style="margin:8px 0 0;font-size:12px;"><a href="https://cloudbasket.co/api/newsletter/unsubscribe" style="color:#039BE5;">Unsubscribe</a></p>
         </td></tr>
       </table>
     </td></tr>

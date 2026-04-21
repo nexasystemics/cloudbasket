@@ -1,0 +1,11 @@
+FILE PATH: app/api/flipkart/search/route.ts
+PURPOSE: Wire searchFlipkartProducts() standalone function into GET handler, replacing flipkartAPI.searchProducts()
+RISK LEVEL: Low — no mock data existed; both paths hit the live Flipkart Affiliate API feed. Behaviour is identical: FlipkartAffiliateAPI.searchProducts() is a thin wrapper around the same standalone function.
+DEPENDENCIES: searchFlipkartProducts() from services/apis/flipkart-affiliate.ts; FLIPKART_AFFILIATE_ID + FLIPKART_AFFILIATE_TOKEN must be set in .env.local
+ROLLBACK PLAN: Revert import to `{ flipkartAPI }` and call `flipkartAPI.searchProducts(parsed.data.q, parsed.data.category)` — both are exported from the same service file.
+
+CHANGES MADE:
+- Line 2: import changed from `{ flipkartAPI }` → `{ searchFlipkartProducts }`
+- Line 27: call changed from `flipkartAPI.searchProducts(...)` → `searchFlipkartProducts(...)`
+
+Response shape unchanged: { products: FlipkartProduct[], count: number }

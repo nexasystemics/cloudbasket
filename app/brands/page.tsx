@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Brand Directory | CloudBasket',
     description: 'Explore the full list of brands available on CloudBasket. Discover products and compare prices from Amazon, Flipkart, and more across all top brands.',
-    url: 'https://cloudbasket.in/brands',
+    url: 'https://cloudbasket.co/brands',
     siteName: 'CloudBasket',
     images: [
       {
-        url: 'https://cloudbasket.in/og-image.svg',
+        url: 'https://cloudbasket.co/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'CloudBasket Brand Directory',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Brand Directory | CloudBasket',
     description: 'Explore the full list of brands available on CloudBasket. Discover products and compare prices from Amazon, Flipkart, and more across all top brands.',
-    images: ['https://cloudbasket.in/og-image.svg'],
+    images: ['https://cloudbasket.co/og-image.svg'],
   },
 }
 

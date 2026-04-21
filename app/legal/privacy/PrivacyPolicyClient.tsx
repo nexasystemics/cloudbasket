@@ -72,7 +72,7 @@ export default function PrivacyPolicyClient() {
 
   const handleCopy = () => {
     try {
-      void navigator.clipboard.writeText('https://cloudbasket.in/legal/privacy')
+      void navigator.clipboard.writeText('https://cloudbasket.co/legal/privacy')
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
@@ -143,7 +143,7 @@ export default function PrivacyPolicyClient() {
       <Section id="s1" title="Section 1 — Introduction">
         <p>
           <strong>NEXQON HOLDINGS</strong> (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) operates CloudBasket at{' '}
-          <a href="https://cloudbasket.in" className="text-skyline-primary underline">cloudbasket.in</a>, an
+          <a href="https://cloudbasket.co" className="text-skyline-primary underline">cloudbasket.co</a>, an
           affiliate product discovery platform. CloudBasket is a <strong>zero-transaction, zero-account
           platform</strong> — we do not process payments, we do not require user registration, and we do not store
           user accounts.
@@ -180,7 +180,7 @@ export default function PrivacyPolicyClient() {
 
         <p>
           <strong>1.2 Scope:</strong> This Policy applies to all visitors of{' '}
-          <a href="https://cloudbasket.in" className="text-skyline-primary underline">cloudbasket.in</a>{' '}
+          <a href="https://cloudbasket.co" className="text-skyline-primary underline">cloudbasket.co</a>{' '}
           regardless of device or location. By continuing to use our Website, you acknowledge that you have read and
           understood this Policy.
         </p>
@@ -198,7 +198,7 @@ export default function PrivacyPolicyClient() {
           <p>NEXQON HOLDINGS, Kadapa, Andhra Pradesh – 516002, India</p>
           <p>
             Website:{' '}
-            <a href="https://cloudbasket.in" className="text-skyline-primary underline">cloudbasket.in</a>
+            <a href="https://cloudbasket.co" className="text-skyline-primary underline">cloudbasket.co</a>
             {' '}| Email:{' '}
             <a href="mailto:info@cloudbasket.co" className="text-skyline-primary underline">info@cloudbasket.co</a>
           </p>
@@ -358,7 +358,7 @@ export default function PrivacyPolicyClient() {
         <p>
           We use cookies and similar tracking technologies. A full description is in our{' '}
           <Link href="/legal/cookies" className="text-skyline-primary underline">Cookie Policy</Link> at{' '}
-          cloudbasket.in/legal/cookies.
+          cloudbasket.co/legal/cookies.
         </p>
 
         <p>
@@ -633,7 +633,7 @@ export default function PrivacyPolicyClient() {
           control over the content, privacy practices, or data collection policies of these third-party websites. We
           strongly encourage you to review the privacy policy of any third-party website you visit. Our Privacy
           Policy applies only to{' '}
-          <a href="https://cloudbasket.in" className="text-skyline-primary underline">cloudbasket.in</a>.
+          <a href="https://cloudbasket.co" className="text-skyline-primary underline">cloudbasket.co</a>.
         </p>
       </Section>
 
@@ -733,7 +733,7 @@ export default function PrivacyPolicyClient() {
             Email:{' '}
             <a href="mailto:info@cloudbasket.co" className="text-skyline-primary underline">info@cloudbasket.co</a>
             {' '}| Website:{' '}
-            <a href="https://cloudbasket.in" className="text-skyline-primary underline">cloudbasket.in</a>
+            <a href="https://cloudbasket.co" className="text-skyline-primary underline">cloudbasket.co</a>
             {' '}| Response Time: Within 30 days
           </p>
         </div>

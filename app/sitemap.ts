@@ -7,7 +7,7 @@ import { BLOG_POSTS } from '@/lib/blog-data'
 import { CATALOG_PRODUCTS, CATEGORY_DEFINITIONS } from '@/lib/cloudbasket-data'
 import { INDIA_CATALOG } from '@/lib/india-catalog'
 
-const BASE_URL = 'https://cloudbasket.in'
+const BASE_URL = 'https://cloudbasket.co'
 const LAST_MODIFIED = new Date()
 
 const INDIA_BRANDS = ['HUL', 'Dabur', 'ITC', 'Godrej', 'Bajaj', 'Havells', 'Philips', 'Prestige', 'boAt', 'Noise']

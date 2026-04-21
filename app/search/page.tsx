@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Search Products and Deals | CloudBasket',
   description: 'Search CloudBasket products, brands, and categories to compare prices across verified affiliate storefronts.',
   alternates: {
-    canonical: 'https://cloudbasket.in/search',
+    canonical: 'https://cloudbasket.co/search',
   },
 }
 

@@ -33,7 +33,7 @@ type ArticleSchemaProps = {
 
 type SchemaMarkupProps = WebsiteSchemaProps | ProductSchemaProps | ArticleSchemaProps
 
-const BASE_URL = 'https://cloudbasket.in'
+const BASE_URL = 'https://cloudbasket.co'
 
 export default function SchemaMarkup({ type, data }: SchemaMarkupProps): ReactElement {
   let schema: Record<string, unknown>

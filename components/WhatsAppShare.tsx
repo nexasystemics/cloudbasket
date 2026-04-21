@@ -9,7 +9,7 @@ interface WhatsAppShareProps {
 }
 
 export default function WhatsAppShare({ productName, price, url }: WhatsAppShareProps) {
-  const message = ` Check out ${productName} at just ₹${price.toLocaleString('en-IN')}!\nFound on CloudBasket — India's best price comparison.\n${url ?? 'https://cloudbasket.in'}`
+  const message = ` Check out ${productName} at just ₹${price.toLocaleString('en-IN')}!\nFound on CloudBasket — India's best price comparison.\n${url ?? 'https://cloudbasket.co'}`
   const waUrl = `https://wa.me/?text=${encodeURIComponent(message)}`
 
   return (

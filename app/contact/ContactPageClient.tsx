@@ -18,7 +18,7 @@ type ContactApiResponse =
   | { success: false; error: string; fieldErrors?: FieldErrors }
 
 const CONTACT_INFO = {
-  email: 'hello@cloudbasket.in',
+  email: 'hello@cloudbasket.co',
   whatsapp: '+91 98765 43210',
   address: 'NEXQON Holdings, Koramangala, Bengaluru, Karnataka 560034',
   responseTime: 'Within 8 business hours',

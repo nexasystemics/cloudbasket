@@ -1,0 +1,11 @@
+FILE PATH: app/api/amazon/product/route.ts
+PURPOSE: Wire fetchAmazonPrice() standalone function into GET handler, replacing amazonAPI.getProduct()
+RISK LEVEL: Low — no mock data existed; both paths hit live PA-API. Response shape narrows from AmazonProduct to AmazonPriceResult ({ price, title, imageUrl }).
+DEPENDENCIES: fetchAmazonPrice() from services/apis/amazon-pa-api.ts; env.AMAZON_ACCESS_KEY + env.AMAZON_SECRET_KEY must be set in .env.local
+ROLLBACK PLAN: Revert import to `amazonAPI` and call `amazonAPI.getProduct(asin)` — both are already exported from the same service file.
+
+CHANGES MADE:
+- Line 2: import changed from `{ amazonAPI }` → `{ fetchAmazonPrice }`
+- Line 26: call changed from `amazonAPI.getProduct(asin)` → `fetchAmazonPrice(asin)`
+
+No mock data was present before; the handler was already live. fetchAmazonPrice() adds internal rate-limiting via TokenBucket and 1-hour in-memory cache — making it slightly leaner than getProduct() for the single-ASIN price-lookup use case.

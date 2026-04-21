@@ -154,7 +154,7 @@ export default function CookiePolicyClient() {
         <TableWrapper>
           <thead><tr><Th>Type</Th><Th>Description</Th></tr></thead>
           <tbody>
-            <tr><Td><strong>First-Party Cookies</strong></Td><Td>Set directly by CloudBasket (cloudbasket.in)</Td></tr>
+            <tr><Td><strong>First-Party Cookies</strong></Td><Td>Set directly by CloudBasket (cloudbasket.co)</Td></tr>
             <tr><Td><strong>Third-Party Cookies</strong></Td><Td>Set by external services we use (Google, Cloudflare, affiliate networks)</Td></tr>
           </tbody>
         </TableWrapper>
@@ -318,7 +318,7 @@ export default function CookiePolicyClient() {
       <Section id="s4" title="4. Cookie Consent — Your Choices">
         <h3 className="font-black text-[var(--cb-text-primary)]">4.1 Our Cookie Consent Banner</h3>
         <p>
-          When you first visit <strong>cloudbasket.in</strong>, a cookie consent banner will be displayed.
+          When you first visit <strong>cloudbasket.co</strong>, a cookie consent banner will be displayed.
           In compliance with <strong>Rule 3(1) and Rule 4 of the DPDP Rules 2025</strong>, consent must be
           free, specific, informed, unconditional, and unambiguous.
         </p>
@@ -501,7 +501,7 @@ export default function CookiePolicyClient() {
           <p>NEXQON HOLDINGS — IBF Document Division</p>
           <p>Kadapa, Andhra Pradesh – 516002, India</p>
           <p>Email: <a href="mailto:info@cloudbasket.co" className="text-[#039BE5] underline">info@cloudbasket.co</a></p>
-          <p>Website: <a href="https://cloudbasket.in/legal/cookies" className="text-[#039BE5] underline">cloudbasket.in/legal/cookies</a></p>
+          <p>Website: <a href="https://cloudbasket.co/legal/cookies" className="text-[#039BE5] underline">cloudbasket.co/legal/cookies</a></p>
         </div>
 
         <h3 className="font-black text-[var(--cb-text-primary)]">Grievance Redressal (IT Rules 2021)</h3>

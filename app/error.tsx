@@ -35,7 +35,7 @@ export default function GlobalError({ error, reset }: { error: Error; reset: () 
           <div className="cb-card p-4 mb-8 text-left">
             <p className="text-xs font-black uppercase tracking-widest text-[var(--cb-text-muted)] mb-1">Error ID</p>
             <p className="font-mono font-black text-skyline-primary">{errorId}</p>
-            <p className="text-xs text-[var(--cb-text-muted)] mt-1">Mention this if contacting support at support@cloudbasket.in</p>
+            <p className="text-xs text-[var(--cb-text-muted)] mt-1">Mention this if contacting support at support@cloudbasket.co</p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-3">

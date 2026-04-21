@@ -6,13 +6,13 @@ import { getDailyDeals } from '@/lib/deals-engine'
 export const metadata: Metadata = {
   title: 'Best Deals Today in India 2026 — Up to 80% Off | CloudBasket',
   description: 'Find the best deals today in India across Amazon, Flipkart, Croma and more. Updated hourly. Up to 80% off on electronics, fashion, home and more.',
-  alternates: { canonical: 'https://cloudbasket.in/best-deals' },
+  alternates: { canonical: 'https://cloudbasket.co/best-deals' },
   openGraph: {
     title: 'Best Deals Today in India 2026',
     description: 'Verified price drops on 1,000+ products. Updated hourly.',
-    url: 'https://cloudbasket.in/best-deals',
+    url: 'https://cloudbasket.co/best-deals',
     siteName: 'CloudBasket',
-    images: [{ url: 'https://cloudbasket.in/og-image.svg' }],
+    images: [{ url: 'https://cloudbasket.co/og-image.svg' }],
     locale: 'en_IN',
     type: 'website',
   },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Best Deals Today in India 2026',
     description: 'Verified price drops on 1,000+ products. Updated hourly.',
-    images: ['https://cloudbasket.in/og-image.svg'],
+    images: ['https://cloudbasket.co/og-image.svg'],
   },
 }
 
@@ -29,7 +29,7 @@ const jsonLd = {
   '@type': 'ItemList',
   name: 'Best Deals Today in India',
   description: 'Top deals across Amazon, Flipkart and more — updated hourly.',
-  url: 'https://cloudbasket.in/best-deals',
+  url: 'https://cloudbasket.co/best-deals',
 }
 
 export default function BestDealsPage() {

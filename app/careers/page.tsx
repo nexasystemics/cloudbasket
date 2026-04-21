@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Join the Team | CloudBasket Careers',
     description: 'Help us build the future of smart shopping in India. Explore open positions in Engineering, Marketing, Design, and more at CloudBasket.',
-    url: 'https://cloudbasket.in/careers',
+    url: 'https://cloudbasket.co/careers',
     siteName: 'CloudBasket',
     images: [
       {
-        url: 'https://cloudbasket.in/og-image.svg',
+        url: 'https://cloudbasket.co/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'CloudBasket Careers',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Join the Team | CloudBasket Careers',
     description: 'Help us build the future of smart shopping in India. Explore open positions in Engineering, Marketing, Design, and more at CloudBasket.',
-    images: ['https://cloudbasket.in/og-image.svg'],
+    images: ['https://cloudbasket.co/og-image.svg'],
   },
 }
 

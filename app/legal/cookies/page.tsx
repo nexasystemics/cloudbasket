@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Cookie Policy | CloudBasket Legal',
     description: 'Detailed disclosure of cookies and tracking technologies used on CloudBasket. Learn how we protect your privacy in compliance with DPDP Act 2023.',
-    url: 'https://cloudbasket.in/legal/cookies',
+    url: 'https://cloudbasket.co/legal/cookies',
     siteName: 'CloudBasket',
     images: [
       {
-        url: 'https://cloudbasket.in/og-image.svg',
+        url: 'https://cloudbasket.co/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'CloudBasket Cookie Policy',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Cookie Policy | CloudBasket Legal',
     description: 'Detailed disclosure of cookies and tracking technologies used on CloudBasket. Learn how we protect your privacy in compliance with DPDP Act 2023.',
-    images: ['https://cloudbasket.in/og-image.svg'],
+    images: ['https://cloudbasket.co/og-image.svg'],
   },
 }
 

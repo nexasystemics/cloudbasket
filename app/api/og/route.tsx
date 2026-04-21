@@ -60,7 +60,7 @@ export async function GET(request: NextRequest): Promise<ImageResponse> {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ color: type === 'category' ? 'white' : '#039BE5', fontSize: 28, fontFamily: 'monospace' }}>cloudbasket.in</div>
+          <div style={{ color: type === 'category' ? 'white' : '#039BE5', fontSize: 28, fontFamily: 'monospace' }}>cloudbasket.co</div>
           <div
             style={{
               borderRadius: 999,

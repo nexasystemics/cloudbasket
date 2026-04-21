@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Feature Unavailable | CloudBasket',
     description: 'This feature is currently disabled. Browse deals and price comparisons at CloudBasket.',
-    url: 'https://cloudbasket.in/feature-disabled',
+    url: 'https://cloudbasket.co/feature-disabled',
     siteName: 'CloudBasket',
     locale: 'en_IN',
     type: 'website',

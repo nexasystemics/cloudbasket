@@ -33,7 +33,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://cloudbasket.in'),
+  metadataBase: new URL('https://cloudbasket.co'),
   title: {
     default: "CloudBasket — India's Best Price Comparison",
     template: '%s | CloudBasket',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://cloudbasket.in',
+    url: 'https://cloudbasket.co',
     siteName: 'CloudBasket',
     title: "CloudBasket — India's Best Price Comparison",
     description: 'Compare prices across 50+ stores. Zero checkout.',

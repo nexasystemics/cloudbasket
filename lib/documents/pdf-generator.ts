@@ -5,7 +5,7 @@ export function generateInvoiceHTML(data: InvoiceData): string {
   const itemRows = data.items.map(i => `<tr><td style="padding:8px;border-bottom:1px solid #eee">${i.name}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:center">${i.qty}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right">₹${i.price.toLocaleString('en-IN')}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right">₹${(i.qty * i.price).toLocaleString('en-IN')}</td></tr>`).join('')
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Invoice ${data.orderId}</title><style>body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:20px;color:#333}h1{color:#039BE5}.total{font-weight:bold;font-size:1.2em}</style></head><body>
 <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:40px">
-  <div><h1>CloudBasket</h1><p style="color:#666">cloudbasket.in</p></div>
+  <div><h1>CloudBasket</h1><p style="color:#666">cloudbasket.co</p></div>
   <div style="text-align:right"><h2>INVOICE</h2><p>#${data.orderId}</p><p>${data.date}</p></div>
 </div>
 <div style="margin-bottom:30px"><h3>Bill To:</h3><p>${data.customerName}<br>${data.customerEmail}</p></div>

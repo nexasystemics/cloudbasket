@@ -16,7 +16,7 @@ export const env = {
   NEXT_PUBLIC_SUPABASE_URL:        process.env.NEXT_PUBLIC_SUPABASE_URL        || '',
   NEXT_PUBLIC_SUPABASE_ANON_KEY:   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY   || '',
   SUPABASE_SERVICE_ROLE_KEY:       process.env.SUPABASE_SERVICE_ROLE_KEY        || '',
-  NEXT_PUBLIC_SITE_URL:            process.env.NEXT_PUBLIC_SITE_URL             || 'https://cloudbasket.in',
+  NEXT_PUBLIC_SITE_URL:            process.env.NEXT_PUBLIC_SITE_URL             || 'https://cloudbasket.co',
   INTERNAL_API_KEY:                process.env.INTERNAL_API_KEY                 || '',
   CRON_SECRET:                     process.env.CRON_SECRET                      || '',
   NEXT_PUBLIC_GA_ID:               process.env.NEXT_PUBLIC_GA_ID                || '',
@@ -81,7 +81,7 @@ export const env = {
   MSG91_OTP_TEMPLATE_ID:           process.env.MSG91_OTP_TEMPLATE_ID            || '',
   NEXT_PUBLIC_VAPID_PUBLIC_KEY:    process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY     || '',
   VAPID_PRIVATE_KEY:               process.env.VAPID_PRIVATE_KEY                || '',
-  VAPID_EMAIL:                     process.env.VAPID_EMAIL                      || 'admin@cloudbasket.in',
+  VAPID_EMAIL:                     process.env.VAPID_EMAIL                      || 'admin@cloudbasket.co',
   /**
    * Google media and search tooling credentials for video, indexing, and search performance automation.
    * Connects to YouTube Data API, Google service account APIs, and Search Console.
@@ -89,7 +89,7 @@ export const env = {
    */
   YOUTUBE_API_KEY:                 process.env.YOUTUBE_API_KEY                  || '',
   GOOGLE_SERVICE_ACCOUNT_JSON:     process.env.GOOGLE_SERVICE_ACCOUNT_JSON      || '',
-  SEARCH_CONSOLE_SITE_URL:         process.env.SEARCH_CONSOLE_SITE_URL          || 'https://cloudbasket.in',
+  SEARCH_CONSOLE_SITE_URL:         process.env.SEARCH_CONSOLE_SITE_URL          || 'https://cloudbasket.co',
   SELLER_GSTIN:                    process.env.SELLER_GSTIN                     || '',
   SELLER_STATE_CODE:               process.env.SELLER_STATE_CODE                || '29',
   SUPABASE_STORAGE_BUCKET:         process.env.SUPABASE_STORAGE_BUCKET          || 'product-images',

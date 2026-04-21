@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { flipkartAPI } from '@/services/apis/flipkart-affiliate'
+import { searchFlipkartProducts } from '@/services/apis/flipkart-affiliate'
 import { rateLimit } from '@/lib/redis'
 import { flipkartSearchQuerySchema, zodError } from '@/lib/validation'
 
@@ -24,6 +24,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: zodError(parsed.error) }, { status: 400 })
   }
 
-  const products = await flipkartAPI.searchProducts(parsed.data.q, parsed.data.category)
+  const products = await searchFlipkartProducts(parsed.data.q, parsed.data.category)
   return NextResponse.json({ products, count: products.length })
 }

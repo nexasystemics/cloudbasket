@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "CloudBasket Originals — Print on Demand",
     description: 'Explore CloudBasket Originals for print-on-demand apparel, mugs, cases, and custom merch with fresh production, quality prints, and India-wide delivery.',
-    url: 'https://cloudbasket.in/pod',
+    url: 'https://cloudbasket.co/pod',
     siteName: 'CloudBasket',
     images: [
       {
-        url: 'https://cloudbasket.in/og-image.svg',
+        url: 'https://cloudbasket.co/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'CloudBasket Originals',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "CloudBasket Originals — Print on Demand",
     description: 'Explore CloudBasket Originals for print-on-demand apparel, mugs, cases, and custom merch with fresh production, quality prints, and India-wide delivery.',
-    images: ['https://cloudbasket.in/og-image.svg'],
+    images: ['https://cloudbasket.co/og-image.svg'],
   },
 }
 const POD_CATEGORIES = [

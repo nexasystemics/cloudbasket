@@ -121,7 +121,7 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
 
       <footer className="border-t border-gray-200 bg-gray-50 py-6 print:hidden">
         <div className="mx-auto max-w-7xl px-4 text-center text-xs text-gray-500 sm:px-6 lg:px-8">
-          <p>© 2026 NEXQON HOLDINGS | CloudBasket | www.cloudbasket.in</p>
+          <p>© 2026 NEXQON HOLDINGS | CloudBasket | www.cloudbasket.co</p>
           <p className="mt-1">
             Kadapa, Andhra Pradesh – 516002, India |{' '}
             <a href="mailto:info@cloudbasket.co" className="hover:text-[#039BE5]">

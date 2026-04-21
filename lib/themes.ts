@@ -24,7 +24,7 @@ export const TENANT_THEMES: Record<string, TenantTheme> = {
     tagline: 'Design. Print. Earn.',
     industry: 'affiliate-pod',
     description: 'Shop smart. Earn more. Browse 1M+ products, compare prices and discover unique designs.',
-    domain: 'cloudbasket.in',
+    domain: 'cloudbasket.co',
   },
   infotyx: {
     name: 'INFOTYX',

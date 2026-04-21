@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Affiliate Disclosure — CloudBasket',
     description: 'Full transparency about how CloudBasket earns affiliate revenue. FTC and ASCI compliant.',
-    url: 'https://cloudbasket.in/affiliate-disclosure',
+    url: 'https://cloudbasket.co/affiliate-disclosure',
     siteName: 'CloudBasket',
     images: [
       {
-        url: 'https://cloudbasket.in/og-image.svg',
+        url: 'https://cloudbasket.co/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'CloudBasket Affiliate Disclosure',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Affiliate Disclosure — CloudBasket',
     description: 'Full transparency about how CloudBasket earns affiliate revenue. FTC and ASCI compliant.',
-    images: ['https://cloudbasket.in/og-image.svg'],
+    images: ['https://cloudbasket.co/og-image.svg'],
   },
 }
 
@@ -118,7 +118,7 @@ export default function AffiliateDisclosurePage() {
         {/* Contact + CTA */}
         <article className="cb-card border-[#039BE5]/20 bg-[#039BE5]/5 p-6">
           <p className="inline-flex items-center gap-2 text-sm font-bold text-[#039BE5] mb-3">
-            <AlertCircle size={14} /> For affiliate-related queries: <a href="mailto:affiliates@cloudbasket.in" className="underline">affiliates@cloudbasket.in</a>
+            <AlertCircle size={14} /> For affiliate-related queries: <a href="mailto:affiliates@cloudbasket.co" className="underline">affiliates@cloudbasket.co</a>
           </p>
           <div className="flex flex-wrap gap-3 mt-3">
             <Link href="/associates" className="cb-btn cb-btn-primary gap-2">

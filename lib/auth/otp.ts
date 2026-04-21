@@ -17,7 +17,7 @@ export async function sendEmailOTP(email: string, otp: string): Promise<boolean>
   try {
     const resend = new Resend(env.RESEND_API_KEY)
     const { error } = await resend.emails.send({
-      from: 'CloudBasket <noreply@cloudbasket.in>',
+      from: 'CloudBasket <noreply@cloudbasket.co>',
       to: [email],
       subject: 'Your CloudBasket OTP',
       html: `<p>Your verification code: <strong style="font-size:24px">${otp}</strong></p><p>Valid for 10 minutes.</p>`,

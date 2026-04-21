@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About CloudBasket — The World's Smartest Price Aggregator",
     description: 'Learn how CloudBasket compares prices across leading stores, tracks daily deal changes, and helps shoppers discover smarter savings without checkout friction.',
-    url: 'https://cloudbasket.in/about',
+    url: 'https://cloudbasket.co/about',
     siteName: 'CloudBasket',
     images: [
       {
-        url: 'https://cloudbasket.in/og-image.svg',
+        url: 'https://cloudbasket.co/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'About CloudBasket',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "About CloudBasket — The World's Smartest Price Aggregator",
     description: 'Learn how CloudBasket compares prices across leading stores, tracks daily deal changes, and helps shoppers discover smarter savings without checkout friction.',
-    images: ['https://cloudbasket.in/og-image.svg'],
+    images: ['https://cloudbasket.co/og-image.svg'],
   },
 }
 const STATS: ReadonlyArray<{ value: string; label: string }> = [

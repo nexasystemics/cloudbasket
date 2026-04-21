@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { amazonAPI } from '@/services/apis/amazon-pa-api'
+import { fetchAmazonPrice } from '@/services/apis/amazon-pa-api'
 import { env } from '@/lib/env'
 import { rateLimit } from '@/lib/redis'
 
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
   const asin = request.nextUrl.searchParams.get('asin')
   if (!asin) return NextResponse.json({ error: 'Missing asin param' }, { status: 400 })
   try {
-    const product = await amazonAPI.getProduct(asin)
+    const product = await fetchAmazonPrice(asin)
     if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     return NextResponse.json({ product })
   } catch {

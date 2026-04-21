@@ -7,7 +7,7 @@ export interface Tenant {
 export const tenants: Record<string, Tenant> = {
   cloudbasket: {
     name: 'CloudBasket',
-    domain: 'cloudbasket.in',
+    domain: 'cloudbasket.co',
     theme: '#039BE5'
   },
   infotyx: {

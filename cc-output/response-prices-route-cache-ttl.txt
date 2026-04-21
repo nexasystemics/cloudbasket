@@ -1,0 +1,8 @@
+FILE PATH: app/api/prices/route.ts
+PURPOSE: Fix Redis cache TTL from 300s → 900s per spec. Import, cache key, and <=10 guard were already correctly wired.
+RISK LEVEL: Low — TTL-only change; no logic altered.
+DEPENDENCIES: getCache/setCache from lib/redis.ts (Upstash Redis REST); UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN in .env.local
+ROLLBACK PLAN: Change setCache(cacheKey, results, 900) back to 300.
+
+CHANGE: Line 100 — setCache TTL argument: 300 → 900
+TYPE CHECK: pnpm tsc --noEmit — exit 0, no errors.

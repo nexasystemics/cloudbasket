@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'CloudBasket - Everything in One Basket',
     description: "Discover and compare the best prices worldwide. Zero checkout. Pure discovery.",
-    url: 'https://cloudbasket.in',
+    url: 'https://cloudbasket.co',
     images: [{ url: '/og-image.svg' }],
   },
   twitter: {
@@ -39,11 +39,11 @@ const WEBSITE_STRUCTURED_DATA = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'CloudBasket',
-  url: 'https://cloudbasket.in',
+  url: 'https://cloudbasket.co',
   description: "The World's Smartest Price Aggregator",
   potentialAction: {
     '@type': 'SearchAction',
-    target: 'https://cloudbasket.in/search?q={search_term_string}',
+    target: 'https://cloudbasket.co/search?q={search_term_string}',
     'query-input': 'required name=search_term_string',
   },
 }

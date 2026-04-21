@@ -90,14 +90,14 @@ export async function GET(request: NextRequest) {
           platform: 'Static',
           price: 0,
           inStock: true,
-          url: `https://cloudbasket.in/go/${id}`,
+          url: `https://cloudbasket.co/go/${id}`,
           fetchedAt: new Date(),
           source: 'static' as const,
         }))
       )
     }
 
-    if (cacheKey) await setCache(cacheKey, results, 300)
+    if (cacheKey) await setCache(cacheKey, results, 900)
 
     return NextResponse.json(results, {
       headers: {

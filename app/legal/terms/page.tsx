@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     'Read CloudBasket\'s Terms of Service. CloudBasket is an affiliate product discovery platform operated by NEXQON HOLDINGS.',
   alternates: {
-    canonical: 'https://www.cloudbasket.in/legal/terms',
+    canonical: 'https://www.cloudbasket.co/legal/terms',
   },
   robots: { index: true, follow: true },
 }
@@ -41,17 +41,17 @@ const jsonLd = {
   name: 'Terms of Service | CloudBasket',
   description:
     "CloudBasket's Terms of Service — an affiliate product discovery platform operated by NEXQON HOLDINGS.",
-  url: 'https://www.cloudbasket.in/legal/terms',
+  url: 'https://www.cloudbasket.co/legal/terms',
   isPartOf: {
     '@type': 'WebSite',
     name: 'CloudBasket',
-    url: 'https://www.cloudbasket.in',
+    url: 'https://www.cloudbasket.co',
   },
   dateModified: '2026-03-31',
   publisher: {
     '@type': 'Organization',
     name: 'NEXQON HOLDINGS',
-    url: 'https://www.cloudbasket.in',
+    url: 'https://www.cloudbasket.co',
   },
 }
 

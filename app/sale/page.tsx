@@ -6,7 +6,7 @@ import { getDailyDeals } from '@/lib/deals-engine'
 export const metadata: Metadata = {
   title: 'Current Sales and Offers in India — All Platforms | CloudBasket',
   description: 'All active sales and offers across Amazon, Flipkart, Croma and more. Find products with 30%+ discount — updated daily.',
-  alternates: { canonical: 'https://cloudbasket.in/sale' },
+  alternates: { canonical: 'https://cloudbasket.co/sale' },
 }
 
 export default function SalePage() {

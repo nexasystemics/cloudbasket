@@ -43,7 +43,7 @@ export function generatePriceDropEmail(
         </td></tr>
         <tr><td style="padding:16px 24px;border-top:1px solid #f0f0f0;text-align:center;">
           <p style="margin:0;font-size:12px;color:#A1A1AA;">CloudBasket — Zero Checkout. Pure Discovery.</p>
-          <p style="margin:8px 0 0;font-size:12px;"><a href="https://cloudbasket.in/api/newsletter/unsubscribe" style="color:#039BE5;">Unsubscribe from alerts</a></p>
+          <p style="margin:8px 0 0;font-size:12px;"><a href="https://cloudbasket.co/api/newsletter/unsubscribe" style="color:#039BE5;">Unsubscribe from alerts</a></p>
         </td></tr>
       </table>
     </td></tr>

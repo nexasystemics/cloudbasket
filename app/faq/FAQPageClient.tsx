@@ -65,7 +65,7 @@ const FAQ_CATEGORIES: readonly FAQCategory[] = [
       },
       {
         q: 'How do I delete my account?',
-        a: "Email privacy@cloudbasket.in with subject 'Delete Account'. We will process within 7 business days per DPDPA 2023.",
+        a: "Email privacy@cloudbasket.co with subject 'Delete Account'. We will process within 7 business days per DPDPA 2023.",
       },
     ],
   },
@@ -75,7 +75,7 @@ const FAQ_CATEGORIES: readonly FAQCategory[] = [
     items: [
       {
         q: 'How do I join the Associates program?',
-        a: 'Register at cloudbasket.in/register, select Associates during signup, and get your unique referral link within minutes.',
+        a: 'Register at cloudbasket.co/register, select Associates during signup, and get your unique referral link within minutes.',
       },
       {
         q: 'What commission rates do Associates earn?',

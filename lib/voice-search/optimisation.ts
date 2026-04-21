@@ -4,5 +4,5 @@ export function normaliseVoiceQuery(query: string): string {
   let n = query.toLowerCase(); Object.entries(HINDI_TO_ENGLISH).forEach(([h, e]) => { n = n.replace(new RegExp(h, 'gi'), e) }); return n.trim()
 }
 export function generateConversationalSchema(productId: string, productName: string, price: number, brand: string): Record<string, unknown> {
-  return { '@context': 'https://schema.org', '@type': 'QAPage', mainEntity: [{ '@type': 'Question', name: `Where can I buy ${productName} cheapest?`, acceptedAnswer: { '@type': 'Answer', text: `Buy ${productName} by ${brand} at ₹${price.toLocaleString('en-IN')} on CloudBasket. Compare prices: cloudbasket.in/product/${productId}` } }] }
+  return { '@context': 'https://schema.org', '@type': 'QAPage', mainEntity: [{ '@type': 'Question', name: `Where can I buy ${productName} cheapest?`, acceptedAnswer: { '@type': 'Answer', text: `Buy ${productName} by ${brand} at ₹${price.toLocaleString('en-IN')} on CloudBasket. Compare prices: cloudbasket.co/product/${productId}` } }] }
 }

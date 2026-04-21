@@ -1,5 +1,5 @@
 export const SITE_NAME = 'CloudBasket'
-export const SITE_URL = 'https://cloudbasket.in'
+export const SITE_URL = 'https://cloudbasket.co'
 export const SITE_DESCRIPTION = "Compare Prices. Discover Deals. Shop Smarter."
 export const SITE_TAGLINE = 'One platform. Every store. Zero confusion.'
 

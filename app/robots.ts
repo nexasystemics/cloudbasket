@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/dashboard/', '/api/'],
     },
-    sitemap: 'https://cloudbasket.in/sitemap.xml',
-    host: 'https://cloudbasket.in',
+    sitemap: 'https://cloudbasket.co/sitemap.xml',
+    host: 'https://cloudbasket.co',
   }
 }

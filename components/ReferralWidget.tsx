@@ -17,7 +17,7 @@ export default function ReferralWidget() {
     } catch { return 'CBREF01' }
   }, [])
 
-  const refUrl = `https://cloudbasket.in?ref=${refCode}`
+  const refUrl = `https://cloudbasket.co?ref=${refCode}`
 
   const handleCopy = async () => {
     const ok = await copyToClipboard(refUrl)

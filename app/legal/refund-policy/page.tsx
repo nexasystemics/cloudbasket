@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description:
     'CloudBasket refund and returns policy for affiliate links and third-party marketplace POD listings.',
   alternates: {
-    canonical: 'https://www.cloudbasket.in/legal/refund-policy',
+    canonical: 'https://www.cloudbasket.co/legal/refund-policy',
   },
   robots: { index: true, follow: true },
 }
@@ -27,12 +27,12 @@ const jsonLd = {
   name: 'Refund & Returns Policy | CloudBasket',
   description:
     'CloudBasket refund and returns policy for affiliate and third-party marketplace purchases.',
-  url: 'https://www.cloudbasket.in/legal/refund-policy',
+  url: 'https://www.cloudbasket.co/legal/refund-policy',
   dateModified: '2026-04-02',
   publisher: {
     '@type': 'Organization',
     name: 'NEXQON HOLDINGS',
-    url: 'https://www.cloudbasket.in',
+    url: 'https://www.cloudbasket.co',
   },
 }
 

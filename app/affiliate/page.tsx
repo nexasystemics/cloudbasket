@@ -30,11 +30,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'CloudBasket Affiliate Program',
     description: 'Join the CloudBasket affiliate program to earn commissions, track clicks and conversions, and grow revenue by sharing verified products and deals today.',
-    url: 'https://cloudbasket.in/affiliate',
+    url: 'https://cloudbasket.co/affiliate',
     siteName: 'CloudBasket',
     images: [
       {
-        url: 'https://cloudbasket.in/og-image.svg',
+        url: 'https://cloudbasket.co/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'CloudBasket Affiliate Program',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CloudBasket Affiliate Program',
     description: 'Join the CloudBasket affiliate program to earn commissions, track clicks and conversions, and grow revenue by sharing verified products and deals today.',
-    images: ['https://cloudbasket.in/og-image.svg'],
+    images: ['https://cloudbasket.co/og-image.svg'],
   },
 }
 

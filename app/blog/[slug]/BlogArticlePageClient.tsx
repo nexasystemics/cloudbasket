@@ -83,7 +83,7 @@ export default function BlogArticlePageClient({ post, relatedPosts }: BlogArticl
     }
   }
 
-  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(`Check out this article on CloudBasket: ${post.title} https://cloudbasket.in/blog/${post.slug}`)}`
+  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(`Check out this article on CloudBasket: ${post.title} https://cloudbasket.co/blog/${post.slug}`)}`
 
   useEffect(() => {
     try {
@@ -108,7 +108,7 @@ export default function BlogArticlePageClient({ post, relatedPosts }: BlogArticl
     author: { '@type': 'Person', name: post.author },
     datePublished: post.date,
     articleSection: post.category,
-    publisher: { '@type': 'Organization', name: 'CloudBasket', logo: { '@type': 'ImageObject', url: 'https://cloudbasket.in/logo.png' } },
+    publisher: { '@type': 'Organization', name: 'CloudBasket', logo: { '@type': 'ImageObject', url: 'https://cloudbasket.co/logo.png' } },
     description: post.excerpt,
   }
 

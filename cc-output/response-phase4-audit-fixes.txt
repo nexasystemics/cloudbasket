@@ -1,0 +1,80 @@
+RESPONSE: PHASE 4 AUDIT + REMAINING CODE FIXES
+Generated: 2026-04-22
+Session: cloudbasket
+
+=== FILES CHANGED (10) ===
+
+app/compare/ComparePageClient.tsx
+  — Added getPlatformSlug() helper: flipkart / cj / amazon derived from specs.platform
+  — Changed compareEntries.map(({ product }) → ({ product, specs }) in header row
+  — CTA href: /go/amazon-${product.id} → /go/${getPlatformSlug(specs.platform)}-${product.id}
+  — Platform slug is now derived from product's actual platform field, not hardcoded
+
+app/deals/[id]/page.tsx
+  — Added getPlatformSlug(source) helper: Flipkart → flipkart, CJ → cj, else amazon
+  — CTA href: /go/amazon-${deal.productId} → /go/${getPlatformSlug(product?.source)}-${deal.productId}
+
+app/brand/[brandName]/page.tsx      — 9× cloudbasket.in → cloudbasket.co
+app/category/[slug]/page.tsx        — 7× cloudbasket.in → cloudbasket.co
+app/blog/[slug]/page.tsx            — 6× cloudbasket.in → cloudbasket.co
+app/blog/[slug]/BlogArticlePageClient.tsx — 2× cloudbasket.in → cloudbasket.co
+app/product/[id]/page.tsx           — 5× cloudbasket.in → cloudbasket.co
+app/pod/[category]/page.tsx         — 6× cloudbasket.in → cloudbasket.co
+
+=== PHASE 4 SCAN FINDINGS ===
+
+cloudbasket.in URLs
+  FIXED — 35 instances across 6 files, all replaced with cloudbasket.co
+  Post-fix grep of app/**/*.{ts,tsx} → zero matches
+
+console.log statements
+  app/api/vitals/route.ts:16 — console.log('[Vitals]', metrics)
+  NOTED, NOT CHANGED — already guarded by NODE_ENV === 'development' check
+  lib/logger.ts does not exist; no replacement target
+  Never executes in production
+
+TODO / FIXME / HACK comments
+  Grep of app/**/*.{ts,tsx} → ZERO matches
+  No outstanding comments found
+
+href links to /checkout, /cart, /admin, /dashboard
+  Grep of app/**/*.{ts,tsx} → ZERO matches
+  Zero-checkout mandate upheld throughout
+
+Sitemap (app/sitemap.ts)
+  Base URL: https://cloudbasket.co — CORRECT
+  No /checkout, /cart, /admin, /dashboard routes listed — CLEAN
+  No changes needed
+
+=== TYPE CHECK ===
+pnpm tsc --noEmit → EXIT 0
+
+=== AFFILIATE TAG AUDIT (context) ===
+cloudbasket-21 hardcoded fallback found in services/ and lib/:
+  services/price-engine/price-intelligence.ts:59  — hardcoded in mock URL
+  services/affiliate/link-health-monitor.ts:30,60 — hardcoded in test URLs
+  services/deals/deal-discovery.ts:27             — hardcoded in affiliate URL
+  lib/constants.ts:7                              — exported AFFILIATE_TAGS.AMAZON constant
+  lib/cloudbasket-data.ts:68-71                   — 3-level env var fallback ending in 'cloudbasket-21'
+  lib/env.ts:34                                   — AMAZON_ASSOCIATE_TAG fallback
+  services/apis/amazon-pa-api.ts:95-97            — env var with fallback (correct pattern)
+  app/go/[id]/route.ts:53                         — env var with fallback (correct pattern)
+  app/legal/affiliate-disclosure/page.tsx:23      — disclosure text (correct, legal copy)
+  tests/affiliate-redirects.spec.ts:23            — test assertion (correct)
+NOTE: service/lib hardcoded fallbacks are internal plumbing, not user-facing CTA hrefs.
+CTA hrefs in app/ now all route through /go/[platform]-[id] with platform derived dynamically.
+IBF to set AMAZON_ASSOCIATE_TAG env var in Vercel/production.
+
+=== ALL PHASES COMPLETE ===
+Phase 1 CRITICAL  — COMPLETE (exit 0)
+Phase 2 HIGH      — COMPLETE (exit 0)
+Phase 3 LEGAL     — COMPLETE (exit 0)
+Phase 4 AUDIT     — COMPLETE (exit 0)
+tsc --noEmit      — EXIT 0 across all phases
+
+=== REMAINING IBF-GATED ITEMS ===
+1. Set AMAZON_ASSOCIATE_TAG in Vercel env (replaces cloudbasket-21 fallback)
+2. Grievance officer real name (replace [PENDING — IBF TO CONFIRM])
+3. Upload /public/legal/terms-of-service.pdf
+4. Cloudflare WAF rate limit on /go/* (infra)
+5. OAuth GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET for Google login

@@ -117,10 +117,10 @@ function DealOfTheDay() {
               </div>
 
               <div className="mt-2 flex items-baseline gap-3">
-                <p className="price-current text-3xl">Rs{DEAL_OF_DAY.price.toLocaleString('en-IN')}</p>
-                <p className="price-original">Rs{DEAL_OF_DAY.originalPrice.toLocaleString('en-IN')}</p>
+                <p className="price-current text-3xl">₹{DEAL_OF_DAY.price.toLocaleString('en-IN')}</p>
+                <p className="price-original">₹{DEAL_OF_DAY.originalPrice.toLocaleString('en-IN')}</p>
                 <span className="cb-badge cb-badge-green">
-                  Save Rs{(DEAL_OF_DAY.originalPrice - DEAL_OF_DAY.price).toLocaleString('en-IN')}
+                  Save ₹{(DEAL_OF_DAY.originalPrice - DEAL_OF_DAY.price).toLocaleString('en-IN')}
                 </span>
               </div>
 

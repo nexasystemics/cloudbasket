@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const title = `${category.label} - Best Prices in India | CloudBasket`
   const description = `${category.heroDescription} Compare prices on CloudBasket across Amazon, Flipkart, and more with verified deals.`
-  const url = `https://cloudbasket.in/category/${slug}`
-  const ogImage = `https://cloudbasket.in/api/og?title=${encodeURIComponent(category.label)}&type=category`
+  const url = `https://cloudbasket.co/category/${slug}`
+  const ogImage = `https://cloudbasket.co/api/og?title=${encodeURIComponent(category.label)}&type=category`
 
   return {
     title, description,
@@ -50,9 +50,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
-      { '@type': 'ListItem', position: 2, name: 'Categories', item: 'https://cloudbasket.in/categories' },
-      { '@type': 'ListItem', position: 3, name: category.label, item: `https://cloudbasket.in/category/${slug}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.co' },
+      { '@type': 'ListItem', position: 2, name: 'Categories', item: 'https://cloudbasket.co/categories' },
+      { '@type': 'ListItem', position: 3, name: category.label, item: `https://cloudbasket.co/category/${slug}` },
     ],
   }
 
@@ -62,7 +62,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     '@type': 'ItemList',
     name: `${category.label} Products on CloudBasket`,
     description: category.heroDescription,
-    url: `https://cloudbasket.in/category/${slug}`,
+    url: `https://cloudbasket.co/category/${slug}`,
     numberOfItems: products.length,
     itemListElement: products.slice(0, 50).map((product, index) => ({
       '@type': 'ListItem',
@@ -72,7 +72,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         name: product.title,
         image: product.image,
         brand: { '@type': 'Brand', name: product.brand },
-        offers: { '@type': 'Offer', price: product.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.in/product/${product.id}` },
+        offers: { '@type': 'Offer', price: product.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.co/product/${product.id}` },
       },
     })),
   }

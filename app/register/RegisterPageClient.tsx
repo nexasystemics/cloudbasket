@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Mail, Lock, Eye, EyeOff, UserPlus, User, Building, ArrowRight, ShoppingBag, Users, Printer } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 type AccountType = 'shopper' | 'associate' | 'pod'
 
@@ -26,20 +27,80 @@ const INITIAL_FORM: RegisterFormData = {
   referralCode: '',
 }
 
+const INDIAN_PHONE_RE = /^(\+91)?[6-9]\d{9}$/
+
 export default function RegisterPageClient() {
   const [step, setStep] = useState<1 | 2>(1)
   const [accountType, setAccountType] = useState<AccountType>('shopper')
   const [formData, setFormData] = useState<RegisterFormData>(INITIAL_FORM)
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
 
   const updateField = (key: keyof RegisterFormData, value: string) => {
     setFormData((current) => ({ ...current, [key]: value }))
   }
 
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
+    setError(null)
+
+    if (!termsAccepted) {
+      setError('Please accept the Terms of Service and Privacy Policy to continue.')
+      return
+    }
+    if (!formData.name.trim()) {
+      setError('Full name is required.')
+      return
+    }
+    if (!formData.email.includes('@') || !formData.email.includes('.')) {
+      setError('Please enter a valid email address.')
+      return
+    }
+    if (formData.phone && !INDIAN_PHONE_RE.test(formData.phone.replace(/\s/g, ''))) {
+      setError('Please enter a valid Indian phone number.')
+      return
+    }
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters.')
+      return
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match.')
+      return
+    }
+
     setIsLoading(true)
-    setTimeout(() => setIsLoading(false), 1500)
+    try {
+      const supabase = createClient()
+      if (!supabase) {
+        setError('Auth service is not configured. Please try again later.')
+        return
+      }
+
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            name: formData.name.trim(),
+            phone: formData.phone.trim() || null,
+            city: formData.city.trim() || null,
+            account_type: accountType,
+            referral_code: formData.referralCode.trim() || null,
+          },
+        },
+      })
+
+      if (signUpError) throw signUpError
+
+      setSuccess('Account created! Check your email to confirm before signing in.')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Registration failed. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -196,7 +257,7 @@ export default function RegisterPageClient() {
                     id="register-password"
                     className="cb-input w-full pl-9 pr-10"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Password"
+                    placeholder="Password (min 8 characters)"
                     aria-label="Password"
                     value={formData.password}
                     onChange={(event) => updateField('password', event.target.value)}
@@ -239,7 +300,13 @@ export default function RegisterPageClient() {
                 ) : null}
 
                 <div className="mb-6 flex items-start gap-3">
-                  <input id="register-terms" type="checkbox" className="mt-1 rounded" />
+                  <input
+                    id="register-terms"
+                    type="checkbox"
+                    className="mt-1 rounded"
+                    checked={termsAccepted}
+                    onChange={(event) => setTermsAccepted(event.target.checked)}
+                  />
                   <label htmlFor="register-terms" className="text-xs text-[var(--cb-text-muted)]">
                     I agree to the{' '}
                     <Link href="/legal/terms" className="text-[#039BE5]">
@@ -252,11 +319,23 @@ export default function RegisterPageClient() {
                   </label>
                 </div>
 
+                {error ? (
+                  <p role="alert" aria-live="assertive" className="mb-4 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-500">
+                    {error}
+                  </p>
+                ) : null}
+
+                {success ? (
+                  <p role="status" aria-live="polite" className="mb-4 rounded-lg bg-emerald-500/10 px-3 py-2 text-sm text-emerald-600 dark:text-emerald-400">
+                    {success}
+                  </p>
+                ) : null}
+
                 <button
                   type="button"
                   className="cb-btn cb-btn-primary w-full gap-2"
                   onClick={handleCreateAccount}
-                  disabled={isLoading}
+                  disabled={isLoading || Boolean(success)}
                 >
                   {isLoading ? (
                     <>

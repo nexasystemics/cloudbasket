@@ -53,7 +53,12 @@
       "Bash(pnpm exec:*)",
       "Bash(node -e ' *)",
       "Bash(xargs grep *)",
-      "Bash(npm i *)"
+      "Bash(npm i *)",
+      "Bash(git -C F:/cloudbasket status)",
+      "Bash(git -C F:/cloudbasket diff --stat)",
+      "Bash(git -C F:/cloudbasket log --oneline -5)",
+      "Bash(git -C F:/cloudbasket add cc-output/audit/ cc-output/cloudbasket-audit-plan.csv cc-output/response-prefinal-audit-plan.txt)",
+      "Bash(git *)"
     ]
   }
 }

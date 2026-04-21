@@ -23,6 +23,12 @@ type UI_DealItem = {
   productId: string
 }
 
+const PLATFORM_SLUG: Record<UI_DealItem['platform'], string> = {
+  'Amazon': 'amazon',
+  'Flipkart': 'flipkart',
+  'CJ Global': 'cj',
+}
+
 function calculateTimeLeft(expiry: Date): string {
   const totalSeconds = Math.max(0, Math.floor((expiry.getTime() - Date.now()) / 1000))
   const hours = Math.floor(totalSeconds / 3600)
@@ -145,7 +151,7 @@ export default function DealsPageClient() {
                       <Clock size={12} className="text-orange-500" />
                       <p className="text-[10px] font-black text-orange-500 uppercase tracking-tighter">Ends in {deal.endsIn}</p>
                     </div>
-                    <Link href={`/go/${deal.platform.toLowerCase()}-${deal.productId}`} className="cb-btn-primary h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                    <Link href={`/go/${PLATFORM_SLUG[deal.platform]}-${deal.productId}`} className="cb-btn-primary h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
                       Grab Deal <ExternalLink size={14} />
                     </Link>
                   </div>

@@ -1,0 +1,30 @@
+RESPONSE: NEXT ACTIONS FROM PRE-FINAL AUDIT PLAN
+Generated: 2026-04-21
+Session: cloudbasket
+
+=== CURRENT STATE ===
+Audit plan file: F:\cloudbasket\cc-output\cloudbasket-audit-plan.csv
+Status: Plan complete, no audits started yet
+
+=== IMMEDIATE ACTIONS ===
+1. Open CSV in Excel → save as .xlsx
+2. Add color coding: Red=CRITICAL, Orange=HIGH, Yellow=MEDIUM, Green=LOW
+3. Add status dropdown column: Not Started / In Progress / Done / Blocked
+
+=== PHASE 1 — CRITICAL PAGES (this week) ===
+1. Home        /              Lighthouse + all 4 auditors
+2. Products    /products      Lighthouse + all 4 auditors
+3. Search      /search        Lighthouse + all 4 auditors
+4. Login       /login         Claude AI security review
+5. Register    /register      Claude AI security review
+6. /go/[id]    affiliate redir  CRITICAL open redirect vulnerability — highest priority
+
+=== HIGHEST PRIORITY SECURITY ===
+/go/[id] open redirect check — flagged CRITICAL
+→ Run Claude AI code review on the route handler first
+
+=== PHASE ORDER ===
+Phase 1 (Week 1): CRITICAL — Home, Products, Search, Login, Register, /go/[id]
+Phase 2 (Week 2): HIGH commerce — Product Detail, Compare, Deals, POD Upload, CJ
+Phase 3 (Week 3): HIGH support/legal — Contact, Privacy, Terms, Refund, Grievance
+Phase 4 (Week 4): MEDIUM + LOW — Blog, Affiliate, Marketing, Utility pages

@@ -56,7 +56,13 @@ export async function GET(
   const cjPublisherId  = process.env.CJ_PUBLISHER_ID       ?? 'cb-cj-pending'
 
   const { id } = (await context.params) as { id?: string }
-  const normalizedId = decodeURIComponent(id ?? '').trim()
+
+  let normalizedId: string
+  try {
+    normalizedId = decodeURIComponent(id ?? '').trim()
+  } catch {
+    return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
+  }
 
   if (!normalizedId) {
     return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
@@ -67,16 +73,12 @@ export async function GET(
   const prefix   = prefixRaw.toLowerCase()
   const targetId = targetParts.join('-').trim()
 
-  // Shared log base — avoids repeating in every branch
-  const logBase = {
-  }
-
   // ── Amazon ────────────────────────────────────────────────────────
   if (prefix === 'amazon' && targetId) {
     const destination = `${AMAZON_BASE}/dp/${encodeURIComponent(targetId)}?tag=${encodeURIComponent(amazonTag)}`
 
     // Fire-and-forget — do not await, redirect immediately
-    void logClick({ ...logBase, platform: 'amazon', target_id: targetId, destination })
+    void logClick({ platform: 'amazon', target_id: targetId, destination })
 
     return NextResponse.redirect(destination, { status: 302 })
   }
@@ -85,7 +87,7 @@ export async function GET(
   if (prefix === 'flipkart' && targetId) {
     const destination = `${FLIPKART_BASE}/search?q=${encodeURIComponent(targetId)}&affid=${encodeURIComponent(flipkartAffid)}`
 
-    void logClick({ ...logBase, platform: 'flipkart', target_id: targetId, destination })
+    void logClick({ platform: 'flipkart', target_id: targetId, destination })
 
     return NextResponse.redirect(destination, { status: 302 })
   }
@@ -94,7 +96,7 @@ export async function GET(
   if (prefix === 'cj' && targetId) {
     const destination = `${CJ_BASE}/click-${encodeURIComponent(targetId)}?publisher=${encodeURIComponent(cjPublisherId)}`
 
-    void logClick({ ...logBase, platform: 'cj', target_id: targetId, destination })
+    void logClick({ platform: 'cj', target_id: targetId, destination })
 
     return NextResponse.redirect(destination, { status: 302 })
   }
@@ -103,16 +105,16 @@ export async function GET(
   if (prefix === 'pod' && targetId) {
     const destination = new URL('/pod', request.url).toString()
 
-    void logClick({ ...logBase, platform: 'pod', target_id: targetId, destination })
+    void logClick({ platform: 'pod', target_id: targetId, destination })
 
-    return NextResponse.redirect(new URL('/pod', request.url), { status: 302 })
+    return NextResponse.redirect(destination, { status: 302 })
   }
 
   // ── VCommission ───────────────────────────────────────────────────
   if (prefix === 'vcm' && targetId) {
     const destination = `${VCOMMISSION_BASE}/track/${encodeURIComponent(targetId)}?id=${encodeURIComponent(vcommissionId)}`
 
-    void logClick({ ...logBase, platform: 'vcommission', target_id: targetId, destination })
+    void logClick({ platform: 'vcommission', target_id: targetId, destination })
 
     return NextResponse.redirect(destination, { status: 302 })
   }
@@ -120,7 +122,7 @@ export async function GET(
   // ── Fallback — Amazon search ──────────────────────────────────────
   const fallback = `${AMAZON_BASE}/s?k=${encodeURIComponent(normalizedId)}&tag=${encodeURIComponent(amazonTag)}`
 
-  void logClick({ ...logBase, platform: 'amazon_fallback', target_id: normalizedId, destination: fallback })
+  void logClick({ platform: 'amazon_fallback', target_id: normalizedId, destination: fallback })
 
   return NextResponse.redirect(fallback, { status: 302 })
 }

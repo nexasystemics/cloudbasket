@@ -95,7 +95,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title,
       description: post.excerpt,
-      url: `https://cloudbasket.in/blog/${post.slug}`,
+      url: `https://cloudbasket.co/blog/${post.slug}`,
       siteName: 'CloudBasket',
       images: [
         {
@@ -138,9 +138,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://cloudbasket.in/blog' },
-      { '@type': 'ListItem', position: 3, name: post.title, item: `https://cloudbasket.in/blog/${post.slug}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.co' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://cloudbasket.co/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://cloudbasket.co/blog/${post.slug}` },
     ],
   }
 
@@ -152,8 +152,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     image: post.image,
     datePublished: post.date,
     author: { '@type': 'Person', name: post.author },
-    publisher: { '@type': 'Organization', name: 'CloudBasket', logo: { '@type': 'ImageObject', url: 'https://cloudbasket.in/og-image.svg' } },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://cloudbasket.in/blog/${post.slug}` },
+    publisher: { '@type': 'Organization', name: 'CloudBasket', logo: { '@type': 'ImageObject', url: 'https://cloudbasket.co/og-image.svg' } },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://cloudbasket.co/blog/${post.slug}` },
   }
 
   return (

@@ -14,6 +14,12 @@ interface DealDetailPageProps {
 
 const formatInr = (amount: number): string => `₹${new Intl.NumberFormat('en-IN').format(amount)}`
 
+function getPlatformSlug(source: string | undefined): string {
+  if (source === 'Flipkart') return 'flipkart'
+  if (source === 'CJ') return 'cj'
+  return 'amazon'
+}
+
 const trimTitle = (value: string): string => {
   return value.length > 40 ? `${value.slice(0, 40)}...` : value
 }
@@ -47,8 +53,7 @@ export default async function DealDetailPage({ params }: DealDetailPageProps) {
     minute: '2-digit',
   })
 
-  const hasPrice = product && product.originalPrice !== undefined && product.originalPrice !== null
-  const savings = hasPrice ? (product!.originalPrice as number) - product!.price : 0
+  const savings = product?.originalPrice != null ? product.originalPrice - product.price : 0
   const description =
     product && product.description && product.description.length > 200
       ? `${product.description.slice(0, 200)}...`
@@ -114,7 +119,7 @@ export default async function DealDetailPage({ params }: DealDetailPageProps) {
 
             <div className="mt-8">
               <a
-                href={`/go/amazon-${deal.productId}`}
+                href={`/go/${getPlatformSlug(product?.source)}-${deal.productId}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cb-btn-primary flex w-full items-center justify-center gap-2 py-5 text-base"

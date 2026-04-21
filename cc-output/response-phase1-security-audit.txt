@@ -1,0 +1,51 @@
+RESPONSE: PHASE 1 SECURITY AUDIT — ALL 6 CRITICAL PAGES
+Generated: 2026-04-22
+Session: cloudbasket
+
+=== FILES REVIEWED ===
+app/page.tsx
+app/register/RegisterPageClient.tsx
+app/login/LoginClient.tsx (previous session)
+app/search/SearchPageClient.tsx
+app/products/products-page-client.tsx
+app/go/[id]/route.ts (previous session)
+app/api/auth/* (previous session)
+
+=== FINDINGS AND STATUS ===
+
+/register
+  CRITICAL  handleCreateAccount was a stub — no backend call            FIXED
+  HIGH      Terms checkbox untracked — consent bypass                   FIXED
+  HIGH      No password mismatch validation                             FIXED
+  MEDIUM    No field validation (email, phone, password length)         FIXED
+  MEDIUM    Magic hex colors                                            NOTED
+
+/search
+  MEDIUM    sortBy URL param cast without allowlist                     FIXED
+  MEDIUM    Number() NaN propagation on price/discount params           FIXED
+  LOW       trackSearch called on every slider tick                     NOTED
+
+/products
+  LOW       sortBy cast from select — safe (controlled source)         CLEAR
+  LOW       Sponsored items first with no disclosure                    NOTED (legal)
+  INFO      affiliateUrl from static catalog — not open redirect risk  CLEAR
+
+/home
+  LOW       Rs → ₹ currency symbol                                     FIXED
+  LOW       dangerouslySetInnerHTML for JSON-LD (compile-time const)    CLEAR
+
+/login            → audited separately, all fixes applied
+/go/[id]          → audited separately, all fixes applied
+
+=== FILES CHANGED (THIS SESSION) ===
+app/register/RegisterPageClient.tsx  — Full rewrite with Supabase auth integration
+app/search/SearchPageClient.tsx      — safeNumber() + safeSort() helpers added
+app/page.tsx                         — Rs → ₹ (3 occurrences)
+
+=== TYPE CHECK ===
+pnpm tsc --noEmit → EXIT 0
+
+=== REMAINING INFRA ITEMS (not code) ===
+1. Cloudflare WAF rate limit on /go/* — 60 req/min per IP
+2. Add sponsored product label disclosure on /products page (ASCI compliance)
+3. Implement OAuth token exchange when GOOGLE_CLIENT_ID is provisioned

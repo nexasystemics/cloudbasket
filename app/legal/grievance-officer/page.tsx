@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const PAGE_TITLE = 'Grievance Officer — CloudBasket'
 const DOCUMENT_ID = 'GRIEVANCE-OFFICER-PAGE-2026'
 const PAGE_URL = 'www.cloudbasket.co/legal/grievance-officer'
-const GRIEVANCE_OFFICER_NAME = 'S. KHALEEL AHMED'
+const GRIEVANCE_OFFICER_NAME = '[PENDING — IBF TO CONFIRM]'
 const ORGANISATION = 'NEXQON HOLDINGS'
 const ADDRESS = 'Kadapa, Andhra Pradesh 516002, India'
 const EMAIL = 'grievance@cloudbasket.co'
@@ -74,8 +74,8 @@ const SECTIONS: readonly ContentSection[] = [
       ],
     },
     callout: {
-      title: 'Placeholder pending confirmation',
-      body: 'The officer name is displayed as placeholder text until the final grievance officer name is confirmed.',
+      title: 'IBF to confirm — name not yet finalised',
+      body: 'The officer name shown is a placeholder. The actual grievance officer name must be confirmed by the IBF before this page goes live.',
       tone: 'warning',
     },
   },

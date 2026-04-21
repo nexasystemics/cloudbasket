@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ brandName
 
   const title = `${brandName} Products — Best Prices in India | CloudBasket`
   const description = `Explore all ${brandName} products at the best prices. Compare across Amazon, Flipkart, Croma and more on CloudBasket.`
-  const url = `https://cloudbasket.in/brand/${encoded}`
+  const url = `https://cloudbasket.co/brand/${encoded}`
 
   return {
     title, description,
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ brandName
       siteName: 'CloudBasket',
       images: [
         {
-          url: 'https://cloudbasket.in/og-image.svg',
+          url: 'https://cloudbasket.co/og-image.svg',
           width: 1200,
           height: 630,
           alt: `${brandName} on CloudBasket`,
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ brandName
       card: 'summary_large_image',
       title,
       description,
-      images: ['https://cloudbasket.in/og-image.svg'],
+      images: ['https://cloudbasket.co/og-image.svg'],
     },
   }
 }
@@ -69,9 +69,9 @@ export default async function BrandPage({ params }: { params: Promise<{ brandNam
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
-      { '@type': 'ListItem', position: 2, name: 'Brands', item: 'https://cloudbasket.in/products' },
-      { '@type': 'ListItem', position: 3, name: brandName, item: `https://cloudbasket.in/brand/${encoded}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.co' },
+      { '@type': 'ListItem', position: 2, name: 'Brands', item: 'https://cloudbasket.co/products' },
+      { '@type': 'ListItem', position: 3, name: brandName, item: `https://cloudbasket.co/brand/${encoded}` },
     ],
   }
 
@@ -80,7 +80,7 @@ export default async function BrandPage({ params }: { params: Promise<{ brandNam
     '@type': 'ItemList',
     name: `Best ${brandName} Products in India`,
     description: `Compare prices for ${products.length} ${brandName} products on CloudBasket.`,
-    url: `https://cloudbasket.in/brand/${encoded}`,
+    url: `https://cloudbasket.co/brand/${encoded}`,
     numberOfItems: products.length,
     itemListElement: products.slice(0, 50).map((product, index) => ({
       '@type': 'ListItem',
@@ -90,7 +90,7 @@ export default async function BrandPage({ params }: { params: Promise<{ brandNam
         name: product.name,
         image: product.image,
         brand: { '@type': 'Brand', name: product.brand },
-        offers: { '@type': 'Offer', price: product.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.in/product/${product.id}` },
+        offers: { '@type': 'Offer', price: product.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.co/product/${product.id}` },
       },
     })),
   }

@@ -1,4 +1,13 @@
 // © 2026 NEXQON HOLDINGS — CloudBasket route.ts
+import { NextResponse } from 'next/server'
+
+// DISABLED — OAuth credentials not provisioned.
+// Re-enable when GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET are set in Vercel.
+export async function GET() {
+  return NextResponse.json({ error: 'OAuth login is not yet available.' }, { status: 503 })
+}
+
+/*
 import { NextRequest, NextResponse } from 'next/server'
 import { rateLimit } from '@/lib/redis'
 
@@ -20,3 +29,4 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   // Exchange code for token via Supabase Auth or custom handler
   return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/dashboard?provider=${provider}`)
 }
+*/

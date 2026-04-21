@@ -1,0 +1,71 @@
+RESPONSE: PHASE 2 SECURITY AUDIT — HIGH COMMERCE PAGES
+Generated: 2026-04-22
+Session: cloudbasket
+
+=== FILES REVIEWED ===
+app/product/[id]/page.tsx
+app/product/[id]/ProductPageClientWidgets.tsx
+app/compare/ComparePageClient.tsx
+app/deals/page.tsx + DealsPageClient.tsx
+app/deals/[id]/page.tsx
+app/deals/flash/FlashSalePageClient.tsx
+app/pod/upload/PODUploadClient.tsx
+app/cj/page.tsx
+
+=== FINDINGS AND STATUS ===
+
+/deals (DealsPageClient)
+  HIGH    CJ Global platform slug has space → CJ affiliate broken         FIXED
+          'CJ Global'.toLowerCase() → 'cj global' (URL space)
+          PLATFORM_SLUG map added: 'CJ Global' → 'cj'
+
+/compare (ComparePageClient)
+  HIGH    (product as any).source — any type violation                    FIXED
+          Added `source: string` to CompareProduct type
+  MEDIUM  localStorage values cast as string[] without validation         FIXED
+          parseSavedIds() helper added with Array.isArray + type guard
+  MEDIUM  Rs symbol in 5 locations                                        FIXED
+          All replaced with ₹
+
+/deals/flash (FlashSalePageClient)
+  MEDIUM  Flash deal cards routed to /products/[id] not /go/             FIXED
+          Now routes to /go/${deal.platform.toLowerCase()}-${deal.id}
+  LOW     BADGE_STYLES lookup returned undefined for unknown labels        FIXED
+          Added ?? 'bg-rose-500 text-white' fallback
+
+/pod/upload (PODUploadClient)
+  HIGH    as any on targetPlatforms + productTypes                        FIXED
+          Derived Platform/ProductType types from constants
+  HIGH    No MIME type validation — only file size checked                FIXED
+          ALLOWED_MIME_TYPES set: PNG/JPEG/WEBP only
+  MEDIUM  No file count limit enforced in code                            FIXED
+          MAX_FILES = 100, newFiles.slice(0, MAX_FILES) applied
+  LOW     Floating promises — handleFiles, handleUpload                   FIXED
+          void prefix added on all async call sites
+
+/deals/[id] (DealDetailPage)
+  MEDIUM  Non-null assertion product! after boolean guard                 FIXED
+          Replaced with product?.originalPrice != null optional chain
+
+/product/[id] (ProductPage)
+  MEDIUM  Mock "Verified" reviews in production — legal risk              NOTED ONLY
+          Removing requires real review system decision
+  LOW     Rs in mock review text                                          FIXED
+
+=== FILES CHANGED (7) ===
+app/deals/DealsPageClient.tsx         — PLATFORM_SLUG map + CJ URL fix
+app/deals/flash/FlashSalePageClient.tsx — /go/ routing + BADGE_STYLES fallback
+app/compare/ComparePageClient.tsx     — any fix, localStorage validation, Rs→₹
+app/pod/upload/PODUploadClient.tsx    — Full rewrite: types, MIME, count, void
+app/deals/[id]/page.tsx               — product! assertion removed
+app/product/[id]/page.tsx             — Rs→₹ in mock review
+
+=== TYPE CHECK ===
+pnpm tsc --noEmit → EXIT 0
+
+=== REMAINING ITEMS (design/legal decisions needed) ===
+1. /product/[id]: Remove or replace mock "Verified" reviews with real data
+2. /cj: Replace hardcoded INR with real-time conversion or remove "real-time" claim
+3. /pod/upload: Auth guard — add middleware check that user is authenticated
+4. /compare + /deals/[id]: Hardcoded amazon- prefix on deal CTAs
+5. Cloudflare WAF rate limit on /go/* (carried from Phase 1)

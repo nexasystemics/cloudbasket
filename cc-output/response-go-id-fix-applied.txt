@@ -1,0 +1,24 @@
+RESPONSE: SECURITY FIX APPLIED — app/go/[id]/route.ts
+Generated: 2026-04-22
+Session: cloudbasket
+
+FILE:     app/go/[id]/route.ts
+RISK:     Was CRITICAL (DoS), now CLEAR
+ROLLBACK: git checkout app/go/[id]/route.ts
+
+CHANGES MADE:
+1. [CRITICAL] Wrapped decodeURIComponent in try/catch (lines 60–65)
+   → Malformed % sequences now redirect to /not-found instead of throwing 500
+
+2. [MEDIUM] Removed empty logBase object (was lines 71–72)
+   → Removed all ...logBase spreads from every logClick() call (6 occurrences)
+
+3. [MEDIUM] Fixed POD branch dead code
+   → Was: new URL('/pod', request.url) computed twice
+   → Now: destination string reused for both logClick and redirect
+
+REMAINING ITEM (not code — infra):
+HIGH: No rate limiting on /go/* — needs Cloudflare WAF rule
+  Recommended: Rate limit to 60 req/min per IP on path /go/*
+
+STATUS: File verified clean. Ready for commit when user approves.

@@ -1,4 +1,5 @@
 // © 2026 NEXQON HOLDINGS — CloudBasket route.ts
+import { createHash } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { generateOTP, sendEmailOTP, sendSMSOTP } from '@/lib/auth/otp'
 import { hasSupabase, env } from '@/lib/env'
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const otp = generateOTP(6)
+    const otpHash = createHash('sha256').update(otp).digest('hex')
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000)
 
     if (hasSupabase()) {
@@ -40,7 +42,7 @@ export async function POST(request: NextRequest) {
       const sb = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY)
       const { error } = await sb.from('otp_codes').upsert({
         identifier,
-        code: otp,
+        code: otpHash,
         type,
         expires_at: expiresAt.toISOString(),
         used: false,
@@ -55,7 +57,7 @@ export async function POST(request: NextRequest) {
     if (type === 'email') sent = await sendEmailOTP(identifier, otp)
     else if (type === 'sms') sent = await sendSMSOTP(identifier, otp)
 
-    return NextResponse.json({ ok: sent, expiresAt })
+    return NextResponse.json({ ok: sent })
   } catch (err) {
     console.error('[auth/otp/send] Unexpected error:', err)
     return NextResponse.json({ error: 'Failed to send OTP' }, { status: 500 })

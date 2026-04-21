@@ -27,6 +27,6 @@ export async function GET(request: NextRequest) {
     if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     return NextResponse.json({ product })
   } catch {
-    return NextResponse.json({ error: 'Fetch failed' }, { status: 500 })
+    return NextResponse.json({ error: 'Price unavailable' }, { status: 502 })
   }
 }

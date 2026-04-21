@@ -1,4 +1,5 @@
 // © 2026 NEXQON HOLDINGS — CloudBasket route.ts
+import { createHash, timingSafeEqual } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { hasSupabase, env } from '@/lib/env'
 import { rateLimit } from '@/lib/redis'
@@ -12,7 +13,7 @@ function getRequestIp(request: NextRequest): string {
 
 export async function POST(request: NextRequest) {
   const ip = getRequestIp(request)
-  const limit = await rateLimit(ip, 10, 60)
+  const limit = await rateLimit(ip, 5, 60)
   if (!limit.success) {
     return NextResponse.json({ valid: false, error: 'Too many requests. Please try again shortly.' }, { status: 429 })
   }
@@ -42,7 +43,6 @@ export async function POST(request: NextRequest) {
       .from('otp_codes')
       .select('*')
       .eq('identifier', identifier)
-      .eq('code', code)
       .eq('used', false)
       .gt('expires_at', new Date().toISOString())
       .single()
@@ -53,6 +53,14 @@ export async function POST(request: NextRequest) {
     }
 
     if (!data) return NextResponse.json({ valid: false })
+
+    // Constant-time comparison — prevents timing attacks on hash comparison
+    const record = data as { code: string }
+    const storedHashBuf = Buffer.from(record.code, 'hex')
+    const incomingHashBuf = Buffer.from(createHash('sha256').update(code).digest('hex'), 'hex')
+    if (storedHashBuf.length !== incomingHashBuf.length || !timingSafeEqual(storedHashBuf, incomingHashBuf)) {
+      return NextResponse.json({ valid: false })
+    }
 
     const { error: updateError } = await sb
       .from('otp_codes')

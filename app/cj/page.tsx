@@ -6,7 +6,7 @@ import { getProductImage } from '@/lib/utils/product-image'
 
 export const metadata: Metadata = {
   title: "CJ Global Network — International Products",
-  description: "Shop international products via Commission Junction. Best USD/INR rates.",
+  description: "Shop international products via Commission Junction. Prices shown in INR are indicative.",
 }
 type CJProduct = {
   name: string
@@ -74,8 +74,8 @@ const CJ_BENEFITS = [
   },
   {
     icon: DollarSign,
-    title: 'Best USD Rates',
-    desc: 'Real-time INR conversion at best rates',
+    title: 'USD/INR Pricing',
+    desc: 'Prices shown in INR (indicative). Final price on retailer site.',
   },
   {
     icon: Package,
@@ -99,7 +99,7 @@ export default function CJPage() {
           </span>
           <h1 className="text-5xl font-black tracking-tighter">Shop Global. Save Big.</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-[var(--cb-text-muted)]">
-            Access international products via Commission Junction. Best USD/INR rates. Delivered via CJ partner network.
+            Access international products via Commission Junction. Prices shown in INR are indicative — confirm final price on the retailer site. Delivered via CJ partner network.
           </p>
           <Link href="#featured-cj" className="cb-btn cb-btn-primary mt-8 gap-2">
             Browse CJ Products <ArrowRight size={16} />

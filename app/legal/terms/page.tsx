@@ -77,15 +77,14 @@ function DownloadIcon() {
 
 function PdfButton({ position }: { position: 'top' | 'bottom' }) {
   return (
-    <a
-      href="/legal/terms-of-service.pdf"
-      download="CloudBasket-Terms-of-Service-2026.pdf"
-      className="inline-flex items-center gap-2 rounded-lg bg-[#039BE5] px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90 print:hidden"
-      aria-label={`Download Terms of Service PDF (${position} button)`}
+    <span
+      className="inline-flex items-center gap-2 rounded-lg bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-500 cursor-not-allowed select-none print:hidden"
+      aria-label={`PDF download not yet available (${position} button)`}
+      title="PDF version coming soon"
     >
       <DownloadIcon />
-      Download PDF
-    </a>
+      PDF Coming Soon
+    </span>
   )
 }
 

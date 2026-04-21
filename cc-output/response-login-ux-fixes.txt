@@ -1,0 +1,51 @@
+RESPONSE: LOGIN UI/UX AUDIT + FIXES APPLIED
+Generated: 2026-04-22
+Session: cloudbasket
+
+FILE: app/login/LoginClient.tsx
+RISK: Low (UI layer — no auth logic changed, only UX improvements)
+ROLLBACK: git checkout app/login/LoginClient.tsx
+
+=== ISSUES FOUND AND STATUS ===
+
+FUNCTIONAL  Duplicate register mode (email+password only, no account type)   FIXED
+            → "Sign Up" now routes to /register via <Link>
+            → register mode branch removed entirely
+
+FUNCTIONAL  No forgot password flow                                           FIXED
+            → Mode 'forgot' added
+            → supabase.auth.resetPasswordForEmail with /auth/reset-password redirect
+            → "Forgot password?" link below password field
+
+UX          No show/hide password toggle                                      FIXED
+            → Eye/EyeOff icons from lucide-react added
+            → aria-label toggles between 'Show password' / 'Hide password'
+
+UX          Success message rendered with red error styling                   FIXED
+            → Separate success state with emerald green styling
+
+A11Y        No <form> wrapper — Enter key and screen reader broken            FIXED
+            → Wrapped in <form onSubmit={handleSubmit}> with noValidate
+            → Submit button changed to type="submit"
+
+A11Y        No autocomplete attributes                                        FIXED
+            → email input: autoComplete="email"
+            → password input: autoComplete="current-password"
+
+A11Y/UX     Inputs editable during loading                                    FIXED
+            → disabled={loading} on both inputs
+
+SECURITY    err: any in catch block                                           FIXED
+            → err: unknown with instanceof Error guard
+
+SECURITY    "Protected by Supabase Auth" disclosure                          FIXED
+            → Footer text removed entirely
+
+=== TYPE CHECK ===
+pnpm tsc --noEmit → EXIT 0
+
+=== WHAT DID NOT CHANGE ===
+- Login logic (signInWithPassword) — unchanged
+- Error/success display structure — same position in layout
+- Design tokens and styling — unchanged (magic hex noted but not in scope here)
+- Route — still /login

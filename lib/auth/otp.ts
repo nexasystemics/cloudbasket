@@ -5,7 +5,7 @@ import { env, isConfigured } from '@/lib/env'
 import crypto from 'crypto'
 
 export function generateOTP(length = 6): string {
-  return Array.from({ length }, () => Math.floor(Math.random() * 10)).join('')
+  return Array.from({ length }, () => crypto.randomInt(10)).join('')
 }
 
 export function generateTOTPSecret(): string {

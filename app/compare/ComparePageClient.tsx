@@ -65,7 +65,19 @@ type CompareProduct = (typeof MOCK_PRODUCTS)[number] & Partial<{
   warranty: string
   delivery: string
   platform: string
+  source: string
 }>
+
+function parseSavedIds(raw: string | null): string[] | null {
+  if (!raw) return null
+  try {
+    const parsed: unknown = JSON.parse(raw)
+    if (!Array.isArray(parsed)) return null
+    return parsed.filter((item): item is string => typeof item === 'string')
+  } catch {
+    return null
+  }
+}
 
 function getProductSpecs(product: CompareProduct): ProductSpecs {
   return {
@@ -82,7 +94,7 @@ function getProductSpecs(product: CompareProduct): ProductSpecs {
     os: product.os ?? 'Android 15',
     warranty: product.warranty ?? '1 Year Manufacturer',
     delivery: product.delivery ?? 'Free · 2-4 Days',
-    platform: product.platform ?? (product as any).source ?? 'Amazon',
+    platform: product.platform ?? product.source ?? 'Amazon',
     savings: product.originalPrice ? product.originalPrice - product.price : Math.floor(product.price * 0.15),
   }
 }
@@ -93,6 +105,13 @@ function getPlatformClass(platform: string): string {
   if (normalized.includes('amazon')) return 'bg-[#FF9900] text-white border border-[#FF9900]/90'
   if (normalized.includes('flipkart')) return 'bg-[#2874F0] text-white border border-[#2874F0]/90'
   return 'cb-badge-green'
+}
+
+function getPlatformSlug(platform: string): 'amazon' | 'flipkart' | 'cj' {
+  const p = platform.toLowerCase()
+  if (p.includes('flipkart')) return 'flipkart'
+  if (p.includes('cj')) return 'cj'
+  return 'amazon'
 }
 
 function getBestIds(compareEntries: CompareEntry[]): Record<SpecKey, Set<string>> {
@@ -127,12 +146,10 @@ export default function ComparePageClient() {
   const deferredSearchQuery = useDeferredValue(searchQuery)
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('cb_compare_list')
-      if (stored) setSavedCompare(JSON.parse(stored) as string[])
-      const preselect = localStorage.getItem('cb_compare_selected')
-      if (preselect) setSelectedProducts(JSON.parse(preselect) as string[])
-    } catch { /* no-op */ }
+    const saved = parseSavedIds(localStorage.getItem('cb_compare_list'))
+    if (saved) setSavedCompare(saved)
+    const preselect = parseSavedIds(localStorage.getItem('cb_compare_selected'))
+    if (preselect) setSelectedProducts(preselect)
   }, [])
 
   useEffect(() => {
@@ -276,7 +293,7 @@ export default function ComparePageClient() {
                   >
                     <p className="line-clamp-1 text-xs font-bold">{product.name}</p>
                     <p className="text-muted text-xs">{product.brand}</p>
-                    <p className="price-current text-xs">Rs{product.price.toLocaleString('en-IN')}</p>
+                    <p className="price-current text-xs">₹{product.price.toLocaleString('en-IN')}</p>
                   </button>
                 )
               })}
@@ -302,7 +319,7 @@ export default function ComparePageClient() {
                   <th scope="col" className="sticky left-0 z-30 bg-white dark:bg-zinc-950 w-32 p-4 text-left text-[10px] font-black uppercase tracking-widest text-muted border-r border-zinc-100 dark:border-zinc-800">
                     Specification
                   </th>
-                  {compareEntries.map(({ product }) => (
+                  {compareEntries.map(({ product, specs }) => (
                     <th key={product.id} scope="col" className="min-w-56 p-4 text-center align-top">
                       <div className="cb-card p-4 text-center">
                         <div className="relative mx-auto mb-3 h-32 w-32">
@@ -310,8 +327,8 @@ export default function ComparePageClient() {
                         </div>
                         <p className="line-clamp-2 text-[11px] font-black leading-tight h-8 mb-1">{product.name}</p>
                         <p className="text-muted text-[10px] uppercase tracking-widest font-bold mb-1">{product.brand}</p>
-                        <p className="price-current mt-1 text-base">Rs{product.price.toLocaleString('en-IN')}</p>
-                        <Link href={`/go/amazon-${product.id}`} className="cb-btn cb-btn-primary mt-3 w-full gap-2 text-[10px] py-2">
+                        <p className="price-current mt-1 text-base">₹{product.price.toLocaleString('en-IN')}</p>
+                        <Link href={`/go/${getPlatformSlug(specs.platform)}-${product.id}`} className="cb-btn cb-btn-primary mt-3 w-full gap-2 text-[10px] py-2">
                           <ExternalLink size={12} /> View Deal
                         </Link>
                         <button type="button" className="cb-btn cb-btn-ghost mt-2 w-full text-[9px] py-1 h-8" onClick={() => removeProduct(String(product.id))}>
@@ -337,7 +354,7 @@ export default function ComparePageClient() {
                             const isBest = Number(value) === lowestPrice
                             return (
                               <div className="flex flex-col items-center">
-                                <p className={`text-sm ${isBest ? 'font-black text-status-success' : 'font-bold'}`}>Rs{Number(value).toLocaleString('en-IN')}</p>
+                                <p className={`text-sm ${isBest ? 'font-black text-status-success' : 'font-bold'}`}>₹{Number(value).toLocaleString('en-IN')}</p>
                                 {isBest && <span className="mt-1 px-1.5 py-0.5 rounded bg-status-success/10 text-[8px] font-black text-status-success uppercase">Best Value</span>}
                               </div>
                             )
@@ -345,7 +362,7 @@ export default function ComparePageClient() {
                           if (format === 'stars') return <div className="flex items-center justify-center gap-1"><span className="text-status-warning font-black">{Number(value).toFixed(1)}</span><span className="text-status-warning">★</span></div>
                           if (format === 'number') return <p className="font-bold">{Number(value).toLocaleString('en-IN')}</p>
                           if (format === 'badge') return <span className={`cb-badge ${getPlatformClass(String(value))} text-[9px]`}>{String(value)}</span>
-                          if (format === 'savings') return <span className="cb-badge cb-badge-green text-[9px] font-black">Save Rs{Number(value).toLocaleString('en-IN')}</span>
+                          if (format === 'savings') return <span className="cb-badge cb-badge-green text-[9px] font-black">Save&nbsp;₹{Number(value).toLocaleString('en-IN')}</span>
                           return <p className="text-zinc-600 dark:text-zinc-400 font-medium">{String(value)}</p>
                         }
                         return <td key={`${spec.key}-${product.id}`} className="px-4 py-5 text-center text-sm">{renderCell(spec.format)}</td>
@@ -393,7 +410,7 @@ export default function ComparePageClient() {
                 <div className="p-3">
                   <p className="line-clamp-2 text-sm font-bold">{product.name}</p>
                   <p className="text-xs text-[var(--cb-text-muted)]">{product.brand}</p>
-                  <p className="price-current mt-2">Rs{product.price.toLocaleString('en-IN')}</p>
+                  <p className="price-current mt-2">₹{product.price.toLocaleString('en-IN')}</p>
                   <Link href={`/product/${product.id}`} className="cb-btn cb-btn-ghost mt-3 text-xs">View Product</Link>
                 </div>
               </article>

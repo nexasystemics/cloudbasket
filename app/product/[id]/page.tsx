@@ -67,21 +67,6 @@ type PriceEntry = {
   best: boolean
 }
 
-const MOCK_REVIEWS = [
-  { name: 'Rahul M.', city: 'Mumbai', rating: 5, date: 'Feb 28, 2026', title: 'Excellent value for money', body: 'Been using for 3 months. Battery life is outstanding. Camera quality surprised me at this price point. Highly recommend.', verified: true, helpful: 24 },
-  { name: 'Priya S.', city: 'Bengaluru', rating: 4, date: 'Feb 20, 2026', title: 'Good phone, minor issues', body: 'Overall very happy with the purchase. Heating under heavy load is the only concern. Display and camera are top notch.', verified: true, helpful: 18 },
-  { name: 'Arjun K.', city: 'Delhi', rating: 5, date: 'Feb 15, 2026', title: 'Best in segment', body: 'Compared 6 phones before buying this. Nothing comes close at this price. Fast charging works as advertised.', verified: false, helpful: 31 },
-  { name: 'Sneha T.', city: 'Pune', rating: 3, date: 'Feb 10, 2026', title: 'Average camera in low light', body: 'Day time photos are great. Night mode is disappointing compared to what was advertised. Rest of the phone is solid.', verified: true, helpful: 12 },
-  { name: 'Vikram R.', city: 'Chennai', rating: 5, date: 'Feb 5, 2026', title: 'CloudBasket saved me Rs3,200', body: 'Found this same phone for Rs3,200 more on another site. CloudBasket showed me the best price instantly. Love this platform.', verified: true, helpful: 45 },
-]
-
-const RATING_BREAKDOWN = [
-  { stars: 5, width: '65%', count: '987' },
-  { stars: 4, width: '20%', count: '304' },
-  { stars: 3, width: '8%', count: '121' },
-  { stars: 2, width: '4%', count: '61' },
-  { stars: 1, width: '3%', count: '45' },
-] as const
 
 function getDealPath(platform: DisplayProduct['affiliatePlatform'], id: string) {
   return `/go/${platform}-${id}`
@@ -211,8 +196,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     ? `Compare prices for ${product.name} by ${product.brand} across Amazon, Flipkart, Croma and more. Find the lowest price and best deals in India.`
     : `Compare prices for ${product.name} on CloudBasket. Find the best ${product.mainCategory} deals from Amazon, Flipkart and more.`
 
-  const url = `https://cloudbasket.in/product/${id}`
-  const ogImage = `https://cloudbasket.in/api/og?title=${encodeURIComponent(product.name)}&type=product`
+  const url = `https://cloudbasket.co/product/${id}`
+  const ogImage = `https://cloudbasket.co/api/og?title=${encodeURIComponent(product.name)}&type=product`
 
   return {
     title, description,
@@ -296,9 +281,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
-      { '@type': 'ListItem', position: 2, name: categoryDetails.label, item: `https://cloudbasket.in/category/${categoryDetails.slug}` },
-      { '@type': 'ListItem', position: 3, name: product.name, item: `https://cloudbasket.in/product/${product.id}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.co' },
+      { '@type': 'ListItem', position: 2, name: categoryDetails.label, item: `https://cloudbasket.co/category/${categoryDetails.slug}` },
+      { '@type': 'ListItem', position: 3, name: product.name, item: `https://cloudbasket.co/product/${product.id}` },
     ],
   }
 
@@ -317,7 +302,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       offerCount: priceComparison.length, availability: 'https://schema.org/InStock',
       offers: priceComparison.map(p => ({
         '@type': 'Offer', price: p.price, priceCurrency: 'INR',
-        url: product.affiliateUrl ?? `https://cloudbasket.in/go/${p.platformSlug}-${product.id}`,
+        url: product.affiliateUrl ?? `https://cloudbasket.co/go/${p.platformSlug}-${product.id}`,
         seller: { '@type': 'Organization', name: p.platform },
       })),
     },
@@ -450,53 +435,15 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
       <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="mb-10 text-center">
-          <h2 className="text-3xl font-black tracking-tighter text-zinc-900 dark:text-white uppercase italic">Customer Intel</h2>
-          <p className="text-xs font-bold text-zinc-400 uppercase tracking-[0.3em] mt-2">Verified community feedback</p>
+          <h2 className="text-3xl font-black tracking-tighter text-zinc-900 dark:text-white uppercase italic">Customer Reviews</h2>
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-[0.3em] mt-2">Verified reviews — coming soon</p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-8 sticky top-24">
-              <div className="text-center mb-8">
-                <p className="text-7xl font-black text-yellow-500">{product.rating.toFixed(1)}</p>
-                <div className="flex justify-center gap-1 my-2">{[1,2,3,4,5].map(s => <Star key={s} size={20} className="fill-yellow-500 text-yellow-500" />)}</div>
-                <p className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">Based on {product.reviewCount.toLocaleString()} reports</p>
-              </div>
-              <div className="space-y-3">
-                {RATING_BREAKDOWN.map((row) => (
-                  <div key={row.stars} className="flex items-center gap-4">
-                    <p className="text-[10px] font-black text-zinc-400 w-4">{row.stars}</p>
-                    <div className="h-2 flex-1 rounded-full bg-zinc-100 dark:bg-zinc-800">
-                      <div className="h-full rounded-full bg-yellow-500 shadow-sm" style={{ width: row.width }} />
-                    </div>
-                    <p className="text-[10px] font-black text-zinc-400 w-10 text-right">{row.count}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="lg:col-span-2 space-y-6">
-            {MOCK_REVIEWS.map((review) => (
-              <div key={`${review.name}-${review.date}`} className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-8 hover:shadow-xl transition-all">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-skyline-primary/10 text-lg font-black text-skyline-primary uppercase">{review.name.charAt(0)}</div>
-                    <div>
-                      <p className="text-sm font-black text-zinc-900 dark:text-white uppercase tracking-tight">{review.name}</p>
-                      <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-0.5">{review.city} · {review.date}</p>
-                    </div>
-                  </div>
-                  {review.verified && <span className="flex items-center gap-1.5 bg-green-500/10 text-green-600 px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border border-green-500/20"><Shield size={10} /> Verified</span>}
-                </div>
-                <div className="flex gap-1 mt-6">{Array.from({ length: 5 }).map((_, i) => <Star key={i} size={14} className={i < review.rating ? 'fill-yellow-500 text-yellow-500' : 'text-zinc-200'} />)}</div>
-                <h3 className="mt-3 text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tight leading-snug">{review.title}</h3>
-                <p className="mt-3 text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">{review.body}</p>
-                <div className="mt-8 flex items-center justify-between pt-6 border-t border-zinc-50 dark:border-zinc-800">
-                  <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest italic">Community Trust: {review.helpful} Helpful Votes</p>
-                  <button type="button" className="cb-btn-ghost px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest">Support Review</button>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-12 text-center">
+          <Star size={40} className="mx-auto mb-4 text-zinc-200 dark:text-zinc-700" />
+          <h3 className="text-xl font-black text-zinc-900 dark:text-white">Reviews Coming Soon</h3>
+          <p className="mt-3 text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
+            We are building our verified review system. Check back soon for genuine customer feedback on this product.
+          </p>
         </div>
       </section>
 

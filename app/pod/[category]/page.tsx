@@ -167,7 +167,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://cloudbasket.in/pod/${category}`,
+      url: `https://cloudbasket.co/pod/${category}`,
       images: [{ url: meta.image }],
     },
     twitter: {
@@ -195,9 +195,9 @@ export default async function PODCategoryPage({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.in' },
-      { '@type': 'ListItem', position: 2, name: 'POD', item: 'https://cloudbasket.in/pod' },
-      { '@type': 'ListItem', position: 3, name: meta.name, item: `https://cloudbasket.in/pod/${category}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudbasket.co' },
+      { '@type': 'ListItem', position: 2, name: 'POD', item: 'https://cloudbasket.co/pod' },
+      { '@type': 'ListItem', position: 3, name: meta.name, item: `https://cloudbasket.co/pod/${category}` },
     ],
   }
 
@@ -206,7 +206,7 @@ export default async function PODCategoryPage({
     '@type': 'ItemList',
     name: `${meta.name} Designs | CloudBasket Originals`,
     description: meta.desc,
-    url: `https://cloudbasket.in/pod/${category}`,
+    url: `https://cloudbasket.co/pod/${category}`,
     numberOfItems: meta.products.length,
     itemListElement: meta.products.map((product, index) => ({
       '@type': 'ListItem',
@@ -216,7 +216,7 @@ export default async function PODCategoryPage({
         name: product.name,
         image: product.image,
         brand: { '@type': 'Brand', name: 'CloudBasket Originals' },
-        offers: { '@type': 'Offer', price: product.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.in/go/pod-${product.id}` },
+        offers: { '@type': 'Offer', price: product.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.co/go/pod-${product.id}` },
       },
     })),
   }

@@ -2,7 +2,7 @@
 
 import { type FormEvent, useState } from 'react'
 import Link from 'next/link'
-import { Mail, MapPin, Send, CheckCircle, Clock, Phone } from 'lucide-react'
+import { Mail, MapPin, Send, CheckCircle, Clock } from 'lucide-react'
 
 type ContactFormData = {
   name: string
@@ -18,10 +18,9 @@ type ContactApiResponse =
   | { success: false; error: string; fieldErrors?: FieldErrors }
 
 const CONTACT_INFO = {
-  email: 'hello@cloudbasket.co',
-  whatsapp: '+91 98765 43210',
-  address: 'NEXQON Holdings, Koramangala, Bengaluru, Karnataka 560034',
-  responseTime: 'Within 8 business hours',
+  email: 'info@cloudbasket.co',
+  address: 'NEXQON Holdings, Kadapa, Andhra Pradesh 516002, India',
+  responseTime: 'Within 48 hours',
 } as const
 
 const SUBJECT_OPTIONS = [
@@ -151,7 +150,7 @@ export default function ContactPage() {
       <section className="bg-[var(--cb-surface-2)] py-16">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <h1 className="text-4xl font-black tracking-tighter">Get in Touch</h1>
-          <p className="mt-3 text-[var(--cb-text-muted)]">We respond within 8 business hours. No bots - real humans.</p>
+          <p className="mt-3 text-[var(--cb-text-muted)]">We respond within 48 hours. No bots - real humans.</p>
         </div>
       </section>
 
@@ -168,14 +167,6 @@ export default function ContactPage() {
 
             <article className="cb-card p-6">
               <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky-600/10 dark:bg-sky-500/10">
-                <Phone size={18} className="text-sky-600 dark:text-sky-400" />
-              </div>
-              <p className="text-sm font-black">WhatsApp</p>
-              <p className="mt-1 text-sm">{CONTACT_INFO.whatsapp}</p>
-            </article>
-
-            <article className="cb-card p-6">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky-600/10 dark:bg-sky-500/10">
                 <MapPin size={18} className="text-sky-600 dark:text-sky-400" />
               </div>
               <p className="text-sm font-black">Office</p>
@@ -185,7 +176,7 @@ export default function ContactPage() {
 
             <article className="cb-card border-sky-600/20 dark:border-sky-500/20 bg-sky-600/5 dark:bg-sky-500/5 p-4">
               <p className="inline-flex items-center gap-2 text-sm font-bold">
-                <Clock size={14} className="text-sky-600 dark:text-sky-400" /> Average response time: 4 hours
+                <Clock size={14} className="text-sky-600 dark:text-sky-400" /> Average response time: 48 hours
               </p>
               <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">{CONTACT_INFO.responseTime}</p>
             </article>
@@ -196,7 +187,7 @@ export default function ContactPage() {
               <article className="cb-card p-12 text-center">
                 <CheckCircle size={48} className="mx-auto mb-4 text-[#10B981]" />
                 <h2 className="text-2xl font-black">Message Sent!</h2>
-                <p className="mt-2 text-[var(--cb-text-muted)]">Thanks! We will reply within 8 business hours.</p>
+                <p className="mt-2 text-[var(--cb-text-muted)]">Thanks! We will reply within 48 hours.</p>
                 <button type="button" className="cb-btn cb-btn-primary mt-6" onClick={resetFormState}>
                   Send Another Message
                 </button>

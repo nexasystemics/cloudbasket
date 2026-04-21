@@ -101,7 +101,7 @@ export default function FlashSalePageClient() {
           {deals.map((deal) => (
             <Link
               key={deal.id}
-              href={`/products/${deal.id}`}
+              href={`/go/${deal.platform.toLowerCase()}-${deal.id}`}
               className="group relative bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl transition-all duration-500"
             >
               <div className="relative h-52 overflow-hidden">
@@ -113,7 +113,7 @@ export default function FlashSalePageClient() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                <span className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-lg ${BADGE_STYLES[deal.label || 'Flash Deal']}`}>
+                <span className={`absolute left-3 top-3 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-lg ${BADGE_STYLES[deal.label || 'Flash Deal'] ?? 'bg-rose-500 text-white'}`}>
                   {deal.label || 'Flash'}
                 </span>
                 <span className="absolute right-3 top-3 bg-white text-zinc-900 px-2.5 py-1 rounded-lg text-[10px] font-black shadow-lg">

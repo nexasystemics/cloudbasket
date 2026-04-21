@@ -1,0 +1,59 @@
+RESPONSE: SECURITY AUDIT — app/go/[id]/route.ts
+Generated: 2026-04-21
+Session: cloudbasket
+
+=== OPEN REDIRECT — VERDICT: NOT VULNERABLE ===
+All redirect destinations use hardcoded base URLs. targetId is always
+encodeURIComponent()'d. No attacker-controlled arbitrary URL injection possible.
+
+Platform       Destination Pattern                            Safe?
+Amazon         amazon.in/dp/{encodeURIComponent(targetId)}   YES
+Flipkart       flipkart.com/search?q={encoded}               YES
+CJ             tkqlhce.com/click-{encoded}                   YES
+POD            internal /pod via new URL()                   YES
+VCommission    vcommission.com/track/{encoded}               YES
+Fallback       amazon.in/s?k={encoded}                       YES
+
+=== REAL VULNERABILITIES ===
+
+CRITICAL — line 59 — Unhandled decodeURIComponent
+  Code:   const normalizedId = decodeURIComponent(id ?? '').trim()
+  Risk:   Throws URIError on malformed % sequences (e.g. /go/%GG)
+  Impact: Uncaught exception → 500 response → DoS vector
+  Fix:    Wrap in try/catch, redirect to /not-found on error
+
+HIGH — No rate limiting
+  Risk:   Endpoint can be spammed to flood attributed_clicks table
+  Impact: Fake click injection, corrupted affiliate analytics
+  Fix:    Cloudflare WAF rate limit rule on /go/* path
+
+MEDIUM — Dead code in POD branch (lines 104–108)
+  Code:   destination computed on line 104, then new URL() again on line 108
+  Impact: None (cosmetic/maintenance) — but inconsistent with other branches
+
+MEDIUM — logBase is empty object (lines 71–72)
+  Code:   const logBase = {}
+  Impact: Harmless — but clearly unfinished, should be removed or completed
+
+LOW — Unsafe type cast on context.params (line 58)
+  Code:   (await context.params) as { id?: string }
+  Impact: Bypasses TypeScript safety — should use Next.js PageProps typing
+
+=== SEVERITY SUMMARY ===
+CRITICAL  1  decodeURIComponent unhandled (DoS)
+HIGH      1  No rate limiting
+MEDIUM    2  Dead code / empty logBase
+LOW       1  Type cast
+CLEAR     1  Open redirect — NOT present
+
+=== RECOMMENDED FIX (CRITICAL) ===
+Replace line 59 with:
+  let normalizedId: string
+  try {
+    normalizedId = decodeURIComponent(id ?? '').trim()
+  } catch {
+    return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
+  }
+  if (!normalizedId) {
+    return NextResponse.redirect(new URL('/not-found', request.url), { status: 302 })
+  }

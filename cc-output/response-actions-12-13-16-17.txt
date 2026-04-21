@@ -1,0 +1,35 @@
+RESPONSE: ACTIONS 12 / 13 / 16 / 17
+Generated: 2026-04-22
+Session: cloudbasket
+
+=== FILES CHANGED (2) ===
+
+app/api/amazon/product/route.ts
+  — catch block: status 500 + 'Fetch failed' → status 502 + 'Price unavailable'
+  — PA-API import, fetchAmazonPrice call, rate limit, auth check: already correct
+  — No other changes needed; route was already fully wired
+
+app/api/flipkart/search/route.ts
+  — Wrapped searchFlipkartProducts() call in try/catch
+  — On throw: returns 502 { error: 'Search unavailable' }
+  — Import, validation schema, rate limit: already correct
+  — No other changes needed; route was already fully wired
+
+=== PRE-EXISTING (NO CHANGES NEEDED) ===
+
+app/api/prices/route.ts  [ACTION 16 — already complete]
+  — Redis import: getCache, setCache — present on line 12
+  — Cache key: cb:cache:prices:${[...productIds].sort().join(',')} — exact match
+  — Condition: productIds.length <= 10 — present on line 48
+  — TTL: 900s — present on line 100
+  — Nothing to add; implementation matches spec exactly
+
+app/api/flipkart/deals/route.ts  [ACTION 17 — already complete]
+  — Redis import: getCache, setCache — present on line 3
+  — Cache key: cb:cache:flipkart:deals — present on line 11
+  — Type: Awaited<ReturnType<typeof flipkartAPI.getDeals>> — present on line 20
+  — TTL: 600s — present on line 26
+  — Nothing to add; implementation matches spec exactly
+
+=== TYPE CHECK ===
+pnpm tsc --noEmit → EXIT 0

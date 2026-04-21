@@ -24,6 +24,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: zodError(parsed.error) }, { status: 400 })
   }
 
-  const products = await searchFlipkartProducts(parsed.data.q, parsed.data.category)
-  return NextResponse.json({ products, count: products.length })
+  try {
+    const products = await searchFlipkartProducts(parsed.data.q, parsed.data.category)
+    return NextResponse.json({ products, count: products.length })
+  } catch {
+    return NextResponse.json({ error: 'Search unavailable' }, { status: 502 })
+  }
 }

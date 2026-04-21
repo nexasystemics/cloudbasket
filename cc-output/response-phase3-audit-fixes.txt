@@ -1,0 +1,66 @@
+RESPONSE: PHASE 3 AUDIT + OPEN ITEMS — ALL FIXES
+Generated: 2026-04-22
+Session: cloudbasket
+
+=== FILES CHANGED (9) ===
+
+app/product/[id]/page.tsx
+  — Removed MOCK_REVIEWS array (5 fake reviews with verified: true badges)
+  — Removed RATING_BREAKDOWN constant (hardcoded star distribution)
+  — Replaced "Customer Intel" section with "Reviews Coming Soon" empty state
+  — Eliminates Consumer Protection Act 2019 liability from fake verified reviews
+
+app/pod/upload/page.tsx
+  — Added Supabase server-side auth guard: checks session via createClient()
+  — Unauthenticated users redirected to /login?next=/pod/upload
+  — PODUploadClient only rendered for authenticated sessions
+
+app/cj/page.tsx
+  — Changed benefit card title from 'Best USD Rates' → 'USD/INR Pricing'
+  — Changed benefit card desc from 'Real-time INR conversion at best rates'
+    → 'Prices shown in INR (indicative). Final price on retailer site.'
+  — Fixed hero subtitle: removed 'Best USD/INR rates' claim
+  — Fixed metadata description: removed 'Best USD/INR rates' claim
+
+app/contact/ContactPageClient.tsx
+  — Email: hello@cloudbasket.co → info@cloudbasket.co
+  — Removed fake WhatsApp number (+91 98765 43210) and Phone import
+  — Response time: "8 business hours" → "48 hours" in all 3 locations
+    (hero text, response time card, success state)
+  — Address corrected to Kadapa, Andhra Pradesh 516002
+
+app/legal/terms/page.tsx
+  — PDF download buttons (href="/legal/terms-of-service.pdf") replaced with
+    disabled "PDF Coming Soon" span — file does not exist, was a 404 on click
+
+app/legal/grievance-officer/page.tsx
+  — GRIEVANCE_OFFICER_NAME: 'S. KHALEEL AHMED' → '[PENDING — IBF TO CONFIRM]'
+  — Callout updated: title/body made explicit that IBF must confirm before go-live
+
+app/support/ticket/TicketClient.tsx  [NEW FILE]
+  — Client component using useSearchParams() (Next.js 15 compliant)
+  — Controlled input state with useState
+  — Check Status button: router.push() with encodeURIComponent — live navigation
+  — Enter key handler on input
+  — Button disabled when input is empty
+
+app/support/ticket/page.tsx
+  — Full rewrite: server component wrapper exporting metadata
+  — Wraps TicketClient in <Suspense> (required for useSearchParams)
+  — Fixes Next.js 15 async searchParams error (was synchronous prop access)
+
+=== TYPE CHECK ===
+pnpm tsc --noEmit → EXIT 0
+
+=== REMAINING ITEMS (IBF decisions needed) ===
+1. /legal/grievance-officer: Replace [PENDING — IBF TO CONFIRM] with real name
+2. /legal/terms: Upload real PDF to /public/legal/terms-of-service.pdf
+3. /compare + /deals/[id]: Hardcoded amazon- prefix on deal CTAs (platform routing)
+4. Cloudflare WAF rate limit on /go/* (infra — not code)
+5. OAuth token exchange (when GOOGLE_CLIENT_ID provisioned)
+
+=== PHASE SUMMARY ===
+Phase 1 CRITICAL — COMPLETE (exit 0)
+Phase 2 HIGH     — COMPLETE (exit 0)
+Phase 3 LEGAL    — COMPLETE (exit 0)
+Open items (legal decisions) — 5 items remain, all IBF-gated

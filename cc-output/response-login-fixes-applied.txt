@@ -1,0 +1,42 @@
+RESPONSE: LOGIN & AUTH SECURITY FIXES APPLIED
+Generated: 2026-04-22
+Session: cloudbasket
+
+=== FILES CHANGED (5) ===
+
+1. app/api/auth/[provider]/route.ts
+   CHANGE:  OAuth initiation disabled — returns 503 immediately
+   COMMENT: Original code preserved in block comment
+   REASON:  Token exchange never implemented — endpoint was a security bypass
+
+2. app/api/auth/[provider]/callback/route.ts
+   CHANGE:  OAuth callback disabled — returns 503 immediately
+   COMMENT: Original code preserved in block comment
+   REASON:  Callback redirected to /dashboard without authenticating user
+
+3. app/api/auth/otp/send/route.ts
+   CHANGE:  OTP hashed with SHA-256 before DB storage (createHash from Node crypto)
+   CHANGE:  expiresAt removed from response (was leaking timing info)
+   IMPORT:  import { createHash } from 'crypto'
+
+4. app/api/auth/otp/verify/route.ts
+   CHANGE:  Queries DB by identifier + not_used + not_expired (no plaintext code in query)
+   CHANGE:  timingSafeEqual used for constant-time hash comparison
+   CHANGE:  Rate limit reduced from 10/min to 5/min (matches send route)
+   IMPORT:  import { createHash, timingSafeEqual } from 'crypto'
+
+5. lib/auth/otp.ts
+   CHANGE:  generateOTP now uses crypto.randomInt(10) — was Math.random() (not CSPRNG)
+   BONUS:   crypto already imported — zero new packages
+
+=== TYPE CHECK ===
+pnpm tsc --noEmit → EXIT 0 (no errors)
+
+=== REMAINING ITEM (infra — not code) ===
+HIGH: Cloudflare WAF rate limit on /go/* — 60 req/min per IP
+
+=== RE-ENABLE OAUTH ===
+When GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET are provisioned in Vercel:
+1. Uncomment block comments in both OAuth files
+2. Remove the 503 GET handler
+3. Implement Supabase token exchange in callback/route.ts

@@ -19,16 +19,33 @@ const POPULAR_SEARCHES = [
   "OnePlus 13R", "Puma sneakers", "Adidas hoodie", "LEGO set", "PlayStation 5",
 ]
 
+const VALID_SORT_VALUES: ReadonlySet<SearchFilters['sortBy']> = new Set([
+  'relevance', 'price-asc', 'price-desc', 'discount-desc', 'newest',
+])
+
+function safeNumber(value: string | null): number | undefined {
+  if (value === null) return undefined
+  const n = Number(value)
+  return Number.isFinite(n) && n >= 0 ? n : undefined
+}
+
+function safeSort(value: string | null): SearchFilters['sortBy'] {
+  if (value && VALID_SORT_VALUES.has(value as SearchFilters['sortBy'])) {
+    return value as SearchFilters['sortBy']
+  }
+  return 'relevance'
+}
+
 function parseSearchParams(params: URLSearchParams): SearchFilters {
   return {
     categories: params.has('categories') ? params.get('categories')?.split(',') : undefined,
     brands: params.has('brands') ? params.get('brands')?.split(',') : undefined,
     platforms: params.has('platforms') ? params.get('platforms')?.split(',') : undefined,
-    minPrice: params.has('minPrice') ? Number(params.get('minPrice')) : undefined,
-    maxPrice: params.has('maxPrice') ? Number(params.get('maxPrice')) : undefined,
-    minDiscount: params.has('minDiscount') ? Number(params.get('minDiscount')) : undefined,
+    minPrice: safeNumber(params.get('minPrice')),
+    maxPrice: safeNumber(params.get('maxPrice')),
+    minDiscount: safeNumber(params.get('minDiscount')),
     inStock: params.has('inStock') ? params.get('inStock') === 'true' : undefined,
-    sortBy: params.has('sortBy') ? params.get('sortBy') as SearchFilters['sortBy'] : 'relevance',
+    sortBy: safeSort(params.get('sortBy')),
   }
 }
 

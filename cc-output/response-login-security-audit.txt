@@ -1,0 +1,63 @@
+RESPONSE: SECURITY AUDIT — LOGIN & AUTH SYSTEM
+Generated: 2026-04-22
+Session: cloudbasket
+
+FILES REVIEWED:
+  app/login/LoginClient.tsx
+  app/api/auth/[provider]/route.ts
+  app/api/auth/[provider]/callback/route.ts
+  app/api/auth/otp/send/route.ts
+  app/api/auth/otp/verify/route.ts
+
+=== VULNERABILITIES ===
+
+CRITICAL — OAuth token exchange not implemented (callback/route.ts line 20-21)
+  Code:   // Exchange code for token via Supabase Auth or custom handler
+          return NextResponse.redirect(`${SITE_URL}/dashboard?provider=${provider}`)
+  Risk:   OAuth callback never authenticates user — redirects to /dashboard without
+          any session being created. Any user can bypass OAuth auth entirely.
+  Fix:    Implement Supabase token exchange OR disable OAuth provider entirely
+
+CRITICAL — OTP stored in plaintext (otp/send/route.ts line 42)
+  Code:   code: otp  (raw 6-digit string inserted into otp_codes table)
+  Risk:   RLS misconfiguration or leaked service role key exposes all active OTPs
+  Fix:    Hash OTP with SHA-256 before storage; hash input before compare in verify
+
+HIGH — OAuth state cookie never cleared (callback/route.ts line 19-21)
+  Risk:   oauth_state cookie valid for 600s after successful flow — replay window
+  Fix:    response.cookies.set('oauth_state', '', { maxAge: 0 }) on both paths
+
+HIGH — expiresAt leaked in OTP send response (otp/send/route.ts line 58)
+  Code:   return NextResponse.json({ ok: sent, expiresAt })
+  Fix:    return NextResponse.json({ ok: sent })
+
+HIGH — provider not validated in callback redirect (callback/route.ts line 21)
+  Code:   ...?provider=${provider}  (provider is attacker-controlled path param)
+  Risk:   Arbitrary string injected into dashboard URL query param
+  Fix:    Validate provider against AUTH_PROVIDERS before using in redirect
+
+MEDIUM — OTP verify rate limit looser than send (otp/verify/route.ts line 15)
+  Send:   rateLimit(ip, 5, 60)
+  Verify: rateLimit(ip, 10, 60)  ← should be ≤ send
+  Fix:    Change verify to rateLimit(ip, 5, 60)
+
+MEDIUM — `any` type in catch block (LoginClient.tsx line 38)
+  Code:   } catch (err: any) {
+  Fix:    } catch (err: unknown) { setError(err instanceof Error ? err.message : 'Something went wrong') }
+
+MEDIUM — Magic hex colors (LoginClient.tsx lines 49, 81, 92)
+  Uses:   #039BE5, #EF4444 directly in JSX
+  Fix:    Import and use design tokens from @/lib/design-system
+
+=== PRIORITY FIX ORDER ===
+1. Decide on OAuth: implement token exchange OR remove OAuth provider buttons
+2. Hash OTP before storage
+3. Clear oauth_state cookie after use
+4. Remove expiresAt from send response
+5. Validate provider in callback
+6. Fix verify rate limit
+7. Fix any type + hex colors
+
+=== STATUS ===
+Awaiting user decision on OAuth before applying fixes.
+Remaining fixes (items 2-7) ready to apply on RUN.

@@ -103,11 +103,9 @@ export default function HeroSection({ totalCount }: Props) {
           </div>
         </form>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {['₹2Cr+ saved by users', '50K+ deals tracked', '4.8★ user rating'].map(stat => (
-            <div key={stat} className="rounded-full border border-white/40 bg-white/60 px-4 py-2 text-[11px] font-black text-zinc-700 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">{stat}</div>
-          ))}
-        </div>
+        <p className="mt-8 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
+          India&apos;s smartest price discovery platform
+        </p>
 
         <div className="mt-16 flex min-h-[48px] flex-wrap items-center justify-center gap-4">
           <Link href={ROUTES.PRODUCTS} className="cb-btn-primary px-8 py-4 rounded-2xl flex items-center gap-2 text-base transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600">

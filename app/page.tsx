@@ -15,62 +15,65 @@ import TrendingSearches from '@/components/TrendingSearches'
 import { DEALS } from '@/lib/deals-data'
 import { IMAGE_ASSETS, resolveImageSource } from '@/lib/image-assets'
 import { PRODUCTS } from '@/lib/mock-data'
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, SITE_TAGLINE } from '@/lib/constants'
 
 import PersonalisedRecommendations from '@/components/PersonalisedRecommendations'
 
 export const metadata: Metadata = {
-  title: 'CloudBasket - Everything in One Basket',
-  description: "Discover and compare the best prices across Amazon, Flipkart and 50+ stores worldwide. Zero checkout. Pure discovery.",
+  title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: SITE_URL },
   openGraph: {
-    title: 'CloudBasket - Everything in One Basket',
-    description: "Discover and compare the best prices worldwide. Zero checkout. Pure discovery.",
-    url: 'https://cloudbasket.co',
-    images: [{ url: '/og-image.svg' }],
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    images: [{ url: '/og-image.png' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CloudBasket - Everything in One Basket',
-    description: "Discover and compare the best prices worldwide. Zero checkout. Pure discovery.",
-    images: ['/og-image.svg'],
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    images: ['/og-image.png'],
   },
 }
 
 const WEBSITE_STRUCTURED_DATA = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'CloudBasket',
-  url: 'https://cloudbasket.co',
-  description: "The World's Smartest Price Aggregator",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
   potentialAction: {
     '@type': 'SearchAction',
-    target: 'https://cloudbasket.co/search?q={search_term_string}',
+    target: `${SITE_URL}/search?q={search_term_string}`,
     'query-input': 'required name=search_term_string',
   },
 }
 
 const DEAL_OF_DAY = {
   id: 'dotd-1',
-  name: 'Samsung Galaxy S25 Ultra 256GB',
+  name: 'Samsung Galaxy M15 5G',
   brand: 'Samsung',
   image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80',
-  originalPrice: 134999,
-  price: 89999,
-  discount: 33,
+  originalPrice: 15999,
+  price: 12999,
+  discount: 19,
   platform: 'Amazon',
   endsAt: '23:59',
+  goUrl: '/go/amazon-B0DGXBSYHS',
   features: [
-    '200MP ProVisual Camera System',
-    'Snapdragon 8 Elite Processor',
-    '5000mAh Battery · 45W Charging',
-    '6.9" QHD+ Dynamic AMOLED Display',
-    'Titanium Frame · S Pen Included',
+    '50MP AI Triple Camera System',
+    'MediaTek Dimensity 6100+ · 5G Ready',
+    '6000mAh Battery · 25W Fast Charge',
+    '6.5" Super AMOLED 90Hz FHD+ Display',
+    '4GB RAM · 128GB Storage · Android 14',
   ],
 }
 
 function DealOfTheDay() {
   return (
-    <section className="py-12">
-      <div className="mx-auto max-w-7xl bg-gradient-to-r from-sky-600/5 via-transparent to-orange-500/5 px-6">
+    <section className="bg-gradient-to-r from-sky-600/5 via-transparent to-orange-500/5 py-12">
+      <div className="mx-auto max-w-7xl px-6">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500">
@@ -110,7 +113,7 @@ function DealOfTheDay() {
               <div className="my-4 flex min-h-[120px] flex-col gap-2">
                 {DEAL_OF_DAY.features.map((feature) => (
                   <p key={feature} className="flex items-center gap-2 text-sm">
-                    <span className="font-black text-[#10B981]">✓</span>
+                    <span className="font-black text-[#1B5E20]">✓</span>
                     {feature}
                   </p>
                 ))}
@@ -124,10 +127,15 @@ function DealOfTheDay() {
                 </span>
               </div>
 
-              <Link href="/go/amazon-dotd-1" className="cb-btn cb-btn-primary mt-6 w-full gap-2 py-4 text-base">
+              <a
+                href={DEAL_OF_DAY.goUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cb-btn cb-btn-primary mt-6 w-full gap-2 py-4 text-base"
+              >
                 <Zap size={18} />
                 Grab This Deal
-              </Link>
+              </a>
 
               <p className="text-muted mt-3 text-center text-xs">
                 <TrendingDown size={12} className="inline" /> Price verified on CloudBasket
@@ -169,10 +177,10 @@ function FlashDealsPreview() {
               <div className="min-h-[146px] p-4">
                 <span className="cb-badge cb-badge-orange">Flash</span>
                 <h3 className="mt-2 line-clamp-2 text-[13px] font-bold text-[var(--cb-text-primary)]">{deal.title}</h3>
-                <p className="mt-2 font-display text-xl font-black text-[#F97316]">-{deal.discount}%</p>
+                <p className="mt-2 font-display text-xl font-black text-[#E65100]">-{deal.discount}%</p>
 
                 <a
-                  href={`/go/amazon-${deal.productId}`}
+                  href={deal.goId ? `/go/${deal.goId}` : `/products`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cb-btn-orange mt-3 flex w-full items-center justify-center gap-2"

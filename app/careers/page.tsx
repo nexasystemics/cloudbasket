@@ -1,30 +1,35 @@
 import type { Metadata } from 'next'
 import CareersPageClient from './CareersPageClient'
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, DEFAULT_LOCALE } from '@/lib/constants'
+
+const CAREERS_TITLE = `Careers — ${SITE_NAME}`
+const CAREERS_DESCRIPTION = `${SITE_DESCRIPTION} Join the team — explore open positions in Engineering, Marketing, Design, and more at ${SITE_NAME}.`
 
 export const metadata: Metadata = {
-  title: 'Join the Team | CloudBasket Careers',
-  description: 'Help us build the future of smart shopping in India. Explore open positions in Engineering, Marketing, Design, and more at CloudBasket.',
+  title: CAREERS_TITLE,
+  description: CAREERS_DESCRIPTION,
+  alternates: { canonical: `${SITE_URL}/careers` },
   openGraph: {
-    title: 'Join the Team | CloudBasket Careers',
-    description: 'Help us build the future of smart shopping in India. Explore open positions in Engineering, Marketing, Design, and more at CloudBasket.',
-    url: 'https://cloudbasket.co/careers',
-    siteName: 'CloudBasket',
+    title: CAREERS_TITLE,
+    description: CAREERS_DESCRIPTION,
+    url: `${SITE_URL}/careers`,
+    siteName: SITE_NAME,
     images: [
       {
-        url: 'https://cloudbasket.co/og-image.svg',
+        url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'CloudBasket Careers',
+        alt: `${SITE_NAME} Careers`,
       },
     ],
-    locale: 'en_IN',
+    locale: DEFAULT_LOCALE,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Join the Team | CloudBasket Careers',
-    description: 'Help us build the future of smart shopping in India. Explore open positions in Engineering, Marketing, Design, and more at CloudBasket.',
-    images: ['https://cloudbasket.co/og-image.svg'],
+    title: CAREERS_TITLE,
+    description: CAREERS_DESCRIPTION,
+    images: [`${SITE_URL}/og-image.png`],
   },
 }
 

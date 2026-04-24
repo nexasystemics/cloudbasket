@@ -20,7 +20,7 @@ export interface MetaTags {
 
 const DEFAULT_DESCRIPTION = "CloudBasket - India's smartest price comparison platform. Save more on electronics, fashion, and home essentials.";
 const DEFAULT_IMAGE = "/brand/og-default.png";
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://cloudbasket.in";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://cloudbasket.co";
 
 /**
  * Generates SEO meta tags for a specific product page.

@@ -88,7 +88,7 @@ class SearchConsoleAPI {
     const totalClicks = STUB_QUERIES.reduce((a, b) => a + b.clicks, 0)
 
     return {
-      siteUrl: 'https://cloudbasket.in',
+      siteUrl: 'https://cloudbasket.co',
       dateRange: {
         start: start.toISOString().split('T')[0],
         end: end.toISOString().split('T')[0],

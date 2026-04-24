@@ -44,6 +44,7 @@ export interface Product {
 export interface Deal {
   id: string
   productId: number
+  goId?: string
   title: string
   discount: number
   expiresAt: string

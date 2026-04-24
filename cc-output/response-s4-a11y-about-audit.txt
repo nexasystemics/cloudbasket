@@ -1,0 +1,168 @@
+S4 DOMAIN FIX + A11Y FIXES + /about AUDIT
+Date: 2026-04-24
+Status: COMPLETE — pnpm tsc --noEmit exit 0
+
+══════════════════════════════════════════
+PART 1 — S4: cloudbasket.in → cloudbasket.co
+══════════════════════════════════════════
+
+Method: sed -i bulk replace across all .ts .tsx .js .jsx .md .svg .bak files
+Scope:  F:\cloudbasket — excluded node_modules, .next, .git, .claude/worktrees
+Result: 0 remaining references verified post-replace
+
+Project source files changed (non-worktree):
+
+  CLAUDE.md                                      (line 14, 273)
+  CLOUDBASKET_HANDOVER_PASSPORT.md               (line 10)
+  DEPLOYMENT.md                                  (lines 25, 45, 46, 47)
+  public/brand/og-image.svg                      (line 22)
+  qa-audit.js                                    (line 64)
+  proxy.ts
+  app/product/[id]/page.tsx.bak                  (lines 231,232,328,329,330,364)
+  services/social/content-generator.ts           (lines 17,19)
+  services/seo/sitemap-manager.ts                (lines 11,15)
+  services/seo/sitemap-generator.ts              (line 31)
+  services/seo/seo-updater.ts                    (line 37)
+  services/seo/search-console.ts                 (line 91)
+  services/seo/schema-validator.ts               (line 15)
+  services/seo/meta-tag-generator.ts             (line 23)
+  services/price-engine/price-intelligence.ts    (line 75)
+  services/price-engine/india-apis.ts            (line 49)
+  services/affiliate/link-health-monitor.ts      (lines 64,65)
+  services/growth/referral-system.ts             (lines 65,76,129,253)
+  services/email-engine/plunk-client.ts          (lines 5,36,44)
+  services/email-engine/email-marketing.ts       (lines 65,112,152)
+  services/email/price-alert-sender.ts           (line 25)
+  services/email/marketing-pipeline.ts           (line 8)
+  services/alerts/price-alert.ts                 (lines 55,88,129)
+  services/content/seo-updater.ts                (line 17)
+  services/deals/deal-discovery.ts               (line 29)
+  tests/unit/ (57 test files)                    — NEXT_PUBLIC_SITE_URL and url fixtures
+
+══════════════════════════════════════════
+PART 2 — A11Y FIXES: page.tsx + HeroSection.tsx
+══════════════════════════════════════════
+
+HeroSection.tsx — 5 fixes
+
+  FIX  File          Line   Issue → Fix
+  ───────────────────────────────────────────────────────────────────
+  A1   HeroSection   69-71  Decorative blobs missing aria-hidden
+                            → Added aria-hidden="true" to all 3 bg divs
+
+  A2   HeroSection   75     Zap icon in badge not hidden from AT
+                            → Added aria-hidden="true" to <Zap size={14}>
+
+  A3   HeroSection   94     Search icon not hidden from AT
+                            → Added aria-hidden="true" to <Search>
+
+  A4   HeroSection   95-99  <input> has no accessible label (placeholder ≠ label)
+                            → Added aria-label="Search for deals in India"
+
+  A5   HeroSection   114    "Compare Products" link missing focus ring
+                            → Added focus-visible:outline-none focus-visible:ring-2
+                              focus-visible:ring-offset-2 focus-visible:ring-blue-600
+
+page.tsx — 8 fixes
+
+  FIX  File          Line   Issue → Fix
+  ───────────────────────────────────────────────────────────────────
+  A6   page.tsx      73     DealOfTheDay <section> has no label for AT
+                            → Added aria-label="Deal of the Day"
+
+  A7   page.tsx      77     Decorative icon container read by AT
+                            → Added aria-hidden="true" to Zap wrapper div
+
+  A8   page.tsx      85     Clock icon in countdown badge read by AT
+                            → Added aria-hidden="true" to <Clock size={14}>
+
+  A9   page.tsx      114    ✓ checkmark spans read as "checkmark" by AT
+                            → Added aria-hidden="true" to all checkmark spans
+
+  A10  page.tsx      128    CTA opens new tab — no AT indication
+                            → Added aria-label="Grab this deal: {name} on Amazon (opens in new tab)"
+
+  A11  page.tsx      134    Zap icon in CTA button read by AT
+                            → Added aria-hidden="true" to <Zap size={18}>
+
+  A12  page.tsx      138    TrendingDown icon read by AT
+                            → Added aria-hidden="true" to <TrendingDown>
+
+  A13  page.tsx      153    FlashDealsPreview <section> has no label for AT
+                            → Added aria-label="Today's flash deals"
+
+  A14  page.tsx      180    Flash CTA "Grab Deal" is non-descriptive; opens new tab
+                            → Added aria-label="Grab deal: {deal.title} (opens in new tab)"
+
+  A15  page.tsx      187    ExternalLink icon in CTA read by AT
+                            → Added aria-hidden="true" to <ExternalLink size={14}>
+
+COLOR CONTRAST FLAGS (not fixed — structural changes needed):
+  - text-muted CSS variable: contrast depends on theme; needs design system verification
+  - #039BE5 on white at body-size text: ~3.1:1 — fails AA (4.5:1) for text <18pt non-bold
+    PASSES for large text (18pt+/14pt bold). Hero h1 and badge text are large → PASS.
+    Any body-size #039BE5 text should be flagged for review.
+  - Heading hierarchy in both files: h1→h2→h3 order correct — no issues
+
+══════════════════════════════════════════
+PART 3 — /about PAGE AUDIT (report only — no fixes)
+══════════════════════════════════════════
+
+File: app/about/page.tsx
+
+┌─────┬──────────┬────────────────────────────────────────────────────────────────────────┬────────┐
+│  #  │ Severity │ Issue                                                                  │ Line   │
+├─────┼──────────┼────────────────────────────────────────────────────────────────────────┼────────┤
+│ A1  │ SEO      │ No canonical URL in metadata                                           │ 6-32   │
+│ A2  │ SEO      │ OG image is /og-image.svg — SVG not rendered by social crawlers        │ 17, 30 │
+│     │          │ Should use /opengraph-image (file-based) or PNG                        │        │
+│ A3  │ SEO      │ Metadata title/desc hardcoded — not using SITE_NAME/SITE_DESCRIPTION   │ 7-31   │
+│     │          │ constants. Drift risk if brand copy changes.                           │        │
+│ A4  │ BRAND    │ Page h1: "The World's Smartest Price Intelligence Platform"             │ 80     │
+│     │          │ Inconsistent with tagline "Know It. Find It. Get It."                  │        │
+│ A5  │ BRAND    │ Metadata title: "The World's Smartest Price Aggregator"                │ 7, 11  │
+│     │          │ Same inconsistency — three different brand claims on one page           │        │
+│ A6  │ BRAND    │ REVENUE_STREAMS color #F97316 for Print on Demand icon                 │ 50     │
+│     │          │ Not a brand color — should be #E65100 (brand CTA orange)               │        │
+│ A7  │ BRAND    │ REVENUE_STREAMS color #10B981 for Associates icon                      │ 56     │
+│     │          │ Not a brand color — should be #1B5E20 (brand success green)            │        │
+│ A8  │ BRAND    │ "every dollar saved" — India-first platform should say "every rupee"   │ 124    │
+│ A9  │ BRAND    │ Footer: "cloudbasket vs.cb.1.0 · v2.0.0" looks like debug/placeholder │ 164    │
+│     │          │ Not a user-facing version string format                                │        │
+│ A10 │ A11Y     │ Revenue stream icons (<Icon>) have no aria-hidden                      │148     │
+│     │          │ Decorative icons announced to screen readers                           │        │
+│ A11 │ A11Y     │ <Shield>, <Heart>, <Target> icons missing aria-hidden                  │130,161 │
+│     │          │                                                                        │  ,170  │
+│ A12 │ A11Y     │ Mission <Image fill> missing sizes prop                                │ 111    │
+│     │          │ Next.js will warn; browser fetches oversized image on mobile           │        │
+│ A13 │ PERF     │ Unsplash image (external CDN) on mission section                       │ 114    │
+│     │          │ Same C3 issue fixed on homepage — no attribution, external dependency  │        │
+│ A14 │ UX       │ Revenue streams grid: sm:grid-cols-5 — 5 narrow cols at 400-640px      │ 139    │
+│     │          │ Cards will be ~80px wide on iPhone SE — likely clipped                 │        │
+│ A15 │ CONTENT  │ STATS value '2,000+' — stated as "Products Tracked"                   │ 33-34  │
+│     │          │ Inconsistency: HeroSection shows PRODUCTS.length (mock count)          │        │
+│     │          │ from a different data source                                           │        │
+└─────┴──────────┴────────────────────────────────────────────────────────────────────────┴────────┘
+
+Issues NOT found on /about:
+  ✓ No cloudbasket.in references (cleaned by S4 bulk replace above)
+  ✓ No Lorem ipsum / TBD / PENDING / [NAME] placeholder text
+  ✓ No fake team members or fake founding dates
+  ✓ No /checkout or /cart links
+  ✓ All internal links (/deals, /associates) route to existing pages
+  ✓ CTA buttons correctly target real routes
+  ✓ No hardcoded phone numbers
+  ✓ External links: Unsplash image is only external dependency — no links
+  ✓ Currency shown as ₹0 (correct)
+  ✓ Mobile responsive grid structure present (col-span-2 → md:col-span-4)
+
+Priority order for /about fixes:
+  1. A1 + A2 + A3 — SEO (canonical, OG image, constants) — quick wins
+  2. A4 + A5 — Brand headline/title consistency
+  3. A6 + A7 — Wrong brand colors on icons
+  4. A9 — Debug-looking version string
+  5. A12 — Missing sizes prop on Image (Next.js warning)
+  6. A10 + A11 — Decorative icons aria-hidden
+  7. A8 — "dollar" → "rupee"
+  8. A13 — Unsplash image replacement
+  9. A14 — Revenue streams narrow grid at sm breakpoint

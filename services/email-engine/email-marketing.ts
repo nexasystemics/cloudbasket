@@ -62,7 +62,7 @@ function buildDealAlertHtml(data: DealAlertEmail): string {
       </a>
     </div>
     <div style="background:#F9FAFB;padding:16px;text-align:center;font-size:12px;color:#9CA3AF">
-      CloudBasket · cloudbasket.in · <a href="https://cloudbasket.in/unsubscribed" style="color:#9CA3AF">Unsubscribe</a>
+      CloudBasket · cloudbasket.co · <a href="https://cloudbasket.co/unsubscribed" style="color:#9CA3AF">Unsubscribe</a>
     </div>
   </div>
 </body>
@@ -109,7 +109,7 @@ class EmailMarketingPipeline {
     try {
       if (this.isResendReady()) {
         const { error } = await this.resend().emails.send({
-            from: 'CloudBasket <alerts@cloudbasket.in>',
+            from: 'CloudBasket <alerts@cloudbasket.co>',
             to: [data.to],
             subject: `🔥 ${data.discountPercent}% OFF — ${data.productName}`,
             html: buildDealAlertHtml(data),
@@ -149,7 +149,7 @@ class EmailMarketingPipeline {
       const results = await Promise.allSettled(
         recipients.map((email) =>
           this.resend().emails.send({
-            from: 'CloudBasket <alerts@cloudbasket.in>',
+            from: 'CloudBasket <alerts@cloudbasket.co>',
             to: [email],
             subject: campaign.subject,
             html: campaign.htmlContent,

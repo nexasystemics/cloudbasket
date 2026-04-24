@@ -26,7 +26,7 @@ function generateId(): string {
 function formatUrl(source: string, productId: string): string {
   if (source === 'amazon') return `https://amazon.in/dp/${productId}?tag=cloudbasket-21`
   if (source === 'flipkart') return `https://flipkart.com/p/${productId}`
-  return `https://cloudbasket.in/product/${productId}`
+  return `https://cloudbasket.co/product/${productId}`
 }
 
 const STUB_DEALS: Omit<DiscoveredDeal, 'id' | 'discoveredAt'>[] = [

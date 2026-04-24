@@ -46,7 +46,7 @@ function staticFallback(productIds: string[], platform: string, source: LivePric
     platform,
     price: 0,
     inStock: true,
-    url: `https://cloudbasket.in/go/${id}`,
+    url: `https://cloudbasket.co/go/${id}`,
     fetchedAt: new Date(),
     source,
   }))

@@ -19,5 +19,5 @@
   <!-- Tagline -->
   <text x="600" y="585" font-family="Inter, sans-serif" font-size="28" fill="white" text-anchor="middle" opacity="0.85">India's Smartest Price Aggregator</text>
   <!-- URL -->
-  <text x="1150" y="615" font-family="Inter, sans-serif" font-size="22" fill="white" text-anchor="end" opacity="0.6">cloudbasket.in</text>
+  <text x="1150" y="615" font-family="Inter, sans-serif" font-size="22" fill="white" text-anchor="end" opacity="0.6">cloudbasket.co</text>
 </svg>

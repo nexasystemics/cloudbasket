@@ -1,0 +1,131 @@
+CAREERS PAGE FIXES — 11 issues
+Date: 2026-04-24
+Status: COMPLETE — pnpm tsc --noEmit exit 0
+
+══════════════════════════════════════
+FILE 1: app/careers/page.tsx
+══════════════════════════════════════
+
+BEFORE→AFTER for each fix:
+
+#1  IMPORTS ADDED (line 3)
+    + import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, DEFAULT_LOCALE } from '@/lib/constants'
+    Added CAREERS_TITLE and CAREERS_DESCRIPTION constants that use SITE_NAME, SITE_DESCRIPTION, SITE_URL.
+    All hardcoded "CloudBasket" strings in metadata now read via SITE_NAME.
+
+#1  TITLE (line 7, was line 5)
+    BEFORE: title: 'Join the Team | CloudBasket Careers'
+    AFTER:  title: CAREERS_TITLE   → "Careers — CloudBasket"
+
+#1  DESCRIPTION (line 8, was line 6)
+    BEFORE: 'Help us build ... at CloudBasket.'
+    AFTER:  CAREERS_DESCRIPTION  → "${SITE_DESCRIPTION} Join the team — ... at ${SITE_NAME}."
+
+#2  CANONICAL (line 11, new)
+    ADDED: alternates: { canonical: `${SITE_URL}/careers` }
+
+#3  OG IMAGE (line 19)
+    BEFORE: url: 'https://cloudbasket.co/og-image.svg'
+    AFTER:  url: `${SITE_URL}/og-image.png`
+
+#3  TWITTER IMAGE (line 30)
+    BEFORE: images: ['https://cloudbasket.co/og-image.svg']
+    AFTER:  images: [`${SITE_URL}/og-image.png`]
+
+#11 LOCALE (line 24)
+    BEFORE: locale: 'en_IN'
+    AFTER:  locale: DEFAULT_LOCALE   → 'en-IN' (matches lib/constants.ts)
+
+══════════════════════════════════════
+FILE 2: app/careers/CareersPageClient.tsx
+══════════════════════════════════════
+
+#4  EMOJI → LUCIDE ICONS (lines 1-13, BENEFITS array)
+    REMOVED imports: Zap (was unused)
+    ADDED imports:   Globe, Target, Banknote, Shield, BookOpen, Calendar
+    ADDED import:    SITE_TAGLINE from '@/lib/constants'
+
+    Emoji → Icon mapping:
+      🌏  →  Globe     (Remote First)
+      🎯  →  Target    (Mission Driven)
+      💰  →  Banknote  (Competitive Salary)
+      🏥  →  Shield    (Health Insurance)
+      📚  →  BookOpen  (Learning Budget)
+      🌴  →  Calendar  (25 Days Leave)
+
+    BENEFITS render changed (line ~100):
+    BEFORE: <span className="text-3xl mb-3 block">{b.icon}</span>
+    AFTER:  const BenefitIcon = b.icon
+            <BenefitIcon size={24} className="mb-3 text-[var(--cb-text-primary)]" aria-hidden="true" />
+
+#5  HERO GRADIENT TOKENS (line 41)
+    BEFORE: className="bg-gradient-to-br from-[#0F2D4A] to-[#1F4E79] py-24 text-white"
+    AFTER:  className="bg-gradient-to-br from-sky-950 to-sky-900 py-24 text-white"
+
+    CTA button color (line 48):
+    BEFORE: text-[#1F4E79]
+    AFTER:  text-sky-900
+
+#6  FORM LABELS + INPUT IDs (lines ~150-165)
+    Dynamic form fields (name, email, linkedin, portfolio):
+    BEFORE: <label ...>{f.label}</label>
+            <input ... />
+    AFTER:  <label htmlFor={`applicant-${f.key}`} ...>{f.label}</label>
+            <input id={`applicant-${f.key}`} ... />
+    IDs generated: applicant-name, applicant-email, applicant-linkedin, applicant-portfolio
+
+    Cover Note textarea (lines ~168-175):
+    BEFORE: <label ...>Cover Note</label>
+            <textarea ... />
+    AFTER:  <label htmlFor="applicant-note" ...>Cover Note</label>
+            <textarea id="applicant-note" ... />
+
+    Resume upload already had id="resume-upload" + htmlFor — no change needed.
+    Consent checkbox already had id="app-consent" + htmlFor — no change needed.
+
+    Type assertion fixed: (form as any)[f.key]
+    → (form as unknown as Record<string, string>)[f.key]
+    (avoids `any`, uses unknown bridge for safe override)
+
+#7  MODAL ARIA (lines ~110-120)
+    Outer backdrop div: no role change (it's the overlay, not the dialog)
+    Inner dialog div:
+    ADDED: role="dialog" aria-modal="true" aria-labelledby="modal-title"
+
+    Modal heading:
+    BEFORE: <h2 className="text-xl font-black">Apply for Position</h2>
+    AFTER:  <h2 id="modal-title" className="text-xl font-black">Apply for Position</h2>
+
+    Close button aria-label improved:
+    BEFORE: aria-label="Close"
+    AFTER:  aria-label="Close application modal"
+
+#8  TAGLINE IN HERO (line 47, new)
+    ADDED after h1:
+    <p className="mt-3 text-sm font-black uppercase tracking-[0.2em] text-[#F5C518]">
+      {SITE_TAGLINE}
+    </p>
+    Colour: #F5C518 (brand accent yellow-gold)
+
+#9  JOB ICON INLINE STYLES REMOVED (lines 15-20, JOBS array + render)
+    BEFORE: color: '#039BE5'   +  style={{ backgroundColor: `${job.color}1A` }}
+                                   style={{ color: job.color }}
+    AFTER:  iconBg: 'bg-sky-500/10'    iconColor: 'text-sky-500'
+            className={job.iconBg}      className={job.iconColor}
+
+    Color → Tailwind mapping:
+      #039BE5 (sky blue)   → bg-sky-500/10    text-sky-500
+      #10B981 (emerald)    → bg-emerald-500/10 text-emerald-500
+      #8B5CF6 (violet)     → bg-violet-500/10  text-violet-500
+      #EF4444 (red)        → bg-red-500/10     text-red-500
+      #F97316 (orange)     → bg-orange-500/10  text-orange-500
+
+    All style={{}} props removed from job icon section.
+    aria-hidden="true" added to all decorative icons.
+
+#10 MODAL BACKDROP CLICK-TO-CLOSE (lines ~109-120)
+    ADDED to outer backdrop div: onClick={closeModal}
+    ADDED to inner dialog div:   onClick={(e) => e.stopPropagation()}
+    closeModal helper extracted at line 77 (avoids inline duplication across 3 buttons).
+
+#11 → handled in page.tsx (locale fix above)

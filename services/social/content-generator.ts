@@ -14,9 +14,9 @@ export class SocialContentGenerator {
     return { id: `ig-${Date.now()}`, platform: 'instagram', content, hashtags: content.match(/#\w+/g) || [], status: 'draft', generatedAt: new Date() }
   }
   generateTweetThread(deals: { title: string; price: number; discount: number }[]): SocialPost[] {
-    return [{ id: `tw-0`, platform: 'twitter', content: `🔥 Today's top ${deals.length} deals on CloudBasket 🧵👇`, status: 'draft', generatedAt: new Date() }, ...deals.slice(0, 5).map((d, i) => ({ id: `tw-${i + 1}`, platform: 'twitter' as const, content: `${i + 1}/ 🛍️ ${d.title.slice(0, 60)}\n💰 ₹${d.price.toLocaleString('en-IN')} (${d.discount}% OFF)\n🔗 cloudbasket.in/deals\n#CloudBasket`, status: 'draft' as const, generatedAt: new Date() }))]
+    return [{ id: `tw-0`, platform: 'twitter', content: `🔥 Today's top ${deals.length} deals on CloudBasket 🧵👇`, status: 'draft', generatedAt: new Date() }, ...deals.slice(0, 5).map((d, i) => ({ id: `tw-${i + 1}`, platform: 'twitter' as const, content: `${i + 1}/ 🛍️ ${d.title.slice(0, 60)}\n💰 ₹${d.price.toLocaleString('en-IN')} (${d.discount}% OFF)\n🔗 cloudbasket.co/deals\n#CloudBasket`, status: 'draft' as const, generatedAt: new Date() }))]
   }
-  generateWhatsAppStatus(title: string, discount: number, price: number): string { return `🔥 ${title.slice(0, 50)} - ${discount}% OFF! Now ₹${price.toLocaleString('en-IN')} | cloudbasket.in/deals`.slice(0, 140) }
+  generateWhatsAppStatus(title: string, discount: number, price: number): string { return `🔥 ${title.slice(0, 50)} - ${discount}% OFF! Now ₹${price.toLocaleString('en-IN')} | cloudbasket.co/deals`.slice(0, 140) }
 }
 export const socialGenerator = new SocialContentGenerator()
 

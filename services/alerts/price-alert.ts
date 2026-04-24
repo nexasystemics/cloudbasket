@@ -52,7 +52,7 @@ async function sendEmailAlert(alert: PriceAlert, currentPrice: number): Promise<
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'alerts@cloudbasket.in',
+        from: 'alerts@cloudbasket.co',
         to: alert.userEmail,
         subject: `🎉 Price Drop! ${alert.productName} is now ₹${currentPrice.toLocaleString('en-IN')}`,
         html: `
@@ -85,7 +85,7 @@ async function sendEmailAlert(alert: PriceAlert, currentPrice: number): Promise<
             ">Buy Now →</a>
             <p style="color:#6b7280;font-size:0.875rem;margin-top:24px;">
               This alert was set by you on CloudBasket.in.
-              <a href="https://cloudbasket.in/alerts">Manage alerts</a>
+              <a href="https://cloudbasket.co/alerts">Manage alerts</a>
             </p>
           </div>
         `,
@@ -126,7 +126,7 @@ async function sendWhatsAppAlert(alert: PriceAlert, currentPrice: number): Promi
     ``,
     `Shop now: ${alert.productUrl}`,
     ``,
-    `_Manage alerts at cloudbasket.in/alerts_`,
+    `_Manage alerts at cloudbasket.co/alerts_`,
   ].join('\n')
 
   try {

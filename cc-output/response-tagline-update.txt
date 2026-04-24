@@ -1,0 +1,19 @@
+TAGLINE UPDATE
+Date: 2026-04-24
+Status: COMPLETE — pnpm tsc --noEmit exit 0
+
+Files changed (2):
+
+1. lib/constants.ts — line 4
+   BEFORE: export const SITE_TAGLINE = 'Design. Print. Earn.'
+   AFTER:  export const SITE_TAGLINE = 'Know It. Find It. Get It.'
+
+2. components/HeroSection.tsx — line 82
+   BEFORE: Compare. Discover. <span className="text-skyline-primary">Save.</span>
+   AFTER:  Know It. Find It. <span className="text-skyline-primary">Get It.</span>
+   Note: text-skyline-primary accent preserved on final clause "Get It."
+
+Downstream consumers of SITE_TAGLINE (all now read "Know It. Find It. Get It."):
+  - app/page.tsx metadata title
+  - app/page.tsx openGraph.title / twitter.title
+  - app/opengraph-image.tsx OG image tagline line

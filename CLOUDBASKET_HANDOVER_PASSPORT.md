@@ -7,7 +7,7 @@
 Project       : CloudBasket v2.0.0
 Tagline       : Pure Price Discovery Engine (Zero-Checkout)
 Company       : NEXQON HOLDINGS
-Domain        : cloudbasket.in
+Domain        : cloudbasket.co
 Repo          : https://github.com/nexasystemics/cloudbasket.git
 Local path    : F:\cloudbasket (Windows, PowerShell)
 Framework     : Next.js 16.1.6 | TypeScript strict | Tailwind CSS v4

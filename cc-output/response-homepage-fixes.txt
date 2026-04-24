@@ -1,0 +1,58 @@
+HOMEPAGE FIXES — app/page.tsx
+Date: 2026-04-24
+Status: COMPLETE — pnpm tsc --noEmit exit 0
+
+Files changed (4):
+
+1. lib/types.ts
+   - Added `goId?: string` to Deal interface (line 46)
+
+2. lib/deals-data.ts
+   - Added goId to all 4 flash deals:
+     flash-1 (iPhone 15 Pro)     → amazon-B0CHX1W1XY
+     flash-2 (Samsung Galaxy S25) → amazon-B0DXJ12345
+     flash-3 (Sony WH-1000XM6)   → amazon-B0CX789012
+     flash-4 (LG OLED C5)        → amazon-B0D5432109
+   NOTE: These are placeholder ASIN-format IDs. Replace with real ASINs before launch.
+
+3. lib/constants.ts
+   - SITE_TAGLINE changed from "One platform. Every store. Zero confusion."
+     to "Design. Print. Earn." (S3 reconciliation)
+
+4. app/page.tsx
+   Imports:
+   - Added: import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, SITE_TAGLINE } from '@/lib/constants'
+
+   Metadata (S1, S2, S3, S5):
+   - title: now `${SITE_NAME} — ${SITE_TAGLINE}` (was hardcoded)
+   - description: now SITE_DESCRIPTION (was hardcoded)
+   - alternates.canonical: SITE_URL added (was missing)
+   - openGraph.url: now SITE_URL (was hardcoded cloudbasket.co)
+   - openGraph.images[0].url: /og-image.png (was .svg)
+   - twitter.images[0]: /og-image.png (was .svg)
+   - All title/description fields now use constants
+
+   Structured data (S5):
+   - name: SITE_NAME
+   - url: SITE_URL
+   - description: SITE_DESCRIPTION (was "The World's Smartest Price Aggregator")
+   - potentialAction.target: `${SITE_URL}/search?q=...`
+
+   DealOfTheDay CTA (C1/Z1):
+   - <Link href="/go/amazon-dotd-1"> replaced with
+     <a href="/go/amazon-B0CW7BQHMH" target="_blank" rel="noopener noreferrer">
+   NOTE: B0CW7BQHMH is a placeholder ASIN. Replace with real S25 Ultra ASIN before launch.
+
+   FlashDealsPreview (C1):
+   - href changed from `/go/amazon-${deal.productId}` (numeric IDs)
+     to `deal.goId ? /go/${deal.goId} : /products` (uses goId field)
+
+Issues deferred (not in scope of this fix run):
+   B1: #10B981 hardcoded color (page.tsx:113)
+   B2: #F97316 hardcoded color (page.tsx:172)
+   B3: Hero h1 tagline (HeroSection.tsx:82)
+   B4: Unverified social proof claims (HeroSection.tsx:107)
+   C2: All deal data still mock/static
+   C3: Unsplash image on DEAL_OF_DAY
+   M1: DealOfTheDay gradient on inner div
+   S4: Domain .co vs .in (blocked on confirming live domain)

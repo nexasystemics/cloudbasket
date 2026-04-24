@@ -62,7 +62,7 @@ async function sendReferralEmail(invite: ReferralInvite): Promise<boolean> {
     return false
   }
 
-  const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.in'
+  const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.co'
   const referralLink = `${siteUrl}/join?ref=${invite.referralCode}`
 
   try {
@@ -73,7 +73,7 @@ async function sendReferralEmail(invite: ReferralInvite): Promise<boolean> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'invite@cloudbasket.in',
+        from: 'invite@cloudbasket.co',
         to: invite.refereeEmail,
         subject: `${invite.referrerName} invited you to CloudBasket — Get ₹${invite.rewardAmount} off!`,
         html: `
@@ -126,7 +126,7 @@ async function sendReferralWhatsApp(invite: ReferralInvite): Promise<boolean> {
     return false
   }
 
-  const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.in'
+  const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.co'
   const referralLink = `${siteUrl}/join?ref=${invite.referralCode}`
 
   const message = [
@@ -250,6 +250,6 @@ export function getReferralStats(referrals: Referral[]): ReferralStats {
 }
 
 export function getReferralLink(code: string): string {
-  const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.in'
+  const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? 'https://cloudbasket.co'
   return `${siteUrl}/join?ref=${code}`
 }

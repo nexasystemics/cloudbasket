@@ -34,7 +34,7 @@ function stubMetadata(path: string): SEOMetadata {
     keywords: ['price comparison', 'best deals', 'india', slug, 'cloudbasket'],
     ogTitle: `Best ${slug} Deals — CloudBasket`,
     ogDescription: `Find the lowest prices on ${slug} across Amazon, Flipkart and more.`,
-    canonicalUrl: `https://cloudbasket.in${path}`,
+    canonicalUrl: `https://cloudbasket.co${path}`,
     lastUpdated: new Date().toISOString(),
   }
 }

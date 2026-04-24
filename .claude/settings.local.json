@@ -58,7 +58,11 @@
       "Bash(git -C F:/cloudbasket diff --stat)",
       "Bash(git -C F:/cloudbasket log --oneline -5)",
       "Bash(git -C F:/cloudbasket add cc-output/audit/ cc-output/cloudbasket-audit-plan.csv cc-output/response-prefinal-audit-plan.txt)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(grep -c \"^\\\\s*{$\\\\|^\\\\s*id:\" F:/cloudbasket/lib/india-catalog-2/india-brands.ts)",
+      "Bash(grep -c \"^\\\\s*{$\\\\|^\\\\s*id:\" F:/cloudbasket/lib/india-catalog-2/tech-accessories.ts)",
+      "Bash(node -e \"require.resolve\\('next/og'\\)\")",
+      "Bash(xargs -I{} sed -i 's/cloudbasket\\\\.in/cloudbasket.co/g' {})"
     ]
   }
 }

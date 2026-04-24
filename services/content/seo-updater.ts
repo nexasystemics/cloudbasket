@@ -14,7 +14,7 @@ export class SEOContentUpdater {
     return { totalPages: 1200, passing: 1150, issues: [{ route: '/legal/terms', type: 'missing-og', severity: 'minor' }] }
   }
   generateProductSchema(productId: string, name: string, price: number, brand: string, image: string): Record<string, unknown> {
-    return { '@context': 'https://schema.org', '@type': 'Product', name, image, brand: { '@type': 'Brand', name: brand }, offers: { '@type': 'Offer', price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.in/product/${productId}` } }
+    return { '@context': 'https://schema.org', '@type': 'Product', name, image, brand: { '@type': 'Brand', name: brand }, offers: { '@type': 'Offer', price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: `https://cloudbasket.co/product/${productId}` } }
   }
 }
 export const seoUpdater = new SEOContentUpdater()

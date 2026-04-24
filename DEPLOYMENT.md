@@ -22,7 +22,7 @@ See `.env.example` for all required and optional variables.
 ### Required for core functionality:
 - `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase anon key
-- `NEXT_PUBLIC_SITE_URL` — Production URL (https://cloudbasket.in)
+- `NEXT_PUBLIC_SITE_URL` — Production URL (https://cloudbasket.co)
 
 ### Optional but recommended:
 - `NEXT_PUBLIC_GA_ID` — Google Analytics 4 measurement ID
@@ -42,9 +42,9 @@ See `.env.example` for all required and optional variables.
 4. Vercel auto-deploys on every push to main
 
 ## Post-Deployment Checklist
-- [ ] Submit sitemap to Google Search Console: https://cloudbasket.in/sitemap.xml
-- [ ] Verify OG images at https://cloudbasket.in/api/og
-- [ ] Test affiliate redirect: https://cloudbasket.in/go/amazon-mob-001
+- [ ] Submit sitemap to Google Search Console: https://cloudbasket.co/sitemap.xml
+- [ ] Verify OG images at https://cloudbasket.co/api/og
+- [ ] Test affiliate redirect: https://cloudbasket.co/go/amazon-mob-001
 - [ ] Verify price alert email delivery
 - [ ] Run Lighthouse audit on homepage (target: 90+ performance)
 - [ ] Test PWA install on Android Chrome

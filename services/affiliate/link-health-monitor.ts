@@ -61,8 +61,8 @@ const STUB_LINKS = [
   'https://amazon.in/dp/B09XYZ1234',
   'https://flipkart.com/p/boat-headphones?affid=cb-flipkart',
   'https://flipkart.com/p/samsung-m14',
-  'https://cloudbasket.in/go/boat-rockerz-450',
-  'https://cloudbasket.in/go/broken-link-404',
+  'https://cloudbasket.co/go/boat-rockerz-450',
+  'https://cloudbasket.co/go/broken-link-404',
 ]
 
 class LinkHealthMonitor {

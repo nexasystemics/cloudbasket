@@ -11,7 +11,7 @@
 |-------------|---------------------------------------------------|
 | Project     | cloudbasket                                       |
 | Type        | Hybrid POD + Affiliate Aggregator                 |
-| Domain      | cloudbasket.in                                    |
+| Domain      | cloudbasket.co                                    |
 | Market      | Indian & Global                                   |
 | Root        | `F:\cloudbasket`                                  |
 | Tagline     | Design. Print. Earn.                              |
@@ -270,7 +270,7 @@ cloudbasket operates a multi-tenant platform. The tenant registry is in `lib/the
 
 | Tenant key    | Brand            | Domain                  | Industry          |
 |---------------|------------------|-------------------------|-------------------|
-| cloudbasket   | CloudBasket      | cloudbasket.in          | affiliate-pod     |
+| cloudbasket   | CloudBasket      | cloudbasket.co          | affiliate-pod     |
 | infotyx       | INFOTYX          | infotyx.in              | media-info        |
 | infotyxco     | INFOTYX Services | infotyx.co              | tech-services     |
 | myhomefinder  | MyHomeFinder     | myhomefinder.in         | realestate        |

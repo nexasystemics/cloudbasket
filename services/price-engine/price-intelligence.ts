@@ -72,7 +72,7 @@ function stubPrices(productId: string): PricePoint[] {
       price: Math.round(base * (0.9 + Math.random() * 0.1)),
       currency: 'INR',
       inStock: Math.random() > 0.2,
-      url: `https://cloudbasket.in/product/${productId}`,
+      url: `https://cloudbasket.co/product/${productId}`,
       fetchedAt: new Date().toISOString(),
     },
   ]

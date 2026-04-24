@@ -5,7 +5,7 @@ import { env, isConfigured } from '@/lib/env'
 
 function getResend(): Resend { return new Resend(env.RESEND_API_KEY) }
 
-const FROM = 'CloudBasket <alerts@cloudbasket.in>'
+const FROM = 'CloudBasket <alerts@cloudbasket.co>'
 
 export class EmailMarketingPipeline {
   async sendWelcomeEmail(email: string, name?: string): Promise<boolean> {

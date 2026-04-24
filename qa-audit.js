@@ -61,7 +61,7 @@ const BANNED_TEXT = [
   'TODO',
   'FIXME',
   'test@test.com',
-  'hello@cloudbasket.in',
+  'hello@cloudbasket.co',
   '+91 98765',
   '+91 99999',
   'AdSense',

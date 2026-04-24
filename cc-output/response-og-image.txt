@@ -1,0 +1,45 @@
+OG IMAGE — app/opengraph-image.tsx
+Date: 2026-04-24
+Status: COMPLETE — pnpm tsc --noEmit exit 0
+
+Files changed (2):
+
+1. app/opengraph-image.tsx  [NEW]
+   Route:   /opengraph-image  (auto-registered by Next.js App Router)
+   Format:  PNG  1200×630
+   Runtime: Node.js (default; no explicit edge runtime needed)
+   Deps:    next/og (ships with Next.js — zero new packages)
+
+   Layout (top→bottom, centered):
+     Wordmark    "Cloud" #039BE5 / "Basket" #FFFFFF — 80px weight-900 flex-row
+     Tagline     SITE_TAGLINE (#F5C518) — 30px weight-700  mt-20
+     Subtext     "India's smartest price discovery platform" (#94A3B8) — 20px mt-16
+     Footer      "NEXQON HOLDINGS" (#4A6480) — 13px, absolute bottom-32
+
+   Design decisions:
+   - Wordmark uses two adjacent spans in a flex-row container; no whitespace
+     between spans since Satori flex layout avoids inter-element text gaps
+   - Apostrophe in subtext wrapped in {"India's..."} to avoid JSX parse conflict
+   - textTransform:'uppercase' omitted on footer — text is already uppercase literal
+   - letterSpacing uses px string ('-3px') for wordmark, em string for tagline
+   - All numeric style values are numbers (Satori requirement), string only where unit needed
+
+2. app/page.tsx  [MODIFIED]
+   Removed: openGraph.images: [{ url: '/og-image.png' }]
+   Removed: twitter.images: ['/og-image.png']
+   Reason:  app/opengraph-image.tsx (file-based convention) automatically injects
+            og:image and twitter:image meta tags. Explicit images[] in the metadata
+            config would prevent the file-based image from being used. Removing them
+            lets opengraph-image.tsx be the single source of truth.
+
+   The /og-image.png reference in public/ is now unused.
+   Safe to delete public/og-image.svg and leave public/og-image.png as fallback,
+   or delete both since the dynamic route handles generation.
+
+How it renders at runtime:
+  GET /opengraph-image
+    → Next.js invokes OgImage() server-side
+    → Returns PNG via ImageResponse (Satori under the hood)
+  Meta tags auto-injected:
+    <meta property="og:image" content="/opengraph-image" />
+    <meta name="twitter:image" content="/opengraph-image" />

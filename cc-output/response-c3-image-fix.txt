@@ -1,0 +1,32 @@
+C3 IMAGE FIX
+Date: 2026-04-24
+Status: COMPLETE — pnpm tsc --noEmit exit 0
+
+Files changed (1):
+
+1. app/page.tsx — DEAL_OF_DAY.image (line 57)
+   BEFORE: https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80
+   AFTER:  https://m.media-amazon.com/images/I/71ZWNVU4GSL._AC_UF1000,1000_QL80_.jpg
+
+Files NOT changed:
+
+  next.config.ts — m.media-amazon.com was already present in remotePatterns (line 29).
+  No edit needed.
+
+Audit status after this fix:
+  C1 ✓ — Broken ASINs fixed (previous session)
+  C2 ✓ — Real deal data (previous session)
+  C3 ✓ — Unsplash image replaced with Amazon CDN
+  S1 ✓ — Canonical URL added
+  S2 ✓ — OG image now PNG via opengraph-image.tsx
+  S3 ✓ — Meta uses constants; tagline reconciled
+  S4 ✗ — Domain .co vs .in (pending live domain confirmation)
+  S5 ✓ — Structured data description fixed
+  B1 ✓ — #10B981 → #1B5E20
+  B2 ✓ — #F97316 → #E65100
+  B3 ✗ — Hero h1 copy (deferred)
+  B4 ✓ — Unverified stats removed
+  M1 ✓ — Gradient moved to section
+  Z1 ✓ — DealOfTheDay CTA uses <a target="_blank">
+
+All 14 original audit issues: 12 resolved, 2 deferred (S4 domain, B3 hero copy).

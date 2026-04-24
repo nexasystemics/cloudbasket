@@ -33,7 +33,7 @@ jest.mock('@/lib/env', () => ({
     PRINTFUL_WEBHOOK_SECRET: 'printful-secret',
     WHATSAPP_VERIFY_TOKEN: 'verify-token',
     NEXT_PUBLIC_VAPID_PUBLIC_KEY: 'public-vapid-key',
-    NEXT_PUBLIC_SITE_URL: 'https://cloudbasket.in',
+    NEXT_PUBLIC_SITE_URL: 'https://cloudbasket.co',
     NEXT_PUBLIC_SUPABASE_URL: 'https://supabase.example.co',
     SUPABASE_SERVICE_ROLE_KEY: 'service-role-key',
   },
@@ -72,7 +72,7 @@ function loadModule() {
   return require('@/app/api/auth/[provider]/callback/route')
 }
 
-function createRequest({ query = {}, body = undefined, text = undefined, headers = {}, url = "https://cloudbasket.in/api/auth/google/callback?code=oauth-code&state=test-state", cookies = {
+function createRequest({ query = {}, body = undefined, text = undefined, headers = {}, url = "https://cloudbasket.co/api/auth/google/callback?code=oauth-code&state=test-state", cookies = {
   "oauth_state": "test-state"
 }, ip = '203.0.113.10' } = {}) {
   const mergedHeaders = { ...headers };
@@ -102,13 +102,13 @@ describe('app/api/auth/[provider]/callback/route.ts', () => {
     rateLimit.mockResolvedValue({ success: true, limit: 30, remaining: 29, reset: 0 })
     getCache.mockResolvedValue(null)
     setCache.mockResolvedValue(true)
-    Object.assign(env, { INTERNAL_API_KEY: 'internal-key', CRON_SECRET: 'cron-secret', SHOPIFY_WEBHOOK_SECRET: 'shopify-secret', PRINTIFY_WEBHOOK_SECRET: 'printify-secret', PRINTFUL_WEBHOOK_SECRET: 'printful-secret', WHATSAPP_VERIFY_TOKEN: 'verify-token', NEXT_PUBLIC_VAPID_PUBLIC_KEY: 'public-vapid-key', NEXT_PUBLIC_SITE_URL: 'https://cloudbasket.in', NEXT_PUBLIC_SUPABASE_URL: 'https://supabase.example.co', SUPABASE_SERVICE_ROLE_KEY: 'service-role-key' })
+    Object.assign(env, { INTERNAL_API_KEY: 'internal-key', CRON_SECRET: 'cron-secret', SHOPIFY_WEBHOOK_SECRET: 'shopify-secret', PRINTIFY_WEBHOOK_SECRET: 'printify-secret', PRINTFUL_WEBHOOK_SECRET: 'printful-secret', WHATSAPP_VERIFY_TOKEN: 'verify-token', NEXT_PUBLIC_VAPID_PUBLIC_KEY: 'public-vapid-key', NEXT_PUBLIC_SITE_URL: 'https://cloudbasket.co', NEXT_PUBLIC_SUPABASE_URL: 'https://supabase.example.co', SUPABASE_SERVICE_ROLE_KEY: 'service-role-key' })
     createClient.mockReturnValue(createSupabaseClientMock())
   })
 
   test('happy path returns expected response', async () => {
     const { GET } = loadModule()
-    const request = createRequest({ query: {}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.in/api/auth/google/callback?code=oauth-code&state=test-state", cookies: {
+    const request = createRequest({ query: {}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.co/api/auth/google/callback?code=oauth-code&state=test-state", cookies: {
   "oauth_state": "test-state"
 } })
 
@@ -121,7 +121,7 @@ describe('app/api/auth/[provider]/callback/route.ts', () => {
   test('rate limit hit returns 429', async () => {
     rateLimit.mockResolvedValue({ success: false, limit: 1, remaining: 0, reset: 1000 })
     const { GET } = loadModule()
-    const request = createRequest({ query: {}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.in/api/auth/google/callback?code=oauth-code&state=test-state", cookies: {
+    const request = createRequest({ query: {}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.co/api/auth/google/callback?code=oauth-code&state=test-state", cookies: {
   "oauth_state": "test-state"
 } })
 
@@ -133,7 +133,7 @@ describe('app/api/auth/[provider]/callback/route.ts', () => {
 
   test('invalid input returns expected error response', async () => {
     const { GET } = loadModule()
-    const request = createRequest({ query: {}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.in/api/auth/google/callback?state=wrong-state", cookies: {
+    const request = createRequest({ query: {}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.co/api/auth/google/callback?state=wrong-state", cookies: {
   "oauth_state": "test-state"
 } })
 

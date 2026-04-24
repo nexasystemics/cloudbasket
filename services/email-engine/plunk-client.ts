@@ -2,7 +2,7 @@
 // services/email-engine/plunk-client.ts — Email engine via Resend (replaces Plunk).
 import { Resend } from 'resend'
 
-const FROM = 'CloudBasket <noreply@cloudbasket.in>'
+const FROM = 'CloudBasket <noreply@cloudbasket.co>'
 
 interface EmailParams {
   to: string
@@ -33,7 +33,7 @@ export class EmailEngine {
     return this.sendEmail({
       to: email,
       subject: 'Welcome to CloudBasket',
-      html: `<h1>Welcome to CloudBasket!</h1><p>Hi ${name},</p><p>Thanks for subscribing! You'll now receive weekly deals, price drops, and exclusive offers.</p><a href="https://cloudbasket.in">Browse Deals</a>`,
+      html: `<h1>Welcome to CloudBasket!</h1><p>Hi ${name},</p><p>Thanks for subscribing! You'll now receive weekly deals, price drops, and exclusive offers.</p><a href="https://cloudbasket.co">Browse Deals</a>`,
     })
   }
 
@@ -41,7 +41,7 @@ export class EmailEngine {
     return this.sendEmail({
       to: email,
       subject: `Deal Alert: ${dealTitle}`,
-      html: `<h2>New Deal Alert!</h2><p><strong>${dealTitle}</strong></p><p>Save ${discountValue}% — Limited time only!</p><a href="https://cloudbasket.in/deals">View Deal</a>`,
+      html: `<h2>New Deal Alert!</h2><p><strong>${dealTitle}</strong></p><p>Save ${discountValue}% — Limited time only!</p><a href="https://cloudbasket.co/deals">View Deal</a>`,
     })
   }
 

@@ -15,8 +15,8 @@ import type { Role } from '@/lib/auth'
 const ADMIN_ROLES: Role[] = ['admin', 'superadmin']
 
 const ALLOWED_ORIGINS = [
-  'https://cloudbasket.in',
-  'https://www.cloudbasket.in',
+  'https://cloudbasket.co',
+  'https://www.cloudbasket.co',
   'https://cloudbasket.co',
   'https://www.cloudbasket.co',
 ]
@@ -84,7 +84,7 @@ function applyCORS(res: NextResponse, origin: string | null): void {
 
   res.headers.set(
     'Access-Control-Allow-Origin',
-    allowed && origin ? origin : 'https://cloudbasket.in'
+    allowed && origin ? origin : 'https://cloudbasket.co'
   )
   res.headers.set('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS')
   res.headers.set('Access-Control-Allow-Headers', 'Content-Type,Authorization,x-internal-api-key')

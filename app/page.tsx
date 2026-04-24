@@ -70,11 +70,11 @@ const DEAL_OF_DAY = {
 
 function DealOfTheDay() {
   return (
-    <section className="bg-gradient-to-r from-sky-600/5 via-transparent to-orange-500/5 py-12">
+    <section aria-label="Deal of the Day" className="bg-gradient-to-r from-sky-600/5 via-transparent to-orange-500/5 py-12">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500" aria-hidden="true">
               <Zap size={20} className="text-white" />
             </div>
             <div className="min-h-[52px]">
@@ -83,7 +83,7 @@ function DealOfTheDay() {
             </div>
           </div>
           <span className="cb-badge cb-badge-orange flex items-center gap-2">
-            <Clock size={14} />
+            <Clock size={14} aria-hidden="true" />
             Ends at {DEAL_OF_DAY.endsAt}
           </span>
         </div>
@@ -111,7 +111,7 @@ function DealOfTheDay() {
               <div className="my-4 flex min-h-[120px] flex-col gap-2">
                 {DEAL_OF_DAY.features.map((feature) => (
                   <p key={feature} className="flex items-center gap-2 text-sm">
-                    <span className="font-black text-[#1B5E20]">✓</span>
+                    <span aria-hidden="true" className="font-black text-[#1B5E20]">✓</span>
                     {feature}
                   </p>
                 ))}
@@ -129,14 +129,15 @@ function DealOfTheDay() {
                 href={DEAL_OF_DAY.goUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Grab this deal: ${DEAL_OF_DAY.name} on Amazon (opens in new tab)`}
                 className="cb-btn cb-btn-primary mt-6 w-full gap-2 py-4 text-base"
               >
-                <Zap size={18} />
+                <Zap size={18} aria-hidden="true" />
                 Grab This Deal
               </a>
 
               <p className="text-muted mt-3 text-center text-xs">
-                <TrendingDown size={12} className="inline" /> Price verified on CloudBasket
+                <TrendingDown size={12} className="inline" aria-hidden="true" /> Price verified on CloudBasket
               </p>
             </div>
           </div>
@@ -150,7 +151,7 @@ function FlashDealsPreview() {
   const flashDeals = DEALS.filter((deal) => deal.isFlash).slice(0, 4)
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-6 py-16">
+    <section aria-label="Today's flash deals" className="mx-auto w-full max-w-7xl px-6 py-16">
       <div className="mb-6 flex items-end justify-between gap-4">
         <div>
           <h2 className="font-display text-3xl font-black tracking-tight text-[var(--cb-text-primary)]">Today&apos;s Best Deals</h2>
@@ -181,10 +182,11 @@ function FlashDealsPreview() {
                   href={deal.goId ? `/go/${deal.goId}` : `/products`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Grab deal: ${deal.title} (opens in new tab)`}
                   className="cb-btn-orange mt-3 flex w-full items-center justify-center gap-2"
                 >
                   Grab Deal
-                  <ExternalLink size={14} />
+                  <ExternalLink size={14} aria-hidden="true" />
                 </a>
               </div>
             </article>

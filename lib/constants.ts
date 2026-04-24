@@ -1,7 +1,7 @@
 export const SITE_NAME = 'CloudBasket'
 export const SITE_URL = 'https://cloudbasket.co'
 export const SITE_DESCRIPTION = "Compare Prices. Discover Deals. Shop Smarter."
-export const SITE_TAGLINE = 'One platform. Every store. Zero confusion.'
+export const SITE_TAGLINE = 'Know It. Find It. Get It.'
 
 export const AFFILIATE_TAGS = {
   AMAZON: 'cloudbasket-21',

@@ -22,7 +22,7 @@ async function sendAlert(email: string, subject: string, html: string): Promise<
   if (!validateEmail(email)) return { success: false, error: 'Invalid email' }
   try {
     const resend = new Resend(env.RESEND_API_KEY)
-    const { error } = await resend.emails.send({ from: 'CloudBasket <alerts@cloudbasket.in>', to: [email], subject, html })
+    const { error } = await resend.emails.send({ from: 'CloudBasket <alerts@cloudbasket.co>', to: [email], subject, html })
     return error ? { success: false, error: error.message } : { success: true }
   } catch (e) { return { success: false, error: String(e) } }
 }

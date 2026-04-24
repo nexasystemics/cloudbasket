@@ -1,0 +1,159 @@
+HOMEPAGE AUDIT — app/page.tsx
+Date: 2026-04-24
+Auditor: Claude Code (claude-sonnet-4-6)
+
+Files examined:
+  app/page.tsx
+  components/HeroSection.tsx
+  lib/constants.ts
+  lib/deals-data.ts
+  lib/mock-data.ts
+  lib/image-assets.ts
+  app/go/[id]/route.ts
+
+=========================================
+CRITICAL — 3 issues
+=========================================
+
+C1. BROKEN AFFILIATE REDIRECTS
+  File: app/page.tsx:127, 175
+  The /go/[id] router (app/go/[id]/route.ts:77) splits on '-' to extract an Amazon ASIN.
+  - "amazon-dotd-1" → ASIN = "dotd-1"  → amazon.in/dp/dotd-1  (not a real ASIN)
+  - "amazon-1", "amazon-2", "amazon-3", "amazon-4" → ASINs "1","2","3","4" (not real)
+  Every "Grab Deal" CTA on the homepage lands on a broken Amazon 404 page.
+  Fix: Replace synthetic IDs with real Amazon ASINs in DEAL_OF_DAY and DEALS data.
+
+C2. ALL DEAL DATA IS MOCK / STATIC
+  File: app/page.tsx:51–68, lib/deals-data.ts:7–116
+  - DEAL_OF_DAY object is hardcoded: price ₹89,999, discount 33%, endsAt "23:59"
+  - endsAt is a static string — not tied to any real countdown
+  - All DEALS use inHours(1): they expire 1 hour from server cold start, not a real schedule
+  - PRODUCTS (lib/mock-data.ts) is static seed data; productCount shown in hero is mock length
+  Risk: Displaying false prices and countdown timers to users is a consumer-protection issue.
+
+C3. EXTERNAL UNSPLASH IMAGE WITHOUT ATTRIBUTION
+  File: app/page.tsx:55
+  DEAL_OF_DAY.image = 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?...'
+  Unsplash commercial use requires a visible credit link. None is present.
+  Also introduces external CDN dependency — image can 404 if Unsplash removes it.
+  Fix: Host the image locally under /public/assets/ or use a licensed stock source.
+
+=========================================
+SEO — 5 issues
+=========================================
+
+S1. NO CANONICAL URL
+  File: app/page.tsx:21–36
+  The metadata export has no `alternates.canonical` field.
+  Google can index /  AND /?ref=... etc. as duplicate pages.
+  Fix: Add `alternates: { canonical: 'https://cloudbasket.in' }` to the metadata object.
+
+S2. OG IMAGE IS SVG — NOT SUPPORTED BY SOCIAL CRAWLERS
+  File: app/page.tsx:28, 34
+  Both openGraph.images and twitter.images point to '/og-image.svg'.
+  Facebook, LinkedIn, WhatsApp, and Twitter require JPG or PNG for preview cards.
+  SVG og-images are silently ignored — share previews appear blank.
+  Fix: Generate an og-image.png (1200×630) and update both image references.
+
+S3. META CONTENT HARDCODED — NOT USING CONSTANTS
+  File: app/page.tsx:22–35 vs lib/constants.ts:1–4
+  page.tsx title: "Everything in One Basket"
+  constants.ts SITE_TAGLINE: "One platform. Every store. Zero confusion."
+  CLAUDE.md tagline: "Design. Print. Earn."
+  Three different taglines in three different places. page.tsx also does not import
+  SITE_URL, SITE_NAME, or SITE_DESCRIPTION from constants — values are duplicated manually.
+  Fix: Import and use constants; align on one canonical tagline across all three sources.
+
+S4. DOMAIN INCONSISTENCY — .co vs .in
+  File: app/page.tsx:27, 42, 46; lib/constants.ts:2
+  OG url, structured data url, and SITE_URL all use "https://cloudbasket.co"
+  CLAUDE.md Section 1 says domain is "cloudbasket.in"
+  If cloudbasket.in is the live domain, all canonical/OG URLs are wrong — search engines
+  will index the .co variant as canonical.
+  Fix: Align constants.ts SITE_URL with the actual live domain, then use it everywhere.
+
+S5. STRUCTURED DATA DESCRIPTION INCONSISTENT WITH BRAND
+  File: app/page.tsx:43
+  WEBSITE_STRUCTURED_DATA description = "The World's Smartest Price Aggregator"
+  This phrase appears nowhere else in the codebase. It doesn't match SITE_DESCRIPTION
+  ("Compare Prices. Discover Deals. Shop Smarter.") or any other brand copy.
+  Fix: Use SITE_DESCRIPTION from constants.ts.
+
+=========================================
+BRAND CONSISTENCY — 4 issues
+=========================================
+
+B1. HARDCODED COLOR NOT IN DESIGN SYSTEM — checkmark green
+  File: app/page.tsx:113
+  text-[#10B981] — this is Tailwind Emerald-500, not a brand color.
+  Brand success green per lib/design-system.ts is #1B5E20.
+  Fix: Replace with brand token class or use design-system `semantic.brand.success`.
+
+B2. HARDCODED COLOR NOT IN DESIGN SYSTEM — flash deal price
+  File: app/page.tsx:172
+  text-[#F97316] — Tailwind Orange-500.
+  Brand CTA orange per design system is #E65100.
+  Fix: Use the cb-badge-orange class or the brand CTA token.
+
+B3. HERO TAGLINE DOES NOT MATCH BRAND IDENTITY
+  File: components/HeroSection.tsx:82
+  h1 text: "Compare. Discover. Save."
+  Brand tagline (CLAUDE.md): "Design. Print. Earn."
+  For a POD + Affiliate platform, the hero headline should reflect the POD angle
+  or at minimum align with one consistent tagline across the site.
+
+B4. UNVERIFIED SOCIAL PROOF CLAIMS
+  File: components/HeroSection.tsx:107
+  Hardcoded badges: "₹2Cr+ saved by users", "50K+ deals tracked", "4.8★ user rating"
+  These figures are static strings with no data source. If the site is pre-launch or
+  early-stage, displaying these claims could constitute false advertising.
+  Fix: Either source from real analytics or remove until figures are verifiable.
+
+=========================================
+MOBILE LAYOUT — 1 issue
+=========================================
+
+M1. DEAL-OF-DAY GRADIENT ON INNER DIV, NOT SECTION
+  File: app/page.tsx:72–73
+  <section className="py-12">
+    <div className="mx-auto max-w-7xl bg-gradient-to-r from-sky-600/5 ... px-6">
+  The gradient background sits on the inner constrained div, not the full-width section.
+  On viewports wider than max-w-7xl (1280px), the section shows plain white gutters while
+  the content box has the gradient — visual inconsistency on large screens.
+  On mobile the px-6 padding is correct but the gradient clip is still confined to the div.
+  Fix: Move bg-gradient-to-r to the <section> element; keep max-w-7xl on the inner div.
+
+=========================================
+ZERO-CHECKOUT COMPLIANCE — 1 issue
+=========================================
+
+Z1. INCONSISTENT CTA BEHAVIOR BETWEEN SECTIONS
+  File: app/page.tsx:127 (DealOfTheDay) vs 174–181 (FlashDealsPreview)
+  - DealOfTheDay "Grab This Deal" uses <Link href="/go/..."> → client-side nav, same tab
+  - FlashDeals "Grab Deal" uses <a target="_blank" rel="noopener noreferrer"> → new tab
+  For a zero-checkout site, the expected pattern is: redirect to partner in a new tab.
+  DealOfTheDay's same-tab navigation means the user loses the CloudBasket page entirely.
+  Fix: Change DealOfTheDay CTA to <a href="/go/amazon-dotd-1" target="_blank" rel="noopener noreferrer">.
+
+=========================================
+SUMMARY TABLE
+=========================================
+
+# | Severity | Area          | Location                   | Issue
+--|----------|---------------|----------------------------|-----------------------------------
+1 | CRITICAL | Broken Links  | page.tsx:127,175           | All affiliate CTAs redirect to invalid ASINs
+2 | CRITICAL | Placeholder   | page.tsx:51-68, deals-data | All deal data is static/mock
+3 | CRITICAL | Legal/IP      | page.tsx:55                | Unsplash image used commercially without attribution
+4 | HIGH     | SEO           | page.tsx:21-36             | No canonical URL in metadata
+5 | HIGH     | SEO           | page.tsx:28,34             | OG image is SVG — not rendered by social platforms
+6 | MEDIUM   | SEO           | page.tsx:22-35, constants  | Meta content not using constants; three different taglines
+7 | MEDIUM   | SEO           | page.tsx:27,42; constants  | Domain is cloudbasket.co vs cloudbasket.in
+8 | LOW      | SEO           | page.tsx:43                | Structured data description doesn't match brand copy
+9 | MEDIUM   | Brand         | page.tsx:113               | #10B981 not in design system (should be #1B5E20)
+10| MEDIUM   | Brand         | page.tsx:172               | #F97316 not in design system (should be #E65100)
+11| LOW      | Brand         | HeroSection.tsx:82         | Hero tagline mismatches brand identity
+12| MEDIUM   | Brand/Legal   | HeroSection.tsx:107        | Unverified ₹2Cr/50K/4.8★ claims
+13| LOW      | Mobile        | page.tsx:72-73             | Deal section gradient clipped to inner div
+14| MEDIUM   | Zero-checkout | page.tsx:127               | DealOfTheDay CTA uses <Link> (same tab) instead of <a target="_blank">
+
+Total: 14 issues (3 Critical, 5 SEO, 4 Brand, 1 Mobile, 1 Zero-checkout)

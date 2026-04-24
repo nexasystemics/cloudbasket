@@ -1,0 +1,34 @@
+TASK: Coming Soon / Maintenance page redesign — 2026-04-22
+
+=== FILES EDITED ===
+1. app/offline/page.tsx [REWRITTEN]
+   - Was: imported OfflinePageClient, rendered "You're offline" + reload button
+   - Now: pure server component, full-screen Coming Soon design
+
+=== FILES NOT CHANGED ===
+- app/offline/OfflinePageClient.tsx — left in place (not deleted per CLAUDE.md rule 2)
+  No longer imported by page.tsx. Safe to delete manually when confirmed.
+- proxy.ts — no changes needed. §7 already redirects to /offline on MAINTENANCE_MODE=true.
+- No separate app/maintenance/ directory exists.
+
+=== DESIGN SPEC ===
+- Dark navy background (#0B1F35) with subtle orange + blue blur blobs
+- CloudBasket wordmark: "Cloud" in #039BE5, "Basket" in white — 5xl/6xl font-black
+- Tagline "Design. Print. Earn." in #F5C518, uppercase tracking-widest
+- H1: "Something exciting is coming."
+- Body copy: 500-char description, white/60
+- Email form: input + "Notify Me" button (static HTML POST /api/waitlist — no backend needed)
+- Trust badges: Privacy First / Made in India / Launching 2026
+- Footer: © 2026 NEXQON HOLDINGS
+
+=== HOW MAINTENANCE MODE WORKS ===
+proxy.ts §7: if MAINTENANCE_MODE=true, any non-admin, non-api, non-/offline path
+→ NextResponse.redirect('/offline')
+Set MAINTENANCE_MODE=true in .env.local to enable.
+
+=== TSC RESULT ===
+pnpm tsc --noEmit → EXIT 0 ✅
+
+=== RISK LEVEL: LOW ===
+Static server component, no external dependencies, no API calls.
+Rollback: restore previous page.tsx content from git.

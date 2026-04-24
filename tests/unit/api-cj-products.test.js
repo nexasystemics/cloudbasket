@@ -39,7 +39,7 @@ jest.mock('@/lib/env', () => ({
     PRINTFUL_WEBHOOK_SECRET: 'printful-secret',
     WHATSAPP_VERIFY_TOKEN: 'verify-token',
     NEXT_PUBLIC_VAPID_PUBLIC_KEY: 'public-vapid-key',
-    NEXT_PUBLIC_SITE_URL: 'https://cloudbasket.in',
+    NEXT_PUBLIC_SITE_URL: 'https://cloudbasket.co',
     NEXT_PUBLIC_SUPABASE_URL: 'https://supabase.example.co',
     SUPABASE_SERVICE_ROLE_KEY: 'service-role-key',
   },
@@ -82,7 +82,7 @@ function loadModule() {
 function createRequest({ query = {
   "q": "monitor",
   "category": "electronics"
-}, body = undefined, text = undefined, headers = {}, url = "https://cloudbasket.in/api/test", cookies = {}, ip = '203.0.113.10' } = {}) {
+}, body = undefined, text = undefined, headers = {}, url = "https://cloudbasket.co/api/test", cookies = {}, ip = '203.0.113.10' } = {}) {
   const mergedHeaders = { ...headers };
   if (mergedHeaders['x-shopify-hmac-sha256'] === '__AUTO__') {
     const crypto = require('crypto');
@@ -110,7 +110,7 @@ describe('app/api/cj/products/route.ts', () => {
     rateLimit.mockResolvedValue({ success: true, limit: 30, remaining: 29, reset: 0 })
     getCache.mockResolvedValue(null)
     setCache.mockResolvedValue(true)
-    Object.assign(env, { INTERNAL_API_KEY: 'internal-key', CRON_SECRET: 'cron-secret', SHOPIFY_WEBHOOK_SECRET: 'shopify-secret', PRINTIFY_WEBHOOK_SECRET: 'printify-secret', PRINTFUL_WEBHOOK_SECRET: 'printful-secret', WHATSAPP_VERIFY_TOKEN: 'verify-token', NEXT_PUBLIC_VAPID_PUBLIC_KEY: 'public-vapid-key', NEXT_PUBLIC_SITE_URL: 'https://cloudbasket.in', NEXT_PUBLIC_SUPABASE_URL: 'https://supabase.example.co', SUPABASE_SERVICE_ROLE_KEY: 'service-role-key' })
+    Object.assign(env, { INTERNAL_API_KEY: 'internal-key', CRON_SECRET: 'cron-secret', SHOPIFY_WEBHOOK_SECRET: 'shopify-secret', PRINTIFY_WEBHOOK_SECRET: 'printify-secret', PRINTFUL_WEBHOOK_SECRET: 'printful-secret', WHATSAPP_VERIFY_TOKEN: 'verify-token', NEXT_PUBLIC_VAPID_PUBLIC_KEY: 'public-vapid-key', NEXT_PUBLIC_SITE_URL: 'https://cloudbasket.co', NEXT_PUBLIC_SUPABASE_URL: 'https://supabase.example.co', SUPABASE_SERVICE_ROLE_KEY: 'service-role-key' })
     createClient.mockReturnValue(createSupabaseClientMock())
     if (cjAPI.searchProducts.mockReturnValue) cjAPI.searchProducts.mockReturnValue([
   {
@@ -127,7 +127,7 @@ describe('app/api/cj/products/route.ts', () => {
     const request = createRequest({ query: {
   "q": "monitor",
   "category": "electronics"
-}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.in/api/test", cookies: {} })
+}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.co/api/test", cookies: {} })
 
     const response = await GET(request)
 
@@ -141,7 +141,7 @@ describe('app/api/cj/products/route.ts', () => {
     const request = createRequest({ query: {
   "q": "monitor",
   "category": "electronics"
-}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.in/api/test", cookies: {} })
+}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.co/api/test", cookies: {} })
 
     const response = await GET(request)
 
@@ -153,7 +153,7 @@ describe('app/api/cj/products/route.ts', () => {
     const { GET } = loadModule()
     const request = createRequest({ query: {
   "q": ""
-}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.in/api/test", cookies: {} })
+}, body: undefined, text: undefined, headers: {}, url: "https://cloudbasket.co/api/test", cookies: {} })
 
     const response = await GET(request)
 

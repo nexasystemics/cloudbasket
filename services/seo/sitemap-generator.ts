@@ -28,7 +28,7 @@ function getClient(): SupabaseClient {
 }
 
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL || "https://cloudbasket.in";
+  return process.env.NEXT_PUBLIC_SITE_URL || "https://cloudbasket.co";
 }
 
 function isFastBuild(): boolean {

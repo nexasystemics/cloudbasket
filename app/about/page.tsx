@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { Shield, Zap, Globe, TrendingDown, Users, Award, Target, Heart } from 'lucide-react'
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, SITE_TAGLINE } from '@/lib/constants'
 
-const ABOUT_TITLE = `About ${SITE_NAME} — ${SITE_TAGLINE}`
-const ABOUT_DESCRIPTION = `${SITE_DESCRIPTION} Learn how ${SITE_NAME} compares prices across leading stores and helps shoppers find smarter savings without checkout friction.`
+const ABOUT_TITLE = `About ${SITE_NAME}`
+const ABOUT_DESCRIPTION = SITE_DESCRIPTION
 
 export const metadata: Metadata = {
   title: ABOUT_TITLE,

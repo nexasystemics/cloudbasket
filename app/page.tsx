@@ -52,7 +52,7 @@ const DEAL_OF_DAY = {
   id: 'dotd-1',
   name: 'Samsung Galaxy M15 5G',
   brand: 'Samsung',
-  image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80',
+  image: 'https://m.media-amazon.com/images/I/71ZWNVU4GSL._AC_UF1000,1000_QL80_.jpg',
   originalPrice: 15999,
   price: 12999,
   discount: 19,
